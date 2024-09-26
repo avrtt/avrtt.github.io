@@ -33,7 +33,7 @@
     ]
   },
   "devDependencies": {
-    "gh-pages": "^4.0.0"
+    "gh-pages": "^5.0.0"
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
