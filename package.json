@@ -1,0 +1,66 @@
+{
+  "name": "avrtt.blog",
+  "version": "3.12.4",
+  "homepage": "https://avrtt.github.io/",
+  "private": true,
+  "description": "My React/Gatsby website written completely from scratch & with love",
+  "author": "avrtt",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/avrtt/avrtt.github.io.git"
+  },
+  "bugs": {
+    "url": "https://github.com/avrtt/avrtt.github.io/issues"
+  },
+  "scripts": {
+    "predeploy": "gatsby build",
+    "deploy": "gh-pages -d public",
+    "start": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "gh-pages": "^4.0.0"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/material": "^6.0.1",
+    "animate.css": "^4.1.1",
+    "framer-motion": "^11.3.31",
+    "gatsby": "^5.13.7",
+    "gatsby-plugin-image": "^3.13.1",
+    "gatsby-plugin-manifest": "^5.13.1",
+    "gatsby-plugin-mdx": "^5.13.1",
+    "gatsby-plugin-react-helmet": "^6.13.1",
+    "gatsby-plugin-sharp": "^5.13.1",
+    "gatsby-plugin-sitemap": "^6.13.1",
+    "gatsby-remark-autolink-headers": "^6.13.1",
+    "gatsby-remark-images": "^7.13.2",
+    "gatsby-remark-prismjs": "^7.13.2",
+    "gatsby-source-filesystem": "^5.13.1",
+    "gatsby-transformer-sharp": "^5.13.1",
+    "react": "^18.3.1",
+    "react-animation-on-scroll": "^5.1.0",
+    "react-jvectormap": "^0.0.16",
+    "react-markdown": "^9.0.1",
+    "react-medium-image-zoom": "^5.2.10",
+    "react-router-dom": "^6.26.1",
+    "react-telegram-comments": "^2.0.0",
+    "rehype-raw": "^7.0.0",
+    "styled-components": "^6.1.13"
+  }
+}
