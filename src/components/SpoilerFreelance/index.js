@@ -51,7 +51,7 @@ const Spoiler = ({ title,
         &nbsp;&nbsp;
       </button>
       <div class="spoilerContentWrapper">
-        <div class="spoilerContent">
+        <div class="spoilerContentFreelance">
           <br/>
           <M text={block1}/>
           <M text={block2}/>
@@ -103,6 +103,8 @@ const Spoiler = ({ title,
           <M text={block48}/>
           <M text={block49}/>
           <M text={block50}/>
+          <br/>
+          <p class="spoilerExtraDesc"><M text={spoilerExtraDesc}/></p>
         </div>
       </div>
     </div>

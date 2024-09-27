@@ -7,7 +7,7 @@ import { freelanceExperienceString, projectsCount, categories, currentZoneUTC, f
 import Stack from'../../components/Stack';
 import FreelanceCategory from'../../components/FreelanceCategory';
 import info from "../../images/goals/info.svg";
-import Spoiler from '../../components/Spoiler';
+import SpoilerFreelance from '../../components/SpoilerFreelance';
 import { Link } from "gatsby"
 
 const TITLE = 'Freelance - avrtt.blog'
@@ -71,7 +71,7 @@ const Freelance = () => {
 		<div class="freelanceBody">
 	
 			<p>I'm a full-time freelancer primarily focused on Data Science, offering both regular and one-off services, including project-based work, system maintenance, consulting and teaching. Being in the field since 2020, I have more than <strong>{freelanceExperienceString} of freelancing</strong> experience in total, with more than <strong>{projectsCount} completed projects</strong> (listed below), as well as other various successful deals. My main areas of expertise are machine learning, data analysis, data collection, statistics, visualization and Python programming, but I'm also competent in web development, video/music post-production and prompt engineering.</p>
-			<Spoiler 
+			<SpoilerFreelance 
 				title={"Detailed list: services I offer (with examples)"} 
 
 				/* current services: */

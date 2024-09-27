@@ -2510,6 +2510,12 @@ span.SAFE {
 .spoilerContent {
   padding: 0em 1.5em;
   font-size: 26px;
+  margin-top: -40px;
+}
+
+.spoilerContentFreelance {
+  padding: 0em 1.5em;
+  font-size: 26px;
   line-height: 20px;
 }
 
