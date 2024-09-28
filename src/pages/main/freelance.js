@@ -7,8 +7,18 @@ import { freelanceExperienceString, projectsCount, categories, currentZoneUTC, f
 import Stack from'../../components/Stack';
 import FreelanceCategory from'../../components/FreelanceCategory';
 import info from "../../images/goals/info.svg";
-import SpoilerFreelance from '../../components/SpoilerFreelance';
+import SpoilerServices from '../../components/SpoilerServices';
 import { Link } from "gatsby"
+import ML from "../../images/freelance/machineLearningIcon.svg";
+import DA from "../../images/freelance/dataAnalysisIcon.svg";
+import DV from "../../images/freelance/dataVisualizationIcon.svg";
+import DC from "../../images/freelance/dataCollectionIcon.svg";
+import PA from "../../images/freelance/pythonAppsIcon.svg";
+import WD from "../../images/freelance/webDevelopmentIcon.svg";
+import RE from "../../images/freelance/researchIcon.svg";
+import TW from "../../images/freelance/technicalWritingIcon.svg";
+import PP from "../../images/freelance/postProductionIcon.svg";
+import MI from "../../images/freelance/miscIcon.svg";
 
 const TITLE = 'Freelance - avrtt.blog'
 
@@ -71,12 +81,16 @@ const Freelance = () => {
 		<div class="freelanceBody">
 	
 			<p>I'm a full-time freelancer primarily focused on Data Science, offering both regular and one-off services, including project-based work, system maintenance, consulting and teaching. Being in the field since 2020, I have more than <strong>{freelanceExperienceString} of freelancing</strong> experience in total, with more than <strong>{projectsCount} completed projects</strong> (listed below), as well as other various successful deals. My main areas of expertise are machine learning, data analysis, data collection, statistics, visualization and Python programming, but I'm also competent in web development, video/music post-production and prompt engineering.</p>
-			<SpoilerFreelance 
+			<SpoilerServices
 				title={"Detailed list: services I offer (with examples)"} 
-
-				/* current services: */
-				block1={"- Data cleansing: ..."}
-				block2={"- Parsing, scraping, ..."}
+			
+				// currently preferable services
+				services={[ 
+					{icon: DA, text: "Data cleansing: ..."},
+					{icon: TW, text: "Write an article or a blog post related to Data Science"},
+					{icon: DC, text: "Parsing, scraping, ..."},
+					{icon: WD, text: "Frontend"},
+				]}
 
 				/* hidden services
 				- ...
@@ -180,7 +194,7 @@ const Freelance = () => {
 			🚀 Какие-нибудь не-фриланс проекты<br/>
 			💼 Опыт работы по найму<br/>
 			🎓 B.S. in Applied Mathematics & Computer Science<br/>
-			💪 Actively contributing to open-source
+			💪 Actively [contributing](https://github.com/avrtt) to open-source
 			"/>
 			</div>
 			<M text="### Courses"/>
