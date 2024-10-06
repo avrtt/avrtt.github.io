@@ -19,18 +19,26 @@ exports.createPages = async ({ actions, graphql }) => {
     }
   `);
 
+  if (result.errors) {
+    throw new Error(result.errors);
+  }
+
+  // process mdx files of posts by checking if the contentFilePath includes 'src/pages/posts'
   result.data.allMdx.nodes.forEach((node) => {
     const PostTemplate = path.resolve(`./src/templates/post.js`);
-    const section = `/${node.frontmatter.slug.split('/')[1]}/`;
 
-    createPage({
-      path: node.frontmatter.slug, 
-      component: `${PostTemplate}?__contentFilePath=${node.internal.contentFilePath}`,
-      context: { 
-        id: node.id,
-        section,
-      },
-    });
+    if (node.internal.contentFilePath.includes('src/pages/posts')) {
+      const section = `/${node.frontmatter.slug.split('/')[1]}/`;
+
+      createPage({
+        path: node.frontmatter.slug, 
+        component: `${PostTemplate}?__contentFilePath=${node.internal.contentFilePath}`,
+        context: { 
+          id: node.id,
+          section,
+        },
+      });
+    }
   });
 
   createPage({path: "/frog", component: path.resolve(`src/components/NotFound/index.js`)});
@@ -41,6 +49,8 @@ exports.createPages = async ({ actions, graphql }) => {
   createPage({path: "/exploration", component: path.resolve(`src/pages/main/exploration.js`)});
   createPage({path: "/freelance", component: path.resolve(`src/pages/main/freelance.js`)});
   createPage({path: "/freelance/ru", component: path.resolve(`src/pages/main/freelance_ru.js`)});
+  createPage({path: "/freelance/services", component: path.resolve(`src/pages/freelance-subpages/services.mdx`)});
+  createPage({path: "/freelance/ru/services", component: path.resolve(`src/pages/freelance-subpages/services_ru.mdx`)});
   createPage({path: "/freelance/projects/machine_learning", component: path.resolve(`src/pages/freelance-subpages/machine_learning.js`)});
   createPage({path: "/freelance/ru/projects/machine_learning", component: path.resolve(`src/pages/freelance-subpages/machine_learning_ru.js`)});
   createPage({path: "/freelance/projects/data_analysis", component: path.resolve(`src/pages/freelance-subpages/data_analysis.js`)});

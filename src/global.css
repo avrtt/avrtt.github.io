@@ -77,6 +77,19 @@ body {
   font-weight: lighter;
 }
 
+.servicesBodyNested {
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 22px;
+  max-width: 100%;
+  font-size: 26px;
+  color: #444444;
+  background-color: white;
+  padding: 2.5em 4em;
+  border-radius: 2vh;
+  font-weight: lighter;
+}
+
 .goalsBody {
 	margin: 0 auto;
 	font-size: 18px;
@@ -184,7 +197,7 @@ a::selection {
 
 
 
-/* HEADINGS */
+/* GENERAL HEADINGS */
 
 h1 {
   color: #858585;
@@ -2426,6 +2439,63 @@ span.SAFE {
   content: "\25B2";
   transition-duration: 0.2s;
   color: rgb(70, 70, 70);
+}
+
+
+
+/* SERVICES PAGE */
+
+h6 {
+  line-height: 0;
+  margin-bottom: -44px;
+  transform: translate(-80px, -80px);
+  opacity: 0;
+  pointer-events: none;
+  -webkit-touch-callout: none;
+    -webkit-user-select: none; 
+     -khtml-user-select: none;
+       -moz-user-select: none; 
+        -ms-user-select: none;
+            user-select: none;
+}
+
+
+
+/* GO BACK BUTTON */
+
+.goBackWrapper {
+  display: flex;
+  position: relative;
+  left: 0;
+  transform: translate(12.3vw, 0);
+  height: 8vh; 
+  transition: top 0.3s ease-out;
+  margin-top: -4.6vw;
+  margin-left: -13.4vw;
+}
+
+.goBackWrapper.scrolled {
+  position: fixed;
+  top: -2vh;
+  margin-top: 2vw;
+  margin-left: 0;
+  left: 0;
+  transition: top 0.3s ease-out;
+}
+
+.goBack {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15%;
+  background-color: rgb(70, 70, 70);
+  transition: transform 0.15s;
+  height: 100%; 
+  margin: 0 0 4% 0;
+}
+
+.goBack:hover {
+  transform: scale(0.97);
 }
 
 
