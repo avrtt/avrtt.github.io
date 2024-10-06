@@ -6,6 +6,7 @@ import M from '../../components/Markdown';
 import { freelanceExperienceString, projectsCount, categories, currentZoneUTC, freelanceWorkHourStart, freelanceWorkHourEnd, freelanceLastUpdated } from '../itemData';
 import Stack from'../../components/Stack';
 import FreelanceCategory from'../../components/FreelanceCategory';
+import Courses from'../../components/Courses';
 import info from "../../images/goals/info.svg";
 import SpoilerServices from '../../components/SpoilerServices';
 import { Link } from "gatsby"
@@ -212,9 +213,7 @@ const Freelance = () => {
 
 			<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true"><div class="sectionBreak"><M text="----------"/></div>
 			<M text="# 📌 PROJECTS "/>
-
 			<M text="My projects are organized into category pages. Please click on the category you're interested in to explore a particular list:"/>
-
 			<div class="freelanceCategorySectionWrapper">
 				{categories.map((category) => (
 					<FreelanceCategory 
@@ -226,7 +225,6 @@ const Freelance = () => {
 					/>
 				))}
 			</div>
-
 			</AnimationOnScroll>
 
 
@@ -284,8 +282,9 @@ const Freelance = () => {
 
 
 			<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true"><div class="sectionBreak"><M text="----------"/></div>
-			<M text="# 📜 CERTIFICATES"/>
-			Здесь рендерить компоненту с сертификатами
+			<M text="# 📜 COURSES"/>
+			<M text="I enjoy learning from courses all the time. Here's a compact list of some of the courses I've taken that I liked the most (clicking redirects to certificate proof, if any):"/>
+			<Courses lang="en"/>
 			</AnimationOnScroll>
 
 
