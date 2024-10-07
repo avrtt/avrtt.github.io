@@ -61,27 +61,43 @@ export const aboutLastUpdated = "SEP 6, 2023"
 export const goalsLastUpdated = "SEP 5, 2023"
 export const explorationLastUpdated = "OCT 14, 2023"
 export const cvLastUpdated = "APR 7, 2024"
-export const freelanceLastUpdated = "APR 7, 2024"
+export const freelanceLastUpdated = "OCT 7, 2024"
 export const footerYear = "2024"
 
 // currently preferable services
-export const services = [ 
-	{icon: PA, text: "Build or debug modular Python software (complex console apps, desktop GUIs, enterprise tools)"},
-	{icon: DC, text: "Collect any kind of data using web scraping techniques"},
-	{icon: DA, text: "Perform data processing (cleaning, transforming, annotation/labeling, reduction, validation)"},
-	{icon: DV, text: "Create a clear and eye-catching visualization for any kind of data"},
-	{icon: DA, text: "Conduct exploratory data analysis"},
-	{icon: ML, text: "Fine-tune a deep learning model"},
-	{icon: WD, text: "Build a frontend for a web app (React)"},
-	{icon: WD, text: "Design and build a static website, such as a blog, portfolio or landing page (Next.js/Gatsby/Jekyll, CMS)"},
-	{icon: PA, text: "Create a bot for your website or popular platforms (Telegram, Instagram, Discord), optionally including chatbot functionality with LLM integration"},
-	{icon: PA, text: "Create custom data collection software (scraper, parser, web crawler)"},
-	{icon: RE, text: "Conduct hypothesis testing, including A/B testing"},
-	{icon: DA, text: "Create a dashboard to display metrics based on data"},
-	{icon: TW, text: "Write SEO-optimized technical content related to Data Science: articles, tutorials, product documentations or blog posts"},
-	{icon: PA, text: "Automate workflows using scripting (Python, Shell)"},
-	{icon: WD, text: "Adapt and deploy a Python app to Streamlit"},
-	{icon: MI, text: "Help with homework, coursework or thesis: coding projects (Python, SQL, JavaScript, TypeScript), Linux, probability theory & statistics, research"}
+export const services = [{},
+	{id: 1, icon: PA, title: "Modular Python software",
+		text: "Build or debug modular Python software (complex console apps, desktop GUIs, enterprise tools)"},
+	{id: 2, icon: DC, title: "Web scraping", 
+		text: "Collect any kind of data using web scraping techniques"},
+	{id: 3, icon: DA, title: "Data processing", 
+		text: "Perform data processing (cleaning, transforming, annotation/labeling, reduction, validation)"}, 
+	{id: 4, icon: DV, title: "Data visualization", 
+		text: "Create a clear and eye-catching visualization for any kind of data"}, 
+	{id: 5, icon: DA, title: "Exploratory data analysis", 
+		text: "Conduct exploratory data analysis"},
+	{id: 6, icon: ML, title: "Fine-tuning",
+		text: "Fine-tune a deep learning model"},
+	{id: 7, icon: WD, title: "Frontend", 
+		text: "Build a frontend for a web app (React)"}, 
+	{id: 8, icon: WD, title: "Static websites", 
+		text: "Design and build a static website, such as a blog, portfolio or landing page (Next.js/Gatsby/Jekyll, CMS)"}, 
+	{id: 9, icon: PA, title: "Bots", 
+		text: "Create a bot for your website or popular platforms (Telegram, Instagram, Discord), optionally including chatbot functionality with LLM integration"}, 
+	{id: 10, icon: PA, title: "Data collection software", 
+		text: "Create custom data collection software (scraper, parser, web crawler)"}, 
+	{id: 11, icon: RE, title: "Hypothesis testing",
+		text: "Conduct hypothesis testing, including A/B testing"}, 
+	{id: 12, icon: DA, title: "Dashboards", 
+		text: "Create a dashboard to display metrics based on data"},
+	{id: 13, icon: TW, title: "Technical writing",
+		text: "Write SEO-optimized technical content related to Data Science: articles, tutorials, product documentations or blog posts"},
+	{id: 14, icon: PA, title: "Scripting", 
+		text: "Automate workflows using scripting (Python, Shell)"}, 
+	{id: 15, icon: WD, title: "Streamlit apps", 
+		text: "Adapt and deploy a Python app to Streamlit"}, 
+	{id: 16, icon: MI, title: "Academic help",
+		text: "Help with homework, coursework or thesis: coding projects (Python, SQL, JavaScript, TypeScript), Linux, probability theory & statistics, research"} 
 ]
 
 /* hidden services and drafts

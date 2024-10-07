@@ -1,11 +1,11 @@
 import GoBackButton from "../../components/GoBackButton"
-import services from "../itemData.js"
+import { services } from "../itemData.js"
 
 <GoBackButton />
 
 <div class="servicesBodyNested">
 ###### 1
-<h2>Job 1 title</h2>
+<h2>{services[1].title} <img class="servicesPageIcon" src={services[1].icon} alt="service_icon"/></h2> 
 Description
 ### What you get
 Text
@@ -15,13 +15,11 @@ Text
 Methodology, step-by-step workflow
 ### Examples
 Text
-</div>
-
-<br/>
+</div><br/>
 
 <div class="servicesBodyNested">
 ###### 2
-<h2>Job 2 title</h2>
+<h2>{services[2].title} <img class="servicesPageIcon" src={services[2].icon} alt="service_icon"/></h2> 
 Description
 ### What you get
 Text
@@ -31,20 +29,4 @@ Text
 Methodology, step-by-step workflow
 ### Examples
 Text
-</div>
-
-<br/>
-
-<div class="servicesBodyNested">
-###### 3
-<h2>Job 3 title</h2>
-Description
-### What you get
-Text
-### What I need
-Text
-### What I do 
-Methodology, step-by-step workflow
-### Examples
-Text
-</div>
+</div><br/>
