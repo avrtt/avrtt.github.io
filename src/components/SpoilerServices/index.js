@@ -58,7 +58,7 @@ const Spoiler = ({ title, services = [], spoilerExtraDesc }) => {
                   <span>{block.text}</span>
                   &nbsp;&thinsp;
                   <a href={"/freelance/services/#" + index}>
-                    <img src={Arrow} alt="" id="anchorArrow"/>
+                    <img title="Go to detailed description" src={Arrow} alt="" id="anchorArrow"/>
                   </a>
                 </p>
               )
