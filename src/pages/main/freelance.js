@@ -3,23 +3,13 @@ import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { AnimationOnScroll } from 'react-animation-on-scroll';
 import M from '../../components/Markdown';
-import { freelanceExperienceString, projectsCount, categories, currentZoneUTC, freelanceWorkHourStart, freelanceWorkHourEnd, freelanceLastUpdated } from '../itemData';
+import { freelanceExperienceString, projectsCount, categories, currentZoneUTC, freelanceWorkHourStart, freelanceWorkHourEnd, freelanceLastUpdated, services } from '../itemData';
 import Stack from'../../components/Stack';
 import FreelanceCategory from'../../components/FreelanceCategory';
 import Courses from'../../components/Courses';
 import info from "../../images/goals/info.svg";
 import SpoilerServices from '../../components/SpoilerServices';
 import { Link } from "gatsby"
-import ML from "../../images/freelance/machineLearningIcon.svg";
-import DA from "../../images/freelance/dataAnalysisIcon.svg";
-import DV from "../../images/freelance/dataVisualizationIcon.svg";
-import DC from "../../images/freelance/dataCollectionIcon.svg";
-import PA from "../../images/freelance/pythonAppsIcon.svg";
-import WD from "../../images/freelance/webDevelopmentIcon.svg";
-import RE from "../../images/freelance/researchIcon.svg";
-import TW from "../../images/freelance/technicalWritingIcon.svg";
-import PP from "../../images/freelance/postProductionIcon.svg";
-import MI from "../../images/freelance/miscIcon.svg";
 
 const TITLE = 'Freelance - avrtt.blog'
 
@@ -82,103 +72,9 @@ const Freelance = () => {
 		<div class="freelanceBody">
 	
 			<p>I'm a full-time freelancer primarily focused on Data Science, offering both regular and one-off services, including project-based work, system maintenance, consulting and teaching. Being in the field since 2020, I have more than <strong>{freelanceExperienceString} of freelancing</strong> experience in total, with more than <strong>{projectsCount} completed projects</strong> (listed below), as well as other various successful deals. My main areas of expertise are machine learning, data analysis, data collection, statistics, visualization and Python programming, but I'm also competent in web development, video/music post-production and prompt engineering.</p>
-			<SpoilerServices
-				title={"Compact list: services I offer"} 
-			
-				// currently preferable services
-				services={[ 
-					{icon: PA, text: "Build or debug modular Python software (complex console apps, desktop GUIs, enterprise tools)"},
-					{icon: DC, text: "Collect any kind of data using web scraping techniques"},
-					{icon: DA, text: "Perform data processing (cleaning, transforming, annotation/labeling, reduction, validation)"},
-					{icon: DV, text: "Create a clear and eye-catching visualization for any kind of data"},
-					{icon: DA, text: "Conduct exploratory data analysis"},
-					{icon: ML, text: "Fine-tune a deep learning model"},
-					{icon: WD, text: "Build a frontend for a web app (React)"},
-					{icon: WD, text: "Design and build a static website, such as a blog, portfolio or landing page (Next.js/Gatsby/Jekyll, CMS)"},
-					{icon: PA, text: "Create a bot for your website or popular platforms (Telegram, Instagram, Discord), optionally including chatbot functionality with LLM integration"},
-					{icon: PA, text: "Create custom data collection software (scraper, parser, web crawler)"},
-					{icon: RE, text: "Conduct hypothesis testing, including A/B testing"},
-					{icon: DA, text: "Create a dashboard to display metrics based on data"},
-					{icon: TW, text: "Write SEO-optimized technical content related to Data Science: articles, tutorials, product documentations or blog posts"},
-					{icon: PA, text: "Automate workflows using scripting (Python, Shell)"},
-					{icon: WD, text: "Adapt and deploy a Python app to Streamlit"},
-					{icon: MI, text: "Help with homework, coursework or thesis: coding projects (Python, SQL, JavaScript, TypeScript), Linux, probability theory & statistics, research"}
-				]}
-
-				/* hidden services and drafts
-				- LLM integration: GPT4 and GeminiAI models, ... (LangChain) 
-				- Design an end-to-end solution (visualizations, ML models, AI automation, web applications, etc.)
-				- Создание модели детекции объектов (TensorFLow/PyTorch)
-				- Создание рекомендательной системы (collaborative filtering or content-based filtering)
-				- Churn prediction
-				- Создание модели для подсказок
-				- Векторизация текстов
-				- Cloud solutions for analytics and automation (AWS, GCP)
-				- Ранжирование
-				- Business consulting: ... (misc icon)
-				- Векторный поиск (ElasticSearch)
-				- Time series analysis and forecasting (Statsmodels, Prophet, ARIMA, SARIMA, LSTM); ARIMA Modeling, Seasonal Decomposition, Exponential Smoothing, State Space Models, Cointegration, Vector Autoregression (VAR), Autoregressive Moving Average (ARMA), Unit Root Testing, Granger Causality, Kalman Filter, Forecasting Accuracy, High-Frequency Data Analysis, Long Memory Processes, Frequency Domain Analysis
-				- Econometrics: Panel Data Analysis, Cross-Sectional Analysis, Generalized Method of Moments (GMM), Instrumental Variables (IV), Structural Equation Modeling (SEM), Fixed Effects Model, Random Effects Model, Difference-in-Differences (DiD), Bayesian Econometrics, Regression Analysis, Maximum Likelihood Estimation (MLE), Quantile Regression, Endogeneity, Causal Inference
-				- Feature engineering
-				- Data wrangling
-				- Feature selection
-				- Ensemble methods
-				- Statistical analysis, statistical model design
-				- Advanced mathematical and optimization modeling
-				- Topic research / AI research
-				- Complex deep learning models forp computer vision
-				- Image/video processing
-				- Computer vision tasks: segmentation, detection, recognition, feature matching, image restoration, OCR, etc. (OpenCV)
-				- NLP tasks: ... (SpaCy, NLTK, BERT, GPT models, text preprocessing, tokenization, text classification, named entity recognition, text similarity, QA, search engines)
-				- Build QA model
-				- Sentiment analysis: social media analysis, customer feedback analysis  
-				- Speech-to-Text, voice assistant
-				- Text-to-Image, Image-to-Text
-				- Data annotation
-				- Build a generative AI model (...)
-				- Data engineering, ETL pipelines
-				- AWS cloud development for scalable solutions
-				- SQL and noSQL queries, Stored Procedures, Functions, CLR
-				- Testing design and implementation
-				- Database administration (Maintain and administer your SQL instance, Design, document, and implement architectures and schemas, Migrate your data, Optimize your queries, Fix problematic queries and performance problems, Write stored procedures and functions, Write complex and simple queries, Integrate and develop custom code in SQL Server as a CLR)
-				- Prompt engineering
-				- Монтаж видео
-				- Dockerize apps & microservices
-				- Topic modeling
-				- Google Sheets / Excel, Spreadsheet Modeling
-				- API development and deployment
-				- SEO optimization, entity matching, SEO analysis
-				- UX/UI
-				- AI-driven design
-				- Website design 
-				- Logo design
-				- Map data analysis and visualization (OpenStreetMap, Leaflet) 
-				- Построение модели регрессии, регрессионный анализ
-				- Market analysis, эконометрика, trading, technical analysis, risk analysis, marketing metrics
-				- Applications of ML in economics, e-commerce and stock market, customer lifetime value
-				- Построение сложной модели классификации (image/audio/text/table data); customer loyalty prediction, ...
-				- Построение сложной модели кластеризации (image/audio/text/table data); customer segmentation, ...
-				- Построение сложной модели поиска аномалий (image/audio/text/table data); fraud detection, ...
-				- Построение сложных ML-пайплайнов
-				- Data mining problems
-				- Big data processing, building ML models for large collections of data (PySpark)
-				- OSINT
-				- BI, business analytics
-				- Database management (SQL)
-				- MLOps
-				- Python web apps, Python backend (Flask, Django, etc.)
-				- ERP dashboards
-				- Click-through rate prediction model for ads
-				- Ad-hoc analysis, business reporting
-				- Build a data analytics web-based platform for uploading datasets to generate automated visualizations and insights
-				- Build a lead scoring system, credit risk scoring
-				- Data augmentation
-				- E-commerce pricing optimization model, dynamic pricing
-				- Build a RAG model
-				- Email automation
-				- PDF extraction (OCR)
-				*/
-
+			<SpoilerServices 
+				title={"Compact list: services I offer"}
+				services={services}
 				spoilerExtraDesc={"This list includes services that I *prefer* to do right now. It's not exhaustive, and we may have a deal on things that goes beyond it."}
 			/>
 			<M text="If you need examples and more details, you can go straight to the [page of services](/freelance/services), which describes each type of job in the list above, step-by-step."/>
