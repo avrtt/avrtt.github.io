@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'gatsby';
-import Arrow from '../../images/freelance/services/arrow.svg';
+import Arrow from '../../images/freelance/services/arrow1.svg';
 
 const GoBackButton = () => {
   const [scrolled, setScrolled] = useState(false);

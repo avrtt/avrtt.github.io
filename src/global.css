@@ -2642,6 +2642,17 @@ h6 {
   vertical-align: -14%;
 }
 
+#anchorArrow {
+  opacity: 0.46 !important;
+  transition: 130ms ease-in;
+}
+
+#anchorArrow:hover {
+  opacity: 0.7 !important;
+  transition: 70ms ease-in;
+  transform: scale(1.1);
+}
+
 #spoilerBlockServices {
   margin-top: 12px;
   margin-bottom: 12px;

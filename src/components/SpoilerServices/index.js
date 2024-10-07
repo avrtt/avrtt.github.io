@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import M from "../Markdown";
+import Arrow from "../../images/freelance/services/arrow2.svg"
 
 const Spoiler = ({ title, services = [], spoilerExtraDesc }) => {
   
@@ -55,6 +56,10 @@ const Spoiler = ({ title, services = [], spoilerExtraDesc }) => {
                     &nbsp;&nbsp;
                   </span>
                   <span>{block.text}</span>
+                  &nbsp;&thinsp;
+                  <a href={"/freelance/services/#" + index}>
+                    <img src={Arrow} alt="" id="anchorArrow"/>
+                  </a>
                 </p>
               )
           )}

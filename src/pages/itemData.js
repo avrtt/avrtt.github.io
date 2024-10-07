@@ -66,37 +66,37 @@ export const footerYear = "2024"
 
 // currently preferable services
 export const services = [{},
-	{id: 1, icon: PA, title: "Modular Python software",
+	{icon: PA, title: "Modular Python software", // 1
 		text: "Build or debug modular Python software (complex console apps, desktop GUIs, enterprise tools)"},
-	{id: 2, icon: DC, title: "Web scraping", 
+	{icon: DC, title: "Web scraping", // 2
 		text: "Collect any kind of data using web scraping techniques"},
-	{id: 3, icon: DA, title: "Data processing", 
+	{icon: DA, title: "Data processing", // 3
 		text: "Perform data processing (cleaning, transforming, annotation/labeling, reduction, validation)"}, 
-	{id: 4, icon: DV, title: "Data visualization", 
+	{icon: DV, title: "Data visualization", // 4
 		text: "Create a clear and eye-catching visualization for any kind of data"}, 
-	{id: 5, icon: DA, title: "Exploratory data analysis", 
+	{icon: DA, title: "Exploratory data analysis", // 5
 		text: "Conduct exploratory data analysis"},
-	{id: 6, icon: ML, title: "Fine-tuning",
+	{icon: ML, title: "Fine-tuning", // 6
 		text: "Fine-tune a deep learning model"},
-	{id: 7, icon: WD, title: "Frontend", 
+	{icon: WD, title: "Frontend", // 7
 		text: "Build a frontend for a web app (React)"}, 
-	{id: 8, icon: WD, title: "Static websites", 
+	{icon: WD, title: "Static websites", // 8
 		text: "Design and build a static website, such as a blog, portfolio or landing page (Next.js/Gatsby/Jekyll, CMS)"}, 
-	{id: 9, icon: PA, title: "Bots", 
+	{icon: PA, title: "Bots", // 9
 		text: "Create a bot for your website or popular platforms (Telegram, Instagram, Discord), optionally including chatbot functionality with LLM integration"}, 
-	{id: 10, icon: PA, title: "Data collection software", 
+	{icon: PA, title: "Data collection software", // 10
 		text: "Create custom data collection software (scraper, parser, web crawler)"}, 
-	{id: 11, icon: RE, title: "Hypothesis testing",
+	{icon: RE, title: "Hypothesis testing", // 11
 		text: "Conduct hypothesis testing, including A/B testing"}, 
-	{id: 12, icon: DA, title: "Dashboards", 
+	{icon: DA, title: "Dashboards", // 12
 		text: "Create a dashboard to display metrics based on data"},
-	{id: 13, icon: TW, title: "Technical writing",
+	{icon: TW, title: "Technical writing", // 13
 		text: "Write SEO-optimized technical content related to Data Science: articles, tutorials, product documentations or blog posts"},
-	{id: 14, icon: PA, title: "Scripting", 
+	{icon: PA, title: "Scripting", // 14
 		text: "Automate workflows using scripting (Python, Shell)"}, 
-	{id: 15, icon: WD, title: "Streamlit apps", 
+	{icon: WD, title: "Streamlit apps", // 15
 		text: "Adapt and deploy a Python app to Streamlit"}, 
-	{id: 16, icon: MI, title: "Academic help",
+	{icon: MI, title: "Academic help", // 16
 		text: "Help with homework, coursework or thesis: coding projects (Python, SQL, JavaScript, TypeScript), Linux, probability theory & statistics, research"} 
 ]
 
