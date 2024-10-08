@@ -61,6 +61,33 @@ const textImg = {
 }
 
 const Goals = () => {
+	
+    const [isOpaque, setIsOpaque] = useState(false)
+    const [hideChecked, setHideChecked] = useState(false)
+    const [hideUnchecked, setHideUnchecked] = useState(false)
+
+    const toggleOpacity = () => {
+        setIsOpaque(prevState => !prevState)
+    }
+
+    const removeChecked = () => {
+        setHideChecked(prevState => !prevState)
+    }
+
+    const removeUnchecked = () => {
+        setHideUnchecked(prevState => !prevState)
+    }
+
+    const hideCheckedButtonStyle = {
+        'opacity': hideUnchecked ? 0.3 : 1,
+        'pointer-events': hideUnchecked ? 'none' : '',
+    }
+
+    const hideUncheckedButtonStyle = {
+        'opacity': hideChecked ? 0.3 : 1,
+        'pointer-events': hideChecked ? 'none' : '',
+    }
+
   return (
     <motion.div
 		initial={{opacity: 0 }}
@@ -75,6 +102,15 @@ const Goals = () => {
         <div class='goalsBody'>
 
             <div class="goalsBodyNested">
+                <div class="goalsTextContent">
+                    
+                    <button onClick={toggleOpacity}>{isOpaque ? 'Hide tags' : 'Show tags'}</button>
+                    <button style={hideUncheckedButtonStyle} onClick={removeUnchecked}>{hideUnchecked ? 'Show unachieved goals' : 'Hide unachieved goals' + ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'u' ? ++acc : acc, 0) + ')'}</button>
+                    <button style={hideCheckedButtonStyle} onClick={removeChecked}>{hideChecked ? 'Show achieved goals' : 'Hide achieved goals' + ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'c' ? ++acc : acc, 0) + ')'}</button>
+                    
+                    <p></p>
+                </div>
+                <p style={placeholderTop}> </p>
 
                 <GoalCategory array={goals1} 
                     name='EXPERIENCES: GENERAL' 
