@@ -213,6 +213,30 @@ const Goals = () => {
                     </p>
                 )}
             </div>
+            <div className="noselect" style={tagStatsWrapper}>
+                {goalsTagsCategories.map(tag => {
+                    const totalGoals = goalsConcat.reduce((acc, cur) => {
+                        const isTagged = [cur.tag1, cur.tag2, cur.tag3, cur.tag4, cur.tag5].includes(String(tag.emoji))
+                        return isTagged ? acc + 1 : acc
+                    }, 0)
+                    const completedGoals = goalsConcat.reduce((acc, cur) => {
+                        const isTaggedAndCompleted = [cur.tag1, cur.tag2, cur.tag3, cur.tag4, cur.tag5].includes(String(tag.emoji)) && cur.status === 'c'
+                        return isTaggedAndCompleted ? acc + 1 : acc
+                    }, 0)
+                    return { ...tag, totalGoals, completedGoals }
+                }).sort((a, b) => b.totalGoals - a.totalGoals).map(tag =>
+                    <p className={tag.name} style={tagStat} key={tag.name}>
+                        <span className="select">{tag.emoji}</span>
+                        &nbsp;
+                        <span>{tag.name}</span>
+                        &nbsp;
+                        <span className={tag.name} style={taggedGoalsNumStyle}>
+                            {tag.completedGoals}/{tag.totalGoals}
+                        </span>
+                    </p>
+                )}
+            </div>
+
         </div> 
         <div class='chatWrapper'><TelegramComments websiteKey={'2JA7Wo3q'} customColor='000000' commentsNumber={5} pageId='goals' showDislikes={true} /></div>
     </motion.div>
