@@ -236,7 +236,13 @@ const Goals = () => {
                     </p>
                 )}
             </div>
-
+            <div class="tagStatsWrapper noselect">
+                <span class="tagStats">
+                    {goalsConcat.reduce((acc, cur) => cur.status === 'c' ? ++acc : acc, 0)}&nbsp;
+                    <span style={spanStyle}>/ {goalsConcat.reduce((acc, cur) => cur.status === 'c' ? ++acc : acc, 0) 
+                        + goalsConcat.reduce((acc, cur) => cur.status === 'u' ? ++acc : acc, 0)}</span>
+                </span>
+            </div>
         </div> 
         <div class='chatWrapper'><TelegramComments websiteKey={'2JA7Wo3q'} customColor='000000' commentsNumber={5} pageId='goals' showDislikes={true} /></div>
     </motion.div>
