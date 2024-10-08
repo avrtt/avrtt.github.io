@@ -61,33 +61,6 @@ const textImg = {
 }
 
 const Goals = () => {
-	
-    const [isOpaque, setIsOpaque] = useState(false)
-    const [hideChecked, setHideChecked] = useState(false)
-    const [hideUnchecked, setHideUnchecked] = useState(false)
-
-    const toggleOpacity = () => {
-        setIsOpaque(prevState => !prevState)
-    }
-
-    const removeChecked = () => {
-        setHideChecked(prevState => !prevState)
-    }
-
-    const removeUnchecked = () => {
-        setHideUnchecked(prevState => !prevState)
-    }
-
-    const hideCheckedButtonStyle = {
-        'opacity': hideUnchecked ? 0.3 : 1,
-        'pointer-events': hideUnchecked ? 'none' : '',
-    }
-
-    const hideUncheckedButtonStyle = {
-        'opacity': hideChecked ? 0.3 : 1,
-        'pointer-events': hideChecked ? 'none' : '',
-    }
-
   return (
     <motion.div
 		initial={{opacity: 0 }}
@@ -100,12 +73,15 @@ const Goals = () => {
         </Helmet>
 
         <div class='goalsBody'>
-            <br/>
-            <div class="yellowNotice">
-                <M text="## 🚧 HEADS UP!"/>
-                <M text="This page isn't finished or has been hidden for redesign. Content will appear soon."/>
-            </div>
+
+            <div class="goalsBodyNested">
+
+            
+                
+            </div> 
+            <div class="lastUpdatedGoals">UPDATED ON {goalsLastUpdated}</div>
         </div> 
+        <div class='chatWrapper'><TelegramComments websiteKey={'2JA7Wo3q'} customColor='000000' commentsNumber={5} pageId='goals' showDislikes={true} /></div>
     </motion.div>
   );
 };
