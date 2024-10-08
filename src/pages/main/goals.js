@@ -194,6 +194,25 @@ const Goals = () => {
                 
             </div> 
             <div class="lastUpdatedGoals">UPDATED ON {goalsLastUpdated}</div>
+            <br/><br/>
+            <div class="noselect" style={tagStatsWrapper}>
+                {goalsTagsSpecific && goalsTagsSpecific.map(tag =>                  
+                    <p class={tag.name} style={tagStat}>
+                        <span class="select">{tag.emoji}</span>
+                        &nbsp;
+                        <span>{tag.name}</span>
+                        &nbsp;
+                        <span class={tag.name} style={taggedGoalsNumStyle}>{
+                            goalsConcat.reduce((acc, cur) => cur.difftag === String(tag.emoji) && cur.status === 'c' ? ++acc : acc, 0) +
+                            goalsConcat.reduce((acc, cur) => cur.safetytag === String(tag.emoji) && cur.status === 'c' ? ++acc : acc, 0)} 
+                            <span>/{
+                                goalsConcat.reduce((acc, cur) => cur.difftag === String(tag.emoji) ? ++acc : acc, 0) +
+                                goalsConcat.reduce((acc, cur) => cur.safetytag === String(tag.emoji) ? ++acc : acc, 0)}
+                            </span>
+                        </span>
+                    </p>
+                )}
+            </div>
         </div> 
         <div class='chatWrapper'><TelegramComments websiteKey={'2JA7Wo3q'} customColor='000000' commentsNumber={5} pageId='goals' showDislikes={true} /></div>
     </motion.div>
