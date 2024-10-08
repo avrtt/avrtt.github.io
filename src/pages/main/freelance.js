@@ -144,6 +144,7 @@ const Freelance = () => {
 			Какие заказы я не беру совсем (небольшие заказы, большие требования и неясное ТЗ)
 			Скидки постоянным клиентам
 			Text conversation или для более сложных проектов или по желанию клиента 1:1 video consultation calls to brainstorm an AI/ML-based business idea and develop a technical project scope
+			Также см. описание конкретной услуги на странице services (там методология, описание по шагам и т.д.)
 			"/>
 			</AnimationOnScroll>
 
