@@ -76,7 +76,85 @@ const Goals = () => {
 
             <div class="goalsBodyNested">
 
-            
+                <GoalCategory array={goals1} 
+                    name='EXPERIENCES: GENERAL' 
+                    desc='ACTIVITIES, EVENTS, FUN, ETC.'
+                    isOpaque={isOpaque} hideChecked={hideChecked} hideUnchecked={hideUnchecked}/>
+
+                <GoalCategory array={goals2} 
+                    name='EXPERIENCES: LOCATION SPECIFIC' 
+                    desc='ACTIVITIES, EVENTS, FUN, ETC. IN A SPECIFIC PLACE'
+                    isOpaque={isOpaque} hideChecked={hideChecked} hideUnchecked={hideUnchecked}/>
+
+                <GoalCategory array={goals3} 
+                    name='EXPLORING' 
+                    desc='PLACES, TRAVEL CHALLENGES, TRANSPORTATION, ETC.'
+                    isOpaque={isOpaque} hideChecked={hideChecked} hideUnchecked={hideUnchecked}/>
+
+                <GoalCategory array={goals4} 
+                    name='OBSERVING' 
+                    desc='NATURE, PHENOMENA, THINGS, LIVING BEINGS, ETC.'
+                    isOpaque={isOpaque} hideChecked={hideChecked} hideUnchecked={hideUnchecked}/>
+
+                <GoalCategory array={goals5} 
+                    name='LIFESTYLE' 
+                    desc='NOMADISM, MINIMALISM, ASCETICISM, FREEDOM, ETC.'
+                    isOpaque={isOpaque} hideChecked={hideChecked} hideUnchecked={hideUnchecked}/>
+
+                <GoalCategory array={goals6} 
+                    name='LEARNING' 
+                    desc='KNOWLEDGE, SKILLS, EDUCATION'
+                    isOpaque={isOpaque} hideChecked={hideChecked} hideUnchecked={hideUnchecked}/>
+
+                <GoalCategory array={goals7} 
+                    name='CREATIVITY' 
+                    desc='BLOG, YOUTUBE, MUSIC, DIY, ETC.'
+                    isOpaque={isOpaque} hideChecked={hideChecked} hideUnchecked={hideUnchecked}/>
+
+                <GoalCategory array={goals8} 
+                    name='SOCIAL' 
+                    desc='APPEARANCE, ACQUAINTANCES, ENGAGEMENT, PUBLICITY, ETC.'
+                    isOpaque={isOpaque} hideChecked={hideChecked} hideUnchecked={hideUnchecked}/>
+
+                <GoalCategory array={goals9} 
+                    name='PRODUCTIVITY' 
+                    desc='SELF-MANAGEMENT, HABITS, WORK OPTIMIZATION, ETC.'
+                    isOpaque={isOpaque} hideChecked={hideChecked} hideUnchecked={hideUnchecked}/>
+
+                <GoalCategory array={goals10} 
+                    name='CAREER & FINANCE' 
+                    desc='TECH, WORK PROJECTS, INVESTMENTS, FINANCIAL INDEPENDENCE'
+                    isOpaque={isOpaque} hideChecked={hideChecked} hideUnchecked={hideUnchecked}/>
+
+                <GoalCategory array={goals11} 
+                    name='BODY' 
+                    desc='HEALTH, FITNESS, PHYSICAL CHALLENGES'
+                    isOpaque={isOpaque} hideChecked={hideChecked} hideUnchecked={hideUnchecked}/>
+
+                <GoalCategory array={goals12} 
+                    name='GOOD DEEDS' 
+                    desc='HELPING, VOLUNTEERING, CHARITY, ETC.'
+                    isOpaque={isOpaque} hideChecked={hideChecked} hideUnchecked={hideUnchecked}/>
+
+                <GoalCategory array={goals13} 
+                    name='FOOD' 
+                    desc='EAT, DRINK, COOK'
+                    isOpaque={isOpaque} hideChecked={hideChecked} hideUnchecked={hideUnchecked}/>
+
+                <GoalCategory array={goals14} 
+                    name='SELF' 
+                    desc='PERSONALITY, SPIRITUALITY, INNER PEACE'
+                    isOpaque={isOpaque} hideChecked={hideChecked} hideUnchecked={hideUnchecked}/>
+
+                <GoalCategory array={goals15} 
+                    name='PROPERTY'
+                    desc='POSSESSIONS, REAL ESTATE, HOME DECORATION, ETC.'
+                    isOpaque={isOpaque} hideChecked={hideChecked} hideUnchecked={hideUnchecked}/>
+
+                <GoalCategory array={goals16} 
+                    name='MISC' 
+                    desc='UNSORTED, EXTRAORDINARY'
+                    isOpaque={isOpaque} hideChecked={hideChecked} hideUnchecked={hideUnchecked}/>
                 
             </div> 
             <div class="lastUpdatedGoals">UPDATED ON {goalsLastUpdated}</div>
