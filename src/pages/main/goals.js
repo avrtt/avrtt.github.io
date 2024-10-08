@@ -65,7 +65,7 @@ const Goals = () => {
         query {
           allGoalsYaml {
             nodes {
-              id
+              order
               title
               description
               goals {
@@ -90,7 +90,7 @@ const Goals = () => {
       `
     )
     
-    const sortedCategories = data.allGoalsYaml.nodes.sort((a, b) => a.id - b.id);
+    const sortedCategories = data.allGoalsYaml.nodes.sort((a, b) => a.order - b.order);
     const allGoals = data.allGoalsYaml.nodes.map(node => node.goals);
     const goalsConcat = [].concat(...allGoals);
 
