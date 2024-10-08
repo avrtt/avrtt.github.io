@@ -53,6 +53,7 @@
     "gatsby-remark-prismjs": "^7.13.2",
     "gatsby-source-filesystem": "^5.13.1",
     "gatsby-transformer-sharp": "^5.13.1",
+    "gatsby-transformer-yaml": "^5.13.1",
     "react": "^18.3.1",
     "react-animation-on-scroll": "^5.1.0",
     "react-jvectormap": "^0.0.16",

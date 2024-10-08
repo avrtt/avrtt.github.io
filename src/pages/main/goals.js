@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { Helmet } from 'react-helmet'
 import { motion } from 'framer-motion';
 import { TelegramComments } from 'react-telegram-comments';
-import { goalsLastUpdated } from '../itemData';
+import { graphql, useStaticQuery } from 'gatsby';
+import { goalsLastUpdated, goalsTags } from "../itemData"
 import M from '../../components/Markdown';
 import GoalCategory from '../../components/GoalCategory';
 import checkbox from "../../images/goals/checked.svg";
@@ -10,8 +11,6 @@ import refLink from "../../images/goals/refLink.svg";
 import resultLink from "../../images/goals/resultLink.svg";
 import info from "../../images/goals/info.svg";
 
-import { goalsTags, goals1, goals2, goals3, goals4, goals5, goals6, goals7, goals8, goals9, goals10, goals11, goals12, goals13, goals14, goals15, goals16 } from "../itemData"
-const goalsConcat = [].concat(goals1, goals2, goals3, goals4, goals5, goals6, goals7, goals8, goals9, goals10, goals11, goals12, goals13, goals14, goals15, goals16)
 const goalsTagsSpecific = goalsTags.filter((x) => x.name === 'COMMON' || x.name === 'UNCOMMON' || x.name === 'RARE' || x.name === 'LEGENDARY' || x.name === 'SAFE' || x.name === 'UNSAFE' || x.name === 'DANGEROUS');
 const goalsTagsCategories = goalsTags.filter((x) => !goalsTagsSpecific.includes(x));
 
@@ -61,7 +60,38 @@ const textImg = {
 }
 
 const Goals = () => {
-	
+
+    const data = useStaticQuery(graphql`
+        query {
+          allGoalsYaml {
+            nodes {
+              title
+              description
+              goals {
+                text
+                status
+                deadline
+                dateCompleted
+                difftag
+                safetytag
+                tag1
+                tag2
+                tag3
+                tag4
+                tag5
+                info
+                refLink
+                resultLink
+              }
+            }
+          }
+        }
+      `
+    )
+    
+    const allGoals = data.allGoalsYaml.nodes.map(node => node.goals);
+    const goalsConcat = [].concat(...allGoals);
+
     const [isOpaque, setIsOpaque] = useState(false)
     const [hideChecked, setHideChecked] = useState(false)
     const [hideUnchecked, setHideUnchecked] = useState(false)
@@ -123,92 +153,21 @@ const Goals = () => {
                     <p></p>
                 </div>
                 <p style={placeholderTop}> </p>
-
-                <GoalCategory array={goals1} 
-                    name='EXPERIENCES: GENERAL' 
-                    desc='ACTIVITIES, EVENTS, FUN, ETC.'
-                    isOpaque={isOpaque} hideChecked={hideChecked} hideUnchecked={hideUnchecked}/>
-
-                <GoalCategory array={goals2} 
-                    name='EXPERIENCES: LOCATION SPECIFIC' 
-                    desc='ACTIVITIES, EVENTS, FUN, ETC. IN A SPECIFIC PLACE'
-                    isOpaque={isOpaque} hideChecked={hideChecked} hideUnchecked={hideUnchecked}/>
-
-                <GoalCategory array={goals3} 
-                    name='EXPLORING' 
-                    desc='PLACES, TRAVEL CHALLENGES, TRANSPORTATION, ETC.'
-                    isOpaque={isOpaque} hideChecked={hideChecked} hideUnchecked={hideUnchecked}/>
-
-                <GoalCategory array={goals4} 
-                    name='OBSERVING' 
-                    desc='NATURE, PHENOMENA, THINGS, LIVING BEINGS, ETC.'
-                    isOpaque={isOpaque} hideChecked={hideChecked} hideUnchecked={hideUnchecked}/>
-
-                <GoalCategory array={goals5} 
-                    name='LIFESTYLE' 
-                    desc='NOMADISM, MINIMALISM, ASCETICISM, FREEDOM, ETC.'
-                    isOpaque={isOpaque} hideChecked={hideChecked} hideUnchecked={hideUnchecked}/>
-
-                <GoalCategory array={goals6} 
-                    name='LEARNING' 
-                    desc='KNOWLEDGE, SKILLS, EDUCATION'
-                    isOpaque={isOpaque} hideChecked={hideChecked} hideUnchecked={hideUnchecked}/>
-
-                <GoalCategory array={goals7} 
-                    name='CREATIVITY' 
-                    desc='BLOG, YOUTUBE, MUSIC, DIY, ETC.'
-                    isOpaque={isOpaque} hideChecked={hideChecked} hideUnchecked={hideUnchecked}/>
-
-                <GoalCategory array={goals8} 
-                    name='SOCIAL' 
-                    desc='APPEARANCE, ACQUAINTANCES, ENGAGEMENT, PUBLICITY, ETC.'
-                    isOpaque={isOpaque} hideChecked={hideChecked} hideUnchecked={hideUnchecked}/>
-
-                <GoalCategory array={goals9} 
-                    name='PRODUCTIVITY' 
-                    desc='SELF-MANAGEMENT, HABITS, WORK OPTIMIZATION, ETC.'
-                    isOpaque={isOpaque} hideChecked={hideChecked} hideUnchecked={hideUnchecked}/>
-
-                <GoalCategory array={goals10} 
-                    name='CAREER & FINANCE' 
-                    desc='TECH, WORK PROJECTS, INVESTMENTS, FINANCIAL INDEPENDENCE'
-                    isOpaque={isOpaque} hideChecked={hideChecked} hideUnchecked={hideUnchecked}/>
-
-                <GoalCategory array={goals11} 
-                    name='BODY' 
-                    desc='HEALTH, FITNESS, PHYSICAL CHALLENGES'
-                    isOpaque={isOpaque} hideChecked={hideChecked} hideUnchecked={hideUnchecked}/>
-
-                <GoalCategory array={goals12} 
-                    name='GOOD DEEDS' 
-                    desc='HELPING, VOLUNTEERING, CHARITY, ETC.'
-                    isOpaque={isOpaque} hideChecked={hideChecked} hideUnchecked={hideUnchecked}/>
-
-                <GoalCategory array={goals13} 
-                    name='FOOD' 
-                    desc='EAT, DRINK, COOK'
-                    isOpaque={isOpaque} hideChecked={hideChecked} hideUnchecked={hideUnchecked}/>
-
-                <GoalCategory array={goals14} 
-                    name='SELF' 
-                    desc='PERSONALITY, SPIRITUALITY, INNER PEACE'
-                    isOpaque={isOpaque} hideChecked={hideChecked} hideUnchecked={hideUnchecked}/>
-
-                <GoalCategory array={goals15} 
-                    name='PROPERTY'
-                    desc='POSSESSIONS, REAL ESTATE, HOME DECORATION, ETC.'
-                    isOpaque={isOpaque} hideChecked={hideChecked} hideUnchecked={hideUnchecked}/>
-
-                <GoalCategory array={goals16} 
-                    name='MISC' 
-                    desc='UNSORTED, EXTRAORDINARY'
-                    isOpaque={isOpaque} hideChecked={hideChecked} hideUnchecked={hideUnchecked}/>
-                
+                {data.allGoalsYaml.nodes.map((category) => (
+                    <GoalCategory
+                        array={category.goals}
+                        name={category.title} 
+                        desc={category.description} 
+                        isOpaque={isOpaque}
+                        hideChecked={hideChecked}
+                        hideUnchecked={hideUnchecked}
+                    />
+                ))}
                 <br/>
                 <div class="sectionBreak"><M text="----------"/></div>
                 <p style={placeholderBottom}> </p>
                 <div class="goalsTextContent">
-                    <M text="For me, keeping a list of goals has become one of the biggest drivers of a fulfilling life, and this website is a reminder of how to live in a more peaceful yet epic, creative lifestyle. Even if I won't live long enough to accomplish this - even half - I'm glad there's a place for my ideas somewhere, because they will live on after me and can inspire people to live the vibrant lives they want."/>
+                    <M text="For me, keeping a list of goals has become one of the biggest drivers of a fulfilling life, and this website is a reminder of how to live in a more peaceful yet epic and creative lifestyle. Even if I won't live long enough to accomplish this - even half - I'm glad there's a place for my ideas somewhere, because they will live on after me and can inspire people to live the vibrant life they want."/>
                     <M text="If you have any ideas for goals, I'd really appreciate it if you could share them in the comments section below."/>
                 </div>
             </div> 
@@ -267,5 +226,5 @@ const Goals = () => {
     </motion.div>
   );
 };
-  
+
 export default Goals;

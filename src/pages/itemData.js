@@ -434,54 +434,6 @@ export const goalsTags = [
     {emoji: '☠', name: 'DANGEROUS', desc: 'This achievement might be associated with extremely risky situations and life-threatening areas.'},
 ];
 
-export const goals1 = [ // EXPERIENCES: GENERAL
-	{text: 'Test', status: 'u', deadline: 'Deadline', dateCompleted: 'Date', difftag: '', safetytag: '', tag1: '', tag2: '', tag3: '', tag4: '', tag5: '', info: 'Test', refLink: 'test', resultLink: 'test'},
-];
-export const goals2 = [ // EXPERIENCES: LOCATION SPECIFIC
-    
-];
-export const goals3 = [ // EXPLORING
-    
-];
-export const goals4 = [ // OBSERVING
-    
-];
-export const goals5 = [ // LIFESTYLE
-    
-];
-export const goals6 = [ // LEARNING
-    
-];
-export const goals7 = [ // CREATIVITY
-    
-];
-export const goals8 = [ // SOCIAL
-    
-];
-export const goals9 = [ // PRODUCTIVITY
-    
-];
-export const goals10 = [ // CAREER & FINANCE
-    
-];
-export const goals11 = [ // BODY
-    
-];
-export const goals12 = [ // GOOD DEEDS
-    
-];
-export const goals13 = [ // FOOD
-    
-];
-export const goals14 = [ // SELF
-    
-];
-export const goals15 = [ // PROPERTY
-    
-];
-export const goals16 = [ // MISC
-    
-];
    
 export const placesArr = [
     {pos: '1', flag: '🇷🇺', name: 'Altai Republic', year: '2022', link: '/adventures/altai', info: "Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text"},

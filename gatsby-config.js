@@ -33,6 +33,14 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
+        name: `goals`,
+        path: `${__dirname}/src/goals/`,
+      },
+      __key: "goals"
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
         name: `adventures`,
         path: `${__dirname}/src/pages/posts/adventures/`,
       },
@@ -51,6 +59,7 @@ module.exports = {
         path: `${__dirname}/src/pages/posts/thoughts/`,
       },
     },
+    `gatsby-transformer-yaml`,
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-plugin-mdx`,
