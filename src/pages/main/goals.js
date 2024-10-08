@@ -103,7 +103,19 @@ const Goals = () => {
 
             <div class="goalsBodyNested">
                 <div class="goalsTextContent">
-                    
+                    <M text="Here you can find the public version of my bucket list, which is actually an organized collection of my life's achievements if it was a RPG (that's exactly how I feel this life). There are boring cliché goals, serious and challenging ones, but also just simple little things for folks who, like me, enjoy goofing around doing stupid and sometimes epic dangerous stuff, because that's what makes life exciting."/>
+                    <M text="Keeping a list of goals constantly reminds me of my passions and motivates me to push forward, and I hope it can give you some inspiration if you're feeling stuck in life."/>
+                    <M text="Before you dive deep, here's a little explanation of the notation:"/>
+                    <ul>
+                        <li><span class="tooltipGoals"><img id="checkboxStyle" style={textImg} src={info} class=".c" alt='checkbox'/><span class="tooltiptextGoals">Hooray, you've discovered mouse control!</span></span> will prompt additional information about a goal on hover </li>
+                        <li><img src={refLink} style={textImg} /> can be a reference, inspiration, or extra source to describe a goal</li>
+                        <li><img src={resultLink} style={textImg} /> is a link to the result or proof of accomplishing a goal</li>
+                        <li>The right side of the page shows two tags: difficulty/rareness (stars) and the level of risk</li>
+                        <li>A bunch of icons on the left side represent the category tags for navigation and the statistics at the bottom of the page</li>
+                        <li>The text after "–" reflects a rough deadline for a goal </li>
+                        <li>Hovering over the <span class="tooltipGoals"><img id="checkboxStyle" style={textImg} src={checkbox} class=".c" alt='checkbox'/><span class="tooltiptextGoals">Yep, just like that.</span></span> icons displays the dates of completion</li>
+                    </ul>
+
                     <button onClick={toggleOpacity}>{isOpaque ? 'Hide tags' : 'Show tags'}</button>
                     <button style={hideUncheckedButtonStyle} onClick={removeUnchecked}>{hideUnchecked ? 'Show unachieved goals' : 'Hide unachieved goals' + ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'u' ? ++acc : acc, 0) + ')'}</button>
                     <button style={hideCheckedButtonStyle} onClick={removeChecked}>{hideChecked ? 'Show achieved goals' : 'Hide achieved goals' + ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'c' ? ++acc : acc, 0) + ')'}</button>
@@ -192,6 +204,13 @@ const Goals = () => {
                     desc='UNSORTED, EXTRAORDINARY'
                     isOpaque={isOpaque} hideChecked={hideChecked} hideUnchecked={hideUnchecked}/>
                 
+                <br/>
+                <div class="sectionBreak"><M text="----------"/></div>
+                <p style={placeholderBottom}> </p>
+                <div class="goalsTextContent">
+                    <M text="For me, keeping a list of goals has become one of the biggest drivers of a fulfilling life, and this website is a reminder of how to live in a more peaceful yet epic, creative lifestyle. Even if I won't live long enough to accomplish this - even half - I'm glad there's a place for my ideas somewhere, because they will live on after me and can inspire people to live the vibrant lives they want."/>
+                    <M text="If you have any ideas for goals, I'd really appreciate it if you could share them in the comments section below."/>
+                </div>
             </div> 
             <div class="lastUpdatedGoals">UPDATED ON {goalsLastUpdated}</div>
             <br/><br/>
