@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { AnimationOnScroll } from 'react-animation-on-scroll';
 import M from '../../components/Markdown';
-import { cvLastUpdated } from '../itemData';
+import { cvLastUpdated } from '../../data/lastUpdated';
 import Stack from'../../components/Stack'
 import CvPosition from'../../components/CvPosition'
 import CvPositionFirst from'../../components/CvPositionFirst'

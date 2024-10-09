@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import M from '../../components/Markdown';
-import { projects, categories } from '../itemData';
+import { projects, categories } from '../../data/freelance/arrays';
 import FreelanceProject from'../../components/FreelanceProject'
 import DataAnalysisIcon from "../../images/freelance/dataAnalysisIcon.svg";
 import DataVisualizationIcon from "../../images/freelance/dataVisualizationIcon.svg";

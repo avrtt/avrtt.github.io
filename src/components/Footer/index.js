@@ -5,7 +5,7 @@ import Email from "./email.svg";
 import Map from "./map.svg";
 import YouTube from "./youtube.svg";
 import Facebook from "./facebook.svg";
-import {footerYear} from "../../pages/itemData";
+import {footerYear} from "../../data/lastUpdated";
 import {
   Box,
   Container,

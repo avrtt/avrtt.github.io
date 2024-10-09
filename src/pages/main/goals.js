@@ -3,7 +3,8 @@ import { Helmet } from 'react-helmet'
 import { motion } from 'framer-motion';
 import { TelegramComments } from 'react-telegram-comments';
 import { graphql, useStaticQuery } from 'gatsby';
-import { goalsLastUpdated, goalsTags } from "../itemData"
+import { goalsTags } from '../../data/goals/tags';
+import { goalsLastUpdated } from '../../data/lastUpdated';
 import M from '../../components/Markdown';
 import GoalCategory from '../../components/GoalCategory';
 import checkbox from "../../images/goals/checked.svg";

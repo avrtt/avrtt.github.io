@@ -1,6 +1,6 @@
 import React from "react";
 import { VectorMap } from "react-jvectormap";
-import { mapData } from '../../pages/itemData';
+import { mapData } from '../../data/exploration/temp';
 
 const handleClick = (e, countryCode) => {
   console.log(countryCode);

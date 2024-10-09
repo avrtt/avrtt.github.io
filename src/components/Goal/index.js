@@ -3,7 +3,7 @@ import checkbox from "../../images/goals/checked.svg";
 import refLink from "../../images/goals/refLink.svg";
 import resultLink from "../../images/goals/resultLink.svg";
 import info from "../../images/goals/info.svg";
-import { goalsTags } from "../../pages/itemData"
+import { goalsTags } from "../../data/goals/tags"
 
 const checkboxWrapper = {
     'vertical-align': 'middle',

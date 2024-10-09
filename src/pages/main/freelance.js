@@ -3,7 +3,9 @@ import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { AnimationOnScroll } from 'react-animation-on-scroll';
 import M from '../../components/Markdown';
-import { freelanceExperienceString, projectsCount, categories, currentZoneUTC, freelanceWorkHourStart, freelanceWorkHourEnd, freelanceLastUpdated, services } from '../itemData';
+import { categories, services, projectsCount } from '../../data/freelance/arrays';
+import { currentZoneUTC, freelanceWorkHourStart, freelanceWorkHourEnd } from '../../data/freelance/variables';
+import { freelanceLastUpdated } from '../../data/lastUpdated';
 import Stack from'../../components/Stack';
 import FreelanceCategory from'../../components/FreelanceCategory';
 import Courses from'../../components/Courses';
@@ -49,6 +51,26 @@ if (userDiff === 0) {
 } else {
 	tooltipText = "The hours are shown for your local time in the 24-hour notation, based on your browser data. My current time zone is UTC" + currentZoneUTC + "."
 }
+
+const freelanceStartDate = new Date(2024, 5, 1); // date of start freelancing full-time
+const freelancePastMonths = 15; // total months of occasional freelancing from January 2020 to June 2024
+
+function calculateWorkExperience(startDate, monthsToAdd) {
+    const currentDate = new Date();
+    let totalMonths = monthsToAdd;
+    let totalYears = currentDate.getFullYear() - startDate.getFullYear();
+    totalMonths += currentDate.getMonth() - startDate.getMonth();
+    if (totalMonths < 0) {
+        totalYears -= 1;
+        totalMonths += 12;
+    }
+    totalMonths += totalYears * 12; 
+    let roundedYears = Math.floor(totalMonths / 6) * 0.5;
+    return roundedYears;
+}
+
+// get rounded years of freelance experience (0, 0.5, 1, 1.5, so on + "years")
+const freelanceExperienceString = `${calculateWorkExperience(freelanceStartDate, freelancePastMonths)} years`;
 
 const Freelance = () => {
 	
@@ -151,7 +173,7 @@ const Freelance = () => {
 
 			<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true"><div class="sectionBreak"><M text="----------"/></div>
 			<M text="# ❤️ RECENT TESTIMONIALS "/>
-			<M text="Здесь несколько последних отзывов в виде блоков с ссылками на источники и указанием проекта. Отзывы подтягиваются из массива в itemData: здесь последние, на отдельной странице (ниже) - все. Сделать такую же страницу на русском."/>
+			<M text="Здесь несколько последних отзывов в виде блоков с ссылками на источники и указанием проекта. Отзывы подтягиваются из массива в data: здесь последние, на отдельной странице (ниже) - все. Сделать такую же страницу на русском."/>
 			<M text="You can check out more reviews on the [Testimonials](/freelance/testimonials) page."/>
 			</AnimationOnScroll>
 

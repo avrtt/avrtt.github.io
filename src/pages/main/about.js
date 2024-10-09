@@ -4,7 +4,7 @@ import { AnimationOnScroll } from 'react-animation-on-scroll';
 import { motion } from 'framer-motion';
 import M from '../../components/Markdown';
 import Spoiler from '../../components/Spoiler';
-import { aboutLastUpdated } from '../itemData';
+import { aboutLastUpdated } from '../../data/lastUpdated';
 import aboutPhoto from "../../images/about/photoAbout.jpg";
 import info from "../../images/goals/info.svg";
 

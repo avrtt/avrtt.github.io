@@ -2,14 +2,14 @@ import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet'
 import { motion } from 'framer-motion';
 import { TelegramComments } from 'react-telegram-comments';
-import { placesArr } from "../itemData"
-import { countriesArr } from "../itemData"
-import { mapData } from '../itemData';
+import { placesArr } from '../../data/exploration/temp';
+import { countriesArr } from '../../data/exploration/temp';
+import { mapData } from '../../data/exploration/temp';
 import CountryMap from '../../components/CountryMap';
 import TravelMap from '../../components/TravelMap';
 import M from '../../components/Markdown';
 import { AnimationOnScroll } from 'react-animation-on-scroll';
-import { explorationLastUpdated } from '../itemData';
+import { explorationLastUpdated } from '../../data/lastUpdated';
 import info from "../../images/goals/info.svg";
 
 const TITLE = 'Exploration - avrtt.blog'
