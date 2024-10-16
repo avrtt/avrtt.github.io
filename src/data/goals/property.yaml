@@ -1,13 +1,16 @@
+# ◾ ✨ ⭐ 🌟
+# 🐥 ⚠️ ☠
+
 order: 15
 title: "PROPERTY"
 description: "POSSESSIONS, REAL ESTATE, HOME DECORATION, ETC."
 goals:
-  - text: "Test"
-    status: "u"
+  - text: "Buy an electric guitar"
+    status: "c"
     deadline: ""
-    dateCompleted: ""
-    difftag: ""
-    safetytag: ""
+    dateCompleted: "2017, Orenburg"
+    difftag: "◾"
+    safetytag: "🐥"
     tag1: ""
     tag2: ""
     tag3: ""

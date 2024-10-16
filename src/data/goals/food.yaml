@@ -1,13 +1,16 @@
+# ◾ ✨ ⭐ 🌟
+# 🐥 ⚠️ ☠
+
 order: 13
 title: "FOOD"
 description: "EAT, DRINK, COOK"
 goals:
-  - text: "Test"
+  - text: "Banana beer"
     status: "u"
-    deadline: ""
+    deadline: "2026"
     dateCompleted: ""
-    difftag: ""
-    safetytag: ""
+    difftag: "◾"
+    safetytag: "🐥"
     tag1: ""
     tag2: ""
     tag3: ""

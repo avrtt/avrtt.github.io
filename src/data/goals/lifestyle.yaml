@@ -1,13 +1,16 @@
+# ◾ ✨ ⭐ 🌟
+# 🐥 ⚠️ ☠
+
 order: 5
 title: "LIFESTYLE"
 description: "NOMADISM, MINIMALISM, ASCETICISM, FREEDOM, ETC."
 goals:
-  - text: "Test"
+  - text: "Work remotely on a beach"
     status: "u"
-    deadline: ""
+    deadline: "2026"
     dateCompleted: ""
-    difftag: ""
-    safetytag: ""
+    difftag: "◾"
+    safetytag: "🐥"
     tag1: ""
     tag2: ""
     tag3: ""

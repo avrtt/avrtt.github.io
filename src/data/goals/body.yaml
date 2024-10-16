@@ -1,13 +1,31 @@
+# ◾ ✨ ⭐ 🌟 
+# 🐥 ⚠️ ☠
+
 order: 11
 title: "BODY"
 description: "HEALTH, FITNESS, PHYSICAL CHALLENGES"
 goals:
-  - text: "Test"
+  - text: "Do planche"
     status: "u"
-    deadline: ""
+    deadline: "2026"
     dateCompleted: ""
-    difftag: ""
-    safetytag: ""
+    difftag: "⭐"
+    safetytag: "🐥"
+    tag1: ""
+    tag2: ""
+    tag3: ""
+    tag4: ""
+    tag5: ""
+    info: ""
+    refLink: ""
+    resultLink: ""
+  
+  - text: "Do human flag"
+    status: "u"
+    deadline: "2026"
+    dateCompleted: ""
+    difftag: "⭐"
+    safetytag: "🐥"
     tag1: ""
     tag2: ""
     tag3: ""
@@ -17,12 +35,12 @@ goals:
     refLink: ""
     resultLink: ""
 
-  - text: "Test"
+  - text: "Get six-pack abs"
     status: "u"
     deadline: ""
     dateCompleted: ""
-    difftag: ""
-    safetytag: ""
+    difftag: "⭐"
+    safetytag: "🐥"
     tag1: ""
     tag2: ""
     tag3: ""
@@ -31,3 +49,5 @@ goals:
     info: ""
     refLink: ""
     resultLink: ""
+
+

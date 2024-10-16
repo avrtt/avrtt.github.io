@@ -1,13 +1,16 @@
+# ◾ ✨ ⭐ 🌟
+# 🐥 ⚠️ ☠
+
 order: 12
 title: "GOOD DEEDS"
 description: "HELPING, VOLUNTEERING, CHARITY, ETC."
 goals:
-  - text: "Test"
+  - text: "Get involved in charity"
     status: "u"
-    deadline: ""
+    deadline: "2030"
     dateCompleted: ""
-    difftag: ""
-    safetytag: ""
+    difftag: "◾"
+    safetytag: "🐥"
     tag1: ""
     tag2: ""
     tag3: ""

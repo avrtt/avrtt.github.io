@@ -1,13 +1,31 @@
+# ◾ ✨ ⭐ 🌟
+# 🐥 ⚠️ ☠
+
 order: 10
 title: "CAREER & FINANCE"
 description: "TECH, WORK PROJECTS, INVESTMENTS, FINANCIAL INDEPENDENCE"
 goals:
-  - text: "Test"
-    status: "u"
+  - text: "Become a full-time freelancer"
+    status: "c"
     deadline: ""
+    dateCompleted: "June 2024, Orenburg"
+    difftag: "✨"
+    safetytag: "🐥"
+    tag1: ""
+    tag2: ""
+    tag3: ""
+    tag4: ""
+    tag5: ""
+    info: "Achieve the dream of earning independently before wandering the world"
+    refLink: ""
+    resultLink: "/freelance"
+
+  - text: "Become a Senior Data Scientist"
+    status: "u"
+    deadline: "2029"
     dateCompleted: ""
-    difftag: ""
-    safetytag: ""
+    difftag: "⭐"
+    safetytag: "🐥"
     tag1: ""
     tag2: ""
     tag3: ""
@@ -16,3 +34,4 @@ goals:
     info: ""
     refLink: ""
     resultLink: ""
+

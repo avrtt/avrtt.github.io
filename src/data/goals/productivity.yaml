@@ -1,18 +1,21 @@
+# ◾ ✨ ⭐ 🌟
+# 🐥 ⚠️ ☠
+
 order: 9
 title: "PRODUCTIVITY"
 description: "SELF-MANAGEMENT, HABITS, WORK OPTIMIZATION, ETC."
 goals:
-  - text: "Test"
+  - text: "Meditate for 1000 days in total"
     status: "u"
-    deadline: ""
+    deadline: "2030"
     dateCompleted: ""
-    difftag: ""
-    safetytag: ""
+    difftag: "✨"
+    safetytag: "🐥"
     tag1: ""
     tag2: ""
     tag3: ""
     tag4: ""
     tag5: ""
-    info: ""
+    info: "Use a habit tracker to count"
     refLink: ""
     resultLink: ""
