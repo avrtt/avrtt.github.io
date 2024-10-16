@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Helmet } from 'react-helmet'
 import { motion } from 'framer-motion';
 import { TelegramComments } from 'react-telegram-comments';
@@ -61,6 +61,34 @@ const textImg = {
 }
 
 const Goals = () => {
+
+    const collRef = useRef([]);
+
+    useEffect(() => {
+        const coll = collRef.current;
+        coll.forEach((element) => {
+            if (element) {
+                element.addEventListener("click", toggleContent);
+            }
+        });
+        return () => {
+            coll.forEach((element) => {
+                if (element) {
+                    element.removeEventListener("click", toggleContent);
+                }
+            });
+        };
+    }, []);
+
+    const toggleContent = (event) => {
+        const content = event.target.nextElementSibling;
+        event.target.classList.toggle("activeSpoiler");
+        if (content.style.maxHeight) {
+            content.style.maxHeight = null;
+        } else {
+            content.style.maxHeight = content.scrollHeight + "px";
+        }
+    };
 
     const data = useStaticQuery(graphql`
         query {
@@ -138,21 +166,32 @@ const Goals = () => {
                 <div class="goalsTextContent">
                     <M text="Here you can find the public version of my bucket list, which is actually an organized collection of my life's achievements if it was a RPG (that's exactly how I feel this life). There are boring cliché goals, serious and challenging ones, but also just simple little things for folks who, like me, enjoy goofing around doing stupid and sometimes epic dangerous stuff, because that's what makes life exciting."/>
                     <M text="Keeping a list of goals constantly reminds me of my passions and motivates me to push forward, and I hope it can give you some inspiration if you're feeling stuck in life."/>
-                    <M text="Before you dive deep, here's a little explanation of the notation:"/>
-                    <ul>
-                        <li><span class="tooltipGoals"><img id="checkboxStyle" style={textImg} src={info} class=".c" alt='checkbox'/><span class="tooltiptextGoals">Hooray, you've discovered mouse control!</span></span> will prompt additional information about a goal on hover </li>
-                        <li><img src={refLink} style={textImg} /> can be a reference, inspiration, or extra source to describe a goal</li>
-                        <li><img src={resultLink} style={textImg} /> is a link to the result or proof of accomplishing a goal</li>
-                        <li>The right side of the page shows two tags: difficulty/rareness (stars) and the level of risk</li>
-                        <li>A bunch of icons on the left side represent the category tags for navigation and the statistics at the bottom of the page</li>
-                        <li>The text after "–" reflects a rough deadline for a goal </li>
-                        <li>Hovering over the <span class="tooltipGoals"><img id="checkboxStyle" style={textImg} src={checkbox} class=".c" alt='checkbox'/><span class="tooltiptextGoals">Yep, just like that.</span></span> icons displays the dates of completion</li>
-                    </ul>
-
+                    <div>
+                        <button className="spoilerButton noselect" ref={(el) => collRef.current.push(el)}>
+                            &nbsp;&nbsp;
+                            <span className="spoilerText"></span>
+                            Spoiler: How to read this list
+                            &nbsp;&nbsp;
+                        </button>
+                        <div className="spoilerContentWrapper">
+                            <div className="spoilerContentGoals">
+                                <M text="Before you dive deep, here's a little explanation of the notation:"/>
+                                <ul>
+                                    <li><span class="tooltipGoals"><img id="checkboxStyle" style={textImg} src={info} class=".c" alt='checkbox'/><span class="tooltiptextGoals">Hooray, you've discovered mouse control!</span></span> will prompt additional information about a goal on hover </li>
+                                    <li><img src={refLink} style={textImg} /> can be a reference, inspiration, or extra source to describe a goal</li>
+                                    <li><img src={resultLink} style={textImg} /> is a link to the result or proof of accomplishing a goal</li>
+                                    <li>The right side of the page shows two tags: difficulty/rareness (stars) and the level of risk</li>
+                                    <li>A bunch of icons on the left side represent the category tags for navigation and the statistics at the bottom of the page</li>
+                                    <li>The text after "–" reflects a rough deadline for a goal </li>
+                                    <li>Hovering over the <span class="tooltipGoals"><img id="checkboxStyle" style={textImg} src={checkbox} class=".c" alt='checkbox'/><span class="tooltiptextGoals">Yep, just like that.</span></span> icons displays the dates of completion</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
                     <button onClick={toggleOpacity}>{isOpaque ? 'Hide tags' : 'Show tags'}</button>
                     <button style={hideUncheckedButtonStyle} onClick={removeUnchecked}>{hideUnchecked ? 'Show unachieved goals' : 'Hide unachieved goals' + ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'u' ? ++acc : acc, 0) + ')'}</button>
                     <button style={hideCheckedButtonStyle} onClick={removeChecked}>{hideChecked ? 'Show achieved goals' : 'Hide achieved goals' + ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'c' ? ++acc : acc, 0) + ')'}</button>
-                    
                     <p></p>
                 </div>
                 <p style={placeholderTop}> </p>

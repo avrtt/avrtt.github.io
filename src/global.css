@@ -2642,6 +2642,23 @@ h6 {
   vertical-align: -14%;
 }
 
+.spoilerContentGoals {
+  padding: 0em 1.5em;
+  font-size: 26px;
+  margin-top: 40px;
+  margin-bottom: 35px;
+  line-height: 34px;
+}
+
+.spoilerContentGoals li {
+  margin: 12px 0px;
+}
+
+.spoilerContentGoals img {
+  width: 26px;
+  vertical-align: -14%;
+}
+
 #anchorArrow {
   opacity: 0.46 !important;
   transition: 130ms ease-in;
