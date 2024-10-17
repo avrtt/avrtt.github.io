@@ -1097,6 +1097,32 @@ code {
   opacity: 1;
 }
 
+.goalsButton {
+  background-color: #c9c9c9;
+  align-items: center; 
+  justify-content: center;
+  cursor: pointer;
+  padding: 12px;
+  width: fit-content;
+  border: none;
+  outline: none;
+  font-size: 22px;
+  border-radius: 1vh;
+  transition-duration: 0.1s;
+  font-weight: bold;
+  color: #464646;
+  margin-right: 12px;
+}
+
+.goalsButton:hover {
+  background-color: #e7e7e7;
+  transition-duration: 0.1s;
+}
+
+.goalsButtonCount {
+  color: #999999;
+}
+
 
 
 /* TABLES (GOALS) */

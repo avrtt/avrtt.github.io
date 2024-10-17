@@ -189,9 +189,23 @@ const Goals = () => {
                         </div>
                     </div>
                     <br/>
-                    <button onClick={toggleOpacity}>{isOpaque ? 'Hide tags' : 'Show tags'}</button>
-                    <button style={hideUncheckedButtonStyle} onClick={removeUnchecked}>{hideUnchecked ? 'Show unachieved goals' : 'Hide unachieved goals' + ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'u' ? ++acc : acc, 0) + ')'}</button>
-                    <button style={hideCheckedButtonStyle} onClick={removeChecked}>{hideChecked ? 'Show achieved goals' : 'Hide achieved goals' + ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'c' ? ++acc : acc, 0) + ')'}</button>
+                    <button className="goalsButton noselect" onClick={toggleOpacity}>{isOpaque ? 'Hide tags' : 'Show tags'}</button>
+                    <button className="goalsButton noselect" style={hideUncheckedButtonStyle} onClick={removeUnchecked}>
+                        <span>
+                            {hideUnchecked ? 'Show unachieved goals' : 'Hide unachieved goals'}
+                        </span>
+                        <span class="goalsButtonCount">
+                            {hideUnchecked ? ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'u' ? ++acc : acc, 0) + ')' : ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'u' ? ++acc : acc, 0) + ')'}
+                        </span>
+                    </button>
+                    <button className="goalsButton noselect" style={hideCheckedButtonStyle} onClick={removeChecked}>
+                        <span>
+                            {hideChecked ? 'Show achieved goals' : 'Hide achieved goals'}
+                        </span>
+                        <span class="goalsButtonCount">
+                            {hideChecked ? ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'c' ? ++acc : acc, 0) + ')' : ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'c' ? ++acc : acc, 0) + ')'}
+                        </span>
+                    </button>
                     <p></p>
                 </div>
                 <p style={placeholderTop}> </p>
