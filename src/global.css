@@ -1106,7 +1106,7 @@ code {
   width: fit-content;
   border: none;
   outline: none;
-  font-size: 22px;
+  font-size: 18px;
   border-radius: 1vh;
   transition-duration: 0.1s;
   font-weight: bold;
@@ -1121,6 +1121,12 @@ code {
 
 .goalsButtonCount {
   color: #999999;
+}
+
+.goalsButtonsWrapper {
+  text-align: center;
+  margin-top: 0px;
+  margin-bottom: -80px;
 }
 
 

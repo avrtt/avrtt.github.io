@@ -165,7 +165,6 @@ const Goals = () => {
             <div class="goalsBodyNested">
                 <div class="goalsTextContent">
                     <M text="Here you can find the public version of my bucket list, which is actually an organized collection of my life's achievements if it was a RPG (that's exactly how I feel this life). There are boring cliché goals, serious and challenging ones, but also just simple little things for folks who, like me, enjoy goofing around doing stupid and sometimes epic dangerous stuff, because that's what makes life exciting."/>
-                    <M text="Keeping a list of goals constantly reminds me of my passions and motivates me to push forward, and I hope it can give you some inspiration if you're feeling stuck in life."/>
                     <div>
                         <button className="spoilerButton noselect" ref={(el) => collRef.current.push(el)}>
                             &nbsp;&nbsp;
@@ -188,25 +187,27 @@ const Goals = () => {
                             </div>
                         </div>
                     </div>
+                    <M text="Keeping a list of goals constantly reminds me of my passions and motivates me to push forward, and I hope it can give you some inspiration if you're feeling stuck in life."/>
                     <br/>
-                    <button className="goalsButton noselect" onClick={toggleOpacity}>{isOpaque ? 'Hide tags' : 'Show tags'}</button>
-                    <button className="goalsButton noselect" style={hideUncheckedButtonStyle} onClick={removeUnchecked}>
-                        <span>
-                            {hideUnchecked ? 'Show unachieved goals' : 'Hide unachieved goals'}
-                        </span>
-                        <span class="goalsButtonCount">
-                            {hideUnchecked ? ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'u' ? ++acc : acc, 0) + ')' : ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'u' ? ++acc : acc, 0) + ')'}
-                        </span>
-                    </button>
-                    <button className="goalsButton noselect" style={hideCheckedButtonStyle} onClick={removeChecked}>
-                        <span>
-                            {hideChecked ? 'Show achieved goals' : 'Hide achieved goals'}
-                        </span>
-                        <span class="goalsButtonCount">
-                            {hideChecked ? ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'c' ? ++acc : acc, 0) + ')' : ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'c' ? ++acc : acc, 0) + ')'}
-                        </span>
-                    </button>
-                    <p></p>
+                    <div class="goalsButtonsWrapper">
+                        <button className="goalsButton noselect" onClick={toggleOpacity}>{isOpaque ? 'Hide tags' : 'Show tags'}</button>
+                        <button className="goalsButton noselect" style={hideUncheckedButtonStyle} onClick={removeUnchecked}>
+                            <span>
+                                {hideUnchecked ? 'Show unachieved goals' : 'Hide unachieved goals'}
+                            </span>
+                            <span class="goalsButtonCount">
+                                {hideUnchecked ? ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'u' ? ++acc : acc, 0) + ')' : ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'u' ? ++acc : acc, 0) + ')'}
+                            </span>
+                        </button>
+                        <button className="goalsButton noselect" style={hideCheckedButtonStyle} onClick={removeChecked}>
+                            <span>
+                                {hideChecked ? 'Show achieved goals' : 'Hide achieved goals'}
+                            </span>
+                            <span class="goalsButtonCount">
+                                {hideChecked ? ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'c' ? ++acc : acc, 0) + ')' : ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'c' ? ++acc : acc, 0) + ')'}
+                            </span>
+                        </button>
+                    </div>
                 </div>
                 <p style={placeholderTop}> </p>
                 {sortedCategories.map((category) => (
