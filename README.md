@@ -1,1 +1,1 @@
-README.md writing in progress
+This website is shut down until the first stable release
