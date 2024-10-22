@@ -71,6 +71,12 @@ const Image = ({ path, caption="", zoom=false, offset="300" }) => {
     )
   }
 
+  if (zoom == "true") {
+    zoom = true
+  } else if (zoom = "false") {
+    zoom = false
+  }
+
   return (
     <center>
       <AnimationOnScroll offset={offset} duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
