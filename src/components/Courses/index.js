@@ -106,7 +106,7 @@ const Courses = ({ lang="en" }) => {
             </span>
             <p style={descStyle}>Certified specialization in <strong>advanced Machine Learning</strong> offered by National Research University Higher School of Economics (ВШЭ)</p>
             <p style={infoStyle}>
-              <span>Apr 2024</span>
+              <span>Dec 2022</span>
               &nbsp;&nbsp;&nbsp;&nbsp;
               <span><strong>Removed from Coursera</strong></span>
             </p>
@@ -136,9 +136,9 @@ const Courses = ({ lang="en" }) => {
               &nbsp;&nbsp;&nbsp;&nbsp;
               <img src={Stanford} class="noselect" alt="course_icon" width="60" height="60" style={imgStyle} />
             </span>
-            <p style={descStyle}>Audited specialization in <strong>Machine Learning</strong> offered by Stanford University & DeepLearning.AI</p>
+            <p style={descStyle}>Audited after Andrew Ng's classic course, a renewed specialization in <strong>Machine Learning</strong> offered by Stanford University & DeepLearning.AI</p>
             <p style={infoStyle}>
-              <span>May 2022</span>
+              <span>Oct 2024</span>
             </p>
           </div>
         </a>
@@ -242,7 +242,7 @@ const Courses = ({ lang="en" }) => {
             </span>
             <p style={descStyle}>Специализация с сертификатом по <strong>продвинутому машинному обучению</strong> от НИУ «Высшая школа экономики»</p>
             <p style={infoStyle}>
-              <span>Апр 2024</span>
+              <span>Дек 2022</span>
               &nbsp;&nbsp;&nbsp;&nbsp;
               <span><strong>Удалено с Coursera</strong></span>
             </p>
@@ -272,9 +272,9 @@ const Courses = ({ lang="en" }) => {
               &nbsp;&nbsp;&nbsp;&nbsp;
               <img src={Stanford} class="noselect" alt="course_icon" width="60" height="60" style={imgStyle} />
             </span>
-            <p style={descStyle}>Прослушанная специализация по <strong>машинному обучению</strong> от Стэнфордского университета и DeepLearning.AI</p>
+            <p style={descStyle}>Прослушанная после классического курса Эндрю Ына, обновлённая специализация по <strong>машинному обучению</strong> от Стэнфордского университета и DeepLearning.AI</p>
             <p style={infoStyle}>
-              <span>Май 2022</span>
+              <span>Окт 2024</span>
             </p>
           </div>
         </a>
