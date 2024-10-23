@@ -1,10 +1,49 @@
 # ◾ ✨ ⭐ 🌟
 # 🐥 ⚠️ ☠
 
+# [to add]
+# Путешествие с монокуляром
+# Многокилометровый сплав по реке
+# Переночевать на башне
+# Переночевать в пещере
+# Перейти нелегально границу
+# Устроить недельный марафон чтения Википедии в дождливую погоду в одиночестве
+# Прокатиться на том самом дебильном банане по морю
+
 order: 1
 title: "EXPERIENCES: GENERAL"
 description: "ACTIVITIES, EVENTS, FUN, ETC."
 goals:
+  - text: "Shoot a compound bow"
+    status: "u"
+    deadline: "2026"
+    dateCompleted: ""
+    difftag: "◾"
+    safetytag: "🐥"
+    tag1: ""
+    tag2: ""
+    tag3: ""
+    tag4: ""
+    tag5: ""
+    info: ""
+    refLink: ""
+    resultLink: ""
+
+  - text: "Sleep under the stars in a sleeping bag"
+    status: "c"
+    deadline: ""
+    dateCompleted: "Several locations"
+    difftag: "◾"
+    safetytag: "🐥"
+    tag1: ""
+    tag2: ""
+    tag3: ""
+    tag4: ""
+    tag5: ""
+    info: ""
+    refLink: ""
+    resultLink: ""
+
   - text: "Walk and sing with friends in the rain at night"
     status: "c"
     deadline: ""
@@ -26,6 +65,21 @@ goals:
     dateCompleted: ""
     difftag: "◾"
     safetytag: "⚠️"
+    tag1: ""
+    tag2: ""
+    tag3: ""
+    tag4: ""
+    tag5: ""
+    info: ""
+    refLink: ""
+    resultLink: ""
+
+  - text: "See the Halloween festival"
+    status: "u"
+    deadline: "2030"
+    dateCompleted: ""
+    difftag: "◾"
+    safetytag: "🐥"
     tag1: ""
     tag2: ""
     tag3: ""
