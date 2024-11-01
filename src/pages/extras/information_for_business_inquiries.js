@@ -21,24 +21,11 @@ const Business = () => {
 	
 		<div class="aboutBody">
 
-вроде этого страница
-https://www.lostwithpurpose.com/work/
-
-<M text="## Ads" />
-условия рекламы на разных площадках
-
-<M text="## Collaboration" />
-f
-
-<M text="## Working with me" />
-открытые вакансии (редактор, хост на канале и т.д.)
-монтажёр видео
-хайлайтер
-smm, менеджер, пиарщики
-
-<M text="## Volunteering" />
-модерация сообщества (дискорд сервер, телеграм-чаты)
-помощь в создании субтитров к видео
+		<br/>
+		<div class="yellowNotice">
+			<M text="## 🚧 HEADS UP!"/>
+			<M text="This page isn't finished or has been hidden for redesign. Content will appear soon."/>
+		</div>
 
 		</div>    
    </motion.div>
