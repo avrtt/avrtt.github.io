@@ -2504,6 +2504,10 @@ span.SAFE {
   color: rgb(70, 70, 70);
 }
 
+#freelanceWorkflowItem {
+  margin-left: 40px;
+}
+
 
 
 /* SERVICES PAGE */
@@ -2690,6 +2694,28 @@ h6 {
 .spoilerContentGoals img {
   width: 26px;
   vertical-align: -14%;
+}
+
+.spoilerContentFAQ {
+  padding: 0em 1.5em;
+  font-size: 26px;
+  margin-top: 40px;
+  margin-bottom: 35px;
+  line-height: 34px;
+}
+
+.spoilerBlockQA {
+  margin: 12px 0px;
+  text-indent: -1.5em;
+  padding-left: 1.5em;
+}
+
+.spoilerQuestion {
+  margin-bottom: 4px;
+}
+
+.spoilerAnswer {
+  margin-top: 4px;
 }
 
 #anchorArrow {
