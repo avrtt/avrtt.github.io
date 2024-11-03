@@ -220,6 +220,65 @@ const Freelance = () => {
 						<M text="I keep in touch with my former customers. You can always contact me if something needs to be improved. For me, relationships with customers and their satisfaction are important, because, in Data Science, it's *much* easier and faster to work with returning clients than to constantly look for new ones."/>
 						<M text="To keep clients coming back, I offer some discounts. Loyal customers can expect **lower pricing** for services and **lower upfront fees**, up to 100% postpaid."/>
 					</p>
+					<br/>
+					<button className="spoilerButton noselect" ref={(el) => collRef.current.push(el)}>
+						&nbsp;&nbsp;
+						<span className="spoilerText"></span>
+						FAQ
+						&nbsp;&nbsp;
+					</button>
+					<div className="spoilerContentWrapper">
+						<div className="spoilerContentFAQ">
+							<div className="spoilerBlockQA">
+								<p class="spoilerQuestion"><strong>Q:</strong> Are there any other payment options available besides the ones below?</p>
+								<p class="spoilerAnswer"><strong>A:</strong> No, this page contains all the possible, currently available payment methods.</p>
+							</div>
+							<div className="spoilerBlockQA">
+								<p class="spoilerQuestion"><strong>Q:</strong> I'd like to pay in cryptocurrency. Is that legal?</p>
+								<p class="spoilerAnswer"><strong>A:</strong> It depends. Some jurisdictions treat cryptocurrency as taxable assets, and some have banned transfers entirely. Although in practice the crypto exchange in these jurisdictions isn't prosecuted in any way, I'm not responsible for the consequences. Check your local laws first.</p>
+							</div>
+							<div className="spoilerBlockQA">
+								<p class="spoilerQuestion"><strong>Q:</strong> Do you offer a legal contract?</p>
+								<p class="spoilerAnswer"><strong>A:</strong> All the services described on this website are provided without signing a legal labor contract. If you're looking for guarantees of a fair deal in return for paying service fees, then consider contacting me via freelance marketplaces (see above).</p>
+							</div>
+							<div className="spoilerBlockQA">
+								<p class="spoilerQuestion"><strong>Q:</strong> How is copyright ownership transferred?</p>
+								<p class="spoilerAnswer"><strong>A:</strong> Since no labor contract is signed, there's no way to transfer copyright  ownership (at least in most jurisdictions). Formally, I remain the owner of all digital products (intellectual property) created as part of a verbal or written agreement with a customer without the use of an intermediary (except for works done through a GitHub/GitLab repository, see below). Practically, this shouldn't be a problem, since I don't intend to assert my authorship in any way, and authorize further use, modification and distribution of the product without attribution or any limitations, and even if I did, I wouldn't be able to prove authorship in the absence of a legal agreement. However, if such legal aspects matter to you, I recommend you to contact me through freelance marketplaces, as copyright issues are considered there (for instance, see Upwork's <a href="https://www.upwork.com/legal#optional-service-contract-terms">Optional Service Contract Terms</a>).</p>
+							</div>
+							<div className="spoilerBlockQA">
+								<p class="spoilerQuestion"><strong>Q:</strong> How is software code licensed when working through a remote git repository?</p>
+								<p class="spoilerAnswer"><strong>A:</strong> In the case of working through popular git repository hosting sites operating under the U.S. law (e.g., GitHub and GitLab), the customer may create a repository, <a href="https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository">choose a license</a>, and then add me as a collaborator. This way, the software code implemented inside the repository will be distributed according to the terms specified in the license. Please note that according to the U.S. law <a href="https://choosealicense.com/no-permission/">no license</a> is equivalent to exclusive copyright only if a creative work has no other contributors.</p>
+							</div>
+							<div className="spoilerBlockQA">
+								<p class="spoilerQuestion"><strong>Q:</strong> Is there any legal guarantee that the contractor won't apply <a href="https://docs.github.com/en/site-policy/content-removal-policies/dmca-takedown-policy">DMCA takedown notice</a> to remove a part of deliverable that was transferred to my use and publicly hosted as a git repository?</p>
+								<p class="spoilerAnswer"><strong>A:</strong> If the source code was implemented inside a repository you've licensed, then yes. In this case, I can only distribute the content of the repository under the terms specified in the license. Moreover, in case of a DMCA policy violation, the repository owner has the right to submit a request to remove an unauthorized copy of the software code by referring to the aforementioned repository. Platforms such as GitHub actively assist in enforcing the terms of the DMCA (and even <a href="https://github.com/github/dmca">list such cases</a> publicly).</p>
+							</div>
+							<div className="spoilerBlockQA">
+								<p class="spoilerQuestion"><strong>Q:</strong> Do you offer an <a href="https://en.wikipedia.org/wiki/Non-disclosure_agreement">NDA</a>?</p>
+								<p class="spoilerAnswer"><strong>A:</strong> In some cases, if required by the customer.</p>
+							</div>
+							<div className="spoilerBlockQA">
+								<p class="spoilerQuestion"><strong>Q:</strong> What if the work isn't completed on time?</p>
+								<p class="spoilerAnswer"><strong>A:</strong> If the work is fully completed but not on time, I'll refund a portion of the cost depending on the specific situation.</p>
+							</div>
+							<div className="spoilerBlockQA">
+								<p class="spoilerQuestion"><strong>Q:</strong> What if I'm not satisfied with the result of the work done?</p>
+								<p class="spoilerAnswer"><strong>A:</strong> I'm always open to consider valid arguments in favor of the customer's rightness before they write a negative review. If the work doesn't match the terms of reference, then I'll refund the money, because reputation is more valuable when it comes to freelancing.</p>
+							</div>
+							<div className="spoilerBlockQA">
+								<p class="spoilerQuestion"><strong>Q:</strong> What languages and style can we use to communicate?</p>
+								<p class="spoilerAnswer"><strong>A:</strong> We can communicate in both formal and informal styles, the latter being more preferable for me. I'm proficient in English and Russian.</p>
+							</div>
+							<div className="spoilerBlockQA">
+								<p class="spoilerQuestion"><strong>Q:</strong> What jurisdiction is the contractor physically located in?</p>
+								<p class="spoilerAnswer"><strong>A:</strong> In a wide variety of different. ;)</p>
+							</div>
+							<div className="spoilerBlockQA">
+								<p class="spoilerQuestion"><strong>Q:</strong> I'm a business representative and I'm interested in long-term cooperation. Can I be sure that the contractor will comply with all applicable legislation?</p>
+								<p class="spoilerAnswer"><strong>A:</strong> No. I don't give any legal guarantees because I'm regularly located outside my country of citizenship (Russia), the international status of which only makes official work more difficult. My legal status is generally unclear. Consider me solely as an unofficial worker.</p>
+							</div>
+						</div>
+					</div>
 				</AnimationOnScroll>
 
 
