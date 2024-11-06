@@ -1,0 +1,388 @@
+---
+index: 4
+title: "Linear algebra for ML"
+desc: "The magic starts here"
+date: "02.06.2022"
+banner: "../../../images/posts/research/banners/linear_algebra_for_ml.jpg"
+slug: "/research/linear_algebra_for_ml"
+---
+import Latex from "../../../components/Latex"
+import NotFinishedNotice from "../../../components/NotFinishedNotice"
+
+
+{/*
+
+https://www.youtube.com/playlist?list=PLUl4u3cNGP63oMNUHXqIUcrkS2PivhN3k
+https://www.youtube.com/playlist?list=PLA0M1Bcd0w8xcPNkaqqRzmh4FEWTB671A
+
+Mathematics for ML: главы 2, 3, 4
+https://mml-book.github.io/book/mml-book.pdf
+
+https://www.youtube.com/watch?v=5fN2J8wYnfw
+https://www.youtube.com/watch?v=OtQZQpR-ZWQ
+https://www.youtube.com/watch?v=2ogdwpHD3V8
+https://www.youtube.com/watch?v=DkyM93Wgh_0
+https://ml-handbook.ru/chapters/matrix_diff/intro
+
+Как должны быть связаны между собой две матрицы, чтобы их можно было диагонализировать одним оператором поворота? (см. ML-канал)
+
+https://www.youtube.com/watch?v=glaiP222JWA
+https://www.youtube.com/watch?v=KTKAp9Q3yWg
+https://www.youtube.com/watch?v=HAJey9-Q8js
+
+*/}
+
+<NotFinishedNotice/>
+
+
+*"You can't learn too much linear algebra."*
+
+<br/>
+
+In machine learning, linear algebra is more than a mathematical discipline; it's the backbone that supports the development, interpretation, and optimization of algorithms. Understanding linear algebra is crucial for us - data scientists - since it allows to grasp the fundamental operations and structures that power various machine learning models, from simple linear regression to advanced neural networks.
+
+At its core, linear algebra provides a framework for working with data in high-dimensional spaces. This is a fundamental thing in machine learning, where data is typically represented as vectors and matrices. Linear algebra concepts help us understand **data structures** (like datasets in vector or matrix forms), **transformations** (such as rotations, scaling, and projections), and **optimizations** (minimizing or maximizing functions during model training). 
+
+Most machine learning algorithms rely heavily on linear algebraic operations, which include:
+
+- **Representing data**: data is often represented as vectors (for features in a sample) or matrices (for datasets with multiple samples and features). For instance, a dataset with <Latex text="\( m \)"/> samples and <Latex text="\( n \)"/> features is typically represented by an <Latex text="\( m \times n \)"/> matrix:
+  <Latex text="\[
+  X = \begin{bmatrix} x_{1,1} & x_{1,2} & \dots & x_{1,n} \\ x_{2,1} & x_{2,2} & \dots & x_{2,n} \\ \vdots & \vdots & \ddots & \vdots \\ x_{m,1} & x_{m,2} & \dots & x_{m,n} \end{bmatrix}
+  \]"/>
+  where each row represents a sample and each column represents a feature.
+
+- **Transformations and projections**: linear transformations, represented as matrix multiplications, allow us to project data into different spaces. This is fundamental for tasks like **dimensionality reduction** (e.g., Principal Component Analysis) and **feature extraction**.
+
+- **Optimization**: many machine learning models, especially those based on gradient-based methods, rely on linear algebra for optimization. For example, finding the optimal parameters for a model often involves computing derivatives of functions and solving systems of linear equations.
+
+By grounding machine learning concepts in linear algebra, we gain a language and toolkit for systematically solving complex problems. As we dive deeper into various algorithms, you'll see that linear algebra simplifies processes that would otherwise be computationally infeasible, making it indispensable for both theory and practice.
+
+<br/>
+
+## Core concepts
+
+### **Vectors**
+
+In linear algebra, a **vector** is an ordered list of numbers, typically represented as a column or row of values. Vectors can describe points, directions, and quantities in space, making them a fundamental building block.
+
+A vector in <Latex text="\( n \)"/>-dimensional space is written as:
+<Latex text="\[
+\mathbf{v} = \begin{bmatrix} v_1 \\ v_2 \\ \vdots \\ v_n \end{bmatrix}
+\]"/>
+where each <Latex text="\( v_i \)"/> represents a component of the vector.
+
+You're probably know the common operations with vectors:
+
+- **Addition**: adding two vectors of the same dimension involves adding corresponding elements. For vectors <Latex text="\( \mathbf{u} \)"/> and <Latex text="\( \mathbf{v} \)"/> in <Latex text="\( n \)"/>-dimensional space,
+  <Latex text="\[
+  \mathbf{u} + \mathbf{v} = \begin{bmatrix} u_1 \\ u_2 \\ \vdots \\ u_n \end{bmatrix} + \begin{bmatrix} v_1 \\ v_2 \\ \vdots \\ v_n \end{bmatrix} = \begin{bmatrix} u_1 + v_1 \\ u_2 + v_2 \\ \vdots \\ u_n + v_n \end{bmatrix}
+  \]"/>
+
+- **Scalar multiplication**: scaling a vector by a scalar <Latex text="\( \alpha \)"/> involves multiplying each component by <Latex text="\( \alpha \)"/>:
+  <Latex text="\[
+  \alpha \mathbf{v} = \alpha \begin{bmatrix} v_1 \\ v_2 \\ \vdots \\ v_n \end{bmatrix} = \begin{bmatrix} \alpha v_1 \\ \alpha v_2 \\ \vdots \\ \alpha v_n \end{bmatrix}
+  \]"/>
+
+Vectors often represent individual **feature sets**. For instance, in image processing, each image pixel can be treated as a vector in 3D space (for RGB values), and in tabular data, each feature in a dataset can be represented as a dimension in a vector. 
+
+Thus, vectors allow us to structure data and perform essential operations, like measuring similarity between data points (via **dot products**), which is critical in algorithms such as **k-nearest neighbors** or **support vector machines**.
+
+### **Matrices**
+
+A **matrix** is a 2D array of numbers, arranged in rows and columns. Matrices are used extensively in machine learning to store and manipulate large datasets efficiently.
+
+A matrix is typically denoted as:
+<Latex text="\[
+\mathbf{A} = \begin{bmatrix} a_{1,1} & a_{1,2} & \dots & a_{1,n} \\ a_{2,1} & a_{2,2} & \dots & a_{2,n} \\ \vdots & \vdots & \ddots & \vdots \\ a_{m,1} & a_{m,2} & \dots & a_{m,n} \end{bmatrix}
+\]"/>
+where <Latex text="\( a_{i,j} \)"/> denotes the element in the <Latex text="\( i \)"/>-th row and <Latex text="\( j \)"/>-th column.
+
+Key types of matrices:
+
+- **Square matrix**: a matrix with the same number of rows and columns (<Latex text="\( m = n \)"/>).
+- **Diagonal matrix**: a square matrix with non-zero values only along its main diagonal.
+- **Identity matrix**: a square matrix with 1s on the diagonal and 0s elsewhere, denoted as <Latex text="\( \mathbf{I} \)"/>. The identity matrix is the multiplicative identity in matrix multiplication.
+
+The main operations to remember for now:
+
+1. **Addition**: matrices of the same dimension can be added by adding corresponding elements:
+   <Latex text="\[
+   \mathbf{A} + \mathbf{B} = \begin{bmatrix} a_{1,1} + b_{1,1} & a_{1,2} + b_{1,2} & \dots \\ a_{2,1} + b_{2,1} & a_{2,2} + b_{2,2} & \dots \\ \vdots & \vdots & \ddots \end{bmatrix}
+   \]"/>
+
+2. **Multiplication**: the **dot product** of matrices <Latex text="\( \mathbf{A} \)"/> and <Latex text="\( \mathbf{B} \)"/> involves multiplying each row of <Latex text="\( \mathbf{A} \)"/> by each column of <Latex text="\( \mathbf{B} \)"/>, resulting in a new matrix. This operation underpins many neural network computations.
+
+3. **Element-wise operations**: also known as the Hadamard product, this involves multiplying corresponding elements of matrices <Latex text="\( \mathbf{A} \)"/> and <Latex text="\( \mathbf{B} \)"/>, denoted as <Latex text="\( \mathbf{A} \circ \mathbf{B} \)"/>.
+
+Matrices are essential for storing and transforming data. For example, in image processing, images are often represented as matrices of pixel intensities, and in neural networks, large datasets are stored in matrices that undergo various transformations as they pass through the network’s layers.
+
+### **Tensors**
+
+A **tensor** generalizes the concept of scalars (0D), vectors (1D), and matrices (2D) to **higher dimensions**. Tensors can be thought of as multi-dimensional arrays that are particularly useful in handling complex data structures, such as images with multiple color channels or batches of sequences in natural language processing.
+
+- **1D tensors** are vectors (e.g., a list of features).
+- **2D tensors** are matrices (e.g., a batch of data points).
+- **3D tensors** or higher-dimensional tensors represent more complex structures, such as a batch of RGB images (height, width, and color channels).
+
+For example, in a neural network training on batches of 28x28 grayscale images, the data might be stored in a 3D tensor of shape <Latex text="\((\text{batch size}, 28, 28)\)"/>. In frameworks like **TensorFlow** and **PyTorch**, tensor operations are optimized to handle large data efficiently, making them indispensable for training complex models.
+
+<br/>
+
+## Key matrix operations
+
+### **Dot product and inner product**
+
+The **dot product** (or **inner product**) is a fundamental operation between two vectors of the same length, resulting in a scalar. Given two vectors <Latex text="\( \mathbf{u} = [u_1, u_2, \dots, u_n] \)"/> and <Latex text="\( \mathbf{v} = [v_1, v_2, \dots, v_n] \)"/>, their dot product is computed as:
+<Latex text="\[
+\mathbf{u} \cdot \mathbf{v} = u_1 v_1 + u_2 v_2 + \dots + u_n v_n = \sum_{i=1}^{n} u_i v_i
+\]"/>
+
+The dot product is used, for instance, in **cosine similarity**, which measures the angle between two vectors and is commonly applied in **text analysis** or **recommendation systems** to assess how similar two data points are.
+  
+In neural networks, the dot product between the input vector and the weight vector calculates the weighted sum, forming the basis of many neural computations.
+
+### **Matrix multiplication**
+
+Matrix multiplication is an operation where two matrices, <Latex text="\( \mathbf{A} \)"/> (of size <Latex text="\( m \times n \)"/>) and <Latex text="\( \mathbf{B} \)"/> (of size <Latex text="\( n \times p \)"/>), produce a resulting matrix <Latex text="\( \mathbf{C} \)"/> (of size <Latex text="\( m \times p \)"/>). This operation is only defined if the number of columns in <Latex text="\( \mathbf{A} \)"/> matches the number of rows in <Latex text="\( \mathbf{B} \)"/>.
+
+For elements <Latex text="\( c_{i,j} \)"/> of the resulting matrix <Latex text="\( \mathbf{C} \)"/>, we compute:
+<Latex text="\[
+c_{i,j} = \sum_{k=1}^{n} a_{i,k} \cdot b_{k,j}
+\]"/>
+
+Matrix multiplication can be thought of as applying a **linear transformation**. It allows for transforming one data representation to another, such as projecting data onto a different feature space. 
+
+Matrix multiplication is the core operation in transforming data through space, often used in algorithms that rely on dimensionality reduction or feature transformations.
+  
+In each layer of a neural network, the matrix of weights is multiplied by the matrix of inputs to produce the activations, forming the core computation at each layer.
+
+### **Transpose**
+
+The **transpose** of a matrix <Latex text="\( \mathbf{A} \)"/>, denoted <Latex text="\( \mathbf{A}^T \)"/>, is formed by swapping its rows and columns. If:
+<Latex text="\[
+\mathbf{A} = \begin{bmatrix} a_{1,1} & a_{1,2} \\ a_{2,1} & a_{2,2} \end{bmatrix}
+\]"/>
+then
+<Latex text="\[
+\mathbf{A}^T = \begin{bmatrix} a_{1,1} & a_{2,1} \\ a_{1,2} & a_{2,2} \end{bmatrix}
+\]"/>
+
+The transpose operation is often used to reformat data, converting row vectors to column vectors (or vice versa) for easier computation, especially in matrix multiplications.
+
+### **Determinant and trace**
+
+The **determinant** is a scalar that can be calculated for square matrices, representing the matrix’s scaling factor and orientation. For a 2x2 matrix <Latex text="\( \mathbf{A} = \begin{bmatrix} a & b \\ c & d \end{bmatrix} \)"/>, the determinant <Latex text="\( \det(\mathbf{A}) \)"/> is computed as:
+  <Latex text="\[
+  \det(\mathbf{A}) = ad - bc
+  \]"/>
+  The determinant gives insights into whether a matrix is **invertible** (non-zero determinant) or **singular** (zero determinant).
+
+The **trace** of a square matrix <Latex text="\( \mathbf{A} \)"/> is the sum of its diagonal elements. For <Latex text="\( \mathbf{A} = \begin{bmatrix} a_{1,1} & a_{1,2} \\ a_{2,1} & a_{2,2} \end{bmatrix} \)"/>, the trace <Latex text="\( \text{tr}(\mathbf{A}) \)"/> is:
+  <Latex text="\[
+  \text{tr}(\mathbf{A}) = a_{1,1} + a_{2,2}
+  \]"/>
+
+The determinant is used to assess matrix **invertibility**, which is critical for operations like solving systems of linear equations in linear regression, and the trace is used in certain **loss functions** and optimization criteria. For example, in matrix factorization, minimizing the trace can be part of regularization.
+
+### **Inverse and pseudo-inverse**
+
+The **inverse** of a matrix <Latex text="\( \mathbf{A} \)"/>, denoted <Latex text="\( \mathbf{A}^{-1} \)"/>, exists only if <Latex text="\( \mathbf{A} \)"/> is square and invertible (i.e., <Latex text="\( \det(\mathbf{A}) \neq 0 \)"/>). The inverse has the property that <Latex text="\( \mathbf{A} \cdot \mathbf{A}^{-1} = \mathbf{I} \)"/>, where <Latex text="\( \mathbf{I} \)"/> is the identity matrix.
+
+The **Moore-Penrose pseudo-inverse** extends the concept of inversion to non-square or singular matrices, where the traditional inverse does not exist. It is commonly used to solve **underdetermined** or **overdetermined** systems.
+
+In linear regression, the inverse of the covariance matrix is often used in solving for the best-fit parameters via the **normal equation**. This allows the direct computation of weights that minimize the error.
+  
+In cases where a dataset has more features than samples (overdetermined), the pseudo-inverse allows us to find a solution that minimizes the error, even if an exact solution doesn’t exist.
+
+<br/>
+
+## Special matrix types
+
+Special matrices have unique properties that simplify computations and play crucial roles in various machine learning algorithms. Understanding these types of matrices helps in optimizing calculations, ensuring stability, and preserving key properties in model transformations.
+
+### **Identity Matrix**
+
+The **identity matrix**, denoted <Latex text="\( \mathbf{I} \)"/>, is a square matrix with 1s on the diagonal and 0s elsewhere:
+<Latex text="\[
+\mathbf{I} = \begin{bmatrix} 1 & 0 & \dots & 0 \\ 0 & 1 & \dots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \dots & 1 \end{bmatrix}
+\]"/>
+
+The identity matrix acts as a **multiplicative neutral element** in matrix operations. For any matrix <Latex text="\( \mathbf{A} \)"/> of compatible dimensions:
+<Latex text="\[
+\mathbf{A} \cdot \mathbf{I} = \mathbf{I} \cdot \mathbf{A} = \mathbf{A}
+\]"/>
+
+In certain neural network architectures, initializing weights with identity matrices or scaled identity matrices helps in stabilizing the network. This approach is sometimes used to prevent vanishing or exploding gradients.
+
+In transformations, multiplying by an identity matrix leaves the original matrix unchanged. This is particularly useful in maintaining the integrity of data during transformations.
+
+### **Diagonal matrix**
+
+A **diagonal matrix** has non-zero elements only along the main diagonal, with all other elements being zero:
+<Latex text="\[
+\mathbf{D} = \begin{bmatrix} d_1 & 0 & \dots & 0 \\ 0 & d_2 & \dots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \dots & d_n \end{bmatrix}
+\]"/>
+
+Diagonal matrices make certain calculations more efficient. For instance, the product of two diagonal matrices <Latex text="\( \mathbf{D}_1 \)"/> and <Latex text="\( \mathbf{D}_2 \)"/> is also a diagonal matrix, where each diagonal element is the product of the corresponding diagonal elements from <Latex text="\( \mathbf{D}_1 \)"/> and <Latex text="\( \mathbf{D}_2 \)"/>:
+<Latex text="\[
+\mathbf{D}_1 \cdot \mathbf{D}_2 = \begin{bmatrix} d_{1,1} \cdot d_{2,1} & 0 & \dots & 0 \\ 0 & d_{1,2} \cdot d_{2,2} & \dots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \dots & d_{n,n} \cdot d_{n,n} \end{bmatrix}
+\]"/>
+
+Diagonal matrices allow for faster calculations because only the diagonal elements need to be considered. This property is valuable in **optimization algorithms**, where computational efficiency is critical.
+
+In cases where features are independent, the covariance matrix becomes diagonal, simplifying the calculations in **Principal Component Analysis (PCA)** and other statistical analyses.
+
+### **Orthogonal matrix**
+
+An **orthogonal matrix** <Latex text="\( \mathbf{Q} \)"/> has the property that its transpose is equal to its inverse:
+<Latex text="\[
+\mathbf{Q}^T \mathbf{Q} = \mathbf{Q} \mathbf{Q}^T = \mathbf{I}
+\]"/>
+This property implies that the columns (or rows) of an orthogonal matrix are mutually orthogonal unit vectors.
+
+Orthogonal matrices are significant because they **preserve distances** and **angles** during transformations, which is crucial for maintaining the structural integrity of data.
+
+Orthogonal transformations help reduce numerical errors, which is especially valuable in machine learning applications that involve iterative computations, such as **gradient descent** and other optimization algorithms.
+
+Orthogonal matrices are used in algorithms like **PCA**, where the eigenvectors of the covariance matrix form an orthogonal basis, allowing data to be projected onto lower-dimensional subspaces with minimal information loss.
+
+### **Symmetric matrix**
+
+A **symmetric matrix** <Latex text="\( \mathbf{A} \)"/> is one where <Latex text="\( \mathbf{A} = \mathbf{A}^T \)"/>, meaning it is equal to its transpose. For instance:
+<Latex text="\[
+\mathbf{A} = \begin{bmatrix} a_{1,1} & a_{1,2} & \dots & a_{1,n} \\ a_{1,2} & a_{2,2} & \dots & a_{2,n} \\ \vdots & \vdots & \ddots & \vdots \\ a_{1,n} & a_{2,n} & \dots & a_{n,n} \end{bmatrix}
+\]"/>
+
+Symmetric matrices appear frequently in machine learning, particularly in **statistics** and **linear algebra**.
+
+The **covariance matrix**, used to measure relationships between features, is always symmetric. Each entry <Latex text="\( \sigma_{ij} \)"/> represents the covariance between features <Latex text="\( i \)"/> and <Latex text="\( j \)"/>, so <Latex text="\( \sigma_{ij} = \sigma_{ji} \)"/>. This symmetry is crucial in algorithms like **PCA**, where eigenvectors and eigenvalues of the covariance matrix are computed to identify principal components.
+
+Symmetric matrices have real eigenvalues, and their eigenvectors are orthogonal. This property simplifies computations, making symmetric matrices useful for **spectral clustering** and **dimensionality reduction**.
+
+<br/>
+
+## Eigenvalues and eigenvectors
+
+Eigenvalues and eigenvectors are fundamental in linear algebra, providing insight into matrix transformations and data structures. Given a square matrix <Latex text="\( \mathbf{A} \)"/>, an eigenvector <Latex text="\( \mathbf{v} \)"/> and its associated eigenvalue <Latex text="\( \lambda \)"/> satisfy the following equation:
+<Latex text="\[
+\mathbf{A} \mathbf{v} = \lambda \mathbf{v}
+\]"/>
+where:
+- <Latex text="\( \mathbf{v} \)"/> is the **eigenvector** (a non-zero vector).
+- <Latex text="\( \lambda \)"/> is the **eigenvalue**, a scalar that indicates how much the eigenvector is stretched or shrunk.
+
+Eigenvalues and eigenvectors are valuable for understanding transformations applied to data, especially when analyzing how data can be decomposed and represented in different bases. In machine learning, they enable simplifications and efficient data representations.
+
+### **Geometric interpretation**
+
+Geometrically, eigenvectors and eigenvalues reveal the underlying structure and characteristics of transformations. When a matrix transformation <Latex text="\( \mathbf{A} \)"/> is applied to an eigenvector <Latex text="\( \mathbf{v} \)"/>, the eigenvector’s direction remains unchanged, although it may be scaled by the eigenvalue <Latex text="\( \lambda \)"/>.
+
+- **Eigenvectors** represent the **principal directions** along which the transformation acts. These directions capture the axes along which data variation is highest, making them crucial in data analysis.
+  
+- **Eigenvalues** describe the **magnitude of scaling** applied in each eigenvector’s direction. A large eigenvalue signifies a significant stretch, while a small (positive) eigenvalue indicates compression along that eigenvector’s direction.
+
+For example, in Principal Component Analysis (PCA), eigenvectors of the covariance matrix correspond to principal components, with eigenvalues indicating the importance (variance) of each principal component.
+
+### **Applications**
+
+Eigenvalues and eigenvectors have diverse applications in machine learning, particularly in tasks involving dimensionality reduction, data transformations, and optimization.
+
+#### 1. **Principal Component Analysis (PCA)**
+
+PCA is a popular dimensionality reduction technique used to project high-dimensional data onto a lower-dimensional space with minimal loss of information. In PCA:
+
+- The **covariance matrix** of the dataset is computed to capture feature relationships.
+- Eigenvectors of this matrix (principal components) represent directions of maximum variance.
+- Eigenvalues associated with these eigenvectors reflect the variance magnitude along each component, allowing us to prioritize components with the highest variance.
+
+By retaining only the top components, PCA reduces data dimensions while preserving most of the variance, improving efficiency in data processing and visualization.
+
+#### 2. **Feature reduction and noise reduction**
+
+Beyond PCA, eigenvalues and eigenvectors assist in identifying significant features or noise in data. Small eigenvalues often correspond to directions with minimal variance (possibly noise), allowing models to ignore less informative features and focus on relevant patterns.
+
+#### 3. **Spectral clustering**
+
+In **spectral clustering**, eigenvalues and eigenvectors of a similarity matrix or **Laplacian matrix** (derived from the adjacency matrix of a graph) are used to group similar data points. Spectral clustering projects data points into a space spanned by the largest eigenvectors of the Laplacian, revealing clusters based on structural relationships in data.
+
+#### 4. **Optimization and stability in neural networks**
+
+In neural network training, the **Hessian matrix** (second derivative of the loss function) can be analyzed via eigenvalues and eigenvectors. The eigenvalues of the Hessian reveal the **curvature** of the loss surface:
+- Large positive eigenvalues indicate steep areas of the surface, and very small or negative eigenvalues may suggest saddle points or flat regions, affecting convergence rates.
+  
+Understanding these eigenvalues can improve optimization strategies, helping to fine-tune learning rates and improve model stability.
+
+#### 5. **Markov chains and probabilistic models**
+
+In probabilistic models, particularly **Markov chains**, eigenvalues and eigenvectors describe the **long-term behavior** of transition matrices. The eigenvector associated with an eigenvalue of 1 represents the **steady-state distribution** of states, offering insights into equilibrium and stability in sequential models.
+
+In sum, eigenvalues and eigenvectors are vital for transforming, compressing, and optimizing data in machine learning. They reveal essential data patterns, simplify complex calculations, and provide insights that enable efficient model design and interpretation.
+
+<br/>
+
+## Linear transformations and projections
+
+Linear transformations are operations that map data points from one space to another while preserving the structure and relationships between points. In a linear transformation, applying a matrix <Latex text="\( \mathbf{A} \)"/> to a vector <Latex text="\( \mathbf{x} \)"/> produces a new vector <Latex text="\( \mathbf{y} \)"/> in the transformed space:
+<Latex text="\[
+\mathbf{y} = \mathbf{A} \mathbf{x}
+\]"/>
+Linear transformations can include scaling, rotation, reflection, and shearing. They are essential in machine learning and data science, as they help manipulate and restructure data to highlight important features or simplify complex relationships.
+
+In machine learning, linear transformations are typically represented by matrix multiplication. This is especially prominent in **neural networks** and **computer vision**.
+
+Each layer of a neural network applies a linear transformation (matrix multiplication by weights) followed by a non-linear activation function. This linear transformation reshapes the input data at each layer, gradually extracting features and enabling the model to learn complex patterns.
+
+In image processing, linear transformations can scale, rotate, and transform images. For instance, convolutional layers in deep learning apply linear transformations to extract spatial features in images. Techniques like image normalization and feature scaling also use linear transformations to adjust data distributions for more consistent and accurate model performance.
+
+A **projection** is a specific type of linear transformation that "projects" data points onto a lower-dimensional subspace, effectively reducing the dimensionality while preserving the structure of the original space as closely as possible. Mathematically, projecting a vector <Latex text="\( \mathbf{x} \)"/> onto a subspace spanned by vector <Latex text="\( \mathbf{u} \)"/> involves calculating:
+<Latex text="\[
+\text{proj}_{\mathbf{u}}(\mathbf{x}) = \frac{\mathbf{u} \cdot \mathbf{x}}{\mathbf{u} \cdot \mathbf{u}} \mathbf{u}
+\]"/>
+where <Latex text="\( \frac{\mathbf{u} \cdot \mathbf{x}}{\mathbf{u} \cdot \mathbf{u}} \)"/> is a scalar that represents the amount of <Latex text="\( \mathbf{x} \)"/> in the direction of <Latex text="\( \mathbf{u} \)"/>.
+
+In machine learning, projections are used to simplify data by reducing its dimensions, thus improving computational efficiency and minimizing noise.
+
+Projections are the foundation of dimensionality reduction techniques like **PCA**, where data is projected onto principal components (directions of maximum variance) to create a low-dimensional representation. This not only reduces computational cost but also highlights the most important patterns, making models more interpretable and less prone to overfitting.
+
+Projections allow models to focus on relevant features by projecting high-dimensional data onto a smaller, informative subspace. In natural language processing, for instance, word embeddings are projected onto vector spaces to capture semantic relationships.
+
+In clustering tasks, projecting data into lower dimensions often reveals group structures and relationships that are not apparent in higher dimensions. Techniques like **t-SNE** or **UMAP** are commonly used for visualizing clusters by projecting data into 2D or 3D spaces.
+
+Projections maintain the integrity of the original data structure by preserving distances and angles to a reasonable extent, which is vital for tasks that require understanding of data relationships. By focusing on essential patterns, projections help models train faster, improve generalization, and reduce redundancy in data.
+
+<br/>
+
+## Vector spaces and basis
+
+In linear algebra, vector spaces and their bases are fundamental for understanding the structure of data and how it can be represented in machine learning. These concepts allow us to define feature spaces, understand data embeddings, and ensure efficient, non-redundant representations of features in models.
+
+### **Vector spaces**
+
+A **vector space** is a collection of vectors that can be added together and multiplied by scalars (real numbers, for example) and still remain within the space. Formally, a vector space <Latex text="\( V \)"/> over a field <Latex text="\( \mathbb{R} \)"/> satisfies two main operations: vector addition and scalar multiplication.
+
+An example of a vector space is <Latex text="\( \mathbb{R}^n \)"/>, the space of all <Latex text="\( n \)"/>-dimensional real-valued vectors. For instance, <Latex text="\( \mathbb{R}^2 \)"/> consists of all 2D vectors, while <Latex text="\( \mathbb{R}^3 \)"/> represents all 3D vectors. In machine learning, we work in vector spaces where each dimension corresponds to a feature or attribute of the data.
+
+In machine learning, data points are often represented as vectors in an <Latex text="\( n \)"/>-dimensional vector space, where <Latex text="\( n \)"/> is the number of features. For example, in a dataset with 10 features, each data point can be viewed as a vector in <Latex text="\( \mathbb{R}^{10} \)"/>.
+  
+Techniques like word embeddings in natural language processing (NLP) or image embeddings in computer vision use vector spaces to represent complex data. Embeddings map data to a vector space where similar items are closer together, allowing models to leverage relationships between items based on distances and angles in that space.
+
+### **Basis and span**
+
+A **basis** of a vector space is a set of vectors that are linearly independent and span the entire space. The **span** of a set of vectors is the collection of all possible linear combinations of those vectors. If a vector space has a basis of <Latex text="\( n \)"/> vectors, we can represent any vector in the space as a unique combination of those <Latex text="\( n \)"/> basis vectors.
+
+For example, in <Latex text="\( \mathbb{R}^2 \)"/>, the standard basis consists of the vectors <Latex text="\( \mathbf{e}_1 = [1, 0]^T \)"/> and <Latex text="\( \mathbf{e}_2 = [0, 1]^T \)"/>, which span the entire 2D plane. Any vector in <Latex text="\( \mathbb{R}^2 \)"/> can be represented as a linear combination of <Latex text="\( \mathbf{e}_1 \)"/> and <Latex text="\( \mathbf{e}_2 \)"/>.
+
+Basis vectors allow us to represent features as combinations of simpler components. In machine learning models, we often select or transform features into an efficient basis that highlights important patterns or directions in the data. For instance, in PCA, the principal components form a new basis that captures the directions of greatest variance in the data.
+
+Changing the basis (e.g., through eigenvectors) allows us to reduce dimensions by selecting a subset of basis vectors that capture most of the information, which is crucial for reducing computational cost and noise in data.
+
+### **Linear independence**
+
+Vectors are **linearly independent** if no vector in the set can be represented as a linear combination of the others. If vectors are linearly dependent, some features may be redundant, providing no new information to the model. Linear independence is crucial because it ensures that each feature or vector contributes unique information to the data representation.
+
+Selecting linearly independent features helps avoid redundant information, improving model interpretability and efficiency. Highly correlated (or dependent) features often add noise without enhancing model performance.
+
+Redundant or dependent features can lead to overfitting, where the model learns specific details of the training data that don’t generalize well to new data. By focusing on a basis of independent features, models are less likely to overfit.
+
+      
+
