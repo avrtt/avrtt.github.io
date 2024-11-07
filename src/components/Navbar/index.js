@@ -72,7 +72,7 @@ const Navbar = () => {
           <NavLink to="/exploration" activeClassName="active">
             Exploration
           </NavLink>
-          <NavLink to="/freelance" activeClassName="active">
+          <NavLink to="/freelance" activeClassName="active" partiallyActive={true}>
             Freelance
           </NavLink>
           <NavLink to="/cv" activeClassName="active">
