@@ -8,13 +8,12 @@ const Navbar = () => {
   const location = useLocation();
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
+  const isHomePage = location.pathname === "/";
   const isPostsPage = location.pathname.includes("/adventures") ||
                       location.pathname.includes("/research") ||
                       location.pathname.includes("/thoughts");
-
-  const isAdventuresPage = location.pathname.includes("/adventures");
-  const isResearchPage = location.pathname.includes("/research");
-  const isThoughtsPage = location.pathname.includes("/thoughts");
+                      
+  const isFreelanceSubpage = location.pathname.startsWith("/freelance/") && location.pathname !== "/freelance/";
 
   const showDropdown = () => setDropdownVisible(true);
   const hideDropdown = () => setDropdownVisible(false);
@@ -23,7 +22,7 @@ const Navbar = () => {
     <>
       <Nav>
         <NavMenu>
-          <Link to="/">
+          <Link to="/" style={{"pointer-events": isHomePage ? "none" : ""}}>
             <StaticImage
               className="logo"
               src="./logo.png"
@@ -37,6 +36,9 @@ const Navbar = () => {
             <NavLink
               activeClassName="active"
               className={isPostsPage || dropdownVisible ? "active" : ""}
+              style={{
+                "background-color": "transparent"
+              }}
             >
               Posts
             </NavLink>
@@ -45,21 +47,18 @@ const Navbar = () => {
                 <DropdownItem
                   to="/adventures"
                   activeClassName="active"
-                  className={isAdventuresPage ? "active" : ""}
                 >
                   Adventures
                 </DropdownItem>
                 <DropdownItem
                   to="/research"
                   activeClassName="active"
-                  className={isResearchPage ? "active" : ""}
                 >
                   Research
                 </DropdownItem>
                 <DropdownItem
                   to="/thoughts"
                   activeClassName="active"
-                  className={isThoughtsPage ? "active" : ""}
                 >
                   Thoughts
                 </DropdownItem>
@@ -72,7 +71,12 @@ const Navbar = () => {
           <NavLink to="/exploration" activeClassName="active">
             Exploration
           </NavLink>
-          <NavLink to="/freelance" activeClassName="active" partiallyActive={true}>
+          <NavLink 
+            to="/freelance" 
+            activeClassName="active"
+            partiallyActive={true}
+            className={isFreelanceSubpage ? "freelance-subpage" : ""}
+          >
             Freelance
           </NavLink>
           <NavLink to="/cv" activeClassName="active">

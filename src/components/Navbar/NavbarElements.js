@@ -1,5 +1,6 @@
 import { Link } from "gatsby";
 import styled from "styled-components";
+import { keyframes } from "styled-components";
 
 export const Nav = styled.nav`
 	margin-bottom: 2vh; 
@@ -27,6 +28,28 @@ export const NavMenu = styled.div`
 	}
 `;
 
+const fadeInDown = keyframes`
+	from {
+		opacity: 0;
+		transform: translateY(-10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+`;
+
+const fadeOutUp = keyframes`
+	from {
+		opacity: 1;
+		transform: translateY(0);
+	}
+	to {
+		opacity: 0;
+		transform: translateY(-10px);
+	}
+`;
+
 export const Dropdown = styled.div`
 	position: relative;
 	display: inline-block;
@@ -37,40 +60,56 @@ export const DropdownMenu = styled.div`
 	display: flex;
 	flex-direction: column;
 	position: absolute;
-	top: 100%;
+	top: 120%;
 	left: 0;
-	background-color: #fff;
-	border-radius: 4px;
-	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-	padding: 0.5vh 0;
+	background-color: #D9D9D9;
+	border-radius: 1vh;
+	padding: 1vh 1vh;
+	margin-left: -1vh;
 	opacity: 0;
 	visibility: hidden;
-	transition: opacity 0.3s ease, visibility 0.3s ease;
+	transform: translateY(-10px);
+	transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+	pointer-events: none;
 
-	${Dropdown}:hover & {
-    	opacity: 1;
+  	${Dropdown}:hover &,
+  	${Dropdown}:focus-within & {
+		opacity: 1;
 		visibility: visible;
+		transform: translateY(0);
+		pointer-events: auto;
+		animation: ${fadeInDown} 0.3s ease forwards;
   	}
+
+  	&::before {
+		content: "";
+		position: absolute;
+		top: -2vh;
+		left: 0;
+		right: 0;
+		height: 2vh;
+	}
 `;
 
 export const DropdownItem = styled(Link)`
-	padding: 0.8vh 2vh;
+	padding: 0.4vh 2vh;
 	color: #8e8e8e;
 	text-decoration: none;
 	font-weight: 1000;
-	font-size: 2vh;
-	background-color: #fff;
+	font-size: 2.2vh;
+	background-color: transparent;
 	border-radius: 1vh;
 	white-space: nowrap;
-	transition: background-color 0.2s ease;
+	transition: background-color 0.2s ease, color 0.2s ease;
 
 	&:hover {
-		background-color: #f2f2f2;
 		color: #545456;
+		background-color: #f2f2f2;
 	}
 
 	&.active {
 		opacity: 0.22;
+		pointer-events: none;
 	}
 `;
 
@@ -96,6 +135,7 @@ export const NavLink = styled(Link)`
 	&.active {
 		opacity: 0.22;
 		background-color: rgba(255, 255, 255, 0) !important;
+		pointer-events: none;
 	}
 
 	&:hover {
@@ -110,7 +150,16 @@ export const NavLink = styled(Link)`
 	}
 
 	${Dropdown}:hover & {
-    	opacity: 0.22;
-    	background-color: rgba(255, 255, 255, 0) !important;
-  }
+    	opacity: 1;
+  	}
+
+	&.freelance-subpage {
+		opacity: 0.22;
+		pointer-events: auto;
+
+		&:hover {
+			background-color: transparent;
+			opacity: 0.7;
+		}
+  	}
 `;
