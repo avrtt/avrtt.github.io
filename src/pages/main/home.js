@@ -25,6 +25,9 @@ import QR from "../../images/donate/qr.png";
 import LastPostAdventures from "../../fetchers/adventures_last_post"
 import LastPostResearch from "../../fetchers/research_last_post"
 import LastPostThoughts from "../../fetchers/thoughts_last_post"
+import SecondLastPostAdventures from "../../fetchers/adventures_second_last_post"
+import SecondLastPostResearch from "../../fetchers/research_second_last_post"
+import SecondLastPostThoughts from "../../fetchers/thoughts_second_last_post"
 
 const TITLE = 'Home - avrtt.blog'
 
@@ -57,7 +60,12 @@ const Home = () => {
 	const lastPostAdventures = LastPostAdventures()
 	const lastPostResearch = LastPostResearch()
 	const lastPostThoughts = LastPostThoughts()
-	const posts = [lastPostAdventures, lastPostResearch, lastPostThoughts];
+	const postsLast = [lastPostAdventures, lastPostResearch, lastPostThoughts];
+
+	const secondLastPostAdventures = SecondLastPostAdventures()
+	const secondLastPostResearch = SecondLastPostResearch()
+	const secondLastPostThoughts = SecondLastPostThoughts()
+	const postsSecondLast = [secondLastPostAdventures, secondLastPostResearch, secondLastPostThoughts];
 	
 	useEffect(() => {
   		window.scrollTo(0, 0)
@@ -79,7 +87,31 @@ const Home = () => {
 		
 		<Box class="latestPosts noselect">
 			<ImageList cols={3} gap={5}>
-				{posts.map(post => {
+				{postsLast.map(post => {
+					const image = getImage(post.frontmatter.banner);
+					return (
+						<ImageListItem key={post.id}>
+							<div class="hover">
+								<GatsbyImage
+									className="prev-home"
+									image={image}
+									alt={post.frontmatter.title}
+								/>
+								<Link to={post.frontmatter.slug}>
+									<div className="overlay-back">
+										<div className="titleblock">
+											<p className="title-home">{post.frontmatter.title}</p>
+										</div>							
+									</div>
+									<div className="overlay-base-home">
+										<p className="title-home">{post.frontmatter.title}</p>
+									</div>
+								</Link>
+							</div>
+						</ImageListItem>
+					);
+				})}
+				{postsSecondLast.map(post => {
 					const image = getImage(post.frontmatter.banner);
 					return (
 						<ImageListItem key={post.id}>
