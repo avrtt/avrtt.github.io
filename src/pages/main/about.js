@@ -46,6 +46,7 @@ const About = () => {
                     fontSizeTitle="50px"
                     titleColor="#615050"
                     textAlignTitle="center"
+                    divAnimation={false}
                 />
             </TileContainer>
             <TileContainer columns={2} gap="1.5vw" marginBottom="4vh" marginTop="2vh">
@@ -54,11 +55,13 @@ const About = () => {
                     backgroundColor="transparent"
                     fontSizeTitle="40px"
                     paddingDescription="0"
+                    divAnimation={false}
                 />
                 <ContentBlock
                     description="An extra place for general detailes about me and photo"
                     backgroundColor="transparent"
                     paddingDescription="0"
+                    divAnimation={false}
                 />
             </TileContainer>
             <TileContainer columns={2}>
