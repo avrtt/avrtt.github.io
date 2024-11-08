@@ -9,6 +9,7 @@ import TileContainer from '../../components/TileContainer';
 import { aboutLastUpdated } from '../../data/lastUpdated';
 import aboutPhoto from "../../images/about/photoAbout.jpg";
 import info from "../../images/goals/info.svg";
+import disguise from "../../gifs/disguise.gif"; 
 
 const TITLE = 'About - avrtt.blog'
 
@@ -68,10 +69,11 @@ const About = () => {
                 />
                 <ContentBlock
                     emoji="🥸"
+                    emojiGif={disguise}
                     description="Despite the ubiquitous usage, **Averett** isn't my surname, but a pseudonym or even something of an alter ego."
                     backgroundColor="#dbdbdb"
                     textAlign='center'
-                    textAlignEmoji='center'
+                    emojiAlign='center'
                 />
             </TileContainer>
             <TileContainer columns={3}>
