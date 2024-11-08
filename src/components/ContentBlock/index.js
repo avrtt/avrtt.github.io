@@ -6,9 +6,11 @@ const ContentBlock = ({
     description,
     backgroundColor = '#ffffff',
     textColor = '#000000',
-    padding = '20px',
+    padding = '0px',
     alignment = 'left',
     borderRadius = '2vh',
+    width = '100%',
+    height = 'auto',
 }) => {
     const blockStyle = {
         backgroundColor,
@@ -16,6 +18,8 @@ const ContentBlock = ({
         padding,
         textAlign: alignment,
         borderRadius,
+        width,
+        height,
     };
 
   return (
@@ -34,6 +38,8 @@ ContentBlock.propTypes = {
     padding: PropTypes.string,
     alignment: PropTypes.oneOf(['left', 'center', 'right']),
     borderRadius: PropTypes.string,
+    width: PropTypes.string,
+    height: PropTypes.string,
 };
 
 export default ContentBlock;

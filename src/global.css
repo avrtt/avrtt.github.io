@@ -2817,6 +2817,26 @@ h6 {
 
 
 
+/* CONTENT BLOCK & TILE CONTAINTER */
+
+.contentBlock {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+}
+
+.tileContainer {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap);
+}
+
+
+
 /* RESPONSIVE DESIGN */
 
 @media (prefers-reduced-motion: reduce) {
