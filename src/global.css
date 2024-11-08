@@ -38,7 +38,20 @@ body {
   font-weight: lighter;
 }
 
-.aboutBody {
+.aboutBodyTile {
+  margin-left: 0%;
+  margin-right: 0%;
+  max-width: 100%;
+  font-size: 22px;
+  color: #444444;
+  background-color: transparent;
+  padding: 0em 4em;
+  border-radius: 2vh;
+  font-weight: lighter;
+  margin-top: 22px;
+}
+
+.aboutBodyRegular {
   margin-left: 5%;
   margin-right: 5%;
   max-width: 100%;
@@ -295,8 +308,8 @@ h3::selection {
 
 /* LINKS */
 
-.postBody a, .homeBody a, .aboutBody a, .cvBody a, .freelanceBody a, .goalsBody a, .explorationBody a,
-.postBody href, .homeBody href, .aboutBody href, .cvBody href, .freelanceBody href, .goalsBody href, .explorationBody href {
+.postBody a, .homeBody a, .aboutBodyTile a, .aboutBodyRegular a, .cvBody a, .freelanceBody a, .goalsBody a, .explorationBody a,
+.postBody href, .homeBody href, .aboutBodyTile href, .aboutBodyRegular href, .cvBody href, .freelanceBody href, .goalsBody href, .explorationBody href {
 	text-decoration: none;
 	font-weight: 800;
 	border-bottom: 0;
@@ -307,8 +320,8 @@ h3::selection {
           transition: color 0.1s ease-in-out;
 }
 
-.postBody a:hover, .homeBody a:hover, .aboutBody a:hover, .cvBody a:hover, .freelanceBody a:hover, .goalsBody a:hover, .explorationBody a:hover,
-.postBody href:hover, .homeBody href:hover, .aboutBody href:hover, .cvBody href:hover, .freelanceBody href:hover, .goalsBody href:hover, .explorationBody href:hover {
+.postBody a:hover, .homeBody a:hover, .aboutBodyTile a:hover, .aboutBodyRegular a:hover, .cvBody a:hover, .freelanceBody a:hover, .goalsBody a:hover, .explorationBody a:hover,
+.postBody href:hover, .homeBody href:hover, .aboutBodyTile href:hover, .aboutBodyRegular href:hover, .cvBody href:hover, .freelanceBody href:hover, .goalsBody href:hover, .explorationBody href:hover {
 	border-bottom: 0;
 	color: #424242;
   text-decoration: none;
@@ -2821,9 +2834,6 @@ h6 {
 
 .contentBlock {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
   flex-direction: column;
 }
 
