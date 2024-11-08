@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const TileContainer = ({ children, columns = 1, gap = '10px', marginBottom = '20px' }) => {
+const TileContainer = ({ children, columns = 1, gap = '0.5vw', marginBottom = '2vh', marginTop = '0vh' }) => {
     const containerStyle = {
         display: 'flex',
         flexWrap: 'wrap',
         gap,
         marginBottom,
+        marginTop,
         justifyContent: 'space-between',
     };
 
@@ -25,6 +26,8 @@ TileContainer.propTypes = {
     children: PropTypes.node.isRequired,
     columns: PropTypes.number,
     gap: PropTypes.string,
+    marginBottom: PropTypes.string,
+    marginTop: PropTypes.string
 };
 
 export default TileContainer;
