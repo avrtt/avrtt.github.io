@@ -64,6 +64,19 @@ body {
   font-weight: lighter;
 }
 
+.courseBody {
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 22px;
+  max-width: 100%;
+  font-size: 26px;
+  color: #444444;
+  background-color: white;
+  padding: 2.5em 4em;
+  border-radius: 2vh;
+  font-weight: lighter;
+}
+
 .freelanceBody {
   margin-left: 5%;
   margin-right: 5%;
@@ -2003,6 +2016,16 @@ span.SAFE {
 }
 
 .lastUpdatedCv {
+  font-size: 18px;
+	text-align: right;
+	opacity: 0.6;
+	font-weight: normal;
+	margin-top: 4px;
+	margin-bottom: -32px;
+	margin-right: 6%;
+}
+
+.lastUpdatedCourse {
   font-size: 18px;
 	text-align: right;
 	opacity: 0.6;

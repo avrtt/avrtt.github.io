@@ -65,6 +65,9 @@ const Navbar = () => {
               </DropdownMenu>
             )}
           </Dropdown>
+          <NavLink to="/course" activeClassName="active">
+            Course
+          </NavLink>
           <NavLink to="/goals" activeClassName="active">
             Goals
           </NavLink>
