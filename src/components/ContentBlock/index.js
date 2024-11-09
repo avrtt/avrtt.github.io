@@ -88,6 +88,8 @@ const ContentBlock = ({
         marginTop: '-1.4em',
         marginLeft: '-0.2em',
         marginRight: '-0.2em',
+        opacity: showGif ? '0' : '1',
+        transition: 'transform 0.3s ease, opacity 0.2s ease',
     }
 
     let emojiGifStyle
