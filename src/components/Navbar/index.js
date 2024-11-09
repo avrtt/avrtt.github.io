@@ -3,6 +3,7 @@ import { Link } from "gatsby";
 import { useLocation } from "@reach/router";
 import { Nav, NavLink, NavMenu, Dropdown, DropdownMenu, DropdownItem } from "./NavbarElements";
 import { StaticImage } from "gatsby-plugin-image";
+import CountPosts from "../../fetchers/count_posts";
 
 const Navbar = () => {
   const location = useLocation();
@@ -17,6 +18,8 @@ const Navbar = () => {
 
   const showDropdown = () => setDropdownVisible(true);
   const hideDropdown = () => setDropdownVisible(false);
+
+  const { adventuresCount, researchCount, thoughtsCount } = CountPosts();
 
   return (
     <>
@@ -54,7 +57,7 @@ const Navbar = () => {
                     "background-color": isAdventuresPost ? "transparent" : "",
                   }}
                 >
-                  Adventures
+                  Adventures ({adventuresCount})
                 </DropdownItem>
                 <DropdownItem
                   to="/research"
@@ -64,7 +67,7 @@ const Navbar = () => {
                     "background-color": isResearchPost ? "transparent" : "",
                   }}
                 >
-                  Research
+                  Research ({researchCount})
                 </DropdownItem>
                 <DropdownItem
                   to="/thoughts"
@@ -74,7 +77,7 @@ const Navbar = () => {
                     "background-color": isThoughtsPost ? "transparent" : "",
                   }}
                 >
-                  Thoughts
+                  Thoughts ({thoughtsCount})
                 </DropdownItem>
               </DropdownMenu>
             )}
