@@ -39,17 +39,6 @@ const fadeInDown = keyframes`
 	}
 `;
 
-const fadeOutUp = keyframes`
-	from {
-		opacity: 1;
-		transform: translateY(0);
-	}
-	to {
-		opacity: 0;
-		transform: translateY(-10px);
-	}
-`;
-
 export const Dropdown = styled.div`
 	position: relative;
 	display: inline-block;
@@ -62,7 +51,7 @@ export const DropdownMenu = styled.div`
 	position: absolute;
 	top: 120%;
 	left: 0;
-	background-color: #D9D9D9;
+	background-color: #e6e3e3;
 	border-radius: 1vh;
 	padding: 1vh 1vh;
 	margin-left: -1vh;
@@ -104,7 +93,7 @@ export const DropdownItem = styled(Link)`
 
 	&:hover {
 		color: #545456;
-		background-color: #f2f2f2;
+		background-color: #F8F8F8;
 	}
 
 	&.active {

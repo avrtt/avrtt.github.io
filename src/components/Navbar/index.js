@@ -37,7 +37,8 @@ const Navbar = () => {
               activeClassName="active"
               className={isPostsPage || dropdownVisible ? "active" : ""}
               style={{
-                "background-color": "transparent"
+                "background-color": "transparent",
+                "padding-right": "28px",
               }}
             >
               Posts
