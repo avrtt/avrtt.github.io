@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "gatsby"
 import Telegram from "./telegram.svg";
 import Instagram from "./instagram.svg";
 import Email from "./email.svg";
@@ -15,7 +16,7 @@ import {
   
 const copyStyle = {
 	"font-size": "1.9vh",
-  "margin-top": "2.8vw",
+  "margin-top": "3.5vw",
 }  
 
 const nameStyle = {
@@ -62,6 +63,13 @@ const badgeFourthStyle = {
 const badgeFifthStyle = {
   "margin-top": "2.8vw",
   "position": "absolute",
+  "margin-left": "-1.2vw",
+  "height": "1.2vw",
+}
+
+const badgeSixthStyle = {
+  "margin-top": "3.8vw",
+  "position": "absolute",
   "margin-left": "0vw",
   "height": "1.2vw",
   "opacity": "0.6",
@@ -96,11 +104,12 @@ const Footer = () => {
             <FooterLink href="https://www.google.com/maps/d/viewer?mid=1X9b0bo11WcY9on87ZQXoB3YUkccwnK49&ll=0.3349379679001004%2C0&z=2"><img src={Map} style={{ height: "4.6vh", width: "4.6vh" }} alt="map-logo" /></FooterLink>     
 		</Row>
     <Row style={badgesLeftWrapperStyle}>
-      <a href="https://github.com/avrtt/avrtt.github.io/issues/new"><img class="footerBadgeStyle" style={badgeFirstStyle} src="https://img.shields.io/badge/🐞%20Report%20a%20bug-f2f2f2?style=flat-square" alt="badge"/></a>
-      <a href="https://github.com/avrtt/avrtt.github.io/blob/main/README.md"><img class="footerBadgeStyle" style={badgeSecondStyle} src="https://img.shields.io/badge/🤓%20Docs%20for%20nerds-f2f2f2?style=flat-square" alt="badge"/></a>
-      <a href="https://github.com/avrtt/avrtt.github.io/activity?ref=gh-pages&activity_type=direct_push"><img class="footerBadgeStyle" style={badgeThirdStyle} src="https://img.shields.io/github/last-commit/avrtt/avrtt.github.io/gh-pages?style=flat-square&label=⚙️%20Last%20deploy%3A&labelColor=%23f2f2f2&color=%23f2f2f2" alt="badge"/></a>
-      <a href="https://github.com/avrtt/avrtt.github.io/commits/main/"><img class="footerBadgeStyle" style={badgeFourthStyle} src="https://img.shields.io/github/commit-activity/t/avrtt/avrtt.github.io/main?style=flat-square&label=🧩%20Commits%20(main%20branch)%3A&labelColor=%23f2f2f2&color=%23f2f2f2" alt="badge"/></a>
-      <img style={badgeFifthStyle} class="footerBadgeStyle" src="https://img.shields.io/github/repo-size/avrtt/avrtt.github.io?style=flat-square&label=📦%20Repo%20size%3A&labelColor=%23f2f2f2&color=%23f2f2f2" alt="badge"/>
+      <Link to="/donate"><img class="footerBadgeStyle" style={badgeFirstStyle} src="https://img.shields.io/badge/🎁%20Donate-f2f2f2?style=flat-square" alt="badge"/></Link>
+      <a href="https://github.com/avrtt/avrtt.github.io/issues/new"><img class="footerBadgeStyle" style={badgeSecondStyle} src="https://img.shields.io/badge/🐞%20Report%20a%20bug-f2f2f2?style=flat-square" alt="badge"/></a>
+      <a href="https://github.com/avrtt/avrtt.github.io/blob/main/README.md"><img class="footerBadgeStyle" style={badgeThirdStyle} src="https://img.shields.io/badge/🤓%20Docs%20for%20nerds-f2f2f2?style=flat-square" alt="badge"/></a>
+      <a href="https://github.com/avrtt/avrtt.github.io/activity?ref=gh-pages&activity_type=direct_push"><img class="footerBadgeStyle" style={badgeFourthStyle} src="https://img.shields.io/github/last-commit/avrtt/avrtt.github.io/gh-pages?style=flat-square&label=⚙️%20Last%20deploy%3A&labelColor=%23f2f2f2&color=%23f2f2f2" alt="badge"/></a>
+      <a href="https://github.com/avrtt/avrtt.github.io/commits/main/"><img class="footerBadgeStyle" style={badgeFifthStyle} src="https://img.shields.io/github/commit-activity/t/avrtt/avrtt.github.io/main?style=flat-square&label=🧩%20Commits%20(main%20branch)%3A&labelColor=%23f2f2f2&color=%23f2f2f2" alt="badge"/></a>
+      <img style={badgeSixthStyle} class="footerBadgeStyle" src="https://img.shields.io/github/repo-size/avrtt/avrtt.github.io?style=flat-square&label=📦%20Repo%20size%3A&labelColor=%23f2f2f2&color=%23f2f2f2" alt="badge"/>
     </Row>
     <Row style={badgesRightWrapperStyle}>
       <img style={visitsTodayBadgeStyle} src="https://api.visitorbadge.io/api/daily?path=https%3A%2F%2Favrtt.github.io%2F&label=TODAY&labelColor=%23f2f2f2&countColor=%23FFAC1C&style=flat-square&labelStyle=none" alt="badge"/>
