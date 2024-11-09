@@ -1,7 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { AnimationOnScroll } from 'react-animation-on-scroll';
 
-const TileContainer = ({ children, columns = 1, gap = '0.5vw', marginBottom = '2vh', marginTop = '0vh' }) => {
+const TileContainer = ({ 
+    children, 
+    columns = 1, 
+    animationonscroll = true, 
+    offset = "300", 
+    gap = '0.5vw', 
+    marginBottom = '2vh', 
+    marginTop = '0vh' 
+}) => {
+    
     const containerStyle = {
         display: 'flex',
         flexWrap: 'wrap',
@@ -11,15 +21,23 @@ const TileContainer = ({ children, columns = 1, gap = '0.5vw', marginBottom = '2
         justifyContent: 'space-between',
     };
 
-  const blockWidth = `calc((100% / ${columns}) - ${gap})`;
+    const blockWidth = `calc((100% / ${columns}) - ${gap})`;
 
-  return (
-    <div style={containerStyle} className="tileContainer">
-        {React.Children.map(children, (child) =>
-            React.cloneElement(child, { width: blockWidth })
-        )}
-    </div>
-  );
+    return animationonscroll ? (
+        <AnimationOnScroll offset={offset} duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
+            <div style={containerStyle} className="tileContainer">
+                {React.Children.map(children, (child) =>
+                    React.cloneElement(child, { width: blockWidth })
+                )}
+            </div>
+        </AnimationOnScroll>
+    ) : (
+        <div style={containerStyle} className="tileContainer">
+            {React.Children.map(children, (child) =>
+                React.cloneElement(child, { width: blockWidth })
+            )}
+        </div>
+    );
 };
 
 TileContainer.propTypes = {
