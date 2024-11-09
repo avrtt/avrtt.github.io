@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { AnimationOnScroll } from 'react-animation-on-scroll';
 import { motion } from 'framer-motion';
@@ -9,7 +9,9 @@ import TileContainer from '../../components/TileContainer';
 import { aboutLastUpdated } from '../../data/lastUpdated';
 import aboutPhoto from "../../images/about/photoAbout.jpg";
 import info from "../../images/goals/info.svg";
-import disguise from "../../gifs/disguise.gif"; 
+import disguise from "../../gifs/disguise.gif";
+import wave from "../../gifs/wave.gif"; 
+import waveFrame from "../../gifs/wave_frame.gif"; 
 
 const TITLE = 'About - avrtt.blog'
 
@@ -22,11 +24,54 @@ const aboutPhotoStyle = {
     'margin-bottom': '60px'
 }
 
+const greetingsStyle = {
+    width: `calc((100%) - 1.5vw)`
+}
+
+const greetingsWrapperStyle = {
+    marginTop: "2vh",
+    fontSize: '50px',
+    textAlign: "center",
+    color: "#615050",
+    fontWeight: 'bold',
+    marginTop: "2vh",
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    marginLeft: '-35px'
+}
+
+const waveGifStyle = {
+    width: '56px',
+    verticalAlign: 'middle',
+    marginRight: '5px',
+    opacity: 0,
+}
+
+const waveFrameStyle = {
+    width: '56px',
+    verticalAlign: 'middle',
+    marginRight: '-55px',
+    opacity: 1,
+}
+
+
 const About = () => {
 	
-	useEffect(() => {
-  		//window.scrollTo(0, 0)
-	}, [])	
+	const [waveGifOpacity, setWaveGifOpacity] = useState(0);
+    const [waveFrameOpacity, setWaveFrameOpacity] = useState(1);
+
+    useEffect(() => {
+        setWaveGifOpacity(1);
+        setWaveFrameOpacity(0);
+
+        const switchToFrameTimeout = setTimeout(() => {
+            setWaveGifOpacity(0);
+            setWaveFrameOpacity(1);
+        }, 1100);
+
+        return () => clearTimeout(switchToFrameTimeout);
+    }, []);
 	
   return (
 	<motion.div
@@ -39,16 +84,24 @@ const About = () => {
         </Helmet>
     
         <div class="aboutBodyTile">
-            <TileContainer columns={1} gap="1.5vw" marginBottom="0vh" marginTop="2vh">
-                <ContentBlock
-                    title="👋 Hi there! I'm Vlad."
-                    backgroundColor="transparent"
-                    fontSizeTitle="50px"
-                    titleColor="#615050"
-                    textAlignTitle="center"
-                    divAnimation={false}
-                />
-            </TileContainer>
+            <div style={greetingsWrapperStyle} className="tileContainer noselect">
+                <p style={greetingsStyle}>
+                    <span>
+                        <img
+                            style={{ ...waveFrameStyle, opacity: waveFrameOpacity }}
+                            src={waveFrame}
+                            alt="👋🏻"
+                        />
+                        <img
+                            style={{ ...waveGifStyle, opacity: waveGifOpacity }}
+                            src={wave}
+                            alt="👋🏻"
+                        />
+                    </span>
+                    &nbsp;
+                    <span>Hi there! I'm Vlad.</span>
+                </p>
+            </div>
             <TileContainer columns={2} gap="1.5vw" marginBottom="4vh" marginTop="2vh">
                 <ContentBlock
                     description="I'm an adventurous nomad, data scientist, AI researcher, occasional developer, experimental musician and content creator from 🐻 **Russia**."
