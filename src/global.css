@@ -2847,6 +2847,20 @@ h6 {
 
 
 
+/* NAVBAR EXTRAS */
+
+.navbarPostSection {
+  opacity: 0.22 !important;
+  transition: opacity 0.2s ease
+}
+
+.navbarPostSection:hover {
+  opacity: 0.6 !important;
+  transition: opacity 0.2s ease
+}
+
+
+
 /* RESPONSIVE DESIGN */
 
 @media (prefers-reduced-motion: reduce) {

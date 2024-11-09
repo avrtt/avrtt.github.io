@@ -9,9 +9,9 @@ const Navbar = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
   const isHomePage = location.pathname === "/";
-  const isPostsPage = location.pathname.includes("/adventures") ||
-                      location.pathname.includes("/research") ||
-                      location.pathname.includes("/thoughts");
+  const isAdventuresPost = location.pathname.includes("/adventures")
+  const isResearchPost = location.pathname.includes("/research")
+  const isThoughtsPost = location.pathname.includes("/thoughts")
                       
   const isFreelanceSubpage = location.pathname.startsWith("/freelance/") && location.pathname !== "/freelance/";
 
@@ -35,8 +35,9 @@ const Navbar = () => {
           <Dropdown onMouseEnter={showDropdown} onMouseLeave={hideDropdown}>
             <NavLink
               activeClassName="active"
-              className={isPostsPage || dropdownVisible ? "active" : ""}
+              className={dropdownVisible ? "active" : ""}
               style={{
+                "opacity": dropdownVisible ? "0.5" : "1",
                 "background-color": "transparent",
                 "padding-right": "28px",
               }}
@@ -48,18 +49,30 @@ const Navbar = () => {
                 <DropdownItem
                   to="/adventures"
                   activeClassName="active"
+                  className={isAdventuresPost ? "navbarPostSection" : ""}
+                  style={{
+                    "background-color": isAdventuresPost ? "transparent" : "",
+                  }}
                 >
                   Adventures
                 </DropdownItem>
                 <DropdownItem
                   to="/research"
                   activeClassName="active"
+                  className={isResearchPost ? "navbarPostSection" : ""}
+                  style={{
+                    "background-color": isResearchPost ? "transparent" : "",
+                  }}
                 >
                   Research
                 </DropdownItem>
                 <DropdownItem
                   to="/thoughts"
                   activeClassName="active"
+                  className={isThoughtsPost ? "navbarPostSection" : ""}
+                  style={{
+                    "background-color": isThoughtsPost ? "transparent" : "",
+                  }}
                 >
                   Thoughts
                 </DropdownItem>
