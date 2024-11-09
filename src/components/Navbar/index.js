@@ -57,7 +57,11 @@ const Navbar = () => {
                     "background-color": isAdventuresPost ? "transparent" : "",
                   }}
                 >
-                  Adventures ({adventuresCount})
+                  Adventures <span style={{
+                    "color": "#bababa", 
+                    "opacity": isAdventuresPost ? "0" : "",
+                    "transition": "opacity 0.3s ease"
+                  }}>({adventuresCount})</span>
                 </DropdownItem>
                 <DropdownItem
                   to="/research"
@@ -67,7 +71,11 @@ const Navbar = () => {
                     "background-color": isResearchPost ? "transparent" : "",
                   }}
                 >
-                  Research ({researchCount})
+                  Research <span style={{
+                    "color": "#bababa", 
+                    "opacity": isResearchPost ? "0" : "",
+                    "transition": "opacity 0.3s ease"
+                  }}>({researchCount})</span>
                 </DropdownItem>
                 <DropdownItem
                   to="/thoughts"
@@ -77,7 +85,11 @@ const Navbar = () => {
                     "background-color": isThoughtsPost ? "transparent" : "",
                   }}
                 >
-                  Thoughts ({thoughtsCount})
+                  Thoughts <span style={{
+                    "color": "#bababa", 
+                    "opacity": isThoughtsPost ? "0" : "",
+                    "transition": "opacity 0.3s ease"
+                  }}>({thoughtsCount})</span>
                 </DropdownItem>
               </DropdownMenu>
             )}
