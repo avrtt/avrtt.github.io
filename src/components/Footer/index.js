@@ -92,16 +92,6 @@ const FooterLinksStyle = {
   "transform": "translateY(2vw)"
 }
 
-/*const contactButtonStyle = {
-  "position": "absolute",
-  "height": "1.2vw",
-  "left": "0",
-  "right": "0",
-  "margin": "auto",
-  "border-radius": "2vh",
-  "transform": "translate(0vw, 2vw)"
-}*/
-
 const contactButtonStyle = {
   "position": "absolute",
   "height": "1.2vw",
