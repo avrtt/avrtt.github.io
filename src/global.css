@@ -103,6 +103,19 @@ body {
   font-weight: lighter;
 }
 
+.contactBody {
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 22px;
+  max-width: 100%;
+  font-size: 26px;
+  color: #444444;
+  background-color: white;
+  padding: 2.5em 4em;
+  border-radius: 2vh;
+  font-weight: lighter;
+}
+
 .freelanceBody {
   margin-left: 5%;
   margin-right: 5%;
@@ -321,8 +334,8 @@ h3::selection {
 
 /* LINKS */
 
-.courseBody a, .donateBody a, .postBody a, .homeBody a, .aboutBodyTile a, .aboutBodyRegular a, .cvBody a, .freelanceBody a, .goalsBody a, .explorationBody a,
-.courseBody href, .donateBody href, .postBody href, .homeBody href, .aboutBodyTile href, .aboutBodyRegular href, .cvBody href, .freelanceBody href, .goalsBody href, .explorationBody href {
+.contactBody a, .courseBody a, .donateBody a, .postBody a, .homeBody a, .aboutBodyTile a, .aboutBodyRegular a, .cvBody a, .freelanceBody a, .goalsBody a, .explorationBody a,
+.contactBody href, .courseBody href, .donateBody href, .postBody href, .homeBody href, .aboutBodyTile href, .aboutBodyRegular href, .cvBody href, .freelanceBody href, .goalsBody href, .explorationBody href {
 	text-decoration: none;
 	font-weight: 800;
 	border-bottom: 0;
@@ -333,8 +346,8 @@ h3::selection {
           transition: color 0.1s ease-in-out;
 }
 
-.courseBody a:hover, .donateBody a:hover, .postBody a:hover, .homeBody a:hover, .aboutBodyTile a:hover, .aboutBodyRegular a:hover, .cvBody a:hover, .freelanceBody a:hover, .goalsBody a:hover, .explorationBody a:hover,
-.courseBody href:hover, .donateBody href:hover, .postBody href:hover, .homeBody href:hover, .aboutBodyTile href:hover, .aboutBodyRegular href:hover, .cvBody href:hover, .freelanceBody href:hover, .goalsBody href:hover, .explorationBody href:hover {
+.contactBody a:hover, .courseBody a:hover, .donateBody a:hover, .postBody a:hover, .homeBody a:hover, .aboutBodyTile a:hover, .aboutBodyRegular a:hover, .cvBody a:hover, .freelanceBody a:hover, .goalsBody a:hover, .explorationBody a:hover,
+.contactBody href:hover, .courseBody href:hover, .donateBody href:hover, .postBody href:hover, .homeBody href:hover, .aboutBodyTile href:hover, .aboutBodyRegular href:hover, .cvBody href:hover, .freelanceBody href:hover, .goalsBody href:hover, .explorationBody href:hover {
 	border-bottom: 0;
 	color: #424242;
   text-decoration: none;
@@ -2085,6 +2098,16 @@ span.SAFE {
   transition: 110ms ease-in;
   opacity: 1.0;
   filter: alpha(opacity=100);
+}
+
+.footerContactStyle {
+  transition: 110ms ease-in;
+  opacity: 1.0;
+}
+
+.footerContactStyle:hover {
+  transition: 110ms ease-in;
+  opacity: 0.75;
 }
 
 

@@ -76,6 +76,7 @@ exports.createPages = async ({ actions, graphql }) => {
   createPage({path: "/about", component: path.resolve(`src/pages/main/about.js`)});
   createPage({path: "/information_for_business_inquiries", component: path.resolve(`src/pages/extras/information_for_business_inquiries.js`)});
   createPage({path: "/donate", component: path.resolve(`src/pages/extras/donate.js`)});
+  createPage({path: "/contact", component: path.resolve(`src/pages/extras/contact.js`)});
 
 };
 
