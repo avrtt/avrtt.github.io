@@ -3,6 +3,8 @@ import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { AnimationOnScroll } from 'react-animation-on-scroll';
 import M from '../../components/Markdown';
+import LinkBlock from '../../components/LinkBlock';
+import TileContainer from '../../components/TileContainer';
 import { categories, services, projectsCount } from '../../data/freelance/arrays';
 import { currentZoneUTC, freelanceWorkHourStart, freelanceWorkHourEnd } from '../../data/freelance/variables';
 import { freelanceLastUpdated } from '../../data/lastUpdated';
@@ -21,6 +23,13 @@ import ETHQR from "../../images/donate/eth-qr.svg";
 import BSCQR from "../../images/donate/bsc-qr.svg";
 import Search from "../../images/donate/search.svg";
 import QR from "../../images/donate/qr.png";
+import telegram from "../../images/links/telegram.svg"
+import envelope from "../../images/links/envelope.svg"
+import facebook from "../../images/links/facebook.svg"
+import upwork from "../../images/links/upwork.svg"
+import fiverr from "../../images/links/fiverr.svg"
+import kwork from "../../images/links/kwork.svg"
+import habr from "../../images/links/habr.svg"
 
 const TITLE = 'Freelance - avrtt.blog'
 
@@ -168,24 +177,102 @@ const Freelance = () => {
 					spoilerExtraDesc={"This list includes services that I *prefer* to do right now. It's not exhaustive, and we may have a deal on things that goes beyond it."}
 				/>
 				<M text="If you need examples and more details, you can go straight to the [page of services](/freelance/services), which describes each type of job in the list above, step-by-step."/>
-				<M text="Found a related problem? Feel free to contact me — I'll answer any questions you may have:"/>
-				<div class="listHome"> 
-					<M text='
-					⚡ Telegram (fastest way): **[@averett](https://t.me/averett)**<br/>
-					✉️ Email: **[avrtt@tuta.io](mailto:avrtt@tuta.io)**<br/>
-					💬 WhatsApp: **[?]()**<br/>
-					👤 Facebook: **[@vladaverett](https://www.facebook.com/vladaverett)**
-					'/>     
-				</div> 
-				<M text="Alternatively, you can choose one of the freelance platforms to make an offer:"/>
-				<div class="listHome"> 
-					<M text='
-					🌐 Upwork: **[019b5459361c20c528](https://www.upwork.com/freelancers/~019b5459361c20c528)**<br/>
-					🌐 Fiverr: **[@vladaverett](https://www.fiverr.com/vladaverett)**<br/>
-					🇷🇺 Kwork: **[@avrtt](https://kwork.ru/user/avrtt)**<br/>
-					🇷🇺 Habr Freelance: **[@avrtt](https://freelance.habr.com/freelancers/avrtt)**
-					'/>     
-				</div> 
+				<M text="Found a related problem? Feel free to contact me, I'll answer any questions you may have. You can reach out directly or choose one of the freelance platforms to make an offer:"/>
+				<TileContainer columns={3} marginTop='2vh' marginBottom='2vh' animationonscroll={false}>
+					<LinkBlock
+						link='https://t.me/averett'
+						icon={telegram}
+						iconSize='3vw'
+						name='Telegram'
+						handle='@averett'
+						description=''
+						backgroundColor='#dbdbdb'
+						blockWidth='14.5vw'
+						fontSizeName = '1vw'
+						fontSizeHandle = '1vw'
+						padding='1vw'
+					/>
+					<LinkBlock
+						link='mailto:avrtt@tuta.io'
+						icon={envelope}
+						iconSize='3vw'
+						name='Email'
+						handle='avrtt@tuta.io'
+						description=''
+						backgroundColor='#dbdbdb'
+						blockWidth='14.5vw'
+						fontSizeName = '1vw'
+						fontSizeHandle = '1vw'
+						padding='1vw'
+					/>
+					<LinkBlock
+						link='https://www.facebook.com/vladaverett'
+						icon={facebook}
+						iconSize='3vw'
+						name='Facebook'
+						handle='@vladaverett'
+						description=''
+						backgroundColor='#dbdbdb'
+						blockWidth='14.5vw'
+						fontSizeName = '1vw'
+						fontSizeHandle = '1vw'
+						padding='1vw'
+					/>
+				</TileContainer>
+				<TileContainer columns={4} marginTop='2vh' marginBottom='4vh' animationonscroll={false}>
+					<LinkBlock
+						link='https://www.upwork.com/freelancers/~019b5459361c20c528'
+						icon={upwork}
+						iconSize='3vw'
+						name='Upwork 🌐'
+						handle='019b5459361c20c528'
+						description=''
+						backgroundColor='#dbdbdb'
+						blockWidth='14vw'
+						fontSizeName = '1vw'
+						fontSizeHandle = '1vw'
+						padding='1vw'
+					/>
+					<LinkBlock
+						link='https://www.fiverr.com/vladaverett'
+						icon={fiverr}
+						iconSize='3vw'
+						name='Fiverr 🌐'
+						handle='@vladaverett'
+						description=''
+						backgroundColor='#dbdbdb'
+						blockWidth='10vw'
+						fontSizeName = '1vw'
+						fontSizeHandle = '1vw'
+						padding='1vw'
+					/>
+					<LinkBlock
+						link='https://kwork.ru/user/avrtt'
+						icon={kwork}
+						iconSize='3vw'
+						name='Kwork 🇷🇺'
+						handle='@avrtt'
+						description=''
+						backgroundColor='#dbdbdb'
+						blockWidth='9vw'
+						fontSizeName = '1vw'
+						fontSizeHandle = '1vw'
+						padding='1vw'
+					/>
+					<LinkBlock
+						link='https://freelance.habr.com/freelancers/avrtt'
+						icon={habr}
+						iconSize='3vw'
+						name='Habr 🇷🇺'
+						handle='@avrtt'
+						description=''
+						backgroundColor='#dbdbdb'
+						blockWidth='8vw'
+						fontSizeName = '1vw'
+						fontSizeHandle = '1vw'
+						padding='1vw'
+					/>
+				</TileContainer>
 				<span>
 					Working hours: <b>{startHoursUTC}–{endHoursUTC}</b> ({strUTCOffset}), Mon – Fri
 					<span class="tooltipFreelance">
@@ -315,7 +402,7 @@ const Freelance = () => {
 							</div>
 							<div className="spoilerBlockQA">
 								<p class="spoilerQuestion"><strong>Q:</strong> I'm a business representative and I'm interested in long-term cooperation. Can I be sure that the contractor will comply with all applicable legislation?</p>
-								<p class="spoilerAnswer"><strong>A:</strong> No. I don't give any legal guarantees because I'm regularly located outside my country of citizenship (Russia), the international status of which only makes official work more difficult. My legal status is generally unclear. Consider me solely as an unofficial worker.</p>
+								<p class="spoilerAnswer"><strong>A:</strong> No. I don't give any legal guarantees, regularly being located outside my country of citizenship (Russia), the international status of which only makes official work more difficult. My legal status is generally unclear. Consider me solely as an unofficial worker.</p>
 							</div>
 						</div>
 					</div>
