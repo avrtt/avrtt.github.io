@@ -25,7 +25,16 @@ body {
   font-weight: lighter;
 }
 
-.homeBody {
+.homeBodyTile {
+  margin-left: 0%;
+  margin-right: 0%;
+  max-width: 100%;
+  background-color: transparent;
+  padding: 0em 4em;
+  margin-top: 22px;
+}
+
+.homeBodyRegular {
   margin-left: 5%;
   margin-right: 5%;
   margin-top: 7vh;
@@ -334,8 +343,8 @@ h3::selection {
 
 /* LINKS */
 
-.contactBody a, .courseBody a, .donateBody a, .postBody a, .homeBody a, .aboutBodyTile a, .aboutBodyRegular a, .cvBody a, .freelanceBody a, .goalsBody a, .explorationBody a,
-.contactBody href, .courseBody href, .donateBody href, .postBody href, .homeBody href, .aboutBodyTile href, .aboutBodyRegular href, .cvBody href, .freelanceBody href, .goalsBody href, .explorationBody href {
+.contactBody a, .courseBody a, .donateBody a, .postBody a, .homeBodyTile a, .homeBodyRegular a, .aboutBodyTile a, .aboutBodyRegular a, .cvBody a, .freelanceBody a, .goalsBody a, .explorationBody a,
+.contactBody href, .courseBody href, .donateBody href, .postBody href, .homeBodyTile href, .homeBodyRegular href, .aboutBodyTile href, .aboutBodyRegular href, .cvBody href, .freelanceBody href, .goalsBody href, .explorationBody href {
 	text-decoration: none;
 	font-weight: 800;
 	border-bottom: 0;
@@ -346,8 +355,8 @@ h3::selection {
           transition: color 0.1s ease-in-out;
 }
 
-.contactBody a:hover, .courseBody a:hover, .donateBody a:hover, .postBody a:hover, .homeBody a:hover, .aboutBodyTile a:hover, .aboutBodyRegular a:hover, .cvBody a:hover, .freelanceBody a:hover, .goalsBody a:hover, .explorationBody a:hover,
-.contactBody href:hover, .courseBody href:hover, .donateBody href:hover, .postBody href:hover, .homeBody href:hover, .aboutBodyTile href:hover, .aboutBodyRegular href:hover, .cvBody href:hover, .freelanceBody href:hover, .goalsBody href:hover, .explorationBody href:hover {
+.contactBody a:hover, .courseBody a:hover, .donateBody a:hover, .postBody a:hover, .homeBodyTile a:hover, .homeBodyRegular a:hover, .aboutBodyTile a:hover, .aboutBodyRegular a:hover, .cvBody a:hover, .freelanceBody a:hover, .goalsBody a:hover, .explorationBody a:hover,
+.contactBody href:hover, .courseBody href:hover, .donateBody href:hover, .postBody href:hover, .homeBodyTile href:hover, .homeBodyRegular href:hover, .aboutBodyTile href:hover, .aboutBodyRegular href:hover, .cvBody href:hover, .freelanceBody href:hover, .goalsBody href:hover, .explorationBody href:hover {
 	border-bottom: 0;
 	color: #424242;
   text-decoration: none;
@@ -2866,9 +2875,14 @@ h6 {
 
 
 
-/* CONTENT BLOCK & TILE CONTAINTER */
+/* BLOCKS & TILE CONTAINTER */
 
 .contentBlock {
+  display: flex;
+  flex-direction: column;
+}
+
+.linkBlock {
   display: flex;
   flex-direction: column;
 }
@@ -2893,6 +2907,15 @@ h6 {
 .navbarPostSection:hover {
   opacity: 0.6 !important;
   transition: opacity 0.2s ease
+}
+
+
+
+/* LOGOS */
+
+.makeBlackAndWhite {
+  filter: grayscale(1) contrast(100) brightness(1);
+  mix-blend-mode: multiply;
 }
 
 
