@@ -616,7 +616,7 @@ svg {
 
 /* DONATE SECTIONS */
 
-code {
+.wallets code {
   font-family: 'Roboto Mono', sans-serif;
   padding: .25em;
   line-height: 0.5;
