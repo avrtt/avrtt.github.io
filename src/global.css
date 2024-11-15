@@ -2920,6 +2920,24 @@ h6 {
 
 
 
+/* TABLE OF CONTENTS */
+
+.toc ul {
+  counter-reset: item;
+}
+
+.toc ul > li {
+  display: block;
+
+}
+
+.toc ul>li:before {
+  content: counters(item, ".") ". "; 
+  counter-increment: item;
+}
+
+
+
 /* RESPONSIVE DESIGN */
 
 @media (prefers-reduced-motion: reduce) {

@@ -3,11 +3,42 @@ import { motion } from 'framer-motion';
 import PostBanner from '../components/PostBanner';
 import PostBottom from'../components/PostBottom'; 
 import { graphql } from 'gatsby';
-import Layout from '../components/layout';
+
+const TableOfContents = ({ toc }) => {
+  if (!toc || !toc.items) return null;
+
+  const handleClick = (e, url) => {
+    e.preventDefault();
+    const targetId = url.replace('#', '');
+    const targetElement = document.getElementById(targetId);
+
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  return (
+    <nav className="toc">
+      <ul>
+        {toc.items.map((item, index) => (
+          <li key={index}>
+            <a
+              href={item.url}
+              onClick={(e) => handleClick(e, item.url)}
+            >
+              {item.title}
+            </a>
+            {item.items && <TableOfContents toc={{ items: item.items }} />}
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
 
 export function PostTemplate({ data: { mdx, allMdx }, children }) {
 
-  const { frontmatter } = mdx;
+  const { frontmatter, tableOfContents } = mdx;
   const index = frontmatter.index;
   const slug = frontmatter.slug;
   const section = slug.split('/')[1];
@@ -35,7 +66,11 @@ export function PostTemplate({ data: { mdx, allMdx }, children }) {
         postKey={keyCurrent}
       />
 
-      <div class="postBody">			
+      <div class="postBody">
+        <TableOfContents toc={tableOfContents} />
+      </div>
+      <br/>
+      <div class="postBody">
         {children}
       </div>
       
@@ -66,6 +101,7 @@ export const query = graphql`
         }
         slug
       }
+      tableOfContents(maxDepth: 3)
     }
     allMdx(filter: {frontmatter: {slug: {regex: $section}}}) {
       nodes {
