@@ -16,6 +16,7 @@ import ETHQR from "../../images/donate/eth-qr.svg";
 import BSCQR from "../../images/donate/bsc-qr.svg";
 import Search from "../../images/donate/search.svg";
 import QR from "../../images/donate/qr.png";
+import { KofiLink, KofiHandle, PaypalLink, PaypalHandle, PatreonLink, PatreonHandle, SberbankCardCopy, SberbankCardDisplay, SberbankSBPCopy, SberbankSBPDisplay, BitcoinWallet, BEP20Wallet, ERC20Wallet } from "../../data/paymentMethods.js";
 
 const TITLE = 'Donate - avrtt.blog'
 
@@ -47,9 +48,9 @@ const Donate = () => {
 	
 	useEffect(() => {
   		window.scrollTo(0, 0)
-  		modal("myImg1", BTCQR, 'bc1qe4h2scmc5hq5xjq43uz8xur5ghrkszn00h437d')
-		modal("myImg2", BSCQR, '0xabFFf687cE09b39858f4432Ef643129CcC1B5bBf')
-		modal("myImg3", ETHQR, '0xabFFf687cE09b39858f4432Ef643129CcC1B5bBf')
+  		modal("myImg1", BTCQR, BitcoinWallet)
+		modal("myImg2", BSCQR, BEP20Wallet)
+		modal("myImg3", ETHQR, ERC20Wallet)
 	}, [])	
 	
     return (
@@ -68,51 +69,51 @@ const Donate = () => {
                 <div class="wallets">
                     <div class="wallet1">
                         <img src={KoFi} class="noselect" alt="kofi_logo" width="60" height="60" style={logoStyle} />
-                        <s><a href="https://ko-fi.com/avrtt"><code class="donateLink">@avrtt</code></a></s>
+                        <s><a href={KofiLink}><code class="donateLink">{KofiHandle}</code></a></s>
                         <div class="currency-name">BUY ME A COFFEE WITH <b>KO-FI</b> </div>
                     </div>
                     <div class="wallet3">
                         <img src={PayPal} class="noselect" alt="paypal_logo" width="60" height="60" style={logoStyle} />
-                        <s><a href="https://www.paypal.me/vladaverett"><code class="donateLink">@vladaverett</code></a></s>
+                        <s><a href={PaypalLink}><code class="donateLink">{PaypalHandle}</code></a></s>
                         <div class="currency-name"><b>PAYPAL</b> MULTICURRENCY TRANSFER</div>
                     </div>
                     <div class="wallet3">
                         <img src={Patreon} class="noselect" alt="patreon_logo" width="60" height="60" style={logoStyle} />
-                        <s><a href="https://www.patreon.com/avrtt"><code class="donateLink">@avrtt</code></a></s>
+                        <s><a href={PatreonLink}><code class="donateLink">{PatreonHandle}</code></a></s>
                         <div class="currency-name"><b>PATREON</b> EXCLUSIVE CONTENT VIA PAID SUBSCRIPTION</div>
                     </div>
                     <div class="wallet3">
                         <img src={CardSber} class="noselect" alt="card_logo" width="60" height="60" style={logoStyle} />
-                        <code class="address" onClick={() => navigator.clipboard.writeText("4276460040256153")}><div class="tooltip">4276 4600 4025 6153
+                        <code class="address" onClick={() => navigator.clipboard.writeText(SberbankCardCopy)}><div class="tooltip">{SberbankCardDisplay}
                         <span class="tooltiptext">Click to copy</span></div></code>
-                        <div class="currency-name"><b>RUB</b> &nbsp;(SBERBANK, RUSSIAN CARDS ONLY) &nbsp; | &nbsp; <code class="phoneNumber" onClick={() => navigator.clipboard.writeText("89083227150")}><div class="tooltip">+7 908 322 7150
+                        <div class="currency-name"><b>RUB</b> &nbsp;(SBERBANK, RUSSIAN CARDS ONLY) &nbsp; | &nbsp; <code class="phoneNumber" onClick={() => navigator.clipboard.writeText(SberbankSBPCopy)}><div class="tooltip">{SberbankSBPDisplay}
                         </div></code></div>
                     </div>
                     <div class="wallet3">				
                         <img src={BTC} class="noselect" alt="btc_logo" width="60" height="60" style={logoStyle} />
-                        <code class="address" onClick={() => navigator.clipboard.writeText("bc1qe4h2scmc5hq5xjq43uz8xur5ghrkszn00h437d")}><div class="tooltip">bc1qe4h2scmc5hq5xjq43uz8xur5ghrkszn00h437d
+                        <code class="address" onClick={() => navigator.clipboard.writeText(BitcoinWallet)}><div class="tooltip">{BitcoinWallet}
                         <span class="tooltiptext">Click to copy</span></div></code>&nbsp;
                         <img id="qr" class="icon" src={QR} width="36" height="36" title="QR code" alt="qr-code" />
-                        <img id="myImg1" class="icon" src={BTCQR} alt="bc1qe4h2scmc5hq5xjq43uz8xur5ghrkszn00h437d" width="40" height="40" style={logoStyle} title="QR code" />&nbsp;
-                        <a href="https://mempool.space/address/bc1qe4h2scmc5hq5xjq43uz8xur5ghrkszn00h437d"><img class="icon" src={Search} alt="search_icon" width="18" height="20" style={logoStyle} title="Transaction history" /></a>
+                        <img id="myImg1" class="icon" src={BTCQR} alt="BitcoinWallet" width="40" height="40" style={logoStyle} title="QR code" />&nbsp;
+                        <a href={"https://mempool.space/address/" + BitcoinWallet}><img class="icon" src={Search} alt="search_icon" width="18" height="20" style={logoStyle} title="Transaction history" /></a>
                         <div class="currency-name"><b>BTC</b> &nbsp;(BITCOIN NETWORK)</div>
                     </div>		
                     <div class="wallet3">		
                         <img src={BNB} class="noselect" alt="bnb_logo" width="60" height="60" style={logoStyle} />
-                        <code class="address" onClick={() => navigator.clipboard.writeText("0xabFFf687cE09b39858f4432Ef643129CcC1B5bBf")}><div class="tooltip">0xabFFf687cE09b39858f4432Ef643129CcC1B5bBf
+                        <code class="address" onClick={() => navigator.clipboard.writeText(BEP20Wallet)}><div class="tooltip">{BEP20Wallet}
                         <span class="tooltiptext">Click to copy</span></div></code>&nbsp;
                         <img id="qr" class="icon" src={QR} width="36" height="36" title="QR code" alt="qr-code" />
-                        <img id="myImg3" class="icon" src={BSCQR} alt="0xabFFf687cE09b39858f4432Ef643129CcC1B5bBf" width="40" height="40" style={logoStyle} title="QR code" />&nbsp;
-                        <a href="https://bscscan.com/address/0xabFFf687cE09b39858f4432Ef643129CcC1B5bBf"><img class="icon" src={Search} alt="search_icon" width="18" height="20" style={logoStyle} title="Transaction history" /></a>
+                        <img id="myImg3" class="icon" src={BSCQR} alt="BEP20Wallet" width="40" height="40" style={logoStyle} title="QR code" />&nbsp;
+                        <a href={"https://bscscan.com/address/" + BEP20Wallet}><img class="icon" src={Search} alt="search_icon" width="18" height="20" style={logoStyle} title="Transaction history" /></a>
                         <div class="currency-name"><b>USDT • USDC • DAI • BNB</b> &nbsp;(BNB SMART CHAIN NETWORK, BEP-20)</div>
                     </div>				
                     <div class="wallet6">
                         <img src={ETH} class="noselect" alt="etherium_logo" width="60" height="60" style={logoStyle} />
-                        <code class="address" onClick={() => navigator.clipboard.writeText("0xabFFf687cE09b39858f4432Ef643129CcC1B5bBf")}><div class="tooltip">0xabFFf687cE09b39858f4432Ef643129CcC1B5bBf
+                        <code class="address" onClick={() => navigator.clipboard.writeText(ERC20Wallet)}><div class="tooltip">{ERC20Wallet}
                         <span class="tooltiptext">Click to copy</span></div></code>&nbsp;
                         <img id="qr" class="icon" src={QR} width="36" height="36" title="QR code" alt="qr-code" />
-                        <img id="myImg2" class="icon" src={ETHQR} alt="0xabFFf687cE09b39858f4432Ef643129CcC1B5bBf" width="40" height="40" style={logoStyle} title="QR code" />&nbsp;
-                        <a href="https://etherscan.io/address/0xabFFf687cE09b39858f4432Ef643129CcC1B5bBf"><img class="icon" src={Search} alt="search_icon" width="18" height="20" style={logoStyle} title="Transaction history" /></a>
+                        <img id="myImg2" class="icon" src={ETHQR} alt="ERC20Wallet" width="40" height="40" style={logoStyle} title="QR code" />&nbsp;
+                        <a href={"https://etherscan.io/address/" + ERC20Wallet}><img class="icon" src={Search} alt="search_icon" width="18" height="20" style={logoStyle} title="Transaction history" /></a>
                         <div class="currency-name"><b>USDT • USDC • DAI • ETH</b> &nbsp;(ETHEREUM NETWORK, ERC-20)</div>
                     </div>
                 </div>

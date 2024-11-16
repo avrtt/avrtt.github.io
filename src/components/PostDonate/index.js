@@ -8,6 +8,7 @@ import Patreon from "../../images/donate/patreon.svg";
 import BTCQR from "../../images/donate/btc-qr.svg";
 import ETHQR from "../../images/donate/eth-qr.svg";
 import BSCQR from "../../images/donate/bsc-qr.svg";
+import { KofiLink, PaypalLink, PatreonLink, BitcoinWallet, BEP20Wallet, ERC20Wallet } from "../../data/paymentMethods.js";
 
 const logoStyle = {
 	'vertical-align': 'middle',
@@ -38,27 +39,27 @@ const PostDonate = () => {
 
   useEffect(() => {
   		window.scrollTo(0, 0)
-  		modal("myImg1Post", BTCQR, 'bc1qe4h2scmc5hq5xjq43uz8xur5ghrkszn00h437d', 'BITCOIN NETWORK', 'Address copied to clipboard!')
-		modal("myImg2Post", BSCQR, '0xabFFf687cE09b39858f4432Ef643129CcC1B5bBf', 'ERC-20 NETWORK', 'Address copied to clipboard!')
-		modal("myImg3Post", ETHQR, '0xabFFf687cE09b39858f4432Ef643129CcC1B5bBf', 'BEP-20 NETWORK', 'Address copied to clipboard!')
+  		modal("myImg1Post", BTCQR, BitcoinWallet, 'BITCOIN NETWORK', 'Address copied to clipboard!')
+		modal("myImg2Post", BSCQR, BEP20Wallet, 'BEP-20 NETWORK', 'Address copied to clipboard!')
+		modal("myImg3Post", ETHQR, ERC20Wallet, 'ERC-20 NETWORK', 'Address copied to clipboard!')
 	}, [])	
 
   return (
 	<>
         <div class="postDonateIconsWrapper">
-            <a target="_blank" href="https://ko-fi.com/avrtt">
+            <a target="_blank" href={KofiLink}>
                 <img src={KoFi} class="postDonateIcon1" alt="kofi_logo" style={logoStyle} />
             </a>
-            <a target="_blank" href="https://www.paypal.me/vladaverett">
+            <a target="_blank" href={PaypalLink}>
                 <img src={PayPal} class="postDonateIcon3" alt="paypal_logo" style={logoStyle} />
             </a>
-            <a target="_blank" href="https://www.patreon.com/avrtt">
+            <a target="_blank" href={PatreonLink}>
                 <img src={Patreon} class="postDonateIcon2" alt="patreon_logo" style={logoStyle} />
             </a>
             
-            <img src={BTC} id="myImg1Post" class="postDonateIcon4" style={logoStyle} onClick={() => navigator.clipboard.writeText("bc1qe4h2scmc5hq5xjq43uz8xur5ghrkszn00h437d")} />
-			<img src={BNB} id="myImg3Post" class="postDonateIcon5" style={logoStyle} onClick={() => navigator.clipboard.writeText("0xabFFf687cE09b39858f4432Ef643129CcC1B5bBf")} />
-			<img src={ETH} id="myImg2Post" class="postDonateIcon6" style={logoStyle} onClick={() => navigator.clipboard.writeText("0xabFFf687cE09b39858f4432Ef643129CcC1B5bBf")} />	
+            <img src={BTC} id="myImg1Post" class="postDonateIcon4" style={logoStyle} onClick={() => navigator.clipboard.writeText(BitcoinWallet)} />
+			<img src={BNB} id="myImg3Post" class="postDonateIcon5" style={logoStyle} onClick={() => navigator.clipboard.writeText(BEP20Wallet)} />
+			<img src={ETH} id="myImg2Post" class="postDonateIcon6" style={logoStyle} onClick={() => navigator.clipboard.writeText(ERC20Wallet)} />	
 		</div>
 		
         <div id="myModal" class="modal">
