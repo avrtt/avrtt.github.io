@@ -179,7 +179,7 @@ const Freelance = () => {
 				/>
 				<M text="If you need examples and more details, you can go straight to the [page of services](/freelance/services), which describes each type of job in the list above, step-by-step."/>
 				<M text="Found a related problem? Feel free to contact me, I'll answer any questions you may have. You can reach out directly or choose one of the freelance platforms to make an offer:"/>
-				<TileContainer columns={3} marginTop='2vh' marginBottom='2vh' animationonscroll={false}>
+				<TileContainer columns={3} marginTop='4vh' marginBottom='2vh' animationonscroll={false}>
 					<LinkBlock
 						link='https://t.me/averett'
 						icon={telegram}
@@ -220,16 +220,16 @@ const Freelance = () => {
 						padding='1vw'
 					/>
 				</TileContainer>
-				<TileContainer columns={4} marginTop='2vh' marginBottom='4vh' animationonscroll={false}>
+				<TileContainer columns={4} marginTop='2vh' marginBottom='6vh' animationonscroll={false}>
 					<LinkBlock
 						link='https://www.upwork.com/freelancers/~019b5459361c20c528'
 						icon={upwork}
 						iconSize='3vw'
 						name='Upwork 🌐'
-						handle='019b5459361c20c528'
+						handle=''
 						description=''
 						backgroundColor='#dbdbdb'
-						blockWidth='14vw'
+						blockWidth='10vw'
 						fontSizeName = '1vw'
 						fontSizeHandle = '1vw'
 						padding='1vw'
@@ -255,7 +255,7 @@ const Freelance = () => {
 						handle='@avrtt'
 						description=''
 						backgroundColor='#dbdbdb'
-						blockWidth='9vw'
+						blockWidth='10vw'
 						fontSizeName = '1vw'
 						fontSizeHandle = '1vw'
 						padding='1vw'
@@ -268,7 +268,7 @@ const Freelance = () => {
 						handle='@avrtt'
 						description=''
 						backgroundColor='#dbdbdb'
-						blockWidth='8vw'
+						blockWidth='10vw'
 						fontSizeName = '1vw'
 						fontSizeHandle = '1vw'
 						padding='1vw'
@@ -412,6 +412,50 @@ const Freelance = () => {
 
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
 					<div class="sectionBreak"><M text="----------"/></div>
+					<M text="# ❤️ RECENT TESTIMONIALS "/>
+					<M text="Здесь несколько последних отзывов в виде блоков с ссылками на источники и указанием проекта. Отзывы подтягиваются из массива в data: здесь последние, на отдельной странице (ниже) - все. Сделать такую же страницу на русском."/>
+					<M text="You can check out more reviews on the [Testimonials](/freelance/testimonials) page."/>
+				</AnimationOnScroll>
+
+
+				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
+					<div class="sectionBreak"><M text="----------"/></div>
+					<M text="# 📚 BACKGROUND"/>
+					<M text="I began by studying the field academically, but went into self-study once realized it's easier to learn with my *very custom* roadmap. I've even created [my own course](/course) along the way, using study notes."/>
+					<M text="A couple things on my background that are worth mentioning:"/>
+					<div className='listHome'>
+						<M text="
+						🎓 [B.S.](https://t.me/venturingforth/394) in **Applied Mathematics & Computer Science** (more info in [CV](/cv))<br/>
+						💼 [~12 months](/cv) of *super boring* **non-freelance work** experience (a so-called *employment*)<br/>
+						🤓 33 completed **courses**: 23 certified and 10+ non-certified (see the section below)<br/>
+						💪 Actively [contributing](https://github.com/avrtt) to **open-source** community<br/>
+						✍️ Writing [blog posts](/research) about everything I **research** since 2022<br/>
+						📢 Keeping tech-related **media platforms** beyond this blog (see links on the [Home](/) page)<br/>
+						"/>
+					</div>
+					<M text="I've developed a *tremendous* amount of **Python programs** of different intricacy since I got into programming. Python, when it comes to implementing something, is definitely one of my strongest (if not the strongest) hard skills."/>
+					<M text="The second important hallmark is my experience in **visualization**. I have some UX/UI knowledge, and I've created many data representations using different kinds of datasets. By doing this just for fun, I learned the philosophy behind visualization, and now I can design and build intuitive charts and dashboards in my own style."/>
+					<M text={`My primary soft skills are **adaptability** and **curiosity**. Although I don't have a strong expertise in a specific domain, I can easily learn new things by asking "why" in anything I touch, and I can do it *very quickly*. That's saved me many times!`}/>
+				</AnimationOnScroll>
+
+
+				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
+					<div class="sectionBreak"><M text="----------"/></div>
+					<M text="# 📜 COURSES"/>
+					<M text="I enjoy learning from courses all the time. Here's a compact list of some of the courses I've taken that I liked the most (clicking redirects to certificate proof, if any):"/>
+					<Courses lang="en"/>
+				</AnimationOnScroll>
+
+
+				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
+					<div class="sectionBreak"><M text="----------"/></div>
+					<M text="# 🛠️ TECH & TOOL STACK "/>
+					<Stack />
+				</AnimationOnScroll>
+
+
+				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
+					<div class="sectionBreak"><M text="----------"/></div>
 					<M text="# 💳 PAYMENT METHODS "/>
 					<div class="wallets">
 						<div class="wallet3">
@@ -449,47 +493,6 @@ const Freelance = () => {
 							<div class="currency-name"><b>USDT • USDC • DAI • ETH</b> &nbsp;(ETHEREUM NETWORK, ERC-20)</div>
 						</div>
 					</div>
-				</AnimationOnScroll>
-
-				
-				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
-					<div class="sectionBreak"><M text="----------"/></div>
-					<M text="# ❤️ RECENT TESTIMONIALS "/>
-					<M text="Здесь несколько последних отзывов в виде блоков с ссылками на источники и указанием проекта. Отзывы подтягиваются из массива в data: здесь последние, на отдельной странице (ниже) - все. Сделать такую же страницу на русском."/>
-					<M text="You can check out more reviews on the [Testimonials](/freelance/testimonials) page."/>
-				</AnimationOnScroll>
-
-
-				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
-					<div class="sectionBreak"><M text="----------"/></div>
-					<M text="# 🛠️ TECH & TOOL STACK "/>
-					<Stack />
-				</AnimationOnScroll>
-
-
-				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
-					<div class="sectionBreak"><M text="----------"/></div>
-					<M text="# 📚 BACKGROUND"/>
-					<div class="listHome"> 
-						<M text="
-						Небольшой текст про бэкграунд<br/>
-						Employment & academic experience<br/>
-						🔥 Митапы, количество пройденных вневузовских курсов, вузовские курсы, доп. инфа по бакалаврскому курсу и т.д.<br/>
-						🚀 Какие-нибудь не-фриланс проекты<br/>
-						💼 Опыт работы по найму<br/>
-						🎓 B.S. in Applied Mathematics & Computer Science<br/>
-						💪 Actively [contributing](https://github.com/avrtt) to open-source<br/>
-						✍️ Writing [blog posts](/research) about everything I research since 2022
-						"/>
-					</div>
-				</AnimationOnScroll>
-
-
-				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
-					<div class="sectionBreak"><M text="----------"/></div>
-					<M text="# 📜 COURSES"/>
-					<M text="I enjoy learning from courses all the time. Here's a compact list of some of the courses I've taken that I liked the most (clicking redirects to certificate proof, if any):"/>
-					<Courses lang="en"/>
 				</AnimationOnScroll>
 
 
