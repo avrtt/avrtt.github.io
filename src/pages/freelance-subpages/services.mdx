@@ -1,299 +1,362 @@
+import M from "../../components/Markdown"
 import GoBackButton from "../../components/GoBackButton"
 import { services } from "../../data/freelance/arrays"
+import { textServices } from "../strings/freelance"
 
 <GoBackButton />
 <div class="servicesBodyNested">
-This subpage provides a detailed overview of all the freelance services that I *prefer* to do right now. Keep in mind: the list is not exhaustive, and we may have a deal on things that goes beyond it.
+<M text={textServices.intro.en}/>
 </div>
 <br/>
 
 
 <div class="servicesBodyNested">
-###### 1
+###### 1 {'Modular Python software'}
 <h2>{services[1].title} <img class="servicesPageIcon" src={services[1].icon} alt="service_icon"/></h2>
-<br/><div class="yellowNotice">
-    ## 🚧 HEADS UP!
-    This block isn't finished. Description will appear soon.
-</div>
-*Description of this job and the potential client who may need it.*
+<M text={textServices.service1.desc.en}/>
 ### What you get
-*A clear demonstration of what the client gets, using simple, non-technical terms, visualizations, screenshots, etc. Explaining the value of the work to a business, why the client may need this service.*
+<M text={textServices.service1.youGet.en}/>
+### Why you might need it
+<M text={textServices.service1.why.en}/>
 ### What I do
-*Tech stuff, methodology, step-by-step workflow, specific technologies and tools I use for this job.*
+<M text={textServices.service1.iDo.en}/>
 ### Examples
-*Project examples from my portfolio.*
+<br/><br/><div class="yellowNotice">
+    ## 🚧 HEADS UP!
+    This section isn't finished. Examples pulled from my portfolio will appear soon.
+</div>
 ### Prerequisites
-*Input data, things I need to fulfill the task and pre-determined conditions.*
-### Pricing
-*Approximate prices depending on complexity, conditions, etc.*
+<M text={textServices.service1.prerequisites.en}/>
+### Preliminary pricing
+<M text={textServices.service1.pricing.en}/>
 </div><br/>
 
+
 <div class="servicesBodyNested">
-###### 2
+###### 2 {'Web scraping'}
 <h2>{services[2].title} <img class="servicesPageIcon" src={services[2].icon} alt="service_icon"/></h2>
-<br/><div class="yellowNotice">
-    ## 🚧 HEADS UP!
-    This block isn't finished. Description will appear soon.
-</div>
+<M text={textServices.service2.desc.en}/>
 ### What you get
-<br/><br/>
+<M text={textServices.service2.youGet.en}/>
+### Why you might need it
+<M text={textServices.service2.why.en}/>
 ### What I do
-<br/><br/>
+<M text={textServices.service2.iDo.en}/>
 ### Examples
-<br/><br/>
+<br/><br/><div class="yellowNotice">
+    ## 🚧 HEADS UP!
+    This section isn't finished. Examples pulled from my portfolio will appear soon.
+</div>
 ### Prerequisites
-<br/><br/>
-### Pricing
+<M text={textServices.service2.prerequisites.en}/>
+### Preliminary pricing
+<M text={textServices.service2.pricing.en}/>
 </div><br/>
 
+
 <div class="servicesBodyNested">
-###### 3
+###### 3 {'Data processing'}
 <h2>{services[3].title} <img class="servicesPageIcon" src={services[3].icon} alt="service_icon"/></h2>
-<br/><div class="yellowNotice">
-    ## 🚧 HEADS UP!
-    This block isn't finished. Description will appear soon.
-</div>
+<M text={textServices.service3.desc.en}/>
 ### What you get
-<br/><br/>
+<M text={textServices.service3.youGet.en}/>
+### Why you might need it
+<M text={textServices.service3.why.en}/>
 ### What I do
-<br/><br/>
+<M text={textServices.service3.iDo.en}/>
 ### Examples
-<br/><br/>
+<br/><br/><div class="yellowNotice">
+    ## 🚧 HEADS UP!
+    This section isn't finished. Examples pulled from my portfolio will appear soon.
+</div>
 ### Prerequisites
-<br/><br/>
-### Pricing
+<M text={textServices.service3.prerequisites.en}/>
+### Preliminary pricing
+<M text={textServices.service3.pricing.en}/>
 </div><br/>
 
+
 <div class="servicesBodyNested">
-###### 4
+###### 4 {'Data visualization'}
 <h2>{services[4].title} <img class="servicesPageIcon" src={services[4].icon} alt="service_icon"/></h2>
-<br/><div class="yellowNotice">
-    ## 🚧 HEADS UP!
-    This block isn't finished. Description will appear soon.
-</div>
+<M text={textServices.service4.desc.en}/>
 ### What you get
-<br/><br/>
+<M text={textServices.service4.youGet.en}/>
+### Why you might need it
+<M text={textServices.service4.why.en}/>
 ### What I do
-<br/><br/>
+<M text={textServices.service4.iDo.en}/>
 ### Examples
-<br/><br/>
+<br/><br/><div class="yellowNotice">
+    ## 🚧 HEADS UP!
+    This section isn't finished. Examples pulled from my portfolio will appear soon.
+</div>
 ### Prerequisites
-<br/><br/>
-### Pricing
+<M text={textServices.service4.prerequisites.en}/>
+### Preliminary pricing
+<M text={textServices.service4.pricing.en}/>
 </div><br/>
 
+
 <div class="servicesBodyNested">
-###### 5
+###### 5 {'Exploratory data analysis'}
 <h2>{services[5].title} <img class="servicesPageIcon" src={services[5].icon} alt="service_icon"/></h2>
-<br/><div class="yellowNotice">
-    ## 🚧 HEADS UP!
-    This block isn't finished. Description will appear soon.
-</div>
+<M text={textServices.service5.desc.en}/>
 ### What you get
-<br/><br/>
+<M text={textServices.service5.youGet.en}/>
+### Why you might need it
+<M text={textServices.service5.why.en}/>
 ### What I do
-<br/><br/>
+<M text={textServices.service5.iDo.en}/>
 ### Examples
-<br/><br/>
+<br/><br/><div class="yellowNotice">
+    ## 🚧 HEADS UP!
+    This section isn't finished. Examples pulled from my portfolio will appear soon.
+</div>
 ### Prerequisites
-<br/><br/>
-### Pricing
+<M text={textServices.service5.prerequisites.en}/>
+### Preliminary pricing
+<M text={textServices.service5.pricing.en}/>
 </div><br/>
 
+
 <div class="servicesBodyNested">
-###### 6
+###### 6 {'Fine-tuning'}
 <h2>{services[6].title} <img class="servicesPageIcon" src={services[6].icon} alt="service_icon"/></h2>
-<br/><div class="yellowNotice">
-    ## 🚧 HEADS UP!
-    This block isn't finished. Description will appear soon.
-</div>
+<M text={textServices.service6.desc.en}/>
 ### What you get
-<br/><br/>
+<M text={textServices.service6.youGet.en}/>
+### Why you might need it
+<M text={textServices.service6.why.en}/>
 ### What I do
-<br/><br/>
+<M text={textServices.service6.iDo.en}/>
 ### Examples
-<br/><br/>
+<br/><br/><div class="yellowNotice">
+    ## 🚧 HEADS UP!
+    This section isn't finished. Examples pulled from my portfolio will appear soon.
+</div>
 ### Prerequisites
-<br/><br/>
-### Pricing
+<M text={textServices.service6.prerequisites.en}/>
+### Preliminary pricing
+<M text={textServices.service6.pricing.en}/>
 </div><br/>
 
+
 <div class="servicesBodyNested">
-###### 7
+###### 7 {'Frontend'}
 <h2>{services[7].title} <img class="servicesPageIcon" src={services[7].icon} alt="service_icon"/></h2>
-<br/><div class="yellowNotice">
-    ## 🚧 HEADS UP!
-    This block isn't finished. Description will appear soon.
-</div>
+<M text={textServices.service7.desc.en}/>
 ### What you get
-<br/><br/>
+<M text={textServices.service7.youGet.en}/>
+### Why you might need it
+<M text={textServices.service7.why.en}/>
 ### What I do
-<br/><br/>
+<M text={textServices.service7.iDo.en}/>
 ### Examples
-<br/><br/>
+<br/><br/><div class="yellowNotice">
+    ## 🚧 HEADS UP!
+    This section isn't finished. Examples pulled from my portfolio will appear soon.
+</div>
 ### Prerequisites
-<br/><br/>
-### Pricing
+<M text={textServices.service7.prerequisites.en}/>
+### Preliminary pricing
+<M text={textServices.service7.pricing.en}/>
 </div><br/>
 
+
 <div class="servicesBodyNested">
-###### 8
+###### 8 {'Static websites'}
 <h2>{services[8].title} <img class="servicesPageIcon" src={services[8].icon} alt="service_icon"/></h2>
-<br/><div class="yellowNotice">
-    ## 🚧 HEADS UP!
-    This block isn't finished. Description will appear soon.
-</div>
+<M text={textServices.service8.desc.en}/>
 ### What you get
-<br/><br/>
+<M text={textServices.service8.youGet.en}/>
+### Why you might need it
+<M text={textServices.service8.why.en}/>
 ### What I do
-<br/><br/>
+<M text={textServices.service8.iDo.en}/>
 ### Examples
-<br/><br/>
+<br/><br/><div class="yellowNotice">
+    ## 🚧 HEADS UP!
+    This section isn't finished. Examples pulled from my portfolio will appear soon.
+</div>
 ### Prerequisites
-<br/><br/>
-### Pricing
+<M text={textServices.service8.prerequisites.en}/>
+### Preliminary pricing
+<M text={textServices.service8.pricing.en}/>
 </div><br/>
 
+
 <div class="servicesBodyNested">
-###### 9
+###### 9 {'Bots'}
 <h2>{services[9].title} <img class="servicesPageIcon" src={services[9].icon} alt="service_icon"/></h2>
-<br/><div class="yellowNotice">
-    ## 🚧 HEADS UP!
-    This block isn't finished. Description will appear soon.
-</div>
+<M text={textServices.service9.desc.en}/>
 ### What you get
-<br/><br/>
+<M text={textServices.service9.youGet.en}/>
+### Why you might need it
+<M text={textServices.service9.why.en}/>
 ### What I do
-<br/><br/>
+<M text={textServices.service9.iDo.en}/>
 ### Examples
-<br/><br/>
+<br/><br/><div class="yellowNotice">
+    ## 🚧 HEADS UP!
+    This section isn't finished. Examples pulled from my portfolio will appear soon.
+</div>
 ### Prerequisites
-<br/><br/>
-### Pricing
+<M text={textServices.service9.prerequisites.en}/>
+### Preliminary pricing
+<M text={textServices.service9.pricing.en}/>
 </div><br/>
 
+
 <div class="servicesBodyNested">
-###### 10
+###### 10 {'Data collection software'}
 <h2>{services[10].title} <img class="servicesPageIcon" src={services[10].icon} alt="service_icon"/></h2>
-<br/><div class="yellowNotice">
-    ## 🚧 HEADS UP!
-    This block isn't finished. Description will appear soon.
-</div>
+<M text={textServices.service10.desc.en}/>
 ### What you get
-<br/><br/>
+<M text={textServices.service10.youGet.en}/>
+### Why you might need it
+<M text={textServices.service10.why.en}/>
 ### What I do
-<br/><br/>
+<M text={textServices.service10.iDo.en}/>
 ### Examples
-<br/><br/>
+<br/><br/><div class="yellowNotice">
+    ## 🚧 HEADS UP!
+    This section isn't finished. Examples pulled from my portfolio will appear soon.
+</div>
 ### Prerequisites
-<br/><br/>
-### Pricing
+<M text={textServices.service10.prerequisites.en}/>
+### Preliminary pricing
+<M text={textServices.service10.pricing.en}/>
 </div><br/>
 
+
 <div class="servicesBodyNested">
-###### 11
+###### 11 {'Hypothesis testing'}
 <h2>{services[11].title} <img class="servicesPageIcon" src={services[11].icon} alt="service_icon"/></h2>
-<br/><div class="yellowNotice">
-    ## 🚧 HEADS UP!
-    This block isn't finished. Description will appear soon.
-</div>
+<M text={textServices.service11.desc.en}/>
 ### What you get
-<br/><br/>
+<M text={textServices.service11.youGet.en}/>
+### Why you might need it
+<M text={textServices.service11.why.en}/>
 ### What I do
-<br/><br/>
+<M text={textServices.service11.iDo.en}/>
 ### Examples
-<br/><br/>
+<br/><br/><div class="yellowNotice">
+    ## 🚧 HEADS UP!
+    This section isn't finished. Examples pulled from my portfolio will appear soon.
+</div>
 ### Prerequisites
-<br/><br/>
-### Pricing
+<M text={textServices.service11.prerequisites.en}/>
+### Preliminary pricing
+<M text={textServices.service11.pricing.en}/>
 </div><br/>
 
+
 <div class="servicesBodyNested">
-###### 12
+###### 12 {'Dashboards'}
 <h2>{services[12].title} <img class="servicesPageIcon" src={services[12].icon} alt="service_icon"/></h2>
-<br/><div class="yellowNotice">
-    ## 🚧 HEADS UP!
-    This block isn't finished. Description will appear soon.
-</div>
+<M text={textServices.service12.desc.en}/>
 ### What you get
-<br/><br/>
+<M text={textServices.service12.youGet.en}/>
+### Why you might need it
+<M text={textServices.service12.why.en}/>
 ### What I do
-<br/><br/>
+<M text={textServices.service12.iDo.en}/>
 ### Examples
-<br/><br/>
+<br/><br/><div class="yellowNotice">
+    ## 🚧 HEADS UP!
+    This section isn't finished. Examples pulled from my portfolio will appear soon.
+</div>
 ### Prerequisites
-<br/><br/>
-### Pricing
+<M text={textServices.service12.prerequisites.en}/>
+### Preliminary pricing
+<M text={textServices.service12.pricing.en}/>
 </div><br/>
 
+
 <div class="servicesBodyNested">
-###### 13
+###### 13 {'Technical writing'}
 <h2>{services[13].title} <img class="servicesPageIcon" src={services[13].icon} alt="service_icon"/></h2>
-<br/><div class="yellowNotice">
-    ## 🚧 HEADS UP!
-    This block isn't finished. Description will appear soon.
-</div>
+<M text={textServices.service13.desc.en}/>
 ### What you get
-<br/><br/>
+<M text={textServices.service13.youGet.en}/>
+### Why you might need it
+<M text={textServices.service13.why.en}/>
 ### What I do
-<br/><br/>
+<M text={textServices.service13.iDo.en}/>
 ### Examples
-<br/><br/>
+<br/><br/><div class="yellowNotice">
+    ## 🚧 HEADS UP!
+    This section isn't finished. Examples pulled from my portfolio will appear soon.
+</div>
 ### Prerequisites
-<br/><br/>
-### Pricing
+<M text={textServices.service13.prerequisites.en}/>
+### Preliminary pricing
+<M text={textServices.service13.pricing.en}/>
 </div><br/>
 
+
 <div class="servicesBodyNested">
-###### 14
+###### 14 {'Scripting'}
 <h2>{services[14].title} <img class="servicesPageIcon" src={services[14].icon} alt="service_icon"/></h2>
-<br/><div class="yellowNotice">
-    ## 🚧 HEADS UP!
-    This block isn't finished. Description will appear soon.
-</div>
+<M text={textServices.service14.desc.en}/>
 ### What you get
-<br/><br/>
+<M text={textServices.service14.youGet.en}/>
+### Why you might need it
+<M text={textServices.service14.why.en}/>
 ### What I do
-<br/><br/>
+<M text={textServices.service14.iDo.en}/>
 ### Examples
-<br/><br/>
+<br/><br/><div class="yellowNotice">
+    ## 🚧 HEADS UP!
+    This section isn't finished. Examples pulled from my portfolio will appear soon.
+</div>
 ### Prerequisites
-<br/><br/>
-### Pricing
+<M text={textServices.service14.prerequisites.en}/>
+### Preliminary pricing
+<M text={textServices.service14.pricing.en}/>
 </div><br/>
 
+
 <div class="servicesBodyNested">
-###### 15
+###### 15 {'Streamlit apps'}
 <h2>{services[15].title} <img class="servicesPageIcon" src={services[15].icon} alt="service_icon"/></h2>
-<br/><div class="yellowNotice">
-    ## 🚧 HEADS UP!
-    This block isn't finished. Description will appear soon.
-</div>
+<M text={textServices.service15.desc.en}/>
 ### What you get
-<br/><br/>
+<M text={textServices.service15.youGet.en}/>
+### Why you might need it
+<M text={textServices.service15.why.en}/>
 ### What I do
-<br/><br/>
+<M text={textServices.service15.iDo.en}/>
 ### Examples
-<br/><br/>
+<br/><br/><div class="yellowNotice">
+    ## 🚧 HEADS UP!
+    This section isn't finished. Examples pulled from my portfolio will appear soon.
+</div>
 ### Prerequisites
-<br/><br/>
-### Pricing
+<M text={textServices.service15.prerequisites.en}/>
+### Preliminary pricing
+<M text={textServices.service15.pricing.en}/>
 </div><br/>
 
+
 <div class="servicesBodyNested">
-###### 16
+###### 16 {'Academic help'}
 <h2>{services[16].title} <img class="servicesPageIcon" src={services[16].icon} alt="service_icon"/></h2>
-<br/><div class="yellowNotice">
-    ## 🚧 HEADS UP!
-    This block isn't finished. Description will appear soon.
-</div>
+<M text={textServices.service16.desc.en}/>
 ### What you get
-<br/><br/>
+<M text={textServices.service16.youGet.en}/>
+### Why you might need it
+<M text={textServices.service16.why.en}/>
 ### What I do
-<br/><br/>
+<M text={textServices.service16.iDo.en}/>
 ### Examples
-<br/><br/>
-### Prerequisites
-<br/><br/>
-### Pricing
+<br/><br/><div class="yellowNotice">
+    ## 🚧 HEADS UP!
+    This section isn't finished. Examples pulled from my portfolio will appear soon.
 </div>
+### Prerequisites
+<M text={textServices.service16.prerequisites.en}/>
+### Preliminary pricing
+<M text={textServices.service16.pricing.en}/>
+</div><br/>
