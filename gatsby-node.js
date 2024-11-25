@@ -65,11 +65,11 @@ exports.createPages = async ({ actions, graphql }) => {
   createPage({path: "/freelance/projects/web_development", component: path.resolve(`src/pages/freelance-subpages/web_development.js`)});
   createPage({path: "/freelance/ru/projects/web_development", component: path.resolve(`src/pages/freelance-subpages/web_development_ru.js`)});
   createPage({path: "/freelance/projects/research", component: path.resolve(`src/pages/freelance-subpages/research.js`)});
-  createPage({path: "/freelance/ru/projects/research", component: path.resolve(`src/pages/freelance-subpages/research.js`)});
+  createPage({path: "/freelance/ru/projects/research", component: path.resolve(`src/pages/freelance-subpages/research_ru.js`)});
   createPage({path: "/freelance/projects/technical_writing", component: path.resolve(`src/pages/freelance-subpages/technical_writing.js`)});
   createPage({path: "/freelance/ru/projects/technical_writing", component: path.resolve(`src/pages/freelance-subpages/technical_writing_ru.js`)});
   createPage({path: "/freelance/projects/post_production", component: path.resolve(`src/pages/freelance-subpages/post_production.js`)});
-  createPage({path: "/freelance/ru/projects/post_production", component: path.resolve(`src/pages/freelance-subpages/post_production.js`)});
+  createPage({path: "/freelance/ru/projects/post_production", component: path.resolve(`src/pages/freelance-subpages/post_production_ru.js`)});
   createPage({path: "/freelance/projects/misc", component: path.resolve(`src/pages/freelance-subpages/misc.js`)});
   createPage({path: "/freelance/ru/projects/misc", component: path.resolve(`src/pages/freelance-subpages/misc_ru.js`)});
   createPage({path: "/cv", component: path.resolve(`src/pages/main/cv.js`)});
