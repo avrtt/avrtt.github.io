@@ -5,7 +5,7 @@ import { freelanceExperienceString, strUTCOffset, startHoursUTC, endHoursUTC } f
 export const textMain = {
 	general: {
         intro: {
-            en: "I'm a full-time freelancer primarily focused on Data Science, offering both regular and one-off services, including project-based work, system maintenance, consulting and teaching. Being in the field since 2020, I have more than <strong>" + freelanceExperienceString + " of freelancing</strong> experience in total, with more than <strong>" + projectsCount + " completed projects</strong> (listed below), as well as other various successful deals. My main areas of expertise are machine learning, data analysis, data collection, statistics, visualization and Python programming, but I'm also competent in web development, video/music post-production and prompt engineering.",
+            en: "I'm a full-time freelancer primarily focused on data science, offering both regular and one-off services, including project-based work, system maintenance, consulting and teaching. Being in the field since 2020, I have more than <strong>" + freelanceExperienceString + " of freelancing</strong> experience in total, with more than <strong>" + projectsCount + " completed projects</strong> (listed below), as well as other various successful deals. My main areas of expertise are machine learning, data analysis, data collection, statistics, visualization and Python software, but I'm also competent in web development, video/music post-production and prompt engineering.",
         },
         spoiler: {
             title: {
@@ -242,7 +242,7 @@ export const textMain = {
                 📢 Keeping tech-related **media platforms** beyond this blog (see links on the [Home](/) page)<br/>`,
         },
         block4: {
-            en: "I've developed a *tremendous* amount of **Python programs** of different intricacy since I got into programming. Python, when it comes to implementing something, is definitely one of my strongest (if not the strongest) hard skills.",
+            en: "I've developed a *tremendous* amount of **Python programs** of different intricacy since I got into programming. Python, when it comes to implementing something, is definitely one of my strongest (if not the strongest) hard skills. Now I build software using AI for acceleration.",
         },
         block5: {
             en: "The second important hallmark is my experience in **visualization**. I have some UX/UI knowledge, and I've created many data representations using different kinds of datasets. By doing this just for fun, I learned the philosophy behind visualization, and now I can design and build intuitive charts and dashboards in my own style.",
@@ -286,5 +286,596 @@ export const textMain = {
 }
 
 export const textServices = {
-
+    intro: {
+        en: 
+`This subpage provides a detailed overview of all the freelance services that I *prefer* to do right now. Keep in mind: the list is not exhaustive, and we may have a deal on things that goes beyond it.`,
+    },
+    service1: {
+        desc: {
+            en: 
+`Modular software is built with reusable, well-structured components, making it scalable and easy to maintain. This service is ideal for individuals or teams needing complex and organized programming projects. Whether you're building a tool, application or library, modular design ensures flexibility and long-term reliability.`,
+        },
+        youGet: {
+            en: 
+`- A Python codebase organized into reusable modules and packages
+- Features like clean APIs, clear documentation and error handling
+- Scalable design, enabling future enhancements and integrations
+- Fully tested software with unit and integration tests included`,
+        },
+        why: {
+            en: 
+`- Save development time: reuse modules for future projects or extensions
+- Improve collaboration: structured code makes teamwork and onboarding smoother
+- Ensure reliability: robust, tested modules minimize bugs and downtime`,
+        },
+        iDo: {
+            en: 
+`- Plan the software architecture based on your project requirements
+- Develop Python modules with clear input/output
+- Use best practices for structuring codebases (e.g., following PEP-8 guidelines)
+- Test modules using Python testing frameworks (Pytest, Unittest)
+- Deliver the software with clear setup instructions, module documentation and API documentation`,
+        },
+        prerequisites: {
+            en: 
+`- A description of the project, its goals and the functionality required
+- Any existing code or systems to integrate with
+- Specifications for APIs, libraries or frameworks to be included
+- (Optional) Examples of desired architecture or project templates`,
+        },
+        pricing: {
+            en: 
+`Highly depends on features and scope, but **~$500** is the average price for complex multi-module applications. Large-scale systems (e.g., enterprise-grade software with robust documentation) may cost **$1000–$2000**.`,
+        },
+    },
+    service2: {
+        desc: {
+            en: 
+`Web scraping involves extracting valuable data from websites in a structured format. If you're a business owner, marketer, researcher or data analyst, this service is for you. Need to track prices, monitor trends, collect leads or gather bulk data for research? Here's an efficient way to acquire information that can help you.`,
+        },
+        youGet: {
+            en: 
+`- A clean, well-organized dataset in your preferred format (Excel, CSV, JSON or database-ready)
+- Screenshots and sample outputs to ensure you're receiving exactly what you need
+- (Optional) Scripts used to collect the data`,
+        },
+        why: {
+            en: 
+`- Save money: no more manual data collection, which can be time-consuming and error-prone
+- Create revenue opportunities: leverage market data to make better business decisions
+- Stay ahead of competitors: gain insights into trends, customer preferences and more`,
+        },
+        iDo: {
+            en: 
+`- Analyze your data requirements and target websites
+- Use scraping Python tools (BeautifulSoup, Scrapy) or Selenium to create scripts
+- Develop custom solutions that bypass restrictions like CAPTCHA or dynamic loading
+- Automatically clean and preprocess the extracted data inside scripts using Pandas pipelines (if needed)
+- Deliver the final dataset in the format of your choice`,
+        },
+        prerequisites: {
+            en: 
+`- The URLs of target websites and a clear description of the type of data you need to collect
+- Information on the desired format of the output data`,
+        },
+        pricing: {
+            en: 
+`The average price for scraping static pages with minimal formatting is **~$60**. Handling pagination, login authentication or dynamic content may cost **$100–$200**. More advanced features (e.g., bypassing captchas, integrating proxies or scraping multiple sites with API development) are highly unpredictable in price.`,
+        },
+    },
+    service3: {
+        desc: {
+            en: 
+`Data processing turns raw data into the required form. Whether you're dealing with messy spreadsheets, incomplete databases or large volumes of unstructured information, this service helps you make sense of it. Ideal for small businesses, analysts or researchers who need to clean, organize and visualize data for decision-making.`,
+        },
+        youGet: {
+            en: 
+`- A structured and cleaned dataset ready for analysis
+- (Optional) Scripts used to process the dataset`,
+        },
+        why: {
+            en: 
+`- Save time: no more manual data cleaning or repetitive tasks
+- Streamlined operations: enable efficient decision-making with organized and accurate data`,
+        },
+        iDo: {
+            en: 
+`- Depending on the source, load the data into my workspace to use Python tools (Pandas, NumPy), SQL or Excel/Spreadsheets
+- Permorm data validation
+- Clean, sort and standardize raw data
+- Handle missing values, inconsistencies and duplicates
+- Perform advanced data transformation, like pivoting, merging or aggregating`,
+        },
+        prerequisites: {
+            en: 
+`- The raw data files or access to your data source
+- Details on the specific processing tasks or desired output
+- (Optional) Information about the business problem or question you're trying to solve with the data`,
+        },
+        pricing: {
+            en: 
+`**$50–$100** for basic tasks like cleaning datasets or simple transformations, depending on the amount of data. Handling large datasets with big data tools or creating reusable workflows may cost **$100–$200**. Advanced workflows (real-time processing, integrating pipelines) or working with specialized formats may cost more. The average price for this service is **~$70**.`,
+        },
+    },
+    service4: {
+        desc: {
+            en: 
+`Data visualization turns numbers into understandable forms that can be presented to non-technical people or simply to see something important in those numbers. This service is perfect for business leaders, marketers, analysts or anyone looking to communicate insights clearly and effectively.`,
+        },
+        youGet: {
+            en: 
+`- Professionally designed charts, graphs, maps or infographics based on your data
+- (Optional) Different variations of static visuals for presentations or reports`,
+        },
+        why: {
+            en: 
+`- Better communication: simplify complex data and understand its nature
+- Increased engagement: captivate your audience with visually striking graphics
+- Improved decision-making: quickly identify trends, anomalies and opportunities`,
+        },
+        iDo: {
+            en: 
+`- Analyze your data and determine the most effective visualization techniques
+- Design visuals using Tableau or Python tools (Matplotlib, Seaborn, Plotly and others)
+- Customize colors, layouts and interactivity to align with your branding or preferences
+- Deliver exportable visuals compatible with your platforms
+- Provide guidance on interpreting and using the visuals effectively`,
+        },
+        prerequisites: {
+            en: 
+`- A dataset or access to your data source
+- Information on what you want to showcase or the story you want to tell
+- Preferred platforms or tools if applicable
+- (Optional) Branding guidelines or example visuals you admire`,
+        },
+        pricing: {
+            en: 
+`**$50–$100** for basic charts on common data types in Python, Excel or Google Sheets. **$100–$200** for interactive/animated visualizations and uncommon data types. **$200+** for highly customized and detailed visuals, advanced interactivity or visualizations on multiple datasets. These prices are mostly determined by urgency.`,
+        },
+    },
+    service5: {
+        desc: {
+            en: 
+`Exploratory data analysis uncovers patterns, relationships and anomalies in your data. Whether you're preparing for a data science project, trying to understand your customers or optimizing operations, EDA provides insights and ensures your data is ready for advanced analytics. This service is essentially a combination of data visualization and statistical analysis.`,
+        },
+        youGet: {
+            en: 
+`- An in-depth overview of your data, including key statistics, distributions and correlations
+- Visualizations to explore trends and relationships
+- A concise report summarizing findings, potential insights and recommendations
+- (Optional) Data cleaning and preparation to remove outliers, handle missing values and standardize formats`,
+        },
+        why: {
+            en: 
+`- Deeper insights: reveal hidden trends and patterns in your data
+- Data quality assurance: ensure your data is clean and reliable for further analysis
+- Informed decisions: gain a solid foundation for strategy and predictive modeling`,
+        },
+        iDo: {
+            en: 
+`- Depending on the source, load the data into my workspace to use Python tools, SQL or Excel/Spreadsheets
+- Perform data cleaning (Pandas, NumPy)
+- Identify outliers, missing values and potential biases in the dataset
+- Prepare the data for further modeling or analysis by transforming and normalizing it
+- Conduct descriptive statistical analysis to summarize your data
+- Visualize relationships and distributions (Seaborn, Matplotlib)
+- Make a report (.pdf, Juputer Notebook, Google Colab, etc.)`,
+        },
+        prerequisites: {
+            en: 
+`- The dataset or access to your data source
+- A clear understanding of your goals (e.g., uncover trends, assess data quality or identify potential issues)
+- Preferred output formats
+- (Optional) A description of the specific problem you're addressing or the decisions you aim to inform with the findings`,
+        },
+        pricing: {
+            en: 
+`**$100–$150** for summary statistics, correlations and basic charts with explanations. **$150–$250** for in-depth analysis, probably using feature engineering or specific problem-focused methods. Comprehensive reports on multiple large datasets or with advanced visualizations may vary in price highly.`,
+        },
+    },
+    service6: {
+        desc: {
+            en: 
+`ML model fine-tuning involves optimizing pre-trained models to meet specific business needs. This service is ideal for businesses and researchers who want to maximize the performance of existing models for tasks like image classification, natural language processing or predictive analytics.`,
+        },
+        youGet: {
+            en: 
+`- A fine-tuned ML model ready to solve your specific problem
+- Comprehensive evaluation metrics to validate performance
+- A detailed report explaining the modifications, performance improvements and potential applications
+- (Optional) Deployment-ready code for integration into your existing systems`,
+        },
+        why: {
+            en: 
+`- Save time and resources: use existing powerful models without starting from scratch
+- Customized solutions: tailor models to your unique dataset and objectives
+- Enhanced accuracy: improve predictions, classifications or forecasts to drive better results`,
+        },
+        iDo: {
+            en: 
+`- Analyze your dataset and objectives to identify the most suitable pre-trained model
+- Fine-tune model(s) using frameworks with TensorFlow/PyTorch
+- Optimize hyperparameters
+- Perform rigorous evaluation using your data and refine the model iteratively
+- Deliver the fine-tuned model with clear documentation and guidance for use`,
+        },
+        prerequisites: {
+            en: 
+`- A labeled dataset or clear instructions on where to source training data
+- Details about the task you want to solve
+- Information on the deployment environment (e.g., cloud platform, local servers)
+- (Optional) Access to computational resources for model training (if applicable)`,
+        },
+        pricing: {
+            en: 
+`**$200–$800** for tuning pre-trained models with perfomance validation, depending on many factors such as quality of data, problem scope and domain.`,
+        },
+    },
+    service7: {
+        desc: {
+            en: 
+`Frontend development focuses on creating engaging, user-friendly web applications. If you need a visually appealing interface, this service brings your ideas to life.`,
+        },
+        youGet: {
+            en: 
+`- A responsive, modern frontend for your needs
+- Smooth navigation, interactive elements and an optimized UX
+- Cross-browser compatibility and mobile-friendly designs
+- Clean, well-documented code for seamless future updates or scaling`,
+        },
+        why: {
+            en: 
+`- Enhanced user engagement: create interfaces that are easy and enjoyable to use
+- Increased conversions: guide users effectively to achieve your business goals`,
+        },
+        iDo: { 
+            en: 
+`- Design and develop the frontend using React framework
+- Write clean, maintainable JavaScript/TypeScript components and CSS modules
+- Implement animations, transitions and responsive designs for a dynamic experience
+- Test for compatibility across browsers and devices`,
+        },
+        prerequisites: {
+            en: 
+`- A detailed description of your project goals and target audience
+- (Optional) Wireframes, mockups or design inspiration
+- (Optional) Branding guidelines (logos, colors, fonts) for consistency
+- (Optional) Access to APIs or backend services if the frontend will integrate with them`,
+        },
+        pricing: {
+            en: 
+`**~$300** for frontend interfaces or single-page apps of moderate complexity with interactive elements and responsive designs, written in React. API integration and additional React modules may increase the price.`,
+        },
+    },
+    service8: {
+        desc: {
+            en: 
+`Static websites are lightweight, fast-loading websites that deliver consistent content to users. Perfect for personal portfolios, small business pages, blogs or event sites, static websites are cost-effective and require minimal maintenance. If you want a fast, secure and SEO-friendly online presence, this service is for you.`,
+        },
+        youGet: {
+            en: 
+`- A responsive website for your needs
+- Up to 10 pages (e.g., Home, About, Services, Contact) designed to showcase your content effectively
+- Optimized for speed, security and search engines (SEO)
+- Hosted and deployed on platforms like GitHub Pages, Netlify or Vercel`,
+        },
+        why: {
+            en: 
+`- Save costs: no backend systems mean lower hosting fees and maintenance needs
+- Faster load times: delight users with a seamless browsing experience
+- Enhanced security: static sites are less prone to hacking compared to dynamic ones`,
+        },
+        iDo: {
+            en: 
+`- Develop the pages and components using React framework (JavaScript/TypeScript)
+- Implement simple Next.js backend or use SSG (Gatsby & GraphQL, Jekyll)
+- Incorporate tools like Tailwind CSS for responsive design
+- Optimize images, fonts and code to ensure fast load times
+- Implement SEO best practices like metadata, alt text and site maps
+- Host the website`,
+        },
+        prerequisites: {
+            en: 
+`- A clear description of the website's purpose and target audience
+- Content for the website (e.g., text, images, logos)
+- Design preferences or examples of websites you admire
+- (Optional) A domain name or hosting preference`,
+        },
+        pricing: {
+            en: 
+`**$150–$250** for basic 2-3 pages website (personal portfolio, small business pages). **~$400** for multi-page websites with contact forms, SEO and animations. Extensive custom design and JavaScript functionality may vary these prices significally. `,
+        },
+    },
+    service9: {
+        desc: {
+            en: 
+`Bots automate repetitive tasks and improve efficiency across various applications. Whether you need a chatbot for customer service or one to automate social media posts, this service provides reliable and intelligent solutions. Ideal for businesses, marketers and individuals looking to save time and enhance productivity.`,
+        },
+        youGet: {
+            en: 
+`- A customized bot designed to handle specific tasks
+- Fully tested and deployed to your preferred platform (e.g., Telegram, Instagram, Discord, your website, standalone scripts)
+- (Optional) Clear documentation on how to operate and maintain the bot`,
+        },
+        why: {
+            en: 
+`- Save time: automate repetitive tasks, freeing up valuable resources
+- Improve engagement: chatbots provide 24/7 customer support or lead generation
+- Streamline operations: automate data entry, notifications or even advanced tasks like workflow orchestration`,
+        },
+        iDo: {
+            en: 
+`- Assess your requirements and choose the right technologies
+- Develop the main bot components (Python)
+- Integrate chatbot functionality
+- Test and refine the bot for accuracy, speed and reliability
+- Integrate the bot with your systems, platforms or APIs as needed`,
+        },
+        prerequisites: {
+            en: 
+`- A clear description of the task or problem you want the bot to address
+- Access to the data sources, APIs or platforms the bot will interact with
+- Information on the preferred bot hosting or deployment platform (if applicable)
+- (Optional) Examples or specifications for desired bot behavior`,
+        },
+        pricing: {
+            en: 
+`This service is highly unpredictable in price. In average, an NLP-driven bot of medium complexity with APIs integration or databases costs **~$230**. `,
+        },
+    },
+    service10: {
+        desc: {
+            en: 
+`Data collection software automates the gathering of structured or unstructured data from various sources like websites, APIs or databases. If you need to collect dynamic data for research, analytics, reporting or decision-making, this service will provide you with a reusable tool.`,
+        },
+        youGet: {
+            en: 
+`- Custom-built software for your data collection needs
+- Data delivered in a structured format like Excel, CSV or a database
+- Features like error handling, scheduling and automated updates
+- Documentation and training on how to use the software effectively`,
+        },
+        why: {
+            en: 
+`- Save time: automate tedious data collection tasks
+- Improve decision-making: access high-quality data to power analytics and insights
+- Stay competitive: gather real-time data for trends, pricing or customer behavior`,
+        },
+        iDo: {
+            en: 
+`- Analyze your data collection requirements and identify the best sources
+- Develop software using Python tools (BeautifulSoup, Scrapy) and/or API integrations
+- Test the software extensively to ensure accuracy and reliability
+- Deliver the tool with documentation`,
+        },
+        prerequisites: {
+            en: 
+`- A clear description of the data you need and where it can be sourced from
+- Information on the preferred output format or storage location
+- (Optional) Access to APIs, databases or websites requiring authentication`,
+        },
+        pricing: {
+            en: 
+`**$150–$200** for one-time data extraction tool. **$200–$400** for tools with scheduling, filtering or error-handling. Real-time data collection may double the price.`,
+        },
+    },
+    service11: {
+        desc: {
+            en: 
+`Hypothesis testing is a statistical method for evaluating assumptions about data. It's perfect for researchers, analysts and business owners who need to make data-driven decisions (by testing marketing strategies, customer preferences, product effectiveness and so on).`,
+        },
+        youGet: {
+            en: 
+`- A clear setup and explanation of the hypothesis to be tested
+- Statistical analysis performed using industry-standard techniques
+- Reports that explain the results in a simple way
+- Recommendations or next steps based on the findings`,
+        },
+        why: {
+            en: 
+`- Validate ideas: make confident decisions based on data, not guesses
+- Improve strategies: identify what works and what doesn't for your goals
+- Optimize resources: focus efforts on initiatives with proven success potential`,
+        },
+        iDo: {
+            en: 
+`- Define the null and alternative hypotheses based on your objectives
+- Collect or clean data to ensure it meets testing requirements
+- Perform statistical tests using Python tools (SciPy, Statsmodels and many others)
+- Create clear visuals (e.g., graphs, p-value tables) to explain the results
+- Write a detailed report summarizing the findings and their implications`,
+        },
+        prerequisites: {
+            en: 
+`- A clear research question or hypothesis to test
+- A dataset relevant to the hypothesis (raw or cleaned)
+- Information on the context of the problem (e.g., what decision will the results impact?)
+- (Optional) Benchmarks or expected results for comparison`,
+        },
+        pricing: {
+            en: 
+`This service depends on many factors, price is negotiable.`,
+        },
+    },
+    service12: {
+        desc: {
+            en: 
+`Dashboards are interactive visual tools that aggregate, analyze and display data in real time. Ideal for business leaders, analysts and teams needing to monitor KPIs, track performance or derive insights quickly.`,
+        },
+        youGet: {
+            en: 
+`- A custom-built, interactive dashboard
+- Integration with data sources (Excel, databases, APIs, etc.) for real-time updates
+- Clean, user-friendly layouts designed to display critical metrics effectively
+- (Optional) Tutorials or guides to help your team navigate and utilize the dashboard`,
+        },
+        why: {
+            en: 
+`- Improved decision-making: access insights instantly
+- Time savings: consolidate data from multiple sources into one view
+- Enhanced collaboration: share insights seamlessly with your team or stakeholders`,
+        },
+        iDo: {
+            en: 
+`- Understand your key metrics and design a layout that meets your needs
+- Build dashboard using Tableau and Python tools (mostly Plotly as a helper library)
+- Connect the dashboard to your data sources for live or automated updates
+- Optimize visuals for clarity, ensuring metrics are easy to interpret
+- Provide training or documentation for effective use and updates`,
+        },
+        prerequisites: {
+            en: 
+`- A clear understanding of the KPIs or data you want to track
+- Access to your data sources (e.g., files, databases, APIs)
+- (Optional) Branding guidelines or design preferences
+- (Optional) Examples of dashboards you like or features you need (e.g., filters, drill-downs)`,
+        },
+        pricing: {
+            en: 
+`Dashboards with simple visualizations and KPIs cost **$200–$400**. Custom features with advanced analytics, real-time updates and handling many data sources may cost **$400–$1000**. The averace price is **~$350**.`,
+        },
+    },
+    service13: {
+        desc: {
+            en: 
+`Technical writing transforms complex concepts into clear, concise documentation. This service is perfect for businesses needing user manuals, API documentation, technical blogs or guides. Whether you're targeting developers, users or clients, this service ensures your materials are professional and easy to understand.`,
+        },
+        youGet: {
+            en: 
+`- Well-organized, professional text to your audience in preferred writing style
+- Accurate and concise language, free from ambiguity
+- (Optional) Visual aids such as flowcharts, diagrams or screenshots`,
+        },
+        why: {
+            en: 
+`- Streamlined communication: help users or teams understand your tools and systems
+- Increased efficiency: deduce support requests with clear, self-service documentation
+- Enhanced credibility: professional materials reflect the quality of your product or service`,
+        },
+        iDo: {
+            en: 
+`- Research and analyze your product or process to understand its functionality
+- Organize and structure content based on user needs and objectives
+- Write and edit clear, accurate and engaging technical documents
+- Ensure consistency with your brand's tone and style`,
+        },
+        prerequisites: {
+            en: 
+`- A description of the product, process or system needing documentation
+- Access to relevant materials, such as prototypes, systems or existing notes
+- Details about your target audience and their familiarity with the subject
+- (Optional) Examples of documentation styles or formats you prefer`,
+        },
+        pricing: {
+            en: 
+`Simple documentation cost **$50–$200** (guides or FAQs), depending on text length. API documentation and user manuals cost **$200–$500**. Technical whitepapers may cost more.`,
+        },
+    },
+    service14: {
+        desc: {
+            en: 
+`Scripting involves writing code to automate tasks, enhance workflows or solve specific problems. If you're looking to save time or add custom functionality to your tools, this service can help you.`,
+        },
+        youGet: {
+            en: 
+`- Custom scripts to automate tasks, process data or solve specific challenges
+- Fully tested, efficient and error-free code in your preferred scripting language (Python, Bash, PowerShell)
+- Clear instructions for running the scripts and integrating them into your systems`,
+        },
+        why: {
+            en: 
+`- Save time: automate repetitive tasks, freeing up resources
+- Improve accuracy: minimize errors in manual processes
+- Increase productivity: speed up workflows with efficient, reusable scripts`,
+        },
+        iDo: {
+            en: 
+`- Analyze your needs and the tasks to be automated or solved
+- Develop Python scripts and/or shell scripts
+- Test the scripts extensively
+- Deliver the scripts with usage instructions`,
+        },
+        prerequisites: {
+            en: 
+`- A clear description of the task or workflow you want to automate or enhance
+- Access to the systems, data or tools the script will interact with
+- Preferred scripting language (if applicable)
+- (Optional) Examples or specifications for desired script functionality`,
+        },
+        pricing: {
+            en: 
+`**$50–$150** for simple automation tasks, **$150–$400** for handling data processing, working with databases or API integration. **$500–$1000+** for end-to-end workflow or highly complex logic. The averace price is **~$80**.`,
+        },
+    },
+    service15: {
+        desc: {
+            en: 
+`Streamlit apps turn your data, models or algorithms into interactive web applications. Ideal for data scientists, ML engineers and businesses wanting to share insights, predictive tools or custom solutions quickly, without the need for a full website.`,
+        },
+        youGet: {
+            en: 
+`- A sleek, interactive web application built using Streamlit
+- Features like dropdowns, sliders, charts and tables to enhance user interaction
+- Seamless integration with your data sources, APIs or machine learning models
+- Fully deployable and accessible on the web or internal platforms`,
+        },
+        why: {
+            en: 
+`- Showcase insights: share interactive reports with your team or clients
+- Streamline workflows: provide an easy-to-use interface for complex processes or models
+- Save time: rapidly build and deploy apps without extensive coding overhead`,
+        },
+        iDo: {
+            en: 
+`- Develop the application using Streamlit, integrating necessary libraries
+- Add features like file upload, live data updates and interactive widgets
+- Test the app (usability, performance, reliability)
+- Assist with deployment on platforms`,
+        },
+        prerequisites: {
+            en: 
+`- A clear description of the app's purpose and target audience
+- Access to data, machine learning models or APIs the app will utilize
+- Preferred hosting platform for deployment
+- (Optional) Examples of similar apps or specific features you want included`,
+        },
+        pricing: {
+            en: 
+`Highly depends on initial software. The average price for static data displays and basic interactivity is **~$200**.`,
+        },
+    },
+    service16: {
+        desc: {
+            en: 
+`This service provides expert assistance with coding projects, Linux tasks, probability theory, statistics or research-related coursework and thesis requirements. Perfect for students, researchers and professionals aiming to enhance their understanding, complete assignments, or achieve academic goals with polished, high-quality work.`,
+        },
+        youGet: {
+            en: 
+`- Coding projects: debugged and well-commented Python, SQL, JavaScript or TypeScript code for your assignment or thesis requirements
+- Linux support: guidance with advanced shell scripting, system configuration or tools
+- Probability & statistics: step-by-step solutions, visualizations and statistical analysis
+- Research assistance: help with structuring, coding or interpreting results for thesis projects, along with insights on best practices and clear documentation`,
+        },
+        why: {
+            en: 
+`- Improve academic performance: understand key concepts and submit high-quality work
+- Save time: get efficient solutions while focusing on learning
+- Gain confidence: learn practical skills in coding, statistics or research that extend beyond the project`,
+        },
+        iDo: {
+            en: 
+`- Review your assignment or project guidelines to understand the requirements
+- Provide solutions with comments, explanations and demonstrations`,
+        },
+        prerequisites: {
+            en: 
+`- Detailed instructions for the assignment, coursework or thesis goals
+- Access to any relevant datasets, systems or materials for your project
+- Any tools, frameworks or environments required by your institution`,
+        },
+        pricing: {
+            en: 
+`**$50–$300** for coding tasks, statistical and mixed problems. **$500+** for complex research projects. These prices are mostly determined by urgency.`,
+        },
+    },
 }
