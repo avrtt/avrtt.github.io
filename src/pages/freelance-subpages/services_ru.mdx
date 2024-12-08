@@ -31,8 +31,6 @@ import { textServices } from "../strings/freelance"
             emoji={project.emoji}
             projectName={project.projectNameRu}
             projectDesc={project.projectDescRu}
-            date={project.dateRu}
-            duration={project.durationRu}
             source1={project.source1}
             source1Link={project.source1Link}
             source2={project.source2}
@@ -56,6 +54,7 @@ import { textServices } from "../strings/freelance"
         </div>
     </>
 )}
+<br/>
 ### Требования
 <M text={textServices.service1.prerequisites.ru}/>
 ### Предварительные расценки
@@ -74,10 +73,38 @@ import { textServices } from "../strings/freelance"
 ### Что делаю я
 <M text={textServices.service2.iDo.ru}/>
 ### Примеры
-<br/><br/><div class="yellowNotice">
-    ## 🚧 ВНИМАНИЕ!
-    Этот раздел не завершён. Примеры из моего портфолио начнут отображаться в ближайшее время.
-</div>
+<p> </p>
+{getProjectsForService(2).length > 0 ? (
+    getProjectsForService(2).map((project) => (
+        <FreelanceProject 
+            isExample={true}
+            emoji={project.emoji}
+            projectName={project.projectNameRu}
+            projectDesc={project.projectDescRu}
+            source1={project.source1}
+            source1Link={project.source1Link}
+            source2={project.source2}
+            source2Link={project.source2Link}
+            source3={project.source3}
+            source3Link={project.source3Link}
+            extraContentHide={project.extraContentHide}
+            extraDesc={project.extraDescRu}
+            demoImg1={project.demoImg1}
+            demoImg2={project.demoImg2}
+            demoImg3={project.demoImg3}
+            demoVidYTKey={project.demoVidYTKey}
+        />
+    ))
+) : (
+    <>
+        <br/>
+        <div class="yellowNotice">
+            <h2>🚧 ВНИМАНИЕ!</h2>
+            <p>Этот раздел не завершён. Примеры из моего портфолио начнут отображаться в ближайшее время.</p>
+        </div>
+    </>
+)}
+<br/>
 ### Требования
 <M text={textServices.service2.prerequisites.ru}/>
 ### Предварительные расценки
@@ -96,10 +123,38 @@ import { textServices } from "../strings/freelance"
 ### Что делаю я
 <M text={textServices.service3.iDo.ru}/>
 ### Примеры
-<br/><br/><div class="yellowNotice">
-    ## 🚧 ВНИМАНИЕ!
-    Этот раздел не завершён. Примеры из моего портфолио начнут отображаться в ближайшее время.
-</div>
+<p> </p>
+{getProjectsForService(3).length > 0 ? (
+    getProjectsForService(3).map((project) => (
+        <FreelanceProject 
+            isExample={true}
+            emoji={project.emoji}
+            projectName={project.projectNameRu}
+            projectDesc={project.projectDescRu}
+            source1={project.source1}
+            source1Link={project.source1Link}
+            source2={project.source2}
+            source2Link={project.source2Link}
+            source3={project.source3}
+            source3Link={project.source3Link}
+            extraContentHide={project.extraContentHide}
+            extraDesc={project.extraDescRu}
+            demoImg1={project.demoImg1}
+            demoImg2={project.demoImg2}
+            demoImg3={project.demoImg3}
+            demoVidYTKey={project.demoVidYTKey}
+        />
+    ))
+) : (
+    <>
+        <br/>
+        <div class="yellowNotice">
+            <h2>🚧 ВНИМАНИЕ!</h2>
+            <p>Этот раздел не завершён. Примеры из моего портфолио начнут отображаться в ближайшее время.</p>
+        </div>
+    </>
+)}
+<br/>
 ### Требования
 <M text={textServices.service3.prerequisites.ru}/>
 ### Предварительные расценки
@@ -118,10 +173,38 @@ import { textServices } from "../strings/freelance"
 ### Что делаю я
 <M text={textServices.service4.iDo.ru}/>
 ### Примеры
-<br/><br/><div class="yellowNotice">
-    ## 🚧 ВНИМАНИЕ!
-    Этот раздел не завершён. Примеры из моего портфолио начнут отображаться в ближайшее время.
-</div>
+<p> </p>
+{getProjectsForService(4).length > 0 ? (
+    getProjectsForService(4).map((project) => (
+        <FreelanceProject 
+            isExample={true}
+            emoji={project.emoji}
+            projectName={project.projectNameRu}
+            projectDesc={project.projectDescRu}
+            source1={project.source1}
+            source1Link={project.source1Link}
+            source2={project.source2}
+            source2Link={project.source2Link}
+            source3={project.source3}
+            source3Link={project.source3Link}
+            extraContentHide={project.extraContentHide}
+            extraDesc={project.extraDescRu}
+            demoImg1={project.demoImg1}
+            demoImg2={project.demoImg2}
+            demoImg3={project.demoImg3}
+            demoVidYTKey={project.demoVidYTKey}
+        />
+    ))
+) : (
+    <>
+        <br/>
+        <div class="yellowNotice">
+            <h2>🚧 ВНИМАНИЕ!</h2>
+            <p>Этот раздел не завершён. Примеры из моего портфолио начнут отображаться в ближайшее время.</p>
+        </div>
+    </>
+)}
+<br/>
 ### Требования
 <M text={textServices.service4.prerequisites.ru}/>
 ### Предварительные расценки
@@ -140,10 +223,38 @@ import { textServices } from "../strings/freelance"
 ### Что делаю я
 <M text={textServices.service5.iDo.ru}/>
 ### Примеры
-<br/><br/><div class="yellowNotice">
-    ## 🚧 ВНИМАНИЕ!
-    Этот раздел не завершён. Примеры из моего портфолио начнут отображаться в ближайшее время.
-</div>
+<p> </p>
+{getProjectsForService(5).length > 0 ? (
+    getProjectsForService(5).map((project) => (
+        <FreelanceProject 
+            isExample={true}
+            emoji={project.emoji}
+            projectName={project.projectNameRu}
+            projectDesc={project.projectDescRu}
+            source1={project.source1}
+            source1Link={project.source1Link}
+            source2={project.source2}
+            source2Link={project.source2Link}
+            source3={project.source3}
+            source3Link={project.source3Link}
+            extraContentHide={project.extraContentHide}
+            extraDesc={project.extraDescRu}
+            demoImg1={project.demoImg1}
+            demoImg2={project.demoImg2}
+            demoImg3={project.demoImg3}
+            demoVidYTKey={project.demoVidYTKey}
+        />
+    ))
+) : (
+    <>
+        <br/>
+        <div class="yellowNotice">
+            <h2>🚧 ВНИМАНИЕ!</h2>
+            <p>Этот раздел не завершён. Примеры из моего портфолио начнут отображаться в ближайшее время.</p>
+        </div>
+    </>
+)}
+<br/>
 ### Требования
 <M text={textServices.service5.prerequisites.ru}/>
 ### Предварительные расценки
@@ -162,10 +273,38 @@ import { textServices } from "../strings/freelance"
 ### Что делаю я
 <M text={textServices.service6.iDo.ru}/>
 ### Примеры
-<br/><br/><div class="yellowNotice">
-    ## 🚧 ВНИМАНИЕ!
-    Этот раздел не завершён. Примеры из моего портфолио начнут отображаться в ближайшее время.
-</div>
+<p> </p>
+{getProjectsForService(6).length > 0 ? (
+    getProjectsForService(6).map((project) => (
+        <FreelanceProject 
+            isExample={true}
+            emoji={project.emoji}
+            projectName={project.projectNameRu}
+            projectDesc={project.projectDescRu}
+            source1={project.source1}
+            source1Link={project.source1Link}
+            source2={project.source2}
+            source2Link={project.source2Link}
+            source3={project.source3}
+            source3Link={project.source3Link}
+            extraContentHide={project.extraContentHide}
+            extraDesc={project.extraDescRu}
+            demoImg1={project.demoImg1}
+            demoImg2={project.demoImg2}
+            demoImg3={project.demoImg3}
+            demoVidYTKey={project.demoVidYTKey}
+        />
+    ))
+) : (
+    <>
+        <br/>
+        <div class="yellowNotice">
+            <h2>🚧 ВНИМАНИЕ!</h2>
+            <p>Этот раздел не завершён. Примеры из моего портфолио начнут отображаться в ближайшее время.</p>
+        </div>
+    </>
+)}
+<br/>
 ### Требования
 <M text={textServices.service6.prerequisites.ru}/>
 ### Предварительные расценки
@@ -184,10 +323,38 @@ import { textServices } from "../strings/freelance"
 ### Что делаю я
 <M text={textServices.service7.iDo.ru}/>
 ### Примеры
-<br/><br/><div class="yellowNotice">
-    ## 🚧 ВНИМАНИЕ!
-    Этот раздел не завершён. Примеры из моего портфолио начнут отображаться в ближайшее время.
-</div>
+<p> </p>
+{getProjectsForService(7).length > 0 ? (
+    getProjectsForService(7).map((project) => (
+        <FreelanceProject 
+            isExample={true}
+            emoji={project.emoji}
+            projectName={project.projectNameRu}
+            projectDesc={project.projectDescRu}
+            source1={project.source1}
+            source1Link={project.source1Link}
+            source2={project.source2}
+            source2Link={project.source2Link}
+            source3={project.source3}
+            source3Link={project.source3Link}
+            extraContentHide={project.extraContentHide}
+            extraDesc={project.extraDescRu}
+            demoImg1={project.demoImg1}
+            demoImg2={project.demoImg2}
+            demoImg3={project.demoImg3}
+            demoVidYTKey={project.demoVidYTKey}
+        />
+    ))
+) : (
+    <>
+        <br/>
+        <div class="yellowNotice">
+            <h2>🚧 ВНИМАНИЕ!</h2>
+            <p>Этот раздел не завершён. Примеры из моего портфолио начнут отображаться в ближайшее время.</p>
+        </div>
+    </>
+)}
+<br/>
 ### Требования
 <M text={textServices.service7.prerequisites.ru}/>
 ### Предварительные расценки
@@ -206,10 +373,38 @@ import { textServices } from "../strings/freelance"
 ### Что делаю я
 <M text={textServices.service8.iDo.ru}/>
 ### Примеры
-<br/><br/><div class="yellowNotice">
-    ## 🚧 ВНИМАНИЕ!
-    Этот раздел не завершён. Примеры из моего портфолио начнут отображаться в ближайшее время.
-</div>
+<p> </p>
+{getProjectsForService(8).length > 0 ? (
+    getProjectsForService(8).map((project) => (
+        <FreelanceProject 
+            isExample={true}
+            emoji={project.emoji}
+            projectName={project.projectNameRu}
+            projectDesc={project.projectDescRu}
+            source1={project.source1}
+            source1Link={project.source1Link}
+            source2={project.source2}
+            source2Link={project.source2Link}
+            source3={project.source3}
+            source3Link={project.source3Link}
+            extraContentHide={project.extraContentHide}
+            extraDesc={project.extraDescRu}
+            demoImg1={project.demoImg1}
+            demoImg2={project.demoImg2}
+            demoImg3={project.demoImg3}
+            demoVidYTKey={project.demoVidYTKey}
+        />
+    ))
+) : (
+    <>
+        <br/>
+        <div class="yellowNotice">
+            <h2>🚧 ВНИМАНИЕ!</h2>
+            <p>Этот раздел не завершён. Примеры из моего портфолио начнут отображаться в ближайшее время.</p>
+        </div>
+    </>
+)}
+<br/>
 ### Требования
 <M text={textServices.service8.prerequisites.ru}/>
 ### Предварительные расценки
@@ -225,15 +420,41 @@ import { textServices } from "../strings/freelance"
 <M text={textServices.service9.youGet.ru}/>
 ### Для чего это нужно
 <M text={textServices.service9.why.ru}/>
-### Виды ботов
-<M text={textServices.service9.typesOfBots.ru}/>
 ### Что делаю я
 <M text={textServices.service9.iDo.ru}/>
 ### Примеры
-<br/><br/><div class="yellowNotice">
-    ## 🚧 ВНИМАНИЕ!
-    Этот раздел не завершён. Примеры из моего портфолио начнут отображаться в ближайшее время.
-</div>
+<p> </p>
+{getProjectsForService(9).length > 0 ? (
+    getProjectsForService(9).map((project) => (
+        <FreelanceProject 
+            isExample={true}
+            emoji={project.emoji}
+            projectName={project.projectNameRu}
+            projectDesc={project.projectDescRu}
+            source1={project.source1}
+            source1Link={project.source1Link}
+            source2={project.source2}
+            source2Link={project.source2Link}
+            source3={project.source3}
+            source3Link={project.source3Link}
+            extraContentHide={project.extraContentHide}
+            extraDesc={project.extraDescRu}
+            demoImg1={project.demoImg1}
+            demoImg2={project.demoImg2}
+            demoImg3={project.demoImg3}
+            demoVidYTKey={project.demoVidYTKey}
+        />
+    ))
+) : (
+    <>
+        <br/>
+        <div class="yellowNotice">
+            <h2>🚧 ВНИМАНИЕ!</h2>
+            <p>Этот раздел не завершён. Примеры из моего портфолио начнут отображаться в ближайшее время.</p>
+        </div>
+    </>
+)}
+<br/>
 ### Требования
 <M text={textServices.service9.prerequisites.ru}/>
 ### Предварительные расценки
@@ -252,10 +473,38 @@ import { textServices } from "../strings/freelance"
 ### Что делаю я
 <M text={textServices.service10.iDo.ru}/>
 ### Примеры
-<br/><br/><div class="yellowNotice">
-    ## 🚧 ВНИМАНИЕ!
-    Этот раздел не завершён. Примеры из моего портфолио начнут отображаться в ближайшее время.
-</div>
+<p> </p>
+{getProjectsForService(10).length > 0 ? (
+    getProjectsForService(10).map((project) => (
+        <FreelanceProject 
+            isExample={true}
+            emoji={project.emoji}
+            projectName={project.projectNameRu}
+            projectDesc={project.projectDescRu}
+            source1={project.source1}
+            source1Link={project.source1Link}
+            source2={project.source2}
+            source2Link={project.source2Link}
+            source3={project.source3}
+            source3Link={project.source3Link}
+            extraContentHide={project.extraContentHide}
+            extraDesc={project.extraDescRu}
+            demoImg1={project.demoImg1}
+            demoImg2={project.demoImg2}
+            demoImg3={project.demoImg3}
+            demoVidYTKey={project.demoVidYTKey}
+        />
+    ))
+) : (
+    <>
+        <br/>
+        <div class="yellowNotice">
+            <h2>🚧 ВНИМАНИЕ!</h2>
+            <p>Этот раздел не завершён. Примеры из моего портфолио начнут отображаться в ближайшее время.</p>
+        </div>
+    </>
+)}
+<br/>
 ### Требования
 <M text={textServices.service10.prerequisites.ru}/>
 ### Предварительные расценки
@@ -274,10 +523,38 @@ import { textServices } from "../strings/freelance"
 ### Что делаю я
 <M text={textServices.service11.iDo.ru}/>
 ### Примеры
-<br/><br/><div class="yellowNotice">
-    ## 🚧 ВНИМАНИЕ!
-    Этот раздел не завершён. Примеры из моего портфолио начнут отображаться в ближайшее время.
-</div>
+<p> </p>
+{getProjectsForService(11).length > 0 ? (
+    getProjectsForService(11).map((project) => (
+        <FreelanceProject 
+            isExample={true}
+            emoji={project.emoji}
+            projectName={project.projectNameRu}
+            projectDesc={project.projectDescRu}
+            source1={project.source1}
+            source1Link={project.source1Link}
+            source2={project.source2}
+            source2Link={project.source2Link}
+            source3={project.source3}
+            source3Link={project.source3Link}
+            extraContentHide={project.extraContentHide}
+            extraDesc={project.extraDescRu}
+            demoImg1={project.demoImg1}
+            demoImg2={project.demoImg2}
+            demoImg3={project.demoImg3}
+            demoVidYTKey={project.demoVidYTKey}
+        />
+    ))
+) : (
+    <>
+        <br/>
+        <div class="yellowNotice">
+            <h2>🚧 ВНИМАНИЕ!</h2>
+            <p>Этот раздел не завершён. Примеры из моего портфолио начнут отображаться в ближайшее время.</p>
+        </div>
+    </>
+)}
+<br/>
 ### Требования
 <M text={textServices.service11.prerequisites.ru}/>
 ### Предварительные расценки
@@ -296,10 +573,38 @@ import { textServices } from "../strings/freelance"
 ### Что делаю я
 <M text={textServices.service12.iDo.ru}/>
 ### Примеры
-<br/><br/><div class="yellowNotice">
-    ## 🚧 ВНИМАНИЕ!
-    Этот раздел не завершён. Примеры из моего портфолио начнут отображаться в ближайшее время.
-</div>
+<p> </p>
+{getProjectsForService(12).length > 0 ? (
+    getProjectsForService(12).map((project) => (
+        <FreelanceProject 
+            isExample={true}
+            emoji={project.emoji}
+            projectName={project.projectNameRu}
+            projectDesc={project.projectDescRu}
+            source1={project.source1}
+            source1Link={project.source1Link}
+            source2={project.source2}
+            source2Link={project.source2Link}
+            source3={project.source3}
+            source3Link={project.source3Link}
+            extraContentHide={project.extraContentHide}
+            extraDesc={project.extraDescRu}
+            demoImg1={project.demoImg1}
+            demoImg2={project.demoImg2}
+            demoImg3={project.demoImg3}
+            demoVidYTKey={project.demoVidYTKey}
+        />
+    ))
+) : (
+    <>
+        <br/>
+        <div class="yellowNotice">
+            <h2>🚧 ВНИМАНИЕ!</h2>
+            <p>Этот раздел не завершён. Примеры из моего портфолио начнут отображаться в ближайшее время.</p>
+        </div>
+    </>
+)}
+<br/>
 ### Требования
 <M text={textServices.service12.prerequisites.ru}/>
 ### Предварительные расценки
@@ -318,10 +623,38 @@ import { textServices } from "../strings/freelance"
 ### Что делаю я
 <M text={textServices.service13.iDo.ru}/>
 ### Примеры
-<br/><br/><div class="yellowNotice">
-    ## 🚧 ВНИМАНИЕ!
-    Этот раздел не завершён. Примеры из моего портфолио начнут отображаться в ближайшее время.
-</div>
+<p> </p>
+{getProjectsForService(13).length > 0 ? (
+    getProjectsForService(13).map((project) => (
+        <FreelanceProject 
+            isExample={true}
+            emoji={project.emoji}
+            projectName={project.projectNameRu}
+            projectDesc={project.projectDescRu}
+            source1={project.source1}
+            source1Link={project.source1Link}
+            source2={project.source2}
+            source2Link={project.source2Link}
+            source3={project.source3}
+            source3Link={project.source3Link}
+            extraContentHide={project.extraContentHide}
+            extraDesc={project.extraDescRu}
+            demoImg1={project.demoImg1}
+            demoImg2={project.demoImg2}
+            demoImg3={project.demoImg3}
+            demoVidYTKey={project.demoVidYTKey}
+        />
+    ))
+) : (
+    <>
+        <br/>
+        <div class="yellowNotice">
+            <h2>🚧 ВНИМАНИЕ!</h2>
+            <p>Этот раздел не завершён. Примеры из моего портфолио начнут отображаться в ближайшее время.</p>
+        </div>
+    </>
+)}
+<br/>
 ### Требования
 <M text={textServices.service13.prerequisites.ru}/>
 ### Предварительные расценки
@@ -340,10 +673,38 @@ import { textServices } from "../strings/freelance"
 ### Что делаю я
 <M text={textServices.service14.iDo.ru}/>
 ### Примеры
-<br/><br/><div class="yellowNotice">
-    ## 🚧 ВНИМАНИЕ!
-    Этот раздел не завершён. Примеры из моего портфолио начнут отображаться в ближайшее время.
-</div>
+<p> </p>
+{getProjectsForService(14).length > 0 ? (
+    getProjectsForService(14).map((project) => (
+        <FreelanceProject 
+            isExample={true}
+            emoji={project.emoji}
+            projectName={project.projectNameRu}
+            projectDesc={project.projectDescRu}
+            source1={project.source1}
+            source1Link={project.source1Link}
+            source2={project.source2}
+            source2Link={project.source2Link}
+            source3={project.source3}
+            source3Link={project.source3Link}
+            extraContentHide={project.extraContentHide}
+            extraDesc={project.extraDescRu}
+            demoImg1={project.demoImg1}
+            demoImg2={project.demoImg2}
+            demoImg3={project.demoImg3}
+            demoVidYTKey={project.demoVidYTKey}
+        />
+    ))
+) : (
+    <>
+        <br/>
+        <div class="yellowNotice">
+            <h2>🚧 ВНИМАНИЕ!</h2>
+            <p>Этот раздел не завершён. Примеры из моего портфолио начнут отображаться в ближайшее время.</p>
+        </div>
+    </>
+)}
+<br/>
 ### Требования
 <M text={textServices.service14.prerequisites.ru}/>
 ### Предварительные расценки
@@ -362,10 +723,38 @@ import { textServices } from "../strings/freelance"
 ### Что делаю я
 <M text={textServices.service15.iDo.ru}/>
 ### Примеры
-<br/><br/><div class="yellowNotice">
-    ## 🚧 ВНИМАНИЕ!
-    Этот раздел не завершён. Примеры из моего портфолио начнут отображаться в ближайшее время.
-</div>
+<p> </p>
+{getProjectsForService(15).length > 0 ? (
+    getProjectsForService(15).map((project) => (
+        <FreelanceProject 
+            isExample={true}
+            emoji={project.emoji}
+            projectName={project.projectNameRu}
+            projectDesc={project.projectDescRu}
+            source1={project.source1}
+            source1Link={project.source1Link}
+            source2={project.source2}
+            source2Link={project.source2Link}
+            source3={project.source3}
+            source3Link={project.source3Link}
+            extraContentHide={project.extraContentHide}
+            extraDesc={project.extraDescRu}
+            demoImg1={project.demoImg1}
+            demoImg2={project.demoImg2}
+            demoImg3={project.demoImg3}
+            demoVidYTKey={project.demoVidYTKey}
+        />
+    ))
+) : (
+    <>
+        <br/>
+        <div class="yellowNotice">
+            <h2>🚧 ВНИМАНИЕ!</h2>
+            <p>Этот раздел не завершён. Примеры из моего портфолио начнут отображаться в ближайшее время.</p>
+        </div>
+    </>
+)}
+<br/>
 ### Требования
 <M text={textServices.service15.prerequisites.ru}/>
 ### Предварительные расценки
@@ -384,10 +773,38 @@ import { textServices } from "../strings/freelance"
 ### Что делаю я
 <M text={textServices.service16.iDo.ru}/>
 ### Примеры
-<br/><br/><div class="yellowNotice">
-    ## 🚧 ВНИМАНИЕ!
-    Этот раздел не завершён. Примеры из моего портфолио начнут отображаться в ближайшее время.
-</div>
+<p> </p>
+{getProjectsForService(16).length > 0 ? (
+    getProjectsForService(16).map((project) => (
+        <FreelanceProject 
+            isExample={true}
+            emoji={project.emoji}
+            projectName={project.projectNameRu}
+            projectDesc={project.projectDescRu}
+            source1={project.source1}
+            source1Link={project.source1Link}
+            source2={project.source2}
+            source2Link={project.source2Link}
+            source3={project.source3}
+            source3Link={project.source3Link}
+            extraContentHide={project.extraContentHide}
+            extraDesc={project.extraDescRu}
+            demoImg1={project.demoImg1}
+            demoImg2={project.demoImg2}
+            demoImg3={project.demoImg3}
+            demoVidYTKey={project.demoVidYTKey}
+        />
+    ))
+) : (
+    <>
+        <br/>
+        <div class="yellowNotice">
+            <h2>🚧 ВНИМАНИЕ!</h2>
+            <p>Этот раздел не завершён. Примеры из моего портфолио начнут отображаться в ближайшее время.</p>
+        </div>
+    </>
+)}
+<br/>
 ### Требования
 <M text={textServices.service16.prerequisites.ru}/>
 ### Предварительные расценки

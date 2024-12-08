@@ -1,5 +1,7 @@
 import M from "../../components/Markdown"
 import GoBackButton from "../../components/GoBackButton"
+import FreelanceProject from'../../components/FreelanceProject'
+import { getProjectsForService } from "../../utils/services"
 import { services } from "../../data/freelance/arrays"
 import { textServices } from "../strings/freelance"
 
@@ -21,10 +23,38 @@ import { textServices } from "../strings/freelance"
 ### What I do
 <M text={textServices.service1.iDo.en}/>
 ### Examples
-<br/><br/><div class="yellowNotice">
-    ## 🚧 HEADS UP!
-    This section isn't finished. Examples pulled from my portfolio will appear soon.
-</div>
+<p> </p>
+{getProjectsForService(1).length > 0 ? (
+    getProjectsForService(1).map((project) => (
+        <FreelanceProject 
+            isExample={true}
+            emoji={project.emoji}
+            projectName={project.projectName}
+            projectDesc={project.projectDesc}
+            source1={project.source1}
+            source1Link={project.source1Link}
+            source2={project.source2}
+            source2Link={project.source2Link}
+            source3={project.source3}
+            source3Link={project.source3Link}
+            extraContentHide={project.extraContentHide}
+            extraDesc={project.extraDesc}
+            demoImg1={project.demoImg1}
+            demoImg2={project.demoImg2}
+            demoImg3={project.demoImg3}
+            demoVidYTKey={project.demoVidYTKey}
+        />
+    ))
+) : (
+    <>
+        <br/>
+        <div class="yellowNotice">
+            <h2>🚧 HEADS UP!</h2>
+            <p>This section isn't finished. Examples pulled from my portfolio will appear soon.</p>
+        </div>
+    </>
+)}
+<br/>
 ### Prerequisites
 <M text={textServices.service1.prerequisites.en}/>
 ### Preliminary pricing
@@ -43,10 +73,38 @@ import { textServices } from "../strings/freelance"
 ### What I do
 <M text={textServices.service2.iDo.en}/>
 ### Examples
-<br/><br/><div class="yellowNotice">
-    ## 🚧 HEADS UP!
-    This section isn't finished. Examples pulled from my portfolio will appear soon.
-</div>
+<p> </p>
+{getProjectsForService(2).length > 0 ? (
+    getProjectsForService(2).map((project) => (
+        <FreelanceProject 
+            isExample={true}
+            emoji={project.emoji}
+            projectName={project.projectName}
+            projectDesc={project.projectDesc}
+            source1={project.source1}
+            source1Link={project.source1Link}
+            source2={project.source2}
+            source2Link={project.source2Link}
+            source3={project.source3}
+            source3Link={project.source3Link}
+            extraContentHide={project.extraContentHide}
+            extraDesc={project.extraDesc}
+            demoImg1={project.demoImg1}
+            demoImg2={project.demoImg2}
+            demoImg3={project.demoImg3}
+            demoVidYTKey={project.demoVidYTKey}
+        />
+    ))
+) : (
+    <>
+        <br/>
+        <div class="yellowNotice">
+            <h2>🚧 HEADS UP!</h2>
+            <p>This section isn't finished. Examples pulled from my portfolio will appear soon.</p>
+        </div>
+    </>
+)}
+<br/>
 ### Prerequisites
 <M text={textServices.service2.prerequisites.en}/>
 ### Preliminary pricing
@@ -65,10 +123,38 @@ import { textServices } from "../strings/freelance"
 ### What I do
 <M text={textServices.service3.iDo.en}/>
 ### Examples
-<br/><br/><div class="yellowNotice">
-    ## 🚧 HEADS UP!
-    This section isn't finished. Examples pulled from my portfolio will appear soon.
-</div>
+<p> </p>
+{getProjectsForService(3).length > 0 ? (
+    getProjectsForService(3).map((project) => (
+        <FreelanceProject 
+            isExample={true}
+            emoji={project.emoji}
+            projectName={project.projectName}
+            projectDesc={project.projectDesc}
+            source1={project.source1}
+            source1Link={project.source1Link}
+            source2={project.source2}
+            source2Link={project.source2Link}
+            source3={project.source3}
+            source3Link={project.source3Link}
+            extraContentHide={project.extraContentHide}
+            extraDesc={project.extraDesc}
+            demoImg1={project.demoImg1}
+            demoImg2={project.demoImg2}
+            demoImg3={project.demoImg3}
+            demoVidYTKey={project.demoVidYTKey}
+        />
+    ))
+) : (
+    <>
+        <br/>
+        <div class="yellowNotice">
+            <h2>🚧 HEADS UP!</h2>
+            <p>This section isn't finished. Examples pulled from my portfolio will appear soon.</p>
+        </div>
+    </>
+)}
+<br/>
 ### Prerequisites
 <M text={textServices.service3.prerequisites.en}/>
 ### Preliminary pricing
@@ -87,10 +173,38 @@ import { textServices } from "../strings/freelance"
 ### What I do
 <M text={textServices.service4.iDo.en}/>
 ### Examples
-<br/><br/><div class="yellowNotice">
-    ## 🚧 HEADS UP!
-    This section isn't finished. Examples pulled from my portfolio will appear soon.
-</div>
+<p> </p>
+{getProjectsForService(4).length > 0 ? (
+    getProjectsForService(4).map((project) => (
+        <FreelanceProject 
+            isExample={true}
+            emoji={project.emoji}
+            projectName={project.projectName}
+            projectDesc={project.projectDesc}
+            source1={project.source1}
+            source1Link={project.source1Link}
+            source2={project.source2}
+            source2Link={project.source2Link}
+            source3={project.source3}
+            source3Link={project.source3Link}
+            extraContentHide={project.extraContentHide}
+            extraDesc={project.extraDesc}
+            demoImg1={project.demoImg1}
+            demoImg2={project.demoImg2}
+            demoImg3={project.demoImg3}
+            demoVidYTKey={project.demoVidYTKey}
+        />
+    ))
+) : (
+    <>
+        <br/>
+        <div class="yellowNotice">
+            <h2>🚧 HEADS UP!</h2>
+            <p>This section isn't finished. Examples pulled from my portfolio will appear soon.</p>
+        </div>
+    </>
+)}
+<br/>
 ### Prerequisites
 <M text={textServices.service4.prerequisites.en}/>
 ### Preliminary pricing
@@ -109,10 +223,38 @@ import { textServices } from "../strings/freelance"
 ### What I do
 <M text={textServices.service5.iDo.en}/>
 ### Examples
-<br/><br/><div class="yellowNotice">
-    ## 🚧 HEADS UP!
-    This section isn't finished. Examples pulled from my portfolio will appear soon.
-</div>
+<p> </p>
+{getProjectsForService(5).length > 0 ? (
+    getProjectsForService(5).map((project) => (
+        <FreelanceProject 
+            isExample={true}
+            emoji={project.emoji}
+            projectName={project.projectName}
+            projectDesc={project.projectDesc}
+            source1={project.source1}
+            source1Link={project.source1Link}
+            source2={project.source2}
+            source2Link={project.source2Link}
+            source3={project.source3}
+            source3Link={project.source3Link}
+            extraContentHide={project.extraContentHide}
+            extraDesc={project.extraDesc}
+            demoImg1={project.demoImg1}
+            demoImg2={project.demoImg2}
+            demoImg3={project.demoImg3}
+            demoVidYTKey={project.demoVidYTKey}
+        />
+    ))
+) : (
+    <>
+        <br/>
+        <div class="yellowNotice">
+            <h2>🚧 HEADS UP!</h2>
+            <p>This section isn't finished. Examples pulled from my portfolio will appear soon.</p>
+        </div>
+    </>
+)}
+<br/>
 ### Prerequisites
 <M text={textServices.service5.prerequisites.en}/>
 ### Preliminary pricing
@@ -131,10 +273,38 @@ import { textServices } from "../strings/freelance"
 ### What I do
 <M text={textServices.service6.iDo.en}/>
 ### Examples
-<br/><br/><div class="yellowNotice">
-    ## 🚧 HEADS UP!
-    This section isn't finished. Examples pulled from my portfolio will appear soon.
-</div>
+<p> </p>
+{getProjectsForService(6).length > 0 ? (
+    getProjectsForService(6).map((project) => (
+        <FreelanceProject 
+            isExample={true}
+            emoji={project.emoji}
+            projectName={project.projectName}
+            projectDesc={project.projectDesc}
+            source1={project.source1}
+            source1Link={project.source1Link}
+            source2={project.source2}
+            source2Link={project.source2Link}
+            source3={project.source3}
+            source3Link={project.source3Link}
+            extraContentHide={project.extraContentHide}
+            extraDesc={project.extraDesc}
+            demoImg1={project.demoImg1}
+            demoImg2={project.demoImg2}
+            demoImg3={project.demoImg3}
+            demoVidYTKey={project.demoVidYTKey}
+        />
+    ))
+) : (
+    <>
+        <br/>
+        <div class="yellowNotice">
+            <h2>🚧 HEADS UP!</h2>
+            <p>This section isn't finished. Examples pulled from my portfolio will appear soon.</p>
+        </div>
+    </>
+)}
+<br/>
 ### Prerequisites
 <M text={textServices.service6.prerequisites.en}/>
 ### Preliminary pricing
@@ -153,10 +323,38 @@ import { textServices } from "../strings/freelance"
 ### What I do
 <M text={textServices.service7.iDo.en}/>
 ### Examples
-<br/><br/><div class="yellowNotice">
-    ## 🚧 HEADS UP!
-    This section isn't finished. Examples pulled from my portfolio will appear soon.
-</div>
+<p> </p>
+{getProjectsForService(7).length > 0 ? (
+    getProjectsForService(7).map((project) => (
+        <FreelanceProject 
+            isExample={true}
+            emoji={project.emoji}
+            projectName={project.projectName}
+            projectDesc={project.projectDesc}
+            source1={project.source1}
+            source1Link={project.source1Link}
+            source2={project.source2}
+            source2Link={project.source2Link}
+            source3={project.source3}
+            source3Link={project.source3Link}
+            extraContentHide={project.extraContentHide}
+            extraDesc={project.extraDesc}
+            demoImg1={project.demoImg1}
+            demoImg2={project.demoImg2}
+            demoImg3={project.demoImg3}
+            demoVidYTKey={project.demoVidYTKey}
+        />
+    ))
+) : (
+    <>
+        <br/>
+        <div class="yellowNotice">
+            <h2>🚧 HEADS UP!</h2>
+            <p>This section isn't finished. Examples pulled from my portfolio will appear soon.</p>
+        </div>
+    </>
+)}
+<br/>
 ### Prerequisites
 <M text={textServices.service7.prerequisites.en}/>
 ### Preliminary pricing
@@ -175,10 +373,38 @@ import { textServices } from "../strings/freelance"
 ### What I do
 <M text={textServices.service8.iDo.en}/>
 ### Examples
-<br/><br/><div class="yellowNotice">
-    ## 🚧 HEADS UP!
-    This section isn't finished. Examples pulled from my portfolio will appear soon.
-</div>
+<p> </p>
+{getProjectsForService(8).length > 0 ? (
+    getProjectsForService(8).map((project) => (
+        <FreelanceProject 
+            isExample={true}
+            emoji={project.emoji}
+            projectName={project.projectName}
+            projectDesc={project.projectDesc}
+            source1={project.source1}
+            source1Link={project.source1Link}
+            source2={project.source2}
+            source2Link={project.source2Link}
+            source3={project.source3}
+            source3Link={project.source3Link}
+            extraContentHide={project.extraContentHide}
+            extraDesc={project.extraDesc}
+            demoImg1={project.demoImg1}
+            demoImg2={project.demoImg2}
+            demoImg3={project.demoImg3}
+            demoVidYTKey={project.demoVidYTKey}
+        />
+    ))
+) : (
+    <>
+        <br/>
+        <div class="yellowNotice">
+            <h2>🚧 HEADS UP!</h2>
+            <p>This section isn't finished. Examples pulled from my portfolio will appear soon.</p>
+        </div>
+    </>
+)}
+<br/>
 ### Prerequisites
 <M text={textServices.service8.prerequisites.en}/>
 ### Preliminary pricing
@@ -194,15 +420,41 @@ import { textServices } from "../strings/freelance"
 <M text={textServices.service9.youGet.en}/>
 ### Why you might need it
 <M text={textServices.service9.why.en}/>
-### Types of bots
-<M text={textServices.service9.typesOfBots.en}/>
 ### What I do
 <M text={textServices.service9.iDo.en}/>
 ### Examples
-<br/><br/><div class="yellowNotice">
-    ## 🚧 HEADS UP!
-    This section isn't finished. Examples pulled from my portfolio will appear soon.
-</div>
+<p> </p>
+{getProjectsForService(9).length > 0 ? (
+    getProjectsForService(9).map((project) => (
+        <FreelanceProject 
+            isExample={true}
+            emoji={project.emoji}
+            projectName={project.projectName}
+            projectDesc={project.projectDesc}
+            source1={project.source1}
+            source1Link={project.source1Link}
+            source2={project.source2}
+            source2Link={project.source2Link}
+            source3={project.source3}
+            source3Link={project.source3Link}
+            extraContentHide={project.extraContentHide}
+            extraDesc={project.extraDesc}
+            demoImg1={project.demoImg1}
+            demoImg2={project.demoImg2}
+            demoImg3={project.demoImg3}
+            demoVidYTKey={project.demoVidYTKey}
+        />
+    ))
+) : (
+    <>
+        <br/>
+        <div class="yellowNotice">
+            <h2>🚧 HEADS UP!</h2>
+            <p>This section isn't finished. Examples pulled from my portfolio will appear soon.</p>
+        </div>
+    </>
+)}
+<br/>
 ### Prerequisites
 <M text={textServices.service9.prerequisites.en}/>
 ### Preliminary pricing
@@ -221,10 +473,38 @@ import { textServices } from "../strings/freelance"
 ### What I do
 <M text={textServices.service10.iDo.en}/>
 ### Examples
-<br/><br/><div class="yellowNotice">
-    ## 🚧 HEADS UP!
-    This section isn't finished. Examples pulled from my portfolio will appear soon.
-</div>
+<p> </p>
+{getProjectsForService(10).length > 0 ? (
+    getProjectsForService(10).map((project) => (
+        <FreelanceProject 
+            isExample={true}
+            emoji={project.emoji}
+            projectName={project.projectName}
+            projectDesc={project.projectDesc}
+            source1={project.source1}
+            source1Link={project.source1Link}
+            source2={project.source2}
+            source2Link={project.source2Link}
+            source3={project.source3}
+            source3Link={project.source3Link}
+            extraContentHide={project.extraContentHide}
+            extraDesc={project.extraDesc}
+            demoImg1={project.demoImg1}
+            demoImg2={project.demoImg2}
+            demoImg3={project.demoImg3}
+            demoVidYTKey={project.demoVidYTKey}
+        />
+    ))
+) : (
+    <>
+        <br/>
+        <div class="yellowNotice">
+            <h2>🚧 HEADS UP!</h2>
+            <p>This section isn't finished. Examples pulled from my portfolio will appear soon.</p>
+        </div>
+    </>
+)}
+<br/>
 ### Prerequisites
 <M text={textServices.service10.prerequisites.en}/>
 ### Preliminary pricing
@@ -243,10 +523,38 @@ import { textServices } from "../strings/freelance"
 ### What I do
 <M text={textServices.service11.iDo.en}/>
 ### Examples
-<br/><br/><div class="yellowNotice">
-    ## 🚧 HEADS UP!
-    This section isn't finished. Examples pulled from my portfolio will appear soon.
-</div>
+<p> </p>
+{getProjectsForService(11).length > 0 ? (
+    getProjectsForService(11).map((project) => (
+        <FreelanceProject 
+            isExample={true}
+            emoji={project.emoji}
+            projectName={project.projectName}
+            projectDesc={project.projectDesc}
+            source1={project.source1}
+            source1Link={project.source1Link}
+            source2={project.source2}
+            source2Link={project.source2Link}
+            source3={project.source3}
+            source3Link={project.source3Link}
+            extraContentHide={project.extraContentHide}
+            extraDesc={project.extraDesc}
+            demoImg1={project.demoImg1}
+            demoImg2={project.demoImg2}
+            demoImg3={project.demoImg3}
+            demoVidYTKey={project.demoVidYTKey}
+        />
+    ))
+) : (
+    <>
+        <br/>
+        <div class="yellowNotice">
+            <h2>🚧 HEADS UP!</h2>
+            <p>This section isn't finished. Examples pulled from my portfolio will appear soon.</p>
+        </div>
+    </>
+)}
+<br/>
 ### Prerequisites
 <M text={textServices.service11.prerequisites.en}/>
 ### Preliminary pricing
@@ -265,10 +573,38 @@ import { textServices } from "../strings/freelance"
 ### What I do
 <M text={textServices.service12.iDo.en}/>
 ### Examples
-<br/><br/><div class="yellowNotice">
-    ## 🚧 HEADS UP!
-    This section isn't finished. Examples pulled from my portfolio will appear soon.
-</div>
+<p> </p>
+{getProjectsForService(12).length > 0 ? (
+    getProjectsForService(12).map((project) => (
+        <FreelanceProject 
+            isExample={true}
+            emoji={project.emoji}
+            projectName={project.projectName}
+            projectDesc={project.projectDesc}
+            source1={project.source1}
+            source1Link={project.source1Link}
+            source2={project.source2}
+            source2Link={project.source2Link}
+            source3={project.source3}
+            source3Link={project.source3Link}
+            extraContentHide={project.extraContentHide}
+            extraDesc={project.extraDesc}
+            demoImg1={project.demoImg1}
+            demoImg2={project.demoImg2}
+            demoImg3={project.demoImg3}
+            demoVidYTKey={project.demoVidYTKey}
+        />
+    ))
+) : (
+    <>
+        <br/>
+        <div class="yellowNotice">
+            <h2>🚧 HEADS UP!</h2>
+            <p>This section isn't finished. Examples pulled from my portfolio will appear soon.</p>
+        </div>
+    </>
+)}
+<br/>
 ### Prerequisites
 <M text={textServices.service12.prerequisites.en}/>
 ### Preliminary pricing
@@ -287,10 +623,38 @@ import { textServices } from "../strings/freelance"
 ### What I do
 <M text={textServices.service13.iDo.en}/>
 ### Examples
-<br/><br/><div class="yellowNotice">
-    ## 🚧 HEADS UP!
-    This section isn't finished. Examples pulled from my portfolio will appear soon.
-</div>
+<p> </p>
+{getProjectsForService(13).length > 0 ? (
+    getProjectsForService(13).map((project) => (
+        <FreelanceProject 
+            isExample={true}
+            emoji={project.emoji}
+            projectName={project.projectName}
+            projectDesc={project.projectDesc}
+            source1={project.source1}
+            source1Link={project.source1Link}
+            source2={project.source2}
+            source2Link={project.source2Link}
+            source3={project.source3}
+            source3Link={project.source3Link}
+            extraContentHide={project.extraContentHide}
+            extraDesc={project.extraDesc}
+            demoImg1={project.demoImg1}
+            demoImg2={project.demoImg2}
+            demoImg3={project.demoImg3}
+            demoVidYTKey={project.demoVidYTKey}
+        />
+    ))
+) : (
+    <>
+        <br/>
+        <div class="yellowNotice">
+            <h2>🚧 HEADS UP!</h2>
+            <p>This section isn't finished. Examples pulled from my portfolio will appear soon.</p>
+        </div>
+    </>
+)}
+<br/>
 ### Prerequisites
 <M text={textServices.service13.prerequisites.en}/>
 ### Preliminary pricing
@@ -309,10 +673,38 @@ import { textServices } from "../strings/freelance"
 ### What I do
 <M text={textServices.service14.iDo.en}/>
 ### Examples
-<br/><br/><div class="yellowNotice">
-    ## 🚧 HEADS UP!
-    This section isn't finished. Examples pulled from my portfolio will appear soon.
-</div>
+<p> </p>
+{getProjectsForService(14).length > 0 ? (
+    getProjectsForService(14).map((project) => (
+        <FreelanceProject 
+            isExample={true}
+            emoji={project.emoji}
+            projectName={project.projectName}
+            projectDesc={project.projectDesc}
+            source1={project.source1}
+            source1Link={project.source1Link}
+            source2={project.source2}
+            source2Link={project.source2Link}
+            source3={project.source3}
+            source3Link={project.source3Link}
+            extraContentHide={project.extraContentHide}
+            extraDesc={project.extraDesc}
+            demoImg1={project.demoImg1}
+            demoImg2={project.demoImg2}
+            demoImg3={project.demoImg3}
+            demoVidYTKey={project.demoVidYTKey}
+        />
+    ))
+) : (
+    <>
+        <br/>
+        <div class="yellowNotice">
+            <h2>🚧 HEADS UP!</h2>
+            <p>This section isn't finished. Examples pulled from my portfolio will appear soon.</p>
+        </div>
+    </>
+)}
+<br/>
 ### Prerequisites
 <M text={textServices.service14.prerequisites.en}/>
 ### Preliminary pricing
@@ -331,10 +723,38 @@ import { textServices } from "../strings/freelance"
 ### What I do
 <M text={textServices.service15.iDo.en}/>
 ### Examples
-<br/><br/><div class="yellowNotice">
-    ## 🚧 HEADS UP!
-    This section isn't finished. Examples pulled from my portfolio will appear soon.
-</div>
+<p> </p>
+{getProjectsForService(15).length > 0 ? (
+    getProjectsForService(15).map((project) => (
+        <FreelanceProject 
+            isExample={true}
+            emoji={project.emoji}
+            projectName={project.projectName}
+            projectDesc={project.projectDesc}
+            source1={project.source1}
+            source1Link={project.source1Link}
+            source2={project.source2}
+            source2Link={project.source2Link}
+            source3={project.source3}
+            source3Link={project.source3Link}
+            extraContentHide={project.extraContentHide}
+            extraDesc={project.extraDesc}
+            demoImg1={project.demoImg1}
+            demoImg2={project.demoImg2}
+            demoImg3={project.demoImg3}
+            demoVidYTKey={project.demoVidYTKey}
+        />
+    ))
+) : (
+    <>
+        <br/>
+        <div class="yellowNotice">
+            <h2>🚧 HEADS UP!</h2>
+            <p>This section isn't finished. Examples pulled from my portfolio will appear soon.</p>
+        </div>
+    </>
+)}
+<br/>
 ### Prerequisites
 <M text={textServices.service15.prerequisites.en}/>
 ### Preliminary pricing
@@ -353,10 +773,38 @@ import { textServices } from "../strings/freelance"
 ### What I do
 <M text={textServices.service16.iDo.en}/>
 ### Examples
-<br/><br/><div class="yellowNotice">
-    ## 🚧 HEADS UP!
-    This section isn't finished. Examples pulled from my portfolio will appear soon.
-</div>
+<p> </p>
+{getProjectsForService(16).length > 0 ? (
+    getProjectsForService(16).map((project) => (
+        <FreelanceProject 
+            isExample={true}
+            emoji={project.emoji}
+            projectName={project.projectName}
+            projectDesc={project.projectDesc}
+            source1={project.source1}
+            source1Link={project.source1Link}
+            source2={project.source2}
+            source2Link={project.source2Link}
+            source3={project.source3}
+            source3Link={project.source3Link}
+            extraContentHide={project.extraContentHide}
+            extraDesc={project.extraDesc}
+            demoImg1={project.demoImg1}
+            demoImg2={project.demoImg2}
+            demoImg3={project.demoImg3}
+            demoVidYTKey={project.demoVidYTKey}
+        />
+    ))
+) : (
+    <>
+        <br/>
+        <div class="yellowNotice">
+            <h2>🚧 HEADS UP!</h2>
+            <p>This section isn't finished. Examples pulled from my portfolio will appear soon.</p>
+        </div>
+    </>
+)}
+<br/>
 ### Prerequisites
 <M text={textServices.service16.prerequisites.en}/>
 ### Preliminary pricing

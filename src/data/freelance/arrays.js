@@ -33,7 +33,7 @@ export const projects = [
 		extraDescRu: '', 
 		demoImg1: '', demoImg2: '', demoImg3: '', // '../images/freelance/projects/[PROJECT]/[IMAGE]'
 		demoVidYTKey: '',
-		showAsServiceExample: '1', // number of service from the "services" array
+		showAsServiceExample: '6', // number of service from the "services" array
 		emoji: '🪶'},
 	{id: 2, 
 		categoryKey: 'misc',
@@ -77,7 +77,7 @@ export const projects = [
 		extraDescRu: '', 
 		demoImg1: '', demoImg2: '', demoImg3: '', 
 		demoVidYTKey: '',
-		showAsServiceExample: '',
+		showAsServiceExample: '8',
 		emoji: '🚀'},
 	{id: 4, 
 		categoryKey: 'technical_writing',
