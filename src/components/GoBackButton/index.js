@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Link } from 'gatsby';
 import Arrow from '../../images/freelance/services/arrow1.svg';
 
-const GoBackButton = () => {
+const GoBackButton = ({ link="/" }) => {
   const [scrolled, setScrolled] = useState(false);
   const buttonRef = useRef(null);
   const initialTopOffset = 12;
@@ -31,7 +31,7 @@ const GoBackButton = () => {
       style={!scrolled ? { top: `${initialTopOffset}vh` } : {}}
       ref={buttonRef}
     >
-      <Link title="Back to the main page" className="goBack noselect" to="/freelance">
+      <Link title="Back to the main page" className="goBack noselect" to={link}>
         <div className="goBack noselect">
           <img src={Arrow} alt="button_icon" width="50%" height="100%" />
         </div>

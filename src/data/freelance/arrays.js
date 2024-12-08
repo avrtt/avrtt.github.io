@@ -101,38 +101,86 @@ export const projects = [
 
 // currently preferable services
 export const services = [{},
-	{icon: PA, title: "Modular Python software", // 1
-		text: "Build or debug modular Python software (complex console apps, desktop GUIs, enterprise tools)"},
-	{icon: DC, title: "Web scraping", // 2
-		text: "Collect any kind of data using web scraping techniques"},
-	{icon: DA, title: "Data processing", // 3
-		text: "Perform data processing (cleaning, transforming, annotation/labeling, reduction, validation)"}, 
-	{icon: DV, title: "Data visualization", // 4
-		text: "Create a clear and eye-catching visualization for any kind of data"}, 
-	{icon: DA, title: "Exploratory data analysis", // 5
-		text: "Conduct exploratory data analysis"},
-	{icon: ML, title: "Fine-tuning", // 6
-		text: "Fine-tune a deep learning model"},
-	{icon: WD, title: "Frontend", // 7
-		text: "Build a frontend for a web app (React)"}, 
-	{icon: WD, title: "Static websites", // 8
-		text: "Design and build a static website, such as a blog, portfolio or landing page (Next.js/Gatsby/Jekyll, CMS)"}, 
-	{icon: PA, title: "Bots", // 9
-		text: "Create a bot for your website or popular platforms (Telegram, Instagram, Discord), optionally including chatbot functionality with LLM integration"}, 
-	{icon: PA, title: "Data collection software", // 10
-		text: "Create custom data collection software (scraper, parser, web crawler)"}, 
-	{icon: RE, title: "Hypothesis testing", // 11
-		text: "Conduct hypothesis testing, including A/B testing"}, 
-	{icon: DA, title: "Dashboards", // 12
-		text: "Create a dashboard to display metrics based on data"},
-	{icon: TW, title: "Technical writing", // 13
-		text: "Write SEO-optimized technical content related to Data Science: articles, tutorials, product documentations or blog posts"},
-	{icon: PA, title: "Scripting", // 14
-		text: "Automate workflows using scripting (Python, Shell)"}, 
-	{icon: WD, title: "Streamlit apps", // 15
-		text: "Adapt and deploy a Python app to Streamlit"}, 
-	{icon: MI, title: "Academic help", // 16
-		text: "Help with homework, coursework or thesis: coding projects (Python, SQL, JavaScript, TypeScript), Linux, probability theory & statistics, research"} 
+	{icon: PA, 
+		title: "Modular Python software", // 1
+		titleRu: "Модульные Python-приложения",
+		text: "Build or debug modular Python software (complex console apps, desktop GUIs, enterprise tools)",
+		textRu: "Создать или отладить модульный софт на Python (сложные консольные программы, десктопные приложения, бизнес-инструменты)"},
+	{icon: DC, 
+		title: "Web scraping", // 2
+		titleRu: "Веб-скрапинг",
+		text: "Collect any kind of data using web scraping techniques",
+		textRu: "Собрать данные любого формата с использованием инструментов веб-скрапинга"},
+	{icon: DA, 
+		title: "Data processing", // 3
+		titleRu: "Обработка данных",
+		text: "Perform data processing (cleaning, transforming, annotation/labeling, reduction, validation)",
+		textRu: "Обработать данные (очистка, трансформирование, разметка, уменьшение размерности, валидация)"}, 
+	{icon: DV, 
+		title: "Data visualization", // 4
+		titleRu: "Визуализация данных",
+		text: "Create a clear and eye-catching visualization for any kind of data",
+		textRu: "Создать наглядную и цепляющую визуализацию на основе любых данных"}, 
+	{icon: DA, 
+		title: "Exploratory data analysis", // 5
+		titleRu: "Разведывательный анализ данных",
+		text: "Conduct exploratory data analysis",
+		textRu: "Провести разведывательный анализ данных"},
+	{icon: ML, 
+		title: "Fine-tuning", // 6
+		titleRu: "Тонкая настройка нейросетей",
+		text: "Fine-tune a deep learning model",
+		textRu: "Настроить и оптимизировать модель глубокого обучения"},
+	{icon: WD, 
+		title: "Frontend", // 7
+		titleRu: "Фронтенд",
+		text: "Build a frontend for a web app (React)",
+		textRu: "Написать фронтенд веб-приложения (React)"}, 
+	{icon: WD, 
+		title: "Static websites", // 8
+		titleRu: "Статические сайты",
+		text: "Design and build a static website, such as a blog, portfolio or landing page (Next.js/Gatsby/Jekyll, CMS)",
+		textRu: "Спроектировать и создать статический сайт, например блог, страницу портфолио или лендинг (Next.js/Gatsby/Jekyll, CMS)"}, 
+	{icon: PA, 
+		title: "Bots", // 9
+		titleRu: "Боты",
+		text: "Create a bot for your website or popular platforms (Telegram, Instagram, Discord), optionally including chatbot functionality with LLM integration",
+		textRu: "Создать бота для сайта или популярных платформ (Telegram, Instagram, Discord) с возможностью применения функционала чат-ботов (интеграция больших языковых моделей)"}, 
+	{icon: PA, 
+		title: "Data collection software", // 10
+		titleRu: "Приложения для сбора данных",
+		text: "Create custom data collection software (scraper, parser, web crawler)",
+		textRu: "Создать инструмент сбора данных (скрапер, парсер, веб-краулер)"}, 
+	{icon: RE, 
+		title: "Hypothesis testing", // 11
+		titleRu: "Проверка гипотез",
+		text: "Conduct hypothesis testing, including A/B testing",
+		textRu: "Провести проверку гипотезы, включая A/B-тестирование"}, 
+	{icon: DA, 
+		title: "Dashboards", // 12
+		titleRu: "Дашборды",
+		text: "Create a dashboard to display metrics based on data (Dash/Plotly, Superset, Grafana, Tableau, Google Sheets & Looker Studio, Excel)",
+		textRu: "Разработать дашборд для отображения метрик по данным (Dash/Plotly, Superset, Grafana, Tableau, Google Sheets & Looker Studio, Excel)"},
+	{icon: TW, 
+		title: "Technical writing", // 13
+		titleRu: "Техрайтинг",
+		text: "Write SEO-optimized technical content related to Data Science: articles, tutorials, product documentations or blog posts",
+		textRu: "Написать SEO-оптимизированный технический текст, относящийся к науке о данных: статьи, уроки, документация, посты"},
+	{icon: PA, 
+		title: "Scripting", // 14
+		titleRu: "Скриптинг",
+		text: "Automate workflows using scripting (Python, Shell)",
+		textRu: "Автоматизировать рабочие процессы с использованием скриптов (Python, Shell)"}, 
+	{icon: WD, 
+		title: "Streamlit apps", // 15
+		titleRu: "Приложения Streamlit",
+		text: "Adapt and deploy a Python app to Streamlit",
+		textRu: "Адаптировать и задеплоить Python-приложение на Streamlit"}, 
+	{icon: MI, 
+		title: "Academic help", // 16
+		titleRu: "Академическая помощь",
+		text: "Help with homework, coursework or thesis: coding projects (Python, SQL, JavaScript, TypeScript), Linux, probability theory & statistics, research",
+		textRu: "Помочь с учебными задачами, курсовой или дипломом: задачи по программированию (Python, SQL, JavaScript, TypeScript), Linux, теория вероятностей и математическая статистика, исследования"} 
 ]
 
 /* hidden services and drafts
@@ -206,7 +254,8 @@ export const services = [{},
     - E-commerce pricing optimization model, dynamic pricing
     - Build a RAG model
     - Email automation
-    - PDF extraction (OCR)
+    - PDF extraction (OCR), обработка/оцифровка документов
+	- Индексация цен (определение и корректировка цен)
 */
  
 export const categories = [
@@ -236,7 +285,7 @@ export const categories = [
 		categoryName: 'Data visualization', 
 		categoryNameRu: 'Визуализация данных', 
 		categoryDesc: 'Helping non-data professionals grasp any data by creating easy-to-understand graphical or visual representations, dashboards and other kinds of reports', 
-		categoryDescRu: 'Помощь неспециалистам в сфере данных в извлечении информации из любых данных путем создания удобных для восприятия визуализаций, дашбордов и других инструментов отчетности', 
+		categoryDescRu: 'Помощь нетехническим специалистам в извлечении информации из любых данных путем создания удобных для восприятия визуализаций, дашбордов и других инструментов отчетности', 
 		categoryDescDetailed: 'I specialize in transforming complex datasets into intuitive and visually appealing representations, making it easier for non-data professionals to understand and act on insights. This includes creating interactive dashboards, charts, graphs, infographics and comprehensive reports.', 
 		categoryDescDetailedRu: 'Я специализируюсь на преобразовании сложных наборов данных в интуитивно понятные и визуально привлекательные представления, что упрощает их понимание и использование для принятия решений. Это включает создание интерактивных дашбордов, диаграмм, графиков, инфографики и подробных отчетов.',
 		numProjects: getProjects(projects.filter(item => item.categoryKey === 'data_visualization').length), 
@@ -278,11 +327,11 @@ export const categories = [
 	},
 	{categoryKey: 'research', 
 		categoryName: 'Research', 
-		categoryNameRu: 'Исследовательская деятельность', 
+		categoryNameRu: 'Исследования', 
 		categoryDesc: 'Statistical analysis and experiments, hypothesis testing, non-standard applications of data analysis or any kind of scientific investigation', 
 		categoryDescRu: 'Статистический анализ и эксперименты, проверка гипотез, нестандартные приложения анализа данных или любые виды научных исследований', 
 		categoryDescDetailed: 'Research is a pretty broad term, and therefore this category of projects is quite heterogeneous. I define research as various statistical experiments that go beyond data analysis (hypothesis testing including A/B testing, experimental design, conducting surveys & customer research, descriptive statistics), as well as non-standard applications of analysis (like OSINT) and direct investigation for further integration (as R&D engineers do), e.g. ML papers research as part of business strategy consulting.', 
-		categoryDescDetailedRu: 'Исследования — довольно широкий термин, а потому данная категория проектов довольно разнородна. Я понимаю под исследованием различные статистические эксперименты, выходящие за рамки анализа данных (проверка гипотез и A/B-тестирование, планирование эксперимента, проведение опросов и изучение клиентов, описательная статистика), а также нестандартные приложения анализа (например, разведка по открытым источникам) и непосредственное изучение информации для дальнейшего внедрения (как это делают R&D инженеры), например изучение ML-документации как часть бизнес-консалтинга.',
+		categoryDescDetailedRu: 'Исследования — широкий термин, а потому данная категория проектов довольно разнородна. Я понимаю под исследованием различные статистические эксперименты, выходящие за рамки анализа данных (проверка гипотез и A/B-тестирование, планирование эксперимента, проведение опросов и изучение клиентов, описательная статистика), а также нестандартные приложения анализа (например, разведка по открытым источникам) и непосредственное изучение информации для дальнейшего внедрения (как это делают R&D инженеры), например изучение ML-документации как часть бизнес-консалтинга.',
 		numProjects: getProjects(projects.filter(item => item.categoryKey === 'math_and_research').length), 
 		numProjectsRu: getProjectsRu(projects.filter(item => item.categoryKey === 'math_and_research').length), 
 		img: RE
@@ -312,8 +361,8 @@ export const categories = [
 	{categoryKey: 'misc', 
 		categoryName: 'Misc projects', 
 		categoryNameRu: 'Прочие проекты', 
-		categoryDesc: 'Diverse projects related to Linux, system configuration, DevOps, reverse engineering, computer modeling, etc.', 
-		categoryDescRu: 'Разнообразные проекты, связанные с Linux, настройкой систем, DevOps, реверс-инжинирингом, компьютерным моделированием и т.д.', 
+		categoryDesc: 'Diverse projects related to Linux, system configuration, DevOps, databases, reverse engineering, computer modeling, etc.', 
+		categoryDescRu: 'Разнообразные проекты, связанные с Linux, настройкой систем, DevOps, базами данных, реверс-инжинирингом, компьютерным моделированием и т.д.', 
 		categoryDescDetailed: "This list simply contains all projects that don't fit into other categories.", 
 		categoryDescDetailedRu: 'Этот список просто содержит все проекты, которые не попали в другие категории.',
 		numProjects: getProjects(projects.filter(item => item.categoryKey === 'misc').length), 

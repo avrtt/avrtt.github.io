@@ -48,6 +48,7 @@ function calculateWorkExperience(startDate, monthsToAdd) {
 
 // get rounded years of freelance experience (0, 0.5, 1, 1.5, so on + "years")
 export const freelanceExperienceString = `${calculateWorkExperience(freelanceStartDate, freelancePastMonths)} years`;
+export const freelanceExperienceStringRu = `${calculateWorkExperience(freelanceStartDate, freelancePastMonths)} лет`;
 
 // get project number string (English)
 export function getProjects(projectCount) {

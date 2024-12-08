@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import M from "../Markdown";
 import Arrow from "../../images/freelance/services/arrow2.svg"
 
-const Spoiler = ({ title, services = [], spoilerExtraDesc }) => {
+const Spoiler = ({ title, services = [], spoilerExtraDesc, isEnglish=true }) => {
   
   const collRef = useRef([]);
 
@@ -33,7 +33,7 @@ const Spoiler = ({ title, services = [], spoilerExtraDesc }) => {
     }
   };
 
-  return (
+  return isEnglish ? (
     <div>
       <button
         className="spoilerButton noselect"
@@ -58,6 +58,45 @@ const Spoiler = ({ title, services = [], spoilerExtraDesc }) => {
                   <span>{block.text}</span>
                   &nbsp;&thinsp;
                   <a href={"/freelance/services/#" + index}>
+                    <img title="Go to detailed description" src={Arrow} alt="" id="anchorArrow"/>
+                  </a>
+                </p>
+              )
+          )}
+          <br />
+          {spoilerExtraDesc && (
+            <p className="spoilerExtraDesc">
+              <M text={spoilerExtraDesc} />
+            </p>
+          )}
+        </div>
+      </div>
+    </div>
+  ) : (
+    <div>
+      <button
+        className="spoilerButton noselect"
+        ref={(el) => collRef.current.push(el)}
+      >
+        &nbsp;&nbsp;
+        <span className="spoilerText"></span>
+        {title}
+        &nbsp;&nbsp;
+      </button>
+      <div className="spoilerContentWrapper">
+        <div className="spoilerContentServices">
+          <br />
+          {services.map(
+            (block, index) =>
+              block.textRu && block.icon && (
+                <p key={index} id="spoilerBlockServices">
+                  <span className="noselect">
+                    <img src={block.icon} alt="" />
+                    &nbsp;&nbsp;
+                  </span>
+                  <span>{block.textRu}</span>
+                  &nbsp;&thinsp;
+                  <a href={"/freelance/ru/services/#" + index}>
                     <img title="Go to detailed description" src={Arrow} alt="" id="anchorArrow"/>
                   </a>
                 </p>
