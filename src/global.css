@@ -343,8 +343,8 @@ h3::selection {
 
 /* LINKS */
 
-.contactBody a, .courseBody a, .donateBody a, .postBody a, .homeBodyTile a, .homeBodyRegular a, .aboutBodyTile a, .aboutBodyRegular a, .cvBody a, .freelanceBody a, .goalsBody a, .explorationBody a,
-.contactBody href, .courseBody href, .donateBody href, .postBody href, .homeBodyTile href, .homeBodyRegular href, .aboutBodyTile href, .aboutBodyRegular href, .cvBody href, .freelanceBody href, .goalsBody href, .explorationBody href {
+.servicesBodyNested a, .contactBody a, .courseBody a, .donateBody a, .postBody a, .homeBodyTile a, .homeBodyRegular a, .aboutBodyTile a, .aboutBodyRegular a, .cvBody a, .freelanceBody a, .goalsBody a, .explorationBody a,
+.servicesBodyNested href, .contactBody href, .courseBody href, .donateBody href, .postBody href, .homeBodyTile href, .homeBodyRegular href, .aboutBodyTile href, .aboutBodyRegular href, .cvBody href, .freelanceBody href, .goalsBody href, .explorationBody href {
 	text-decoration: none;
 	font-weight: 800;
 	border-bottom: 0;
@@ -355,8 +355,8 @@ h3::selection {
           transition: color 0.1s ease-in-out;
 }
 
-.contactBody a:hover, .courseBody a:hover, .donateBody a:hover, .postBody a:hover, .homeBodyTile a:hover, .homeBodyRegular a:hover, .aboutBodyTile a:hover, .aboutBodyRegular a:hover, .cvBody a:hover, .freelanceBody a:hover, .goalsBody a:hover, .explorationBody a:hover,
-.contactBody href:hover, .courseBody href:hover, .donateBody href:hover, .postBody href:hover, .homeBodyTile href:hover, .homeBodyRegular href:hover, .aboutBodyTile href:hover, .aboutBodyRegular href:hover, .cvBody href:hover, .freelanceBody href:hover, .goalsBody href:hover, .explorationBody href:hover {
+.servicesBodyNested a:hover, .contactBody a:hover, .courseBody a:hover, .donateBody a:hover, .postBody a:hover, .homeBodyTile a:hover, .homeBodyRegular a:hover, .aboutBodyTile a:hover, .aboutBodyRegular a:hover, .cvBody a:hover, .freelanceBody a:hover, .goalsBody a:hover, .explorationBody a:hover,
+.servicesBodyNested href:hover, .contactBody href:hover, .courseBody href:hover, .donateBody href:hover, .postBody href:hover, .homeBodyTile href:hover, .homeBodyRegular href:hover, .aboutBodyTile href:hover, .aboutBodyRegular href:hover, .cvBody href:hover, .freelanceBody href:hover, .goalsBody href:hover, .explorationBody href:hover {
 	border-bottom: 0;
 	color: #424242;
   text-decoration: none;
