@@ -29,14 +29,17 @@ const tagStyle = {
   'margin-top': '-14px'
 }; 
 
-const projectDescStyle = {
-  'font-weight': 'lighter',
-  'font-size': '18px',
-  'margin-left': '47px',
-  'width': '75%'
-}; 
+const FreelanceProject = ({ isExample=false, emoji, projectName, projectDesc, date, duration, tag, source1, source1Link, source2, source2Link, source3, source3Link, extraContentHide, extraDesc, demoImg1, demoImg2, demoImg3, demoVidYTKey }) => {
 
-const FreelanceProject = ({ emoji, projectName, projectDesc, date, duration, tag, source1, source1Link, source2, source2Link, source3, source3Link, extraContentHide, extraDesc, demoImg1, demoImg2, demoImg3, demoVidYTKey }) => {
+  const projectDescStyle = {
+    'font-weight': 'lighter',
+    'font-size': '18px',
+    'margin-left': '47px',
+    'width': '75%',
+    'padding-top': isExample ? '14px' : '0'
+  }
+
+  isExample ? tag = '' : tag = tag
 
   const collRef = useRef([])
 

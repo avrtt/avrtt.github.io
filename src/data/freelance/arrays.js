@@ -33,6 +33,7 @@ export const projects = [
 		extraDescRu: '', 
 		demoImg1: '', demoImg2: '', demoImg3: '', // '../images/freelance/projects/[PROJECT]/[IMAGE]'
 		demoVidYTKey: '',
+		showAsServiceExample: '1', // number of service from the "services" array
 		emoji: '🪶'},
 	{id: 2, 
 		categoryKey: 'misc',
@@ -54,6 +55,7 @@ export const projects = [
 		extraDescRu: '', 
 		demoImg1: '', demoImg2: '', demoImg3: '', 
 		demoVidYTKey: '',
+		showAsServiceExample: '',
 		emoji: '🔶'},
 	{id: 3, 
 		categoryKey: 'web_development',
@@ -75,6 +77,7 @@ export const projects = [
 		extraDescRu: '', 
 		demoImg1: '', demoImg2: '', demoImg3: '', 
 		demoVidYTKey: '',
+		showAsServiceExample: '',
 		emoji: '🚀'},
 	{id: 4, 
 		categoryKey: 'technical_writing',
@@ -96,6 +99,7 @@ export const projects = [
 		extraDescRu: '', 
 		demoImg1: '', demoImg2: '', demoImg3: '', 
 		demoVidYTKey: '',
+		showAsServiceExample: '',
 		emoji: '🚀'},
 ];
 
