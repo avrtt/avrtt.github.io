@@ -873,9 +873,25 @@ export const textServices = {
     service9: {
         desc: {
             en: 
-`Bots automate repetitive tasks and improve efficiency across various applications. Whether you need a chatbot for customer service or one to automate social media posts, this service provides reliable and intelligent solutions. Ideal for businesses, marketers and individuals looking to save time and enhance productivity.`,
+`Bots automate repetitive tasks and improve efficiency across various applications. This service is for everyone, especially businesses, marketers and individuals looking to save time and enhance productivity.
+
+Here are the most popular types of bots I've worked on:
+- **Informational bot**: collects/aggregates any data and notifies the user when needed
+- **Assistant**: automates the work of a consultant; allows you to guide the user and answer frequently asked questions according to a consistent algorithm
+- **Chatbot**: allows you to bring the functionality of popular language models to other platforms to create conversations; can be modified and trained on your data in order to answer non-standard questions from customers regarding your product, service, etc.
+- **Auto commenter**: a userbot that monitors new posts in specified channels/groups/chats and instantly sends AI-generated comments below; each comment is generated based on the text of the post and your pre-defined bot behavior (prompt)
+
+It's hard to classify bots clearly. Usually, they utilize a variety of different tools and methods.`,
             ru:
-`Боты автоматизируют выполнение повторяющихся задач и повышают эффективность работы в различных приложениях. Эта услуга поможет, если Вам, например, нужен чат-бот для обслуживания клиентов или автоматизации отправки постов в социальных сетях.`
+`Боты автоматизируют выполнение повторяющихся задач и повышают эффективность работы в различных приложениях. Данная услуга может понадобиться всем, но особенно часто ей пользуются бизнес, маркетологи и частные лица, которым необходима экономия времени.
+
+Вот наиболее популярные виды ботов, над которыми я работал:
+- **Информационный бот**: собирает/агрегирует какие-либо данные и уведомляет пользователя в нужные моменты
+- **Бот-ассистент**: автоматизирует работу консультанта; позволяет направлять пользователя и отвечает на часто задаваемые вопросы по единому алгоритму
+- **Чат-бот**: позволяет перенести функционал популярных языковых моделей на другие платформы для создания диалогов; может быть модифицирован и обучен на Ваших данных для того, чтобы отвечать на нестандартные вопросы клиентов о Вашем продукте, сервисе и т.д.
+- **Бот-комментатор** (нейрокомментинг): бот на основе аккаунта пользователя (юзербот), отслеживающий новые посты в заданных каналах/группах/чатах и моментально отправляющий сгенерированные нейросетью комментарии под ними; каждый комментарий генерируется на основе текста поста и заранее прописанного Вами поведения бота
+
+Ботов сложно классифицировать однозначно. Зачастую в них реализуется смешанный функционал с использованием множества разнородных инструментов и методов.`
         },
         youGet: {
             en: 
@@ -897,35 +913,17 @@ export const textServices = {
 - Повышение вовлеченности: чат-боты обеспечивают круглосуточную поддержку и привлечение новых клиентов
 - Оптимизация операций: автоматизация ввода данных, отправки уведомлений и различных сложных задач, в том числе организации рабочих циклов`
         },
-        typesOfBots: {
-            en: 
-`Here are the most popular types of bots I've worked on:
-- **Informational bot**: collects/aggregates any data and notifies the user when needed
-- **Assistant**: automates the work of a consultant; allows you to guide the user and answer frequently asked questions according to a consistent algorithm
-- **Chatbot**: allows you to bring the functionality of popular language models to other platforms to create conversations; can be modified and trained on your data in order to answer non-standard questions from customers regarding your product, service, etc.
-- **Auto commenter**: a userbot that monitors new posts in specified channels/groups/chats and instantly sends AI-generated comments below; each comment is generated based on the text of the post and your pre-defined bot behavior (prompt)
-
-It's hard to classify bots clearly. Usually, they utilize a variety of different tools and methods.`,
-            ru:
-`Вот наиболее популярные виды ботов, над которыми я работал:
-- **Информационный бот**: собирает/агрегирует какие-либо данные и уведомляет пользователя в нужные моменты
-- **Бот-ассистент**: автоматизирует работу консультанта; позволяет направлять пользователя и отвечает на часто задаваемые вопросы по единому алгоритму
-- **Чат-бот**: позволяет перенести функционал популярных языковых моделей на другие платформы для создания диалогов; может быть модифицирован и обучен на Ваших данных для того, чтобы отвечать на нестандартные вопросы клиентов о Вашем продукте, сервисе и т.д.
-- **Бот-комментатор** (нейрокомментинг): бот на основе аккаунта пользователя (юзербот), отслеживающий новые посты в заданных каналах/группах/чатах и моментально отправляющий сгенерированные нейросетью комментарии под ними; каждый комментарий генерируется на основе текста поста и заранее прописанного Вами поведения бота
-
-Ботов сложно классифицировать однозначно. Зачастую в них реализуется смешнный функционал с использованием множества разнородных инструментов и методов.`
-        },
         iDo: {
             en: 
 `- Assess your requirements and choose the right technologies
 - Develop the main bot components (Python)
-- Integrate chatbot functionality (OpenAI, gpt4free, etc.)
+- Integrate language model functionality
 - Test and refine the bot for accuracy, speed and reliability
 - Integrate the bot with your systems, platforms or APIs as needed`,
             ru:
 `- Оцениваю требования и выбираю подходящие технологии
 - Разрабатываю основные компоненты бота на Python
-- Интегрирую функциональность чат-бота (OpenAI, gpt4free и т.д.)
+- Интегрирую функциональность языковой модели
 - Тестирую и дорабатываю бота для обеспечения точности, скорости и надёжности
 - Интегрирую бота в Ваши системы, платформы или API (при необходимости)`
         },
