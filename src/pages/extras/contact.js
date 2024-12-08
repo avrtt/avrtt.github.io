@@ -2,6 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import M from '../../components/Markdown';
+import Code from "../../components/Code"
 
 const TITLE = 'Contact - avrtt.blog'
 
@@ -28,7 +29,28 @@ const Contact = () => {
                 </div>
                 <M text="I'm open to making friends with people all over the world."/>
                 <M text="If you're reaching out about business (i.e. ads and collaboration), please consider reading the [Information for Business Inquiries](/information_for_business_inquiries)."/>
-            </div> 
+                <br/>
+                Share my opinion on the importance of secure communication? You might find these magic scribbles useful:
+                <div class="listHome">
+                    <M text="
+                    [m]: [!IkPReSNEepRWuitAYY](https://matrix.to/#/!IkPReSNEepRWuitAYY:matrix.org):matrix.org, 
+                    [@avrtt](https://matrix.to/#/@avrtt:digitalprivacy.diy):digitalprivacy.diy<br/>
+                    Session: **05a7b2f8134fc6915ded9df78f9c834a33a9157ce43d8ec40a195db8e3f834f35f**
+                    "/>
+                    <Code text='
+mDMEZ1KmZRYJKwYBBAHaRw8BAQdAhDFnbiRMGWqAO1D6AUNdTuVeIQz6zoVlqvd6
+uUx9Pkm0GVZsYWRpc2xhdiA8YXZydHRAdHV0YS5pbz6IkwQTFgoAOxYhBBXEpnmU
+st0uikFNXSbyHQrTGEHhBQJnUqZlAhsDBQsJCAcCAiICBhUKCQgLAgQWAgMBAh4H
+AheAAAoJECbyHQrTGEHhLFkA/jXu0m3p/w9SmCZJhWKI8LlWNoVM25I19Xikq6nB
+9IusAP9MjSkVh9lNTR5m+Zlm9dr08WkQIs/5bi+SnMPmlk51Brg4BGdSpmUSCisG
+AQQBl1UBBQEBB0CdZEZQVxRYpv2McO4cz1z8+VyNy4Yku9V+QIbbmaweIAMBCAeI
+eAQYFgoAIBYhBBXEpnmUst0uikFNXSbyHQrTGEHhBQJnUqZlAhsMAAoJECbyHQrT
+GEHhDvYBAIUwUljg/hFxgI71yMaJWFmH1hCBA1mHKYuI7qCSsqdvAQCsvpUjJn8R
+oukZqhXuxAdlr5geyAbMceZFWz7aYO8GBw==
+=Jigm' language="bash"/>
+                    <a href="https://raw.githubusercontent.com/avrtt/pgp-keys/main/general.asc">general.asc</a> | PGP fingerprint: <b>15C4 A679 94B2 DD2E 8A41 4D5D 26F2 <u>1D0A D318 41E1</u></b>
+                </div>
+            </div>
         </motion.div>
     );
 };
