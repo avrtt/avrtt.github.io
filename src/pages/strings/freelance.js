@@ -284,7 +284,14 @@ export const textMain = {
         },
     },
     testimonials: {
-        
+        heading: {
+            en: "# ❤️ TESTIMONIALS",
+            ru: "# ❤️ ОТЗЫВЫ"
+        },
+        block1: {
+            en: "",
+            ru: ""
+        },
     },
     background: {
         heading: {
@@ -896,7 +903,7 @@ export const textServices = {
 - **Informational bot**: collects/aggregates any data and notifies the user when needed
 - **Assistant**: automates the work of a consultant; allows you to guide the user and answer frequently asked questions according to a consistent algorithm
 - **Chatbot**: allows you to bring the functionality of popular language models to other platforms to create conversations; can be modified and trained on your data in order to answer non-standard questions from customers regarding your product, service, etc.
-- **Auto commenter**: a bot account that monitors new posts in specified channels/groups/chats and instantly sends AI-generated comments below; each comment is generated based on the text of the post and your pre-defined bot behavior (prompt)
+- **Auto commenter**: a userbot that monitors new posts in specified channels/groups/chats and instantly sends AI-generated comments below; each comment is generated based on the text of the post and your pre-defined bot behavior (prompt)
 
 It's hard to classify bots clearly. Usually, they utilize a variety of different tools and methods.`,
             ru:
@@ -904,7 +911,7 @@ It's hard to classify bots clearly. Usually, they utilize a variety of different
 - **Информационный бот**: собирает/агрегирует какие-либо данные и уведомляет пользователя в нужные моменты
 - **Бот-ассистент**: автоматизирует работу консультанта; позволяет направлять пользователя и отвечает на часто задаваемые вопросы по единому алгоритму
 - **Чат-бот**: позволяет перенести функционал популярных языковых моделей на другие платформы для создания диалогов; может быть модифицирован и обучен на Ваших данных для того, чтобы отвечать на нестандартные вопросы клиентов о Вашем продукте, сервисе и т.д.
-- **Бот-комментатор** (нейрокомментинг): бот-аккаунт, отслеживающий новые посты в заданных каналах/группах/чатах и моментально отправляющий сгенерированные нейросетью комментарии под ними; каждый комментарий генерируется на основе текста поста и заранее прописанного Вами поведения бота
+- **Бот-комментатор** (нейрокомментинг): бот на основе аккаунта пользователя (юзербот), отслеживающий новые посты в заданных каналах/группах/чатах и моментально отправляющий сгенерированные нейросетью комментарии под ними; каждый комментарий генерируется на основе текста поста и заранее прописанного Вами поведения бота
 
 Ботов сложно классифицировать однозначно. Зачастую в них реализуется смешнный функционал с использованием множества разнородных инструментов и методов.`
         },
@@ -929,14 +936,14 @@ It's hard to classify bots clearly. Usually, they utilize a variety of different
 - (Optional) Information on the preferred bot hosting or deployment platform (if applicable)
 - (Optional) Examples or specifications for desired bot behavior
 
-If you order a bot account (userbot), then make sure there's nothing confidential or important on it. To access bot accounts API, in Telegram for instance, I need phone numbers with confirmation codes to log in, and passwords if you have two-factor authentication.`,
+If you order an userbot, then make sure there's nothing confidential or important on it. To access accounts API, in Telegram for instance, I need phone numbers with confirmation codes to log in, and passwords if you have two-factor authentication.`,
             ru:
 `- Чёткое описание задачи или проблемы, которую Вы хотите решить с помощью бота
 - Доступ к источникам данных, API, бот-аккаунтам или платформам, с которыми будет взаимодействовать бот
 - (Необязательно) Информация о предпочтительной платформе хостинга/развёртывания бота
 - (Необязательно) Примеры или характеристики желаемого поведения бота
 
-Если Вы заказываете бот-аккаунт (пользователя-бота) — убедитесь, что на нём нет ничего конфиденциального или важного. Чтобы получить доступ к API бот-аккаунта, например, в Telegram, мне понадобятся номер телефона и код подтверждения для входа, а при наличии двухфакторной аутентификации — ещё и пароль.`
+Если Вы заказываете юзербота (бота на основе аккаунта пользователя) — убедитесь, что на нём нет ничего конфиденциального или важного. Чтобы получить доступ к API аккаунта, например, в Telegram, мне понадобятся номер телефона и код подтверждения для входа, а при наличии двухфакторной аутентификации — ещё и пароль.`
         },
         pricing: {
             en: 
