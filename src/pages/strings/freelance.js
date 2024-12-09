@@ -407,26 +407,26 @@ export const textServices = {
         },
         why: {
             en: 
-`- Save development time: reuse modules for future projects or extensions
-- Improve collaboration: structured code makes teamwork and onboarding smoother
-- Ensure reliability: robust, tested modules minimize bugs and downtime`,
+`- **Save development time**: reuse modules for future projects or extensions
+- **Improve collaboration**: structured code makes teamwork and onboarding smoother
+- **Ensure reliability**: robust, tested modules minimize bugs and downtime`,
             ru:
-`- Экономия времени разработки: используйте модули повторно в будущих расширениях функционала
-- Ускорение совместной работы: структурированный код упрощает командную работу и онбординг
-- Надежность: протестированные модули минимизируют ошибки и downtime`
+`- **Экономия времени разработки**: используйте модули повторно в будущих расширениях функционала
+- **Ускорение совместной работы**: структурированный код упрощает командную работу и онбординг
+- **Надежность**: протестированные модули минимизируют ошибки и downtime`
         },
         iDo: {
             en: 
 `- Plan the software architecture based on your project requirements
 - Develop Python modules with clear input/output
 - Use best practices for structuring codebases (e.g., following PEP-8 guidelines)
-- Test modules using Python testing frameworks (Pytest, Unittest)
+- Test modules using Python testing frameworks (**Pytest**, **Unittest**)
 - Deliver the software with clear setup instructions, module documentation and API documentation`,
             ru:
 `- Планирую архитектуру ПО в соответствии с вашими требованиями
 - Разрабатываю модули на Python с четкими входными/выходными данными
 - Применяю лучшие практики для структурирования кода (например, соблюдение стандартов PEP-8)
-- Тестирую модули с использованием соответствующих фреймворков (Pytest, Unittest)
+- Тестирую модули с использованием соответствующих фреймворков (**Pytest**, **Unittest**)
 - Передаю ПО с понятными инструкциями по настройке, документацией модулей и API`
         },
         prerequisites: {
@@ -467,26 +467,26 @@ export const textServices = {
         },
         why: {
             en: 
-`- Save money: no more manual data collection, which can be time-consuming and error-prone
-- Create revenue opportunities: leverage market data to make better business decisions
-- Stay ahead of competitors: gain insights into trends, customer preferences and more`,
+`- **Save money**: no more manual data collection, which can be time-consuming and error-prone
+- **Create revenue opportunities**: leverage market data to make better business decisions
+- **Stay ahead of competitors**: gain insights into trends, customer preferences and more`,
             ru:
-`- Экономия денег: больше никакого тредоёмкого ручного сбора данных, из-за которого в дальнейшем могут возникнуть ошибки
-- Возможности для роста выручки: используйте рыночные данные для принятия более эффективных бизнес-решений
-- Преимущество перед конкурентами: получите представление о трендах, предпочтениях клиентов и многом другом`
+`- **Экономия денег**: больше никакого тредоёмкого ручного сбора данных, из-за которого в дальнейшем могут возникнуть ошибки
+- **Возможности для роста выручки**: используйте рыночные данные для принятия более эффективных бизнес-решений
+- **Преимущество перед конкурентами**: получите представление о трендах, предпочтениях клиентов и многом другом`
         },
         iDo: {
             en: 
 `- Analyze your data requirements and target websites
-- Use scraping & HTTP Python tools (BeautifulSoup, Scrapy, requests) or Selenium to create scripts
+- Use scraping & HTTP Python tools (**BeautifulSoup**, **Scrapy**, **requests**) or **Selenium** to create scripts
 - Develop custom solutions that bypass restrictions like CAPTCHA or dynamic loading
-- Automatically clean and preprocess the extracted data inside scripts using Pandas pipelines (if needed)
+- Automatically clean and preprocess the extracted data inside scripts using **Pandas** pipelines (if needed)
 - Deliver the final dataset in the format of your choice`,
             ru:
 `- Анализирую Ваши требования к данным и целевые веб-сайты
-- Использую Python-инструменты скрапинга и работы с HTTP (BeautifulSoup, Scrapy, requests) или Selenium для создания скриптов
+- Использую Python-инструменты скрапинга и работы с HTTP (**BeautifulSoup**, **Scrapy**, **requests**) или **Selenium** для создания скриптов
 - Разрабатываю решения для обхода ограничений, таких как CAPTCHA или динамическая загрузка
-- Автоматически очищаю и предварительно обрабатываю извлеченные данные внутри скриптов с использованием Pandas (если необходимо)
+- Автоматически очищаю и предварительно обрабатываю извлеченные данные внутри скриптов с использованием **Pandas** (если необходимо)
 - Передаю итоговый набор данных в предпочитаемом Вами формате`
         },
         prerequisites: {
@@ -521,21 +521,21 @@ export const textServices = {
         },
         why: {
             en: 
-`- Save time: no more manual data cleaning or repetitive tasks
-- Streamlined operations: enable efficient decision-making with organized and accurate data`,
+`- **Save time**: no more manual data cleaning or repetitive tasks
+- **Streamlined operations**: enable efficient decision-making with organized and accurate data`,
             ru:
-`- Экономия времени: больше никакой ручной очистки данных
-- Оптимизация работы: обеспечьте эффективное принятие решений с организованными и точными данными`
+`- **Экономия времени**: больше никакой ручной очистки данных
+- **Оптимизация работы**: обеспечьте эффективное принятие решений с организованными и точными данными`
         },
         iDo: {
             en: 
-`- Depending on the source, load the data into my workspace to use Python tools (Pandas, NumPy), SQL or Google Sheets (Excel)
+`- Depending on the source, load the data into my workspace to use Python tools (**Pandas**, **NumPy**), **SQL** or **Google Sheets** (**Excel**)
 - Permorm data validation
 - Clean, sort and standardize raw data
 - Handle missing values, inconsistencies and duplicates
 - Perform advanced data transformation, like pivoting, merging or aggregating`,
             ru:
-`- В зависимости от источника, загружаю данные в рабочее пространство для использования Python-инструментов (Pandas, NumPy), SQL или Google Sheets (Excel)
+`- В зависимости от источника, загружаю данные в рабочее пространство для использования Python-инструментов (**Pandas**, **NumPy**), **SQL** или **Google Sheets** (**Excel**)
 - Провожу валидацию данных
 - Очищаю, сортирую и стандартизирую сырые данные
 - Работаю с пропущенными значениями, несоответствиями и дубликатами
@@ -575,24 +575,24 @@ export const textServices = {
         },
         why: {
             en: 
-`- Better communication: simplify complex data and understand its nature
-- Increased engagement: captivate your audience with visually striking graphics
-- Improved decision-making: quickly identify trends, anomalies and opportunities`,
+`- **Better communication**: simplify complex data and understand its nature
+- **Increased engagement**: captivate your audience with visually striking graphics
+- **Improved decision-making**: quickly identify trends, anomalies and opportunities`,
             ru:
-`- Повышение информативности: упростите сложные данные, чтобы понять их суть
-- Улучшение вовлеченности: увлеките свою аудиторию выразительными графиками
-- Ускорение принятия решений: быстро выявляйте тренды, аномалии и возможности`
+`- **Повышение информативности**: упростите сложные данные, чтобы понять их суть
+- **Улучшение вовлеченности**: увлеките свою аудиторию выразительными графиками
+- **Ускорение принятия решений**: быстро выявляйте тренды, аномалии и возможности`
         },
         iDo: {
             en: 
 `- Analyze your data and determine the most effective visualization techniques
-- Design visuals using Python tools (Matplotlib, Seaborn, Plotly and others) or Superset/Tableau
+- Design visuals using Python tools (**Matplotlib**, **Seaborn**, **Plotly** and others) or **Superset**/**Tableau**
 - Customize colors, layouts and interactivity to align with your branding or preferences
 - Deliver exportable visuals compatible with your platforms
 - Provide guidance on interpreting and using the visuals effectively`,
             ru:
 `- Анализирую Ваши данные и выбираю наиболее эффективные методы визуализации
-- Создаю визуализации с использованием Python (Matplotlib, Seaborn, Plotly и прочие инструменты) или Superset/Tableau
+- Создаю визуализации с использованием Python (**Matplotlib**, **Seaborn**, **Plotly** и прочие инструменты) или **Superset**/**Tableau**
 - Настраиваю цвета, макеты и интерактивность в соответствии с Вашим брендом или предпочтениями
 - Предоставляю визуализации, совместимые с Вашими платформами
 - Даю рекомендации по интерпретации и использованию визуализаций`
@@ -637,30 +637,30 @@ export const textServices = {
         },
         why: {
             en: 
-`- Deeper insights: reveal hidden trends and patterns in your data
-- Data quality assurance: ensure your data is clean and reliable for further analysis
-- Informed decisions: gain a solid foundation for strategy and predictive modeling`,
+`- **Deeper insights**: reveal hidden trends and patterns in your data
+- **Data quality assurance**: ensure your data is clean and reliable for further analysis
+- **Informed decisions**: gain a solid foundation for strategy and predictive modeling`,
             ru:
-`- Углубление понимания: выявление скрытых трендов и закономерностей в Ваших данных
-- Гарантия качества данных: обеспечение чистоты и надежности набора данных для дальнейшего анализа
-- Обоснованные решения: заложите прочный фундамент для стратегии и прогнозного моделирования`
+`- **Углубление понимания**: выявление скрытых трендов и закономерностей в Ваших данных
+- **Гарантия качества данных**: обеспечение чистоты и надежности набора данных для дальнейшего анализа
+- **Обоснованные решения**: заложите прочный фундамент для стратегии и прогнозного моделирования`
         },
         iDo: {
             en: 
-`- Depending on the source, load the data into my workspace to use Python tools, SQL or Google Sheets (Excel)
-- Perform data cleaning (Pandas, NumPy)
+`- Depending on the source, load the data into my workspace to use **Python** tools, **SQL** or **Google Sheets** (**Excel**)
+- Perform data cleaning (**Pandas**, **NumPy**)
 - Identify outliers, missing values and potential biases in the dataset
 - Prepare the data for further modeling or analysis by transforming and normalizing it
 - Conduct descriptive statistical analysis to summarize your data
-- Visualize relationships and distributions (Seaborn, Matplotlib)
+- Visualize relationships and distributions (**Seaborn**, **Matplotlib**)
 - Make a report (.pdf, Juputer Notebook, Google Colab, etc.)`,
             ru:
-`- В зависимости от источника, загружаю данные в рабочее пространство для использования Python-инструментов, SQL или Google Sheets (Excel)
-- Провожу очистку данных (Pandas, NumPy)
+`- В зависимости от источника, загружаю данные в рабочее пространство для использования **Python**-инструментов, **SQL** или **Google Sheets** (**Excel**)
+- Провожу очистку данных (**Pandas**, **NumPy**)
 - Выявляю выбросы, пропущенные значения и потенциальные смещения/перекосы (bias) в наборе данных
 - Подготавливаю данные для дальнейшего моделирования или анализа, выполняя необходимые трансформации и нормализацию
 - Провожу описательный статистический анализ для обобщения данных
-- Визуализирую взаимосвязи и распределения (Seaborn, Matplotlib)
+- Визуализирую взаимосвязи и распределения (**Seaborn**, **Matplotlib**)
 - Создаю отчёт (.pdf, Jupyter Notebook, Google Colab и т.д.)`
         },
         prerequisites: {
@@ -703,18 +703,18 @@ export const textServices = {
         },
         why: {
             en: 
-`- Save time and resources: use existing powerful models without starting from scratch
-- Customized solutions: tailor models to your unique dataset and objectives
-- Enhanced accuracy: improve predictions, classifications or forecasts to drive better results`,
+`- **Save time and resources**: use existing powerful models without starting from scratch
+- **Customized solutions**: tailor models to your unique dataset and objectives
+- **Enhanced accuracy**: improve predictions, classifications or forecasts to drive better results`,
             ru:
-`- Экономия времени и ресурсов: использование готовых мощных моделей вместо разработки с нуля
-- Индивидуальный подход: адаптация моделей под Ваш набор данных и цели
-- Повышенная точность: улучшение предсказаний модели для достижения лучших результатов`
+`- **Экономия времени и ресурсов**: использование готовых мощных моделей вместо разработки с нуля
+- **Индивидуальный подход**: адаптация моделей под Ваш набор данных и цели
+- **Повышенная точность**: улучшение предсказаний модели для достижения лучших результатов`
         },
         iDo: {
             en: 
 `- Analyze your dataset, processses and objectives to identify the most suitable pre-trained model
-- Fine-tune a baseline model using TensorFlow/PyTorch frameworks
+- Fine-tune a baseline model using **TensorFlow**/**PyTorch** frameworks
 - Optimize hyperparameters
 - Perform rigorous evaluation using your data and refine the model iteratively
 - (Optionally) Perform A/B testing of the model
@@ -722,7 +722,7 @@ export const textServices = {
 - (Optionally) Monitor the model performance metrics in production for potential optimization`,
             ru:
 `- Анализирую Ваш набор данных, процессы и задачи для выбора подходящей предварительно обученной модели
-- Настраиваю бейзлайн-модель с использованием фреймворков TensorFlow/PyTorch
+- Настраиваю бейзлайн-модель с использованием фреймворков **TensorFlow**/**PyTorch**
 - Оптимизирую гиперпараметры
 - Провожу тщательную оценку производительности на Ваших данных и итеративно улучшаю модель
 - (Необязательно) Провожу A/B-тестирование модели
@@ -769,21 +769,21 @@ export const textServices = {
         },
         why: {
             en: 
-`- Enhanced user engagement: create interfaces that are easy and enjoyable to use
-- Increased conversions: guide users effectively to achieve your business goals`,
+`- **Enhanced user engagement**: create interfaces that are easy and enjoyable to use
+- **Increased conversions**: guide users effectively to achieve your business goals`,
             ru:
-`- Повышение вовлеченности пользователей: работайте с интерфейсами, которые удобно использовать
-- Увеличение конверсии: эффективная фокусировка внимания пользователей на Ваших бизнес-целях`
+`- **Повышение вовлеченности пользователей**: работайте с интерфейсами, которые удобно использовать
+- **Увеличение конверсии**: эффективная фокусировка внимания пользователей на Ваших бизнес-целях`
         },
         iDo: { 
             en: 
-`- Design and develop the frontend using React framework
-- Write clean, maintainable JavaScript/TypeScript components and CSS modules
+`- Design and develop the frontend using **React** framework
+- Write clean, maintainable **JavaScript**/**TypeScript** components and **CSS** modules
 - Implement animations, transitions and responsive design for a dynamic experience
 - Test for compatibility across browsers and devices`,
             ru:
-`- Проектирую и разрабатываю фронтенд с использованием React
-- Пишу чистые и простые в обслуживании JavaScript/TypeScript компоненты и CSS-модули
+`- Проектирую и разрабатываю фронтенд с использованием **React**
+- Пишу чистые и простые в обслуживании **JavaScript**/**TypeScript** компоненты и **CSS**-модули
 - Реализую анимации, переходы и адаптивный дизайн для динамичного восприятия
 - Тестирую совместимость с разными браузерами и устройствами`
         },
@@ -827,26 +827,26 @@ export const textServices = {
         },
         why: {
             en: 
-`- Save costs: no backend systems mean lower hosting fees and maintenance needs
-- Faster load times: delight users with a seamless browsing experience
-- Enhanced security: static sites are less prone to hacking compared to dynamic ones`,
+`- **Save costs**: no backend systems mean lower hosting fees and maintenance needs
+- **Faster load times**: delight users with a seamless browsing experience
+- **Enhanced security**: static sites are less prone to hacking compared to dynamic ones`,
             ru:
-`- Экономия: минимизация или отсутствие бэкенда снижает расходы на хостинг и обслуживание
-- Быстрая загрузка странц: обеспечьте пользователям удобство при работе с сайтом
-- Повышенная безопасность: статические сайты менее подвержены взломам, чем динамические`
+`- **Экономия**: минимизация или отсутствие бэкенда снижает расходы на хостинг и обслуживание
+- **Быстрая загрузка странц**: обеспечьте пользователям удобство при работе с сайтом
+- **Повышенная безопасность**: статические сайты менее подвержены взломам, чем динамические`
         },
         iDo: {
             en: 
-`- Develop the pages and components using React framework (JavaScript/TypeScript)
-- Implement primitive Next.js backend or use SSG (Gatsby & GraphQL, Jekyll)
-- Incorporate tools like Tailwind CSS for responsive design
+`- Develop the pages and components using **React** framework (**JavaScript**/**TypeScript**)
+- Implement primitive **Next.js** backend or use SSG (**Gatsby** & **GraphQL**, **Jekyll**)
+- Incorporate tools like **Tailwind CSS** for responsive design
 - Optimize images, fonts and code to ensure fast load times
 - Implement SEO best practices like metadata, alt text and site maps
 - Host the website`,
             ru:
-`- Разрабатываю страницы и компоненты с использованием React (JavaScript/TypeScript)
-- Реализую примитивный бэкенд на Next.js или использую генератор статических сайтов (Gatsby & GraphQL, Jekyll)
-- Использую такие инструменты, как, например, Tailwind CSS для создания адаптивного дизайна
+`- Разрабатываю страницы и компоненты с использованием **React** (**JavaScript**/**TypeScript**)
+- Реализую примитивный бэкенд на **Next.js** или использую генератор статических сайтов (**Gatsby** & **GraphQL**, **Jekyll**)
+- Использую такие инструменты, как, например, **Tailwind CSS** для создания адаптивного дизайна
 - Оптимизирую изображения, шрифты и код для ускорения загрузки
 - Реализую лучшие практики SEO, включая работу с метаданными, alt-тексты, sitemap и т.д.
 - Размещаю сайт на хостинге`
@@ -905,24 +905,24 @@ It's hard to classify bots clearly. Usually, they utilize a variety of different
         },
         why: {
             en: 
-`- Save time: automate repetitive tasks, freeing up valuable resources
-- Improve engagement: chatbots provide 24/7 customer support or lead generation
-- Streamline operations: automate data entry, notifications or even advanced tasks like workflow orchestration`,
+`- **Save time**: automate repetitive tasks, freeing up valuable resources
+- **Improve engagement**: chatbots provide 24/7 customer support or lead generation
+- **Streamline operations**: automate data entry, notifications or even advanced tasks like workflow orchestration`,
             ru:
-`- Экономия времени: автоматизируйте повторяющиеся задачи, освобождая ресурсы
-- Повышение вовлеченности: чат-боты обеспечивают круглосуточную поддержку и привлечение новых клиентов
-- Оптимизация операций: автоматизация ввода данных, отправки уведомлений и различных сложных задач, в том числе организации рабочих циклов`
+`- **Экономия времени**: автоматизируйте повторяющиеся задачи, освобождая ресурсы
+- **Повышение вовлеченности**: чат-боты обеспечивают круглосуточную поддержку и привлечение новых клиентов
+- **Оптимизация операций**: автоматизация ввода данных, отправки уведомлений и различных сложных задач, в том числе организации рабочих циклов`
         },
         iDo: {
             en: 
 `- Assess your requirements and choose the right technologies
-- Develop the main bot components (Python)
+- Develop the main bot components (**Python**)
 - Integrate language model functionality
 - Test and refine the bot for accuracy, speed and reliability
 - Integrate the bot with your systems, platforms or APIs as needed`,
             ru:
 `- Оцениваю требования и выбираю подходящие технологии
-- Разрабатываю основные компоненты бота на Python
+- Разрабатываю основные компоненты бота на **Python**
 - Интегрирую функциональность языковой модели
 - Тестирую и дорабатываю бота для обеспечения точности, скорости и надёжности
 - Интегрирую бота в Ваши системы, платформы или API (при необходимости)`
@@ -971,23 +971,23 @@ If you order an userbot, then make sure there's nothing confidential or importan
         },
         why: {
             en: 
-`- Save time: automate tedious data collection tasks
-- Improve decision-making: access high-quality data to power analytics and insights
-- Stay competitive: gather real-time data for trends, pricing or customer behavior`,
+`- **Save time**: automate tedious data collection tasks
+- **Improve decision-making**: access high-quality data to power analytics and insights
+- **Stay competitive**: gather real-time data for trends, pricing or customer behavior`,
             ru:
-`- Экономия времени: автоматизация трудоемких задач по сбору данных
-- Улучшение процесса принятия решений: доступ к высококачественным данным, позволяющим проводить аналитику и исследования
-- Сохраняйте конкурентоспособность: оперативно собирайте данные о тенденциях, ценообразовании или поведении клиентов в режиме реального времени`
+`- **Экономия времени**: автоматизация трудоемких задач по сбору данных
+- **Улучшение процесса принятия решений**: доступ к высококачественным данным, позволяющим проводить аналитику и исследования
+- **Сохраняйте конкурентоспособность**: оперативно собирайте данные о тенденциях, ценообразовании или поведении клиентов в режиме реального времени`
         },
         iDo: {
             en: 
 `- Analyze your data collection requirements
-- Develop software using Python tools (BeautifulSoup, Scrapy, requests) and API integrations
+- Develop software using Python tools (**BeautifulSoup**, **Scrapy**, **requests**) and API integrations
 - Test the software extensively to ensure accuracy and reliability
 - Deliver the tool with documentation`,
             ru:
 `- Анализирую Ваши требования
-- Разрабатываю ПО с использованием Python-инструментов (BeautifulSoup, Scrapy, requests) и интеграциями API
+- Разрабатываю ПО с использованием Python-инструментов (**BeautifulSoup**, **Scrapy**, **requests**) и интеграциями API
 - Тестирую ПО, убеждаюсь в точности и надёжности
 - Передаю инструмент с документацией`
         },
@@ -1027,25 +1027,25 @@ If you order an userbot, then make sure there's nothing confidential or importan
         },
         why: {
             en: 
-`- Validate ideas: make confident decisions based on data, not guesses
-- Improve strategies: identify what works and what doesn't for your goals
-- Optimize resources: focus efforts on initiatives with proven success potential`,
+`- **Validate ideas**: make confident decisions based on data, not guesses
+- **Improve strategies**: identify what works and what doesn't for your goals
+- **Optimize resources**: focus efforts on initiatives with proven success potential`,
             ru:
-`- Проверка обоснованности идей: принимайте уверенные решения, основанные на данных, а не на предположениях
-- Совершенствование стратегий: определите, что именно способствует достижению Ваших целей, а что нет
-- Оптимизация ресурсов: сосредоточьте усилия на инициативах с доказанным потенциалом успеха`
+`- **Проверка обоснованности идей**: принимайте уверенные решения, основанные на данных, а не на предположениях
+- **Совершенствование стратегий**: определите, что именно способствует достижению Ваших целей, а что нет
+- **Оптимизация ресурсов**: сосредоточьте усилия на инициативах с доказанным потенциалом успеха`
         },
         iDo: {
             en: 
 `- Define the null and alternative hypotheses based on your objectives
 - Collect or clean data to ensure it meets testing requirements
-- Perform statistical tests using Python tools (SciPy, Statsmodels and many others)
+- Perform statistical tests using Python tools (**SciPy**, **Statsmodels** and many others)
 - Create clear visuals (e.g., graphs, p-value tables) to interpret the results
 - Write a detailed report summarizing the findings and their implications`,
             ru:
 `- Определяю нулевую и альтернативную гипотиезы, основываясь на Ваших целях
 - Собираю и очищаю данные для обеспечения их соответствия требованиям
-- Провожу статистические тесты с использованием инструментов Python (SciPy, Statsmodels и многие другие)
+- Провожу статистические тесты с использованием инструментов Python (**SciPy**, **Statsmodels** и многие другие)
 - Создаю понятные визуализации (например, графики, таблицы значения p-value и т.д.) для интерпретации результата
 - Пишу детальный отчёт, резюмируя результаты и их приложения`
         },
@@ -1089,20 +1089,20 @@ If you order an userbot, then make sure there's nothing confidential or importan
         },
         why: {
             en: 
-`- Improved decision-making: access insights instantly
-- Time savings: consolidate data from multiple sources into one view
-- Enhanced collaboration: share insights seamlessly with your team or stakeholders`,
+`- **Improved decision-making**: access insights instantly
+- **Time savings**: consolidate data from multiple sources into one view
+- **Enhanced collaboration**: share insights seamlessly with your team or stakeholders`,
             ru:
-`- Ускорение принятия решений: имейте мгновенный доступ к инсайтам
-- Экономия времени: консолидация данных из нескольких источников в одну единственную обзорную панель
-- Упрощение совместной работы: беспрепятственный обмен информацией с командой и не только с ней`
+`- **Ускорение принятия решений**: имейте мгновенный доступ к инсайтам
+- **Экономия времени**: консолидация данных из нескольких источников в одну единственную обзорную панель
+- **Упрощение совместной работы**: беспрепятственный обмен информацией с командой и не только с ней`
         },
         iDo: {
             en: 
 `- Understand your key metrics, pick the right tool and design a layout that meets your needs
 - Build a dashboard using the chosen tool (see below)
 - Connect the dashboard to your data sources for live or automated updates
-- Optionally use Google Sheets or Excel, helper Python libraries (Matplotlib, Seaborn, Pandas) and SQL
+- Optionally use helper Python libraries (**Matplotlib**, **Seaborn**, **Pandas**) and **SQL**
 - Optimize visuals for clarity, ensuring metrics are easy to interpret
 - Provide training or documentation for effective use and updates
 
@@ -1113,11 +1113,12 @@ How I usually choose a tool to create a dashboard:
 - **Grafana**: for real-time monitoring projects, especially when working with time series; probably the best option for DevOps working with cloud systems like Prometheus, Elasticsearch, etc.
 - **Tableau Public**: for simple dashboards, fast building (it's no-code too), demos and quick sharing with non-technical clients
 
-Besides these tools, some “exotic” types of dashboards can be created using Streamlit. Streamlit apps development is moved to a [separate type of services](/freelance/services/#15).`,
+Besides these tools, some “exotic” types of dashboards can be created using **Streamlit**. Streamlit apps development is moved to a [separate type of services](/freelance/services/#15).`,
             ru:
 `- Анализирую ключевые метрики, подбираю правильный инструмент и разрабатываю макет, отвечающий Вашим потребностям
 - Создаю дашборд с использованием выбранного инструмента (см. ниже)
 - Связываю дашборд к Вашими источникам данных для автоматических обновлений или обновлений в реальном времени
+- При необходимости использую дополнительные Python-инструменты (**Matplotlib**, **Seaborn**, **Pandas**) и **SQL**
 - Оптимизирую визуализации для наглядности, чтобы метрики легко интерпретировались
 - Обучаю или предоставляю документацию для эффективного использования и дальнейших обновлений дашборда
 
@@ -1128,7 +1129,7 @@ Besides these tools, some “exotic” types of dashboards can be created using 
 - **Grafana**: для проектов, связанных с мониторингом в реальном времени, особенно при работе с временными рядами; вероятно, лучший вариант для DevOps, работающих с такими облачными системами, как Prometheus, Elasticsearch и т.д.
 - **Tableau Public**: для простых дашбордов, быстрой разработки (это тоже no-code), демонстраций и быстрого обмена с нетехническими клиентами
 
-Помимо этих инструментов, некоторые "экзотические" виды дашбордов создаются с использованием Streamlit. Разработка Streamlit-приложений вынесена в [отдельный тип услуг](/freelance/ru/services/#15).`
+Помимо этих инструментов, некоторые "экзотические" виды дашбордов создаются с использованием **Streamlit**. Разработка Streamlit-приложений вынесена в [отдельный тип услуг](/freelance/ru/services/#15).`
         },
         prerequisites: {
             en: 
@@ -1170,13 +1171,13 @@ Besides these tools, some “exotic” types of dashboards can be created using 
         },
         why: {
             en: 
-`- Streamlined communication: help users or teams understand your tools and systems
-- Increased efficiency: deduce support requests with clear, self-service documentation
-- Enhanced credibility: professional materials reflect the quality of your product or service`,
+`- **Streamlined communication**: help users or teams understand your tools and systems
+- **Increased efficiency**: deduce support requests with clear, self-service documentation
+- **Enhanced credibility**: professional materials reflect the quality of your product or service`,
             ru:
-`- Упрощение коммуникации: помогите пользователям или командам понять Ваши инструменты и системы
-- Повышение эффективности: уменьшите количество запросов в поддержку с помощью понятно изложенной документации
-- Повышение доверия: профессиональные тексты подчеркивают качество Вашего продукта или услуги`
+`- **Упрощение коммуникации**: помогите пользователям или командам понять Ваши инструменты и системы
+- **Повышение эффективности**: уменьшите количество запросов в поддержку с помощью понятно изложенной документации
+- **Повышение доверия**: профессиональные тексты подчеркивают качество Вашего продукта или услуги`
         },
         iDo: {
             en: 
@@ -1228,23 +1229,23 @@ Besides these tools, some “exotic” types of dashboards can be created using 
         },
         why: {
             en: 
-`- Save time: automate repetitive tasks, freeing up resources
-- Improve accuracy: minimize errors in manual processes
-- Increase productivity: speed up workflows with efficient, reusable scripts`,
+`- **Save time**: automate repetitive tasks, freeing up resources
+- **Improve accuracy**: minimize errors in manual processes
+- **Increase productivity**: speed up workflows with efficient, reusable scripts`,
             ru:
-`- Экономия времени: автоматизируйте повторяющиеся задачи и освободите ресурсы
-- Повышение точности: минимизация ошибок, которые часто появляются при ручной обработке
-- Увеличение продуктивности: ускорение рабочих процессов с помощью эффективных, многократно используемых скриптов`
+`- **Экономия времени**: автоматизируйте повторяющиеся задачи и освободите ресурсы
+- **Повышение точности**: минимизация ошибок, которые часто появляются при ручной обработке
+- **Увеличение продуктивности**: ускорение рабочих процессов с помощью эффективных, многократно используемых скриптов`
         },
         iDo: {
             en: 
 `- Analyze your needs and the tasks to be automated or solved
-- Develop Python scripts and/or shell scripts
+- Develop **Python** scripts and/or **Shell** scripts
 - Test the scripts extensively
 - Deliver the scripts with usage instructions`,
             ru:
 `- Анализирую Ваши потребности и задачи, которые необходимо автоматизировать или решить
-- Разрабатываю Python- и/или Shell-скрипты
+- Разрабатываю **Python**- и/или **Shell**-скрипты
 - Тщательно тестирую скрипты
 - Передаю скрипты с инструкциями по использованию`
         },
@@ -1288,13 +1289,13 @@ Besides these tools, some “exotic” types of dashboards can be created using 
         },
         why: {
             en: 
-`- Showcase insights: share interactive reports with your team or clients
-- Streamline workflows: provide an easy-to-use interface for complex processes or models
-- Save time: rapidly build and deploy apps without extensive coding overhead`,
+`- **Showcase insights**: share interactive reports with your team or clients
+- **Streamline workflows**: provide an easy-to-use interface for complex processes or models
+- **Save time**: rapidly build and deploy apps without extensive coding overhead`,
             ru:
-`- Демонстрация инсайтов: делитесь интерактивными отчетами с командой или клиентами
-- Оптимизация работы: предоставьте простой интерфейс для сложных моделей или процессов
-- Экономия времени: быстрое создание и развертывание приложений без необходимости в написании кода`
+`- **Демонстрация инсайтов**: делитесь интерактивными отчетами с командой или клиентами
+- **Оптимизация работы**: предоставьте простой интерфейс для сложных моделей или процессов
+- **Экономия времени**: быстрое создание и развертывание приложений без необходимости в написании кода`
         },
         iDo: {
             en: 
@@ -1336,23 +1337,23 @@ Besides these tools, some “exotic” types of dashboards can be created using 
         },
         youGet: {
             en: 
-`- Coding projects: debugged and well-commented Python, SQL, JavaScript or TypeScript code for your assignment or thesis requirements
-- Linux support: guidance with advanced shell scripting, system configuration or tools
-- Probability & statistics: step-by-step solutions, visualizations and statistical analysis
-- Research assistance: help with structuring, coding or interpreting results for thesis projects, along with insights on best practices and clear documentation`,
+`- Coding projects: debugged and well-commented **Python**, **SQL**, **JavaScript** or **TypeScript** code for your assignment or thesis requirements
+- **Linux** support: guidance with advanced shell scripting, system configuration or tools
+- **Probability & statistics**: step-by-step solutions, visualizations and statistical analysis
+- **Research** assistance: help with structuring, coding or interpreting results for thesis projects, along with insights on best practices and clear documentation`,
             ru:
-`- Проекты по программированию: отлаженный и подробно комментированный код на Python, SQL, JavaScript или TypeScript для ваших практических заданий или дипломных работ
-- Linux: помощь в написании продвинутых сценариев оболочки, настройке системы или инструментов
-- Теория вероятностей и статистика: пошаговые решения, визуализации и статистический анализ
-- Сопровождение в исследованиях: помощь в структурировании, программировании или интерпретации результатов для дипломных проектов, а также рекомендации по лучшим практикам и четкой документации`
+`- Проекты по программированию: отлаженный и подробно комментированный код на **Python**, **SQL**, **JavaScript** или **TypeScript** для ваших практических заданий или дипломных работ
+- **Linux**: помощь в написании продвинутых сценариев оболочки, настройке системы или инструментов
+- **Теория вероятностей и статистика**: пошаговые решения, визуализации и статистический анализ
+- Сопровождение в **исследованиях**: помощь в структурировании, программировании или интерпретации результатов для дипломных проектов, а также рекомендации по лучшим практикам и четкой документации`
         },
         why: {
             en: 
-`- Improve academic performance: understand key concepts and submit high-quality work
-- Save time: get efficient solutions while focusing on learning`,
+`- **Improve academic performance**: understand key concepts and submit high-quality work
+- **Save time**: get efficient solutions while focusing on learning`,
             ru:
-`- Улучшение успеваемости: разберитесь в ключевых понятиях и подготовьте качественную работу
-- Экономия времени: получите эффективные решения, сосредоточившись на учебе`
+`- **Улучшение успеваемости**: разберитесь в ключевых понятиях и подготовьте качественную работу
+- **Экономия времени**: получите эффективные решения, сосредоточившись на учебе`
         },
         iDo: {
             en: 
