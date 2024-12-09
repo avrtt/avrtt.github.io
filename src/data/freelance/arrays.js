@@ -83,8 +83,8 @@ export const projects = [
 		categoryKey: 'technical_writing',
 		projectName: 'The Research section (avrtt.blog)', 
 		projectNameRu: 'Раздел Research (avrtt.blog)', 
-		projectDesc: "My tech blog about all the cool things I'm researching along my career path within Data Science", 
-		projectDescRu: 'Мой профессиональный блог обо всём, что я узнаю на пути изучения Data Science', 
+		projectDesc: "My tech blog about all the cool things I research along the career path within data science", 
+		projectDescRu: 'Мой профессиональный блог обо всём, что я узнаю на пути изучения науки о данных', 
 		date: '2020 – Ongoing', 
 		dateRu: '2020 – Настоящее время', 
 		duration: '', 
@@ -99,7 +99,7 @@ export const projects = [
 		extraDescRu: '', 
 		demoImg1: '', demoImg2: '', demoImg3: '', 
 		demoVidYTKey: '',
-		showAsServiceExample: '',
+		showAsServiceExample: '13',
 		emoji: '🚀'},
 ];
 
