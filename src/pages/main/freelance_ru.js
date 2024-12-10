@@ -360,8 +360,50 @@ const FreelanceRu = () => {
 
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
 					<div class="sectionBreak"><M text="----------"/></div>
-					<M text="# ❤️ TESTIMONIALS "/>
-					<M text="..."/>
+					<M text={textMain.testimonials.heading.ru}/>
+					<TileContainer columns={2} marginTop='2vh' marginBottom='4vh' animationonscroll={false}>
+						<LinkBlock
+							link='https://t.me/avrtt_feedback/6'
+							icon={telegram}
+							iconSize='3vw'
+							name='Telegram'
+							handle='@avrtt_feedback'
+							description={textMain.testimonials.telegramDesc.ru}
+							backgroundColor='#dbdbdb'
+							blockWidth='25vw'
+							fontSizeName = '1vw'
+							fontSizeHandle = '1vw'
+							padding='1vw'
+						/>
+						<LinkBlock
+							link='https://www.facebook.com/averett.freelance/reviews'
+							icon={facebook}
+							iconSize='3vw'
+							name='Facebook'
+							handle='@averett.freelance'
+							description={textMain.testimonials.facebookDesc.ru}
+							backgroundColor='#dbdbdb'
+							blockWidth='25vw'
+							fontSizeName = '1vw'
+							fontSizeHandle = '1vw'
+							padding='1vw'
+						/>
+					</TileContainer>
+					<M text={textMain.testimonials.general.ru}/>
+					<button className="spoilerButton noselect" ref={(el) => collRef.current.push(el)}>
+						&nbsp;&nbsp;
+						<span className="spoilerText"></span>
+						{textMain.testimonials.spoilerDifference.title.ru}
+						&nbsp;&nbsp;
+					</button>
+					<div className="spoilerContentWrapper">
+						<div className="spoilerBlockTestimonials">
+							<M text={textMain.testimonials.spoilerDifference.content.ru}/>
+						</div>
+					</div>
+					<br/>
+					<M text={textMain.testimonials.write.heading.ru}/>
+					<M text={textMain.testimonials.write.template.ru}/>
 				</AnimationOnScroll>
 
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">

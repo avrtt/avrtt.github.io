@@ -2791,6 +2791,11 @@ h6 {
   padding-left: 1.5em;
 }
 
+.spoilerBlockTestimonials {
+  margin: 30px 0px;
+  padding: 0 2em;
+}
+
 .spoilerQuestion {
   margin-bottom: 4px;
 }

@@ -359,9 +359,50 @@ const Freelance = () => {
 
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
 					<div class="sectionBreak"><M text="----------"/></div>
-					<M text="# ❤️ RECENT TESTIMONIALS "/>
-					<M text="Здесь несколько последних отзывов в виде блоков с ссылками на источники и указанием проекта. Отзывы подтягиваются из массива в data: здесь последние, на отдельной странице (ниже) - все. Сделать такую же страницу на русском."/>
-					<M text="You can check out more reviews on the [Testimonials](/freelance/testimonials) page."/>
+					<M text={textMain.testimonials.heading.en}/>
+					<TileContainer columns={2} marginTop='2vh' marginBottom='4vh' animationonscroll={false}>
+						<LinkBlock
+							link='https://t.me/avrtt_feedback/6'
+							icon={telegram}
+							iconSize='3vw'
+							name='Telegram'
+							handle='@avrtt_feedback'
+							description={textMain.testimonials.telegramDesc.en}
+							backgroundColor='#dbdbdb'
+							blockWidth='25vw'
+							fontSizeName = '1vw'
+							fontSizeHandle = '1vw'
+							padding='1vw'
+						/>
+						<LinkBlock
+							link='https://www.facebook.com/averett.freelance/reviews'
+							icon={facebook}
+							iconSize='3vw'
+							name='Facebook'
+							handle='@averett.freelance'
+							description={textMain.testimonials.facebookDesc.en}
+							backgroundColor='#dbdbdb'
+							blockWidth='25vw'
+							fontSizeName = '1vw'
+							fontSizeHandle = '1vw'
+							padding='1vw'
+						/>
+					</TileContainer>
+					<M text={textMain.testimonials.general.en}/>
+					<button className="spoilerButton noselect" ref={(el) => collRef.current.push(el)}>
+						&nbsp;&nbsp;
+						<span className="spoilerText"></span>
+						{textMain.testimonials.spoilerDifference.title.en}
+						&nbsp;&nbsp;
+					</button>
+					<div className="spoilerContentWrapper">
+						<div className="spoilerBlockTestimonials">
+							<M text={textMain.testimonials.spoilerDifference.content.en}/>
+						</div>
+					</div>
+					<br/>
+					<M text={textMain.testimonials.write.heading.en}/>
+					<M text={textMain.testimonials.write.template.en}/>
 				</AnimationOnScroll>
 
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">

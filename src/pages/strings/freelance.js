@@ -152,8 +152,8 @@ export const textMain = {
                 ru: "По завершении работы предоставляется **полная версия продукта**, и я ожидаю постоплату. В некоторых случаях (как правило, с новыми клиентами) я предлагаю **демо-версию** до осуществления постоплаты — это зависит от сложности и типа проекта. При **почасовой оплате** с постоянными клиентами 100%-ая постоплата формируется после подсчёта суммарного количества проработанных часов."
             },
             block2: {
-                en: "Like any freelancer, I value testimonials and therefore offer a **discount of 10% off post-payment** for your feedback and references after any gig.",
-                ru: "Как и любой фрилансер, я ценю отзывы, а потому предлагаю **скидку в размере 10% от постоплаты** за Вашу обратную связь и рекомендации после выполнения любого заказа."
+                en: "Like any freelancer, I value testimonials and therefore offer a **discount of 10% off post-payment** for your feedback and references after any gig. Check out the \"Write a review\" section below to learn how to get the discount.",
+                ru: "Как и любой фрилансер, я ценю отзывы, а потому предлагаю **скидку в размере 10% от постоплаты** за Вашу обратную связь и рекомендации после выполнения любого заказа. В разделе \"Написать отзыв\" ниже описывается, как получить скидку."
             },
         },
         section7: {
@@ -288,9 +288,87 @@ export const textMain = {
             en: "# ❤️ TESTIMONIALS",
             ru: "# ❤️ ОТЗЫВЫ"
         },
-        block1: {
-            en: "",
-            ru: ""
+        telegramDesc: {
+            en: "Group for any feedback, including reviews. For writing a review, you'll need to join the group, then you can leave it.",
+            ru: "Группа для любой обратной связи, включая отзывы. Для написания отзыва потребуется вступить в группу, затем её можно будет покинуть."
+        },
+        facebookDesc: {
+            en: "Reviews section on my business page. For writing a review, you'll need to click \"Yes\" (recommend), then you'll be prompted to write.",
+            ru: 'Раздел отзывов на странице бизнес-аккаунта. Для написания отзыва потребуется нажать "Да" (рекомендую), после чего будет предложено написать текст.'
+        },
+        general: {
+            en: 
+`Reviews are available through one of these two links. They don't intersect: Telegram is used primarily for Russian-speaking clients, and Facebook is used for English-speaking clients. If you don't speak Russian, you can use the built-in translation feature in the app.
+
+Some reviews are also posted on freelance marketplaces (see the links at the top of this page).`,
+            ru: 
+`Отзывы доступны при переходе по одной из этих двух ссылок. Они не пересекаются: Telegram используется преимущественно для русскоязычных клиентов, а Facebook — для англоязычных. Если Вы не владеете английским языком, Вы можете использовать встроенную фукнцию перевода в Facebook ("Показать перевод").  
+
+Некоторые отзывы также оставляются на фриланс-биржах (см. ссылки в начале этой страницы).`,
+        },
+        spoilerDifference: {
+            title: {
+                en: "A few words on review platforms",
+                ru: "Пара слов о платформах для отзывов"
+            },
+            content: {
+                en: 
+`Telegram is my preferred platform since, unlike Facebook, it allows me to moderate fake reviews. That said, it does require trust in me as a contractor, since in theory I could delete real negative reviews. 
+
+I recommend treating the rating of a Facebook business page as an *opinion* rather than an *assessment* of my skills, because 1) it uses a binary system (recommend / unrecommend), which can negatively affect the overall impression, and 2) negative reviews can be spammed there without any message, and I can't remove it. Telegram, on the other hand, reflects almost no majority opinion, but provides a detailed assessment of my skills. 
+
+Reviews on freelance marketplaces are considered the most valuable, but I rarely work there, following customer preferences mostly.
+
+Regardless of the platform, never trust reviews that don't describe the **problem** and **the process for solving it**.`,
+                ru: 
+`Telegram — более предпочтительная для меня платформа, поскольку он, в отличие от Facebook, позволяет модерировать фейковые отзывы. При этом, он требует доверия ко мне как к исполнителю, поскольку в теории я мог бы удалять настоящие негативные отзывы. 
+
+Я рекомендую относиться к рейтингу бизнес-страницы в Facebook не как к *оценке* моих навыков, а как к *мнению*, поскольку 1) там используется бинарная система (нравится / не нравится), что может негативно влиять на общее впечатление, и 2) там можно спамить негативными отзывами без какого-либо содержания, и я не смогу их удалить. Telegram, напротив, практически не отражает мнения большинства, но предоставляет развернутую оценку моих навыков. 
+
+Наиболее ценными считаются отзывы на фриланс-биржах, однако я редко работаю через них, во многом следуя предпочтениям заказчиков.
+
+Вне зависимости от платформы, никогда не доверяйте отзывам, в которых не описана **проблема** и **процесс её решения**.`
+            },
+        },
+        write: {
+            heading: {
+                en: "### 📝 Write a review",
+                ru: "### 📝 Написать отзыв"
+            },
+            template: {
+                en: 
+`To get your discount, use one of these options to publish a review. In order to save you time, I've prepared a template — simply answer the following questions:
+1. What service did you order (or what problem did you have)?
+2. What options have you considered (and why did you choose me)?
+3. How did I help in solving the problem?
+4. How quickly and efficiently was the work done? What did you like (or dislike)?
+5. What did you expect and what did you get as a result?
+
+The text form is flexible. You may also add other thoughts: any doubts you had which were resolved, quality of communication, etc. It's highly appreciated that the review should be addressed to other potential clients rather than me, i.e. it should be written as a recommendation. It's not necessary for you to have an "alive" or public profile, although that's a valuable attribute for me as well. Please, write in **one message**.
+
+**Requirements:**
+- Your review must at least **describe the problem solved**
+- For **Telegram** reviews: you should have at least one photo/avatar in your account history that is at least **3 months old** (this is necessary for other clients to verify the authenticity of the account)
+- For **Facebook** reviews: make sure that it's posted **publicly** ("Sharing to Public" above the review text)
+
+I'll provide a discount after reading your review. Your detailed feedback helps me to improve my services!`,
+                ru: 
+`Чтобы получить скидку, опубликуйте отзыв на одной из указанных платформ. В целях экономии времени я подготовил шаблон — просто ответьте на следующие вопросы:
+1. Какой услугой пользовались (или с какой проблемой обратились)?
+2. Какие варианты решения проблемы изучали (и почему обратились ко мне)?
+3. Как я помог решить проблему?
+4. Насколько быстро и качественно была выполнена работа? Что (не) понравилось?
+5. Что ожидали и что получили в итоге?
+
+Форма текста свободная. Можно также добавить какие-либо другие мысли: возникшие сомнения, которые были решены, качество коммуникации и т.д. Крайне желательно, чтобы отзыв был адресован не мне, а другим потенциальным клиентам, т.е. написан как рекомендация. Вам не обязательно иметь "живой" или открытый настройками приватности профиль, хотя это также ценные его свойства для меня. Пожалуйста, пишите **одним сообщением**.
+
+**Обязательные условия:**
+- Ваш отзыв должен как минимум **описать решенную задачу**
+- Для отзыва в **Telegram**: иметь хотя бы одно фото/аватар в истории аккаунта, которому как минимум **3 месяца** (это необходимо для подтверждения подлинности аккаунта другими клиентами)
+- Для отзыва в **Facebook**: убедиться, что он размещается **публично** ("Доступно всем" над текстом отзыва)
+
+Я предоставлю скидку после прочтения отзыва. Помните, что Ваши развёрнутые отзывы помогают мне улучшать качество услуг!`
+            },
         },
     },
     background: {
@@ -367,6 +445,7 @@ export const textMain = {
                 🧩 [LeetCode](https://leetcode.com/avrtt/)<br/>
                 ⚙️ [GitHub](https://github.com/avrtt)<br/>
                 💼 [LinkedIn](https://www.linkedin.com/in/avrtt/)<br/>
+                📢 [Facebook (business page)](https://www.facebook.com/averett.freelance/)<br/>
                 🎓 [Coursera](https://www.coursera.org/user/6debb8344117076d8b1d5f743066057c)`,
             ru: `▶️ [YouTube](https://www.youtube.com/channel/UCpPtaqqxzFqm9rZAh2xC5OA)<br/>
                 📚 [Telegram (профессиональный блог)](https://t.me/avheuristics)<br/>
@@ -374,6 +453,7 @@ export const textMain = {
                 🧩 [LeetCode](https://leetcode.com/avrtt/)<br/>
                 ⚙️ [GitHub](https://github.com/avrtt)<br/>
                 💼 [LinkedIn](https://www.linkedin.com/in/avrtt/)<br/>
+                📢 [Facebook (страница бизнеса)](https://www.facebook.com/averett.freelance/)<br/>
                 🎓 [Coursera](https://www.coursera.org/user/6debb8344117076d8b1d5f743066057c)`,
         },
     },
@@ -832,7 +912,7 @@ export const textServices = {
 - **Enhanced security**: static sites are less prone to hacking compared to dynamic ones`,
             ru:
 `- **Экономия**: минимизация или отсутствие бэкенда снижает расходы на хостинг и обслуживание
-- **Быстрая загрузка странц**: обеспечьте пользователям удобство при работе с сайтом
+- **Быстрая загрузка страниц**: обеспечьте пользователям удобство при работе с сайтом
 - **Повышенная безопасность**: статические сайты менее подвержены взломам, чем динамические`
         },
         iDo: {
