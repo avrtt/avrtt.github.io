@@ -353,6 +353,26 @@ const Freelance = () => {
 								<p class="spoilerQuestion"><strong>Q:</strong> {textMain.workflow.faq.q12.en}</p>
 								<p class="spoilerAnswer"><strong>A:</strong> {textMain.workflow.faq.a12.en}</p>
 							</div>
+							<div className="spoilerBlockQA">
+								<p class="spoilerQuestion"><strong>Q:</strong> {textMain.workflow.faq.q13.en}</p>
+								<p class="spoilerAnswer"><strong>A:</strong> {textMain.workflow.faq.a13.en}</p>
+							</div>
+							<div className="spoilerBlockQA">
+								<p class="spoilerQuestion"><strong>Q:</strong> {textMain.workflow.faq.q14.en}</p>
+								<p class="spoilerAnswer"><strong>A:</strong> {textMain.workflow.faq.a14.en}</p>
+							</div>
+							<div className="spoilerBlockQA">
+								<p class="spoilerQuestion"><strong>Q:</strong> {textMain.workflow.faq.q15.en}</p>
+								<p class="spoilerAnswer"><strong>A:</strong> {textMain.workflow.faq.a15.en}</p>
+							</div>
+							<div className="spoilerBlockQA">
+								<p class="spoilerQuestion"><strong>Q:</strong> {textMain.workflow.faq.q16.en}</p>
+								<p class="spoilerAnswer"><strong>A:</strong> {textMain.workflow.faq.a16.en}</p>
+							</div>
+							<div className="spoilerBlockQA">
+								<p class="spoilerQuestion"><strong>Q:</strong> {textMain.workflow.faq.q17.en}</p>
+								<p class="spoilerAnswer"><strong>A:</strong> {textMain.workflow.faq.a17.en}</p>
+							</div>
 						</div>
 					</div>
 				</AnimationOnScroll>

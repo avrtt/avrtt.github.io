@@ -281,6 +281,46 @@ export const textMain = {
                 en: "No. I don't give any legal guarantees, regularly being located outside my country of citizenship (Russia), the international status of which only makes official work more difficult. My legal status is generally unclear. Consider me solely as an unofficial worker.",
                 ru: "Никак. Я не даю никаких правовых гарантий, поскольку постоянно нахожусь за пределами страны своего гражданства (Россия), международный статус которой лишь усложняет официальную работу. Мой же правовой статус, как правило, размыт. Рассматривайте меня исключительно как неофициального работника."
             },
+            q13: {
+                en: "How to make sure Telegram reviews are real?",
+                ru: "Как удостовериться в подлинности отзывов в Telegram?"
+            },
+            a13: {
+                en: "Telegram is a messenger and it links one account to one phone number. As an additional verification, I require each account to have at least one photo in their profile history that was uploaded at least 3 months prior to writing the review. You can verify that the account belongs to a real person by checking the upload dates of the photos by swiping in the app. Check the upload date against the date the review was posted. This is the only way to know that the Telegram account wasn't created just before the review was written.",
+                ru: "Telegram — это мессенджер, и он привязывает один аккаунт к одному номеру телефона. В качестве дополнительной проверки я требую, чтобы каждый аккаунт имел хотя бы одно фото в истории профиля, которое было загружено не менее, чем за 3 месяца до написания отзыва. Вы можете убедиться в том, что аккаунт принадлежит настоящему человеку, проверив даты загрузки фотографий пролистыванием в приложении. Сверьте дату загрузки с датой отправки отзыва. Это единственный способ узнать, что Telegram-аккаунт был создан не перед написанием отзыва."
+            },
+            q14: {
+                en: "A Telegram user prohibits access to their profile, or has deleted all photos. How can I be sure that the review is real?",
+                ru: "Пользователь Telegram запрещает переход в свой профиль, либо удалил все фотографии. Как убедиться, что отзыв настоящий?"
+            },
+            a14: {
+                en: "Sometimes users change account privacy settings or delete all photos, which makes it impossible to verify the authenticity of the account. I can't do anything about it, but it's not a common occurrence.",
+                ru: "Иногда пользователи изменяют настройки приватности аккаунта или удаляют все фото, что лишает возможности проверить подлинность аккаунта. Я ничего не могу с этим сделать, но это и не частое явление."
+            },
+            q15: {
+                en: "How do I make sure a Telegram review hasn't been changed?",
+                ru: "Как мне убедиться, что Telegram-отзыв не был изменён?"
+            },
+            a15: {
+                en: "Telegram indicates when a message has been edited by its author. Hover over \"edited\" in the app to see when, if ever, the message was modified by the user. I can't edit other people's messages in my group, and Telegram displays the sender's name.",
+                ru: "Telegram указывает факт и время изменения сообщения его автором. Наведите курсор в приложении на \"edited\", чтобы узнать, когда сообщение было изменёно пользователем, если это было. Я не имею права изменять сообщения других людей в своей группе, а Telegram отображает имя отправителя."
+            },
+            q16: {
+                en: "How to make sure Facebook reviews are real?",
+                ru: "Как удостовериться в подлинности отзывов в Facebook?"
+            },
+            a16: {
+                en: "If you have doubts about the authenticity of Facebook reviews, then you may want to check out user profiles. Facebook somewhat controls the integrity of business pages: for example, a business owner is prohibited from deleting or editing user reviews, or posting reviews of themselves from other accounts.",
+                ru: "Если Вы сомневаетесь в подлинности отзывов в Facebook — изучайте профили пользователей. Facebook в некоторой степени контролирует честность ведения бизнес-страниц: например, владельцу бизнеса запрещено удалять или редактировать отзывы пользователей, а также размещать отзывы на самого себя с других аккаунтов."
+            },
+            q17: {
+                en: "Are there other platforms to leave a review and get a discount?",
+                ru: "Существуют ли другие платформы, чтобы оставить отзыв и получить скидку?"
+            },
+            a17: {
+                en: "No. Only Telegram, Facebook and freelance marketplaces (when working through them). In any other cases, no discount will be applied.",
+                ru: "Нет. Только Telegram, Facebook и фриланс-биржи (при работе через них). В любых иных случаях скидка предоставлена не будет."
+            },
         },
     },
     testimonials: {
