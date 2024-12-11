@@ -1500,4 +1500,22 @@ Besides these tools, some “exotic” types of dashboards can be created using 
 `**$50-$300** за задач по программированию, статистических и смешанных работ. **$500+** за сложные исследовательские проекты. Данные цены в основном зависят от срочности.`
         },
     },
+    service17: {
+        desc: {
+            en: 
+`Using machine learning, I can help you to solve a wide range of problems related to transforming data into useful information by automating decisions and predicting outcomes, giving you a competitive edge. Whether you represent a company or just working on a standalone project, I can implement, update or maintain (ongoing or ad-hoc) statistical algorithms, neural network models or ML pipelines for classification, regression, clustering, dimensionality reduction, anomaly detection and other (mixed) problems.
+
+This service is extremely diverse and will be divided into more specific sub-types in the future. At the moment, all **details are subject of discussion**.`,
+            ru:
+`Используя машинное обучение, я могу помочь в решении широкого спектра задач, связанных с преобразованием данных в полезную информацию путем автоматизации принятия решений и прогнозирования результатов, что обеспечит Вам конкурентное преимущество. Независимо от того, представляете ли вы компанию или просто работаете над независимым проектом, я могу внедрить, обновить или поддерживать (на постоянной или разовой основе) статистические алгоритмы, модели нейронных сетей или ML-пайплайны для классификации, регрессии, кластеризации, уменьшения размерности, обнаружения аномалий и других (смешанных) задач.
+
+Данная услуга крайне разнообразна, и в дальнейшем она будет разбита на более конкретные подтипы. В настоящий момент все **условия обговариваются лично**.`
+        },
+        pricing: {
+            en: 
+`Price is negotiable.`,
+            ru:
+`Цена договорная.`
+        },
+    },
 }

@@ -184,10 +184,16 @@ export const services = [{},
 		title: "Academic help", // 16
 		titleRu: "Академическая помощь",
 		text: "Help with homework, coursework or thesis: coding projects (Python, SQL, JavaScript, TypeScript), Linux, probability theory & statistics, research",
-		textRu: "Помочь с учебными задачами, курсовой или дипломом: задачи по программированию (Python, SQL, JavaScript, TypeScript), Linux, теория вероятностей и математическая статистика, исследования"} 
+		textRu: "Помочь с учебными задачами, курсовой или дипломом: задачи по программированию (Python, SQL, JavaScript, TypeScript), Linux, теория вероятностей и математическая статистика, исследования"},
+	{icon: ML, 
+		title: "Machine learning models", // 17
+		titleRu: "Модели машинного обучения",
+		text: "Build a machine learning model",
+		textRu: "Создать модель машинного обучения"}, 
 ]
 
 /* hidden services and drafts
+	- Услугу про создание моделей машинного обучения разделить на несколько подвидов
     - LLM integration: GPT4 and GeminiAI models, ... (LangChain) 
     - Design an end-to-end solution (visualizations, ML models, AI automation, web applications, etc.)
     - Создание модели детекции объектов (TensorFLow/PyTorch)
@@ -208,7 +214,7 @@ export const services = [{},
     - Statistical analysis, statistical model design
     - Advanced mathematical and optimization modeling
     - Topic research / AI research
-    - Complex deep learning models forp computer vision
+    - Complex deep learning models for computer vision
     - Image/video processing
     - Computer vision tasks: segmentation, detection, recognition, feature matching, image restoration, OCR, etc. (OpenCV)
     - NLP tasks: ... (SpaCy, NLTK, BERT, GPT models, text preprocessing, tokenization, text classification, named entity recognition, text similarity, QA, search engines)
