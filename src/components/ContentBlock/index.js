@@ -25,7 +25,8 @@ const ContentBlock = ({
     textAlign = 'left',
     textAlignTitle = 'left',
     emojiAlign = 'left',
-    divAnimation = true
+    divAnimation = true,
+    isMarkdown = true
 }) => {
 
     const [isHovered, setIsHovered] = useState(false);
@@ -133,7 +134,7 @@ const ContentBlock = ({
         padding: paddingDescription,
     }
 
-    return (
+    return isMarkdown ? (
         <div
             style={blockStyle}
             className="contentBlock"
@@ -146,6 +147,22 @@ const ContentBlock = ({
             {description && (
                 <span style={descriptionStyle}>
                     <M text={description} />
+                </span>
+            )}
+        </div>
+    ) : (
+        <div
+            style={blockStyle}
+            className="contentBlock"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+        >
+            {title && <p style={titleStyle}>{title}</p>}
+            {emoji && <p class="noselect" style={emojiStyle}>{emoji}</p>}
+            {emojiGif && <img class="noselect" style={emojiGifStyle} src={emojiGif} alt={emoji} />}
+            {description && (
+                <span style={descriptionStyle}>
+                    {description}
                 </span>
             )}
         </div>
