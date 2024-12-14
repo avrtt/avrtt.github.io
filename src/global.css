@@ -2304,6 +2304,18 @@ span.SAFE {
   color:#717171;
 }
 
+.badgeAboutMarked {
+  background-color: #ffd56a;
+  border-radius: 10px;
+  display: inline-block;
+  font-weight: bold;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin: 2.5px;
+  vertical-align: middle;
+  color:#717171;
+}
+
 .badgesAboutWrapper {
   margin-bottom: 40px;
   max-width: 100%;
