@@ -310,8 +310,8 @@ export const textMain = {
                 ru: "Как удостовериться в подлинности отзывов в Facebook?"
             },
             a16: {
-                en: "If you have doubts about the authenticity of Facebook reviews, then you may want to check out user profiles. Facebook somewhat controls the integrity of business pages: for example, a business owner is prohibited from deleting or editing user reviews, or posting reviews of themselves from other accounts.",
-                ru: "Если Вы сомневаетесь в подлинности отзывов в Facebook — изучайте профили пользователей. Facebook в некоторой степени контролирует честность ведения бизнес-страниц: например, владельцу бизнеса запрещено удалять или редактировать отзывы пользователей, а также размещать отзывы на самого себя с других аккаунтов."
+                en: "If you have doubts about the authenticity of Facebook reviews, then you may want to check out user profiles. Facebook somewhat controls the integrity of business pages: for example, a business owner is prohibited from deleting or editing user reviews, or posting reviews of themselves from other accounts (at least because Facebook prohibits having multiple accounts and tracks them).",
+                ru: "Если Вы сомневаетесь в подлинности отзывов в Facebook — изучайте профили пользователей. Facebook в некоторой степени контролирует честность ведения бизнес-страниц: например, владельцу бизнеса запрещено удалять или редактировать отзывы пользователей, а также размещать отзывы на самого себя с других аккаунтов (как минимум потому, что Facebook запрещает наличие нескольких аккаунтов и отслеживает это)."
             },
             q17: {
                 en: "Are there other platforms to leave a review and get a discount?",
@@ -353,9 +353,11 @@ Some reviews are also posted on freelance marketplaces (see the links at the top
             },
             content: {
                 en: 
-`Telegram is my preferred platform since, unlike Facebook, it allows me to moderate fake reviews. That said, it does require trust in me as a contractor, since in theory I could delete real negative reviews. 
+`Telegram is my preferred platform since, unlike Facebook, it allows me to moderate fake reviews. That said, it does require trust in me as a contractor, since in theory I could remove real negative reviews. 
 
 I recommend treating the rating of a Facebook business page as an *opinion* rather than an *assessment* of my skills, because 1) it uses a binary system (recommend / unrecommend), which can negatively affect the overall impression, and 2) negative reviews can be spammed there without any message, and I can't remove it. Telegram, on the other hand, reflects almost no majority opinion, but provides a detailed assessment of my skills. 
+
+It's also important to note that Facebook doesn't allow you to leave more than one review per account, and at the same time their policy prohibits having more than one account per person. If suspected by ML algorithms, the account will be suspended until you verify your identity. So, returning clients end up using Telegram for discounts.
 
 Reviews on freelance marketplaces are considered the most valuable, but I rarely work there, following customer preferences mostly.
 
@@ -364,6 +366,8 @@ Regardless of the platform, never trust reviews that don't describe the **proble
 `Telegram — более предпочтительная для меня платформа, поскольку он, в отличие от Facebook, позволяет модерировать фейковые отзывы. При этом, он требует доверия ко мне как к исполнителю, поскольку в теории я мог бы удалять настоящие негативные отзывы. 
 
 Я рекомендую относиться к рейтингу бизнес-страницы в Facebook не как к *оценке* моих навыков, а как к *мнению*, поскольку 1) там используется бинарная система (нравится / не нравится), что может негативно влиять на общее впечатление, и 2) там можно спамить негативными отзывами без какого-либо содержания, и я не смогу их удалить. Telegram, напротив, практически не отражает мнения большинства, но предоставляет развернутую оценку моих навыков. 
+
+Также важно заметить, что Facebook позволяет оставлять отзыв на моей странице лишь один раз, и при этом запрещает иметь несколько аккаунтов одному человеку. Если алгоритмы машинного обучения заподозрят нарушение этого правила, аккаунт будет приостановлен до тех пор, пока Вы не подтвердите личность. Поэтому возвращающиеся клиенты для получения скидки используют Telegram.
 
 Наиболее ценными считаются отзывы на фриланс-биржах, однако я редко работаю через них, во многом следуя предпочтениям заказчиков.
 
