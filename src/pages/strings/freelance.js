@@ -338,11 +338,11 @@ export const textMain = {
         },
         general: {
             en: 
-`Reviews are available through one of these two links. They don't intersect: Telegram is used primarily for Russian-speaking clients, and Facebook is used for English-speaking clients. If you don't speak Russian, you can use the built-in translation feature in the app.
+`Reviews are available through one of these two links. They almost never intersect: Telegram is used primarily for Russian-speaking clients, and Facebook is used for English-speaking clients. If you don't speak Russian, you can use the built-in translation feature in the app.
 
 Some reviews are also posted on freelance marketplaces (see the links at the top of this page).`,
             ru: 
-`Отзывы доступны при переходе по одной из этих двух ссылок. Они не пересекаются: Telegram используется преимущественно для русскоязычных клиентов, а Facebook — для англоязычных. Если Вы не владеете английским языком, Вы можете использовать встроенную фукнцию перевода в Facebook ("Показать перевод").  
+`Отзывы доступны при переходе по одной из этих двух ссылок. Они практически не пересекаются: Telegram используется преимущественно для русскоязычных клиентов, а Facebook — для англоязычных. Если Вы не владеете английским языком, Вы можете использовать встроенную фукнцию перевода в Facebook ("Показать перевод").  
 
 Некоторые отзывы также оставляются на фриланс-биржах (см. ссылки в начале этой страницы).`,
         },
