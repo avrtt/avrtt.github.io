@@ -99,6 +99,71 @@ body {
   font-weight: lighter;
 }
 
+.talksBody {
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 22px;
+  max-width: 100%;
+  font-size: 26px;
+  color: #444444;
+  background-color: white;
+  padding: 2.5em 4em;
+  border-radius: 2vh;
+  font-weight: lighter;
+}
+
+.musicBody {
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 22px;
+  max-width: 100%;
+  font-size: 26px;
+  color: #444444;
+  background-color: white;
+  padding: 2.5em 4em;
+  border-radius: 2vh;
+  font-weight: lighter;
+}
+
+.softwareBody {
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 22px;
+  max-width: 100%;
+  font-size: 26px;
+  color: #444444;
+  background-color: white;
+  padding: 2.5em 4em;
+  border-radius: 2vh;
+  font-weight: lighter;
+}
+
+.publicationsBody {
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 22px;
+  max-width: 100%;
+  font-size: 26px;
+  color: #444444;
+  background-color: white;
+  padding: 2.5em 4em;
+  border-radius: 2vh;
+  font-weight: lighter;
+}
+
+.musicBody {
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-top: 22px;
+  max-width: 100%;
+  font-size: 26px;
+  color: #444444;
+  background-color: white;
+  padding: 2.5em 4em;
+  border-radius: 2vh;
+  font-weight: lighter;
+}
+
 .donateBody {
   margin-left: 5%;
   margin-right: 5%;
@@ -343,8 +408,8 @@ h3::selection {
 
 /* LINKS */
 
-.servicesBodyNested a, .contactBody a, .courseBody a, .donateBody a, .postBody a, .homeBodyTile a, .homeBodyRegular a, .aboutBodyTile a, .aboutBodyRegular a, .cvBody a, .freelanceBody a, .goalsBody a, .explorationBody a,
-.servicesBodyNested href, .contactBody href, .courseBody href, .donateBody href, .postBody href, .homeBodyTile href, .homeBodyRegular href, .aboutBodyTile href, .aboutBodyRegular href, .cvBody href, .freelanceBody href, .goalsBody href, .explorationBody href {
+.servicesBodyNested a, .contactBody a, .courseBody a, .talksBody a, .publicationsBody a, .softwareBody a, .musicBody a, .donateBody a, .postBody a, .homeBodyTile a, .homeBodyRegular a, .aboutBodyTile a, .aboutBodyRegular a, .cvBody a, .freelanceBody a, .goalsBody a, .explorationBody a,
+.servicesBodyNested href, .contactBody href, .courseBody href, .talksBody href, .publicationsBody href, .softwareBody href, .musicBody href, .donateBody href, .postBody href, .homeBodyTile href, .homeBodyRegular href, .aboutBodyTile href, .aboutBodyRegular href, .cvBody href, .freelanceBody href, .goalsBody href, .explorationBody href {
 	text-decoration: none;
 	font-weight: 800;
 	border-bottom: 0;
@@ -355,8 +420,8 @@ h3::selection {
           transition: color 0.1s ease-in-out;
 }
 
-.servicesBodyNested a:hover, .contactBody a:hover, .courseBody a:hover, .donateBody a:hover, .postBody a:hover, .homeBodyTile a:hover, .homeBodyRegular a:hover, .aboutBodyTile a:hover, .aboutBodyRegular a:hover, .cvBody a:hover, .freelanceBody a:hover, .goalsBody a:hover, .explorationBody a:hover,
-.servicesBodyNested href:hover, .contactBody href:hover, .courseBody href:hover, .donateBody href:hover, .postBody href:hover, .homeBodyTile href:hover, .homeBodyRegular href:hover, .aboutBodyTile href:hover, .aboutBodyRegular href:hover, .cvBody href:hover, .freelanceBody href:hover, .goalsBody href:hover, .explorationBody href:hover {
+.servicesBodyNested a:hover, .contactBody a:hover, .courseBody a:hover, .talksBody a:hover, .publicationsBody a:hover, .softwareBody a:hover, .musicBody a:hover, .donateBody a:hover, .postBody a:hover, .homeBodyTile a:hover, .homeBodyRegular a:hover, .aboutBodyTile a:hover, .aboutBodyRegular a:hover, .cvBody a:hover, .freelanceBody a:hover, .goalsBody a:hover, .explorationBody a:hover,
+.servicesBodyNested href:hover, .contactBody href:hover, .courseBody href:hover, .talksBody href:hover, .publicationsBody href:hover, .softwareBody href:hover, .musicBody href:hover, .donateBody href:hover, .postBody href:hover, .homeBodyTile href:hover, .homeBodyRegular href:hover, .aboutBodyTile href:hover, .aboutBodyRegular href:hover, .cvBody href:hover, .freelanceBody href:hover, .goalsBody href:hover, .explorationBody href:hover {
 	border-bottom: 0;
 	color: #424242;
   text-decoration: none;
@@ -2083,6 +2148,46 @@ span.SAFE {
 	margin-right: 6%;
 }
 
+.lastUpdatedPublications {
+  font-size: 18px;
+	text-align: right;
+	opacity: 0.6;
+	font-weight: normal;
+	margin-top: 4px;
+	margin-bottom: -32px;
+	margin-right: 6%;
+}
+
+.lastUpdatedSoftware {
+  font-size: 18px;
+	text-align: right;
+	opacity: 0.6;
+	font-weight: normal;
+	margin-top: 4px;
+	margin-bottom: -32px;
+	margin-right: 6%;
+}
+
+.lastUpdatedMusic {
+  font-size: 18px;
+	text-align: right;
+	opacity: 0.6;
+	font-weight: normal;
+	margin-top: 4px;
+	margin-bottom: -32px;
+	margin-right: 6%;
+}
+
+.lastUpdatedTalks {
+  font-size: 18px;
+	text-align: right;
+	opacity: 0.6;
+	font-weight: normal;
+	margin-top: 4px;
+	margin-bottom: -32px;
+	margin-right: 6%;
+}
+
 .lastUpdatedFreelance {
   font-size: 18px;
 	text-align: right;
@@ -2899,17 +3004,17 @@ h6 {
   flex-direction: column;
 }
 
-.linkBlock {
-  display: flex;
-  flex-direction: column;
-}
-
 .tileContainer {
   width: 100%;
   margin: 0 auto;
   display: flex;
   flex-wrap: wrap;
   gap: var(--gap);
+}
+
+.tileContainerLink {
+  width: 100%;
+  margin: 0 auto;
 }
 
 
