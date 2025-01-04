@@ -203,6 +203,22 @@ body {
   font-weight: lighter;
 }
 
+.freelanceBodyNested {
+  margin-top: 22px;
+  margin-bottom: 50px;
+  max-width: 100%;
+  font-size: 26px;
+  color: #444444;
+  background-color: none;
+  padding: 0.5em 1em;
+  border-radius: 2vh;
+  font-weight: lighter;
+}
+
+.freelanceCoursesWrapper {
+  padding: 0.5em 5em;
+}
+
 .servicesBodyNested {
   margin-left: 5%;
   margin-right: 5%;
@@ -408,8 +424,8 @@ h3::selection {
 
 /* LINKS */
 
-.servicesBodyNested a, .contactBody a, .courseBody a, .talksBody a, .publicationsBody a, .softwareBody a, .musicBody a, .donateBody a, .postBody a, .homeBodyTile a, .homeBodyRegular a, .aboutBodyTile a, .aboutBodyRegular a, .cvBody a, .freelanceBody a, .goalsBody a, .explorationBody a,
-.servicesBodyNested href, .contactBody href, .courseBody href, .talksBody href, .publicationsBody href, .softwareBody href, .musicBody href, .donateBody href, .postBody href, .homeBodyTile href, .homeBodyRegular href, .aboutBodyTile href, .aboutBodyRegular href, .cvBody href, .freelanceBody href, .goalsBody href, .explorationBody href {
+.servicesBodyNested a, .contactBody a, .courseBody a, .talksBody a, .publicationsBody a, .softwareBody a, .musicBody a, .donateBody a, .postBody a, .homeBodyTile a, .homeBodyRegular a, .aboutBodyTile a, .aboutBodyRegular a, .cvBody a, .freelanceBody a, .freelanceBodyNested a, .goalsBody a, .explorationBody a,
+.servicesBodyNested href, .contactBody href, .courseBody href, .talksBody href, .publicationsBody href, .softwareBody href, .musicBody href, .donateBody href, .postBody href, .homeBodyTile href, .homeBodyRegular href, .aboutBodyTile href, .aboutBodyRegular href, .cvBody href, .freelanceBody href, .freelanceBodyNested href, .goalsBody href, .explorationBody href {
 	text-decoration: none;
 	font-weight: 800;
 	border-bottom: 0;
@@ -420,8 +436,8 @@ h3::selection {
           transition: color 0.1s ease-in-out;
 }
 
-.servicesBodyNested a:hover, .contactBody a:hover, .courseBody a:hover, .talksBody a:hover, .publicationsBody a:hover, .softwareBody a:hover, .musicBody a:hover, .donateBody a:hover, .postBody a:hover, .homeBodyTile a:hover, .homeBodyRegular a:hover, .aboutBodyTile a:hover, .aboutBodyRegular a:hover, .cvBody a:hover, .freelanceBody a:hover, .goalsBody a:hover, .explorationBody a:hover,
-.servicesBodyNested href:hover, .contactBody href:hover, .courseBody href:hover, .talksBody href:hover, .publicationsBody href:hover, .softwareBody href:hover, .musicBody href:hover, .donateBody href:hover, .postBody href:hover, .homeBodyTile href:hover, .homeBodyRegular href:hover, .aboutBodyTile href:hover, .aboutBodyRegular href:hover, .cvBody href:hover, .freelanceBody href:hover, .goalsBody href:hover, .explorationBody href:hover {
+.servicesBodyNested a:hover, .contactBody a:hover, .courseBody a:hover, .talksBody a:hover, .publicationsBody a:hover, .softwareBody a:hover, .musicBody a:hover, .donateBody a:hover, .postBody a:hover, .homeBodyTile a:hover, .homeBodyRegular a:hover, .aboutBodyTile a:hover, .aboutBodyRegular a:hover, .cvBody a:hover, .freelanceBody a:hover, .freelanceBodyNested a:hover, .goalsBody a:hover, .explorationBody a:hover,
+.servicesBodyNested href:hover, .contactBody href:hover, .courseBody href:hover, .talksBody href:hover, .publicationsBody href:hover, .softwareBody href:hover, .musicBody href:hover, .donateBody href:hover, .postBody href:hover, .homeBodyTile href:hover, .homeBodyRegular href:hover, .aboutBodyTile href:hover, .aboutBodyRegular href:hover, .cvBody href:hover, .freelanceBody href:hover, .freelanceBodyNested href:hover, .goalsBody href:hover, .explorationBody href:hover {
 	border-bottom: 0;
 	color: #424242;
   text-decoration: none;

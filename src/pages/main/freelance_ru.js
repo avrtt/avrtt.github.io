@@ -220,11 +220,12 @@ const FreelanceRu = () => {
 					</span>
 				</span>
 				<M text={textMain.general.outro.ru}/>
-
+				<div class="sectionBreak"><M text="----------"/></div>
+				<M text={textMain.projects.heading.ru}/>
+				<M text={textMain.projects.intro.ru}/>
+			</div>
+			<div class="freelanceBodyNested">
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
-					<div class="sectionBreak"><M text="----------"/></div>
-					<M text={textMain.projects.heading.ru}/>
-					<M text={textMain.projects.intro.ru}/>
 					<div class="freelanceCategorySectionWrapper">
 						{categories.map((category) => (
 							<FreelanceCategory 
@@ -237,9 +238,9 @@ const FreelanceRu = () => {
 						))}
 					</div>
 				</AnimationOnScroll>
-
+			</div>
+			<div class="freelanceBody">
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
-					<div class="sectionBreak"><M text="----------"/></div>
 					<M text={textMain.workflow.heading.ru}/>
 					<M text={textMain.workflow.section1.heading.ru}/>
 					<p id="freelanceWorkflowItem">
@@ -363,7 +364,6 @@ const FreelanceRu = () => {
 						</div>
 					</div>
 				</AnimationOnScroll>
-
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
 					<div class="sectionBreak"><M text="----------"/></div>
 					<M text={textMain.testimonials.heading.ru}/>
@@ -403,7 +403,6 @@ const FreelanceRu = () => {
 					<M text={textMain.testimonials.write.heading.ru}/>
 					<M text={textMain.testimonials.write.template.ru}/>
 				</AnimationOnScroll>
-
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
 					<div class="sectionBreak"><M text="----------"/></div>
 					<M text={textMain.background.heading.ru}/>
@@ -416,20 +415,20 @@ const FreelanceRu = () => {
 					<M text={textMain.background.block5.ru}/>
 					<M text={textMain.background.block6.ru}/>
 				</AnimationOnScroll>
-
+				<div class="sectionBreak"><M text="----------"/></div>
+				<M text={textMain.courses.heading.ru}/>
+				<M text={textMain.courses.intro.ru}/>
+			</div>
+			<div class="freelanceBodyNested freelanceCoursesWrapper">
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
-					<div class="sectionBreak"><M text="----------"/></div>
-					<M text={textMain.courses.heading.ru}/>
-					<M text={textMain.courses.intro.ru}/>
 					<Courses lang="ru"/>
 				</AnimationOnScroll>
-
+			</div>
+			<div class="freelanceBody">
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
-					<div class="sectionBreak"><M text="----------"/></div>
 					<M text={textMain.stack.heading.ru}/>
 					<Stack />
 				</AnimationOnScroll>
-
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
 					<div class="sectionBreak"><M text="----------"/></div>
 					<M text={textMain.payment.heading.ru}/>
@@ -470,7 +469,6 @@ const FreelanceRu = () => {
 						</div>
 					</div>
 				</AnimationOnScroll>
-
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
 					<div class="sectionBreak"><M text="----------"/></div>
 					<M text={textMain.related.heading.ru}/>

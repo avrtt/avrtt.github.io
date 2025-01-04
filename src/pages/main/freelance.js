@@ -219,11 +219,12 @@ const Freelance = () => {
 					</span>
 				</span>
 				<M text={textMain.general.outro.en}/>
-
+				<div class="sectionBreak"><M text="----------"/></div>
+				<M text={textMain.projects.heading.en}/>
+				<M text={textMain.projects.intro.en}/>
+			</div>
+			<div class="freelanceBodyNested">
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
-					<div class="sectionBreak"><M text="----------"/></div>
-					<M text={textMain.projects.heading.en}/>
-					<M text={textMain.projects.intro.en}/>
 					<div class="freelanceCategorySectionWrapper">
 						{categories.map((category) => (
 							<FreelanceCategory 
@@ -236,9 +237,9 @@ const Freelance = () => {
 						))}
 					</div>
 				</AnimationOnScroll>
-
+			</div>
+			<div class="freelanceBody">
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
-					<div class="sectionBreak"><M text="----------"/></div>
 					<M text={textMain.workflow.heading.en}/>
 					<M text={textMain.workflow.section1.heading.en}/>
 					<p id="freelanceWorkflowItem">
@@ -362,7 +363,6 @@ const Freelance = () => {
 						</div>
 					</div>
 				</AnimationOnScroll>
-
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
 					<div class="sectionBreak"><M text="----------"/></div>
 					<M text={textMain.testimonials.heading.en}/>
@@ -402,7 +402,6 @@ const Freelance = () => {
 					<M text={textMain.testimonials.write.heading.en}/>
 					<M text={textMain.testimonials.write.template.en}/>
 				</AnimationOnScroll>
-
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
 					<div class="sectionBreak"><M text="----------"/></div>
 					<M text={textMain.background.heading.en}/>
@@ -415,20 +414,20 @@ const Freelance = () => {
 					<M text={textMain.background.block5.en}/>
 					<M text={textMain.background.block6.en}/>
 				</AnimationOnScroll>
-
+				<div class="sectionBreak"><M text="----------"/></div>
+				<M text={textMain.courses.heading.en}/>
+				<M text={textMain.courses.intro.en}/>
+			</div>
+			<div class="freelanceBodyNested freelanceCoursesWrapper">
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
-					<div class="sectionBreak"><M text="----------"/></div>
-					<M text={textMain.courses.heading.en}/>
-					<M text={textMain.courses.intro.en}/>
 					<Courses lang="en"/>
 				</AnimationOnScroll>
-
+			</div>
+			<div class="freelanceBody">
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
-					<div class="sectionBreak"><M text="----------"/></div>
 					<M text={textMain.stack.heading.en}/>
 					<Stack />
 				</AnimationOnScroll>
-
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
 					<div class="sectionBreak"><M text="----------"/></div>
 					<M text={textMain.payment.heading.en}/>
@@ -469,7 +468,6 @@ const Freelance = () => {
 						</div>
 					</div>
 				</AnimationOnScroll>
-
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
 					<div class="sectionBreak"><M text="----------"/></div>
 					<M text={textMain.related.heading.en}/>
@@ -477,7 +475,7 @@ const Freelance = () => {
 						<M text={textMain.related.links.en}/>
 					</div>   
 				</AnimationOnScroll>
-				
+
 				<div id="myModal" class="modal">
 					<div class="close">
 						<img class="modal-content" id="img01" alt="modal-img" />
