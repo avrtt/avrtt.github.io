@@ -1,4 +1,8 @@
+export const publicationsLastUpdated = "DEC 19, 2024"
+export const softwareLastUpdated = "DEC 19, 2024"
+export const musicLastUpdated = "DEC 19, 2024"
 export const courseLastUpdated = "NOV 8, 2024"
+export const talksLastUpdated = "DEC 19, 2024"
 export const goalsLastUpdated = "OCT 9, 2024"
 export const explorationLastUpdated = "OCT 14, 2023"
 export const freelanceLastUpdated = "OCT 20, 2024"
