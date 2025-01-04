@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { AnimationOnScroll } from 'react-animation-on-scroll';
 import M from '../../components/Markdown';
 import LinkBlock from '../../components/LinkBlock';
-import TileContainer from '../../components/TileContainer';
+import TileContainerLink from '../../components/TileContainerLink';
 import { userDiff } from '../../utils/freelance';
 import { categories, services } from '../../data/freelance/arrays';
 import { freelanceLastUpdated } from '../../data/lastUpdated';
@@ -129,101 +129,73 @@ const Freelance = () => {
 				/>
 				<M text={textMain.general.servicesRedirect.en}/>
 				<M text={textMain.general.contactMe.en}/>
-				<TileContainer columns={3} marginTop='4vh' marginBottom='2vh' animationonscroll={false}>
+				<TileContainerLink columns={3} marginTop='4vh' animationonscroll={false}>
 					<LinkBlock
 						link='https://t.me/averett'
 						icon={telegram}
-						iconSize='3vw'
 						name='Telegram'
 						handle='@averett'
 						description=''
 						backgroundColor='#dbdbdb'
-						blockWidth='14.5vw'
-						fontSizeName = '1vw'
-						fontSizeHandle = '1vw'
-						padding='1vw'
+						padding='20px'
 					/>
 					<LinkBlock
 						link='mailto:avrtt@tuta.io'
 						icon={envelope}
-						iconSize='3vw'
 						name='Email'
 						handle='avrtt@tuta.io'
 						description=''
 						backgroundColor='#dbdbdb'
-						blockWidth='14.5vw'
-						fontSizeName = '1vw'
-						fontSizeHandle = '1vw'
-						padding='1vw'
+						padding='20px'
 					/>
 					<LinkBlock
 						link='https://www.facebook.com/vladaverett'
 						icon={facebook}
-						iconSize='3vw'
 						name='Facebook'
 						handle='@vladaverett'
 						description=''
 						backgroundColor='#dbdbdb'
-						blockWidth='14.5vw'
-						fontSizeName = '1vw'
-						fontSizeHandle = '1vw'
-						padding='1vw'
+						padding='20px'
 					/>
-				</TileContainer>
-				<TileContainer columns={4} marginTop='2vh' marginBottom='6vh' animationonscroll={false}>
+				</TileContainerLink>
+				<TileContainerLink columns={4} marginBottom='6vh' animationonscroll={false}>
 					<LinkBlock
 						link='https://www.upwork.com/freelancers/~019b5459361c20c528'
 						icon={upwork}
-						iconSize='3vw'
 						name='Upwork 🌐'
 						handle=''
 						description=''
 						backgroundColor='#dbdbdb'
-						blockWidth='10vw'
-						fontSizeName = '1vw'
-						fontSizeHandle = '1vw'
-						padding='1vw'
+						padding='20px'
 					/>
 					<LinkBlock
 						link='https://www.fiverr.com/vladaverett'
 						icon={fiverr}
-						iconSize='3vw'
 						name='Fiverr 🌐'
 						handle='@vladaverett'
 						description=''
 						backgroundColor='#dbdbdb'
-						blockWidth='10vw'
-						fontSizeName = '1vw'
-						fontSizeHandle = '1vw'
-						padding='1vw'
+						padding='20px'
 					/>
 					<LinkBlock
 						link='https://kwork.ru/user/avrtt'
 						icon={kwork}
-						iconSize='3vw'
 						name='Kwork 🇷🇺'
 						handle='@avrtt'
 						description=''
 						backgroundColor='#dbdbdb'
-						blockWidth='10vw'
-						fontSizeName = '1vw'
-						fontSizeHandle = '1vw'
-						padding='1vw'
+						padding='20px'
 					/>
 					<LinkBlock
 						link='https://freelance.habr.com/freelancers/avrtt'
 						icon={habr}
-						iconSize='3vw'
 						name='Habr 🇷🇺'
 						handle='@avrtt'
 						description=''
 						backgroundColor='#dbdbdb'
-						blockWidth='10vw'
-						fontSizeName = '1vw'
-						fontSizeHandle = '1vw'
-						padding='1vw'
+						padding='20px'
 					/>
-				</TileContainer>
+				</TileContainerLink>
 				<span>
 					<span dangerouslySetInnerHTML={{ __html: textMain.general.schedule.en }} />
 					<span class="tooltipFreelance">
@@ -380,34 +352,26 @@ const Freelance = () => {
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
 					<div class="sectionBreak"><M text="----------"/></div>
 					<M text={textMain.testimonials.heading.en}/>
-					<TileContainer columns={2} marginTop='2vh' marginBottom='4vh' animationonscroll={false}>
+					<TileContainerLink columns={2} marginTop='2vh' marginBottom='4vh' animationonscroll={false}>
 						<LinkBlock
 							link='https://t.me/avrtt_feedback/6'
 							icon={telegram}
-							iconSize='3vw'
 							name='Telegram'
 							handle='@avrtt_feedback'
 							description={textMain.testimonials.telegramDesc.en}
 							backgroundColor='#dbdbdb'
-							blockWidth='25vw'
-							fontSizeName = '1vw'
-							fontSizeHandle = '1vw'
-							padding='1vw'
+							padding='20px'
 						/>
 						<LinkBlock
 							link='https://www.facebook.com/averett.freelance/reviews'
 							icon={facebook}
-							iconSize='3vw'
 							name='Facebook'
 							handle='@averett.freelance'
 							description={textMain.testimonials.facebookDesc.en}
 							backgroundColor='#dbdbdb'
-							blockWidth='25vw'
-							fontSizeName = '1vw'
-							fontSizeHandle = '1vw'
-							padding='1vw'
+							padding='20px'
 						/>
-					</TileContainer>
+					</TileContainerLink>
 					<M text={textMain.testimonials.general.en}/>
 					<button className="spoilerButton noselect" ref={(el) => collRef.current.push(el)}>
 						&nbsp;&nbsp;
