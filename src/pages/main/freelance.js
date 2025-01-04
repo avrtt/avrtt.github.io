@@ -30,6 +30,7 @@ import upwork from "../../images/links/upwork.svg"
 import fiverr from "../../images/links/fiverr.svg"
 import kwork from "../../images/links/kwork.svg"
 import habr from "../../images/links/habr.svg"
+import russian from "../../images/flags/russia.svg"
 import { textMain } from "../strings/freelance"
 import { SberbankCardCopy, SberbankCardDisplay, SberbankSBPCopy, SberbankSBPDisplay, BitcoinWallet, BEP20Wallet, ERC20Wallet } from "../../data/paymentMethods.js";
 
@@ -37,7 +38,17 @@ const TITLE = 'Freelance - avrtt.blog'
 
 const logoStyle = {
 	'vertical-align': 'middle'
-}; 
+}
+
+const flagStyle = {
+	width: '35px',
+	borderRadius: '6px',
+	marginRight: '6px'
+}
+
+const codeStyle = {
+	marginBottom: '-4px'
+}
 
 var tooltipText
 if (userDiff === 0) {
@@ -116,7 +127,10 @@ const Freelance = () => {
 
 			<div class="languageSwitchWrapper noselect">
 				<Link to="/freelance/ru">
-					<span class="languageButton">RU</span>
+					<span class="languageButton">
+						<img style={flagStyle} src={russian}/>
+						<span style={codeStyle}>RU</span>
+					</span>
 				</Link>
 			</div>
 
