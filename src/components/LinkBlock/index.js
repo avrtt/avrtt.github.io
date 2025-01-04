@@ -1,30 +1,33 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from "gatsby";
+import russian from "../../images/flags/russia.svg"
+import englishRussian from "../../images/flags/uk_russia.svg"
 
 const LinkBlock = ({
     link,
     isExternalLink = true,
+    inactive = false,
+    isRussian = false,
+    isEnglishAndRussian = false,
     icon,
-    iconSize = '3vw',
+    categoryEmoji = '',
+    categoryName = '',
+    iconSize = '70px',
     name = 'Untitled link',
     handle,
     description = '',
-    fontSizeName = '0.8vw',
-    fontSizeHandle = '0.8vw',
-    fontSizeDescription = '0.76vw',
+    fontSizeName = '20px',
+    fontSizeHandle = '17px',
+    fontSizeDescription = '17px',
     textColorName = '#000000',
     textColorHandle = '#696969',
     textColorDescription = '#696969',
-    justifyContent = 'center',
+    justifyContent = 'flex-start',
     backgroundColor = '#ffffff',
-    padding = '1vw 1vw 0.5vw 1vw',
-    marginRight = '0',
-    marginLeft = '0',
-    paddingDescription = '0 0.1vw',
+    padding = '20px 20px 10px 20px',
+    paddingDescription = '0 5px',
     borderRadius = '2vh',
-    blockWidth = 'auto',
-    height = 'auto',
     divAnimation = true
 }) => {
 
@@ -32,57 +35,55 @@ const LinkBlock = ({
 
     const handleMouseEnter = () => {
         setIsHovered(true);
-    };
+    }
 
     const handleMouseLeave = () => {
         setIsHovered(false);
-    };
+    }
 
     const blockStyle = {
         backgroundColor,
         padding,
-        marginRight,
-        marginLeft,
         borderRadius,
-        width: blockWidth,
-        height,
+        width: '100%',
+        height: '100%',
         display: 'flex',
         flexDirection: 'column',
         justifyContent,
-        transform: `scale(${isHovered && divAnimation ? 0.97 : 1})`,
-        opacity: isHovered ? '0.8' : '1',
+        transform: inactive ? (`scale(${isHovered && divAnimation ? 1 : 1})`) : (`scale(${isHovered && divAnimation ? 0.97 : 1})`),
+        opacity: inactive ? '0.5' : (isHovered ? '0.9' : '1'),
         transition: 'transform 0.1s ease, opacity 0.1s ease',
-        flex: 1,
-    };
+        boxSizing: 'border-box',
+    }
 
     const blockContentStyle = {
         display: 'flex',
         alignItems: 'center',
-    };
+    }
 
     const iconStyle = {
         width: iconSize,
         height: 'auto',
         marginRight: '0.8vw',
-    };
+    }
 
     const textWrapperStyle = {
         display: 'flex',
         flexDirection: 'column',
-    };
+    }
 
     const nameStyle = {
         fontSize: fontSizeName,
         color: textColorName,
         fontWeight: 'bold',
         marginBottom: '-0.2vw',
-    };
+    }
 
     const handleStyle = {
         fontSize: fontSizeHandle,
         color: textColorHandle,
         marginTop: '-0.2vw',
-    };
+    }
 
     const descriptionStyle = {
         fontSize: fontSizeDescription,
@@ -91,7 +92,27 @@ const LinkBlock = ({
         padding: paddingDescription,
         wordWrap: 'break-word',
         overflowWrap: 'break-word',
-    };
+    }
+
+    const inactiveNoticeStyle = {
+        fontSize: '15px',
+        position: 'absolute',
+        right: '15px',
+        top: '5px',
+    }
+
+    const categoryEmojiStyle = {
+        opacity: '0.4',
+        marginLeft: '10px'
+    }
+
+    const flagStyle = {
+        width: '35px',
+        position: 'absolute',
+        right: '-8px',
+        top: '-8px',
+        borderRadius: '6px',
+    }
 
     return isExternalLink ? (
         <a href={link} target="_blank" rel="noopener noreferrer">
@@ -104,7 +125,12 @@ const LinkBlock = ({
                 <div style={blockContentStyle}>
                     <img style={iconStyle} className=".makeBlackAndWhite" src={icon} alt={`${name} icon`} />
                     <div style={textWrapperStyle}>
-                        <span style={nameStyle}>{name}</span>
+                        <img title={!inactive && (isRussian ? "Russian language mostly" : null || isEnglishAndRussian ? "Bilingual" : null)} style={flagStyle} src={!inactive && (isRussian ? russian : null || isEnglishAndRussian ? englishRussian : null)}/>
+                        <span style={nameStyle}>
+                            {name}
+                            <span title={categoryName} style={categoryEmojiStyle}>{inactive || categoryEmoji}</span>
+                        </span>
+                        <span style={inactiveNoticeStyle}>{inactive && "Inactive"}</span>
                         {handle && <span style={handleStyle}>{handle}</span>}
                     </div>
                 </div>
@@ -122,7 +148,12 @@ const LinkBlock = ({
                 <div style={blockContentStyle}>
                     <img style={iconStyle} className=".makeBlackAndWhite" src={icon} alt={`${name} icon`} />
                     <div style={textWrapperStyle}>
-                        <span style={nameStyle}>{name}</span>
+                        <img title={!inactive && (isRussian ? "Russian language mostly" : null || isEnglishAndRussian ? "Bilingual" : null)} style={flagStyle} src={!inactive && (isRussian ? russian : null || isEnglishAndRussian ? englishRussian : null)}/>
+                        <span style={nameStyle}>
+                            {name}
+                            <span title={categoryName} style={categoryEmojiStyle}>{inactive || categoryEmoji}</span>
+                        </span>
+                        <span style={inactiveNoticeStyle}>{inactive && "Inactive"}</span>
                         {handle && <span style={handleStyle}>{handle}</span>}
                     </div>
                 </div>
