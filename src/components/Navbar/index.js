@@ -7,7 +7,8 @@ import CountPosts from "../../fetchers/count_posts";
 
 const Navbar = () => {
   const location = useLocation();
-  const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [dropdownPostsVisible, setDropdownPostsVisible] = useState(false);
+  const [dropdownWorksVisible, setDropdownWorksVisible] = useState(false);
 
   const isHomePage = location.pathname === "/";
   const isAdventuresPost = location.pathname.includes("/adventures")
@@ -16,8 +17,10 @@ const Navbar = () => {
                       
   const isFreelanceSubpage = location.pathname.startsWith("/freelance/") && location.pathname !== "/freelance/";
 
-  const showDropdown = () => setDropdownVisible(true);
-  const hideDropdown = () => setDropdownVisible(false);
+  const showPostsDropdown = () => setDropdownPostsVisible(true);
+  const hidePostsDropdown = () => setDropdownPostsVisible(false);
+  const showWorksDropdown = () => setDropdownWorksVisible(true);
+  const hideWorksDropdown = () => setDropdownWorksVisible(false);
 
   const { adventuresCount, researchCount, thoughtsCount } = CountPosts();
 
@@ -35,19 +38,19 @@ const Navbar = () => {
               placeholder='none'
             />
           </Link>
-          <Dropdown onMouseEnter={showDropdown} onMouseLeave={hideDropdown}>
+          <Dropdown onMouseEnter={showPostsDropdown} onMouseLeave={hidePostsDropdown}>
             <NavLink
               activeClassName="active"
-              className={dropdownVisible ? "active" : ""}
+              className={dropdownPostsVisible ? "active" : ""}
               style={{
-                "opacity": dropdownVisible ? "0.5" : "1",
+                "opacity": dropdownPostsVisible ? "0.5" : "1",
                 "background-color": "transparent",
-                "padding-right": "28px",
+                "padding-right": "0px",
               }}
             >
               Posts
             </NavLink>
-            {dropdownVisible && (
+            {dropdownPostsVisible && (
               <DropdownMenu>
                 <DropdownItem
                   to="/adventures"
@@ -94,8 +97,46 @@ const Navbar = () => {
               </DropdownMenu>
             )}
           </Dropdown>
+          <Dropdown onMouseEnter={showWorksDropdown} onMouseLeave={hideWorksDropdown}>
+            <NavLink
+              activeClassName="active"
+              className={dropdownWorksVisible ? "active" : ""}
+              style={{
+                "opacity": dropdownWorksVisible ? "0.5" : "1",
+                "background-color": "transparent",
+                "padding-right": "20px",
+              }}
+            >
+              Works
+            </NavLink>
+            {dropdownWorksVisible && (
+              <DropdownMenu>
+                <DropdownItem
+                  to="/publications"
+                  activeClassName="active"
+                >
+                  Publications
+                </DropdownItem>
+                <DropdownItem
+                  to="/software"
+                  activeClassName="active"
+                >
+                  Software
+                </DropdownItem>
+                <DropdownItem
+                  to="/music"
+                  activeClassName="active"
+                >
+                  Music
+                </DropdownItem>
+              </DropdownMenu>
+            )}
+          </Dropdown>
           <NavLink to="/course" activeClassName="active">
             Course
+          </NavLink>
+          <NavLink to="/talks" activeClassName="active">
+            Talks
           </NavLink>
           <NavLink to="/goals" activeClassName="active">
             Goals
