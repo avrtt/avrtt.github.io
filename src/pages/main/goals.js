@@ -6,6 +6,7 @@ import { graphql, useStaticQuery } from 'gatsby';
 import { goalsTags } from '../../data/goals/tags';
 import { goalsLastUpdated } from '../../data/lastUpdated';
 import M from '../../components/Markdown';
+import StickerPack from '../../components/StickerPack';
 import GoalCategory from '../../components/GoalCategory';
 import checkbox from "../../images/goals/checked.svg";
 import refLink from "../../images/goals/refLink.svg";
@@ -164,7 +165,7 @@ const Goals = () => {
 
             <div class="goalsBodyNested">
                 <div class="goalsTextContent">
-                    <M text="Here you can find the public version of my bucket list, which is actually an organized collection of my life's achievements if it was a RPG (that's exactly how I feel this life). There are boring cliché goals, serious and challenging ones, but also just simple little things for folks who, like me, enjoy goofing around doing stupid and sometimes epic dangerous stuff, because that's what makes life exciting."/>
+                    <p>Here you can find the public version of my bucket list, which is actually an organized collection of my life's achievements if it was a RPG (that's exactly how I feel this life). There are boring cliché goals, serious and challenging ones, but also just simple little things for folks who, like me, enjoy goofing around doing stupid and sometimes epic dangerous stuff, because that's what makes life exciting. <StickerPack sticker="pug_dance"/> </p>
                     <div>
                         <button className="spoilerButton noselect" ref={(el) => collRef.current.push(el)}>
                             &nbsp;&nbsp;

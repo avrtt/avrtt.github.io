@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { StaticImage } from "gatsby-plugin-image"
 import M from '../../components/Markdown';
+import StickerPack from '../../components/StickerPack';
 import BTC from "../../images/donate/btc.svg";
 import ETH from "../../images/donate/eth.svg";
 import BNB from "../../images/donate/bnb.svg";
@@ -46,11 +47,19 @@ function modal(myImg, qr, address, caption1, caption2) {
 
 const Donate = () => {
 	
+    const [showEasterEgg, setShowEasterEgg] = useState(false)
+
 	useEffect(() => {
   		window.scrollTo(0, 0)
+
   		modal("myImg1", BTCQR, BitcoinWallet)
 		modal("myImg2", BSCQR, BEP20Wallet)
 		modal("myImg3", ETHQR, ERC20Wallet)
+
+        const randomNumber = Math.floor(Math.random() * 50000) + 1;
+        if (randomNumber === 1) {
+            setShowEasterEgg(true)
+        }
 	}, [])	
 	
     return (
@@ -117,15 +126,26 @@ const Donate = () => {
                         <div class="currency-name"><b>USDT • USDC • DAI • ETH</b> &nbsp;(ETHEREUM NETWORK, ERC-20)</div>
                     </div>
                 </div>
-                <br/>
-                <M text="Btw this is me when I don't have to work today thanks to your donation:"/>
-                <StaticImage style={{
-                    "border-radius": "2vh", 
-                    "width": "80%", 
-                    "margin-left": "auto", 
-                    "margin-right": "auto",
-                    "display": "block"
-                }} src="../../images/donate/me.jpg"></StaticImage>				
+                <p>Your donations directly allow me to spend more time on my community-related projects! <StickerPack sticker="pepe_wink"/></p>
+                {showEasterEgg && (
+                    <div>
+                        <br/><br/>
+                        <M text="---"/>
+                        <br/>
+                        <M text="# EASTER EGG???"/>
+                        <M text="Btw this is me when I don't have to work today thanks to your donation:"/>
+                        <StaticImage
+                            style={{
+                                "border-radius": "2vh", 
+                                "width": "80%", 
+                                "margin-left": "auto", 
+                                "margin-right": "auto",
+                                "display": "block"
+                            }} 
+                            src="../../images/donate/me.jpg" 
+                        />
+                    </div>
+                )}
                 <div id="myModal" class="modal">
                     <div class="close">
                         <img class="modal-content" id="img01" alt="modal-img" />

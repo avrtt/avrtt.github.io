@@ -30,6 +30,8 @@ const Contact = () => {
                 <M text="I'm open to making friends with people all over the world."/>
                 <M text="If you're reaching out about business (i.e. ads and collaboration), please consider reading the [Information for Business Inquiries](/information_for_business_inquiries)."/>
                 <br/>
+                <M text="---"/>
+                <br/>
                 Share my opinion on the importance of secure communication? You might find these magic scribbles useful:
                 <div class="listHome">
                     <M text="
