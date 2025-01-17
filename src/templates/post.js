@@ -59,6 +59,7 @@ export function PostTemplate({ data: { mdx, allMdx }, children }) {
       <PostBanner
         postNumber={frontmatter.index} 
         date={frontmatter.date}
+        updated={frontmatter.updated}
         title={frontmatter.title}
         desc={frontmatter.desc}
         banner={frontmatter.banner}
@@ -90,6 +91,7 @@ export const query = graphql`
         title
         desc
         date
+        updated
         banner {
           childImageSharp {
             gatsbyImageData(

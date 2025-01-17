@@ -29,6 +29,22 @@ const prevDateStyle = {
 	"border-radius": "0"
 }
 
+const prevUpdatedStyle = {
+	"position": "absolute",
+	"top": "15%",
+	"left": "90%",
+	"width": "6vw",
+	"transform": "translate(-50%, -70%)",
+	"margin": "0",
+	"padding": "0",
+	"color": "#ffffff",
+	"font-size": "0.9vw",
+	"font-family": "'Quicksand', sans-serif",
+	"font-weight": "900",
+	"opacity": "0.6",
+	"border-radius": "0"
+}
+
 const prevNumberStyle = {
 	"position": "absolute",
 	"top": "10%",
@@ -62,7 +78,23 @@ const svgStyle = {
 	"transform": "translate(0.3vw, -0.08vw)",
 }
 
-const PostBanner = ({ postNumber, date, title, desc, banner, section, postKey }) => {
+const PostBanner = ({ postNumber, date, updated, title, desc, banner, section, postKey }) => {
+
+	const prevUpdatedTextStyle = {
+		"position": "absolute",
+		"top": "15%",
+		"left": "90%",
+		"width": "6vw",
+		"transform": "translate(-110%, -70%)",
+		"margin": "0",
+		"padding": "0",
+		"color": "#ffffff",
+		"font-size": "0.9vw",
+		"font-family": "'Quicksand', sans-serif",
+		"font-weight": "900",
+		"opacity": updated ? "0.6" : "0",
+		"border-radius": "0"
+	}
 
     const prevTextStyle = {
     	"position": "absolute",
@@ -109,6 +141,7 @@ const PostBanner = ({ postNumber, date, title, desc, banner, section, postKey })
 			    <b><div style={prevTextStyle}>{title}</div></b>
 			    <div style={prevDescStyle}>{desc}</div>
 			    <div style={prevDateStyle}>{date}</div>
+				<span style={prevUpdatedTextStyle}>upd: </span><span style={prevUpdatedStyle}>{updated}</span>
 			    <div style={prevNumberStyle}>#{postNumber}</div>
 			    <br/>
 		    </div>
