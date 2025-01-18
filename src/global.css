@@ -469,6 +469,28 @@ h3::selection {
   text-decoration: none;
 }
 
+.compactViewLink {
+  text-decoration: none;
+	font-weight: 800;
+	border-bottom: 0;
+	color: #787878;
+	overflow: hidden;
+	background: linear-gradient(to right, #424242, #424242 50%, #787878 50%);
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-size: 200% 100%;
+	background-position: 100%;
+	transition: background-position 200ms ease;
+}
+
+.compactViewLink:hover {
+  background-position: 0 100%;
+	border-bottom: 0;
+	color: #696969;
+  text-decoration: none;
+}
+
 
 
 /* EMBED MAPS */
@@ -1269,6 +1291,38 @@ svg {
   text-align: center;
   margin-top: 0px;
   margin-bottom: -80px;
+}
+
+
+
+/* COMPACT VIEWS */
+
+.viewButton {
+  background-color: #ffffff;
+  align-items: center; 
+  justify-content: center;
+  cursor: pointer;
+  padding: 1.2vh;
+  width: fit-content;
+  border: none;
+  outline: none;
+  font-size: 2vh;
+  border-radius: 1vh;
+  transition-duration: 0.1s;
+  font-weight: 1000;
+  color: #8e8e8e;
+  margin-right: 12px;
+}
+
+.viewButton:hover {
+  background-color: #eaeaea;
+  transition-duration: 0.1s;
+}
+
+.viewButtonWrapper {
+  text-align: right;
+  margin-right: 0.8vh;
+  margin-top: -2vh;
 }
 
 
