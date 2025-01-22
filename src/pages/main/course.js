@@ -146,9 +146,12 @@ const Course = ({ data }) => {
 				<M text="Many nights — in the light of a dim lamp — I've explored a completely new discipline, which at first seemed unfeasible to me. I must, therefore, express my gratitude to those who guided me through this arduous journey of learning:"/>
 				<M text={`
 - **Andrew Ng** — for the greatest classic ML course, excellent deep learning Coursera specialization and online lectures at Stanford
+- **Peter Norvig** and **Stuart Russell** — for my favorite & one of the greatest textbooks on AI
 - **Victor Kantor**, **Evgeniy Riabenko**, **Evgeniy Sokolov**, **Emeli Dral** — my first lecturers who got me into data science
 - **Josh Starmer** — for being the best statistics teacher ever
 - **Radoslav Neychev** and **Vladislav Goncharenko** — for excellent and clear lectures and practices at MIPT
+- **Ian Goodfellow**, **Yoshua Bengio** and **Aaron Courville** — for their clear deep learning textbook
+- **Marc Deisenroth**, **Aldo Faisal** and **Cheng Soon Ong** — for their clear textbook on mathematics for ML
 - **Konstantin Vorontsov** — for in-depth knowledge in machine learning
 - **Sergey Balakirev** — for clearest CS/ML tutorials I've ever seen
 - **Alexander Dyakonov** — for courses and his captivating easy-to-read data science blog
@@ -159,13 +162,11 @@ const Course = ({ data }) => {
 - and a lot of other teachers at **MIT**, **MIPT** and **Harvard** — for giving free online lectures
 				`}/>
 {/* 
-Deep Learning, Adaptive Computation and Machine Learning series (Goodfellow)
-Mathematics for Machine Learning (Deisenroth)
 Data Science from Scratch (Grus)
 Python Data Science Handbook: Essential Tools for Working with Data (VanderPlas)
 Deep Learning with Python (Chollet)
-Artificial Intelligence: A Modern Approach (Russell)
 Hands-On Machine Learning with Scikit-Learn, Keras and TensorFlow (Geron)
+Practical Deep Learning for Coders (Howard)
 */}
 				<M text="Thanks for educating, inspiring, or both."/>
 			</div>
