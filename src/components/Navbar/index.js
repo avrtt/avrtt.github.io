@@ -64,7 +64,7 @@ const Navbar = () => {
                     "color": "#bababa", 
                     "opacity": isAdventuresPost ? "0" : "",
                     "transition": "opacity 0.3s ease"
-                  }}>({adventuresCount})</span>
+                  }}>&#8239;{adventuresCount}</span>
                 </DropdownItem>
                 <DropdownItem
                   to="/research"
@@ -78,7 +78,7 @@ const Navbar = () => {
                     "color": "#bababa", 
                     "opacity": isResearchPost ? "0" : "",
                     "transition": "opacity 0.3s ease"
-                  }}>({researchCount})</span>
+                  }}>&#8239;{researchCount}</span>
                 </DropdownItem>
                 <DropdownItem
                   to="/thoughts"
@@ -92,7 +92,7 @@ const Navbar = () => {
                     "color": "#bababa", 
                     "opacity": isThoughtsPost ? "0" : "",
                     "transition": "opacity 0.3s ease"
-                  }}>({thoughtsCount})</span>
+                  }}>&#8239;{thoughtsCount}</span>
                 </DropdownItem>
               </DropdownMenu>
             )}
