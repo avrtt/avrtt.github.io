@@ -116,13 +116,21 @@ const Course = ({ data }) => {
 - **Modify** the source code by opening a pull request (expand topics, add details, fix something, etc.)
 - **Create** new pages, sub-chapters, practical exercises, code notebooks, homework, quizzes, etc.
 				`}/>
-				<M text="Please use [GitHub Issues](https://github.com/avrtt/avrtt.github.io/issues/new) for reports and suggestions. You can open a new PR [here](https://github.com/avrtt/avrtt.github.io/compare) and check accepted changes [here](https://github.com/avrtt/avrtt.github.io/pulls?q=is%3Aclosed). For more information, see the website's [README.md](https://github.com/avrtt/avrtt.github.io/blob/main/README.md)."/>
-				<p>Your contributions are important in building accessible education in AI (and beyond). GitHub profiles of people who contribute significantly will be listed on this page. <StickerPack sticker="dog_nerd" /></p>
+				<M text="Please use [GitHub Issues](https://github.com/avrtt/avrtt.github.io/issues/new) for reports and suggestions. You can open a new PR [here](https://github.com/avrtt/avrtt.github.io/compare) and check accepted changes [here](https://github.com/avrtt/avrtt.github.io/pulls?q=is%3Aclosed). For more information, see the repository's [README.md](https://github.com/avrtt/avrtt.github.io/blob/main/README.md)."/>
+				<p>Your contributions are important in building accessible education in AI (and beyond). GitHub profiles of people who contribute significantly will be listed on this page. <StickerPack sticker="dog_nerd"/></p>
 				<M text="Questions? [Text me](/contact)!"/>
 				<br/>
 				<M text="### Adding new pages"/>
 				<p>If you're going to add a new article (lesson), you may link to a third-party resource. The content of the article doesn't have to be a part of <Link to="/research">Research</Link>, but it must comply with copyright and coherence in the context of the entire course.</p>
 				<M text="Research posts are written in `.mdx` format and located [here](https://github.com/avrtt/avrtt.github.io/tree/main/src/pages/posts/research), while images (banners and post content) are stored [here](https://github.com/avrtt/avrtt.github.io/tree/main/src/images/posts/research). Gatsby's frontmatter must include `indexCourse`, `titleCourse` and `courseCategoryName` to properly display your page in the table of contents."/>
+				<br/>
+				<M text="### Licensing"/>
+				<M text="**TL;DR**: you're free to use, distribute and modify [only] the course-related content of this website, as long as you attribute."/>
+				<span style={{opacity: "0.5"}}><M text="---"/></span>
+				<M text="The *course material* is distributed under a separate [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) license, which is a special sublicense extending the permissions of the main website's content protection [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/) license. This sublicense allows you to copy and redistribute the *course material* in any medium or format for any purpose (even commercially) and adapt it (remix, transform and build upon the material for any purpose, even commercially) with attribution under the same license (CC BY-SA 4.0)."/>
+				<M text="The *course material* covers all the internal pages **referenced** in the table of contents above (i.e., `.mdx` files of the referenced posts located in the [website's GitHub repository](https://github.com/avrtt/avrtt.github.io), including all the `/research` category posts covered in the course), as well as the current page (`/course`). The sublicense applies to the text of the mentioned pages and to the media files on these pages (except for those already copyrighted by someone else)."/>
+				<M text="To summarize, you are not permitted to distribute the content of this website's posts either commercially or in a modified form, **but this rule does not apply to course-related content** (as long as you credit, of course)."/>
+				<M text="Please note that the source code of the website (i.e. basically all the content of the website's GitHub repository excluding `.mdx` files and the `/course` page) is distributed under a separate (software) license. For more information, refer to the repository's [README.md](https://github.com/avrtt/avrtt.github.io/blob/main/README.md)."/>
 				<br/>
 				<M text="### Plans & to-do"/>
 				<M text={`
@@ -138,7 +146,7 @@ const Course = ({ data }) => {
 			<div class="courseBody">
 				<M text="# ❤️ SUPPORT"/>
 				<M text="The course is **free forever**. I've put a huge amount of my free time into this work, wished to make something enormous and helpful for people, and never sought to profit from this endeavor, as I believe that educational materials should be open to everyone. I also believe that earning the people's love is the only right way to earn coins from such projects, so if you found it useful — please consider support beyond contributing."/>
-				<p>The easiest way to thank me and speed up development of the course is to <Link to="/donate">donate right here</Link>. <StickerPack sticker="hedgehog" /></p>
+				<p>The easiest way to thank me and speed up development of the course is to <Link to="/donate">donate right here</Link>. <StickerPack sticker="hedgehog"/></p>
 			</div>
 			<br/>
 			<div class="courseBody">
