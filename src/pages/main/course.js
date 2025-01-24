@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import M from '../../components/Markdown';
 import StickerPack from '../../components/StickerPack';
 import { courseLastUpdated } from '../../data/lastUpdated';
+import CountPosts from "../../fetchers/count_posts";
 import 'animate.css/animate.min.css';
 
 const TITLE = 'Course - avrtt.blog'
@@ -57,6 +58,8 @@ const Course = ({ data }) => {
         }
     }
 
+	 const { courseCount } = CountPosts();
+
 	return (
 		<motion.div
 			initial={{ opacity: 0 }}
@@ -87,6 +90,7 @@ const Course = ({ data }) => {
 						</div>
 					</div>
 				</div>
+				<p>There are <strong>{courseCount}</strong> articles in the course so far.</p>
 			</div>
 			<br/>
 			<div class="courseBody noselect">

@@ -12,6 +12,9 @@ const CountPosts = () => {
       thoughts: allMdx(filter: {frontmatter: {slug: {regex: "/^/thoughts//"}}}) {
         totalCount
       }
+      course: allMdx(filter: {frontmatter: {indexCourse: { ne: null }}}) {
+        totalCount
+      }
     }
   `);
 
@@ -19,6 +22,7 @@ const CountPosts = () => {
     adventuresCount: data.adventures.totalCount,
     researchCount: data.research.totalCount,
     thoughtsCount: data.thoughts.totalCount,
+    courseCount: data.course.totalCount,
   };
 };
 
