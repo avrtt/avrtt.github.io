@@ -23,6 +23,7 @@ const Navbar = () => {
   const hideWorksDropdown = () => setDropdownWorksVisible(false);
 
   const { adventuresCount, researchCount, thoughtsCount } = CountPosts();
+  const totalPostsCount = adventuresCount + researchCount + thoughtsCount;
 
   return (
     <>
@@ -38,65 +39,6 @@ const Navbar = () => {
               placeholder='none'
             />
           </Link>
-          <Dropdown onMouseEnter={showPostsDropdown} onMouseLeave={hidePostsDropdown}>
-            <NavLink
-              activeClassName="active"
-              className={dropdownPostsVisible ? "active" : ""}
-              style={{
-                "opacity": dropdownPostsVisible ? "0.5" : "1",
-                "background-color": "transparent",
-                "padding-right": "0px",
-              }}
-            >
-              Posts
-            </NavLink>
-            {dropdownPostsVisible && (
-              <DropdownMenu>
-                <DropdownItem
-                  to="/adventures"
-                  activeClassName="active"
-                  className={isAdventuresPost ? "navbarPostSection" : ""}
-                  style={{
-                    "background-color": isAdventuresPost ? "transparent" : "",
-                  }}
-                >
-                  Adventures <span style={{
-                    "color": "#bababa", 
-                    "opacity": isAdventuresPost ? "0" : "",
-                    "transition": "opacity 0.3s ease"
-                  }}>&#8239;{adventuresCount}</span>
-                </DropdownItem>
-                <DropdownItem
-                  to="/research"
-                  activeClassName="active"
-                  className={isResearchPost ? "navbarPostSection" : ""}
-                  style={{
-                    "background-color": isResearchPost ? "transparent" : "",
-                  }}
-                >
-                  Research <span style={{
-                    "color": "#bababa", 
-                    "opacity": isResearchPost ? "0" : "",
-                    "transition": "opacity 0.3s ease"
-                  }}>&#8239;{researchCount}</span>
-                </DropdownItem>
-                <DropdownItem
-                  to="/thoughts"
-                  activeClassName="active"
-                  className={isThoughtsPost ? "navbarPostSection" : ""}
-                  style={{
-                    "background-color": isThoughtsPost ? "transparent" : "",
-                  }}
-                >
-                  Thoughts <span style={{
-                    "color": "#bababa", 
-                    "opacity": isThoughtsPost ? "0" : "",
-                    "transition": "opacity 0.3s ease"
-                  }}>&#8239;{thoughtsCount}</span>
-                </DropdownItem>
-              </DropdownMenu>
-            )}
-          </Dropdown>
           <Dropdown onMouseEnter={showWorksDropdown} onMouseLeave={hideWorksDropdown}>
             <NavLink
               activeClassName="active"
@@ -104,7 +46,7 @@ const Navbar = () => {
               style={{
                 "opacity": dropdownWorksVisible ? "0.5" : "1",
                 "background-color": "transparent",
-                "padding-right": "20px",
+                "padding-right": "1px",
               }}
             >
               Works
@@ -128,6 +70,75 @@ const Navbar = () => {
                   activeClassName="active"
                 >
                   Music
+                </DropdownItem>
+              </DropdownMenu>
+            )}
+          </Dropdown>
+          <Dropdown onMouseEnter={showPostsDropdown} onMouseLeave={hidePostsDropdown}>
+            <NavLink
+              activeClassName="active"
+              className={dropdownPostsVisible ? "active" : ""}
+              style={{
+                "opacity": dropdownPostsVisible ? "0.5" : "1",
+                "background-color": "transparent",
+                "padding-right": "34px",
+              }}
+            >
+              Posts
+              &#8198;
+              <span 
+                style={{
+                  "color": "#bababa",
+                  "pointer-events": "none",
+                  "opacity": dropdownPostsVisible ? "0" : "0.85",
+                  "transition": "opacity 0.3s ease",
+                }}>
+                  {totalPostsCount}
+              </span>
+            </NavLink>
+            {dropdownPostsVisible && (
+              <DropdownMenu>
+                <DropdownItem
+                  to="/adventures"
+                  activeClassName="active"
+                  className={isAdventuresPost ? "navbarPostSection" : ""}
+                  style={{
+                    "background-color": isAdventuresPost ? "transparent" : "",
+                  }}
+                >
+                  Adventures <span style={{
+                    "color": "#bababa", 
+                    "opacity": isAdventuresPost ? "0" : "",
+                    "transition": "opacity 0.3s ease"
+                  }}>&#8198;{adventuresCount}</span>
+                </DropdownItem>
+                <DropdownItem
+                  to="/research"
+                  activeClassName="active"
+                  className={isResearchPost ? "navbarPostSection" : ""}
+                  style={{
+                    "background-color": isResearchPost ? "transparent" : "",
+                  }}
+                >
+                  Research <span style={{
+                    "color": "#bababa", 
+                    "opacity": isResearchPost ? "0" : "",
+                    "transition": "opacity 0.3s ease"
+                  }}>&#8198;{researchCount}</span>
+                </DropdownItem>
+                <DropdownItem
+                  to="/thoughts"
+                  activeClassName="active"
+                  className={isThoughtsPost ? "navbarPostSection" : ""}
+                  style={{
+                    "background-color": isThoughtsPost ? "transparent" : "",
+                  }}
+                >
+                  Thoughts <span style={{
+                    "color": "#bababa", 
+                    "opacity": isThoughtsPost ? "0" : "",
+                    "transition": "opacity 0.3s ease"
+                  }}>&#8198;{thoughtsCount}</span>
                 </DropdownItem>
               </DropdownMenu>
             )}
