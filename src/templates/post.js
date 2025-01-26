@@ -3,6 +3,7 @@ import RemoveMarkdown from 'remove-markdown';
 import { motion } from 'framer-motion';
 import PostBanner from '../components/PostBanner';
 import PostBottom from'../components/PostBottom'; 
+import NotFinishedNotice from "../components/NotFinishedNotice"
 import { wordsPerMinuteAdventures, wordsPerMinuteResearch, wordsPerMinuteThoughts } from '../data/commonVariables';
 import { graphql } from 'gatsby';
 
@@ -113,6 +114,7 @@ export function PostTemplate({ data: { mdx, allMdx }, children }) {
       </div>
       <br/>
       <div class="postBody">
+        {frontmatter.isDraft ? <NotFinishedNotice/> : ""}
         {children}
       </div>
       
@@ -134,6 +136,7 @@ export const query = graphql`
         date
         updated
         extraReadTimeMin
+        isDraft
         banner {
           childImageSharp {
             gatsbyImageData(
