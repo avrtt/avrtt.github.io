@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import RemoveMarkdown from 'remove-markdown';
 import { graphql } from 'gatsby';
 import { Helmet } from 'react-helmet';
 import Box from '@mui/material/Box';
@@ -8,12 +9,43 @@ import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import { Link } from "gatsby";
 import { motion } from 'framer-motion';
 import { AnimationOnScroll } from 'react-animation-on-scroll';
+import { wordsPerMinuteThoughts} from '../../data/commonVariables';
 import 'animate.css/animate.min.css';
 
 const TITLE = 'Thoughts - avrtt.blog'
 
+function formatReadTime(minutes) {
+	if (minutes <= 10) return '~10 min';
+	if (minutes <= 20) return '~20 min';
+	if (minutes <= 30) return '~30 min';
+	if (minutes <= 40) return '~40 min';
+	if (minutes <= 50) return '~50 min';
+	if (minutes <= 60) return '~1 h';
+
+	const hours = Math.floor(minutes / 60);
+	const remainder = minutes % 60;
+
+	if (remainder <= 30) {
+		return `~${hours}${remainder > 0 ? '.5' : ''} h`;
+	}
+	return `~${hours + 1} h`;
+}
+
+function calculateReadTime(body, extraTime = 0) {
+	const plainText = RemoveMarkdown(body)
+		.replace(/import .*? from .*?;/g, '')
+		.replace(/<.*?>/g, '')
+		.replace(/\{\/\*[\s\S]*?\*\/\}/g, '')
+		.trim();
+	const wordCount = plainText.split(/\s+/).length;
+	const baseReadTime = Math.ceil(wordCount / wordsPerMinute);
+	return formatReadTime(baseReadTime + extraTime);
+}
+
+const wordsPerMinute = wordsPerMinuteThoughts;
+
 const Posts = ({ data }) => {
-	const posts = data.allMdx.nodes;
+	const posts = data.allMdx.nodes.map(post => ({...post.frontmatter, readTime: calculateReadTime(post.body)}));
 	const [isTileView, setIsTileView] = useState(true);
   
 	useEffect(() => {
@@ -58,7 +90,7 @@ const Posts = ({ data }) => {
 					{isTileView ? (
 						<ImageList cols={2} gap={5}>
 							{posts.map(post => {
-								const image = getImage(post.frontmatter.banner);
+								const image = getImage(post.banner);
 								return (
 									<ImageListItem key={post.id}>
 										<div className="hover">
@@ -66,18 +98,18 @@ const Posts = ({ data }) => {
 												<GatsbyImage
 													className="prev-home"
 													image={image}
-													alt={post.frontmatter.title}
+													alt={post.title}
 												/>
 											</AnimationOnScroll>
-											<Link to={post.frontmatter.slug}>
+											<Link to={post.slug}>
 												<div className="overlay-back">
 													<div className="titleblock">
-														<p className="title">{post.frontmatter.title}</p>
+														<p className="title">{post.title}</p>
 													</div>
 												</div>
 												<div className="overlay-base">
-													<p className="title">{post.frontmatter.title}</p>
-													<div className="description">{post.frontmatter.desc}</div>
+													<p className="title">{post.title}</p>
+													<div className="description">{post.desc}</div>
 												</div>
 											</Link>
 										</div>
@@ -90,13 +122,15 @@ const Posts = ({ data }) => {
 							{posts.map(post => (
 								<li key={post.id} style={{ marginBottom: '4px' }}>
 									<div>
-										<span style={{opacity: "0.5"}}>{post.frontmatter.date}</span> 
+										<span style={{opacity: "0.5"}}>{post.date}</span> 
 										&nbsp;&nbsp;
-										<Link to={post.frontmatter.slug} className="compactViewLink">
-											{post.frontmatter.titleDetailed || post.frontmatter.title}
+										<Link to={post.slug} className="compactViewLink">
+											{post.titleDetailed || post.title}
 										</Link>
-										&nbsp;&nbsp;
-										<span style={{opacity: "0.5"}}>#{post.frontmatter.index}</span>
+										&nbsp;
+										<span style={{opacity: "0.5"}}>{post.readTime}</span>
+										&nbsp;
+										<strong><span style={{opacity: "0.5"}}>#{post.index}</span></strong>
 									</div>
 								</li>
 							))}
@@ -122,6 +156,7 @@ export const query = graphql`
 					titleDetailed
 					desc
 					date
+					extraReadTimeMin
 					slug
 					banner {
           				childImageSharp {
@@ -133,6 +168,7 @@ export const query = graphql`
           				}
         			}
       			}
+				body
     		}
   		}
 	}
