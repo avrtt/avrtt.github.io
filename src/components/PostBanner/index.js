@@ -45,6 +45,23 @@ const prevUpdatedStyle = {
 	"border-radius": "0"
 }
 
+const prevReadTimeStyle = {
+	"position": "absolute",
+	"top": "60%",
+	"left": "0",
+	"right": "0",
+	"margin-left": "auto",
+	"margin-right": "auto",
+	"width": "6vw",
+	"padding": "0",
+	"color": "#ffffff",
+	"font-size": "0.9vw",
+	"font-family": "'Quicksand', sans-serif",
+	"font-weight": "900",
+	"opacity": "0.6",
+	"border-radius": "0"
+}
+
 const prevNumberStyle = {
 	"position": "absolute",
 	"top": "10%",
@@ -78,7 +95,7 @@ const svgStyle = {
 	"transform": "translate(0.3vw, -0.08vw)",
 }
 
-const PostBanner = ({ postNumber, date, updated, title, desc, banner, section, postKey }) => {
+const PostBanner = ({ postNumber, date, updated, readTime, title, desc, banner, section, postKey }) => {
 
 	const prevUpdatedTextStyle = {
 		"position": "absolute",
@@ -140,6 +157,7 @@ const PostBanner = ({ postNumber, date, updated, title, desc, banner, section, p
 				<GatsbyImage style={prevImgStyle} image={image} alt="banner" />
 			    <b><div style={prevTextStyle}>{title}</div></b>
 			    <div style={prevDescStyle}>{desc}</div>
+				<div style={prevReadTimeStyle}>{readTime}</div>
 			    <div style={prevDateStyle}>{date}</div>
 				<span style={prevUpdatedTextStyle}>upd: </span><span style={prevUpdatedStyle}>{updated}</span>
 			    <div style={prevNumberStyle}>#{postNumber}</div>
