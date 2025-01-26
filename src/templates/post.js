@@ -3,6 +3,7 @@ import RemoveMarkdown from 'remove-markdown';
 import { motion } from 'framer-motion';
 import PostBanner from '../components/PostBanner';
 import PostBottom from'../components/PostBottom'; 
+import { wordsPerMinuteAdventures, wordsPerMinuteResearch, wordsPerMinuteThoughts } from '../data/commonVariables';
 import { graphql } from 'gatsby';
 
 function formatReadTime(minutes) {
@@ -66,8 +67,15 @@ export function PostTemplate({ data: { mdx, allMdx }, children }) {
   const nextPost = sortedPosts[currentIndex + 1];
   const lastPost = sortedPosts[currentIndex - 1];
   const keyCurrent = /[^/]*$/.exec(frontmatter.slug)[0];
-
-  const wordsPerMinute = 180; // average reading speed
+  
+  var wordsPerMinute
+  if (section == "adventures") {
+    wordsPerMinute = wordsPerMinuteAdventures
+  } else if (section == "research") {
+    wordsPerMinute = wordsPerMinuteResearch
+  } else if (section == "thoughts") {
+    wordsPerMinute = wordsPerMinuteThoughts
+  }
 
   // calculating read time
   const plainTextBody = RemoveMarkdown(body)

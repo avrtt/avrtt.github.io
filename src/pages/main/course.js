@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import M from '../../components/Markdown';
 import StickerPack from '../../components/StickerPack';
 import { courseLastUpdated } from '../../data/lastUpdated';
+import { wordsPerMinuteResearch } from '../../data/commonVariables';
 import 'animate.css/animate.min.css';
 
 const TITLE = 'Course - avrtt.blog'
@@ -27,8 +28,6 @@ function formatReadTime(minutes) {
 	return `~${hours + 1} h`;
 }
 
-const wordsPerMinute = 180;
-
 function calculateReadTime(body, extraTime = 0) {
 	const plainText = RemoveMarkdown(body)
 		.replace(/import .*? from .*?;/g, '')
@@ -39,6 +38,8 @@ function calculateReadTime(body, extraTime = 0) {
 	const baseReadTime = Math.ceil(wordCount / wordsPerMinute);
 	return formatReadTime(baseReadTime + extraTime);
 }
+
+const wordsPerMinute = wordsPerMinuteResearch;
 
 const Course = ({ data }) => {
 
