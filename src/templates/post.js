@@ -1,8 +1,26 @@
 import React from 'react';
+import RemoveMarkdown from 'remove-markdown';
 import { motion } from 'framer-motion';
 import PostBanner from '../components/PostBanner';
 import PostBottom from'../components/PostBottom'; 
 import { graphql } from 'gatsby';
+
+function formatReadTime(minutes) {
+  if (minutes <= 10) return '~10 min';
+  if (minutes <= 20) return '~20 min';
+  if (minutes <= 30) return '~30 min';
+  if (minutes <= 40) return '~40 min';
+  if (minutes <= 50) return '~50 min';
+  if (minutes <= 60) return '~1 h';
+
+  const hours = Math.floor(minutes / 60);
+  const remainder = minutes % 60;
+
+  if (remainder <= 30) {
+    return `~${hours}${remainder > 0 ? '.5' : ''} h`;
+  }
+  return `~${hours + 1} h`;
+}
 
 const TableOfContents = ({ toc }) => {
   if (!toc || !toc.items) return null;
@@ -38,7 +56,7 @@ const TableOfContents = ({ toc }) => {
 
 export function PostTemplate({ data: { mdx, allMdx }, children }) {
 
-  const { frontmatter, tableOfContents } = mdx;
+  const { frontmatter, body, tableOfContents } = mdx;
   const index = frontmatter.index;
   const slug = frontmatter.slug;
   const section = slug.split('/')[1];
@@ -48,6 +66,20 @@ export function PostTemplate({ data: { mdx, allMdx }, children }) {
   const nextPost = sortedPosts[currentIndex + 1];
   const lastPost = sortedPosts[currentIndex - 1];
   const keyCurrent = /[^/]*$/.exec(frontmatter.slug)[0];
+
+  const wordsPerMinute = 180; // average reading speed
+
+  // calculating read time
+  const plainTextBody = RemoveMarkdown(body)
+    .replace(/import .*? from .*?;/g, '') // don't count imports
+    .replace(/<.*?>/g, '') // don't count html tags
+    .replace(/\{\/\*[\s\S]*?\*\/\}/g, '') // don't count multi-line comments
+    .trim();
+  const wordCount = plainTextBody.split(/\s+/).length;
+  const baseReadTimeMinutes = Math.ceil(wordCount / wordsPerMinute);
+  const extraTime = frontmatter.extraReadTimeMin || 0; 
+  const totalReadTime = baseReadTimeMinutes + extraTime;
+  const readTime = formatReadTime(totalReadTime);
 
   return (
     <motion.div 
@@ -60,6 +92,7 @@ export function PostTemplate({ data: { mdx, allMdx }, children }) {
         postNumber={frontmatter.index} 
         date={frontmatter.date}
         updated={frontmatter.updated}
+        readTime={readTime}
         title={frontmatter.title}
         desc={frontmatter.desc}
         banner={frontmatter.banner}
@@ -92,6 +125,7 @@ export const query = graphql`
         desc
         date
         updated
+        extraReadTimeMin
         banner {
           childImageSharp {
             gatsbyImageData(
@@ -103,6 +137,7 @@ export const query = graphql`
         }
         slug
       }
+      body
       tableOfContents(maxDepth: 3)
     }
     allMdx(filter: {frontmatter: {slug: {regex: $section}}}) {
