@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import RemoveMarkdown from 'remove-markdown';
 import { Helmet } from 'react-helmet';
 import { Link, graphql } from "gatsby";
 import { motion } from 'framer-motion';
@@ -9,13 +10,45 @@ import 'animate.css/animate.min.css';
 
 const TITLE = 'Course - avrtt.blog'
 
+function formatReadTime(minutes) {
+	if (minutes <= 10) return '~10 min';
+	if (minutes <= 20) return '~20 min';
+	if (minutes <= 30) return '~30 min';
+	if (minutes <= 40) return '~40 min';
+	if (minutes <= 50) return '~50 min';
+	if (minutes <= 60) return '~1 h';
+
+	const hours = Math.floor(minutes / 60);
+	const remainder = minutes % 60;
+
+	if (remainder <= 30) {
+		return `~${hours}${remainder > 0 ? '.5' : ''} h`;
+	}
+	return `~${hours + 1} h`;
+}
+
+const wordsPerMinute = 180;
+
+function calculateReadTime(body, extraTime = 0) {
+	const plainText = RemoveMarkdown(body)
+		.replace(/import .*? from .*?;/g, '')
+		.replace(/<.*?>/g, '')
+		.replace(/\{\/\*[\s\S]*?\*\/\}/g, '')
+		.trim();
+	const wordCount = plainText.split(/\s+/).length;
+	const baseReadTime = Math.ceil(wordCount / wordsPerMinute);
+	return formatReadTime(baseReadTime + extraTime);
+}
+
 const Course = ({ data }) => {
+
 	const posts = data.allMdx.nodes
     	.filter(post => post.frontmatter.indexCourse !== null && post.frontmatter.indexCourse !== undefined)
-    	.sort((a, b) => a.frontmatter.indexCourse - b.frontmatter.indexCourse)
+		.map(post => ({...post.frontmatter, readTime: calculateReadTime(post.body, post.frontmatter.extraReadTimeMin || 0)}))
+    	.sort((a, b) => a.indexCourse - b.indexCourse);
 
 	const groupedByCategory = posts.reduce((acc, post) => {
-		const category = post.frontmatter.courseCategoryName || "Uncategorized"
+		const category = post.courseCategoryName || "Uncategorized"
 		if (!acc[category]) {
 			acc[category] = []
 		}
@@ -98,8 +131,9 @@ const Course = ({ data }) => {
 						<ul>
 							{posts.map(post => (
 								<div>
-									<span>{post.frontmatter.indexCourse}. </span>
-									<Link to={post.frontmatter.slug}>{post.frontmatter.titleCourse}</Link>
+									<span>{post.indexCourse}. </span>
+									<Link to={post.slug}>{post.titleCourse}</Link>
+									<span style={{ opacity: 0.4 }}>&nbsp;{post.readTime}</span>
 								</div>
 							))}
 						</ul>
@@ -196,8 +230,10 @@ export const query = graphql`
 					indexCourse
 					titleCourse
 					courseCategoryName
+					extraReadTimeMin
 					slug
         		}
+				body
       		}
     	}
 	}
