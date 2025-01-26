@@ -124,12 +124,14 @@ const Posts = ({ data }) => {
 									<div>
 										<span style={{opacity: "0.5"}}>{post.date}</span> 
 										&nbsp;&nbsp;
-										<Link to={post.slug} className="compactViewLink">
-											{post.titleDetailed || post.title}
-										</Link>
-										&nbsp;
-										<span style={{opacity: "0.5"}}>{post.readTime}</span>
-										&nbsp;
+										<span style={{ background: "#ffffff", padding: "6px 11px 6px 11px", borderRadius: "10px" }}>
+											<Link to={post.slug} className="compactViewLink">
+												{post.titleDetailed || post.title}
+											</Link>
+											&nbsp;
+											<span style={{opacity: "0.5"}}>{post.readTime}</span>
+										</span>
+										&#8239;&#8239;
 										<strong><span style={{opacity: "0.5"}}>#{post.index}</span></strong>
 									</div>
 								</li>
