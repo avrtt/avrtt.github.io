@@ -191,23 +191,52 @@ const Goals = () => {
                     <M text="Keeping a list of goals constantly reminds me of my passions and motivates me to push forward, and I hope it can give you some inspiration if you're feeling stuck in life."/>
                     <br/>
                     <div class="goalsButtonsWrapper">
-                        <button className="goalsButton noselect" onClick={toggleOpacity}>{isOpaque ? 'Hide tags' : 'Show tags'}</button>
-                        <button className="goalsButton noselect" style={hideUncheckedButtonStyle} onClick={removeUnchecked}>
-                            <span>
-                                {hideUnchecked ? 'Show unachieved goals' : 'Hide unachieved goals'}
-                            </span>
-                            <span class="goalsButtonCount">
-                                {hideUnchecked ? ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'u' ? ++acc : acc, 0) + ')' : ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'u' ? ++acc : acc, 0) + ')'}
-                            </span>
-                        </button>
-                        <button className="goalsButton noselect" style={hideCheckedButtonStyle} onClick={removeChecked}>
-                            <span>
-                                {hideChecked ? 'Show achieved goals' : 'Hide achieved goals'}
-                            </span>
-                            <span class="goalsButtonCount">
-                                {hideChecked ? ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'c' ? ++acc : acc, 0) + ')' : ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'c' ? ++acc : acc, 0) + ')'}
-                            </span>
-                        </button>
+                        <motion.button className="goalsButton noselect" onClick={toggleOpacity} whileTap={{ scale: 0.93 }}>
+                            <motion.div
+                                className="buttonTextWrapper"
+                                key={isOpaque}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ duration: 0.3, ease: "easeInOut" }}
+                            >
+                                {isOpaque ? 'Hide tags' : 'Show tags'}
+                            </motion.div>
+                        </motion.button>
+                        <motion.button className="goalsButton noselect" style={hideUncheckedButtonStyle} onClick={removeUnchecked} whileTap={{ scale: 0.93 }}>
+                            <motion.div
+                                className="buttonTextWrapper"
+                                key={hideUnchecked}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ duration: 0.3, ease: "easeInOut" }}
+                            >
+                                <span>
+                                    {hideUnchecked ? 'Show unachieved goals' : 'Hide unachieved goals'}
+                                </span>
+                                <span class="goalsButtonCount">
+                                    {hideUnchecked ? ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'u' ? ++acc : acc, 0) + ')' : ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'u' ? ++acc : acc, 0) + ')'}
+                                </span>
+                            </motion.div>
+                        </motion.button>
+                        <motion.button className="goalsButton noselect" style={hideCheckedButtonStyle} onClick={removeChecked} whileTap={{ scale: 0.93 }}>
+                            <motion.div
+                                className="buttonTextWrapper"
+                                key={hideChecked}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ duration: 0.3, ease: "easeInOut" }}
+                            >
+                                <span>
+                                    {hideChecked ? 'Show achieved goals' : 'Hide achieved goals'}
+                                </span>
+                                <span class="goalsButtonCount">
+                                    {hideChecked ? ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'c' ? ++acc : acc, 0) + ')' : ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'c' ? ++acc : acc, 0) + ')'}
+                                </span>
+                            </motion.div>
+                        </motion.button>
                     </div>
                 </div>
                 <p style={placeholderTop}> </p>

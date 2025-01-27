@@ -74,9 +74,18 @@ const Posts = ({ data }) => {
 			</Helmet>
 
 			<div className="viewButtonWrapper">
-				<button onClick={toggleView} className="viewButton noselect">
-					{isTileView ? 'Compact view' : 'Gallery view'}
-				</button>
+				<motion.button onClick={toggleView} className="viewButton noselect" whileTap={{ scale: 0.95 }}>
+					<motion.div
+						className="buttonTextWrapper"
+						key={isTileView}
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						transition={{ duration: 0.3, ease: "easeInOut" }}
+					>
+						{isTileView ? 'Switch to compact view' : 'Switch to gallery view'}
+					</motion.div>
+				</motion.button>
 			</div>
 
 			<Box>

@@ -79,13 +79,6 @@ export function PostTemplate({ data: { mdx, allMdx }, children }) {
   const [isWideLayout, setIsWideLayout] = useState(frontmatter.flagWideLayoutByDefault);
 
   const toggleLayout = () => {
-    const button = document.querySelector(".postButton");
-    button.classList.add("flash");
-
-    setTimeout(() => {
-      button.classList.remove("flash");
-    }, 120)
-
     setIsWideLayout(!isWideLayout);
   };
 
@@ -143,12 +136,16 @@ export function PostTemplate({ data: { mdx, allMdx }, children }) {
           onClick={toggleLayout}
           whileTap={{ scale: 0.93 }}
         >
-          <div
+          <motion.div
             className="buttonTextWrapper"
             key={isWideLayout}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
           >
-            {isWideLayout ? "Wide layout" : "Default layout"}
-          </div>
+            {isWideLayout ? "Switch to default layout" : "Switch to wide layout"}
+          </motion.div>
         </motion.button>
       </div>
       <br/>
