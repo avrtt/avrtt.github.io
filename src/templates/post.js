@@ -120,7 +120,10 @@ export function PostTemplate({ data: { mdx, allMdx }, children }) {
         <TableOfContents toc={tableOfContents} />
       </div>
       <br/>
-      <div class="postBody">
+      <div class="postBody" style={{ 
+        margin: frontmatter.flagWideLayoutByDefault ? "0 -14%" : "",
+        maxWidth: frontmatter.flagWideLayoutByDefault ? "200%" : "",
+      }}>
         {frontmatter.isDraft ? <NotFinishedNotice/> : ""}
         {frontmatter.flagMindfuckery ? <MindfuckeryNotice/> : ""}
         {frontmatter.flagRewrite ? <RewriteNotice/> : ""}
@@ -158,6 +161,7 @@ export const query = graphql`
         flagPolitical
         flagCognitohazard
         flagHidden
+        flagWideLayoutByDefault
         banner {
           childImageSharp {
             gatsbyImageData(
