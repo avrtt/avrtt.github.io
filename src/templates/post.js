@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import RemoveMarkdown from 'remove-markdown';
 import { motion } from 'framer-motion';
 import PostBanner from '../components/PostBanner';
@@ -76,6 +76,19 @@ export function PostTemplate({ data: { mdx, allMdx }, children }) {
   const lastPost = sortedPosts[currentIndex - 1];
   const keyCurrent = /[^/]*$/.exec(frontmatter.slug)[0];
   
+  const [isWideLayout, setIsWideLayout] = useState(frontmatter.flagWideLayoutByDefault);
+
+  const toggleLayout = () => {
+    const button = document.querySelector(".postButton");
+    button.classList.add("flash");
+
+    setTimeout(() => {
+      button.classList.remove("flash");
+    }, 120)
+
+    setIsWideLayout(!isWideLayout);
+  };
+
   var wordsPerMinute
   if (section == "adventures") {
     wordsPerMinute = wordsPerMinuteAdventures
@@ -120,9 +133,31 @@ export function PostTemplate({ data: { mdx, allMdx }, children }) {
         <TableOfContents toc={tableOfContents} />
       </div>
       <br/>
-      <div class="postBody" style={{ 
-        margin: frontmatter.flagWideLayoutByDefault ? "0 -14%" : "",
-        maxWidth: frontmatter.flagWideLayoutByDefault ? "200%" : "",
+      <div  
+        style={{ 
+          margin: "0 10% -2vh 30%", 
+          textAlign: "right"
+        }}>
+        <motion.button 
+          className="postButton noselect" 
+          onClick={toggleLayout}
+          whileTap={{ scale: 0.93 }}
+        >
+          <div
+            className="buttonTextWrapper"
+            key={isWideLayout}
+          >
+            {isWideLayout ? "Wide layout" : "Default layout"}
+          </div>
+        </motion.button>
+      </div>
+      <br/>
+      <div 
+        class="postBody" 
+        style={{ 
+          margin: isWideLayout ? "0 -14%" : "",
+          maxWidth: isWideLayout ? "200%" : "",
+          transition: "margin 0.5s ease, max-width 0.5s ease",
       }}>
         {frontmatter.isDraft ? <NotFinishedNotice/> : ""}
         {frontmatter.flagMindfuckery ? <MindfuckeryNotice/> : ""}
