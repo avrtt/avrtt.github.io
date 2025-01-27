@@ -52,7 +52,7 @@ const prevReadTimeStyle = {
 	"right": "0",
 	"margin-left": "auto",
 	"margin-right": "auto",
-	"width": "6vw",
+	"width": "15vw",
 	"padding": "0",
 	"color": "#ffffff",
 	"font-size": "0.9vw",
@@ -95,7 +95,7 @@ const svgStyle = {
 	"transform": "translate(0.3vw, -0.08vw)",
 }
 
-const PostBanner = ({ postNumber, date, updated, readTime, title, desc, banner, section, postKey }) => {
+const PostBanner = ({ postNumber, date, updated, readTime, difficulty, title, desc, banner, section, postKey }) => {
 
 	const prevUpdatedTextStyle = {
 		"position": "absolute",
@@ -157,7 +157,7 @@ const PostBanner = ({ postNumber, date, updated, readTime, title, desc, banner, 
 				<GatsbyImage style={prevImgStyle} image={image} alt="banner" />
 			    <b><div style={prevTextStyle}>{title}</div></b>
 			    <div style={prevDescStyle}>{desc}</div>
-				<div style={prevReadTimeStyle}>{readTime}</div>
+				<div style={prevReadTimeStyle}>{readTime}, {difficulty}</div>
 			    <div style={prevDateStyle}>{date}</div>
 				<span style={prevUpdatedTextStyle}>upd: </span><span style={prevUpdatedStyle}>{updated}</span>
 			    <div style={prevNumberStyle}>#{postNumber}</div>

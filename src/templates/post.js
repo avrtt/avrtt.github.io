@@ -115,6 +115,7 @@ export function PostTemplate({ data: { mdx, allMdx }, children }) {
         date={frontmatter.date}
         updated={frontmatter.updated}
         readTime={readTime}
+        difficulty={frontmatter.difficultyLevel}
         title={frontmatter.title}
         desc={frontmatter.desc}
         banner={frontmatter.banner}
@@ -185,6 +186,7 @@ export const query = graphql`
         date
         updated
         extraReadTimeMin
+        difficultyLevel
         isDraft
         flagMindfuckery
         flagRewrite
