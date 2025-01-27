@@ -1272,15 +1272,14 @@ svg {
   outline: none;
   font-size: 18px;
   border-radius: 1vh;
-  transition-duration: 0.1s;
   font-weight: bold;
   color: #464646;
   margin-right: 12px;
+  transition: width 0.3s ease, background-color 0.1s ease;
 }
 
 .goalsButton:hover {
   background-color: #e7e7e7;
-  transition-duration: 0.1s;
 }
 
 .goalsButtonCount {
@@ -1308,21 +1307,74 @@ svg {
   outline: none;
   font-size: 2vh;
   border-radius: 1vh;
-  transition-duration: 0.1s;
   font-weight: 1000;
   color: #8e8e8e;
   margin-right: 12px;
+  transition: width 0.3s ease, background-color 0.1s ease;
 }
 
 .viewButton:hover {
   background-color: #eaeaea;
-  transition-duration: 0.1s;
 }
 
 .viewButtonWrapper {
   text-align: right;
   margin-right: 0.8vh;
   margin-top: -2vh;
+}
+
+
+
+/* CUSTOM POST LAYOUTS */
+
+.postButton {
+  background-color: #c9c9c9;
+  align-items: center; 
+  justify-content: center;
+  cursor: pointer;
+  padding: 12px;
+  width: fit-content;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  border-radius: 1vh;
+  font-weight: bold;
+  color: #464646;
+  margin-right: 12px;
+  transition: width 0.3s ease, background-color 0.1s ease;
+}
+
+.postButton:hover {
+  background-color: #e7e7e7;
+}
+
+
+
+/* BUTTONS (COMMON) */
+
+.buttonTextWrapper {
+  overflow: hidden;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.buttonTextWrapper-enter {
+  opacity: 0;
+  transform: translateY(-10%);
+}
+
+.buttonTextWrapper-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.buttonTextWrapper-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.buttonTextWrapper-exit-active {
+  opacity: 0;
+  transform: translateY(10%);
 }
 
 
