@@ -3,9 +3,16 @@ import RemoveMarkdown from 'remove-markdown';
 import { motion } from 'framer-motion';
 import PostBanner from '../components/PostBanner';
 import PostBottom from'../components/PostBottom'; 
-import NotFinishedNotice from "../components/NotFinishedNotice"
 import { wordsPerMinuteAdventures, wordsPerMinuteResearch, wordsPerMinuteThoughts } from '../data/commonVariables';
 import { graphql } from 'gatsby';
+import NotFinishedNotice from "../components/NotFinishedNotice"
+import MindfuckeryNotice from "../components/MindfuckeryNotice"
+import RewriteNotice from "../components/RewriteNotice"
+import OffensiveNotice from "../components/OffensiveNotice"
+import ProfanityNotice from "../components/ProfanityNotice"
+import PoliticsNotice from "../components/PoliticsNotice"
+import CognitohazardNotice from "../components/CognitohazardNotice"
+import HiddenNotice from "../components/HiddenNotice"
 
 function formatReadTime(minutes) {
   if (minutes <= 10) return '~10 min';
@@ -115,9 +122,16 @@ export function PostTemplate({ data: { mdx, allMdx }, children }) {
       <br/>
       <div class="postBody">
         {frontmatter.isDraft ? <NotFinishedNotice/> : ""}
+        {frontmatter.flagMindfuckery ? <MindfuckeryNotice/> : ""}
+        {frontmatter.flagRewrite ? <RewriteNotice/> : ""}
+        {frontmatter.flagOffensive ? <OffensiveNotice/> : ""}
+        {frontmatter.flagProfane ? <ProfanityNotice/> : ""}
+        {frontmatter.flagPolitical ? <PoliticsNotice/> : ""}
+        {frontmatter.flagCognitohazard ? <CognitohazardNotice/> : ""}
+        {frontmatter.flagHidden ? <HiddenNotice/> : ""}
         {children}
       </div>
-      
+
       <PostBottom nextPost={nextPost} lastPost={lastPost} keyCurrent={keyCurrent} section={section} />
 
     </motion.div>
@@ -137,6 +151,13 @@ export const query = graphql`
         updated
         extraReadTimeMin
         isDraft
+        flagMindfuckery
+        flagRewrite
+        flagOffensive
+        flagProfane
+        flagPolitical
+        flagCognitohazard
+        flagHidden
         banner {
           childImageSharp {
             gatsbyImageData(
