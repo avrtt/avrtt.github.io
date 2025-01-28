@@ -92,7 +92,7 @@ const svgStyle = {
 	"transform": "translate(0.3vw, -0.08vw)",
 }
 
-const PostBanner = ({ postNumber, date, updated, readTime, difficulty, title, desc, banner, section, postKey }) => {
+const PostBanner = ({ postNumber, date, updated, readTime, difficulty, title, desc, banner, section, postKey, isMindfuckery }) => {
 
 	const prevUpdatedTextStyle = {
 		"position": "absolute",
@@ -151,7 +151,11 @@ const PostBanner = ({ postNumber, date, updated, readTime, difficulty, title, de
 	}
 
 	var difficultyEmoji, difficultyText
-	if (section === "research") {
+
+	if (isMindfuckery) {
+		difficultyEmoji = "💀"
+		difficultyText = "Mindfuckery"
+	} else if (section === "research") {
 		if (difficulty === 1) {
 			difficultyEmoji = "🗿"
 			difficultyText = "Beginner"
@@ -177,10 +181,10 @@ const PostBanner = ({ postNumber, date, updated, readTime, difficulty, title, de
 
 	const difficultyStyle = {
 		"display": difficulty ? "" : "none",
-		"background-color": (difficulty === 1) ? ("rgb(255, 255, 255)") : ((difficulty === 2) ? ("rgb(255, 206, 71)") : ((difficulty === 3) ? ("rgb(238, 16, 16)") : ("rgba(0, 0, 0, 0)"))),
+		"background-color": (isMindfuckery) ? ("rgb(30, 30, 30)") : ((difficulty === 1) ? ("rgb(255, 255, 255)") : ((difficulty === 2) ? ("rgb(255, 206, 71)") : ((difficulty === 3) ? ("rgb(238, 16, 16)") : ("rgba(0, 0, 0, 0)")))),
 		"padding": "6px 11px 6px 11px", 
 		"borderRadius": "10px",
-		"color": (difficulty === 1) ? ("#7C7C7C") : ((difficulty === 2) ? ("#6e6b6b") : ((difficulty === 3) ? ("#383838") : ("rgb(255, 255, 255)"))),
+		"color": (isMindfuckery) ? ("rgb(213, 213, 213)") : ((difficulty === 1) ? ("#7C7C7C") : ((difficulty === 2) ? ("#6e6b6b") : ((difficulty === 3) ? ("#383838") : ("rgb(255, 255, 255)")))),
 	}
 
   const viewsLink = "https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Favrtt.github.io%2F%23%2F" + section + "%2F"+ postKey + "&label=&labelColor=%23f2f2f2&countColor=%23f2f2f2&style=flat-square&labelStyle=none"

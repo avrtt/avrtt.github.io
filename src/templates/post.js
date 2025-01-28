@@ -121,6 +121,7 @@ export function PostTemplate({ data: { mdx, allMdx }, children }) {
         banner={frontmatter.banner}
         section={section}
         postKey={keyCurrent}
+        isMindfuckery={frontmatter.flagMindfuckery}
       />
 
       <div class="postBody">
