@@ -42,6 +42,23 @@ function calculateReadTime(body, extraTime = 0) {
 	return formatReadTime(baseReadTime + extraTime);
 }
 
+var difficultyIcon
+
+function parseDifficulty(difficultyLevel, isMindfuckery) {
+	if (isMindfuckery) {
+		difficultyIcon = "⚫️"
+	} else {
+		if (difficultyLevel === 1) {
+			difficultyIcon = ""
+		} else if (difficultyLevel === 2) {
+			difficultyIcon = "🟡"
+		} else if (difficultyLevel === 3) {
+			difficultyIcon = "🔴"
+		} 
+	}
+	return difficultyIcon
+}
+
 const wordsPerMinute = wordsPerMinuteThoughts;
 
 const Posts = ({ data }) => {
@@ -131,17 +148,18 @@ const Posts = ({ data }) => {
 							{posts.map(post => (
 								<li key={post.id} style={{ marginBottom: '4px' }}>
 									<div>
-										<span style={{opacity: "0.5"}}>{post.date}</span> 
+										<span style={{ opacity: "0.5" }}>{post.date}</span> 
 										&nbsp;&nbsp;
 										<span style={{ background: "#ffffff", padding: "6px 11px 6px 11px", borderRadius: "10px" }}>
 											<Link to={post.slug} className="compactViewLink">
 												{post.titleDetailed || post.title}
 											</Link>
 											&nbsp;
-											<span style={{opacity: "0.5"}}>{post.readTime}</span>
+											<span style={{ opacity: "0.5" }}>{post.readTime}</span>
+											<span style={{ display: ((post.difficultyLevel === 1) && !post.flagMindfuckery) ? "none" : "" }}>&#8239;&#8239;{parseDifficulty(post.difficultyLevel, post.flagMindfuckery)}</span>
 										</span>
 										&#8239;&#8239;
-										<strong><span style={{opacity: "0.5"}}>#{post.index}</span></strong>
+										<strong><span style={{ opacity: "0.5" }}>#{post.index}</span></strong>
 									</div>
 								</li>
 							))}
@@ -168,6 +186,8 @@ export const query = graphql`
 					desc
 					date
 					extraReadTimeMin
+					difficultyLevel
+					flagMindfuckery
 					slug
 					banner {
           				childImageSharp {
