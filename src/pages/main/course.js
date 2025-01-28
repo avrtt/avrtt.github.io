@@ -39,6 +39,23 @@ function calculateReadTime(body, extraTime = 0) {
 	return formatReadTime(baseReadTime + extraTime);
 }
 
+var difficultyColor
+
+function parseDifficulty(difficultyLevel, isMindfuckery) {
+	if (isMindfuckery) {
+		difficultyColor = "rgb(30, 30, 30)"
+	} else {
+		if (difficultyLevel === 1) {
+			difficultyColor = "rgb(255, 255, 255)"
+		} else if (difficultyLevel === 2) {
+			difficultyColor = "rgb(255, 206, 71)"
+		} else if (difficultyLevel === 3) {
+			difficultyColor = "rgb(238, 16, 16)"
+		} 
+	}
+	return difficultyColor
+}
+
 const wordsPerMinute = wordsPerMinuteResearch;
 
 const Course = ({ data }) => {
@@ -132,7 +149,7 @@ const Course = ({ data }) => {
 						<ul>
 							{posts.map(post => (
 								<div>
-									<span>{post.indexCourse}. </span>
+									<span style={{ "border-left": "solid", "margin-left": "-15px", "border-width": "0.3em", "border-color": parseDifficulty(post.difficultyLevel, post.flagMindfuckery) }}><span style={{ "margin-left": "10px" }}>{post.indexCourse}</span>. </span>
 									<Link to={post.slug}>{post.titleCourse}</Link>
 									<span style={{ opacity: 0.4 }}>&nbsp;{post.readTime}</span>
 								</div>
@@ -232,6 +249,8 @@ export const query = graphql`
 					titleCourse
 					courseCategoryName
 					extraReadTimeMin
+					difficultyLevel
+					flagMindfuckery
 					slug
         		}
 				body
