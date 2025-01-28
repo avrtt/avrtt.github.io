@@ -1348,6 +1348,20 @@ svg {
   background-color: #e7e7e7;
 }
 
+.text-content {
+  transition: opacity 0.2s ease;
+}
+
+.text-content.fade-out {
+  opacity: 0;
+  transition: opacity 0.1s ease;
+}
+
+.text-content.fade-in {
+  opacity: 1;
+  transition: opacity 1.4s ease;
+}
+
 
 
 /* BUTTONS (COMMON) */

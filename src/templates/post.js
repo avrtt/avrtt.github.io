@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import RemoveMarkdown from 'remove-markdown';
 import { motion } from 'framer-motion';
 import PostBanner from '../components/PostBanner';
@@ -77,10 +77,17 @@ export function PostTemplate({ data: { mdx, allMdx }, children }) {
   const keyCurrent = /[^/]*$/.exec(frontmatter.slug)[0];
   
   const [isWideLayout, setIsWideLayout] = useState(frontmatter.flagWideLayoutByDefault);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const toggleLayout = () => {
     setIsWideLayout(!isWideLayout);
   };
+
+  useEffect(() => {
+    setIsAnimating(true);    
+    const timer = setTimeout(() => setIsAnimating(false), 340);
+    return () => clearTimeout(timer);
+  }, [isWideLayout]);
 
   var wordsPerMinute
   if (section === "adventures") {
@@ -158,15 +165,17 @@ export function PostTemplate({ data: { mdx, allMdx }, children }) {
           maxWidth: isWideLayout ? "200%" : "",
           transition: "margin 0.5s ease, max-width 0.5s ease",
       }}>
-        {frontmatter.isDraft ? <NotFinishedNotice/> : ""}
-        {frontmatter.flagMindfuckery ? <MindfuckeryNotice/> : ""}
-        {frontmatter.flagRewrite ? <RewriteNotice/> : ""}
-        {frontmatter.flagOffensive ? <OffensiveNotice/> : ""}
-        {frontmatter.flagProfane ? <ProfanityNotice/> : ""}
-        {frontmatter.flagPolitical ? <PoliticsNotice/> : ""}
-        {frontmatter.flagCognitohazard ? <CognitohazardNotice/> : ""}
-        {frontmatter.flagHidden ? <HiddenNotice/> : ""}
-        {children}
+        <div className={`text-content ${isAnimating ? "fade-out" : "fade-in"}`}>
+          {frontmatter.isDraft ? <NotFinishedNotice/> : ""}
+          {frontmatter.flagMindfuckery ? <MindfuckeryNotice/> : ""}
+          {frontmatter.flagRewrite ? <RewriteNotice/> : ""}
+          {frontmatter.flagOffensive ? <OffensiveNotice/> : ""}
+          {frontmatter.flagProfane ? <ProfanityNotice/> : ""}
+          {frontmatter.flagPolitical ? <PoliticsNotice/> : ""}
+          {frontmatter.flagCognitohazard ? <CognitohazardNotice/> : ""}
+          {frontmatter.flagHidden ? <HiddenNotice/> : ""}
+          {children}
+        </div>
       </div>
 
       <PostBottom nextPost={nextPost} lastPost={lastPost} keyCurrent={keyCurrent} section={section} />
