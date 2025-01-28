@@ -83,11 +83,11 @@ export function PostTemplate({ data: { mdx, allMdx }, children }) {
   };
 
   var wordsPerMinute
-  if (section == "adventures") {
+  if (section === "adventures") {
     wordsPerMinute = wordsPerMinuteAdventures
-  } else if (section == "research") {
+  } else if (section === "research") {
     wordsPerMinute = wordsPerMinuteResearch
-  } else if (section == "thoughts") {
+  } else if (section === "thoughts") {
     wordsPerMinute = wordsPerMinuteThoughts
   }
 
