@@ -129,7 +129,26 @@ export function PostTemplate({ data: { mdx, allMdx }, children }) {
         section={section}
         postKey={keyCurrent}
         isMindfuckery={frontmatter.flagMindfuckery}
+        mainTag={frontmatter.mainTag}
       />
+
+      <div style={{ 
+        display: "flex", 
+        justifyContent: "flex-end", 
+        flexWrap: "wrap", 
+        maxWidth: "75%", 
+        marginLeft: "auto",
+        paddingRight: "1vw",
+        marginTop: "-6vh",
+        marginBottom: "4vh"
+      }}>
+        {frontmatter.otherTags.map((tag, index) => (
+          <span key={index} className="tagPosts noselect" style={{ margin: "0 5px 5px 0" }}>
+            {tag}
+          </span>
+        ))}
+      </div>
+
 
       <div class="postBody">
         <TableOfContents toc={tableOfContents} />
@@ -206,6 +225,8 @@ export const query = graphql`
         flagCognitohazard
         flagHidden
         flagWideLayoutByDefault
+        mainTag
+        otherTags
         banner {
           childImageSharp {
             gatsbyImageData(

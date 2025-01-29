@@ -96,34 +96,34 @@ const Tags = ({ data }) => {
               </motion.div>
             </motion.button>
           </div>
-		  <motion.span
-			key={sortByFrequency}
-			initial={{ opacity: 0 }}
-			animate={{ opacity: 1 }}
-			exit={{ opacity: 0 }}
-			transition={{ duration: 0.3, ease: "easeInOut" }}
-		  >
-			{sortedTags.map(([tag, count]) => (
-				<motion.span
-					key={tag}
-					className="tagPosts"
-					style={{ 
-						cursor: 'pointer', 
-						opacity: selectedTag && selectedTag !== tag ? 0.55 : 1, 
-						transition: "opacity 0.15s ease",
-						backgroundColor: data.allMdx.nodes.some(post => post.frontmatter.mainTag === tag) ? '#ffb05c' : '',
-					}}
-					whileHover={selectedTag ? { opacity: 1 } : { opacity: 0.7 }}
-					transition={{ duration: 0.1 }}
-					whileTap={{ scale: 0.95 }}
-					onClick={() => setSelectedTag(selectedTag === tag ? null : tag)}
-				>
-					<span>{tag}</span>
-					&#8198;&#8198;
-					<span style={{ opacity: 0.6 }}>{count}</span>
-				</motion.span>
-			))}
-		  </motion.span>
+          <motion.span
+            key={sortByFrequency}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+          >
+            {sortedTags.map(([tag, count]) => (
+              <motion.span
+                key={tag}
+                className="tagPosts"
+                style={{ 
+                  cursor: 'pointer', 
+                  opacity: selectedTag && selectedTag !== tag ? 0.55 : 1, 
+                  transition: "opacity 0.15s ease",
+                  backgroundColor: data.allMdx.nodes.some(post => post.frontmatter.mainTag === tag) ? '#ffb05c' : '',
+                }}
+                whileHover={selectedTag ? { opacity: 1 } : { opacity: 0.7 }}
+                transition={{ duration: 0.1 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setSelectedTag(selectedTag === tag ? null : tag)}
+              >
+                <span>{tag}</span>
+                &#8198;&#8198;
+                <span style={{ opacity: 0.6 }}>{count}</span>
+              </motion.span>
+            ))}
+          </motion.span>
         </div>
       </div>
     </motion.div>

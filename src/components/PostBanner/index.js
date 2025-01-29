@@ -92,7 +92,7 @@ const svgStyle = {
 	"transform": "translate(0.3vw, -0.08vw)",
 }
 
-const PostBanner = ({ postNumber, date, updated, readTime, difficulty, title, desc, banner, section, postKey, isMindfuckery }) => {
+const PostBanner = ({ postNumber, date, updated, readTime, difficulty, title, desc, banner, section, postKey, isMindfuckery, mainTag }) => {
 
 	const prevUpdatedTextStyle = {
 		"position": "absolute",
@@ -141,7 +141,14 @@ const PostBanner = ({ postNumber, date, updated, readTime, difficulty, title, de
     	"font-weight": "bold",
     	"opacity": "1",
     	"border-radius": "0"
-  }
+  	}
+
+  	const mainTagStyle = {
+		"background-color": "rgb(255, 255, 255)", 
+		"padding": "6px 11px 6px 11px", 
+		"borderRadius": "10px",
+		"color": "#7C7C7C",
+	}
 
 	const readTimeStyle = {
 		"background-color": "rgb(255, 255, 255)", 
@@ -199,6 +206,8 @@ const PostBanner = ({ postNumber, date, updated, readTime, difficulty, title, de
 			    <b><div style={prevTextStyle}>{title}</div></b>
 			    <div style={prevDescStyle}>{desc}</div>
 				<div style={prevInfoStyle}>
+					<span style={mainTagStyle}>#️⃣&#8239;&#8239;{mainTag}</span>
+					&nbsp;
 					<span style={readTimeStyle}>⌛&#8239;&#8239;{readTime}</span>
 					&nbsp;
 					<span style={difficultyStyle}>{difficultyEmoji}&#8239;&#8239;{difficultyText}</span>
