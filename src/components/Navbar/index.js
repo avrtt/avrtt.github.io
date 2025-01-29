@@ -140,6 +140,13 @@ const Navbar = () => {
                     "transition": "opacity 0.3s ease"
                   }}>&#8198;{thoughtsCount}</span>
                 </DropdownItem>
+                <p style={{ margin: "6px 0" }}> </p>
+                <DropdownItem
+                  to="/tags"
+                  activeClassName="active"
+                >
+                  Filter by tag
+                </DropdownItem>
               </DropdownMenu>
             )}
           </Dropdown>

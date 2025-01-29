@@ -45,6 +45,7 @@ exports.createPages = async ({ actions, graphql }) => {
   createPage({path: "/adventures", component: path.resolve(`src/pages/main/adventures.js`)});
   createPage({path: "/research", component: path.resolve(`src/pages/main/research.js`)});
   createPage({path: "/thoughts", component: path.resolve(`src/pages/main/thoughts.js`)});
+  createPage({path: "/tags", component: path.resolve(`src/pages/main/tags.js`)});
   createPage({path: "/publications", component: path.resolve(`src/pages/main/publications.js`)});
   createPage({path: "/software", component: path.resolve(`src/pages/main/software.js`)});
   createPage({path: "/music", component: path.resolve(`src/pages/main/music.js`)});
