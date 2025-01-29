@@ -56,7 +56,14 @@ const Tags = ({ data }) => {
       </Helmet>
 
       <div style={{ display: 'flex' }}>
-        <div style={{ width: '55rem' }}>
+        <motion.div 
+		  style={{ width: '55rem' }}
+		  key={selectedTag}
+		  initial={{ opacity: 0 }}
+		  animate={{ opacity: 1 }}
+		  exit={{ opacity: 0 }}
+		  transition={{ duration: 0.3, ease: "easeInOut" }}
+		>
 		  <p style={{ marginBottom: "3rem" }}> </p>
           <Box component="ul" sx={{ listStyleType: 'none', padding: 0 }}>
             {filteredPosts.map(post => (
@@ -73,7 +80,7 @@ const Tags = ({ data }) => {
               </li>
             ))}
           </Box>
-        </div>
+        </motion.div>
         <div style={{ width: 'fit-content', textAlign: 'center' }}>
           <div className="sortingButtonWrapper" style={{ marginBottom: "18px"}} >
             <motion.button onClick={toggleSorting} className="sortingButton noselect" whileTap={{ scale: 0.95 }}>
@@ -89,18 +96,34 @@ const Tags = ({ data }) => {
               </motion.div>
             </motion.button>
           </div>
-          {sortedTags.map(([tag, count]) => (
-            <span
-              key={tag}
-              className="tagPosts"
-              style={{ cursor: 'pointer', opacity: selectedTag && selectedTag !== tag ? 0.6 : 1 }}
-              onClick={() => setSelectedTag(selectedTag === tag ? null : tag)}
-            >
-              <span>{tag}</span>
-			  &#8198;&#8198;
-			  <span style={{ opacity: 0.6 }}>{count}</span>
-            </span>
-          ))}
+		  <motion.span
+			key={sortByFrequency}
+			initial={{ opacity: 0 }}
+			animate={{ opacity: 1 }}
+			exit={{ opacity: 0 }}
+			transition={{ duration: 0.3, ease: "easeInOut" }}
+		  >
+			{sortedTags.map(([tag, count]) => (
+				<motion.span
+					key={tag}
+					className="tagPosts"
+					style={{ 
+						cursor: 'pointer', 
+						opacity: selectedTag && selectedTag !== tag ? 0.55 : 1, 
+						transition: "opacity 0.15s ease",
+						backgroundColor: data.allMdx.nodes.some(post => post.frontmatter.mainTag === tag) ? '#ffb05c' : '',
+					}}
+					whileHover={selectedTag ? { opacity: 1 } : { opacity: 0.7 }}
+					transition={{ duration: 0.1 }}
+					whileTap={{ scale: 0.95 }}
+					onClick={() => setSelectedTag(selectedTag === tag ? null : tag)}
+				>
+					<span>{tag}</span>
+					&#8198;&#8198;
+					<span style={{ opacity: 0.6 }}>{count}</span>
+				</motion.span>
+			))}
+		  </motion.span>
         </div>
       </div>
     </motion.div>
