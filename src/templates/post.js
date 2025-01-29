@@ -185,11 +185,13 @@ export function PostTemplate({ data: { mdx, allMdx }, children }) {
           transition: "margin 0.5s ease, max-width 0.5s ease",
       }}>
         <div className={`text-content ${isAnimating ? "fade-out" : "fade-in"}`}>
-          {frontmatter.isDraft ? <NotFinishedNotice/> : ""}
+          {frontmatter.flagDraft ? <NotFinishedNotice/> : ""}
           {frontmatter.flagMindfuckery ? <MindfuckeryNotice/> : ""}
           {frontmatter.flagRewrite ? <RewriteNotice/> : ""}
           {frontmatter.flagOffensive ? <OffensiveNotice/> : ""}
           {frontmatter.flagProfane ? <ProfanityNotice/> : ""}
+          {frontmatter.flagMultilingual ? <MultilingualNotice/> : ""}
+          {frontmatter.flagUnreliably ? <UnreliablyNotice/> : ""}
           {frontmatter.flagPolitical ? <PoliticsNotice/> : ""}
           {frontmatter.flagCognitohazard ? <CognitohazardNotice/> : ""}
           {frontmatter.flagHidden ? <HiddenNotice/> : ""}
@@ -216,11 +218,13 @@ export const query = graphql`
         updated
         extraReadTimeMin
         difficultyLevel
-        isDraft
+        flagDraft
         flagMindfuckery
         flagRewrite
         flagOffensive
         flagProfane
+        flagMultilingual
+        flagUnreliably
         flagPolitical
         flagCognitohazard
         flagHidden
