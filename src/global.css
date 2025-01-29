@@ -2620,6 +2620,15 @@ span.SAFE {
   color:#717171;
 }
 
+.mainTagGallery {
+  position: absolute;
+  z-index: 2;
+  right: 1vh;
+  bottom: 1vh;
+  font-size: 2vh;
+  pointer-events: none;
+}
+
 
 
 /* COURSES */

@@ -103,6 +103,7 @@ const Posts = ({ data }) => {
 								return (
 									<ImageListItem key={post.id}>
 										<div className="hover">
+											<span className="tagPosts mainTagGallery">{post.mainTag}</span>
 											<AnimationOnScroll offset="999999" animateIn="animate__fadeIn" animatePreScroll="false" duration="0.3">
 												<GatsbyImage
 													className="prev-home"
@@ -168,6 +169,7 @@ export const query = graphql`
 					desc
 					date
 					extraReadTimeMin
+					mainTag
 					slug
 					banner {
           				childImageSharp {
