@@ -1774,6 +1774,13 @@ span.SAFE {
   border-radius: 0vh;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  [data-rmiz-modal-overlay],
+  [data-rmiz-modal-img] {
+    transition-duration: 0.01ms !important;
+  }
+}
+
 
 
 /* COMMENT SECTION */
@@ -3252,35 +3259,10 @@ h6 {
 
 .toc ul > li {
   display: block;
-
 }
 
 .toc ul>li:before {
   content: counters(item, ".") ". "; 
   counter-increment: item;
-}
-
-
-
-/* RESPONSIVE DESIGN */
-
-@media (prefers-reduced-motion: reduce) {
-  [data-rmiz-modal-overlay],
-  [data-rmiz-modal-img] {
-    transition-duration: 0.01ms !important;
-  }
-}
-
-@media screen and (max-width: 1500px) {
-  .latestVideosWrapper {
-    visibility: hidden;
-    display: none;
-  }
-}
-
-@media only screen and (max-width: 700px) {
-	.modal-content {
-	  width: 100%;
-	}
 }
 
