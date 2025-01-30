@@ -5,7 +5,12 @@ const SecondLastPostThoughts = () => {
         graphql`
             query HomeThoughtsQuery {
                 allMdx(
-                    filter: {frontmatter: {slug: {regex: "/^/thoughts//"}}}
+                    filter: {
+                        frontmatter: {
+                            slug: {regex: "/^/thoughts//"}
+                            flagHidden: { ne: true }
+                        }
+                    }
                     sort: {frontmatter: {index: DESC}}
                 ) {
                     nodes {

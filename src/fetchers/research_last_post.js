@@ -5,7 +5,12 @@ const LastPostResearch = () => {
         graphql`
             query HomeResearchQuery {
                 allMdx(
-                    filter: {frontmatter: {slug: {regex: "/^/research//"}}}
+                    filter: {
+                        frontmatter: {
+                            slug: {regex: "/^/research//"}
+                            flagHidden: { ne: true }
+                        }
+                    }
                     sort: {frontmatter: {index: DESC}}
                 ) {
                     nodes {

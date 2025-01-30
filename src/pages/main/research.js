@@ -175,7 +175,12 @@ const Posts = ({ data }) => {
 export const query = graphql`
 	query PostGalleryQuery {
   		allMdx(
-    		filter: {frontmatter: {slug: {regex: "/^/research//"}}}
+    		filter: {
+				frontmatter: {
+					slug: { regex: "/^/research//" }
+					flagHidden: { ne: true }
+				}
+			}
     		sort: {frontmatter: {index: DESC}}
   		) {
     		nodes {

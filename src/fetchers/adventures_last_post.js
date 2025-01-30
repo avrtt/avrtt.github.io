@@ -5,7 +5,12 @@ const LastPostAdventures = () => {
         graphql`
             query HomeAdventuresQuery {
                 allMdx(
-                    filter: {frontmatter: {slug: {regex: "/^/adventures//"}}}
+                    filter: {
+                        frontmatter: {
+                            slug: {regex: "/^/adventures//"}
+                            flagHidden: { ne: true }
+                        }
+                    }
                     sort: {frontmatter: {index: DESC}}
                 ) {
                     nodes {

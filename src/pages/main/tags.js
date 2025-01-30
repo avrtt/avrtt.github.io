@@ -132,7 +132,7 @@ const Tags = ({ data }) => {
 
 export const query = graphql`
   query {
-    allMdx {
+    allMdx(filter: {frontmatter: {flagHidden: {ne: true}}}) {
       nodes {
         id
         frontmatter {
