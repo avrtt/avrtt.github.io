@@ -1,5 +1,5 @@
 import * as React from "react"
-import "../global.css"
+import "../global.scss"
 import Home from './main/home'
 
 const App = () => {
