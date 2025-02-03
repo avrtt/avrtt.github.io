@@ -4,6 +4,9 @@ import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { Link } from "gatsby";
 import Box from '@mui/material/Box';
+import * as stylesTagsPage from "../../styles/tags_page.module.scss";
+import * as stylesButtonsCommon from "../../styles/buttons_common.module.scss"
+import * as stylesTagBadges from "../../styles/tag_badges.module.scss";
 
 const TITLE = 'Tags - avrtt.blog';
 
@@ -82,10 +85,10 @@ const Tags = ({ data }) => {
           </Box>
         </motion.div>
         <div style={{ width: 'fit-content', textAlign: 'center' }}>
-          <div className="sortingButtonWrapper" style={{ marginBottom: "18px"}} >
-            <motion.button onClick={toggleSorting} className="sortingButton noselect" whileTap={{ scale: 0.95 }}>
+          <div className={stylesTagsPage.sortingButtonWrapper} style={{ marginBottom: "18px"}} >
+            <motion.button onClick={toggleSorting} class="noselect" className={stylesTagsPage.sortingButton} whileTap={{ scale: 0.95 }}>
               <motion.div
-                className="buttonTextWrapper"
+                className={stylesButtonsCommon.buttonTextWrapper}
                 key={sortByFrequency}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -106,7 +109,7 @@ const Tags = ({ data }) => {
             {sortedTags.map(([tag, count]) => (
               <motion.span
                 key={tag}
-                className="tagPosts"
+                className={stylesTagBadges.tagPosts}
                 style={{ 
                   cursor: 'pointer', 
                   opacity: selectedTag && selectedTag !== tag ? 0.55 : 1, 
