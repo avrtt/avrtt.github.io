@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import M from "../Markdown";
 import Arrow from "../../images/freelance/services/arrow2.svg"
+import * as stylesSpoilers from "../../styles/spoilers.module.scss"
 
 const Spoiler = ({ title, services = [], spoilerExtraDesc, isEnglish=true }) => {
   
@@ -25,7 +26,7 @@ const Spoiler = ({ title, services = [], spoilerExtraDesc, isEnglish=true }) => 
 
   const toggleContent = (event) => {
     const content = event.target.nextElementSibling;
-    event.target.classList.toggle("activeSpoiler");
+    event.target.classList.toggle(stylesSpoilers.activeSpoiler);
     if (content.style.maxHeight) {
       content.style.maxHeight = null;
     } else {
@@ -36,21 +37,21 @@ const Spoiler = ({ title, services = [], spoilerExtraDesc, isEnglish=true }) => 
   return isEnglish ? (
     <div>
       <button
-        className="spoilerButton noselect"
+        class="noselect" className={stylesSpoilers.spoilerButton}
         ref={(el) => collRef.current.push(el)}
       >
         &nbsp;&nbsp;
-        <span className="spoilerText"></span>
+        <span className={stylesSpoilers.spoilerText}></span>
         {title}
         &nbsp;&nbsp;
       </button>
-      <div className="spoilerContentWrapper">
-        <div className="spoilerContentServices">
+      <div className={stylesSpoilers.spoilerContentWrapper}>
+        <div className={stylesSpoilers.spoilerContentServices}>
           <br />
           {services.map(
             (block, index) =>
               block.text && block.icon && (
-                <p key={index} id="spoilerBlockServices">
+                <p key={index} id={stylesSpoilers.spoilerBlockServices}>
                   <span className="noselect">
                     <img src={block.icon} alt="" />
                     &nbsp;&nbsp;
@@ -58,14 +59,14 @@ const Spoiler = ({ title, services = [], spoilerExtraDesc, isEnglish=true }) => 
                   <span>{block.text}</span>
                   &nbsp;&thinsp;
                   <a href={"/freelance/services/#" + index}>
-                    <img title="Go to detailed description" src={Arrow} alt="" id="anchorArrow"/>
+                    <img title="Go to detailed description" src={Arrow} alt="" id={stylesSpoilers.anchorArrow}/>
                   </a>
                 </p>
               )
           )}
           <br />
           {spoilerExtraDesc && (
-            <p className="spoilerExtraDesc">
+            <p className={stylesSpoilers.spoilerExtraDesc}>
               <M text={spoilerExtraDesc} />
             </p>
           )}
@@ -75,21 +76,21 @@ const Spoiler = ({ title, services = [], spoilerExtraDesc, isEnglish=true }) => 
   ) : (
     <div>
       <button
-        className="spoilerButton noselect"
+        class="noselect" className={stylesSpoilers.spoilerButton}
         ref={(el) => collRef.current.push(el)}
       >
         &nbsp;&nbsp;
-        <span className="spoilerText"></span>
+        <span className={stylesSpoilers.spoilerText}></span>
         {title}
         &nbsp;&nbsp;
       </button>
-      <div className="spoilerContentWrapper">
-        <div className="spoilerContentServices">
+      <div className={stylesSpoilers.spoilerContentWrapper}>
+        <div className={stylesSpoilers.spoilerContentServices}>
           <br />
           {services.map(
             (block, index) =>
               block.textRu && block.icon && (
-                <p key={index} id="spoilerBlockServices">
+                <p key={index} id={stylesSpoilers.spoilerBlockServices}>
                   <span className="noselect">
                     <img src={block.icon} alt="" />
                     &nbsp;&nbsp;
@@ -97,14 +98,14 @@ const Spoiler = ({ title, services = [], spoilerExtraDesc, isEnglish=true }) => 
                   <span>{block.textRu}</span>
                   &nbsp;&thinsp;
                   <a href={"/freelance/ru/services/#" + index}>
-                    <img title="Go to detailed description" src={Arrow} alt="" id="anchorArrow"/>
+                    <img title="Go to detailed description" src={Arrow} alt="" id={stylesSpoilers.anchorArrow}/>
                   </a>
                 </p>
               )
           )}
           <br />
           {spoilerExtraDesc && (
-            <p className="spoilerExtraDesc">
+            <p className={stylesSpoilers.spoilerExtraDesc}>
               <M text={spoilerExtraDesc} />
             </p>
           )}
