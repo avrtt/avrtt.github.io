@@ -1,5 +1,6 @@
 import React from "react";
 import Box from '@mui/material/Box';
+import * as styles from "./styles.module.scss";
 
 /*
 const telegramPrevStyle = {
@@ -73,14 +74,14 @@ const ChannelPreview = ({ tgLink, ytLink, tgChannelPicture, tgChannelName, tgCha
   
   return (
 	<>
-		<Box class="moreContentWrapper">
-            <a href={hrefLink}><div class="blockLeft">
-				<img class="tgChannelPicture" src={tgChannelPicture} alt="telegram_channel"/>
-				<span class="blockLeftTitle">{tgChannelName}</span>
-				<span class="blockLeftLink">{tgHandle}</span>
-				<p class="blockLeftDesc">{tgChannelDesc}</p>
+		<Box class={styles.moreContentWrapper}>
+            <a href={hrefLink}><div class={styles.blockLeft}>
+				<img class={styles.tgChannelPicture} src={tgChannelPicture} alt="telegram_channel"/>
+				<span class={styles.blockLeftTitle}>{tgChannelName}</span>
+				<span class={styles.blockLeftLink}>{tgHandle}</span>
+				<p class={styles.blockLeftDesc}>{tgChannelDesc}</p>
 			</div></a>
-            <iframe class="blockRight" src={ytUrl} frameborder="0" allowfullscreen="1"></iframe>
+            <iframe class={styles.blockRight} src={ytUrl} frameborder="0" allowfullscreen="1"></iframe>
 		</Box>
 	</>
   );

@@ -1,0 +1,79 @@
+.moreContentWrapper {
+  animation: fadeIn 0.7s linear forwards;
+  width: 100%;
+  margin-top: 8vh;
+  display: flex;
+  justify-content: center;
+  -webkit-touch-callout: none;
+    -webkit-user-select: none; 
+     -khtml-user-select: none;
+       -moz-user-select: none; 
+        -ms-user-select: none;
+            user-select: none;
+}
+
+.moreContentWrapper a {
+  text-decoration: none;
+}
+
+.blockLeft {
+  margin-right: 1.5vw;
+  width: 67vh; 
+	height: 18vw;
+  background-color: #282828;
+  border-radius: 2vh;
+  transition: transform .1s;
+	cursor: pointer;
+  -webkit-transition-duration: 0.1s;
+  transition-duration: 0.1s;
+  -webkit-touch-callout: none;
+    -webkit-user-select: none; 
+     -khtml-user-select: none;
+       -moz-user-select: none; 
+        -ms-user-select: none;
+            user-select: none;
+}
+
+.blockLeftTitle {
+  font-size: 3.5vh;
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  font-weight: 800;
+  position: absolute;
+  margin: 6.5vh 0 0 2vh;
+}
+
+.blockLeftLink {
+  font-size: 2.5vh;
+  color: #8e8e8e;
+  text-decoration: none;
+  font-weight: 800;
+  position: absolute;
+  margin: 11.5vh 0 0 2vh;
+}
+
+.blockLeftDesc {
+  font-size: 2.2vh;
+  color: #8e8e8e;
+  text-decoration: none;
+  margin: 2vh 0 0 4vh;
+  width: 70%;
+}
+
+.blockLeft:hover {
+  transform: scale(0.97);
+}
+
+.blockRight {
+  margin-left: 1.5vw;
+  width: 67vh; 
+	height: 18vw;
+  border-radius: 2vh;
+}
+
+.tgChannelPicture {
+  border-radius: 100%;
+  height: 15vh;
+  width: 15vh;
+  margin: 4vh 0 0 4vh;
+}
