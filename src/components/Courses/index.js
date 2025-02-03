@@ -5,6 +5,7 @@ import Umich from "../../images/courses/umich.svg";
 import Hse from "../../images/courses/hse.svg";
 import Stanford from "../../images/courses/stanford.svg";
 import Ods from "../../images/courses/ods.svg";
+import * as styles from "./styles.module.scss";
 
 const titleStyle = {
   'font-weight': 'bold',
@@ -43,10 +44,10 @@ const Courses = ({ lang="en" }) => {
   
   if (lang == "en") {
     return (
-      <div class="coursesSectionWrapper">
+      <div className={styles.coursesSectionWrapper}>
 
         <a href="https://www.coursera.org/account/accomplishments/specialization/BBTQSDXPTKCK">
-          <div class="courseWrapper">
+          <div className={styles.courseWrapper}>
             <span style={titleStyle}>MIPT @ Coursera</span>
             <span style={numCoursesStyle}>
               6 courses
@@ -63,7 +64,7 @@ const Courses = ({ lang="en" }) => {
         </a>
 
         <a href="https://www.coursera.org/account/accomplishments/specialization/VWTSMYDC66TZ">
-          <div class="courseWrapper">
+          <div className={styles.courseWrapper}>
             <span style={titleStyle}>UMich @ Coursera</span>
             <span style={numCoursesStyle}>
               5 courses
@@ -80,7 +81,7 @@ const Courses = ({ lang="en" }) => {
         </a>
 
         <a href="https://www.coursera.org/account/accomplishments/specialization/TZY9XAAPRMXM">
-          <div class="courseWrapper">
+          <div className={styles.courseWrapper}>
             <span style={titleStyle}>DL.AI @ Coursera</span>
             <span style={numCoursesStyle}>
               5 courses
@@ -97,7 +98,7 @@ const Courses = ({ lang="en" }) => {
         </a>
 
         <a href="https://blog.coursera.org/coursera-response-to-the-humanitarian-crisis-in-ukraine/">
-          <div class="courseWrapper">
+          <div className={styles.courseWrapper}>
             <span style={titleStyle}>HSE @ Coursera</span>
             <span style={numCoursesStyle}>
               7 courses
@@ -114,7 +115,7 @@ const Courses = ({ lang="en" }) => {
         </a>
 
         <a href="https://www.coursera.org/professional-certificates/tensorflow-in-practice">
-          <div class="courseWrapper">
+          <div className={styles.courseWrapper}>
             <span style={titleStyle}>DL.AI @ Coursera</span>
             <span style={numCoursesStyle}>
               4 courses
@@ -129,7 +130,7 @@ const Courses = ({ lang="en" }) => {
         </a>
 
         <a href="https://www.coursera.org/specializations/machine-learning-introduction">
-          <div class="courseWrapper">
+          <div className={styles.courseWrapper}>
             <span style={titleStyle}>Stanford @ Coursera</span>
             <span style={numCoursesStyle}>
               3 courses
@@ -144,7 +145,7 @@ const Courses = ({ lang="en" }) => {
         </a>
 
         <a href="https://github.com/girafe-ai/ml-course">
-          <div class="courseWrapper">
+          <div className={styles.courseWrapper}>
             <span style={titleStyle}>MIPT @ girafe-ai</span>
             <span style={numCoursesStyle}>
               Single course
@@ -159,7 +160,7 @@ const Courses = ({ lang="en" }) => {
         </a>
 
         <a href="https://mlcourse.ai/book/index.html">
-          <div class="courseWrapper">
+          <div className={styles.courseWrapper}>
             <span style={titleStyle}>mlcourse @ ODS</span>
             <span style={numCoursesStyle}>
               Single course
@@ -179,10 +180,10 @@ const Courses = ({ lang="en" }) => {
   
   else if (lang="ru") {
     return (
-      <div class="coursesSectionWrapper">
+      <div className={styles.coursesSectionWrapper}>
 
         <a href="https://www.coursera.org/account/accomplishments/specialization/BBTQSDXPTKCK">
-          <div class="courseWrapper">
+          <div className={styles.courseWrapper}>
             <span style={titleStyle}>МФТИ @ Coursera</span>
             <span style={numCoursesStyle}>
               6 курсов
@@ -199,7 +200,7 @@ const Courses = ({ lang="en" }) => {
         </a>
 
         <a href="https://www.coursera.org/account/accomplishments/specialization/VWTSMYDC66TZ">
-          <div class="courseWrapper">
+          <div className={styles.courseWrapper}>
             <span style={titleStyle}>UMich @ Coursera</span>
             <span style={numCoursesStyle}>
               5 курсов
@@ -216,7 +217,7 @@ const Courses = ({ lang="en" }) => {
         </a>
 
         <a href="https://www.coursera.org/account/accomplishments/specialization/TZY9XAAPRMXM">
-          <div class="courseWrapper">
+          <div className={styles.courseWrapper}>
             <span style={titleStyle}>DL.AI @ Coursera</span>
             <span style={numCoursesStyle}>
               5 курсов
@@ -233,7 +234,7 @@ const Courses = ({ lang="en" }) => {
         </a>
 
         <a href="https://blog.coursera.org/coursera-response-to-the-humanitarian-crisis-in-ukraine/">
-          <div class="courseWrapper">
+          <div className={styles.courseWrapper}>
             <span style={titleStyle}>ВШЭ @ Coursera</span>
             <span style={numCoursesStyle}>
               7 курсов
@@ -250,7 +251,7 @@ const Courses = ({ lang="en" }) => {
         </a>
 
         <a href="https://www.coursera.org/professional-certificates/tensorflow-in-practice">
-          <div class="courseWrapper">
+          <div className={styles.courseWrapper}>
             <span style={titleStyle}>DL.AI @ Coursera</span>
             <span style={numCoursesStyle}>
               4 курса
@@ -265,7 +266,7 @@ const Courses = ({ lang="en" }) => {
         </a>
 
         <a href="https://www.coursera.org/specializations/machine-learning-introduction">
-          <div class="courseWrapper">
+          <div className={styles.courseWrapper}>
             <span style={titleStyle}>Stanford @ Coursera</span>
             <span style={numCoursesStyle}>
               3 курса
@@ -280,7 +281,7 @@ const Courses = ({ lang="en" }) => {
         </a>
 
         <a href="https://github.com/girafe-ai/ml-course">
-          <div class="courseWrapper">
+          <div className={styles.courseWrapper}>
             <span style={titleStyle}>МФТИ @ girafe-ai</span>
             <span style={numCoursesStyle}>
               Одиночный курс
@@ -295,7 +296,7 @@ const Courses = ({ lang="en" }) => {
         </a>
 
         <a href="https://mlcourse.ai/book/index.html">
-          <div class="courseWrapper">
+          <div className={styles.courseWrapper}>
             <span style={titleStyle}>mlcourse @ ODS</span>
             <span style={numCoursesStyle}>
               Одиночный курс
