@@ -7,6 +7,7 @@ import M from '../../components/Markdown';
 import StickerPack from '../../components/StickerPack';
 import { courseLastUpdated } from '../../data/lastUpdated';
 import { wordsPerMinuteResearch } from '../../data/commonVariables';
+import * as stylesSpoilers from "../../styles/spoilers.module.scss"
 import 'animate.css/animate.min.css';
 
 const TITLE = 'Course - avrtt.blog'
@@ -100,7 +101,7 @@ const Course = ({ data }) => {
 
 	const toggleContent = (event) => {
         const content = event.target.nextElementSibling;
-        event.target.classList.toggle("activeSpoiler");
+        event.target.classList.toggle(stylesSpoilers.activeSpoiler);
         if (content.style.maxHeight) {
             content.style.maxHeight = null;
         } else {
@@ -123,14 +124,14 @@ const Course = ({ data }) => {
 				<M text="Here you can find tutorials on machine learning, data science and several other fields organized as a sequential, in-depth theoretical course presented in modules. I've created it single-handedly by studying and summarizing a huge amount of material, and launched together with this blog as open source."/>
 				<p>I also have plans to make video tutorials based on <Link to="/research">Research</Link> posts for my YouTube channel <Link to="https://www.youtube.com/@avheuristics">@avheuristics</Link> in the future.</p>
 				<div>
-					<button className="spoilerButton noselect" ref={(el) => collRef.current.push(el)}>
+					<button class="noselect" className={stylesSpoilers.spoilerButton} ref={(el) => collRef.current.push(el)}>
 						&nbsp;&nbsp;
-						<span className="spoilerText"></span>
+						<span className={stylesSpoilers.spoilerText}></span>
 						More about this course
 						&nbsp;&nbsp;
 					</button>
-					<div className="spoilerContentWrapper">
-						<div className="spoilerContentGoals">
+					<div className={stylesSpoilers.spoilerContentWrapper}>
+						<div className={stylesSpoilers.spoilerContentGoals}>
 							<M text="So far, the course is **completely theoretical** and covers a wide range of advanced topics taken from different online lectures, textbooks, articles and my university classes, including sophisticated concepts of AI algorithms, data analysis and statistics. This is a fully-fledged textbook designed to help students, but it doesn't feature homework or quizzes."/>
 							<M text="Fundamental concepts are covered superficially. For better understanding, it's recommended to first familiarize yourself with the basics of **linear algebra**, **calculus**, **statistics** and **programming**, even though it's not necessary."/>
 							<M text="I decided to integrate the course into this personal website to achieve better popularization, but it will probably be moved to a separate one in the future."/>
