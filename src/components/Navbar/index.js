@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "gatsby";
 import { useLocation } from "@reach/router";
-import { Nav, NavLink, NavMenu, Dropdown, DropdownMenu, DropdownItem } from "./NavbarElements";
 import { StaticImage } from "gatsby-plugin-image";
 import CountPosts from "../../fetchers/count_posts";
 import * as styles from "./styles.module.scss"
@@ -28,8 +27,8 @@ const Navbar = () => {
 
   return (
     <>
-      <Nav>
-        <NavMenu>
+      <nav className={styles.navbar}>
+        <div className={styles.navbarMenu}>
           <Link to="/" style={{"pointer-events": isHomePage ? "none" : ""}}>
             <StaticImage
               className={styles.logo}
@@ -40,10 +39,10 @@ const Navbar = () => {
               placeholder='none'
             />
           </Link>
-          <Dropdown onMouseEnter={showWorksDropdown} onMouseLeave={hideWorksDropdown}>
-            <NavLink
-              activeClassName="active"
-              className={dropdownWorksVisible ? "active" : ""}
+          <div className={styles.dropdown} onMouseEnter={showWorksDropdown} onMouseLeave={hideWorksDropdown}>
+            <Link
+              activeClassName={styles.active}
+              className={`${dropdownWorksVisible ? styles.active : ""} ${styles.navLink}`}
               style={{
                 "opacity": dropdownWorksVisible ? "0.5" : "1",
                 "background-color": "transparent",
@@ -51,34 +50,34 @@ const Navbar = () => {
               }}
             >
               Works
-            </NavLink>
+            </Link>
             {dropdownWorksVisible && (
-              <DropdownMenu>
-                <DropdownItem
+              <div className={styles.dropdownMenu}>
+                <Link className={styles.dropdownItem}
                   to="/publications"
-                  activeClassName="active"
+                  activeClassName={styles.active}
                 >
                   Publications
-                </DropdownItem>
-                <DropdownItem
+                </Link>
+                <Link className={styles.dropdownItem}
                   to="/software"
-                  activeClassName="active"
+                  activeClassName={styles.active}
                 >
                   Software
-                </DropdownItem>
-                <DropdownItem
+                </Link>
+                <Link className={styles.dropdownItem}
                   to="/music"
-                  activeClassName="active"
+                  activeClassName={styles.active}
                 >
                   Music
-                </DropdownItem>
-              </DropdownMenu>
+                </Link>
+              </div>
             )}
-          </Dropdown>
-          <Dropdown onMouseEnter={showPostsDropdown} onMouseLeave={hidePostsDropdown}>
-            <NavLink
-              activeClassName="active"
-              className={dropdownPostsVisible ? "active" : ""}
+          </div>
+          <div className={styles.dropdown} onMouseEnter={showPostsDropdown} onMouseLeave={hidePostsDropdown}>
+            <Link
+              activeClassName={styles.active}
+              className={`${dropdownPostsVisible ? styles.active : ""} ${styles.navLink}`}
               style={{
                 "opacity": dropdownPostsVisible ? "0.5" : "1",
                 "background-color": "transparent",
@@ -96,13 +95,13 @@ const Navbar = () => {
                 }}>
                   {totalPostsCount}
               </span>
-            </NavLink>
+            </Link>
             {dropdownPostsVisible && (
-              <DropdownMenu>
-                <DropdownItem
+              <div className={styles.dropdownMenu}>
+                <Link
                   to="/adventures"
-                  activeClassName="active"
-                  className={isAdventuresPost ? styles.navbarPostSection : ""}
+                  activeClassName={styles.active}
+                  className={`${isAdventuresPost ? styles.navbarPostSection : ""} ${styles.dropdownItem}`}
                   style={{
                     "background-color": isAdventuresPost ? "transparent" : "",
                   }}
@@ -112,11 +111,11 @@ const Navbar = () => {
                     "opacity": isAdventuresPost ? "0" : "",
                     "transition": "opacity 0.3s ease"
                   }}>&#8198;{adventuresCount}</span>
-                </DropdownItem>
-                <DropdownItem
+                </Link>
+                <Link
                   to="/research"
-                  activeClassName="active"
-                  className={isResearchPost ? styles.navbarPostSection : ""}
+                  activeClassName={styles.active}
+                  className={`${isResearchPost ? styles.navbarPostSection : ""} ${styles.dropdownItem}`}
                   style={{
                     "background-color": isResearchPost ? "transparent" : "",
                   }}
@@ -126,11 +125,11 @@ const Navbar = () => {
                     "opacity": isResearchPost ? "0" : "",
                     "transition": "opacity 0.3s ease"
                   }}>&#8198;{researchCount}</span>
-                </DropdownItem>
-                <DropdownItem
+                </Link>
+                <Link
                   to="/thoughts"
-                  activeClassName="active"
-                  className={isThoughtsPost ? styles.navbarPostSection : ""}
+                  activeClassName={styles.active}
+                  className={`${isThoughtsPost ? styles.navbarPostSection : ""} ${styles.dropdownItem}`}
                   style={{
                     "background-color": isThoughtsPost ? "transparent" : "",
                   }}
@@ -140,45 +139,45 @@ const Navbar = () => {
                     "opacity": isThoughtsPost ? "0" : "",
                     "transition": "opacity 0.3s ease"
                   }}>&#8198;{thoughtsCount}</span>
-                </DropdownItem>
+                </Link>
                 <p style={{ margin: "6px 0" }}> </p>
-                <DropdownItem
+                <Link className={styles.dropdownItem}
                   to="/tags"
-                  activeClassName="active"
+                  activeClassName={styles.active}
                 >
                   Filter by tag
-                </DropdownItem>
-              </DropdownMenu>
+                </Link>
+              </div>
             )}
-          </Dropdown>
-          <NavLink to="/course" activeClassName="active">
+          </div>
+          <Link className={styles.navLink} to="/course" activeClassName={styles.active}>
             Course
-          </NavLink>
-          <NavLink to="/talks" activeClassName="active">
+          </Link>
+          <Link className={styles.navLink} to="/talks" activeClassName={styles.active}>
             Talks
-          </NavLink>
-          <NavLink to="/goals" activeClassName="active">
+          </Link>
+          <Link className={styles.navLink} to="/goals" activeClassName={styles.active}>
             Goals
-          </NavLink>
-          <NavLink to="/exploration" activeClassName="active">
+          </Link>
+          <Link className={styles.navLink} to="/exploration" activeClassName={styles.active}>
             Exploration
-          </NavLink>
-          <NavLink 
+          </Link>
+          <Link
             to="/freelance" 
-            activeClassName="active"
+            activeClassName={styles.active}
             partiallyActive={true}
-            className={isFreelanceSubpage ? "freelance-subpage" : ""}
+            className={`${isFreelanceSubpage ? styles.freelanceSubpage : ""} ${styles.navLink}`}
           >
             Freelance
-          </NavLink>
-          <NavLink to="/cv" activeClassName="active">
+          </Link>
+          <Link className={styles.navLink} to="/cv" activeClassName={styles.active}>
             CV
-          </NavLink>
-          <NavLink to="/about" activeClassName="active">
+          </Link>
+          <Link className={styles.navLink} to="/about" activeClassName={styles.active}>
             About
-          </NavLink>
-        </NavMenu>
-      </Nav>
+          </Link>
+        </div>
+      </nav>
     </>
   );
 };

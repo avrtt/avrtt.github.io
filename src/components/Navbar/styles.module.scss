@@ -1,24 +1,165 @@
-.navbarPostSection {
-  opacity: 0.22 !important;
-  transition: opacity 0.2s ease
+$fade-in-down: fadeInDown 0.3s ease forwards;
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.navbarPostSection:hover {
-  opacity: 0.6 !important;
-  transition: opacity 0.2s ease
+.navbar {
+  margin-bottom: 2vh;
+  margin-top: -11vh;
+  margin-left: -7.5vh;
+  padding: 4.3vh 2.4em 0.5em 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 12;
+  user-select: none;
+}
+
+.navbarMenu {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  z-index: 999;
+}
+
+.dropdownMenu {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 120%;
+  left: 0;
+  background-color: #e6e3e3;
+  border-radius: 1vh;
+  padding: 1vh;
+  margin-left: -1vh;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+
+  .dropdown:hover &,
+  .dropdown:focus-within & {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+    animation: $fade-in-down;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -2vh;
+    left: 0;
+    right: 0;
+    height: 2vh;
+  }
+}
+
+.dropdownItem {
+  padding: 0.4vh 2vh;
+  color: #8e8e8e;
+  text-decoration: none;
+  font-weight: 1000;
+  font-size: 2.2vh;
+  background-color: transparent;
+  border-radius: 1vh;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    color: #545456;
+    background-color: #f8f8f8;
+  }
+
+  &.active {
+    opacity: 0.22;
+    pointer-events: none;
+  }
+}
+
+.navLink {
+  width: fit-content;
+  border-radius: 1vh;
+  background-color: rgb(255, 255, 255);
+  height: 4.2vh;
+  font-size: 2.2vh;
+  justify-content: center;
+  margin: 0 0.4vh 0 0.4vh;
+  border-bottom: 0;
+	overflow: hidden;	
+  color: #8e8e8e;
+  font-weight: 1000;
+  display: flex;
+  align-items: center;
+  padding: 0 1.75vh;
+  cursor: pointer;
+  text-decoration: none;
+  transition-duration: 0.1s;
+
+  &.active {
+    opacity: 0.22;
+    background-color: rgba(255, 255, 255, 0) !important;
+    pointer-events: none;
+  }
+
+  &:hover {
+    color: #545456;
+    transform: translate(1px, 2px);
+    background-color: #f2f2f2;
+  }
+
+  &:hover.active {
+    transform: translate(0px, 0px);
+    opacity: 0.14;
+  }
+
+  .dropdown:hover & {
+    opacity: 1;
+  }
+
+  &.freelanceSubpage {
+    opacity: 0.22;
+    pointer-events: auto;
+
+    &:hover {
+      background-color: transparent;
+      opacity: 0.7;
+    }
+  }
+}
+
+.navbarPostSection {
+  opacity: 0.22 !important;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.6 !important;
+  }
 }
 
 .logo {
   margin-right: 3vh;
   width: 11.5vh;
-  transition: all 2s;
+  transition: all 0.1s;
   cursor: pointer;
-  -webkit-transition-duration: 0.1s;
-  transition-duration: 0.1s;
-}
 
-.logo:hover {
-	transform: scale(0.98);
-  filter: alpha(opacity=0.8);
-  opacity: 0.78;
+  &:hover {
+    transform: scale(0.98);
+    opacity: 0.78;
+  }
 }
