@@ -3,6 +3,7 @@ import ArrowNext from "../../images/posts/arrow_next.svg";
 import ArrowLast from "../../images/posts/arrow_last.svg";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
 import { Link } from "gatsby"
+import * as styles from "./styles.module.scss";
 
 const PostsLastNext = ({ nextPost, lastPost, section }) => {
 
@@ -15,19 +16,19 @@ const PostsLastNext = ({ nextPost, lastPost, section }) => {
   
   return (
 	<>
-      <div className="readNextWrapper">
+      <div className={styles.readNextWrapper}>
           {lastPost && (
             <Link to={lastLink}>
-              <GatsbyImage className="lastPost" image={lastPreview} alt="post_last" />
+              <GatsbyImage className={styles.lastPost} image={lastPreview} alt="post_last" />
             </Link>
           )}
-          <img className="lastArrow" style={{ display: lastPost ? 'block' : 'none' }} src={ArrowLast} alt="arrow_last" />
+          <img className={styles.lastArrow} styles={{ display: lastPost ? 'block' : 'none' }} src={ArrowLast} alt="arrow_last" />
           {nextPost && (
             <Link to={nextLink}>
-              <GatsbyImage className="nextPost" image={nextPreview} alt="post_next" />
+              <GatsbyImage className={styles.nextPost} image={nextPreview} alt="post_next" />
             </Link>
           )}
-          <img className="nextArrow" style={{ display: nextPost ? 'block' : 'none' }} src={ArrowNext} alt="arrow_next" />
+          <img className={styles.nextArrow} styles={{ display: nextPost ? 'block' : 'none' }} src={ArrowNext} alt="arrow_next" />
       </div>
 	</>
   );
