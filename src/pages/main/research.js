@@ -10,6 +10,10 @@ import { Link } from "gatsby";
 import { motion } from 'framer-motion';
 import { AnimationOnScroll } from 'react-animation-on-scroll';
 import { wordsPerMinuteResearch } from '../../data/commonVariables';
+import * as stylesPostsGallery from "../../styles/posts_gallery.module.scss"
+import * as stylesButtonsCommon from "../../styles/buttons_common.module.scss"
+import * as stylesCompactViews from "../../styles/compact_views.module.scss"
+import * as stylesTagBadges from "../../styles/tag_badges.module.scss";
 import 'animate.css/animate.min.css';
 
 const TITLE = 'Research - avrtt.blog'
@@ -90,10 +94,10 @@ const Posts = ({ data }) => {
 				<title>{TITLE}</title>
 			</Helmet>
 
-			<div className="viewButtonWrapper">
-				<motion.button onClick={toggleView} className="viewButton noselect" whileTap={{ scale: 0.95 }}>
+			<div className={stylesCompactViews.viewButtonWrapper}>
+				<motion.button onClick={toggleView} class="noselect" whileTap={{ scale: 0.95 }} className={stylesCompactViews.viewButton}>
 					<motion.div
-						className="buttonTextWrapper"
+						className={stylesButtonsCommon.buttonTextWrapper}
 						key={isTileView}
 						initial={{ opacity: 0 }}
 						animate={{ opacity: 1 }}
@@ -120,23 +124,23 @@ const Posts = ({ data }) => {
 								return (
 									<ImageListItem key={post.id}>
 										<div className="hover">
-											<span className="tagPosts mainTagGallery">{post.mainTag}</span>
+											<span className={`${stylesTagBadges.tagPosts} ${stylesTagBadges.mainTagGallery}`}>{post.mainTag}</span>
 											<AnimationOnScroll offset="999999" animateIn="animate__fadeIn" animatePreScroll="false" duration="0.3">
 												<GatsbyImage
-													className="prev-home"
+													className={stylesPostsGallery.prevHome}
 													image={image}
 													alt={post.title}
 												/>
 											</AnimationOnScroll>
 											<Link to={post.slug}>
-												<div className="overlay-back">
-													<div className="titleblock">
-														<p className="title">{post.title}</p>
+												<div className={stylesPostsGallery.overlayBack}>
+													<div className={stylesPostsGallery.titleblock}>
+														<p className={stylesPostsGallery.title}>{post.title}</p>
 													</div>
 												</div>
-												<div className="overlay-base">
-													<p className="title">{post.title}</p>
-													<div className="description">{post.desc}</div>
+												<div className={stylesPostsGallery.overlayBase}>
+													<p className={stylesPostsGallery.title}>{post.title}</p>
+													<div className={stylesPostsGallery.description}>{post.desc}</div>
 												</div>
 											</Link>
 										</div>
