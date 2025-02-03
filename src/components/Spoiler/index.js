@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import M from "../Markdown";
+import * as stylesSpoilers from "../../styles/spoilers.module.scss"
 
 // refactor this component
 
@@ -34,7 +35,7 @@ const Spoiler = ({ title,
 
   const toggleContent = (event) => {
     const content = event.target.nextElementSibling
-    event.target.classList.toggle("activeSpoiler")
+    event.target.classList.toggle(stylesSpoilers.activeSpoiler)
     if (content.style.maxHeight) {
       content.style.maxHeight = null
     } else {
@@ -44,14 +45,14 @@ const Spoiler = ({ title,
 
   return (
     <div>
-      <button class="spoilerButton" ref={(el) => (collRef.current.push(el))}>
+      <button class={stylesSpoilers.spoilerButton} ref={(el) => (collRef.current.push(el))}>
         &nbsp;&nbsp;
-        <span class="spoilerText"></span>
+        <span class={stylesSpoilers.spoilerText}></span>
         {title}
         &nbsp;&nbsp;
       </button>
-      <div class="spoilerContentWrapper">
-        <div class="spoilerContent">
+      <div class={stylesSpoilers.spoilerContentWrapper}>
+        <div class={stylesSpoilers.spoilerContent}>
           <br/>
           <M text={block1}/>
           <M text={block2}/>
