@@ -9,6 +9,8 @@ import BTCQR from "../../images/donate/btc-qr.svg";
 import ETHQR from "../../images/donate/eth-qr.svg";
 import BSCQR from "../../images/donate/bsc-qr.svg";
 import { KofiLink, PaypalLink, PatreonLink, BitcoinWallet, BEP20Wallet, ERC20Wallet } from "../../data/paymentMethods.js";
+import * as styles from "./styles.module.scss"
+import * as stylesDonateCommon from "../../styles/donate_common.module.scss"
 
 const logoStyle = {
 	'vertical-align': 'middle',
@@ -19,9 +21,9 @@ function modal(myImg, qr, address, caption1, caption2) {
 	var modal = document.getElementById("myModal");
 	var img = document.getElementById(myImg);
 	var modalImg = document.getElementById("img01");
-	var addressText = document.getElementById("address");
-	var caption1Text = document.getElementById("caption1");
-	var caption2Text = document.getElementById("caption2");
+	var addressText = document.getElementById(stylesDonateCommon.address);
+	var caption1Text = document.getElementById(stylesDonateCommon.caption1);
+	var caption2Text = document.getElementById(stylesDonateCommon.caption2);
 	img.onclick = function(){
 		modal.style.display = "block";
 		modalImg.src = qr;
@@ -29,7 +31,7 @@ function modal(myImg, qr, address, caption1, caption2) {
 		caption1Text.innerHTML = caption1;
 		caption2Text.innerHTML = caption2;
 	}
-	var span = document.getElementsByClassName("close")[0];
+	var span = document.getElementsByClassName(stylesDonateCommon.close)[0];
 	span.onclick = function() { 
 		modal.style.display = "none";
 	}
@@ -39,35 +41,35 @@ const PostDonate = () => {
 
   useEffect(() => {
   		window.scrollTo(0, 0)
-  		modal("myImg1Post", BTCQR, BitcoinWallet, 'BITCOIN NETWORK', 'Address copied to clipboard!')
-		modal("myImg2Post", BSCQR, BEP20Wallet, 'BEP-20 NETWORK', 'Address copied to clipboard!')
-		modal("myImg3Post", ETHQR, ERC20Wallet, 'ERC-20 NETWORK', 'Address copied to clipboard!')
+  		modal(styles.myImg1Post, BTCQR, BitcoinWallet, 'BITCOIN NETWORK', 'Address copied to clipboard!')
+		modal(styles.myImg2Post, BSCQR, BEP20Wallet, 'BEP-20 NETWORK', 'Address copied to clipboard!')
+		modal(styles.myImg3Post, ETHQR, ERC20Wallet, 'ERC-20 NETWORK', 'Address copied to clipboard!')
 	}, [])	
 
   return (
 	<>
-        <div class="postDonateIconsWrapper">
+        <div class={styles.postDonateIconsWrapper}>
             <a target="_blank" href={KofiLink}>
-                <img src={KoFi} class="postDonateIcon1" alt="kofi_logo" style={logoStyle} />
+                <img src={KoFi} class={styles.postDonateIcon1} alt="kofi_logo" style={logoStyle} />
             </a>
             <a target="_blank" href={PaypalLink}>
-                <img src={PayPal} class="postDonateIcon3" alt="paypal_logo" style={logoStyle} />
+                <img src={PayPal} class={styles.postDonateIcon3} alt="paypal_logo" style={logoStyle} />
             </a>
             <a target="_blank" href={PatreonLink}>
-                <img src={Patreon} class="postDonateIcon2" alt="patreon_logo" style={logoStyle} />
+                <img src={Patreon} class={styles.postDonateIcon2} alt="patreon_logo" style={logoStyle} />
             </a>
             
-            <img src={BTC} id="myImg1Post" class="postDonateIcon4" style={logoStyle} onClick={() => navigator.clipboard.writeText(BitcoinWallet)} />
-			<img src={BNB} id="myImg3Post" class="postDonateIcon5" style={logoStyle} onClick={() => navigator.clipboard.writeText(BEP20Wallet)} />
-			<img src={ETH} id="myImg2Post" class="postDonateIcon6" style={logoStyle} onClick={() => navigator.clipboard.writeText(ERC20Wallet)} />	
+            <img src={BTC} id={styles.myImg1Post} class={styles.postDonateIcon4} style={logoStyle} onClick={() => navigator.clipboard.writeText(BitcoinWallet)} />
+			<img src={BNB} id={styles.myImg3Post} class={styles.postDonateIcon5} style={logoStyle} onClick={() => navigator.clipboard.writeText(BEP20Wallet)} />
+			<img src={ETH} id={styles.myImg2Post} class={styles.postDonateIcon6} style={logoStyle} onClick={() => navigator.clipboard.writeText(ERC20Wallet)} />	
 		</div>
 		
-        <div id="myModal" class="modal">
-	        <div class="close">
-		        <img class="modal-content" id="img01" alt="modal-img" />
-		        <div id="address"></div>
-		        <div id="caption1"></div>
-		        <div id="caption2"></div>
+        <div id="myModal" class={stylesDonateCommon.modal}>
+	        <div class={stylesDonateCommon.close}>
+		        <img class={stylesDonateCommon.modalContent} id="img01" alt="modal-img" />
+		        <div id={stylesDonateCommon.address}></div>
+		        <div id={stylesDonateCommon.caption1}></div>
+		        <div id={stylesDonateCommon.caption2}></div>
 	        </div>
         </div>
 		
