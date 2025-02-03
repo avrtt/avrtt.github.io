@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import M from '../Markdown';
+import * as styles from "./styles.module.scss";
 
 const ContentBlock = ({
     title,
@@ -137,7 +138,7 @@ const ContentBlock = ({
     return isMarkdown ? (
         <div
             style={blockStyle}
-            className="contentBlock"
+            className={styles.contentBlock}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
@@ -153,7 +154,7 @@ const ContentBlock = ({
     ) : (
         <div
             style={blockStyle}
-            className="contentBlock"
+            className={styles.contentBlock}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
         >
