@@ -1,0 +1,21 @@
+.footerBadgeStyle {
+  transition: 110ms ease-in;
+  opacity: 0.6;
+  filter: alpha(opacity=40);
+}
+
+.footerBadgeStyle:hover {
+  transition: 110ms ease-in;
+  opacity: 1.0;
+  filter: alpha(opacity=100);
+}
+
+.footerContactStyle {
+  transition: 110ms ease-in;
+  opacity: 1.0;
+}
+
+.footerContactStyle:hover {
+  transition: 110ms ease-in;
+  opacity: 0.75;
+}
