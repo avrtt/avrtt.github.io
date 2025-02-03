@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import M from '../../components/Markdown';
-
+import * as stylesPlaques from "../../styles/plaques.module.scss"
 
 const TITLE = 'Information for Business Inquiries - avrtt.blog'
 
@@ -22,7 +22,7 @@ const Business = () => {
 		<div class="aboutBody">
 
 		<br/>
-		<div class="yellowNotice">
+		<div class={stylesPlaques.yellowNotice}>
 			<M text="## 🚧 HEADS UP!"/>
 			<M text="This page isn't finished or has been hidden for redesign. Content will appear soon."/>
 		</div>

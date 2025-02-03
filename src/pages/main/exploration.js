@@ -11,6 +11,7 @@ import M from '../../components/Markdown';
 import { AnimationOnScroll } from 'react-animation-on-scroll';
 import { explorationLastUpdated } from '../../data/lastUpdated';
 import info from "../../images/goals/info.svg";
+import * as stylesPlaques from "../../styles/plaques.module.scss"
 
 const TITLE = 'Exploration - avrtt.blog'
 
@@ -359,7 +360,7 @@ const Exploration = () => {
 	
 		<div class='explorationBody'> 
 			<br/>
-			<div class="yellowNotice">
+			<div class={stylesPlaques.yellowNotice}>
 				<M text="## 🚧 HEADS UP!"/>
 				<M text="This page isn't finished or has been hidden for redesign. Content will appear soon."/>
 			</div>

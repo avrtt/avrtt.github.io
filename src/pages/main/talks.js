@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { AnimationOnScroll } from 'react-animation-on-scroll';
 import M from '../../components/Markdown';
 import { talksLastUpdated } from '../../data/lastUpdated';
+import * as stylesPlaques from "../../styles/plaques.module.scss"
 import 'animate.css/animate.min.css';
 
 const TITLE = 'Talks - avrtt.blog'
@@ -23,7 +24,7 @@ const Talks = () => {
 
 			<div class="talksBody">
 				<br/>
-				<div class="yellowNotice">
+				<div class={stylesPlaques.yellowNotice}>
 					<M text="## 🚧 HEADS UP!"/>
 					<M text="This page isn't finished or has been hidden for redesign. Content will appear soon."/>
 				</div>

@@ -7,6 +7,7 @@ import { cvLastUpdated } from '../../data/lastUpdated';
 import Stack from'../../components/Stack'
 import CvPosition from'../../components/CvPosition'
 import CvPositionFirst from'../../components/CvPositionFirst'
+import * as stylesPlaques from "../../styles/plaques.module.scss"
 
 const TITLE = 'CV - avrtt.blog'
 
@@ -35,7 +36,7 @@ const CV = () => {
 
 		<div class="cvBody">
 			<br/>
-			<div class="yellowNotice">
+			<div class={stylesPlaques.yellowNotice}>
 				<M text="## 🚧 HEADS UP!"/>
 				<M text="This page isn't finished or has been hidden for redesign. Content will appear soon."/>
 			</div>
