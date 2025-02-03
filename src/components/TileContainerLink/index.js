@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { AnimationOnScroll } from 'react-animation-on-scroll';
+import * as styles from "./styles.module.scss";
 
 const TileContainerLink = ({ 
     children, 
@@ -22,10 +23,10 @@ const TileContainerLink = ({
 
     return animationonscroll ? (
         <AnimationOnScroll offset={offset} duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
-            <div style={containerStyle} className="tileContainerLink">{children}</div>
+            <div style={containerStyle} className={styles.tileContainerLink}>{children}</div>
         </AnimationOnScroll>
     ) : (
-        <div style={containerStyle} className="tileContainerLink">{children}</div>
+        <div style={containerStyle} className={styles.tileContainerLink}>{children}</div>
     )
 }
 
