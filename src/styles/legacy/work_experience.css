@@ -1,0 +1,34 @@
+.expPosition {
+  font-weight: bold;
+  font-size: 28px;
+}
+
+.expCompany {
+  font-size: 28px;
+}
+
+.expTime {
+  opacity: 0.85;
+}
+
+.expLocation {
+  opacity: 0.85;
+}
+
+.expTimeLocationWrapper {
+  font-size: 21px;
+  margin-top: -6px;
+}
+
+.expDesc {
+  margin-top: 20px;
+}
+
+.expDescList {
+  margin-top: -20px;
+  margin-bottom: 60px;
+}
+
+.expDescListFirst {
+  margin-top: -20px;
+}

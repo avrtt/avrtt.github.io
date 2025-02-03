@@ -1,5 +1,4 @@
 import * as React from "react"
-import "../global.scss"
 import Home from './main/home'
 
 const App = () => {

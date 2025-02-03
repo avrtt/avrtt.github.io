@@ -1,0 +1,24 @@
+.flagsWrapper {
+	text-align: center;
+	font-size: 34px;
+	display: flex;
+	letter-spacing: 0px;
+	line-height: 31px;
+	margin-left: 15%;
+	margin-right: 15%;
+  -webkit-touch-callout: none;
+    -webkit-user-select: none; 
+     -khtml-user-select: none;
+       -moz-user-select: none; 
+        -ms-user-select: none;
+            user-select: none;
+}
+
+.flagsCollected {
+	display: inline-block;
+}
+
+.flagsNotCollected {
+	display: inline-block;
+	opacity: 0.13;
+}

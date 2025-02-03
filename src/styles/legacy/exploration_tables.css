@@ -1,0 +1,100 @@
+#infoExploration {
+	opacity: 0.4;
+	margin-right: 10px;
+	display: inline-block;
+	height: 100%;
+	width: 32px;
+	vertical-align: sub;
+	-webkit-touch-callout: none;
+    -webkit-user-select: none; 
+     -khtml-user-select: none;
+       -moz-user-select: none; 
+        -ms-user-select: none;
+            user-select: none;
+}
+
+.tooltipExploration {
+	position: relative;
+	display: inline-block;
+}
+
+.tooltipExploration .tooltiptextExploration {
+	font-size: 16px;
+	visibility: hidden;
+	width: 400px;
+	background-color: #444444;
+	color: #f2f2f2;
+	text-align: center;
+	border-radius: 6px;
+	padding: 0 3px;
+	position: absolute;
+	z-index: 1;
+	bottom: 120%;
+	left: 50%;
+	margin-left: -205px;
+	opacity: 0;
+	transition: opacity 0.3s;
+}
+
+.tooltipExploration .tooltiptextExploration::after {
+	content: "";
+	position: absolute;
+	left: 50%;
+	margin-left: -5px;
+	border-style: solid;
+	border-color: transparent transparent transparent;
+}
+
+.tooltipExploration .tooltiptextExploration {
+	transition: 170ms ease-in;
+}
+
+.tooltipExploration:hover .tooltiptextExploration {
+	visibility: visible;
+	opacity: 1;
+}
+
+.placesTable td {
+	padding-top: 5px; 
+  padding-bottom: 5px
+}
+
+.countriesTable td {
+	padding-top: 5px; 
+  padding-bottom: 5px;
+}
+
+.rankingTitle {
+  color: #858585;
+  line-height: 1;
+  font-weight: lighter;
+  margin-top: 0px;
+  margin-bottom: 50px;
+  font-size: 28px;
+  text-align: center;
+  -webkit-touch-callout: none;
+    -webkit-user-select: none; 
+     -khtml-user-select: none;
+       -moz-user-select: none; 
+        -ms-user-select: none;
+            user-select: none;
+}
+
+#infoExploration {
+	transition: 120ms ease-in;
+	-webkit-touch-callout: none;
+    -webkit-user-select: none; 
+     -khtml-user-select: none;
+       -moz-user-select: none; 
+        -ms-user-select: none;
+            user-select: none;
+}
+
+#infoExploration {
+	width: 32px;
+}
+
+#infoExploration:hover {
+	opacity: 0.75;
+	transition: 120ms ease-in;
+}

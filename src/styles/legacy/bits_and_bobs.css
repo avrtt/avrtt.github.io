@@ -1,0 +1,4 @@
+.makeBlackAndWhite {
+  filter: grayscale(1) contrast(100) brightness(1);
+  mix-blend-mode: multiply;
+}
