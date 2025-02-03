@@ -33,6 +33,10 @@ import habr from "../../images/links/habr.svg"
 import russian from "../../images/flags/russia.svg"
 import { textMain } from "../strings/freelance"
 import { SberbankCardCopy, SberbankCardDisplay, SberbankSBPCopy, SberbankSBPDisplay, BitcoinWallet, BEP20Wallet, ERC20Wallet } from "../../data/paymentMethods.js";
+import * as stylesWallets from "../../styles/wallets.module.scss"
+import * as stylesDonateCommon from "../../styles/donate_common.module.scss"
+import * as stylesSpoilers from "../../styles/spoilers.module.scss"
+import * as stylesFreelancePages from "../../styles/freelance_pages.module.scss"
 
 const TITLE = 'Freelance - avrtt.blog'
 
@@ -61,9 +65,9 @@ function modal(myImg, qr, address, caption1, caption2) {
 	var modal = document.getElementById("myModal");
 	var img = document.getElementById(myImg);
 	var modalImg = document.getElementById("img01");
-	var addressText = document.getElementById("address");
-	var caption1Text = document.getElementById("caption1");
-	var caption2Text = document.getElementById("caption2");
+	var addressText = document.getElementById(stylesDonateCommon.address);
+	var caption1Text = document.getElementById(stylesDonateCommon.caption1);
+	var caption2Text = document.getElementById(stylesDonateCommon.caption2);
 	img.onclick = function(){
 		modal.style.display = "block";
 		modalImg.src = qr;
@@ -71,7 +75,7 @@ function modal(myImg, qr, address, caption1, caption2) {
 		caption1Text.innerHTML = caption1;
 		caption2Text.innerHTML = caption2;
 	}
-	var span = document.getElementsByClassName("close")[0];
+	var span = document.getElementsByClassName(stylesDonateCommon.close)[0];
 	span.onclick = function() { 
 		modal.style.display = "none";
 	}
@@ -99,14 +103,14 @@ const Freelance = () => {
 
 	useEffect(() => {
   		window.scrollTo(0, 0)
-  		modal("myImg1", BTCQR, 'bc1qe4h2scmc5hq5xjq43uz8xur5ghrkszn00h437d')
-		modal("myImg2", BSCQR, '0xabFFf687cE09b39858f4432Ef643129CcC1B5bBf')
-		modal("myImg3", ETHQR, '0xabFFf687cE09b39858f4432Ef643129CcC1B5bBf')
+  		modal(stylesWallets.myImg1, BTCQR, 'bc1qe4h2scmc5hq5xjq43uz8xur5ghrkszn00h437d')
+		modal(stylesWallets.myImg2, BSCQR, '0xabFFf687cE09b39858f4432Ef643129CcC1B5bBf')
+		modal(stylesWallets.myImg3, ETHQR, '0xabFFf687cE09b39858f4432Ef643129CcC1B5bBf')
 	}, [])	
 
     const toggleContent = (event) => {
         const content = event.target.nextElementSibling;
-        event.target.classList.toggle("activeSpoiler");
+        event.target.classList.toggle(stylesSpoilers.activeSpoiler);
         if (content.style.maxHeight) {
             content.style.maxHeight = null;
         } else {
@@ -125,9 +129,9 @@ const Freelance = () => {
 				<title>{ TITLE }</title>
 			</Helmet>
 
-			<div class="languageSwitchWrapper noselect">
+			<div class="noselect" className={stylesFreelancePages.languageSwitchWrapper}>
 				<Link to="/freelance/ru">
-					<span class="languageButton">
+					<span class={stylesFreelancePages.languageButton}>
 						<img style={flagStyle} src={russian}/>
 						<span style={codeStyle}>RU</span>
 					</span>
@@ -212,10 +216,10 @@ const Freelance = () => {
 				</TileContainerLink>
 				<span>
 					<span dangerouslySetInnerHTML={{ __html: textMain.general.schedule.en }} />
-					<span class="tooltipFreelance">
+					<span class={stylesFreelancePages.tooltipFreelance}>
 						&nbsp;&nbsp;
-						<img id='infoFreelance' src={info} alt='info'/>
-						<span class="tooltiptextFreelance">{tooltipText}</span>
+						<img id={stylesFreelancePages.infoFreelance} src={info} alt='info'/>
+						<span class={stylesFreelancePages.tooltiptextFreelance}>{tooltipText}</span>
 					</span>
 				</span>
 				<M text={textMain.general.outro.en}/>
@@ -225,7 +229,7 @@ const Freelance = () => {
 			</div>
 			<div class="freelanceBodyNested">
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
-					<div class="freelanceCategorySectionWrapper">
+					<div class={stylesFreelancePages.freelanceCategorySectionWrapper}>
 						{categories.map((category) => (
 							<FreelanceCategory 
 								categoryName={category.categoryName}
@@ -242,123 +246,123 @@ const Freelance = () => {
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
 					<M text={textMain.workflow.heading.en}/>
 					<M text={textMain.workflow.section1.heading.en}/>
-					<p id="freelanceWorkflowItem">
+					<p id={stylesFreelancePages.freelanceWorkflowItem}>
 						<M text={textMain.workflow.section1.block1.en}/>
 						<M text={textMain.workflow.section1.block2.en}/>
 						<M text={textMain.workflow.section1.block3.en}/>
 						<M text={textMain.workflow.section1.block4.en}/>
 					</p>
 					<M text={textMain.workflow.section2.heading.en}/>
-					<p id="freelanceWorkflowItem">
+					<p id={stylesFreelancePages.freelanceWorkflowItem}>
 						<M text={textMain.workflow.section2.block1.en}/>
 						<M text={textMain.workflow.section2.block2.en}/>
 						<M text={textMain.workflow.section2.block3.en}/>
 					</p>
 					<M text={textMain.workflow.section3.heading.en}/>
-					<p id="freelanceWorkflowItem">
+					<p id={stylesFreelancePages.freelanceWorkflowItem}>
 						<M text={textMain.workflow.section3.block1.en}/>
 					</p>
 					<M text={textMain.workflow.section4.heading.en}/>
-					<p id="freelanceWorkflowItem">
+					<p id={stylesFreelancePages.freelanceWorkflowItem}>
 						<M text={textMain.workflow.section4.block1.en}/>
 						<M text={textMain.workflow.section4.block2.en}/>
 						<M text={textMain.workflow.section4.block3.en}/>
 					</p>
 					<M text={textMain.workflow.section5.heading.en}/>
-					<p id="freelanceWorkflowItem">
+					<p id={stylesFreelancePages.freelanceWorkflowItem}>
 						<M text={textMain.workflow.section5.block1.en}/>
 						<M text={textMain.workflow.section5.block2.en}/>
 					</p>
 					<M text={textMain.workflow.section6.heading.en}/>
-					<p id="freelanceWorkflowItem">
+					<p id={stylesFreelancePages.freelanceWorkflowItem}>
 						<M text={textMain.workflow.section6.block1.en}/>
 						<M text={textMain.workflow.section6.block2.en}/>
 					</p>
 					<M text={textMain.workflow.section7.heading.en}/>
-					<p id="freelanceWorkflowItem">
+					<p id={stylesFreelancePages.freelanceWorkflowItem}>
 						<M text={textMain.workflow.section7.block1.en}/>
 					</p>
 					<M text={textMain.workflow.section8.heading.en}/>
-					<p id="freelanceWorkflowItem">
+					<p id={stylesFreelancePages.freelanceWorkflowItem}>
 						<M text={textMain.workflow.section8.block1.en}/>
 						<M text={textMain.workflow.section8.block2.en}/>
 					</p>
 					<br/>
-					<button className="spoilerButton noselect" ref={(el) => collRef.current.push(el)}>
+					<button class="noselect" className={stylesSpoilers.spoilerButton} ref={(el) => collRef.current.push(el)}>
 						&nbsp;&nbsp;
-						<span className="spoilerText"></span>
+						<span className={stylesSpoilers.spoilerText}></span>
 						{textMain.workflow.faq.title.en}
 						&nbsp;&nbsp;
 					</button>
-					<div className="spoilerContentWrapper">
-						<div className="spoilerContentFAQ">
-							<div className="spoilerBlockQA">
-								<p class="spoilerQuestion"><strong>Q:</strong> {textMain.workflow.faq.q1.en}</p>
-								<p class="spoilerAnswer"><strong>A:</strong> {textMain.workflow.faq.a1.en}</p>
+					<div className={stylesSpoilers.spoilerContentWrapper}>
+						<div className={stylesSpoilers.spoilerContentFAQ}>
+							<div className={stylesSpoilers.spoilerBlockQA}>
+								<p class={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q1.en}</p>
+								<p class={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a1.en}</p>
 							</div>
-							<div className="spoilerBlockQA">
-								<p class="spoilerQuestion"><strong>Q:</strong> {textMain.workflow.faq.q2.en}</p>
-								<p class="spoilerAnswer"><strong>A:</strong> {textMain.workflow.faq.a2.en}</p>
+							<div className={stylesSpoilers.spoilerBlockQA}>
+								<p class={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q2.en}</p>
+								<p class={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a2.en}</p>
 							</div>
-							<div className="spoilerBlockQA">
-								<p class="spoilerQuestion"><strong>Q:</strong> {textMain.workflow.faq.q3.en}</p>
-								<p class="spoilerAnswer"><strong>A:</strong> {textMain.workflow.faq.a3.en}</p>
+							<div className={stylesSpoilers.spoilerBlockQA}>
+								<p class={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q3.en}</p>
+								<p class={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a3.en}</p>
 							</div>
-							<div className="spoilerBlockQA">
-								<p class="spoilerQuestion"><strong>Q:</strong> {textMain.workflow.faq.q4.en}</p>
-								<p class="spoilerAnswer"><strong>A:</strong> <span dangerouslySetInnerHTML={{ __html: textMain.workflow.faq.a4.en }}/></p>
+							<div className={stylesSpoilers.spoilerBlockQA}>
+								<p class={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q4.en}</p>
+								<p class={stylesSpoilers.spoilerAnswer}><strong>A:</strong> <span dangerouslySetInnerHTML={{ __html: textMain.workflow.faq.a4.en }}/></p>
 							</div>
-							<div className="spoilerBlockQA">
-								<p class="spoilerQuestion"><strong>Q:</strong> {textMain.workflow.faq.q5.en}</p>
-								<p class="spoilerAnswer"><strong>A:</strong> <span dangerouslySetInnerHTML={{ __html: textMain.workflow.faq.a5.en }}/></p>
+							<div className={stylesSpoilers.spoilerBlockQA}>
+								<p class={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q5.en}</p>
+								<p class={stylesSpoilers.spoilerAnswer}><strong>A:</strong> <span dangerouslySetInnerHTML={{ __html: textMain.workflow.faq.a5.en }}/></p>
 							</div>
-							<div className="spoilerBlockQA">
-								<p class="spoilerQuestion"><strong>Q:</strong> <span dangerouslySetInnerHTML={{ __html: textMain.workflow.faq.q6.en }}/></p>
-								<p class="spoilerAnswer"><strong>A:</strong> <span dangerouslySetInnerHTML={{ __html: textMain.workflow.faq.a6.en }}/></p>
+							<div className={stylesSpoilers.spoilerBlockQA}>
+								<p class={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> <span dangerouslySetInnerHTML={{ __html: textMain.workflow.faq.q6.en }}/></p>
+								<p class={stylesSpoilers.spoilerAnswer}><strong>A:</strong> <span dangerouslySetInnerHTML={{ __html: textMain.workflow.faq.a6.en }}/></p>
 							</div>
-							<div className="spoilerBlockQA">
-								<p class="spoilerQuestion"><strong>Q:</strong> <span dangerouslySetInnerHTML={{ __html: textMain.workflow.faq.q7.en }}/></p>
-								<p class="spoilerAnswer"><strong>A:</strong> {textMain.workflow.faq.a7.en}</p>
+							<div className={stylesSpoilers.spoilerBlockQA}>
+								<p class={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> <span dangerouslySetInnerHTML={{ __html: textMain.workflow.faq.q7.en }}/></p>
+								<p class={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a7.en}</p>
 							</div>
-							<div className="spoilerBlockQA">
-								<p class="spoilerQuestion"><strong>Q:</strong> {textMain.workflow.faq.q8.en}</p>
-								<p class="spoilerAnswer"><strong>A:</strong> {textMain.workflow.faq.a8.en}</p>
+							<div className={stylesSpoilers.spoilerBlockQA}>
+								<p class={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q8.en}</p>
+								<p class={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a8.en}</p>
 							</div>
-							<div className="spoilerBlockQA">
-								<p class="spoilerQuestion"><strong>Q:</strong> {textMain.workflow.faq.q9.en}</p>
-								<p class="spoilerAnswer"><strong>A:</strong> {textMain.workflow.faq.a9.en}</p>
+							<div className={stylesSpoilers.spoilerBlockQA}>
+								<p class={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q9.en}</p>
+								<p class={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a9.en}</p>
 							</div>
-							<div className="spoilerBlockQA">
-								<p class="spoilerQuestion"><strong>Q:</strong> {textMain.workflow.faq.q10.en}</p>
-								<p class="spoilerAnswer"><strong>A:</strong> {textMain.workflow.faq.a10.en}</p>
+							<div className={stylesSpoilers.spoilerBlockQA}>
+								<p class={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q10.en}</p>
+								<p class={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a10.en}</p>
 							</div>
-							<div className="spoilerBlockQA">
-								<p class="spoilerQuestion"><strong>Q:</strong> {textMain.workflow.faq.q11.en}</p>
-								<p class="spoilerAnswer"><strong>A:</strong> {textMain.workflow.faq.a11.en}</p>
+							<div className={stylesSpoilers.spoilerBlockQA}>
+								<p class={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q11.en}</p>
+								<p class={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a11.en}</p>
 							</div>
-							<div className="spoilerBlockQA">
-								<p class="spoilerQuestion"><strong>Q:</strong> {textMain.workflow.faq.q12.en}</p>
-								<p class="spoilerAnswer"><strong>A:</strong> {textMain.workflow.faq.a12.en}</p>
+							<div className={stylesSpoilers.spoilerBlockQA}>
+								<p class={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q12.en}</p>
+								<p class={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a12.en}</p>
 							</div>
-							<div className="spoilerBlockQA">
-								<p class="spoilerQuestion"><strong>Q:</strong> {textMain.workflow.faq.q13.en}</p>
-								<p class="spoilerAnswer"><strong>A:</strong> {textMain.workflow.faq.a13.en}</p>
+							<div className={stylesSpoilers.spoilerBlockQA}>
+								<p class={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q13.en}</p>
+								<p class={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a13.en}</p>
 							</div>
-							<div className="spoilerBlockQA">
-								<p class="spoilerQuestion"><strong>Q:</strong> {textMain.workflow.faq.q14.en}</p>
-								<p class="spoilerAnswer"><strong>A:</strong> {textMain.workflow.faq.a14.en}</p>
+							<div className={stylesSpoilers.spoilerBlockQA}>
+								<p class={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q14.en}</p>
+								<p class={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a14.en}</p>
 							</div>
-							<div className="spoilerBlockQA">
-								<p class="spoilerQuestion"><strong>Q:</strong> {textMain.workflow.faq.q15.en}</p>
-								<p class="spoilerAnswer"><strong>A:</strong> {textMain.workflow.faq.a15.en}</p>
+							<div className={stylesSpoilers.spoilerBlockQA}>
+								<p class={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q15.en}</p>
+								<p class={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a15.en}</p>
 							</div>
-							<div className="spoilerBlockQA">
-								<p class="spoilerQuestion"><strong>Q:</strong> {textMain.workflow.faq.q16.en}</p>
-								<p class="spoilerAnswer"><strong>A:</strong> {textMain.workflow.faq.a16.en}</p>
+							<div className={stylesSpoilers.spoilerBlockQA}>
+								<p class={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q16.en}</p>
+								<p class={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a16.en}</p>
 							</div>
-							<div className="spoilerBlockQA">
-								<p class="spoilerQuestion"><strong>Q:</strong> {textMain.workflow.faq.q17.en}</p>
-								<p class="spoilerAnswer"><strong>A:</strong> {textMain.workflow.faq.a17.en}</p>
+							<div className={stylesSpoilers.spoilerBlockQA}>
+								<p class={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q17.en}</p>
+								<p class={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a17.en}</p>
 							</div>
 						</div>
 					</div>
@@ -387,14 +391,14 @@ const Freelance = () => {
 						/>
 					</TileContainerLink>
 					<M text={textMain.testimonials.general.en}/>
-					<button className="spoilerButton noselect" ref={(el) => collRef.current.push(el)}>
+					<button class="noselect" className={stylesSpoilers.spoilerButton} ref={(el) => collRef.current.push(el)}>
 						&nbsp;&nbsp;
-						<span className="spoilerText"></span>
+						<span className={stylesSpoilers.spoilerText}></span>
 						{textMain.testimonials.spoilerDifference.title.en}
 						&nbsp;&nbsp;
 					</button>
-					<div className="spoilerContentWrapper">
-						<div className="spoilerBlockTestimonials">
+					<div className={stylesSpoilers.spoilerContentWrapper}>
+						<div className={stylesSpoilers.spoilerBlockTestimonials}>
 							<M text={textMain.testimonials.spoilerDifference.content.en}/>
 						</div>
 					</div>
@@ -431,40 +435,40 @@ const Freelance = () => {
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
 					<div class="sectionBreak"><M text="----------"/></div>
 					<M text={textMain.payment.heading.en}/>
-					<div class="wallets">
-						<div class="wallet3">
+					<div className={stylesWallets.wallets}>
+						<div className={stylesWallets.wallet3}>
 							<img src={CardSber} class="noselect" alt="card_logo" width="60" height="60" style={logoStyle} />
-							<code class="address" onClick={() => navigator.clipboard.writeText(SberbankCardCopy)}><div class="tooltip">{SberbankCardDisplay}
-							<span class="tooltiptext">Click to copy</span></div></code>
-							<div class="currency-name"><b>RUB</b> &nbsp;(SBERBANK, RUSSIAN CARDS ONLY) &nbsp; | &nbsp; <code class="phoneNumber" onClick={() => navigator.clipboard.writeText(SberbankSBPCopy)}><div class="tooltip">{SberbankSBPDisplay}
+							<code class={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(SberbankCardCopy)}><div className={stylesWallets.tooltip}>{SberbankCardDisplay}
+							<span className={stylesWallets.tooltiptext}>Click to copy</span></div></code>
+							<div className={stylesWallets.currencyName}><b>RUB</b> &nbsp;(SBERBANK, RUSSIAN CARDS ONLY) &nbsp; | &nbsp; <code className={stylesWallets.phoneNumber} onClick={() => navigator.clipboard.writeText(SberbankSBPCopy)}><div className={stylesWallets.tooltip}>{SberbankSBPDisplay}
 							</div></code></div>
 						</div>
-						<div class="wallet3">				
+						<div className={stylesWallets.wallet3}>				
 							<img src={BTC} class="noselect" alt="btc_logo" width="60" height="60" style={logoStyle} />
-							<code class="address" onClick={() => navigator.clipboard.writeText(BitcoinWallet)}><div class="tooltip">{BitcoinWallet}
-							<span class="tooltiptext">Click to copy</span></div></code>&nbsp;
-							<img id="qr" class="icon" src={QR} width="36" height="36" title="QR code" alt="qr-code" />
-							<img id="myImg1" class="icon" src={BTCQR} alt="BitcoinWallet" width="40" height="40" style={logoStyle} title="QR code" />&nbsp;
-							<a href={"https://mempool.space/address/" + BitcoinWallet}><img class="icon" src={Search} alt="search_icon" width="18" height="20" style={logoStyle} title="Transaction history" /></a>
-							<div class="currency-name"><b>BTC</b> &nbsp;(BITCOIN NETWORK)</div>
+							<code class={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(BitcoinWallet)}><div className={stylesWallets.tooltip}>{BitcoinWallet}
+							<span className={stylesWallets.tooltiptext}>Click to copy</span></div></code>&nbsp;
+							<img id={stylesWallets.qr} className={stylesWallets.icon} src={QR} width="36" height="36" title="QR code" alt="qr-code" />
+							<img id={stylesWallets.myImg1} className={stylesWallets.icon} src={BTCQR} alt="BitcoinWallet" width="40" height="40" style={logoStyle} title="QR code" />&nbsp;
+							<a href={"https://mempool.space/address/" + BitcoinWallet}><img className={stylesWallets.icon} src={Search} alt="search_icon" width="18" height="20" style={logoStyle} title="Transaction history" /></a>
+							<div className={stylesWallets.currencyName}><b>BTC</b> &nbsp;(BITCOIN NETWORK)</div>
 						</div>		
-						<div class="wallet3">		
+						<div className={stylesWallets.wallet3}>		
 							<img src={BNB} class="noselect" alt="bnb_logo" width="60" height="60" style={logoStyle} />
-							<code class="address" onClick={() => navigator.clipboard.writeText(BEP20Wallet)}><div class="tooltip">{BEP20Wallet}
-							<span class="tooltiptext">Click to copy</span></div></code>&nbsp;
-							<img id="qr" class="icon" src={QR} width="36" height="36" title="QR code" alt="qr-code" />
-							<img id="myImg3" class="icon" src={BSCQR} alt="BEP20Wallet" width="40" height="40" style={logoStyle} title="QR code" />&nbsp;
-							<a href={"https://bscscan.com/address/" + BEP20Wallet}><img class="icon" src={Search} alt="search_icon" width="18" height="20" style={logoStyle} title="Transaction history" /></a>
-							<div class="currency-name"><b>USDT • USDC • DAI • BNB</b> &nbsp;(BNB SMART CHAIN NETWORK, BEP-20)</div>
+							<code class={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(BEP20Wallet)}><div className={stylesWallets.tooltip}>{BEP20Wallet}
+							<span className={stylesWallets.tooltiptext}>Click to copy</span></div></code>&nbsp;
+							<img id={stylesWallets.qr} className={stylesWallets.icon} src={QR} width="36" height="36" title="QR code" alt="qr-code" />
+							<img id={stylesWallets.myImg3} className={stylesWallets.icon} src={BSCQR} alt="BEP20Wallet" width="40" height="40" style={logoStyle} title="QR code" />&nbsp;
+							<a href={"https://bscscan.com/address/" + BEP20Wallet}><img className={stylesWallets.icon} src={Search} alt="search_icon" width="18" height="20" style={logoStyle} title="Transaction history" /></a>
+							<div className={stylesWallets.currencyName}><b>USDT • USDC • DAI • BNB</b> &nbsp;(BNB SMART CHAIN NETWORK, BEP-20)</div>
 						</div>				
-						<div class="wallet6">
+						<div className={stylesWallets.wallet6}>
 							<img src={ETH} class="noselect" alt="etherium_logo" width="60" height="60" style={logoStyle} />
-							<code class="address" onClick={() => navigator.clipboard.writeText(ERC20Wallet)}><div class="tooltip">{ERC20Wallet}
-							<span class="tooltiptext">Click to copy</span></div></code>&nbsp;
-							<img id="qr" class="icon" src={QR} width="36" height="36" title="QR code" alt="qr-code" />
-							<img id="myImg2" class="icon" src={ETHQR} alt="ERC20Wallet" width="40" height="40" style={logoStyle} title="QR code" />&nbsp;
-							<a href={"https://etherscan.io/address/" + ERC20Wallet}><img class="icon" src={Search} alt="search_icon" width="18" height="20" style={logoStyle} title="Transaction history" /></a>
-							<div class="currency-name"><b>USDT • USDC • DAI • ETH</b> &nbsp;(ETHEREUM NETWORK, ERC-20)</div>
+							<code class={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(ERC20Wallet)}><div className={stylesWallets.tooltip}>{ERC20Wallet}
+							<span className={stylesWallets.tooltiptext}>Click to copy</span></div></code>&nbsp;
+							<img id={stylesWallets.qr} className={stylesWallets.icon} src={QR} width="36" height="36" title="QR code" alt="qr-code" />
+							<img id={stylesWallets.myImg2} className={stylesWallets.icon} src={ETHQR} alt="ERC20Wallet" width="40" height="40" style={logoStyle} title="QR code" />&nbsp;
+							<a href={"https://etherscan.io/address/" + ERC20Wallet}><img className={stylesWallets.icon} src={Search} alt="search_icon" width="18" height="20" style={logoStyle} title="Transaction history" /></a>
+							<div className={stylesWallets.currencyName}><b>USDT • USDC • DAI • ETH</b> &nbsp;(ETHEREUM NETWORK, ERC-20)</div>
 						</div>
 					</div>
 				</AnimationOnScroll>
@@ -476,10 +480,10 @@ const Freelance = () => {
 					</div>   
 				</AnimationOnScroll>
 
-				<div id="myModal" class="modal">
-					<div class="close">
-						<img class="modal-content" id="img01" alt="modal-img" />
-						<div id="address"></div>
+				<div id="myModal" class={stylesDonateCommon.modal}>
+					<div class={stylesDonateCommon.close}>
+						<img class={stylesDonateCommon.modalContent} id="img01" alt="modal-img" />
+						<div id={stylesDonateCommon.address}></div>
 					</div>
 				</div>	
 			</div>
