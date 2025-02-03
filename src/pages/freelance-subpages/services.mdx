@@ -4,6 +4,8 @@ import FreelanceProject from'../../components/FreelanceProject'
 import { getProjectsForService } from "../../utils/services"
 import { services } from "../../data/freelance/arrays"
 import { textServices } from "../strings/freelance"
+import * as stylesPlaques from "../../styles/plaques.module.scss"
+import * as stylesServicesPages from "../../styles/services_pages.module.scss"
 
 <GoBackButton link="/freelance" />
 <div class="servicesBodyNested">
@@ -14,7 +16,7 @@ import { textServices } from "../strings/freelance"
 
 <div class="servicesBodyNested">
 ###### 1
-<h2>{services[1].title} <img class="servicesPageIcon" src={services[1].icon} alt="service_icon"/></h2>
+<h2>{services[1].title} <img class={stylesServicesPages.servicesPageIcon} src={services[1].icon} alt="service_icon"/></h2>
 <M text={textServices.service1.desc.en}/>
 ### What you get
 <M text={textServices.service1.youGet.en}/>
@@ -48,7 +50,7 @@ import { textServices } from "../strings/freelance"
 ) : (
     <>
         <br/>
-        <div class="yellowNotice">
+        <div class={stylesPlaques.yellowNotice}>
             <h2>🚧 HEADS UP!</h2>
             <p>This section isn't finished. Examples pulled from my portfolio will appear soon.</p>
         </div>
@@ -64,7 +66,7 @@ import { textServices } from "../strings/freelance"
 
 <div class="servicesBodyNested">
 ###### 2
-<h2>{services[2].title} <img class="servicesPageIcon" src={services[2].icon} alt="service_icon"/></h2>
+<h2>{services[2].title} <img class={stylesServicesPages.servicesPageIcon} src={services[2].icon} alt="service_icon"/></h2>
 <M text={textServices.service2.desc.en}/>
 ### What you get
 <M text={textServices.service2.youGet.en}/>
@@ -98,7 +100,7 @@ import { textServices } from "../strings/freelance"
 ) : (
     <>
         <br/>
-        <div class="yellowNotice">
+        <div class={stylesPlaques.yellowNotice}>
             <h2>🚧 HEADS UP!</h2>
             <p>This section isn't finished. Examples pulled from my portfolio will appear soon.</p>
         </div>
@@ -114,7 +116,7 @@ import { textServices } from "../strings/freelance"
 
 <div class="servicesBodyNested">
 ###### 3
-<h2>{services[3].title} <img class="servicesPageIcon" src={services[3].icon} alt="service_icon"/></h2>
+<h2>{services[3].title} <img class={stylesServicesPages.servicesPageIcon} src={services[3].icon} alt="service_icon"/></h2>
 <M text={textServices.service3.desc.en}/>
 ### What you get
 <M text={textServices.service3.youGet.en}/>
@@ -148,7 +150,7 @@ import { textServices } from "../strings/freelance"
 ) : (
     <>
         <br/>
-        <div class="yellowNotice">
+        <div class={stylesPlaques.yellowNotice}>
             <h2>🚧 HEADS UP!</h2>
             <p>This section isn't finished. Examples pulled from my portfolio will appear soon.</p>
         </div>
@@ -164,7 +166,7 @@ import { textServices } from "../strings/freelance"
 
 <div class="servicesBodyNested">
 ###### 4
-<h2>{services[4].title} <img class="servicesPageIcon" src={services[4].icon} alt="service_icon"/></h2>
+<h2>{services[4].title} <img class={stylesServicesPages.servicesPageIcon} src={services[4].icon} alt="service_icon"/></h2>
 <M text={textServices.service4.desc.en}/>
 ### What you get
 <M text={textServices.service4.youGet.en}/>
@@ -198,7 +200,7 @@ import { textServices } from "../strings/freelance"
 ) : (
     <>
         <br/>
-        <div class="yellowNotice">
+        <div class={stylesPlaques.yellowNotice}>
             <h2>🚧 HEADS UP!</h2>
             <p>This section isn't finished. Examples pulled from my portfolio will appear soon.</p>
         </div>
@@ -214,7 +216,7 @@ import { textServices } from "../strings/freelance"
 
 <div class="servicesBodyNested">
 ###### 5
-<h2>{services[5].title} <img class="servicesPageIcon" src={services[5].icon} alt="service_icon"/></h2>
+<h2>{services[5].title} <img class={stylesServicesPages.servicesPageIcon} src={services[5].icon} alt="service_icon"/></h2>
 <M text={textServices.service5.desc.en}/>
 ### What you get
 <M text={textServices.service5.youGet.en}/>
@@ -248,7 +250,7 @@ import { textServices } from "../strings/freelance"
 ) : (
     <>
         <br/>
-        <div class="yellowNotice">
+        <div class={stylesPlaques.yellowNotice}>
             <h2>🚧 HEADS UP!</h2>
             <p>This section isn't finished. Examples pulled from my portfolio will appear soon.</p>
         </div>
@@ -264,7 +266,7 @@ import { textServices } from "../strings/freelance"
 
 <div class="servicesBodyNested">
 ###### 6
-<h2>{services[6].title} <img class="servicesPageIcon" src={services[6].icon} alt="service_icon"/></h2>
+<h2>{services[6].title} <img class={stylesServicesPages.servicesPageIcon} src={services[6].icon} alt="service_icon"/></h2>
 <M text={textServices.service6.desc.en}/>
 ### What you get
 <M text={textServices.service6.youGet.en}/>
@@ -298,7 +300,7 @@ import { textServices } from "../strings/freelance"
 ) : (
     <>
         <br/>
-        <div class="yellowNotice">
+        <div class={stylesPlaques.yellowNotice}>
             <h2>🚧 HEADS UP!</h2>
             <p>This section isn't finished. Examples pulled from my portfolio will appear soon.</p>
         </div>
@@ -314,7 +316,7 @@ import { textServices } from "../strings/freelance"
 
 <div class="servicesBodyNested">
 ###### 7
-<h2>{services[7].title} <img class="servicesPageIcon" src={services[7].icon} alt="service_icon"/></h2>
+<h2>{services[7].title} <img class={stylesServicesPages.servicesPageIcon} src={services[7].icon} alt="service_icon"/></h2>
 <M text={textServices.service7.desc.en}/>
 ### What you get
 <M text={textServices.service7.youGet.en}/>
@@ -348,7 +350,7 @@ import { textServices } from "../strings/freelance"
 ) : (
     <>
         <br/>
-        <div class="yellowNotice">
+        <div class={stylesPlaques.yellowNotice}>
             <h2>🚧 HEADS UP!</h2>
             <p>This section isn't finished. Examples pulled from my portfolio will appear soon.</p>
         </div>
@@ -364,7 +366,7 @@ import { textServices } from "../strings/freelance"
 
 <div class="servicesBodyNested">
 ###### 8
-<h2>{services[8].title} <img class="servicesPageIcon" src={services[8].icon} alt="service_icon"/></h2>
+<h2>{services[8].title} <img class={stylesServicesPages.servicesPageIcon} src={services[8].icon} alt="service_icon"/></h2>
 <M text={textServices.service8.desc.en}/>
 ### What you get
 <M text={textServices.service8.youGet.en}/>
@@ -398,7 +400,7 @@ import { textServices } from "../strings/freelance"
 ) : (
     <>
         <br/>
-        <div class="yellowNotice">
+        <div class={stylesPlaques.yellowNotice}>
             <h2>🚧 HEADS UP!</h2>
             <p>This section isn't finished. Examples pulled from my portfolio will appear soon.</p>
         </div>
@@ -414,7 +416,7 @@ import { textServices } from "../strings/freelance"
 
 <div class="servicesBodyNested">
 ###### 9
-<h2>{services[9].title} <img class="servicesPageIcon" src={services[9].icon} alt="service_icon"/></h2>
+<h2>{services[9].title} <img class={stylesServicesPages.servicesPageIcon} src={services[9].icon} alt="service_icon"/></h2>
 <M text={textServices.service9.desc.en}/>
 ### What you get
 <M text={textServices.service9.youGet.en}/>
@@ -448,7 +450,7 @@ import { textServices } from "../strings/freelance"
 ) : (
     <>
         <br/>
-        <div class="yellowNotice">
+        <div class={stylesPlaques.yellowNotice}>
             <h2>🚧 HEADS UP!</h2>
             <p>This section isn't finished. Examples pulled from my portfolio will appear soon.</p>
         </div>
@@ -464,7 +466,7 @@ import { textServices } from "../strings/freelance"
 
 <div class="servicesBodyNested">
 ###### 10
-<h2>{services[10].title} <img class="servicesPageIcon" src={services[10].icon} alt="service_icon"/></h2>
+<h2>{services[10].title} <img class={stylesServicesPages.servicesPageIcon} src={services[10].icon} alt="service_icon"/></h2>
 <M text={textServices.service10.desc.en}/>
 ### What you get
 <M text={textServices.service10.youGet.en}/>
@@ -498,7 +500,7 @@ import { textServices } from "../strings/freelance"
 ) : (
     <>
         <br/>
-        <div class="yellowNotice">
+        <div class={stylesPlaques.yellowNotice}>
             <h2>🚧 HEADS UP!</h2>
             <p>This section isn't finished. Examples pulled from my portfolio will appear soon.</p>
         </div>
@@ -514,7 +516,7 @@ import { textServices } from "../strings/freelance"
 
 <div class="servicesBodyNested">
 ###### 11
-<h2>{services[11].title} <img class="servicesPageIcon" src={services[11].icon} alt="service_icon"/></h2>
+<h2>{services[11].title} <img class={stylesServicesPages.servicesPageIcon} src={services[11].icon} alt="service_icon"/></h2>
 <M text={textServices.service11.desc.en}/>
 ### What you get
 <M text={textServices.service11.youGet.en}/>
@@ -548,7 +550,7 @@ import { textServices } from "../strings/freelance"
 ) : (
     <>
         <br/>
-        <div class="yellowNotice">
+        <div class={stylesPlaques.yellowNotice}>
             <h2>🚧 HEADS UP!</h2>
             <p>This section isn't finished. Examples pulled from my portfolio will appear soon.</p>
         </div>
@@ -564,7 +566,7 @@ import { textServices } from "../strings/freelance"
 
 <div class="servicesBodyNested">
 ###### 12
-<h2>{services[12].title} <img class="servicesPageIcon" src={services[12].icon} alt="service_icon"/></h2>
+<h2>{services[12].title} <img class={stylesServicesPages.servicesPageIcon} src={services[12].icon} alt="service_icon"/></h2>
 <M text={textServices.service12.desc.en}/>
 ### What you get
 <M text={textServices.service12.youGet.en}/>
@@ -598,7 +600,7 @@ import { textServices } from "../strings/freelance"
 ) : (
     <>
         <br/>
-        <div class="yellowNotice">
+        <div class={stylesPlaques.yellowNotice}>
             <h2>🚧 HEADS UP!</h2>
             <p>This section isn't finished. Examples pulled from my portfolio will appear soon.</p>
         </div>
@@ -614,7 +616,7 @@ import { textServices } from "../strings/freelance"
 
 <div class="servicesBodyNested">
 ###### 13
-<h2>{services[13].title} <img class="servicesPageIcon" src={services[13].icon} alt="service_icon"/></h2>
+<h2>{services[13].title} <img class={stylesServicesPages.servicesPageIcon} src={services[13].icon} alt="service_icon"/></h2>
 <M text={textServices.service13.desc.en}/>
 ### What you get
 <M text={textServices.service13.youGet.en}/>
@@ -648,7 +650,7 @@ import { textServices } from "../strings/freelance"
 ) : (
     <>
         <br/>
-        <div class="yellowNotice">
+        <div class={stylesPlaques.yellowNotice}>
             <h2>🚧 HEADS UP!</h2>
             <p>This section isn't finished. Examples pulled from my portfolio will appear soon.</p>
         </div>
@@ -664,7 +666,7 @@ import { textServices } from "../strings/freelance"
 
 <div class="servicesBodyNested">
 ###### 14
-<h2>{services[14].title} <img class="servicesPageIcon" src={services[14].icon} alt="service_icon"/></h2>
+<h2>{services[14].title} <img class={stylesServicesPages.servicesPageIcon} src={services[14].icon} alt="service_icon"/></h2>
 <M text={textServices.service14.desc.en}/>
 ### What you get
 <M text={textServices.service14.youGet.en}/>
@@ -698,7 +700,7 @@ import { textServices } from "../strings/freelance"
 ) : (
     <>
         <br/>
-        <div class="yellowNotice">
+        <div class={stylesPlaques.yellowNotice}>
             <h2>🚧 HEADS UP!</h2>
             <p>This section isn't finished. Examples pulled from my portfolio will appear soon.</p>
         </div>
@@ -714,7 +716,7 @@ import { textServices } from "../strings/freelance"
 
 <div class="servicesBodyNested">
 ###### 15
-<h2>{services[15].title} <img class="servicesPageIcon" src={services[15].icon} alt="service_icon"/></h2>
+<h2>{services[15].title} <img class={stylesServicesPages.servicesPageIcon} src={services[15].icon} alt="service_icon"/></h2>
 <M text={textServices.service15.desc.en}/>
 ### What you get
 <M text={textServices.service15.youGet.en}/>
@@ -748,7 +750,7 @@ import { textServices } from "../strings/freelance"
 ) : (
     <>
         <br/>
-        <div class="yellowNotice">
+        <div class={stylesPlaques.yellowNotice}>
             <h2>🚧 HEADS UP!</h2>
             <p>This section isn't finished. Examples pulled from my portfolio will appear soon.</p>
         </div>
@@ -764,7 +766,7 @@ import { textServices } from "../strings/freelance"
 
 <div class="servicesBodyNested">
 ###### 16
-<h2>{services[16].title} <img class="servicesPageIcon" src={services[16].icon} alt="service_icon"/></h2>
+<h2>{services[16].title} <img class={stylesServicesPages.servicesPageIcon} src={services[16].icon} alt="service_icon"/></h2>
 <M text={textServices.service16.desc.en}/>
 ### What you get
 <M text={textServices.service16.youGet.en}/>
@@ -798,7 +800,7 @@ import { textServices } from "../strings/freelance"
 ) : (
     <>
         <br/>
-        <div class="yellowNotice">
+        <div class={stylesPlaques.yellowNotice}>
             <h2>🚧 HEADS UP!</h2>
             <p>This section isn't finished. Examples pulled from my portfolio will appear soon.</p>
         </div>
@@ -814,7 +816,7 @@ import { textServices } from "../strings/freelance"
 
 <div class="servicesBodyNested">
 ###### 17
-<h2>{services[17].title} <img class="servicesPageIcon" src={services[17].icon} alt="service_icon"/></h2>
+<h2>{services[17].title} <img class={stylesServicesPages.servicesPageIcon} src={services[17].icon} alt="service_icon"/></h2>
 <M text={textServices.service17.desc.en}/>
 ### Examples
 <p> </p>
@@ -842,7 +844,7 @@ import { textServices } from "../strings/freelance"
 ) : (
     <>
         <br/>
-        <div class="yellowNotice">
+        <div class={stylesPlaques.yellowNotice}>
             <h2>🚧 HEADS UP!</h2>
             <p>This section isn't finished. Examples pulled from my portfolio will appear soon.</p>
         </div>
