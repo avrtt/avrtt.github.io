@@ -935,9 +935,9 @@ export const textServices = {
     service8: {
         desc: {
             en: 
-`Static websites are lightweight, fast-loading websites that deliver consistent content to users. Perfect for personal portfolios, landing pages, blogs or event sites, static websites are cost-effective and require minimal maintenance. If you want a fast, secure and SEO-friendly online presence, this service is for you.`,
+`Static websites are lightweight, fast-loading websites that deliver consistent content to users. Perfect for personal portfolios, landing pages, blogs or event sites, static websites are cost-effective and require minimal maintenance. If you want a fast, secure and SEO-friendly online presence, this service is for you. Look, I even made one for myself.`,
             ru:
-`Статические сайты — это легковесные, быстро загружаемые сайты с постоянным (статическим) контентом. Они идеально подходят для персональных портфолио, лэндингов, блогов или страниц мероприятий. Если Вам нужна быстрая, защищенная и SEO-оптимизированная онлайн-страница, которая эффективна с точки зрения затрат и требует минимального обслуживания, эта услуга для Вас.`
+`Статические сайты — это легковесные, быстро загружаемые страницы с постоянным (статическим) контентом. Они идеально подходят для персональных портфолио, лэндингов, блогов или страниц мероприятий. Если Вам нужен быстрый, стабильно работающий и SEO-оптимизированный сайт (как, например, мой), который эффективен с точки зрения затрат и требует минимального обслуживания, эта услуга для Вас.`
         },
         youGet: {
             en: 
