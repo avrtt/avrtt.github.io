@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "gatsby"
+import * as stylesFreelancePages from "../../styles/freelance_pages.module.scss"
 
 const categoryNameStyle = {
   'font-weight': 'bold',
@@ -29,7 +30,7 @@ const categoryDescStyle = {
 const FreelanceCategory= ({ categoryName, categoryDesc, numProjects, img, url }) => {
   
   return (
-    <Link to={url}><div class="freelanceCategoryWrapper">
+    <Link to={url}><div class={stylesFreelancePages.freelanceCategoryWrapper}>
       <span style={categoryNameStyle}>{categoryName}</span>
       <span style={numProjectsStyle}>
         {numProjects}
