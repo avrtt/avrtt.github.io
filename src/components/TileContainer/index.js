@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { AnimationOnScroll } from 'react-animation-on-scroll';
+import * as styles from "./styles.module.scss";
 
 const TileContainer = ({ 
     children, 
@@ -25,14 +26,14 @@ const TileContainer = ({
 
     return animationonscroll ? (
         <AnimationOnScroll offset={offset} duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
-            <div style={containerStyle} className="tileContainer">
+            <div style={containerStyle} className={styles.tileContainer}>
                 {React.Children.map(children, (child) =>
                     React.cloneElement(child, { width: child.props.width || blockWidth })
                 )}
             </div>
         </AnimationOnScroll>
     ) : (
-        <div style={containerStyle} className="tileContainer">
+        <div style={containerStyle} className={styles.tileContainer}>
             {React.Children.map(children, (child) =>
                 React.cloneElement(child, { width: child.props.width || blockWidth })
             )}
