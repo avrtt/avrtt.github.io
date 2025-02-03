@@ -266,7 +266,7 @@ const Goals = () => {
             <br/><br/>
             <div class="noselect" style={tagStatsWrapper}>
                 {goalsTagsSpecific && goalsTagsSpecific.map(tag =>                  
-                    <p class={tag.name} style={tagStat}>
+                    <p class={stylesGoalsPage[tag.name]} style={tagStat}>
                         <span class="select">{tag.emoji}</span>
                         &nbsp;
                         <span>{tag.name}</span>
@@ -294,7 +294,7 @@ const Goals = () => {
                     }, 0)
                     return { ...tag, totalGoals, completedGoals }
                 }).sort((a, b) => b.totalGoals - a.totalGoals).map(tag =>
-                    <p className={tag.name} style={tagStat} key={tag.name}>
+                    <p className={stylesGoalsPage[tag.name]} style={tagStat} key={tag.name}>
                         <span className="select">{tag.emoji}</span>
                         &nbsp;
                         <span>{tag.name}</span>
