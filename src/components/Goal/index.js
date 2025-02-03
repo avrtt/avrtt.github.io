@@ -3,7 +3,8 @@ import checkbox from "../../images/goals/checked.svg";
 import refLink from "../../images/goals/refLink.svg";
 import resultLink from "../../images/goals/resultLink.svg";
 import info from "../../images/goals/info.svg";
-import { goalsTags } from "../../data/goals/tags"
+import { goalsTags } from "../../data/goals/tags";
+import * as stylesGoalsPage from "../../styles/goals_page.module.scss";
 
 const checkboxWrapper = {
     'vertical-align': 'middle',
@@ -123,11 +124,11 @@ const Goal = ({ goal, isOpaque, hideChecked, hideUnchecked }) => {
     'display': hideUnchecked ? 'none' : '',
   }
 
-  var showinfo, showref, showresult, showdeadline, textStatus, showtooltip, difftagname, diffdesc, safetytagname, safetydesc, tagname1, tagdesc1, tagname2, tagdesc2, tagname3, tagdesc3, tagname4, tagdesc4, tagname5, tagdesc5, checkboxStyle, legendaryText, rowStyle
+  var showinfo, showref, showresult, showdeadline, textStatus, showtooltip, difftagname, diffdesc, safetytagname, safetydesc, tagname1, tagdesc1, tagname2, tagdesc2, tagname3, tagdesc3, tagname4, tagdesc4, tagname5, tagdesc5, checkboxStyle,legendaryText, rowStyle
 
-  if (goal.info === '') {showinfo = 'n'} else {showinfo = 'y'}
-  if (goal.refLink === '') {showref = 'n'} else {showref = 'y'}
-  if (goal.resultLink === '') {showresult = 'n'} else {showresult = 'y'}
+  if (goal.info === '') {showinfo = stylesGoalsPage.n} else {showinfo = stylesGoalsPage.y}
+  if (goal.refLink === '') {showref = stylesGoalsPage.n} else {showref = stylesGoalsPage.y}
+  if (goal.resultLink === '') {showresult = stylesGoalsPage.n} else {showresult = stylesGoalsPage.y}
   if (goal.status === 'c') {showdeadline = deadlineHide} else {showdeadline = deadlineStyle}
   if (goal.status === 'c') {textStatus = textChecked} else {textStatus = textUnchecked}
   if (goal.status === 'u') {showtooltip = tooltipHide} 
@@ -159,87 +160,87 @@ const Goal = ({ goal, isOpaque, hideChecked, hideUnchecked }) => {
     tagname5 = goalsTags.find(x => x.emoji === goal.tag5).name
     tagdesc5 = goalsTags.find(x => x.emoji === goal.tag5).desc
   } 
-  if (goal.dateCompleted !== '') {checkboxStyle = 'checkboxStyle'} else {checkboxStyle = 'checkboxStyleEmptyDate'} 
-  if (goal.difftag === '🌟') {legendaryText = 'legendaryText'}
+  if (goal.dateCompleted !== '') {checkboxStyle = stylesGoalsPage.checkboxStyle} else {checkboxStyle = stylesGoalsPage.checkboxStyleEmptyDate}
+  if (goal.difftag === '🌟') {legendaryText = stylesGoalsPage.legendaryText}
   if (goal.status === 'c') {rowStyle = rowStyleC} else {rowStyle = rowStyleU}
 
   return (  
     <tr style={rowStyle}>
         <td>
-            <span class="tooltipGoals">
-                <span id={difftagname} class={difftagname} style={diffStyle}>{goal.difftag}
-                    <p class="tooltiptextGoals tooltiptextGoalsLeft"><span class="tooltipTitle"><p></p>{difftagname}</span>
-                        <p class="lighterText">{diffdesc}</p>
+            <span class={stylesGoalsPage.tooltipGoals}>
+                <span id={stylesGoalsPage[difftagname]} class={stylesGoalsPage[difftagname]} style={diffStyle}>{goal.difftag}
+                    <p className={`${stylesGoalsPage.tooltiptextGoals} ${stylesGoalsPage.tooltiptextGoalsLeft}`}><span class={stylesGoalsPage.tooltipTitle}><p></p>{difftagname}</span>
+                        <p class={stylesGoalsPage.lighterText}>{diffdesc}</p>
                     </p>
                 </span>
             </span>
         </td>
         <td style={checkboxWrapper}>
-            <div style={showtooltip} class="tooltipGoals">
-				<img id={checkboxStyle} src={checkbox} class={goal.status} alt='checkbox'/>
-				<span class="tooltiptextGoals tooltiptextGoalsLeft">{goal.dateCompleted}</span>
+            <div style={showtooltip} class={stylesGoalsPage.tooltipGoals}>
+				<img id={stylesGoalsPage.checkboxStyle} src={checkbox} class={goal.status} alt='checkbox'/>
+				<span className={`${stylesGoalsPage.tooltiptextGoals} ${stylesGoalsPage.tooltiptextGoalsLeft}`}>{goal.dateCompleted}</span>
 			</div>
         </td>
         <td style={textStyle} width='100%'>
             <span class={legendaryText} style={textStatus}>{goal.text}</span><span class='noselect' style={showdeadline}> – {goal.deadline}</span>
             <span class="noselect">&nbsp;&nbsp;</span>
-            <span class="tooltipGoals noselect tagAnimation">
+            <span class="noselect" className={`${stylesGoalsPage.tooltipGoals} ${stylesGoalsPage.tagAnimation}`}>
                 <span style={tag5Style}>{goal.tag5}
-                    <p class="tooltiptextGoals tooltiptextGoalsLeft"><span class="tooltipTitle"><p></p>{tagname5}</span>
-                        <p class="lighterText">{tagdesc5}</p>
+                    <p className={`${stylesGoalsPage.tooltiptextGoals} ${stylesGoalsPage.tooltiptextGoalsLeft}`}><span class={stylesGoalsPage.tooltipTitle}><p></p>{tagname5}</span>
+                        <p class={stylesGoalsPage.lighterText}>{tagdesc5}</p>
                     </p>
                 </span>
             </span>
-            <span class="tooltipGoals noselect tagAnimation">
+            <span class="noselect" className={`${stylesGoalsPage.tooltipGoals} ${stylesGoalsPage.tagAnimation}`}>
                 <span style={tag4Style}>{goal.tag4}
-                    <p class="tooltiptextGoals tooltiptextGoalsLeft"><span class="tooltipTitle"><p></p>{tagname4}</span>
-                        <p class="lighterText">{tagdesc4}</p>
+                    <p className={`${stylesGoalsPage.tooltiptextGoals} ${stylesGoalsPage.tooltiptextGoalsLeft}`}><span class={stylesGoalsPage.tooltipTitle}><p></p>{tagname4}</span>
+                        <p class={stylesGoalsPage.lighterText}>{tagdesc4}</p>
                     </p>
                 </span>
             </span>
-            <span class="tooltipGoals noselect tagAnimation">
+            <span class="noselect" className={`${stylesGoalsPage.tooltipGoals} ${stylesGoalsPage.tagAnimation}`}>
                 <span style={tag3Style}>{goal.tag3}
-                    <p class="tooltiptextGoals tooltiptextGoalsLeft"><span class="tooltipTitle"><p></p>{tagname3}</span>
-                        <p class="lighterText">{tagdesc3}</p>
+                    <p className={`${stylesGoalsPage.tooltiptextGoals} ${stylesGoalsPage.tooltiptextGoalsLeft}`}><span class={stylesGoalsPage.tooltipTitle}><p></p>{tagname3}</span>
+                        <p class={stylesGoalsPage.lighterText}>{tagdesc3}</p>
                     </p>
                 </span>
             </span>
-            <span class="tooltipGoals noselect tagAnimation">
+            <span class="noselect" className={`${stylesGoalsPage.tooltipGoals} ${stylesGoalsPage.tagAnimation}`}>
                 <span style={tag2Style}>{goal.tag2}
-                    <p class="tooltiptextGoals tooltiptextGoalsLeft"><span class="tooltipTitle"><p></p>{tagname2}</span>
-                        <p class="lighterText">{tagdesc2}</p>
+                    <p className={`${stylesGoalsPage.tooltiptextGoals} ${stylesGoalsPage.tooltiptextGoalsLeft}`}><span class={stylesGoalsPage.tooltipTitle}><p></p>{tagname2}</span>
+                        <p class={stylesGoalsPage.lighterText}>{tagdesc2}</p>
                     </p>
                 </span>
             </span>
-            <span class="tooltipGoals noselect tagAnimation">
+            <span class="noselect" className={`${stylesGoalsPage.tooltipGoals} ${stylesGoalsPage.tagAnimation}`}>
                 <span style={tag1Style}>{goal.tag1}
-                    <p class="tooltiptextGoals tooltiptextGoalsLeft"><span class="tooltipTitle"><p></p>{tagname1}</span>
-                        <p class="lighterText">{tagdesc1}</p>
+                    <p className={`${stylesGoalsPage.tooltiptextGoals} ${stylesGoalsPage.tooltiptextGoalsLeft}`}><span class={stylesGoalsPage.tooltipTitle}><p></p>{tagname1}</span>
+                        <p class={stylesGoalsPage.lighterText}>{tagdesc1}</p>
                     </p>
                 </span>
             </span>
         </td>
         <td style={infoStyle}>
-			<div class="tooltipGoals">
-				<img id='infoGoals' src={info} class={showinfo} alt='info'/>
-				<span class="tooltiptextGoals tooltiptextGoalsRight lighterText goalsTooltipPadding">{goal.info}</span>
+			<div class={stylesGoalsPage.tooltipGoals}>
+				<img id={checkboxStyle} src={info} class={showinfo} alt='info'/>
+				<span className={`${stylesGoalsPage.tooltiptextGoals} ${stylesGoalsPage.tooltiptextGoalsRight} ${stylesGoalsPage.lighterText} ${stylesGoalsPage.goalsTooltipPadding}`}>{goal.info}</span>
 			</div>
 		</td>
         <td style={refLinkStyle}>
             <a class={showref} href={goal.refLink}>
-                <img id='link' src={refLink} class={showref} alt='reference_link'/>
+                <img id={stylesGoalsPage.link} src={refLink} class={showref} alt='reference_link'/>
             </a>
         </td>
         <td style={resultLinkStyle}>
             <a class={showresult} href={goal.resultLink}>
-                <img id='link' src={resultLink} class={showresult} alt='result_link'/>
+                <img id={stylesGoalsPage.link} src={resultLink} class={showresult} alt='result_link'/>
             </a>
         </td>
         <td>
-            <span class="tooltipGoals">
-                <span id={safetytagname} class={safetytagname} style={safetyStyle}>{goal.safetytag}
-                    <p class="tooltiptextGoals tooltiptextGoalsRight"><span class="tooltipTitle"><p></p>{safetytagname}</span>
-                        <p class="lighterText">{safetydesc}</p>
+            <span class={stylesGoalsPage.tooltipGoals}>
+                <span id={stylesGoalsPage[safetytagname]} class={stylesGoalsPage[safetytagname]} style={safetyStyle}>{goal.safetytag}
+                    <p className={`${stylesGoalsPage.tooltiptextGoals} ${stylesGoalsPage.tooltiptextGoalsRight}`}><span class={stylesGoalsPage.tooltipTitle}><p></p>{safetytagname}</span>
+                        <p class={stylesGoalsPage.lighterText}>{safetydesc}</p>
                     </p>
                 </span>
             </span>
