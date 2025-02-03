@@ -4,6 +4,7 @@ import { useLocation } from "@reach/router";
 import { Nav, NavLink, NavMenu, Dropdown, DropdownMenu, DropdownItem } from "./NavbarElements";
 import { StaticImage } from "gatsby-plugin-image";
 import CountPosts from "../../fetchers/count_posts";
+import * as styles from "./styles.module.scss"
 
 const Navbar = () => {
   const location = useLocation();
@@ -31,9 +32,9 @@ const Navbar = () => {
         <NavMenu>
           <Link to="/" style={{"pointer-events": isHomePage ? "none" : ""}}>
             <StaticImage
-              className="logo"
+              className={styles.logo}
               src="./logo.png"
-              alt="logo"
+              alt={styles.logo}
               loading="eager"
               backgroundColor="transparent"
               placeholder='none'
@@ -101,7 +102,7 @@ const Navbar = () => {
                 <DropdownItem
                   to="/adventures"
                   activeClassName="active"
-                  className={isAdventuresPost ? "navbarPostSection" : ""}
+                  className={isAdventuresPost ? styles.navbarPostSection : ""}
                   style={{
                     "background-color": isAdventuresPost ? "transparent" : "",
                   }}
@@ -115,7 +116,7 @@ const Navbar = () => {
                 <DropdownItem
                   to="/research"
                   activeClassName="active"
-                  className={isResearchPost ? "navbarPostSection" : ""}
+                  className={isResearchPost ? styles.navbarPostSection : ""}
                   style={{
                     "background-color": isResearchPost ? "transparent" : "",
                   }}
@@ -129,7 +130,7 @@ const Navbar = () => {
                 <DropdownItem
                   to="/thoughts"
                   activeClassName="active"
-                  className={isThoughtsPost ? "navbarPostSection" : ""}
+                  className={isThoughtsPost ? styles.navbarPostSection : ""}
                   style={{
                     "background-color": isThoughtsPost ? "transparent" : "",
                   }}
