@@ -5,6 +5,7 @@ import ChannelPreview from '../ChannelPreview';
 import PostDonate from '../PostDonate';
 import VenturingforthPicture from '../../images/posts/venturingforth.jpg';
 import AvheuristicsPicture from '../../images/posts/avheuristics.jpg';
+import * as stylesCommentsSections from '../../styles/comments_sections.module.scss';
 
 const PostBottom = ({ nextPost, lastPost, key, section }) => {
 
@@ -34,7 +35,7 @@ const PostBottom = ({ nextPost, lastPost, key, section }) => {
 	  <>
       <PostsLastNext nextPost={nextPost} lastPost={lastPost} section={section} />
       <PostDonate />
-      <div class='chatWrapper'>
+      <div class={stylesCommentsSections.chatWrapper}>
         <TelegramComments websiteKey={'2JA7Wo3q'} customColor='000000' commentsNumber={5} pageId={key} showDislikes={true} />
       </div>
 	    <ChannelPreview tgLink={tgLink} ytLink={ytLink} tgChannelPicture={tgChannelPicture} tgChannelName={tgChannelName} tgChannelDesc={tgChannelDesc} />
