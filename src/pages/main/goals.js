@@ -12,6 +12,10 @@ import checkbox from "../../images/goals/checked.svg";
 import refLink from "../../images/goals/refLink.svg";
 import resultLink from "../../images/goals/resultLink.svg";
 import info from "../../images/goals/info.svg";
+import * as stylesGoalsPage from "../../styles/goals_page.module.scss"
+import * as stylesSpoilers from "../../styles/spoilers.module.scss"
+import * as stylesButtonsCommon from "../../styles/buttons_common.module.scss"
+import * as stylesCommentsSections from '../../styles/comments_sections.module.scss';
 
 const goalsTagsSpecific = goalsTags.filter((x) => x.name === 'COMMON' || x.name === 'UNCOMMON' || x.name === 'RARE' || x.name === 'LEGENDARY' || x.name === 'SAFE' || x.name === 'UNSAFE' || x.name === 'DANGEROUS');
 const goalsTagsCategories = goalsTags.filter((x) => !goalsTagsSpecific.includes(x));
@@ -83,7 +87,7 @@ const Goals = () => {
 
     const toggleContent = (event) => {
         const content = event.target.nextElementSibling;
-        event.target.classList.toggle("activeSpoiler");
+        event.target.classList.toggle(stylesSpoilers.activeSpoiler);
         if (content.style.maxHeight) {
             content.style.maxHeight = null;
         } else {
@@ -164,36 +168,36 @@ const Goals = () => {
         <div class='goalsBody'>
 
             <div class="goalsBodyNested">
-                <div class="goalsTextContent">
+                <div class={stylesGoalsPage.goalsTextContent}>
                     <p>Here you can find the public version of my bucket list, which is actually an organized collection of my life's achievements if it was a RPG (that's exactly how I feel this life). There are boring cliché goals, serious and challenging ones, but also just simple little things for folks who, like me, enjoy goofing around doing stupid and sometimes epic dangerous stuff, because that's what makes life exciting. <StickerPack sticker="pug_dance"/> </p>
                     <div>
-                        <button className="spoilerButton noselect" ref={(el) => collRef.current.push(el)}>
+                        <button class="noselect" className={stylesSpoilers.spoilerButton} ref={(el) => collRef.current.push(el)}>
                             &nbsp;&nbsp;
-                            <span className="spoilerText"></span>
+                            <span className={stylesSpoilers.spoilerText}></span>
                             Spoiler: How to read this list
                             &nbsp;&nbsp;
                         </button>
-                        <div className="spoilerContentWrapper">
-                            <div className="spoilerContentGoals">
+                        <div className={stylesSpoilers.spoilerContentWrapper}>
+                            <div className={stylesSpoilers.spoilerContentGoals}>
                                 <M text="Before you dive deep, here's a little explanation of the notation:"/>
                                 <ul>
-                                    <li><span class="tooltipGoals"><img id="checkboxStyle" style={textImg} src={info} class=".c" alt='checkbox'/><span class="tooltiptextGoals">Hooray, you've discovered mouse control!</span></span> will prompt additional information about a goal on hover </li>
+                                    <li><span class={stylesGoalsPage.tooltipGoals}><img id={stylesGoalsPage.checkboxStyle} style={textImg} src={info} class={stylesGoalsPage.c} alt='checkbox'/><span class={stylesGoalsPage.tooltiptextGoals}>Hooray, you've discovered mouse control!</span></span> will prompt additional information about a goal on hover </li>
                                     <li><img src={refLink} style={textImg} /> can be a reference, inspiration, or extra source to describe a goal</li>
                                     <li><img src={resultLink} style={textImg} /> is a link to the result or proof of accomplishing a goal</li>
                                     <li>The right side of the page shows two tags: difficulty/rareness (stars) and the level of risk</li>
                                     <li>A bunch of icons on the left side represent the category tags for navigation and the statistics at the bottom of the page</li>
                                     <li>The text after "–" reflects a rough deadline for a goal </li>
-                                    <li>Hovering over the <span class="tooltipGoals"><img id="checkboxStyle" style={textImg} src={checkbox} class=".c" alt='checkbox'/><span class="tooltiptextGoals">Yep, just like that.</span></span> icons displays the dates of completion</li>
+                                    <li>Hovering over the <span class={stylesGoalsPage.tooltipGoals}><img id={stylesGoalsPage.checkboxStyle} style={textImg} src={checkbox} class={stylesGoalsPage.c} alt='checkbox'/><span class={stylesGoalsPage.tooltiptextGoals}>Yep, just like that.</span></span> icons displays the dates of completion</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <M text="Keeping a list of goals constantly reminds me of my passions and motivates me to push forward, and I hope it can give you some inspiration if you're feeling stuck in life."/>
                     <br/>
-                    <div class="goalsButtonsWrapper">
-                        <motion.button className="goalsButton noselect" onClick={toggleOpacity} whileTap={{ scale: 0.93 }}>
+                    <div className={stylesGoalsPage.goalsButtonsWrapper}>
+                        <motion.button class="noselect" onClick={toggleOpacity} whileTap={{ scale: 0.93 }} className={stylesGoalsPage.goalsButton}>
                             <motion.div
-                                className="buttonTextWrapper"
+                                className={stylesButtonsCommon.buttonTextWrapper}
                                 key={isOpaque}
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
@@ -203,9 +207,9 @@ const Goals = () => {
                                 {isOpaque ? 'Hide tags' : 'Show tags'}
                             </motion.div>
                         </motion.button>
-                        <motion.button className="goalsButton noselect" style={hideUncheckedButtonStyle} onClick={removeUnchecked} whileTap={{ scale: 0.93 }}>
+                        <motion.button class="noselect" style={hideUncheckedButtonStyle} onClick={removeUnchecked} whileTap={{ scale: 0.93 }} className={stylesGoalsPage.goalsButton}>
                             <motion.div
-                                className="buttonTextWrapper"
+                                className={stylesButtonsCommon.buttonTextWrapper}
                                 key={hideUnchecked}
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
@@ -215,14 +219,14 @@ const Goals = () => {
                                 <span>
                                     {hideUnchecked ? 'Show unachieved goals' : 'Hide unachieved goals'}
                                 </span>
-                                <span class="goalsButtonCount">
+                                <span class={stylesGoalsPage.goalsButtonCount}>
                                     {hideUnchecked ? ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'u' ? ++acc : acc, 0) + ')' : ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'u' ? ++acc : acc, 0) + ')'}
                                 </span>
                             </motion.div>
                         </motion.button>
-                        <motion.button className="goalsButton noselect" style={hideCheckedButtonStyle} onClick={removeChecked} whileTap={{ scale: 0.93 }}>
+                        <motion.button class="noselect" style={hideCheckedButtonStyle} onClick={removeChecked} whileTap={{ scale: 0.93 }} className={stylesGoalsPage.goalsButton}>
                             <motion.div
-                                className="buttonTextWrapper"
+                                className={stylesButtonsCommon.buttonTextWrapper}
                                 key={hideChecked}
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
@@ -232,7 +236,7 @@ const Goals = () => {
                                 <span>
                                     {hideChecked ? 'Show achieved goals' : 'Hide achieved goals'}
                                 </span>
-                                <span class="goalsButtonCount">
+                                <span class={stylesGoalsPage.goalsButtonCount}>
                                     {hideChecked ? ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'c' ? ++acc : acc, 0) + ')' : ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'c' ? ++acc : acc, 0) + ')'}
                                 </span>
                             </motion.div>
@@ -253,7 +257,7 @@ const Goals = () => {
                 <br/>
                 <div class="sectionBreak"><M text="----------"/></div>
                 <p style={placeholderBottom}> </p>
-                <div class="goalsTextContent">
+                <div class={stylesGoalsPage.goalsTextContent}>
                     <M text="For me, keeping a list of goals has become one of the biggest drivers of a fulfilling life, and this website is a reminder of how to live in a more peaceful yet epic and creative lifestyle. Even if I won't live long enough to accomplish this - even half - I'm glad there's a place for my ideas somewhere, because they will live on after me and can inspire people to live the vibrant life they want."/>
                     <M text="If you have any ideas for goals, I'd really appreciate it if you could share them in the comments section below."/>
                 </div>
@@ -301,15 +305,15 @@ const Goals = () => {
                     </p>
                 )}
             </div>
-            <div class="tagStatsWrapper noselect">
-                <span class="tagStats">
+            <div className="noselect" class={stylesGoalsPage.tagStatsWrapper}>
+                <span class={stylesGoalsPage.tagStats}>
                     {goalsConcat.reduce((acc, cur) => cur.status === 'c' ? ++acc : acc, 0)}&nbsp;
                     <span style={spanStyle}>/ {goalsConcat.reduce((acc, cur) => cur.status === 'c' ? ++acc : acc, 0) 
                         + goalsConcat.reduce((acc, cur) => cur.status === 'u' ? ++acc : acc, 0)}</span>
                 </span>
             </div>
         </div> 
-        <div class='chatWrapper'><TelegramComments websiteKey={'2JA7Wo3q'} customColor='000000' commentsNumber={5} pageId='goals' showDislikes={true} /></div>
+        <div class={stylesCommentsSections.chatWrapper}><TelegramComments websiteKey={'2JA7Wo3q'} customColor='000000' commentsNumber={5} pageId='goals' showDislikes={true} /></div>
     </motion.div>
   );
 };
