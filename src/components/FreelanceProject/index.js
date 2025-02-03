@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import Vid from "../Video"
 import Img from "../Image"
+import * as stylesFreelancePages from "../../styles/freelance_pages.module.scss"
 
 const emojiStyle = {
   'margin-right': '14px',
@@ -63,7 +64,7 @@ const FreelanceProject = ({ isExample=false, emoji, projectName, projectDesc, da
 
   const toggleContent = (event) => {
     const content = event.target.nextElementSibling
-    event.target.classList.toggle("activeExtra")
+    event.target.classList.toggle(stylesFreelancePages.activeExtra)
     if (content.style.maxHeight) {
       content.style.maxHeight = null
     } else {
@@ -84,7 +85,7 @@ const FreelanceProject = ({ isExample=false, emoji, projectName, projectDesc, da
   if (demoVidYTKey === "") { demoVidYTKeyFlag = "demoVidYTKeyHide" }
 
   return (
-    <div class="freelanceItemWrapper">
+    <div className={stylesFreelancePages.freelanceItemWrapper}>
       <span style={emojiStyle}>{emoji}</span>
       <span style={projectNameStyle}>{projectName}</span>
       <span style={dateDurationStyle}>
@@ -92,24 +93,24 @@ const FreelanceProject = ({ isExample=false, emoji, projectName, projectDesc, da
         &nbsp;&nbsp;&nbsp;
         {duration}
         &nbsp;&nbsp;&nbsp;&nbsp;
-        <a href={source3Link}><img src={source3} id={source3Flag} class="sourceIcon noselect" alt="source_logo" style={logoStyle} /></a>
-        <a href={source2Link}><img src={source2} id={source2Flag} class="sourceIcon noselect" alt="source_logo" style={logoStyle} /></a>
-        <a href={source1Link}><img src={source1} id={source1Flag} class="sourceIcon noselect" alt="source_logo" style={logoStyle} /></a>
+        <a href={source3Link}><img src={source3} id={stylesFreelancePages[source3Flag]} class="noselect" className={stylesFreelancePages.sourceIcon} alt="source_logo" style={logoStyle} /></a>
+        <a href={source2Link}><img src={source2} id={stylesFreelancePages[source2Flag]} class="noselect" className={stylesFreelancePages.sourceIcon} alt="source_logo" style={logoStyle} /></a>
+        <a href={source1Link}><img src={source1} id={stylesFreelancePages[source1Flag]} class="noselect" className={stylesFreelancePages.sourceIcon} alt="source_logo" style={logoStyle} /></a>
       </span>
       <br/>
       <p style={tagStyle}>{tag}</p>
       <p style={projectDescStyle}>{projectDesc}</p>
-      <button id={extraContentHide} class="collapsible" ref={(el) => (collRef.current.push(el))}>
-        <span class="expandText"></span>
+      <button id={stylesFreelancePages[extraContentHide]} className={stylesFreelancePages.collapsible} ref={(el) => (collRef.current.push(el))}>
+        <span className={stylesFreelancePages.expandText}></span>
       </button>
-      <div class="extraContent">
+      <div className="extraContent">
         <br/>
-        <span id={extraDescFlag}>{extraDesc}</span>
+        <span id={stylesFreelancePages[extraDescFlag]}>{extraDesc}</span>
         <p></p>
-        <span id={demoImg1Flag}><Img p={demoImg1} offset="0" /></span>
-        <span id={demoImg2Flag}><Img p={demoImg2} offset="0" /></span>
-        <span id={demoImg3Flag}><Img p={demoImg3} offset="0" /></span>
-        <span id={demoVidYTKeyFlag}><Vid ytKey={demoVidYTKey} offset="0" /></span>
+        <span id={stylesFreelancePages[demoImg1Flag]}><Img p={demoImg1} offset="0" /></span>
+        <span id={stylesFreelancePages[demoImg2Flag]}><Img p={demoImg2} offset="0" /></span>
+        <span id={stylesFreelancePages[demoImg3Flag]}><Img p={demoImg3} offset="0" /></span>
+        <span id={stylesFreelancePages[demoVidYTKeyFlag]}><Vid ytKey={demoVidYTKey} offset="0" /></span>
       </div>
     </div>
   )
