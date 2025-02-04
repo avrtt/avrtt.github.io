@@ -17,22 +17,22 @@ const Footer = () => {
         {/* links */}
         <div className={`${styles.row} ${styles.footerLinksStyle}`}>
           <a className={styles.footerLink} href="mailto:avrtt@tuta.io">
-            <img src={Email} style={{ height: "4.6vh", width: "4.6vh" }} alt="email-logo"/>
+            <img src={Email} className={styles.linkImg} alt="email-logo"/>
           </a>
           <a className={styles.footerLink} href="https://www.facebook.com/avrttblog">
-            <img src={Facebook} style={{ height: "4.6vh", width: "4.6vh" }} alt="facebook-logo"/>
+            <img src={Facebook} className={styles.linkImg} alt="facebook-logo"/>
           </a>
           <a className={styles.footerLink} href="https://www.instagram.com/avrttv">
-            <img src={Instagram} style={{ height: "4.6vh", width: "4.6vh" }} alt="intagram-logo"/>
+            <img src={Instagram} className={styles.linkImg} alt="intagram-logo"/>
           </a>
           <a className={styles.footerLink} href="https://www.youtube.com/@vladaverett">
-            <img src={YouTube} style={{ height: "4.6vh", width: "4.6vh" }} alt="youtube-logo"/>
+            <img src={YouTube} className={styles.linkImg} alt="youtube-logo"/>
           </a>
           <a className={styles.footerLink} href="https://t.me/avrttclub">
-            <img src={Telegram} style={{ height: "4.6vh", width: "4.6vh" }} alt="telegram-logo"/>
+            <img src={Telegram} className={styles.linkImg} alt="telegram-logo"/>
           </a>
           <a className={styles.footerLink} href="https://www.google.com/maps/d/viewer?mid=1X9b0bo11WcY9on87ZQXoB3YUkccwnK49&ll=0.3349379679001004%2C0&z=2">
-            <img src={Map} style={{ height: "4.6vh", width: "4.6vh" }} alt="map-logo"/>
+            <img src={Map} className={styles.linkImg} alt="map-logo"/>
           </a>
         </div>
 

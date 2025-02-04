@@ -4,7 +4,6 @@
   transition: 110ms ease-in;
   opacity: 0.6;
   filter: alpha(opacity=40);
-
   &:hover {
     opacity: 1;
     filter: alpha(opacity=100);
@@ -14,20 +13,12 @@
 .footerContactStyle {
   transition: 110ms ease-in;
   opacity: 1;
-
   &:hover {
     opacity: 0.75;
   }
-
-  @include respond-to(mobile) {
-    display: none;
-  }
-  @include respond-to(small-tablet) {
-    display: none;
-  }
-  @include respond-to(tablet) {
-    display: none;
-  }
+  @include respond-to(mobile) { display: none }
+  @include respond-to(small-tablet) { display: none }
+  @include respond-to(tablet) { display: none }
 }
 
 .box {
@@ -74,10 +65,18 @@
   }
 }
 
+.linkImg {
+  height: clamp(2rem, 2.2vw, 4rem);
+  width: clamp(2rem, 2.2vw, 4rem);
+}
+
 .footerCopyStyle {
-  font-size: 1.9vh;
-  margin-top: 3.5vw;
-  transform: translate(-5.5vw, 0);
+  font-size: clamp(0.9rem, 0.9vw, 1.4rem);
+  @include respond-to(mobile) { position: absolute; left: 0; right: 0; margin-inline: auto; width: fit-content; }
+  @include respond-to(small-tablet) { position: absolute; left: 0; right: 0; margin-inline: auto; width: fit-content; }
+  @include respond-to(tablet) { position: absolute; left: 0; right: 0; margin-inline: auto; width: fit-content; }
+  @include respond-to(small-desktop) { margin-top: 3.5vw; transform: translate(-5.5vw, 0); }
+  @include respond-to(desktop) { margin-top: 3.5vw; transform: translate(-5.5vw, 0); }
 }
 
 .footerNameStyle {
@@ -85,12 +84,19 @@
 }
 
 .footerLinksStyle {
-  transform: translateY(2vw);
+  @include respond-to(mobile) { transform: translateY(1.2rem); }
+  @include respond-to(small-tablet) { transform: translateY(1.2rem); }
+  @include respond-to(tablet) { transform: translateY(1.2rem); }
+  @include respond-to(small-desktop) { transform: translateY(1.2rem); }
+  @include respond-to(desktop) { transform: translateY(2.5rem); }
 }
 
 .badgesLeftWrapper {
   justify-content: left;
   margin-left: 5%;
+  @include respond-to(mobile) { display: none }
+  @include respond-to(small-tablet) { display: none }
+  @include respond-to(tablet) { display: none }
 }
 
 .badgesRightWrapper {
@@ -150,6 +156,12 @@
   margin-top: 0.2vw;
   position: absolute;
   height: 1.2vw;
+}
+
+.visitsTodayBadge, .visitsTotalBadge {
+  @include respond-to(mobile) { display: none }
+  @include respond-to(small-tablet) { display: none }
+  @include respond-to(tablet) { display: none }
 }
 
 .contactButtonStyle {
