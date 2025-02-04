@@ -3,7 +3,7 @@
 $transition-duration: 0.1s;
 
 .badge {
-  height: 1.25rem;
+  height: clamp(1.3rem, 2.7vw, 1.7rem);
   margin: 2px;
   cursor: pointer;
   transition: transform $transition-duration;
@@ -16,8 +16,7 @@ $transition-duration: 0.1s;
     transform: scale(0.95);
   }
   
-  @include respond-to(small-tablet) { height: 1.3rem; }
-  @include respond-to(tablet) { height: 1.4rem; }
+  @include respond-to(tablet) { height: clamp(1.4rem, 3vw, 1.8rem); }
   @include respond-to(small-desktop) { height: 2rem; }
   @include respond-to(desktop) { height: 2rem; }
 }
