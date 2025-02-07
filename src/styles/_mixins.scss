@@ -1,0 +1,12 @@
+@use 'variables' as var;
+
+@mixin respond-to($layout) {
+  @if map-has-key(var.$breakpoints, $layout) {
+    @media only screen and #{map-get(var.$breakpoints, $layout)} {
+      @content;
+    }
+  } @else {
+    @error "Screen layout "#{$layout}" not found in $breakpoints map.";
+  }
+}
+
