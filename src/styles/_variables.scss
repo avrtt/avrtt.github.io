@@ -1,0 +1,18 @@
+$font-family-primary: "Quicksand", sans-serif;
+$color-text: #444444;
+$color-bg-main: #f2f2f2;
+$color-bg-body: #ffffff;
+$color-headings-main: #858585; // h1/h2
+$color-link: #8e8e8e;
+$color-link-hover: #424242;
+
+$transition-default: 1s ease;
+
+$breakpoints: (
+  "mobile": "(max-width: 479px)",
+  "small-tablet": "(min-width: 480px) and (max-width: 767px)",
+  "tablet": "(min-width: 768px) and (max-width: 991px)",
+  "small-desktop": "(min-width: 992px) and (max-width: 1199px)",
+  "desktop": "(min-width: 1200px)"
+);
+
