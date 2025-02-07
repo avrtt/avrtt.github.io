@@ -1,0 +1,22 @@
+@import 'mixins';
+
+.announcementsHomeWrapper {
+  @include respond-to(mobile) { padding-bottom: 1.5rem }
+  @include respond-to(small-tablet) { padding-bottom: 1.5rem }
+  @include respond-to(tablet) { padding-bottom: 2rem }
+  @include respond-to(small-desktop) {}
+  @include respond-to(desktop) {}
+}
+
+.linkArrow {
+  opacity: 0.6;
+  transition: 130ms ease-in;
+  width: clamp(1.2rem, 1.5vw, 2rem);
+	vertical-align: sub;
+
+  &:hover {
+    opacity: 0.8;
+    transition: 70ms ease-in;
+    transform: scale(1.1);
+  }
+}
