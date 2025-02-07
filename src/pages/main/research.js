@@ -10,6 +10,7 @@ import { Link } from "gatsby";
 import { motion } from 'framer-motion';
 import { AnimationOnScroll } from 'react-animation-on-scroll';
 import { wordsPerMinuteResearch } from '../../data/commonVariables';
+import PugDance from "../../stickers/pug_dance.gif"
 import * as stylesPostsGallery from "../../styles/posts_gallery.module.scss"
 import * as stylesButtonsCommon from "../../styles/buttons_common.module.scss"
 import * as stylesCompactViews from "../../styles/compact_views.module.scss"
@@ -84,95 +85,103 @@ const Posts = ({ data }) => {
 	};
   
 	return (
-		<motion.div className='noselect'
-			initial={{ opacity: 0 }}
-			animate={{ opacity: 1 }}
-			exit={{ opacity: 0 }}
-			transition={{ duration: 0.15 }}>
-  
-			<Helmet>
-				<title>{TITLE}</title>
-			</Helmet>
-
-			<div className={stylesCompactViews.viewButtonWrapper}>
-				<motion.button onClick={toggleView} class="noselect" whileTap={{ scale: 0.95 }} className={stylesCompactViews.viewButton}>
-					<motion.div
-						className={stylesButtonsCommon.buttonTextWrapper}
-						key={isTileView}
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						exit={{ opacity: 0 }}
-						transition={{ duration: 0.3, ease: "easeInOut" }}
-					>
-						{isTileView ? 'Switch to compact view' : 'Switch to gallery view'}
-					</motion.div>
-				</motion.button>
+		<>
+			<div className="smallScreenNotice noselect">
+				<p>This page is not supported on small screen devices (and I'm a lazy ass to fix it). Use "Posts" page instead.</p>
+				<div style={{ display: 'flex', justifyContent: 'center' }}>
+					<img src={PugDance} style={{ width: '4rem' }}/>
+				</div>
 			</div>
+			<motion.div className='desktopOnlySupport noselect'
+				initial={{ opacity: 0 }}
+				animate={{ opacity: 1 }}
+				exit={{ opacity: 0 }}
+				transition={{ duration: 0.15 }}>
+	
+				<Helmet>
+					<title>{TITLE}</title>
+				</Helmet>
 
-			<Box>
-				<motion.div
-					key={isTileView ? 'tileView' : 'listView'}
-					initial="hidden"
-					animate="visible"
-					exit="exit"
-					variants={viewVariants}
-				>
-					{isTileView ? (
-						<ImageList cols={2} gap={5}>
-							{posts.map(post => {
-								const image = getImage(post.banner);
-								return (
-									<ImageListItem key={post.id}>
-										<div className="hover">
-											<span className={`${stylesTagBadges.tagPosts} ${stylesTagBadges.mainTagGallery}`}>{post.mainTag}</span>
-											<AnimationOnScroll offset="999999" animateIn="animate__fadeIn" animatePreScroll="false" duration="0.3">
-												<GatsbyImage
-													className={stylesPostsGallery.prevHome}
-													image={image}
-													alt={post.title}
-												/>
-											</AnimationOnScroll>
-											<Link to={post.slug}>
-												<div className={stylesPostsGallery.overlayBack}>
-													<div className={stylesPostsGallery.titleblock}>
-														<p className={stylesPostsGallery.title}>{post.title}</p>
+				<div className={stylesCompactViews.viewButtonWrapper}>
+					<motion.button onClick={toggleView} class="noselect" whileTap={{ scale: 0.95 }} className={stylesCompactViews.viewButton}>
+						<motion.div
+							className={stylesButtonsCommon.buttonTextWrapper}
+							key={isTileView}
+							initial={{ opacity: 0 }}
+							animate={{ opacity: 1 }}
+							exit={{ opacity: 0 }}
+							transition={{ duration: 0.3, ease: "easeInOut" }}
+						>
+							{isTileView ? 'Switch to compact view' : 'Switch to gallery view'}
+						</motion.div>
+					</motion.button>
+				</div>
+
+				<Box>
+					<motion.div
+						key={isTileView ? 'tileView' : 'listView'}
+						initial="hidden"
+						animate="visible"
+						exit="exit"
+						variants={viewVariants}
+					>
+						{isTileView ? (
+							<ImageList cols={2} gap={5}>
+								{posts.map(post => {
+									const image = getImage(post.banner);
+									return (
+										<ImageListItem key={post.id}>
+											<div className="hover">
+												<span className={`${stylesTagBadges.tagPosts} ${stylesTagBadges.mainTagGallery}`}>{post.mainTag}</span>
+												<AnimationOnScroll offset="999999" animateIn="animate__fadeIn" animatePreScroll="false" duration="0.3">
+													<GatsbyImage
+														className={stylesPostsGallery.prevHome}
+														image={image}
+														alt={post.title}
+													/>
+												</AnimationOnScroll>
+												<Link to={post.slug}>
+													<div className={stylesPostsGallery.overlayBack}>
+														<div className={stylesPostsGallery.titleblock}>
+															<p className={stylesPostsGallery.title}>{post.title}</p>
+														</div>
 													</div>
-												</div>
-												<div className={stylesPostsGallery.overlayBase}>
-													<p className={stylesPostsGallery.title}>{post.title}</p>
-													<div className={stylesPostsGallery.description}>{post.desc}</div>
-												</div>
-											</Link>
+													<div className={stylesPostsGallery.overlayBase}>
+														<p className={stylesPostsGallery.title}>{post.title}</p>
+														<div className={stylesPostsGallery.description}>{post.desc}</div>
+													</div>
+												</Link>
+											</div>
+										</ImageListItem>
+									);
+								})}
+							</ImageList>
+						) : (
+							<Box component="ul" sx={{ listStyleType: 'none', padding: 0 }}>
+								{posts.map(post => (
+									<li key={post.id} style={{ marginBottom: '4px' }}>
+										<div>
+											<span style={{ opacity: "0.5" }}>{post.date}</span> 
+											&nbsp;&nbsp;
+											<span style={{ background: "#ffffff", padding: "6px 11px 6px 11px", borderRadius: "10px" }}>
+												<Link to={post.slug} className="compactViewLink">
+													{post.titleDetailed || post.title}
+												</Link>
+												&nbsp;
+												<span style={{ opacity: "0.5" }}>{post.readTime}</span>
+												<span style={{ display: ((post.difficultyLevel === 1) && !post.flagMindfuckery) ? "none" : "" }}>&#8239;&#8239;{parseDifficulty(post.difficultyLevel, post.flagMindfuckery)}</span>
+											</span>
+											&#8239;&#8239;
+											<strong><span style={{ opacity: "0.5" }}>#{post.index}</span></strong>
 										</div>
-									</ImageListItem>
-								);
-							})}
-						</ImageList>
-					) : (
-						<Box component="ul" sx={{ listStyleType: 'none', padding: 0 }}>
-							{posts.map(post => (
-								<li key={post.id} style={{ marginBottom: '4px' }}>
-									<div>
-										<span style={{ opacity: "0.5" }}>{post.date}</span> 
-										&nbsp;&nbsp;
-										<span style={{ background: "#ffffff", padding: "6px 11px 6px 11px", borderRadius: "10px" }}>
-											<Link to={post.slug} className="compactViewLink">
-												{post.titleDetailed || post.title}
-											</Link>
-											&nbsp;
-											<span style={{ opacity: "0.5" }}>{post.readTime}</span>
-											<span style={{ display: ((post.difficultyLevel === 1) && !post.flagMindfuckery) ? "none" : "" }}>&#8239;&#8239;{parseDifficulty(post.difficultyLevel, post.flagMindfuckery)}</span>
-										</span>
-										&#8239;&#8239;
-										<strong><span style={{ opacity: "0.5" }}>#{post.index}</span></strong>
-									</div>
-								</li>
-							))}
-						</Box>
-					)}
-				</motion.div>
-			</Box>
-	  	</motion.div>
+									</li>
+								))}
+							</Box>
+						)}
+					</motion.div>
+				</Box>
+			</motion.div>
+		</>
 	);
 };
 
