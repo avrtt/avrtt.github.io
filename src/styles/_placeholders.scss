@@ -1,0 +1,43 @@
+@use 'variables' as var;
+
+%body-box {
+  margin-left: 0;
+  margin-right: 0;
+  max-width: 100%;
+  color: var.$color-text;
+  background-color: var.$color-bg-body;
+  padding: 0.2rem 1.5rem;
+  border-radius: 2vh;
+  font-weight: lighter;
+  transition: margin 1s ease, padding 1s ease;
+}
+  
+%body-box-tile {
+  @extend %body-box;
+  background-color: transparent;
+  font-size: clamp(0.8rem, 2vw, 1.2rem);
+  margin-top: 1em;
+}
+  
+%body-box-nested {
+  max-width: 100%;
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  border-radius: 2vh;
+  font-weight: lighter;
+  transition: margin 1s ease, padding 1s ease;
+}
+  
+%link-common {
+  text-decoration: none;
+  font-weight: 800;
+  border-bottom: 0;
+  color: var.$color-link;
+  transition: color 0.1s ease-in-out;
+  
+  &:hover {
+    border-bottom: 0;
+    color: var.$color-link-hover;
+    text-decoration: none;
+    transition: color 0.1s ease-in-out;
+  }
+}
