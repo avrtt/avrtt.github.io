@@ -3,10 +3,11 @@ import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { AnimationOnScroll } from 'react-animation-on-scroll';
 import M from '../../components/Markdown';
+import H from "../../components/Highlight"
 import LinkBlock from '../../components/LinkBlock';
 import TileContainerLink from '../../components/TileContainerLink';
-import { userDiff } from '../../utils/freelance';
-import { categories, services } from '../../data/freelance/arrays';
+import { userDiff, freelanceExperienceStringRu, strUTCOffset, startHoursUTC, endHoursUTC } from '../../utils/freelance';
+import { categories, services, projectsCount } from '../../data/freelance/arrays';
 import { freelanceLastUpdated } from '../../data/lastUpdated';
 import Stack from'../../components/Stack';
 import FreelanceCategory from'../../components/FreelanceCategory';
@@ -31,6 +32,7 @@ import fiverr from "../../images/links/fiverr.svg"
 import kwork from "../../images/links/kwork.svg"
 import habr from "../../images/links/habr.svg"
 import english from "../../images/flags/uk.svg"
+import FreelanceStatus from "../../components/FreelanceStatus"
 import { textMain } from "../strings/freelance"
 import { SberbankCardCopy, SberbankCardDisplay, SberbankSBPCopy, SberbankSBPDisplay, BitcoinWallet, BEP20Wallet, ERC20Wallet } from "../../data/paymentMethods.js";
 import * as stylesWallets from "../../styles/wallets.module.scss"
@@ -139,7 +141,14 @@ const FreelanceRu = () => {
 			</div>
 
 			<div class="freelanceBody">
-				<p dangerouslySetInnerHTML={{ __html: textMain.general.intro.ru }}/>
+				<FreelanceStatus isRussian={true}/>
+				<p style={{ marginTop: "2.5rem" }}>
+					<span dangerouslySetInnerHTML={{ __html: textMain.general.intro.ru1 }}/>
+					<H>{freelanceExperienceStringRu} опыта фрилансинга</H>
+					<span dangerouslySetInnerHTML={{ __html: textMain.general.intro.ru2 }}/>
+					<H>{projectsCount} выполненных проектов</H>
+					<span dangerouslySetInnerHTML={{ __html: textMain.general.intro.ru3 }}/>
+				</p>
 				<SpoilerServices 
 					title={textMain.general.spoiler.title.ru}
 					services={services}
@@ -216,7 +225,7 @@ const FreelanceRu = () => {
 					/>
 				</TileContainerLink>
 				<span>
-					<span dangerouslySetInnerHTML={{ __html: textMain.general.schedule.ru }} />
+					<span>Рабочее время: <H>{startHoursUTC}–{endHoursUTC}</H> ({strUTCOffset}), Пн – Пт</span>
 					<span class={stylesFreelancePages.tooltipFreelance}>
 						&nbsp;&nbsp;
 						<img id={stylesFreelancePages.infoFreelance} src={info} alt='info'/>

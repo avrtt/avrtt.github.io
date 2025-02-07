@@ -3,10 +3,11 @@ import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { AnimationOnScroll } from 'react-animation-on-scroll';
 import M from '../../components/Markdown';
+import H from "../../components/Highlight"
 import LinkBlock from '../../components/LinkBlock';
 import TileContainerLink from '../../components/TileContainerLink';
-import { userDiff } from '../../utils/freelance';
-import { categories, services } from '../../data/freelance/arrays';
+import { userDiff, freelanceExperienceString, strUTCOffset, startHoursUTC, endHoursUTC } from '../../utils/freelance';
+import { categories, services, projectsCount } from '../../data/freelance/arrays';
 import { freelanceLastUpdated } from '../../data/lastUpdated';
 import Stack from'../../components/Stack';
 import FreelanceCategory from'../../components/FreelanceCategory';
@@ -31,6 +32,7 @@ import fiverr from "../../images/links/fiverr.svg"
 import kwork from "../../images/links/kwork.svg"
 import habr from "../../images/links/habr.svg"
 import russian from "../../images/flags/russia.svg"
+import FreelanceStatus from "../../components/FreelanceStatus"
 import { textMain } from "../strings/freelance"
 import { SberbankCardCopy, SberbankCardDisplay, SberbankSBPCopy, SberbankSBPDisplay, BitcoinWallet, BEP20Wallet, ERC20Wallet } from "../../data/paymentMethods.js";
 import * as stylesWallets from "../../styles/wallets.module.scss"
@@ -139,7 +141,14 @@ const Freelance = () => {
 			</div>
 
 			<div class="freelanceBody">
-				<p dangerouslySetInnerHTML={{ __html: textMain.general.intro.en }}/>
+				<FreelanceStatus/>
+				<p style={{ marginTop: "2.5rem" }}>
+					<span dangerouslySetInnerHTML={{ __html: textMain.general.intro.en1 }}/>
+					<H>{freelanceExperienceString} of freelancing</H>
+					<span dangerouslySetInnerHTML={{ __html: textMain.general.intro.en2 }}/>
+					<H>{projectsCount} completed projects</H>
+					<span dangerouslySetInnerHTML={{ __html: textMain.general.intro.en3 }}/>
+				</p>
 				<SpoilerServices 
 					title={textMain.general.spoiler.title.en}
 					services={services}
@@ -215,7 +224,7 @@ const Freelance = () => {
 					/>
 				</TileContainerLink>
 				<span>
-					<span dangerouslySetInnerHTML={{ __html: textMain.general.schedule.en }} />
+					<span>Working hours: <H>{startHoursUTC}–{endHoursUTC}</H> ({strUTCOffset}), Mon – Fri</span>
 					<span class={stylesFreelancePages.tooltipFreelance}>
 						&nbsp;&nbsp;
 						<img id={stylesFreelancePages.infoFreelance} src={info} alt='info'/>
