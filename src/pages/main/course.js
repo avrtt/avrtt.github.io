@@ -4,6 +4,8 @@ import { Helmet } from 'react-helmet';
 import { Link, graphql } from "gatsby";
 import { motion } from 'framer-motion';
 import M from '../../components/Markdown';
+import S from '../../components/Shine';
+import H from '../../components/Highlight';
 import StickerPack from '../../components/StickerPack';
 import { courseLastUpdated } from '../../data/lastUpdated';
 import { wordsPerMinuteResearch } from '../../data/commonVariables';
@@ -138,6 +140,7 @@ const Course = ({ data }) => {
 							<p>The course content is largely compiled from texts of the <Link to="/research">Research</Link>, or simply pulled as posts automatically, however, the contents may reference any sources.</p>
 						</div>
 					</div>
+					<div className="mobileOnlySupport"><br/></div>
 				</div>
 			</div>
 			<br/>
@@ -198,8 +201,8 @@ const Course = ({ data }) => {
 			<br/>
 			<div class="courseBody">
 				<M text="# ❤️ SUPPORT"/>
-				<M text="The course is **free forever**. I've put a huge amount of my free time into this work, wished to make something enormous and helpful for people, and never sought to profit from this endeavor, as I believe that educational materials should be open to everyone. I also believe that earning the people's love is the only right way to earn coins from such projects, so if you found it useful — please consider support beyond contributing."/>
-				<p>The easiest way to thank me and speed up development of the course is to <Link to="/donate">donate right here</Link>. <StickerPack sticker="hedgehog"/></p>
+				<p>The course is <H>free forever</H>. I've put a huge amount of my free time into this work, wished to make something enormous and helpful for people, and never sought to profit from this endeavor, as I believe that educational materials should be open to everyone. I also believe that earning the people's love is the only right way to earn coins from such projects, so if you found it useful — please consider support beyond contributing.</p>
+				<p>The easiest way to thank me and speed up development of the course is to <Link to="/donate"><S>donate right here</S></Link>. <StickerPack sticker="hedgehog"/></p>
 			</div>
 			<br/>
 			<div class="courseBody">
