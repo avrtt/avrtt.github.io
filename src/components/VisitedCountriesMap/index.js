@@ -84,19 +84,41 @@ const VisitedCountriesMap = ({ isFlat, width=800, widthDivisor=2, height=600, he
         mapData[d.properties.iso_a2] === 1 ? 'orange' : 'grey'
       )
       .attr('stroke', 'black')
-      .attr('stroke-width', 0.4);
+      .attr('stroke-width', 0.4)
 
-    const drag = d3 // drag to rotate behavior
-      .drag()
-      .on('drag', (event) => {
-        const rotate = projection.rotate();
-        const sensitivity = 0.3;
-        const dx = event.dx;
-        const dy = event.dy;
-        const lambda = rotate[0] + dx * sensitivity; // update
-        const phi = rotate[1] - dy * sensitivity;
-        projection.rotate([lambda, phi]);
-        svg.selectAll('path').attr('d', pathGenerator); // re-render everything
+    let inertiaTimer;
+    let velocity = [0, 0];
+    const sensitivity = 0.18
+      
+    const drag = d3.drag() // "drag and rotate" behavior 
+      .on('start', () => {
+        if (inertiaTimer) inertiaTimer.stop(); // stop inertia if already in progress
+      })
+      .on('drag', (event) => { // update rotation based on the drag delta
+        const currentRotate = projection.rotate()
+        const newRotate = [
+          currentRotate[0] + event.dx * sensitivity,
+          currentRotate[1] - event.dy * sensitivity
+        ];
+        projection.rotate(newRotate);
+        svg.selectAll('path').attr('d', pathGenerator)
+    
+        velocity = [event.dx * sensitivity, -event.dy * sensitivity] // store the velocity from this event (use the last dx/dy values)
+      })
+      .on('end', () => { // after drag ends, continue to update the rotation with a decaying velocity
+        inertiaTimer = d3.timer(() => {
+          velocity[0] *= 0.9; // apply friction to the velocity
+          velocity[1] *= 0.9;
+          const currentRotate = projection.rotate();
+          projection.rotate([
+            currentRotate[0] + velocity[0],
+            currentRotate[1] + velocity[1]
+          ]);
+          svg.selectAll('path').attr('d', pathGenerator);
+          if (Math.abs(velocity[0]) < 0.1 && Math.abs(velocity[1]) < 0.1) { // stop the timer when the velocity is very small
+            inertiaTimer.stop();
+          }
+        });
       });
 
     svg.call(drag);
