@@ -141,6 +141,7 @@ const FreelanceRu = () => {
 			</div>
 
 			<div class="freelanceBody">
+				<div className="mobileOnlySupport"><br/><br/></div>
 				<FreelanceStatus isRussian={true}/>
 				<p style={{ marginTop: "2.5rem" }}>
 					<span dangerouslySetInnerHTML={{ __html: textMain.general.intro.ru1 }}/>
@@ -157,73 +158,76 @@ const FreelanceRu = () => {
 				/>
 				<M text={textMain.general.servicesRedirect.ru}/>
 				<M text={textMain.general.contactMe.ru}/>
-				<TileContainerLink columns={3} marginTop='4vh' animationonscroll={false}>
-					<LinkBlock
-						link='https://t.me/averett'
-						icon={telegram}
-						name='Telegram'
-						handle='@averett'
-						description=''
-						backgroundColor='#dbdbdb'
-						padding='20px'
-					/>
-					<LinkBlock
-						link='mailto:avrtt@tuta.io'
-						icon={envelope}
-						name='Почта'
-						handle='avrtt@tuta.io'
-						description=''
-						backgroundColor='#dbdbdb'
-						padding='20px'
-					/>
-					<LinkBlock
-						link='https://www.facebook.com/vladaverett'
-						icon={facebook}
-						name='Facebook'
-						handle='@vladaverett'
-						description=''
-						backgroundColor='#dbdbdb'
-						padding='20px'
-					/>
-				</TileContainerLink>
-				<TileContainerLink columns={4} marginBottom='6vh' animationonscroll={false}>
-					<LinkBlock
-						link='https://kwork.ru/user/avrtt'
-						icon={kwork}
-						name='Kwork 🇷🇺'
-						handle='@avrtt'
-						description=''
-						backgroundColor='#dbdbdb'
-						padding='20px'
-					/>
-					<LinkBlock
-						link='https://freelance.habr.com/freelancers/avrtt'
-						icon={habr}
-						name='Habr 🇷🇺'
-						handle='@avrtt'
-						description=''
-						backgroundColor='#dbdbdb'
-						padding='20px'
-					/>
-					<LinkBlock
-						link='https://www.upwork.com/freelancers/~019b5459361c20c528'
-						icon={upwork}
-						name='Upwork 🌐'
-						handle=''
-						description=''
-						backgroundColor='#dbdbdb'
-						padding='20px'
-					/>
-					<LinkBlock
-						link='https://www.fiverr.com/vladaverett'
-						icon={fiverr}
-						name='Fiverr 🌐'
-						handle='@vladaverett'
-						description=''
-						backgroundColor='#dbdbdb'
-						padding='20px'
-					/>
-				</TileContainerLink>
+				<div className="mobileOnlySupport">
+					<div class="listHome" style={{ marginLeft: 0, marginBottom: "1rem" }}>
+						📲 Telegram: <a href="https://t.me/averett">@averett</a><br/>  
+						📩 Почта: <a href="mailto:avrtt@tuta.io">avrtt@tuta.io</a><br/>
+						👤 Facebook: <a href="https://www.facebook.com/vladaverett">@vladaverett</a><br/>
+						🇷🇺 Kwork: <a href="https://kwork.ru/user/avrtt">@avrtt</a><br/>
+						🌐 Upwork: <a href="https://www.upwork.com/freelancers/~019b5459361c20c528">link</a><br/>
+						🌐 Fiverr: <a href="https://www.fiverr.com/vladaverett">@vladaverett</a><br/>
+					</div>
+				</div>
+				<div className="desktopOnlySupport">
+					<TileContainerLink columns={3} marginTop='4vh' animationonscroll={false}>
+						<LinkBlock
+							link='https://t.me/averett'
+							icon={telegram}
+							name='Telegram'
+							handle='@averett'
+							description=''
+							backgroundColor='#dbdbdb'
+							padding='20px'
+						/>
+						<LinkBlock
+							link='mailto:avrtt@tuta.io'
+							icon={envelope}
+							name='Почта'
+							handle='avrtt@tuta.io'
+							description=''
+							backgroundColor='#dbdbdb'
+							padding='20px'
+						/>
+						<LinkBlock
+							link='https://www.facebook.com/vladaverett'
+							icon={facebook}
+							name='Facebook'
+							handle='@vladaverett'
+							description=''
+							backgroundColor='#dbdbdb'
+							padding='20px'
+						/>
+					</TileContainerLink>
+					<TileContainerLink columns={3} marginBottom='6vh' animationonscroll={false}>
+						<LinkBlock
+							link='https://kwork.ru/user/avrtt'
+							icon={kwork}
+							name='Kwork 🇷🇺'
+							handle='@avrtt'
+							description=''
+							backgroundColor='#dbdbdb'
+							padding='20px'
+						/>
+						<LinkBlock
+							link='https://www.upwork.com/freelancers/~019b5459361c20c528'
+							icon={upwork}
+							name='Upwork 🌐'
+							handle=''
+							description=''
+							backgroundColor='#dbdbdb'
+							padding='20px'
+						/>
+						<LinkBlock
+							link='https://www.fiverr.com/vladaverett'
+							icon={fiverr}
+							name='Fiverr 🌐'
+							handle='@vladaverett'
+							description=''
+							backgroundColor='#dbdbdb'
+							padding='20px'
+						/>
+					</TileContainerLink>
+				</div>
 				<span>
 					<span>Рабочее время: <H>{startHoursUTC}–{endHoursUTC}</H> ({strUTCOffset}), Пн – Пт</span>
 					<span class={stylesFreelancePages.tooltipFreelance}>
@@ -380,26 +384,34 @@ const FreelanceRu = () => {
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
 					<div class="sectionBreak"><M text="----------"/></div>
 					<M text={textMain.testimonials.heading.ru}/>
-					<TileContainerLink columns={2} marginTop='2vh' marginBottom='4vh' animationonscroll={false}>
-						<LinkBlock
-							link='https://t.me/avrtt_feedback/6'
-							icon={telegram}
-							name='Telegram'
-							handle='@avrtt_feedback'
-							description={textMain.testimonials.telegramDesc.ru}
-							backgroundColor='#dbdbdb'
-							padding='20px'
-						/>
-						<LinkBlock
-							link='https://www.facebook.com/averett.freelance/reviews'
-							icon={facebook}
-							name='Facebook'
-							handle='@averett.freelance'
-							description={textMain.testimonials.facebookDesc.ru}
-							backgroundColor='#dbdbdb'
-							padding='20px'
-						/>
-					</TileContainerLink>
+					<div className="mobileOnlySupport">
+						<div class="listHome" style={{ marginLeft: 0, marginBottom: "1rem" }}>
+							👉 в <H>Telegram</H>: <a href="https://t.me/avrtt_feedback/6">@avrtt_feedback</a><br/>
+							👉 в <H>Facebook</H>: <a href="https://www.facebook.com/averett.freelance/reviews">@averett.freelance</a><br/>
+						</div>
+					</div>
+					<div className="desktopOnlySupport">
+						<TileContainerLink columns={2} marginTop='2vh' marginBottom='4vh' animationonscroll={false}>
+							<LinkBlock
+								link='https://t.me/avrtt_feedback/6'
+								icon={telegram}
+								name='Telegram'
+								handle='@avrtt_feedback'
+								description={textMain.testimonials.telegramDesc.ru}
+								backgroundColor='#dbdbdb'
+								padding='20px'
+							/>
+							<LinkBlock
+								link='https://www.facebook.com/averett.freelance/reviews'
+								icon={facebook}
+								name='Facebook'
+								handle='@averett.freelance'
+								description={textMain.testimonials.facebookDesc.ru}
+								backgroundColor='#dbdbdb'
+								padding='20px'
+							/>
+						</TileContainerLink>
+					</div>
 					<M text={textMain.testimonials.general.ru}/>
 					<button class="noselect" className={stylesSpoilers.spoilerButton} ref={(el) => collRef.current.push(el)}>
 						&nbsp;&nbsp;
