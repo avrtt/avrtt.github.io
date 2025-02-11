@@ -12,7 +12,6 @@ import { freelanceLastUpdated } from '../../data/lastUpdated';
 import Stack from'../../components/Stack';
 import FreelanceCategory from'../../components/FreelanceCategory';
 import Courses from'../../components/Courses';
-import info from "../../images/goals/info.svg";
 import SpoilerServices from '../../components/SpoilerServices';
 import { Link } from "gatsby"
 import CardSber from "../../images/donate/card_sber.svg";
@@ -30,9 +29,9 @@ import facebook from "../../images/links/facebook.svg"
 import upwork from "../../images/links/upwork.svg"
 import fiverr from "../../images/links/fiverr.svg"
 import kwork from "../../images/links/kwork.svg"
-import habr from "../../images/links/habr.svg"
 import russian from "../../images/flags/russia.svg"
 import FreelanceStatus from "../../components/FreelanceStatus"
+import Tooltip from "../../components/Tooltip";
 import { textMain } from "../strings/freelance"
 import { SberbankCardCopy, SberbankCardDisplay, SberbankSBPCopy, SberbankSBPDisplay, BitcoinWallet, BEP20Wallet, ERC20Wallet } from "../../data/paymentMethods.js";
 import * as stylesWallets from "../../styles/wallets.module.scss"
@@ -227,14 +226,7 @@ const Freelance = () => {
 						/>
 					</TileContainerLink>
 				</div>
-				<span>
-					<span>Working hours: <H>{startHoursUTC}–{endHoursUTC}</H> ({strUTCOffset}), Mon – Fri</span>
-					<span class={stylesFreelancePages.tooltipFreelance}>
-						&nbsp;&nbsp;
-						<img id={stylesFreelancePages.infoFreelance} src={info} alt='info'/>
-						<span class={stylesFreelancePages.tooltiptextFreelance}>{tooltipText}</span>
-					</span>
-				</span>
+				<span>Working hours: <H>{startHoursUTC}–{endHoursUTC}</H> ({strUTCOffset}), Mon – Fri</span>&nbsp;&nbsp;<Tooltip text={tooltipText}/>
 				<M text={textMain.general.outro.en}/>
 				<div class="sectionBreak"><M text="----------"/></div>
 				<M text={textMain.projects.heading.en}/>
