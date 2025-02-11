@@ -1,6 +1,6 @@
 @import '../../styles/mixins';
 
-#infoGeneral {
+#info {
 	opacity: 0.4;
 	display: inline-block;
 	height: 100%;
@@ -21,11 +21,11 @@
     }
 }
 
-.tooltipGeneral {
+.tooltipWrapper {
     position: relative;
     display: inline-block;
 
-    .tooltiptextGeneral {
+    .tooltiptext {
         font-size: clamp(1rem, 2.5vw, 1.25rem);
         visibility: hidden;
         width: 600px;
@@ -106,7 +106,7 @@
         }
     }
 
-    &:hover .tooltiptextGeneral {
+    &:hover .tooltiptext {
         visibility: visible;
         opacity: 1;
     }

@@ -24,9 +24,9 @@ const Tooltip = ({ text }) => {
     }, []);
 
     return (
-        <span className={styles.tooltipGeneral} ref={tooltipRef}>
-            <img id={styles.infoGeneral} src={info} alt='info' onClick={handleIconClick}/>
-            <span className={isOpen ? `${styles.tooltiptextGeneral} ${styles.visible}` : styles.tooltiptextGeneral}>
+        <span className={styles.tooltipWrapper} ref={tooltipRef}>
+            <img id={styles.info} src={info} alt='info' onClick={handleIconClick}/>
+            <span className={isOpen ? `${styles.tooltiptext} ${styles.visible}` : styles.tooltiptext}>
                 {text}
             </span>
         </span>
