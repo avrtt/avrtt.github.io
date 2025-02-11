@@ -77,7 +77,39 @@ const Donate = () => {
             
             <div class="donateBody">
                 <M text="So, have any reason to thank me? You could use one of the following donation methods:"/>
-                <div class={stylesWallets.wallets}>
+                <div className="mobileOnlySupport">
+                    <div class="listHome" style={{ marginLeft: 0, marginBottom: "1.8rem" }}>
+                        <p style={{ marginBottom: "-0.8rem" }}>
+                            <img src={KoFi} class="noselect" alt="kofi_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
+                            <s><a href="https://ko-fi.com/avrtt">@avrtt</a></s>
+                        </p>
+                        <p style={{ marginBottom: "-0.8rem" }}>
+                            <img src={PayPal} class="noselect" alt="paypal_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
+                            <s><a href="https://www.paypal.me/vladaverett">@vladaverett</a></s>
+                        </p>
+                        <p style={{ marginBottom: "-0.8rem" }}>
+                            <img src={Patreon} class="noselect" alt="patreon_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
+                            <s><a href="https://www.patreon.com/avrtt">@avrtt</a></s>
+                        </p>
+                        <p style={{ marginBottom: "-0.8rem" }}>
+                            <img src={CardSber} class="noselect" alt="sber_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
+                            <motion.button className={stylesWallets.mobileWalletButton} onClick={() => navigator.clipboard.writeText(SberbankCardCopy)} whileTap={{ scale: 0.95 }}>Copy card number</motion.button> (Sberbank)
+                        </p>
+                        <p style={{ marginBottom: "-0.8rem" }}>
+                            <img src={BTC} class="noselect" alt="btc_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
+                            <motion.button className={stylesWallets.mobileWalletButton} onClick={() => navigator.clipboard.writeText(BitcoinWallet)} whileTap={{ scale: 0.95 }}>Copy address</motion.button> (BTC network)
+                        </p>
+                        <p style={{ marginBottom: "-0.8rem" }}>
+                            <img src={BNB} class="noselect" alt="bnb_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
+                            <motion.button className={stylesWallets.mobileWalletButton} onClick={() => navigator.clipboard.writeText(BEP20Wallet)} whileTap={{ scale: 0.95 }}>Copy address</motion.button> (BEP-20 network)
+                        </p>
+                        <p style={{ marginBottom: "-0.8rem" }}>
+                            <img src={ETH} class="noselect" alt="eth_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
+                            <motion.button className={stylesWallets.mobileWalletButton} onClick={() => navigator.clipboard.writeText(ERC20Wallet)} whileTap={{ scale: 0.95 }}>Copy address</motion.button> (ETC-20 network)
+                        </p>
+                    </div>
+                </div>
+                <div className={`${stylesWallets.wallets} desktopOnlySupport`}>
                     <div class={stylesWallets.wallet1}>
                         <img src={KoFi} class="noselect" alt="kofi_logo" width="60" height="60" style={logoStyle} />
                         <s><a href={KofiLink}><code class={stylesWallets.donateLink}>{KofiHandle}</code></a></s>
@@ -130,7 +162,7 @@ const Donate = () => {
                 </div>
                 <p>Your donations directly allow me to spend more time on my community-related projects! <StickerPack sticker="pepe_wink"/></p>
                 {showEasterEgg && (
-                    <div>
+                    <div className="desktopOnlySupport">
                         <br/><br/>
                         <M text="---"/>
                         <br/>

@@ -456,7 +456,27 @@ const Freelance = () => {
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
 					<div class="sectionBreak"><M text="----------"/></div>
 					<M text={textMain.payment.heading.en}/>
-					<div className={stylesWallets.wallets}>
+					<div className="mobileOnlySupport">
+						<div class="listHome" style={{ marginLeft: 0, marginBottom: "1.8rem" }}>
+							<p style={{ marginBottom: "-0.8rem" }}>
+								<img src={CardSber} class="noselect" alt="sber_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
+								<motion.button className={stylesWallets.mobileWalletButton} onClick={() => navigator.clipboard.writeText(SberbankCardCopy)} whileTap={{ scale: 0.95 }}>Copy card number</motion.button> (Sberbank)
+							</p>
+							<p style={{ marginBottom: "-0.8rem" }}>
+								<img src={BTC} class="noselect" alt="btc_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
+								<motion.button className={stylesWallets.mobileWalletButton} onClick={() => navigator.clipboard.writeText(BitcoinWallet)} whileTap={{ scale: 0.95 }}>Copy address</motion.button> (BTC network)
+							</p>
+							<p style={{ marginBottom: "-0.8rem" }}>
+								<img src={BNB} class="noselect" alt="bnb_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
+								<motion.button className={stylesWallets.mobileWalletButton} onClick={() => navigator.clipboard.writeText(BEP20Wallet)} whileTap={{ scale: 0.95 }}>Copy address</motion.button> (BEP-20 network)
+							</p>
+							<p style={{ marginBottom: "-0.8rem" }}>
+								<img src={ETH} class="noselect" alt="eth_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
+								<motion.button className={stylesWallets.mobileWalletButton} onClick={() => navigator.clipboard.writeText(ERC20Wallet)} whileTap={{ scale: 0.95 }}>Copy address</motion.button> (ETC-20 network)
+							</p>
+						</div>
+					</div>
+					<div className={`${stylesWallets.wallets} desktopOnlySupport`}>
 						<div className={stylesWallets.wallet3}>
 							<img src={CardSber} class="noselect" alt="card_logo" width="60" height="60" style={logoStyle} />
 							<code class={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(SberbankCardCopy)}><div className={stylesWallets.tooltip}>{SberbankCardDisplay}
