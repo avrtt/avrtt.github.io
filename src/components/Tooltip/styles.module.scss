@@ -38,7 +38,7 @@
         z-index: 1;
         bottom: 120%;
         left: 50%;
-        margin-left: -210px;
+        margin-left: -310px;
         opacity: 0;
         transition: opacity 0.3s;
         @include respond-to(mobile) { 
@@ -110,4 +110,9 @@
         visibility: visible;
         opacity: 1;
     }
+}
+
+.visible {
+    visibility: visible;
+    opacity: 1;
 }
