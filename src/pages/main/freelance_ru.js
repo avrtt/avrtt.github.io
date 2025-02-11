@@ -158,13 +158,15 @@ const FreelanceRu = () => {
 				<M text={textMain.general.servicesRedirect.ru}/>
 				<M text={textMain.general.contactMe.ru}/>
 				<div className="mobileOnlySupport">
-					<div class="listHome" style={{ marginLeft: 0, marginBottom: "1rem" }}>
-						📲 Telegram: <a href="https://t.me/averett">@averett</a><br/>  
-						📩 Почта: <a href="mailto:avrtt@tuta.io">avrtt@tuta.io</a><br/>
-						👤 Facebook: <a href="https://www.facebook.com/vladaverett">@vladaverett</a><br/>
-						🇷🇺 Kwork: <a href="https://kwork.ru/user/avrtt">@avrtt</a><br/>
-						🌐 Upwork: <a href="https://www.upwork.com/freelancers/~019b5459361c20c528">link</a><br/>
-						🌐 Fiverr: <a href="https://www.fiverr.com/vladaverett">@vladaverett</a><br/>
+					<div class="list" style={{ marginLeft: 0, marginBottom: "1rem" }}>
+						<ul>
+							<li>📲 Telegram: <a href="https://t.me/averett">@averett</a></li> 
+							<li>📩 Почта: <a href="mailto:avrtt@tuta.io">avrtt@tuta.io</a></li>
+							<li>👤 Facebook: <a href="https://www.facebook.com/vladaverett">@vladaverett</a></li>
+							<li>🇷🇺 Kwork: <a href="https://kwork.ru/user/avrtt">@avrtt</a></li>
+							<li>🌐 Upwork: <a href="https://www.upwork.com/freelancers/~019b5459361c20c528">link</a></li>
+							<li>🌐 Fiverr: <a href="https://www.fiverr.com/vladaverett">@vladaverett</a></li>
+						</ul>
 					</div>
 				</div>
 				<div className="desktopOnlySupport">
@@ -377,9 +379,11 @@ const FreelanceRu = () => {
 					<div class="sectionBreak"><M text="----------"/></div>
 					<M text={textMain.testimonials.heading.ru}/>
 					<div className="mobileOnlySupport">
-						<div class="listHome" style={{ marginLeft: 0, marginBottom: "1rem" }}>
-							👉 в <H>Telegram</H>: <a href="https://t.me/avrtt_feedback/6">@avrtt_feedback</a><br/>
-							👉 в <H>Facebook</H>: <a href="https://www.facebook.com/averett.freelance/reviews">@averett.freelance</a><br/>
+						<div class="list" style={{ marginLeft: 0, marginBottom: "1rem" }}>
+							<ul>
+								<li>👉 в <H>Telegram</H>: <a href="https://t.me/avrtt_feedback/6">@avrtt_feedback</a></li>
+								<li>👉 в <H>Facebook</H>: <a href="https://www.facebook.com/averett.freelance/reviews">@averett.freelance</a></li>
+							</ul>
 						</div>
 					</div>
 					<div className="desktopOnlySupport">
@@ -425,7 +429,10 @@ const FreelanceRu = () => {
 					<M text={textMain.background.heading.ru}/>
 					<M text={textMain.background.block1.ru}/>
 					<M text={textMain.background.block2.ru}/>
-					<div className='listHome'>
+					<div className='list desktopOnlySupport'>
+						<M text={textMain.background.block3.ru}/>
+					</div>
+					<div className='list mobileOnlySupport' style={{ marginLeft: 0 }}>
 						<M text={textMain.background.block3.ru}/>
 					</div>
 					<M text={textMain.background.block4.ru}/>
@@ -450,7 +457,7 @@ const FreelanceRu = () => {
 					<div class="sectionBreak"><M text="----------"/></div>
 					<M text={textMain.payment.heading.ru}/>
 					<div className="mobileOnlySupport">
-						<div class="listHome" style={{ marginLeft: 0, marginBottom: "1.8rem" }}>
+						<div style={{ marginLeft: 0, marginBottom: "1.8rem" }}>
 							<p style={{ marginBottom: "-0.8rem" }}>
 								<img src={CardSber} class="noselect" alt="sber_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
 								<motion.button className={stylesWallets.mobileWalletButton} onClick={() => navigator.clipboard.writeText(SberbankCardCopy)} whileTap={{ scale: 0.95 }}>Скопировать номер карты</motion.button> (Сбер)
@@ -509,9 +516,12 @@ const FreelanceRu = () => {
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
 					<div class="sectionBreak"><M text="----------"/></div>
 					<M text={textMain.related.heading.ru}/>
-					<div class="listHome"> 
+					<div class="list desktopOnlySupport"> 
 						<M text={textMain.related.links.ru}/>
-					</div>   
+					</div>
+					<div class="list mobileOnlySupport" style={{ marginLeft: 0 }}> 
+						<M text={textMain.related.links.ru}/>
+					</div>      
 				</AnimationOnScroll>
 				
 				<div id="myModal" class={stylesDonateCommon.modal}>

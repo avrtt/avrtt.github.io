@@ -78,7 +78,7 @@ const Donate = () => {
             <div class="donateBody">
                 <M text="So, have any reason to thank me? You could use one of the following donation methods:"/>
                 <div className="mobileOnlySupport">
-                    <div class="listHome" style={{ marginLeft: 0, marginBottom: "1.8rem" }}>
+                    <div style={{ marginLeft: 0, marginBottom: "1.8rem" }}>
                         <p style={{ marginBottom: "-0.8rem" }}>
                             <img src={KoFi} class="noselect" alt="kofi_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
                             <s><a href="https://ko-fi.com/avrtt">@avrtt</a></s>

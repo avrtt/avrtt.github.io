@@ -428,20 +428,24 @@ I'll provide a discount after reading your review. Your detailed feedback helps 
             ru: "Несколько фактов из моей биографии, которые стоит упомянуть:"
         },
         block3: {
-            en: `🎓 [B.S.](https://t.me/venturingforth/394) in **Applied Mathematics & Computer Science** (more info in [CV](/cv))<br/>
-                💼 [~12 months](/cv) of *super boring* **non-freelance work** experience (a so-called *employment*)<br/>
-                🤓 33 completed **courses**: 23 certified and 10+ non-certified (see the section below)<br/>
-                💪 Actively [contributing](https://github.com/avrtt) to **open-source** community<br/>
-                ✍️ Writing [blog posts](/research) about everything interesting I **research** since 2022<br/>
-                🔎 Currently **developing skills** towards [AI engineering](https://en.wikipedia.org/wiki/Artificial_intelligence_engineering)<br/>
-                📢 Keeping tech-related **social media blogs** beyond this website (see links on the [Home](/) page)<br/>`,
-            ru: `🎓 [Степень бакалавра](https://t.me/venturingforth/394) по **прикладной математике и информатике** (см. информацию в [CV](/cv))<br/>
-                💼 [~12 месяцев](/cv) опыта *очень скучной* **не-фриланс работы** (так называемое *трудоустройство*)<br/>
-                🤓 33 пройденных **курса**: 23 с сертификатами и 10+ без них (см. раздел ниже)<br/>
-                💪 Активно [вношу вклад](https://github.com/avrtt) в **опенсорс** сообщество<br/>
-                ✍️ Пишу [посты](/research) про всё интересное, что **изучаю** с 2022<br/>
-                🔎 На данный момент **развиваю навыки** в направлении [AI engineering](https://en.wikipedia.org/wiki/Artificial_intelligence_engineering)<br/>
-                📢 Веду профессиональные **блоги в соцсетях** помимо данного сайта (см. ссылки в [Home](/))<br/>`
+            en: `
+- 🎓 [B.S.](https://t.me/venturingforth/394) in **Applied Mathematics & Computer Science** (more info in [CV](/cv))<br/>
+- 💼 [~12 months](/cv) of *super boring* **non-freelance work** experience (a so-called *employment*)<br/>
+- 🤓 33 completed **courses**: 23 certified and 10+ non-certified (see the section below)<br/>
+- 💪 Actively [contributing](https://github.com/avrtt) to **open-source** community<br/>
+- ✍️ Writing [blog posts](/research) about everything interesting I **research** since 2022<br/>
+- 🔎 Currently **developing skills** towards [AI engineering](https://en.wikipedia.org/wiki/Artificial_intelligence_engineering)<br/>
+- 📢 Keeping tech-related **social media blogs** beyond this website (see links on the [Home](/) page)<br/>
+                `,
+            ru: `
+- 🎓 [Степень бакалавра](https://t.me/venturingforth/394) по **прикладной математике и информатике** (см. информацию в [CV](/cv))<br/>
+- 💼 [~12 месяцев](/cv) опыта *очень скучной* **не-фриланс работы** (так называемое *трудоустройство*)<br/>
+- 🤓 33 пройденных **курса**: 23 с сертификатами и 10+ без них (см. раздел ниже)<br/>
+- 💪 Активно [вношу вклад](https://github.com/avrtt) в **опенсорс** сообщество<br/>
+- ✍️ Пишу [посты](/research) про всё интересное, что **изучаю** с 2022<br/>
+- 🔎 На данный момент **развиваю навыки** в направлении [AI engineering](https://en.wikipedia.org/wiki/Artificial_intelligence_engineering)<br/>
+- 📢 Веду профессиональные **блоги в соцсетях** помимо данного сайта (см. ссылки в [Home](/))<br/>
+                `
         },
         block4: {
             en: "I've developed a *tremendous* amount of **Python programs** of different intricacy since I got into programming. Python, when it comes to implementing something, is definitely one of my strongest (if not the strongest) hard skills. Now I build software using AI for acceleration.",
@@ -484,22 +488,26 @@ I'll provide a discount after reading your review. Your detailed feedback helps 
             ru: "# 🔗 РЕЛЕВАНТНЫЕ ССЫЛКИ"
         },
         links: {
-            en: `▶️ [YouTube](https://www.youtube.com/channel/UCpPtaqqxzFqm9rZAh2xC5OA)<br/>
-                📚 [Telegram (tech blog)](https://t.me/avheuristics)<br/>
-                🏆 [Kaggle](https://www.kaggle.com/lenferdetroud)<br/>
-                🧩 [LeetCode](https://leetcode.com/avrtt/)<br/>
-                ⚙️ [GitHub](https://github.com/avrtt)<br/>
-                💼 [LinkedIn](https://www.linkedin.com/in/avrtt/)<br/>
-                📢 [Facebook (business page)](https://www.facebook.com/averett.freelance/)<br/>
-                🎓 [Coursera](https://www.coursera.org/user/6debb8344117076d8b1d5f743066057c)`,
-            ru: `▶️ [YouTube](https://www.youtube.com/channel/UCpPtaqqxzFqm9rZAh2xC5OA)<br/>
-                📚 [Telegram (профессиональный блог)](https://t.me/avheuristics)<br/>
-                🏆 [Kaggle](https://www.kaggle.com/lenferdetroud)<br/>
-                🧩 [LeetCode](https://leetcode.com/avrtt/)<br/>
-                ⚙️ [GitHub](https://github.com/avrtt)<br/>
-                💼 [LinkedIn](https://www.linkedin.com/in/avrtt/)<br/>
-                📢 [Facebook (страница бизнеса)](https://www.facebook.com/averett.freelance/)<br/>
-                🎓 [Coursera](https://www.coursera.org/user/6debb8344117076d8b1d5f743066057c)`,
+            en: `
+- ▶️ [YouTube](https://www.youtube.com/channel/UCpPtaqqxzFqm9rZAh2xC5OA)<br/>
+- 📚 [Telegram (tech blog)](https://t.me/avheuristics)<br/>
+- 🏆 [Kaggle](https://www.kaggle.com/lenferdetroud)<br/>
+- 🧩 [LeetCode](https://leetcode.com/avrtt/)<br/>
+- ⚙️ [GitHub](https://github.com/avrtt)<br/>
+- 💼 [LinkedIn](https://www.linkedin.com/in/avrtt/)<br/>
+- 📢 [Facebook (business page)](https://www.facebook.com/averett.freelance/)<br/>
+- 🎓 [Coursera](https://www.coursera.org/user/6debb8344117076d8b1d5f743066057c)
+                `,
+            ru: `
+- ▶️ [YouTube](https://www.youtube.com/channel/UCpPtaqqxzFqm9rZAh2xC5OA)<br/>
+- 📚 [Telegram (профессиональный блог)](https://t.me/avheuristics)<br/>
+- 🏆 [Kaggle](https://www.kaggle.com/lenferdetroud)<br/>
+- 🧩 [LeetCode](https://leetcode.com/avrtt/)<br/>
+- ⚙️ [GitHub](https://github.com/avrtt)<br/>
+- 💼 [LinkedIn](https://www.linkedin.com/in/avrtt/)<br/>
+- 📢 [Facebook (страница бизнеса)](https://www.facebook.com/averett.freelance/)<br/>
+- 🎓 [Coursera](https://www.coursera.org/user/6debb8344117076d8b1d5f743066057c)
+                `,
         },
     },
 }

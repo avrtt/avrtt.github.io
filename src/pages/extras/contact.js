@@ -20,12 +20,19 @@ const Contact = () => {
             
             <div class="contactBody">
                 <M text="Questions, corrections, business proposals, creative suggestions, bucket list ideas, offers to travel together, just chatting:"/>
-                <div class="listHome">
-                    <M text="
-                    📲 Telegram (fastest way): **[@averett](https://t.me/averett)**<br/>
-                    📩 Email: **[avrtt@tuta.io](mailto:avrtt@tuta.io)**<br/>
-                    👤 Facebook: **[@vladaverett](https://www.facebook.com/vladaverett)**
-                    "/>
+                <div class="list desktopOnlySupport">
+                    <M text={`
+- 📲 Telegram (fastest way): **[@averett](https://t.me/averett)**<br/>
+- 📩 Email: **[avrtt@tuta.io](mailto:avrtt@tuta.io)**<br/>
+- 👤 Facebook: **[@vladaverett](https://www.facebook.com/vladaverett)**
+                    `}/>
+                </div>
+                <div class="list mobileOnlySupport" style={{ marginLeft: 0 }}>
+                    <M text={`
+- 📲 Telegram (fastest way): **[@averett](https://t.me/averett)**<br/>
+- 📩 Email: **[avrtt@tuta.io](mailto:avrtt@tuta.io)**<br/>
+- 👤 Facebook: **[@vladaverett](https://www.facebook.com/vladaverett)**
+                    `}/>
                 </div>
                 <M text="I'm open to making friends with people all over the world."/>
                 <M text="If you're reaching out about business (i.e. ads and collaboration), please consider reading the [Information for Business Inquiries](/information_for_business_inquiries)."/>
@@ -33,13 +40,11 @@ const Contact = () => {
                 <M text="---"/>
                 <br/>
                 Share my opinion on the importance of secure communication? You might find these magic scribbles useful:
-                <div class="listHome">
-                    <M text="
-                    [m]: [!IkPReSNEepRWuitAYY](https://matrix.to/#/!IkPReSNEepRWuitAYY:matrix.org):matrix.org, 
-                    [@avrtt](https://matrix.to/#/@avrtt:digitalprivacy.diy):digitalprivacy.diy<br/>
-                    Session: **05a7b2f8134fc6915ded9df78f9c834a33a9157ce43d8ec40a195db8e3f834f35f**
-                    "/>
-                    <Code text='
+                <M text={`
+- [m]: [!IkPReSNEepRWuitAYY](https://matrix.to/#/!IkPReSNEepRWuitAYY:matrix.org):matrix.org, [@avrtt](https://matrix.to/#/@avrtt:digitalprivacy.diy):digitalprivacy.diy<br/>
+- Session: **05a7b2f8134fc6915ded9df78f9c834a33a9157ce43d8ec40a195db8e3f834f35f**
+                `}/>
+                <Code text='
 mDMEZ1KmZRYJKwYBBAHaRw8BAQdAhDFnbiRMGWqAO1D6AUNdTuVeIQz6zoVlqvd6
 uUx9Pkm0GVZsYWRpc2xhdiA8YXZydHRAdHV0YS5pbz6IkwQTFgoAOxYhBBXEpnmU
 st0uikFNXSbyHQrTGEHhBQJnUqZlAhsDBQsJCAcCAiICBhUKCQgLAgQWAgMBAh4H
@@ -50,8 +55,7 @@ eAQYFgoAIBYhBBXEpnmUst0uikFNXSbyHQrTGEHhBQJnUqZlAhsMAAoJECbyHQrT
 GEHhDvYBAIUwUljg/hFxgI71yMaJWFmH1hCBA1mHKYuI7qCSsqdvAQCsvpUjJn8R
 oukZqhXuxAdlr5geyAbMceZFWz7aYO8GBw==
 =Jigm' language="bash"/>
-                    <a href="https://raw.githubusercontent.com/avrtt/pgp-keys/main/general.asc">general.asc</a> | PGP fingerprint: <b>15C4 A679 94B2 DD2E 8A41 4D5D 26F2 <u>1D0A D318 41E1</u></b>
-                </div>
+                <a href="https://raw.githubusercontent.com/avrtt/pgp-keys/main/general.asc">general.asc</a> | PGP fingerprint: <b>15C4 A679 94B2 DD2E 8A41 4D5D 26F2 <u>1D0A D318 41E1</u></b>
             </div>
         </motion.div>
     );

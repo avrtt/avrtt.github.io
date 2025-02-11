@@ -157,13 +157,15 @@ const Freelance = () => {
 				<M text={textMain.general.servicesRedirect.en}/>
 				<M text={textMain.general.contactMe.en}/>
 				<div className="mobileOnlySupport">
-					<div class="listHome" style={{ marginLeft: 0, marginBottom: "1rem" }}>
-						📲 Telegram: <a href="https://t.me/averett">@averett</a><br/>  
-						📩 Email: <a href="mailto:avrtt@tuta.io">avrtt@tuta.io</a><br/>
-						👤 Facebook: <a href="https://www.facebook.com/vladaverett">@vladaverett</a><br/>
-						🌐 Upwork: <a href="https://www.upwork.com/freelancers/~019b5459361c20c528">link</a><br/>
-						🌐 Fiverr: <a href="https://www.fiverr.com/vladaverett">@vladaverett</a><br/>
-						🇷🇺 Kwork: <a href="https://kwork.ru/user/avrtt">@avrtt</a><br/>
+					<div class="list" style={{ marginLeft: 0, marginBottom: "1rem" }}>
+						<ul>
+							<li>📲 Telegram: <a href="https://t.me/averett">@averett</a></li>
+							<li>📩 Email: <a href="mailto:avrtt@tuta.io">avrtt@tuta.io</a></li>
+							<li>👤 Facebook: <a href="https://www.facebook.com/vladaverett">@vladaverett</a></li>
+							<li>🌐 Upwork: <a href="https://www.upwork.com/freelancers/~019b5459361c20c528">link</a></li>
+							<li>🌐 Fiverr: <a href="https://www.fiverr.com/vladaverett">@vladaverett</a></li>
+							<li>🇷🇺 Kwork: <a href="https://kwork.ru/user/avrtt">@avrtt</a></li>
+						</ul>
 					</div>
 				</div>
 				<div className="desktopOnlySupport">
@@ -376,9 +378,11 @@ const Freelance = () => {
 					<div class="sectionBreak"><M text="----------"/></div>
 					<M text={textMain.testimonials.heading.en}/>
 					<div className="mobileOnlySupport">
-						<div class="listHome" style={{ marginLeft: 0, marginBottom: "1rem" }}>
-							👉 in <H>Telegram</H>: <a href="https://t.me/avrtt_feedback/6">@avrtt_feedback</a><br/>
-							👉 in <H>Facebook</H>: <a href="https://www.facebook.com/averett.freelance/reviews">@averett.freelance</a><br/>
+						<div class="list" style={{ marginLeft: 0, marginBottom: "1rem" }}>
+							<ul>
+								<li>👉 in <H>Telegram</H>: <a href="https://t.me/avrtt_feedback/6">@avrtt_feedback</a></li>
+								<li>👉 in <H>Facebook</H>: <a href="https://www.facebook.com/averett.freelance/reviews">@averett.freelance</a></li>
+							</ul>
 						</div>
 					</div>
 					<div className="desktopOnlySupport">
@@ -424,7 +428,10 @@ const Freelance = () => {
 					<M text={textMain.background.heading.en}/>
 					<M text={textMain.background.block1.en}/>
 					<M text={textMain.background.block2.en}/>
-					<div className='listHome'>
+					<div className='list desktopOnlySupport'>
+						<M text={textMain.background.block3.en}/>
+					</div>
+					<div className='list mobileOnlySupport' style={{ marginLeft: 0 }}>
 						<M text={textMain.background.block3.en}/>
 					</div>
 					<M text={textMain.background.block4.en}/>
@@ -449,7 +456,7 @@ const Freelance = () => {
 					<div class="sectionBreak"><M text="----------"/></div>
 					<M text={textMain.payment.heading.en}/>
 					<div className="mobileOnlySupport">
-						<div class="listHome" style={{ marginLeft: 0, marginBottom: "1.8rem" }}>
+						<div style={{ marginLeft: 0, marginBottom: "1.8rem" }}>
 							<p style={{ marginBottom: "-0.8rem" }}>
 								<img src={CardSber} class="noselect" alt="sber_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
 								<motion.button className={stylesWallets.mobileWalletButton} onClick={() => navigator.clipboard.writeText(SberbankCardCopy)} whileTap={{ scale: 0.95 }}>Copy card number</motion.button> (Sberbank)
@@ -508,9 +515,12 @@ const Freelance = () => {
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
 					<div class="sectionBreak"><M text="----------"/></div>
 					<M text={textMain.related.heading.en}/>
-					<div class="listHome"> 
+					<div class="list desktopOnlySupport"> 
 						<M text={textMain.related.links.en}/>
-					</div>   
+					</div>
+					<div class="list mobileOnlySupport" style={{ marginLeft: 0 }}> 
+						<M text={textMain.related.links.en}/>
+					</div> 
 				</AnimationOnScroll>
 
 				<div id="myModal" class={stylesDonateCommon.modal}>
