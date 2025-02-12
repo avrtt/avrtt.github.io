@@ -429,10 +429,7 @@ const FreelanceRu = () => {
 					<M text={textMain.background.heading.ru}/>
 					<M text={textMain.background.block1.ru}/>
 					<M text={textMain.background.block2.ru}/>
-					<div className='list desktopOnlySupport'>
-						<M text={textMain.background.block3.ru}/>
-					</div>
-					<div className='list mobileOnlySupport' style={{ marginLeft: 0 }}>
+					<div className='list'>
 						<M text={textMain.background.block3.ru}/>
 					</div>
 					<M text={textMain.background.block4.ru}/>
@@ -516,12 +513,9 @@ const FreelanceRu = () => {
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
 					<div class="sectionBreak"><M text="----------"/></div>
 					<M text={textMain.related.heading.ru}/>
-					<div class="list desktopOnlySupport"> 
+					<div class="list"> 
 						<M text={textMain.related.links.ru}/>
-					</div>
-					<div class="list mobileOnlySupport" style={{ marginLeft: 0 }}> 
-						<M text={textMain.related.links.ru}/>
-					</div>      
+					</div>     
 				</AnimationOnScroll>
 				
 				<div id="myModal" class={stylesDonateCommon.modal}>

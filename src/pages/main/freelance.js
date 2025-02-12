@@ -428,10 +428,7 @@ const Freelance = () => {
 					<M text={textMain.background.heading.en}/>
 					<M text={textMain.background.block1.en}/>
 					<M text={textMain.background.block2.en}/>
-					<div className='list desktopOnlySupport'>
-						<M text={textMain.background.block3.en}/>
-					</div>
-					<div className='list mobileOnlySupport' style={{ marginLeft: 0 }}>
+					<div className='list'>
 						<M text={textMain.background.block3.en}/>
 					</div>
 					<M text={textMain.background.block4.en}/>
@@ -515,12 +512,9 @@ const Freelance = () => {
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
 					<div class="sectionBreak"><M text="----------"/></div>
 					<M text={textMain.related.heading.en}/>
-					<div class="list desktopOnlySupport"> 
+					<div class="list"> 
 						<M text={textMain.related.links.en}/>
 					</div>
-					<div class="list mobileOnlySupport" style={{ marginLeft: 0 }}> 
-						<M text={textMain.related.links.en}/>
-					</div> 
 				</AnimationOnScroll>
 
 				<div id="myModal" class={stylesDonateCommon.modal}>

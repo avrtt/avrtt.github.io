@@ -20,14 +20,7 @@ const Contact = () => {
             
             <div class="contactBody">
                 <M text="Questions, corrections, business proposals, creative suggestions, bucket list ideas, offers to travel together, just chatting:"/>
-                <div class="list desktopOnlySupport">
-                    <M text={`
-- 📲 Telegram (fastest way): **[@averett](https://t.me/averett)**<br/>
-- 📩 Email: **[avrtt@tuta.io](mailto:avrtt@tuta.io)**<br/>
-- 👤 Facebook: **[@vladaverett](https://www.facebook.com/vladaverett)**
-                    `}/>
-                </div>
-                <div class="list mobileOnlySupport" style={{ marginLeft: 0 }}>
+                <div class="list">
                     <M text={`
 - 📲 Telegram (fastest way): **[@averett](https://t.me/averett)**<br/>
 - 📩 Email: **[avrtt@tuta.io](mailto:avrtt@tuta.io)**<br/>
