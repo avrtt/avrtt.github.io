@@ -1,0 +1,96 @@
+@use 'variables' as var;
+@use 'placeholders' as *;
+@use 'mixins' as mix;
+
+body {
+  font-family: var.$font-family-primary;
+  margin: 5% auto;
+  max-width: 100%;
+  line-height: 1.8;
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  padding: 0 0.5rem;
+  color: var.$color-text;
+  background-color: var.$color-bg-main;
+  overflow-y: overlay;
+  overflow: auto !important;
+  transition: max-width 0.5s ease, padding var.$transition-default;
+  @include mix.respond-to(small-tablet) { max-width: 98%; padding: 0 1em }
+  @include mix.respond-to(tablet) { max-width: 95%; padding: 0 1.5em }
+  @include mix.respond-to(small-desktop) { max-width: 90%; padding: 0 2em }
+  @include mix.respond-to(desktop) { max-width: 73%; padding: 0 2.4em }
+}
+
+.homeBodyRegular, .courseBody, .freelanceBody, .aboutBodyRegular, .postBody, .donateBody, .contactBody {
+  @extend %body-box;
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
+  transition: margin 1s ease, padding 1s ease;
+  @include mix.respond-to(tablet) { margin-left: 3%; margin-right: 3%; padding: 1em 2.5em }
+  @include mix.respond-to(small-desktop) { margin-left: 4%; margin-right: 4%; padding: 1.2em 3em }
+  @include mix.respond-to(desktop) { margin-left: 5%; margin-right: 5%; padding: 2.5em 4em }
+}
+
+.homeBodyTile, .aboutBodyTile {
+  @extend %body-box-tile;
+  @include mix.respond-to(tablet) { padding: 0 2.5em }
+  @include mix.respond-to(small-desktop) { padding: 0 3em }
+  @include mix.respond-to(desktop) { padding: 0 4em }  
+}
+
+.goalsBodyNested, .servicesBodyNested {
+  @extend %body-box-nested;
+  margin-left: 0%;
+  margin-right: 0%;
+  background-color: var.$color-bg-body;
+  padding: 0.2rem 1.5rem;
+  margin-top: 0;
+  @include mix.respond-to(tablet) { margin-left: 3%; margin-right: 3%; padding: 1em 2.5em }
+  @include mix.respond-to(small-desktop) { margin-left: 4%; margin-right: 4%; padding: 1.2em 3em }
+  @include mix.respond-to(desktop) { margin-left: 5%; margin-right: 5%; padding: 2.5em 4em }
+}
+
+.goalsBody {
+    color: #8e8e8e;
+}
+
+.goalsBodyNestedMain {
+  @include mix.respond-to(small-desktop) { margin: 0 -14%; max-width: 100%; }
+  @include mix.respond-to(desktop) { margin: 0 -14%; max-width: 200%; }
+}
+
+.freelanceBodyNested {
+  @extend %body-box-nested;
+  margin-top: 1.5em;
+  margin-bottom: 2.5em;
+  background-color: none;
+  padding: 0;
+}
+
+.freelanceCoursesWrapper {
+  @include mix.respond-to(desktop) { padding-left: 5em; padding-right: 5em }
+}
+
+.postBody {
+  @include mix.respond-to(tablet) { margin-left: 5%; margin-right: 5% }
+  @include mix.respond-to(small-desktop) { margin-left: 8%; margin-right: 8% }
+  @include mix.respond-to(desktop) { margin-left: 10%; margin-right: 10% }
+}
+
+.homeBodyRegular {
+  @include mix.respond-to(mobile) {}
+  @include mix.respond-to(small-tablet) {}
+  @include mix.respond-to(tablet) {}
+  @include mix.respond-to(small-desktop) {}
+  @include mix.respond-to(desktop) { margin-top: 2.5em }
+}
+
+.homeBodyTile {
+  padding: 0em 1em;
+}
+
+.goalsBodyNested {
+  font-weight: bold;
+}
+
+.publicationsBody, .softwareBody, .musicBody, .talksBody, .explorationBody, .explorationBodyNested, .cvBody {
+  /* ... */
+}
