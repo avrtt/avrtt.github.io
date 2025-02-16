@@ -27,7 +27,7 @@ const spanStyle = {
 }
 
 const tagStatsWrapper = {
-    'font-size': '16px',
+    'font-size': 'clamp(0.4rem, 2.5vw, 1rem)',
     'margin-left': '5%',
     'margin-right': '5%',
     'max-width': '100%',
@@ -51,18 +51,11 @@ const taggedGoalsNumStyle = {
     'opacity': '0.6'
 }
 
-const placeholderTop = {
-    'margin-top': '-30px'
-}
-
-const placeholderBottom = {
-    'margin-bottom': '90px'
-}
-
 const textImg = {
     'width': '32px',
     'opacity': '0.4',
-    'vertical-align': 'middle'
+    'vertical-align': 'middle',
+    'margin': '0'
 }
 
 const Goals = () => {
@@ -170,7 +163,7 @@ const Goals = () => {
             <div class="goalsBodyNested">
                 <div class={stylesGoalsPage.goalsTextContent}>
                     <p>Here you can find the public version of my bucket list, which is actually an organized collection of my life's achievements if it was a RPG (that's exactly how I feel this life). There are boring cliché goals, serious and challenging ones, but also just simple little things for folks who, like me, enjoy goofing around doing stupid and sometimes epic dangerous stuff, because that's what makes life exciting. <StickerPack sticker="pug_dance"/> </p>
-                    <div>
+                    <div className="desktopOnlySupport">
                         <button class="noselect" className={stylesSpoilers.spoilerButton} ref={(el) => collRef.current.push(el)}>
                             &nbsp;&nbsp;
                             <span className={stylesSpoilers.spoilerText}></span>
@@ -181,69 +174,74 @@ const Goals = () => {
                             <div className={stylesSpoilers.spoilerContentGoals}>
                                 <M text="Before you dive deep, here's a little explanation of the notation:"/>
                                 <ul>
-                                    <li><span class={stylesGoalsPage.tooltipGoals}><img id={stylesGoalsPage.checkboxStyle} style={textImg} src={info} class={stylesGoalsPage.c} alt='checkbox'/><span class={stylesGoalsPage.tooltiptextGoals}>Hooray, you've discovered mouse control!</span></span> will prompt additional information about a goal on hover </li>
+                                    <li><span class={stylesGoalsPage.tooltipGoals}><img id={stylesGoalsPage.infoStyle} style={textImg} src={info} class={stylesGoalsPage.c} alt='checkbox'/></span> will show additional information about a goal on hover </li>
                                     <li><img src={refLink} style={textImg} /> can be a reference, inspiration, or extra source to describe a goal</li>
                                     <li><img src={resultLink} style={textImg} /> is a link to the result or proof of accomplishing a goal</li>
                                     <li>The right side of the page shows two tags: difficulty/rareness (stars) and the level of risk</li>
-                                    <li>A bunch of icons on the left side represent the category tags for navigation and the statistics at the bottom of the page</li>
-                                    <li>The text after "–" reflects a rough deadline for a goal </li>
-                                    <li>Hovering over the <span class={stylesGoalsPage.tooltipGoals}><img id={stylesGoalsPage.checkboxStyle} style={textImg} src={checkbox} class={stylesGoalsPage.c} alt='checkbox'/><span class={stylesGoalsPage.tooltiptextGoals}>Yep, just like that.</span></span> icons displays the dates of completion</li>
+                                    <li>The date/text after "–" reflects a rough deadline for a goal</li>
+                                    <li>The bunch of icons after each goal description represent the category tags for navigation and the statistics at the bottom of the page</li>
+                                    <li>Hovering over the <span class={stylesGoalsPage.tooltipGoals}><img id={stylesGoalsPage.checkboxStyle} style={textImg} src={checkbox} class={stylesGoalsPage.c} alt='checkbox'/><span style={{ left: "50%"}} class={stylesGoalsPage.tooltiptextGoals}>You've discovered mouse control!</span></span> icons displays the date and location of completion</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <M text="Keeping a list of goals constantly reminds me of my passions and motivates me to push forward, and I hope it can give you some inspiration if you're feeling stuck in life."/>
-                    <br/>
-                    <div className={stylesGoalsPage.goalsButtonsWrapper}>
-                        <motion.button class="noselect" onClick={toggleOpacity} whileTap={{ scale: 0.93 }} className={stylesGoalsPage.goalsButton}>
-                            <motion.div
-                                className={stylesButtonsCommon.buttonTextWrapper}
-                                key={isOpaque}
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                                transition={{ duration: 0.3, ease: "easeInOut" }}
-                            >
-                                {isOpaque ? 'Hide tags' : 'Show tags'}
-                            </motion.div>
-                        </motion.button>
-                        <motion.button class="noselect" style={hideUncheckedButtonStyle} onClick={removeUnchecked} whileTap={{ scale: 0.93 }} className={stylesGoalsPage.goalsButton}>
-                            <motion.div
-                                className={stylesButtonsCommon.buttonTextWrapper}
-                                key={hideUnchecked}
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                                transition={{ duration: 0.3, ease: "easeInOut" }}
-                            >
-                                <span>
-                                    {hideUnchecked ? 'Show unachieved goals' : 'Hide unachieved goals'}
-                                </span>
-                                <span class={stylesGoalsPage.goalsButtonCount}>
-                                    {hideUnchecked ? ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'u' ? ++acc : acc, 0) + ')' : ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'u' ? ++acc : acc, 0) + ')'}
-                                </span>
-                            </motion.div>
-                        </motion.button>
-                        <motion.button class="noselect" style={hideCheckedButtonStyle} onClick={removeChecked} whileTap={{ scale: 0.93 }} className={stylesGoalsPage.goalsButton}>
-                            <motion.div
-                                className={stylesButtonsCommon.buttonTextWrapper}
-                                key={hideChecked}
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                                transition={{ duration: 0.3, ease: "easeInOut" }}
-                            >
-                                <span>
-                                    {hideChecked ? 'Show achieved goals' : 'Hide achieved goals'}
-                                </span>
-                                <span class={stylesGoalsPage.goalsButtonCount}>
-                                    {hideChecked ? ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'c' ? ++acc : acc, 0) + ')' : ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'c' ? ++acc : acc, 0) + ')'}
-                                </span>
-                            </motion.div>
-                        </motion.button>
-                    </div>
                 </div>
-                <p style={placeholderTop}> </p>
+            </div>
+            <br/>
+            <div className="goalsBodyNested goalsBodyNestedMain">
+                <div className={stylesGoalsPage.goalsButtonsWrapper}>
+                    <motion.button onClick={toggleOpacity} whileTap={{ scale: 0.93 }} className={`desktopOnlySupport noselect ${stylesGoalsPage.goalsButton}`}>
+                        <motion.div
+                            className={stylesButtonsCommon.buttonTextWrapper}
+                            key={isOpaque}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.3, ease: "easeInOut" }}
+                        >
+                            {isOpaque ? 'Hide tags' : 'Show tags'}
+                        </motion.div>
+                    </motion.button>
+                    <span className="mobileOnlySupport"><br/></span>
+                    <motion.button class="noselect" style={hideUncheckedButtonStyle} onClick={removeUnchecked} whileTap={{ scale: 0.93 }} className={stylesGoalsPage.goalsButton}>
+                        <motion.div
+                            className={stylesButtonsCommon.buttonTextWrapper}
+                            key={hideUnchecked}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.3, ease: "easeInOut" }}
+                        >
+                            <span>
+                                {hideUnchecked ? 'Show unachieved goals' : 'Hide unachieved goals'}
+                            </span>
+                            <span class={stylesGoalsPage.goalsButtonCount}>
+                                {hideUnchecked ? ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'u' ? ++acc : acc, 0) + ')' : ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'u' ? ++acc : acc, 0) + ')'}
+                            </span>
+                        </motion.div>
+                    </motion.button>
+                    <span className="mobileOnlySupport"><br/></span>
+                    <motion.button class="noselect" style={hideCheckedButtonStyle} onClick={removeChecked} whileTap={{ scale: 0.93 }} className={stylesGoalsPage.goalsButton}>
+                        <motion.div
+                            className={stylesButtonsCommon.buttonTextWrapper}
+                            key={hideChecked}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ duration: 0.3, ease: "easeInOut" }}
+                        >
+                            <span>
+                                {hideChecked ? 'Show achieved goals' : 'Hide achieved goals'}
+                            </span>
+                            <span class={stylesGoalsPage.goalsButtonCount}>
+                                {hideChecked ? ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'c' ? ++acc : acc, 0) + ')' : ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'c' ? ++acc : acc, 0) + ')'}
+                            </span>
+                        </motion.div>
+                    </motion.button>
+                </div>
+                <br/>
+                <span className="mobileOnlySupport"><br/></span>
                 {sortedCategories.map((category) => (
                     <GoalCategory
                         array={category.goals}
@@ -255,8 +253,9 @@ const Goals = () => {
                     />
                 ))}
                 <br/>
-                <div class="sectionBreak"><M text="----------"/></div>
-                <p style={placeholderBottom}> </p>
+            </div>
+            <br/>
+            <div class="goalsBodyNested">
                 <div class={stylesGoalsPage.goalsTextContent}>
                     <M text="For me, keeping a list of goals has become one of the biggest drivers of a fulfilling life, and this website is a reminder of how to live in a more peaceful yet epic and creative lifestyle. Even if I won't live long enough to accomplish this - even half - I'm glad there's a place for my ideas somewhere, because they will live on after me and can inspire people to live the vibrant life they want."/>
                     <M text="If you have any ideas for goals, I'd really appreciate it if you could share them in the comments section below."/>
