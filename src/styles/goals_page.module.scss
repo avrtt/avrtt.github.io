@@ -1,0 +1,330 @@
+@import 'mixins';
+
+$primary-gray: #444444;
+$light-gray: #8e8e8e;
+$medium-gray: #c9c9c9;
+$hover-gray: #e7e7e7;
+$dark-gray: #464646;
+$border-radius: 1vh;
+$transition-ease: 120ms ease-in;
+$legendary-bg: #fc7e00;
+
+@mixin user-select-none {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+@mixin transition($properties...) {
+  transition: $properties $transition-ease;
+}
+
+.goalsTextContent {
+  color: $primary-gray;
+  font-weight: lighter;
+}
+
+.tagStatsWrapper {
+  margin: 2% 35% 0;
+  max-width: 100%;
+  transform: translateX(0);
+}
+
+.tagStats {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: $border-radius;
+  width: 100%;
+  padding: 0 0.4vw;
+  height: 2.5rem;
+  margin-bottom: 4%;
+  font: 1000 clamp(1.4rem, 2vw, 1.8rem) sans-serif;
+  color: $light-gray;
+  opacity: 1;
+}
+
+.goalsButton {
+  background-color: $medium-gray;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 12px;
+  width: fit-content;
+  border: none;
+  outline: none;
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+  border-radius: $border-radius;
+  font-weight: bold;
+  color: $dark-gray;
+  margin-right: 12px;
+  @include transition(width 0.3s ease, background-color 0.1s ease);
+  @include respond-to(mobile) { margin: 2px; padding: 0.5rem; }
+  @include respond-to(small-tablet) { margin: 2px; padding: 0.5rem; }
+  @include respond-to(tablet) { margin: 2px; padding: 0.5rem; }
+
+  &:hover {
+    background-color: $hover-gray;
+  }
+}
+
+.goalsButtonCount {
+  color: #999999;
+}
+
+.goalsButtonsWrapper {
+  text-align: center;
+  margin: 0 0 -80px;
+}
+
+// TABLES
+
+.c, .u, .y, .n {
+  margin-right: 2px;
+  display: inline-block;
+  height: 100%;
+  width: 2rem;
+  vertical-align: middle;
+  opacity: 0.65;
+  @include user-select-none;
+
+  &.u, &.n {
+    opacity: 0;
+    pointer-events: none;
+    cursor: default;
+  }
+}
+
+#checkboxStyle, #checkboxStyleEmptyDate {
+  opacity: 0.4;
+	display: inline-block;
+	height: 100%;
+	width: clamp(1.6rem, 2.5vw, 1.9rem);
+	vertical-align: sub;
+	transition: 120ms ease-in;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none; 
+	-khtml-user-select: none;
+	-moz-user-select: none; 
+	-ms-user-select: none;
+	user-select: none;
+  
+  &:hover {
+    opacity: 0.75;
+    transition: 120ms ease-in;
+  }
+}
+
+#checkboxStyle, #checkboxStyleEmptyDate {
+  @include respond-to(mobile) { margin-left: -1.4rem }
+  @include respond-to(small-tablet) { margin-left: -1.4rem }
+  @include respond-to(tablet) { margin-left: -2rem }
+  @include respond-to(small-desktop) { margin-left: -3rem }
+  @include respond-to(desktop) { margin-left: -4rem }
+}
+
+#infoExtra {
+  @include respond-to(mobile) { margin-right: -1.4rem }
+  @include respond-to(small-tablet) { margin-right: -1.4rem }
+  @include respond-to(tablet) { margin-right: -2rem }
+}
+
+#infoExtra.y {
+	vertical-align: middle;
+	transition: 120ms ease-in;
+  opacity: 0.4;
+  width: clamp(1.5rem, 2.5vw, 2rem);
+  &:hover {
+    opacity: 0.75;
+    transition: 120ms ease-in;
+  }
+}
+
+#infoExtra.n {
+  opacity: 0;
+}
+
+.textExtra {
+  @include respond-to(mobile) { padding-left: 0.5rem; }
+}
+
+#link, #checkboxStyle, #checkboxStyleEmptyDate {
+  @include transition(all);
+  @include user-select-none;
+  width: clamp(1.5rem, 2.5vw, 2rem);
+
+  &:hover {
+    opacity: 0.75;
+  }
+}
+
+#link:hover {
+  opacity: 1;
+}
+
+.goalCategoryTable th, td {
+  padding-bottom: 0.2rem;
+  @include respond-to(small-desktop) { padding-bottom: 0.5rem }
+  @include respond-to(desktop) { padding-bottom: 0.5rem }
+}
+
+.tooltipGoals {
+  position: relative;
+  display: inline-block;
+
+  .tooltiptextGoals {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    visibility: hidden;
+    width: 400px;
+    background-color: $primary-gray;
+    color: #f2f2f2;
+    text-align: center;
+    border-radius: 6px;
+    padding: 10px 12px;
+    position: absolute;
+    z-index: 9999999;
+    bottom: 120%;
+    right: 50%;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    line-height: 1.25rem;
+    @include respond-to(mobile) { 
+        position: fixed; 
+        top: 50%; 
+        left: 50%; 
+        bottom: auto;
+        transform: translate(-50%, -50%); 
+        width: 100vw !important;
+        margin: 0 !important;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none; 
+        -khtml-user-select: none;
+        -moz-user-select: none; 
+        -ms-user-select: none;
+        user-select: none;
+    }
+    @include respond-to(small-tablet) { 
+        position: fixed; 
+        top: 50%; 
+        left: 50%; 
+        bottom: auto;
+        transform: translate(-50%, -50%); 
+        width: 100vw;
+        margin: 0;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none; 
+        -khtml-user-select: none;
+        -moz-user-select: none; 
+        -ms-user-select: none;
+        user-select: none;
+    }
+    @include respond-to(tablet) { 
+        position: fixed; 
+        top: 50%; 
+        left: 50%; 
+        bottom: auto;
+        transform: translate(-50%, -50%); 
+        width: 100vw;
+        margin: 0;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none; 
+        -khtml-user-select: none;
+        -moz-user-select: none; 
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      margin-left: -5px;
+      border-style: solid;
+      border-color: transparent transparent transparent;
+    }
+  }
+
+  &:hover .tooltiptextGoals {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+.visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+.tooltipTitle {
+  font-size: 1.2rem;
+}
+
+.goalsCategoryTitle {
+  color: #858585;
+  line-height: 1;
+  font-weight: bold;
+  margin: 0 0 50px;
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  text-align: center;
+  z-index: -1;
+  @include user-select-none;
+}
+
+.legendaryText {
+  background-color: $legendary-bg;
+  color: rgb(56, 56, 56);
+  padding: 6px;
+  margin: -6px 0 -6px -6px;
+  border-radius: 6px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+// TAGS
+
+span.COMMON, span.SAFE {
+  opacity: 0;
+  @include user-select-none;
+}
+
+#COMMON, #SAFE {
+  opacity: 0 !important;
+}
+
+@mixin tag-style($bg-color, $text-color) {
+  background-color: $bg-color !important;
+  color: $text-color;
+  @include user-select-none;
+}
+
+.UNCOMMON {
+  @include tag-style(#8B8BCE, #F1ECE4);
+}
+
+.RARE {
+  @include tag-style(#a335ee, #EBE5D9);
+}
+
+.LEGENDARY {
+  @include tag-style(#E57300, #F2F2F2);
+}
+
+.UNSAFE, .DANGEROUS {
+  @include user-select-none;
+}
+
+.DANGEROUS {
+  @include tag-style(#666666, #DFDCD7);
+}
+
+#UNCOMMON, #RARE, #LEGENDARY, #UNSAFE, #DANGEROUS, .tagAnimation {
+  transition: 0.15s ease !important;
+  
+  &:hover {
+    transform: scale(1.18);
+  }
+}
