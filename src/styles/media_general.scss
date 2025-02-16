@@ -1,0 +1,17 @@
+// MEDIUM IMAGE ZOOM OVERRIDE (REMOVE IT LATER)
+
+[data-rmiz-btn-unzoom] {
+  display: none !important;
+}
+
+[data-rmiz-modal-img] {
+  transition: transform 0.3s !important;
+  border-radius: 0vh;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-rmiz-modal-overlay],
+  [data-rmiz-modal-img] {
+    transition-duration: 0.01ms !important;
+  }
+}
