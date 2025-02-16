@@ -1,0 +1,37 @@
+$last-updated-font-size: clamp(0.9rem, 2.5vw, 1.125rem);;
+$last-updated-text-align: right;
+$last-updated-opacity: 0.6;
+$last-updated-font-weight: normal;
+$last-updated-margin-top: 0.25rem;
+$last-updated-margin-bottom: -32px;
+$last-updated-margin-right: 6%;
+$last-updated-color-default: #444444;
+
+@mixin last-updated-styles($color: null) {
+  font-size: $last-updated-font-size;
+  text-align: $last-updated-text-align;
+  opacity: $last-updated-opacity;
+  font-weight: $last-updated-font-weight;
+  margin-top: $last-updated-margin-top;
+  margin-bottom: $last-updated-margin-bottom;
+  margin-right: $last-updated-margin-right;
+  @if $color {
+    color: $color;
+  }
+}
+
+.lastUpdatedAbout,
+.lastUpdatedCv,
+.lastUpdatedCourse,
+.lastUpdatedPublications,
+.lastUpdatedSoftware,
+.lastUpdatedMusic,
+.lastUpdatedTalks,
+.lastUpdatedFreelance {
+  @include last-updated-styles();
+}
+
+.lastUpdatedGoals,
+.lastUpdatedExploration {
+  @include last-updated-styles($last-updated-color-default);
+}
