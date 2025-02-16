@@ -1,0 +1,11 @@
+@import 'mixins';
+
+.sectionBreak {
+  margin-top: 52px;	
+  margin-bottom: 52px;	
+  opacity: 0.25;
+  @include respond-to(mobile) { opacity: 0; margin: 1.4rem 0; }
+  @include respond-to(small-tablet) { opacity: 0; margin: 1.4rem 0; }
+  @include respond-to(tablet) { opacity: 0; margin: 1.4rem 0; }
+  @include respond-to(small-desktop) { opacity: 0; margin: 1.4rem 0; }
+}
