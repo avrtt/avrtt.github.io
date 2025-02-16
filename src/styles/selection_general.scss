@@ -1,0 +1,40 @@
+@use 'variables' as var;
+
+::selection {
+  color: var.$color-text;
+  background: #ffdc8a;
+}
+
+::-moz-selection {
+  color: var.$color-text;
+  background: #ffdc8a;
+}
+
+
+a::selection {
+  color: var.$color-text;
+  background: #ffdc8a;
+}
+
+a::-moz-selection {
+  color: var.$color-text;
+  background: #ffdc8a;
+}
+
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none; 
+  -khtml-user-select: none;
+  -moz-user-select: none; 
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.select {
+  -webkit-touch-callout: text;
+  -webkit-user-select: text; 
+  -khtml-user-select: text;
+  -moz-user-select: text; 
+  -ms-user-select: text;
+  user-select: text;
+}
