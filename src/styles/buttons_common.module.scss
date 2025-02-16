@@ -1,0 +1,24 @@
+.buttonTextWrapper {
+  overflow: hidden;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.buttonTextWrapper-enter {
+  opacity: 0;
+  transform: translateY(-10%);
+}
+
+.buttonTextWrapper-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.buttonTextWrapper-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.buttonTextWrapper-exit-active {
+  opacity: 0;
+  transform: translateY(10%);
+}
