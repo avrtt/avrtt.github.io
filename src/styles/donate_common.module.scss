@@ -1,0 +1,158 @@
+$address-color: #aba7a7;
+$address-hover-color: #5c5c5c;
+$address-font-color: #4E4D4D;
+$address-bg: #D7D7D7;
+$caption-font-color: #ffffff;
+$close-color: #f1f1f1;
+$close-hover-color: #bbb;
+$modal-bg-fallback: rgb(0, 0, 0);
+$modal-bg: rgba(0, 0, 0, 0.9);
+$address-active-transition: 80ms ease;
+$modal-transition: 150ms ease-in;
+$modal-hover-transition: 120ms ease-in;
+$animation-duration: 0.3s;
+
+@mixin user-select($value) {
+  -webkit-touch-callout: $value;
+  -webkit-user-select: $value;
+  -khtml-user-select: $value;
+  -moz-user-select: $value;
+  -ms-user-select: $value;
+  user-select: $value;
+}
+
+@mixin zoom-animation {
+  -webkit-animation-name: zoom;
+  -webkit-animation-duration: $animation-duration;
+  animation-name: zoom;
+  animation-duration: $animation-duration;
+}
+
+.address {
+  background-color: transparent;
+  color: $address-color;
+  margin-left: 12px;
+  @include user-select(text);
+
+  &:active {
+    opacity: 0.5;
+    transition: $address-active-transition;
+  }
+
+  &:hover {
+    color: $address-hover-color;
+  }
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: hidden;
+  background-color: $modal-bg-fallback;
+  background-color: $modal-bg;
+  opacity: 0;
+  z-index: 9999;
+  transition: $modal-transition;
+  @include user-select(none);
+
+  &:hover {
+    opacity: 1;
+    transition: $modal-hover-transition;
+  }
+}
+
+.modalContent {
+  position: absolute;
+  text-align: center;
+  left: 0vw;
+  right: 0vw;
+  top: 10vh;
+  margin: auto;
+  width: 20vw;
+  object-fit: cover;
+}
+
+#address {
+  position: absolute;
+  text-align: center;
+  left: 32.2%;
+  right: 32.2%;
+  top: 53vh;
+  font-size: 1.4vw;
+  color: $address-font-color;
+  font-weight: bold;
+  background-color: $address-bg;
+  width: 35vw;
+  border-radius: 2vh;
+}
+
+#caption1 {
+  position: absolute;
+  text-align: center;
+  left: 42.5%;
+  right: 42.5%;
+  top: 59vh;
+  font-size: 1.4vw;
+  color: $address-font-color;
+  font-weight: bold;
+  background-color: $address-bg;
+  width: 15vw;
+  border-radius: 2vh;
+}
+
+#caption2 {
+  position: absolute;
+  text-align: center;
+  left: 0vw;
+  right: 0vw;
+  top: 66vh;
+  font-size: 1.4vw;
+  display: block;
+  color: $caption-font-color;
+  font-weight: lighter;
+}
+
+.modalContent,
+#caption1,
+#caption2,
+#address {
+  @include zoom-animation;
+}
+
+.close {
+  color: $close-color;
+  font-weight: bold;
+  transition: 0.3s;
+  width: 100%;
+  height: 100%;
+
+  &:hover,
+  &:focus {
+    color: $close-hover-color;
+    text-decoration: none;
+    cursor: pointer;
+  }
+}
+
+@-webkit-keyframes zoom {
+  from {
+    -webkit-transform: scale(0);
+  }
+  to {
+    -webkit-transform: scale(1);
+  }
+}
+
+@keyframes zoom {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
