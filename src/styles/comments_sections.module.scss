@@ -1,0 +1,20 @@
+@import 'mixins';
+
+.chatWrapper {
+	margin-top: 4vw;
+	border-radius: 2vh;
+	border: 20px solid white;
+	background-color: white;
+	-webkit-touch-callout: none;
+    -webkit-user-select: none; 
+     -khtml-user-select: none;
+       -moz-user-select: none; 
+        -ms-user-select: none;
+            user-select: none;
+  @include respond-to(mobile) { display: none }
+  @include respond-to(small-tablet) { display: none }
+  @include respond-to(tablet) { display: none }
+  @include respond-to(small-desktop) { display: none }
+  @include respond-to(desktop) {}
+
+}
