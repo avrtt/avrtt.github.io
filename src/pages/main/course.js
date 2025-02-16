@@ -150,7 +150,7 @@ const Course = ({ data }) => {
 				{sortedCategories.map(([category, posts]) => (
 					<div key={category} className="courseCategoryName">
 						<h2>{category}</h2>
-						<ul>
+						<ul className="courseContents">
 							{posts.map(post => (
 								<div>
 									<span style={{ "border-left": "solid", "margin-left": "-15px", "border-width": "0.3em", "border-color": parseDifficulty(post.difficultyLevel, post.flagMindfuckery) }}><span style={{ "margin-left": "10px" }}>{post.indexCourse}</span>. </span>
