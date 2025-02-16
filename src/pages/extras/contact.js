@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import M from '../../components/Markdown';
 import Code from "../../components/Code"
+import * as stylesWallets from "../../styles/wallets.module.scss"
 
 const TITLE = 'Contact - avrtt.blog'
 
@@ -29,15 +30,19 @@ const Contact = () => {
                 </div>
                 <M text="I'm open to making friends with people all over the world."/>
                 <M text="If you're reaching out about business (i.e. ads and collaboration), please consider reading the [Information for Business Inquiries](/information_for_business_inquiries)."/>
+                <span className="desktopOnlySupport">
                 <br/>
                 <M text="---"/>
                 <br/>
+                </span>
                 Share my opinion on the importance of secure communication? You might find these magic scribbles useful:
-                <M text={`
-- [m]: [!IkPReSNEepRWuitAYY](https://matrix.to/#/!IkPReSNEepRWuitAYY:matrix.org):matrix.org, [@avrtt](https://matrix.to/#/@avrtt:digitalprivacy.diy):digitalprivacy.diy<br/>
-- Session: **05a7b2f8134fc6915ded9df78f9c834a33a9157ce43d8ec40a195db8e3f834f35f**
-                `}/>
-                <Code text='
+                <ul>
+<li>[m]: <a href="https://matrix.to/#/!IkPReSNEepRWuitAYY:matrix.org">!IkPReSNEepRWuitAYY</a>:matrix.org, <a href="https://matrix.to/#/@avrtt:digitalprivacy.diy">@avrtt</a>:digitalprivacy.diy</li>
+<li className="desktopOnlySupport">Session: <b>05a7b2f8134fc6915ded9df78f9c834a33a9157ce43d8ec40a195db8e3f834f35f</b></li>
+<li className="mobileOnlySupport">Session: <b><motion.button className={stylesWallets.mobileWalletButton} onClick={() => navigator.clipboard.writeText("05a7b2f8134fc6915ded9df78f9c834a33a9157ce43d8ec40a195db8e3f834f35f")} whileTap={{ scale: 0.95 }}>Copy ID</motion.button></b></li>
+                </ul>
+                <div className="desktopOnlySupport">
+                    <Code text='
 mDMEZ1KmZRYJKwYBBAHaRw8BAQdAhDFnbiRMGWqAO1D6AUNdTuVeIQz6zoVlqvd6
 uUx9Pkm0GVZsYWRpc2xhdiA8YXZydHRAdHV0YS5pbz6IkwQTFgoAOxYhBBXEpnmU
 st0uikFNXSbyHQrTGEHhBQJnUqZlAhsDBQsJCAcCAiICBhUKCQgLAgQWAgMBAh4H
@@ -48,7 +53,9 @@ eAQYFgoAIBYhBBXEpnmUst0uikFNXSbyHQrTGEHhBQJnUqZlAhsMAAoJECbyHQrT
 GEHhDvYBAIUwUljg/hFxgI71yMaJWFmH1hCBA1mHKYuI7qCSsqdvAQCsvpUjJn8R
 oukZqhXuxAdlr5geyAbMceZFWz7aYO8GBw==
 =Jigm' language="bash"/>
-                <a href="https://raw.githubusercontent.com/avrtt/pgp-keys/main/general.asc">general.asc</a> | PGP fingerprint: <b>15C4 A679 94B2 DD2E 8A41 4D5D 26F2 <u>1D0A D318 41E1</u></b>
+                </div>
+                <span className="mobileOnlySupport">PGP key: </span><a href="https://raw.githubusercontent.com/avrtt/pgp-keys/main/general.asc">general.asc</a> <span className="desktopOnlySupport">|</span><span className="mobileOnlySupport"><br/></span> PGP fingerprint: <b><span className="desktopOnlySupport">15C4 A679 94B2 DD2E 8A41 4D5D 26F2 </span><u>1D0A D318 41E1</u></b>
+                <span className="mobileOnlySupport"><br/><br/></span>
             </div>
         </motion.div>
     );
