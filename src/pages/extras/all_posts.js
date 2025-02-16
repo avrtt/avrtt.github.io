@@ -39,15 +39,15 @@ const Posts = ({ data }) => {
 		    >
           <Box component="ul" sx={{ listStyleType: 'none', padding: 0 }}>
             {posts.map(post => (
-              <li key={post.id} style={{ marginBottom: '-12px' }}>
+              <li key={post.id} style={{ marginBottom: '-0.5rem', marginLeft: "0.5rem" }}>
                 <div>
-                  <p style={{ opacity: "0.5", marginBottom: "-5px", marginLeft: "11px" }}>
+                  <p style={{ opacity: "0.5", marginBottom: "0.1rem", marginLeft: "1rem" }}>
                     {post.date}
                     &nbsp;
                     <span style={{ fontWeight: "bold" }}>{post.slug.slice(0, 2).toUpperCase()}</span>
                   </p> 
                   &nbsp;&nbsp;
-                  <span style={{ background: "#ffffff", padding: "6px 11px 6px 11px", borderRadius: "10px", marginLeft: "-10px" }}>
+                  <span style={{ background: "#ffffff", padding: "6px 11px 6px 11px", borderRadius: "10px", marginLeft: "-0.25rem" }}>
                     <Link to={post.slug} className="compactViewLink">
                       {post.title}
                     </Link>
