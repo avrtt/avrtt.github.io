@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import checkbox from "../../images/goals/checked.svg";
 import refLink from "../../images/goals/refLink.svg";
 import resultLink from "../../images/goals/resultLink.svg";
@@ -23,20 +23,21 @@ const resultLinkStyle = {
 const infoStyle = {
 	'text-align': 'right',
 	'vertical-align': 'middle',
+    'padding-left': '1.5vw',
 } 
 
 const textStyle = {
-    'line-height': '30px',
-    'padding-right': '3vh',
-    'padding-left': '1vh',
+    'line-height': 'clamp(1.4rem, 2vw, 2rem)',
+    'font-size': 'clamp(0.9rem, 2.5vw, 1.4rem)',
+    'padding-right': '1.5vw',
 }
 
 const textChecked = {
-    'opacity': '0.6'
+    'opacity': '0.6',
 }
 
 const textUnchecked = {
-    'opacity': '1'
+    'opacity': '1',
 }
 
 const deadlineStyle = {
@@ -54,6 +55,25 @@ const tooltipHide = {
 }
 
 const Goal = ({ goal, isOpaque, hideChecked, hideUnchecked }) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const tooltipRef = useRef(null);
+
+    const handleIconClick = (e) => {
+        e.stopPropagation();
+        setIsOpen((prev) => !prev);
+    };
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (tooltipRef.current && !tooltipRef.current.contains(event.target)) {
+                setIsOpen(false);
+            }
+        }
+        document.addEventListener("click", handleClickOutside);
+        return () => {
+            document.removeEventListener("click", handleClickOutside);
+        };
+    }, []);
 
   const diffStyle = {
     'opacity': isOpaque ? 1 : 0,
@@ -62,7 +82,6 @@ const Goal = ({ goal, isOpaque, hideChecked, hideUnchecked }) => {
     'vertical-align': 'middle',
     'border-radius': '8px',
     'padding': '3px 6px',
-    'margin-left': '-80px',
     'margin-top': '-24px',
     'line-height': '30px',
     'position': 'absolute',
@@ -75,7 +94,7 @@ const Goal = ({ goal, isOpaque, hideChecked, hideUnchecked }) => {
     'vertical-align': 'middle',
     'border-radius': '8px',
     'padding': '3px 6px',
-    'margin-left': '42px',
+    'margin-left': '3rem',
     'margin-top': '-24px',
     'line-height': '30px',
     'position': 'absolute',
@@ -84,36 +103,41 @@ const Goal = ({ goal, isOpaque, hideChecked, hideUnchecked }) => {
   const tag1Style = {
     'opacity': isOpaque ? 1 : 0,
     'font-size': isOpaque ? '18px' : '0px',
-    'transition': 'font-size 0.1s ease, opacity 0.3s ease', 
+    'transition': 'font-size 0.3s ease, opacity 0.3s ease', 
     'vertical-align': 'middle',
+    'pointer-events': 'none',
   }
 
   const tag2Style = {
     'opacity': isOpaque ? 1 : 0,
     'font-size': isOpaque ? '18px' : '0px',
-    'transition': 'font-size 0.1s ease, opacity 0.3s ease', 
+    'transition': 'font-size 0.25s ease, opacity 0.25s ease', 
     'vertical-align': 'middle',
+    'pointer-events': 'none',
   }
 
   const tag3Style = {
     'opacity': isOpaque ? 1 : 0,
     'font-size': isOpaque ? '18px' : '0px',
-    'transition': 'font-size 0.1s ease, opacity 0.3s ease', 
+    'transition': 'font-size 0.2s ease, opacity 0.2s ease', 
     'vertical-align': 'middle',
+    'pointer-events': 'none',
   }
 
   const tag4Style = {
     'opacity': isOpaque ? 1 : 0,
     'font-size': isOpaque ? '18px' : '0px',
-    'transition': 'font-size 0.1s ease, opacity 0.3s ease', 
+    'transition': 'font-size 0.15s ease, opacity 0.15s ease', 
     'vertical-align': 'middle',
+    'pointer-events': 'none',
   }
 
   const tag5Style = {
     'opacity': isOpaque ? 1 : 0,
     'font-size': isOpaque ? '18px' : '0px',
-    'transition': 'font-size 0.1s ease, opacity 0.3s ease', 
+    'transition': 'font-size 0.1s ease, opacity 0.1s ease', 
     'vertical-align': 'middle',
+    'pointer-events': 'none',
   }
 
   const rowStyleC = {
@@ -166,81 +190,81 @@ const Goal = ({ goal, isOpaque, hideChecked, hideUnchecked }) => {
 
   return (  
     <tr style={rowStyle}>
-        <td>
-            <span class={stylesGoalsPage.tooltipGoals}>
-                <span id={stylesGoalsPage[difftagname]} class={stylesGoalsPage[difftagname]} style={diffStyle}>{goal.difftag}
-                    <p className={`${stylesGoalsPage.tooltiptextGoals} ${stylesGoalsPage.tooltiptextGoalsLeft}`}><span class={stylesGoalsPage.tooltipTitle}><p></p>{difftagname}</span>
-                        <p class={stylesGoalsPage.lighterText}>{diffdesc}</p>
-                    </p>
-                </span>
-            </span>
-        </td>
         <td style={checkboxWrapper}>
-            <div style={showtooltip} class={stylesGoalsPage.tooltipGoals}>
-				<img id={stylesGoalsPage.checkboxStyle} src={checkbox} class={goal.status} alt='checkbox'/>
-				<span className={`${stylesGoalsPage.tooltiptextGoals} ${stylesGoalsPage.tooltiptextGoalsLeft}`}>{goal.dateCompleted}</span>
+            <div style={showtooltip} class={stylesGoalsPage.tooltipGoals} ref={tooltipRef}>
+				<img id={checkboxStyle} src={checkbox} class={goal.status} onClick={handleIconClick} alt='checkbox'/>
+				<span style={{ fontWeight: "lighter", left: "50%", marginLeft: "-3rem", width: "max-content", maxWidth: "400px" }} className={isOpen ? `${stylesGoalsPage.tooltiptextGoals} ${stylesGoalsPage.visible}` : stylesGoalsPage.tooltiptextGoals}>{goal.dateCompleted}</span>
 			</div>
         </td>
-        <td style={textStyle} width='100%'>
+        <td style={textStyle} width='100%' className={stylesGoalsPage.textExtra}>
             <span class={legendaryText} style={textStatus}>{goal.text}</span><span class='noselect' style={showdeadline}> – {goal.deadline}</span>
-            <span class="noselect">&nbsp;&nbsp;</span>
-            <span class="noselect" className={`${stylesGoalsPage.tooltipGoals} ${stylesGoalsPage.tagAnimation}`}>
-                <span style={tag5Style}>{goal.tag5}
-                    <p className={`${stylesGoalsPage.tooltiptextGoals} ${stylesGoalsPage.tooltiptextGoalsLeft}`}><span class={stylesGoalsPage.tooltipTitle}><p></p>{tagname5}</span>
-                        <p class={stylesGoalsPage.lighterText}>{tagdesc5}</p>
+            <span className="desktopOnlySupport">&nbsp;&nbsp;</span>
+            <span className={`noselect ${stylesGoalsPage.tooltipGoals} ${stylesGoalsPage.tagAnimation}`}>
+                <span className="desktopOnlySupport" style={tag5Style}>{goal.tag5}
+                    <p className={`${stylesGoalsPage.tooltiptextGoals}`} style={{bottom: "50%", left: "50%", marginLeft: "-210px"}}><span class={stylesGoalsPage.tooltipTitle}>{tagname5}</span><br/><br/>
+                        <span style={{ fontWeight: "lighter", fontSize: "1rem" }}>{tagdesc5}</span>
                     </p>
                 </span>
             </span>
-            <span class="noselect" className={`${stylesGoalsPage.tooltipGoals} ${stylesGoalsPage.tagAnimation}`}>
-                <span style={tag4Style}>{goal.tag4}
-                    <p className={`${stylesGoalsPage.tooltiptextGoals} ${stylesGoalsPage.tooltiptextGoalsLeft}`}><span class={stylesGoalsPage.tooltipTitle}><p></p>{tagname4}</span>
-                        <p class={stylesGoalsPage.lighterText}>{tagdesc4}</p>
+            <span className={`noselect ${stylesGoalsPage.tooltipGoals} ${stylesGoalsPage.tagAnimation}`}>
+                <span className="desktopOnlySupport" style={tag4Style}>{goal.tag4}
+                    <p className={`${stylesGoalsPage.tooltiptextGoals}`} style={{bottom: "50%", left: "50%", marginLeft: "-210px"}}><span class={stylesGoalsPage.tooltipTitle}>{tagname4}</span><br/><br/>
+                        <span style={{ fontWeight: "lighter", fontSize: "1rem" }}>{tagdesc4}</span>
                     </p>
                 </span>
             </span>
-            <span class="noselect" className={`${stylesGoalsPage.tooltipGoals} ${stylesGoalsPage.tagAnimation}`}>
-                <span style={tag3Style}>{goal.tag3}
-                    <p className={`${stylesGoalsPage.tooltiptextGoals} ${stylesGoalsPage.tooltiptextGoalsLeft}`}><span class={stylesGoalsPage.tooltipTitle}><p></p>{tagname3}</span>
-                        <p class={stylesGoalsPage.lighterText}>{tagdesc3}</p>
+            <span className={`noselect ${stylesGoalsPage.tooltipGoals} ${stylesGoalsPage.tagAnimation}`}>
+                <span className="desktopOnlySupport" style={tag3Style}>{goal.tag3}
+                    <p className={`${stylesGoalsPage.tooltiptextGoals}`} style={{bottom: "50%", left: "50%", marginLeft: "-210px"}}><span class={stylesGoalsPage.tooltipTitle}>{tagname3}</span><br/><br/>
+                        <span style={{ fontWeight: "lighter", fontSize: "1rem" }}>{tagdesc3}</span>
                     </p>
                 </span>
             </span>
-            <span class="noselect" className={`${stylesGoalsPage.tooltipGoals} ${stylesGoalsPage.tagAnimation}`}>
-                <span style={tag2Style}>{goal.tag2}
-                    <p className={`${stylesGoalsPage.tooltiptextGoals} ${stylesGoalsPage.tooltiptextGoalsLeft}`}><span class={stylesGoalsPage.tooltipTitle}><p></p>{tagname2}</span>
-                        <p class={stylesGoalsPage.lighterText}>{tagdesc2}</p>
+            <span className={`noselect ${stylesGoalsPage.tooltipGoals} ${stylesGoalsPage.tagAnimation}`}>
+                <span className="desktopOnlySupport" style={tag2Style}>{goal.tag2}
+                    <p className={`${stylesGoalsPage.tooltiptextGoals}`} style={{bottom: "50%", left: "50%", marginLeft: "-210px"}}><span class={stylesGoalsPage.tooltipTitle}>{tagname2}</span><br/><br/>
+                        <span style={{ fontWeight: "lighter", fontSize: "1rem" }}>{tagdesc2}</span>
                     </p>
                 </span>
             </span>
-            <span class="noselect" className={`${stylesGoalsPage.tooltipGoals} ${stylesGoalsPage.tagAnimation}`}>
-                <span style={tag1Style}>{goal.tag1}
-                    <p className={`${stylesGoalsPage.tooltiptextGoals} ${stylesGoalsPage.tooltiptextGoalsLeft}`}><span class={stylesGoalsPage.tooltipTitle}><p></p>{tagname1}</span>
-                        <p class={stylesGoalsPage.lighterText}>{tagdesc1}</p>
+            <span className={`noselect ${stylesGoalsPage.tooltipGoals} ${stylesGoalsPage.tagAnimation}`}>
+                <span className="desktopOnlySupport" style={tag1Style}>{goal.tag1}
+                    <p className={`${stylesGoalsPage.tooltiptextGoals}`} style={{bottom: "50%", left: "50%", marginLeft: "-210px"}}><span class={stylesGoalsPage.tooltipTitle}>{tagname1}</span><br/><br/>
+                        <span style={{ fontWeight: "lighter", fontSize: "1rem" }}>{tagdesc1}</span>
                     </p>
                 </span>
             </span>
         </td>
         <td style={infoStyle}>
-			<div class={stylesGoalsPage.tooltipGoals}>
-				<img id={checkboxStyle} src={info} class={showinfo} alt='info'/>
-				<span className={`${stylesGoalsPage.tooltiptextGoals} ${stylesGoalsPage.tooltiptextGoalsRight} ${stylesGoalsPage.lighterText} ${stylesGoalsPage.goalsTooltipPadding}`}>{goal.info}</span>
+			<div style={!goal.info ? { display: "none" } : {}} class={stylesGoalsPage.tooltipGoals} ref={tooltipRef}>
+				<img id={stylesGoalsPage.infoExtra} src={info} class={showinfo} alt='info' onClick={handleIconClick}/>
+				<span style={{ fontWeight: "lighter" }} className={isOpen ? `${stylesGoalsPage.tooltiptextGoals} ${stylesGoalsPage.visible}` : stylesGoalsPage.tooltiptextGoals}>{goal.info}</span>
 			</div>
 		</td>
-        <td style={refLinkStyle}>
+        <td className="desktopOnlySupport" style={refLinkStyle}>
             <a class={showref} href={goal.refLink}>
                 <img id={stylesGoalsPage.link} src={refLink} class={showref} alt='reference_link'/>
             </a>
         </td>
-        <td style={resultLinkStyle}>
+        <td className="desktopOnlySupport" style={resultLinkStyle}>
             <a class={showresult} href={goal.resultLink}>
                 <img id={stylesGoalsPage.link} src={resultLink} class={showresult} alt='result_link'/>
             </a>
         </td>
-        <td>
+        <td className="desktopOnlySupport">
             <span class={stylesGoalsPage.tooltipGoals}>
                 <span id={stylesGoalsPage[safetytagname]} class={stylesGoalsPage[safetytagname]} style={safetyStyle}>{goal.safetytag}
-                    <p className={`${stylesGoalsPage.tooltiptextGoals} ${stylesGoalsPage.tooltiptextGoalsRight}`}><span class={stylesGoalsPage.tooltipTitle}><p></p>{safetytagname}</span>
-                        <p class={stylesGoalsPage.lighterText}>{safetydesc}</p>
+                    <p className={`${stylesGoalsPage.tooltiptextGoals}`} style={{ bottom: "60%" }}><span class={stylesGoalsPage.tooltipTitle}>{safetytagname}</span><br/><br/>
+                        <span style={{ fontWeight: "lighter", fontSize: "1rem" }}>{safetydesc}</span>
+                    </p>
+                </span>
+            </span>
+        </td>
+        <td>
+            <span class={stylesGoalsPage.tooltipGoals}>
+                <span id={stylesGoalsPage[difftagname]} className={`desktopOnlySupport ${stylesGoalsPage[difftagname]}`} style={diffStyle}>{goal.difftag}
+                    <p className={`${stylesGoalsPage.tooltiptextGoals}`} style={{ bottom: "60%" }}><span class={stylesGoalsPage.tooltipTitle}>{difftagname}</span><br/><br/>
+                        <span style={{ fontWeight: "lighter", fontSize: "1rem" }}>{diffdesc}</span>
                     </p>
                 </span>
             </span>
