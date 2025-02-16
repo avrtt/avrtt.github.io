@@ -1,0 +1,209 @@
+@import 'mixins';
+
+$bg-dark: rgb(70, 70, 70);
+$bg-light: #ffffff;
+$bg-hover: #cfcfcf;
+$bg-extra-active: rgb(122, 122, 122);
+$color-light: #F1F1F1;
+$color-dark: #444444;
+$color-gray: #8e8e8e;
+$color-tooltip-bg: #444444;
+$color-tooltip-text: #f2f2f2;
+$transition-fast: 0.15s;
+$transition-slow: 0.3s;
+$border-radius-small: 1vh;
+$border-radius-medium: 2vh;
+$padding-default: 20px 20px 8px 20px;
+
+@mixin transform-scale($scale) {
+  -webkit-transform: scale($scale);
+  -ms-transform: scale($scale);
+  transform: scale($scale);
+}
+
+@mixin transition($property, $duration) {
+  transition: $property $duration ease-in-out;
+}
+
+.freelanceItemWrapper, .freelanceCategoryWrapper {
+  background-color: $bg-dark;
+  color: $color-light;
+  padding: $padding-default;
+  border-radius: $border-radius-medium;
+  font-weight: lighter;
+  @include transition(transform, $transition-fast);
+}
+
+.freelanceItemWrapper {
+  margin: 10px 0 10px 0;
+}
+
+.freelanceCategoryWrapper {
+  width: 100%; 
+  height: 100%;
+  box-sizing: border-box;
+  @include respond-to(mobile) { line-height: 1.25rem; }
+  @include respond-to(small-tablet) { line-height: 1.4rem; }
+  @include respond-to(tablet) { line-height: 1.6rem; }
+  @include respond-to(small-desktop) { line-height: 1.8rem; }
+  @include respond-to(desktop) { line-height: 1.8rem; }
+}
+
+.sourceIcon {
+  width: 45px;
+  height: 45px;
+  margin-left: 8px;
+  @include transition(transform, $transition-fast);
+
+  &:hover {
+    @include transform-scale(1.1);
+  }
+}
+
+#source1Hide, #source2Hide, #source3Hide, 
+#extraContentHide, #extraDescHide, 
+#demoImg1Hide, #demoImg2Hide, #demoImg3Hide, 
+#demoVidYTKeyHide {
+  display: none;
+}
+
+.freelanceCategorySectionWrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.625rem;
+  margin: 0 auto;
+  max-width: 100%; 
+  box-sizing: border-box;
+  @include respond-to(mobile) { grid-template-columns: 1fr; }
+  @include respond-to(small-tablet) { grid-template-columns: 1fr; }
+  @include respond-to(tablet) { grid-template-columns: 1fr; }
+}
+
+.freelanceCategoryWrapper:hover {
+  @include transform-scale(0.985);
+}
+
+.categoryButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15%;
+  background-color: $bg-dark;
+  width: 100%;
+  height: 8vh;
+  margin: 0 0 4% 0;
+  @include transition(transform, $transition-fast);
+
+  &:hover {
+    @include transform-scale(0.97);
+  }
+}
+
+.categorySwitchWrapper, .languageSwitchWrapper {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  max-width: 100%;
+  transform: translate(69.5vw, 2vh);
+
+  a {
+    text-decoration: none;
+  }
+}
+
+.categorySwitchWrapper {
+  @include respond-to(mobile) { display: none }
+  @include respond-to(small-tablet) { display: none }
+  @include respond-to(tablet) { display: none }
+}
+
+.languageSwitchWrapper {
+  @include respond-to(mobile) { transform: translate(0, 0); left: 0; right: 0; top: 5.5rem; margin-inline: auto; width: fit-content; }
+  @include respond-to(small-tablet) { transform: translate(0, 0); left: 0; right: 0; top: 5.5rem; margin-inline: auto; width: fit-content; }
+  @include respond-to(tablet) { transform: translate(0, 0); left: 0; right: 0; top: 7rem; margin-inline: auto; width: fit-content; }
+}
+
+.languageButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: $border-radius-small;
+  background-color: rgb(226, 226, 226);
+  width: 5.5rem;
+  height: 2.5rem;
+  margin: 0 0 4% 0;
+  font-weight: 1000;
+  font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+  color: $color-gray;
+  opacity: 1;
+  @include transition(opacity, 0.1s);
+  @include respond-to(mobile) { width: 3.5rem; height: 1.5rem; padding-right: 1rem }
+  @include respond-to(small-tablet) { width: 5rem; height: 2.2rem; }
+  @include respond-to(tablet) { width: 5.5rem; height: 2.5rem; }
+
+  &:hover {
+    opacity: 0.8;
+    @include transition(opacity, 0.1s);
+  }
+}
+
+.extraContent {
+  padding: 0 18px;
+  max-height: 0;
+  overflow: hidden;
+  background-color: $bg-dark;
+  transition: max-height 0.2s ease-out;
+}
+
+.expandText {
+  font-weight: 900;
+  color: $bg-dark;
+}
+
+.collapsible {
+  margin-left: auto;
+  margin-bottom: 10px;
+  margin-top: -50px;
+  background-color: $bg-light;
+  display: flex; 
+  flex-direction: row; 
+  align-items: center; 
+  justify-content: center;
+  cursor: pointer;
+  padding: 8px;
+  width: 8%;
+  border: none;
+  outline: none;
+  font-size: 22px;
+  border-radius: $border-radius-small;
+  @include transition(background-color, 0.1s);
+
+  &:hover {
+    background-color: $bg-hover;
+  }
+
+  &::after {
+    content: '\25BC';
+    color: $bg-dark;
+    font-weight: bold;
+    float: right;
+    margin-left: 0;
+    @include transition(all, 1s);
+  }
+
+  &.activeExtra {
+    background-color: $bg-extra-active;
+    @include transition(background-color, 0.2s);
+
+    &::after {
+      content: "\25B2";
+      color: $bg-dark;
+      @include transition(all, 0.2s);
+    }
+  }
+}
+
+#freelanceWorkflowItem {
+  @include respond-to(small-desktop) { margin-left: 40px; }
+  @include respond-to(desktop) { margin-left: 40px; }
+}
