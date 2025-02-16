@@ -15,6 +15,10 @@ import UnreliablyNotice from "../components/UnreliablyNotice"
 import PoliticsNotice from "../components/PoliticsNotice"
 import CognitohazardNotice from "../components/CognitohazardNotice"
 import HiddenNotice from "../components/HiddenNotice"
+import * as stylesButtonsCommon from "../styles/buttons_common.module.scss"
+import * as stylesCustomPostLayouts from "../styles/custom_post_layouts.module.scss"
+import * as stylesTableOfContents from "../styles/table_of_contents.module.scss"
+import * as stylesTagBadges from "../styles/tag_badges.module.scss";
 
 function formatReadTime(minutes) {
   if (minutes <= 10) return '~10 min';
@@ -47,7 +51,7 @@ const TableOfContents = ({ toc }) => {
   }
 
   return (
-    <nav className="toc">
+    <nav className={stylesTableOfContents.toc}>
       <ul>
         {toc.items.map((item, index) => (
           <li key={index}>
@@ -142,15 +146,14 @@ export function PostTemplate({ data: { mdx, allMdx }, children }) {
         marginLeft: "auto",
         paddingRight: "1vw",
         marginTop: "-6vh",
-        marginBottom: "4vh"
+        marginBottom: "4vh",
       }}>
         {frontmatter.otherTags.map((tag, index) => (
-          <span key={index} className="tagPosts noselect" style={{ margin: "0 5px 5px 0" }}>
+          <span key={index} className={`noselect ${stylesTagBadges.tagPosts}`} style={{ margin: "0 5px 5px 0" }}>
             {tag}
           </span>
         ))}
       </div>
-
 
       <div class="postBody">
         <TableOfContents toc={tableOfContents} />
@@ -162,12 +165,13 @@ export function PostTemplate({ data: { mdx, allMdx }, children }) {
           textAlign: "right"
         }}>
         <motion.button 
-          className="postButton noselect" 
+          class="noselect" className={stylesCustomPostLayouts.postButton}
+          id={stylesCustomPostLayouts.postLayoutSwitchButton}
           onClick={toggleLayout}
           whileTap={{ scale: 0.93 }}
         >
           <motion.div
-            className="buttonTextWrapper"
+            className={stylesButtonsCommon.buttonTextWrapper}
             key={isWideLayout}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -184,9 +188,9 @@ export function PostTemplate({ data: { mdx, allMdx }, children }) {
         style={{ 
           margin: isWideLayout ? "0 -14%" : "",
           maxWidth: isWideLayout ? "200%" : "",
-          transition: "margin 0.5s ease, max-width 0.5s ease",
+          transition: "margin 1s ease, max-width 1s ease, padding 1s ease",
       }}>
-        <div className={`text-content ${isAnimating ? "fade-out" : "fade-in"}`}>
+        <div className={`${stylesCustomPostLayouts.textContent} ${isAnimating ? stylesCustomPostLayouts.fadeOut : stylesCustomPostLayouts.fadeIn}`}>
           {frontmatter.flagDraft ? <NotFinishedNotice/> : ""}
           {frontmatter.flagMindfuckery ? <MindfuckeryNotice/> : ""}
           {frontmatter.flagRewrite ? <RewriteNotice/> : ""}
