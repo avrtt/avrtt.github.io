@@ -56,8 +56,9 @@ const DataVisualization = () => {
 
 		<div class="freelanceBody">
 
+			<div class="mobileOnlySupport"><br/></div>
 			<Spoiler 
-				title={"More about this category of projects"} 
+				title={"More about this category"} 
 				block1={categoryDescDetailed}
 			/>
 			<br/>

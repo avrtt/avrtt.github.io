@@ -55,9 +55,11 @@ const WebDevelopmentRu = () => {
 		</div>
 
 		<div class="freelanceBody">
-
+			
+			<div class="mobileOnlySupport"><br/></div>
+			<div class="mobileOnlySupport"><br/></div>
 			<Spoiler 
-				title={"Подробнее про эту категорию проектов"} 
+				title={"Подробнее про эту категорию"}  
 				block1={categoryDescDetailedRu}
 			/>
 			<br/>
