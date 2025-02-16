@@ -1,0 +1,54 @@
+@import 'mixins';
+
+$btn-bg-color: #c9c9c9;
+$btn-hover-bg-color: #e7e7e7;
+$btn-text-color: #464646;
+$margin-right: 12px;
+$btn-transition: width 0.3s ease, background-color 0.1s ease;
+$text-opacity-transition: opacity 0.2s ease;
+
+#postLayoutSwitchButton {
+  @include respond-to(mobile) { display: none; }
+  @include respond-to(small-tablet) { display: none; }
+  @include respond-to(tablet) { display: none; }
+  @include respond-to(small-desktop) { display: none; }
+  @include respond-to(desktop) { display: inline; }
+}
+
+.postButton {
+  background-color: $btn-bg-color;
+  color: $btn-text-color;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: fit-content;
+  border: none;
+  outline: none;
+  font-weight: bold;
+  margin-right: $margin-right;
+  transition: $btn-transition;  
+  
+  @include respond-to(desktop) {
+    padding: 12px;
+    font-size: 18px;
+    border-radius: 1vh;
+  }
+
+  &:hover {
+    background-color: $btn-hover-bg-color;
+  }
+}
+
+.textContent {
+  transition: $text-opacity-transition;
+
+  &.fadeOut {
+    opacity: 0;
+    transition: opacity 0.1s ease;
+  }
+
+  &.fadeIn {
+    opacity: 1;
+    transition: opacity 1.4s ease;
+  }
+}
