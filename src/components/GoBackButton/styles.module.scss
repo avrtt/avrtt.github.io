@@ -1,0 +1,29 @@
+@import "../../styles/mixins";
+
+.goBackWrapper {
+  position: sticky;
+  top: -6vh;
+  display: flex;      
+  align-items: center;
+  transition: top 0.3s ease-out;
+  transform: translateY(7.5vh);
+  margin-top: -6vh;
+  @include respond-to(mobile) { display: none }
+  @include respond-to(small-tablet) { display: none }
+  @include respond-to(tablet) { display: none }
+}
+
+.goBack {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 15%;
+  background-color: rgb(70, 70, 70);
+  transition: transform 0.15s;
+  height: 6vh;
+  width: 6vh;
+  margin: 0;
+  &:hover {
+    transform: scale(0.95);
+  }
+}
