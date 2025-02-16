@@ -1,0 +1,74 @@
+@use 'placeholders' as *;
+
+$color-bg: #424242;
+$color-hover-text: #8e8e8e;
+$color-compactview-text: #787878;
+$color-link-hover: #696969;
+
+@mixin gradient-text($start-color, $end-color) {
+  text-decoration: none;
+  font-weight: 800;
+  border-bottom: 0;
+  color: $end-color;
+  overflow: hidden;
+  background: linear-gradient(to right, $start-color, $start-color 50%, $end-color 50%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 100%;
+  background-position: 100%;
+  transition: background-position 200ms ease;
+}
+
+.servicesBodyNested,
+.contactBody,
+.courseBody,
+.talksBody,
+.publicationsBody,
+.softwareBody,
+.musicBody,
+.donateBody,
+.postBody,
+.homeBodyTile,
+.homeBodyRegular,
+.aboutBodyTile,
+.aboutBodyRegular,
+.cvBody,
+.freelanceBody,
+.freelanceBodyNested,
+.goalsBody,
+.explorationBody {
+  a,
+  href {
+    @extend %link-common;
+  }
+}
+
+.hover { // застрелись нахуй за такие костыли
+  position: relative;
+  transition: transform 0.2s;
+  &:hover {
+    transform: scale(0.95);
+  }
+  a,
+  href {
+    @include gradient-text($color-bg, $color-hover-text);
+  }
+  a:hover,
+  href:hover {
+    background-position: 0 100%;
+    border-bottom: 0;
+    color: $color-link-hover;
+    text-decoration: none;
+  }
+}
+
+.compactViewLink {
+  @include gradient-text($color-bg, $color-compactview-text);
+  &:hover {
+    background-position: 0 100%;
+    border-bottom: 0;
+    color: $color-link-hover;
+    text-decoration: none;
+  }
+}
