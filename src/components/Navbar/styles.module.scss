@@ -1,3 +1,5 @@
+@import '../../styles/mixins';
+
 $fade-in-down: fadeInDown 0.3s ease forwards;
 
 @keyframes fadeInDown {
@@ -18,15 +20,39 @@ $fade-in-down: fadeInDown 0.3s ease forwards;
   padding: 4.3vh 2.4em 0.5em 0;
   width: 100%;
   display: flex;
-  justify-content: center;
   z-index: 12;
   user-select: none;
+  justify-content: space-between;
+  @include respond-to(mobile) { padding-top: 8rem; margin-bottom: 1rem; margin-top: -6.5rem; padding: 7.5rem 0 1rem 0 }
+  @include respond-to(small-tablet) { padding-top: 8rem; margin-bottom: 1rem; margin-top: -6.5rem; padding: 7.5rem 0 0.3rem 0 }
+  @include respond-to(tablet) { padding-top: 8rem; margin-bottom: 1rem; margin-top: -6.5rem; padding: 7.5rem 0 0.5rem 0 }
+  @include respond-to(small-desktop) { justify-content: center }
+  @include respond-to(desktop) { justify-content: center }
 }
 
 .navbarMenu {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0);
+  opacity: 0;
+  pointer-events: none;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+  z-index: 9998;
+
+  &.open {
+    background-color: rgba(0, 0, 0, 0.3);
+    opacity: 1;
+    pointer-events: all;
+  }
 }
 
 .dropdown {
@@ -141,6 +167,12 @@ $fade-in-down: fadeInDown 0.3s ease forwards;
       opacity: 0.7;
     }
   }
+  
+  @include respond-to(mobile) { display: none }
+  @include respond-to(small-tablet) { display: none }
+  @include respond-to(tablet) { display: none }
+  @include respond-to(small-desktop) {}
+  @include respond-to(desktop) {}
 }
 
 .navbarPostSection {
@@ -153,7 +185,6 @@ $fade-in-down: fadeInDown 0.3s ease forwards;
 }
 
 .logo {
-  margin-right: 3vh;
   width: 11.5vh;
   transition: all 0.1s;
   cursor: pointer;
@@ -162,4 +193,172 @@ $fade-in-down: fadeInDown 0.3s ease forwards;
     transform: scale(0.98);
     opacity: 0.78;
   }
+
+  //@include respond-to(mobile) { position: absolute; left: 2vw; top: 1.5vw; width: 5.5rem }
+  //@include respond-to(small-tablet) { position: absolute; left: 2vw; top: 1.5vw; width: 6rem }
+  //@include respond-to(tablet) { position: absolute; left: 2vw; top: 1.5vw; width: 7.5rem }
+  @include respond-to(mobile) { display: none }
+  @include respond-to(small-tablet) { display: none }
+  @include respond-to(tablet) { display: none }
+  @include respond-to(small-desktop) { margin-right: 3vh }
+  @include respond-to(desktop) { margin-right: 3vh }
+}
+
+.hamburger {
+  width: 2.4rem;
+  opacity: 0.4;
+  cursor: pointer;
+  display: absolute;
+  z-index: 9999;
+  transform: scale(1);
+  transition: transform 0.5s ease;
+
+  &.hamburgerOpen {
+    transform: scale(0.5);
+    transition-duration: 0.1s;
+  }
+
+  @include respond-to(mobile) { position: fixed; right: 0.6rem; top: 0.4rem }
+  @include respond-to(small-tablet) { position: fixed; right: 0.6rem; top: 0.4rem }
+  @include respond-to(tablet) { position: fixed; right: 0.6rem; top: 0.4rem }
+  @include respond-to(small-desktop) {}
+  @include respond-to(desktop) {}
+}
+
+.hamburgerWrapper {
+  flex-direction: column;
+  justify-content: space-between;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+
+  @include respond-to(mobile) {}
+  @include respond-to(small-tablet) {}
+  @include respond-to(tablet) {}
+  @include respond-to(small-desktop) { display: none; }
+  @include respond-to(desktop) { display: none; }
+}
+
+.mobileMenu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 70%;
+  max-width: 20rem;
+  height: 100vh;
+  background-color: #fff;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  &.open {
+    transform: translateX(0);
+  }
+
+  @include respond-to(mobile) {}
+  @include respond-to(small-tablet) {}
+  @include respond-to(tablet) {}
+  @include respond-to(small-desktop) { display: none; }
+  @include respond-to(desktop) { display: none; }
+}
+
+.mobileMenuContent {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(0.5rem, 1.1vh, 0.9rem) clamp(1rem, 2.2vh, 1.4rem);
+
+  .closeButton {
+    align-self: flex-end;
+    margin: 0.1vh -0.45rem 1.5vh 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    cursor: pointer;
+    background-color: transparent !important;
+    border: none;
+  }
+}
+
+.mobileNavLink {
+  margin: 0.3vh 0;
+  font-weight: 600;
+  color: #333;
+  text-decoration: none;
+  font-size: clamp(1rem, 2.2vh, 1.4rem);
+  padding: clamp(0.2rem, 0.5vh, 0.7rem) 1.5vh;
+  border-radius: 2vh;
+  background-color: #f2f2f2;
+
+  &:hover {
+    background-color: #f2f2f2;
+  }
+}
+
+.mobileNavLinkMain {
+  width: fit-content;
+  border-radius: 1vh;
+  background-color: rgb(255, 255, 255);
+  height: auto;
+  font-size: 1.2rem;
+  margin: -1.8rem 0 0 0;
+  color: #8e8e8e;
+  font-weight: 1000;
+  align-items: center;
+  padding: 0.3rem 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition-duration: 0.1s;
+  position: absolute;
+
+  &.all {
+    @include respond-to(mobile) { left: 0.8rem }
+    @include respond-to(small-tablet) { left: 1.5rem }
+    @include respond-to(tablet) { left: 1.5rem }
+  }
+
+  &.about {
+    @include respond-to(mobile) { left: 8.5rem }
+    @include respond-to(small-tablet) { left: 9rem }
+    @include respond-to(tablet) { left: 9rem }
+  }
+
+  &.active {
+    opacity: 0.22;
+    background-color: rgba(255, 255, 255, 0) !important;
+    pointer-events: none;
+  }
+
+  &:hover {
+    color: #545456;
+    transform: translate(1px, 2px);
+    background-color: #f2f2f2;
+  }
+
+  &:hover.active {
+    transform: translate(0px, 0px);
+    opacity: 0.14;
+  }
+
+  .dropdown:hover & {
+    opacity: 1;
+  }
+
+  &.freelanceSubpage {
+    opacity: 0.22;
+    pointer-events: auto;
+
+    &:hover {
+      background-color: transparent;
+      opacity: 0.7;
+    }
+  }
+  
+  @include respond-to(mobile) { top: 2.5rem }
+  @include respond-to(small-tablet) { top: 2.5rem }
+  @include respond-to(tablet) { top: 2.5rem }
+  @include respond-to(small-desktop) { display: none }
+  @include respond-to(desktop) { display: none }
 }
