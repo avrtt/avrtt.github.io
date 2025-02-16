@@ -82,6 +82,12 @@ exports.createPages = async ({ actions, graphql }) => {
   createPage({path: "/information_for_business_inquiries", component: path.resolve(`src/pages/extras/information_for_business_inquiries.js`)});
   createPage({path: "/donate", component: path.resolve(`src/pages/extras/donate.js`)});
   createPage({path: "/contact", component: path.resolve(`src/pages/extras/contact.js`)});
+  createPage({path: "/all", component: path.resolve(`src/pages/extras/all_posts.js`)});
+  createPage({path: "/dev", component: path.resolve(`src/pages/extras/dev.js`)});
+  createPage({path: "/dev/null", component: path.resolve(`src/pages/extras/dev_null.js`)});
+  createPage({path: "/dev/magnitoshakhtinsk", component: path.resolve(`src/pages/extras/dev_magnitoshakhtinsk.js`)});
+  createPage({path: "/null", component: path.resolve(`src/pages/extras/dev_null.js`)});
+  createPage({path: "/avrtt", component: path.resolve(`src/pages/extras/avrtt.js`)});
 
 };
 
