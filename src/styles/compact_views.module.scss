@@ -1,0 +1,26 @@
+.viewButton {
+  background-color: #ffffff;
+  align-items: center; 
+  justify-content: center;
+  cursor: pointer;
+  padding: 1.2vh;
+  width: fit-content;
+  border: none;
+  outline: none;
+  font-size: 2vh;
+  border-radius: 1vh;
+  font-weight: 1000;
+  color: #8e8e8e;
+  margin-right: 12px;
+  transition: width 0.3s ease, background-color 0.1s ease;
+}
+
+.viewButton:hover {
+  background-color: #eaeaea;
+}
+
+.viewButtonWrapper {
+  text-align: right;
+  margin-right: 0.8vh;
+  margin-top: -2vh;
+}
