@@ -1,0 +1,101 @@
+@import 'mixins';
+
+$color-gray-light: #858585;
+$color-gray-medium: #999999;
+$background-light: #f2f2f2;
+
+$border-radius-h3: 10px;
+
+@mixin no-select {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+h1 {
+  color: #f2f2f2;
+  line-height: 1;
+  font-weight: bold;
+  background-color: #707070;
+  display: block;
+  padding: 0.8rem 0.4rem;
+  text-align: center;
+  margin: -0.5rem -7.5vw 1rem -7.5vw;
+  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+  @include no-select;
+
+  @include respond-to(tablet) { margin: -0.5rem -10vw 1rem -10vw; border-radius: 2vh; }
+  @include respond-to(small-desktop) { margin: -0.5rem -10vw 1rem -10vw; border-radius: 2vh; }
+  @include respond-to(desktop) {
+    color: $color-gray-light;
+    font-weight: lighter;
+    padding: 0;
+    background-color: transparent;
+    margin: -2.4rem 0 4rem 0;
+    text-align: right;
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  }
+}
+
+h2 {
+  color: $color-gray-light;
+  line-height: 1;
+}
+
+h3 {
+  color: $color-gray-medium;
+  line-height: 1;
+  background-color: $background-light;
+  border-radius: $border-radius-h3;
+  display: block;
+  padding: 0.4rem 0;
+  text-align: center;
+  @include respond-to(small-desktop) { display: inline; padding: 6px 15px; vertical-align: middle; text-align: start };
+  @include respond-to(desktop) { display: inline; padding: 6px 15px; vertical-align: middle; text-align: start };
+}
+
+h6 {
+  line-height: 0;
+  margin-bottom: -44px;
+  transform: translate(-80px, -140px);
+  opacity: 0;
+  pointer-events: none;
+  @include no-select;
+}
+
+h1::selection {
+  color: $color-gray-light;
+  line-height: 1;
+  font-weight: lighter;
+  margin: -40px 0 65px 0;
+  text-align: right;
+  @include no-select;
+}
+
+h1::-moz-selection {
+  color: $color-gray-light;
+  line-height: 1;
+  font-weight: lighter;
+  margin: -40px 0 65px 0;
+  text-align: right;
+  @include no-select;
+}
+
+h2::selection {
+  color: $color-gray-light;
+}
+
+h2::-moz-selection {
+  color: $color-gray-light;
+}
+
+h3::selection {
+  color: $color-gray-medium;
+}
+
+h3::-moz-selection {
+  color: $color-gray-medium;
+}
