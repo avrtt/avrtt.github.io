@@ -1,0 +1,196 @@
+$primary-bg: #444444;
+$text-light: #f2f2f2;
+$text-gray: #aba7a7;
+$text-hover: #5c5c5c;
+$transition-fast: 100ms ease-in;
+$transition-medium: 170ms ease-in;
+$transition-slow: 200ms ease-in;
+$border-radius: 6px;
+
+@mixin user-select($value) {
+  -webkit-touch-callout: $value;
+  -webkit-user-select: $value;
+  -khtml-user-select: $value;
+  -moz-user-select: $value;
+  -ms-user-select: $value;
+  user-select: $value;
+}
+
+.wallets {
+  margin-left: 40px;
+  margin-bottom: 50px;
+
+  code {
+    font-family: 'Roboto Mono', sans-serif;
+    padding: 0.25em;
+    line-height: 0.5;
+    transition: $transition-fast;
+    cursor: pointer;
+  }
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+
+  .tooltiptext {
+    font-size: 16px;
+    visibility: hidden;
+    width: 150px;
+    background-color: $primary-bg;
+    color: $text-light;
+    text-align: center;
+    border-radius: $border-radius;
+    padding: 10px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 200%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s, $transition-medium;
+    @include user-select(none);
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: $primary-bg transparent transparent transparent;
+    }
+  }
+
+  &:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
+.fade {
+  width: 200px;
+  height: 200px;
+  background: red;
+  opacity: 0;
+}
+
+.elementToFadeInAndOut {
+  animation: fadeInOut 1s linear forwards;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.container {
+  position: relative;
+  margin: 100px 0 550px;
+
+  .wallets {
+    font-size: 25px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, 50%);
+    @include user-select(none);
+  }
+}
+
+.wallet1 { margin: 40px 0 25px; }
+.wallet2, .wallet3, .wallet4, .wallet5 { margin-bottom: 25px; }
+.wallet6 { margin-bottom: 70px; }
+
+.currencyName {
+  font-size: 10pt;
+  line-height: 0;
+  margin-left: 80px;
+  @include user-select(none);
+}
+
+.icon {
+  transition: $transition-fast;
+  transform: translate(-63%, 0);
+  @include user-select(none);
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.phoneNumber {
+  line-height: 0;
+  background-color: transparent;
+  color: $text-gray;
+  @include user-select(text);
+
+  &:active {
+    opacity: 0.5;
+    transition: 80ms ease;
+  }
+
+  &:hover {
+    color: $text-hover;
+  }
+}
+
+#myImg1, #myImg2, #myImg3 {
+  opacity: 0;
+  transition: $transition-medium;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 1;
+    transition: $transition-slow;
+  }
+}
+
+#qr {
+  transform: translate(35%, 30%);
+  transition: $transition-medium;
+
+  &:hover {
+    opacity: 0.7;
+    filter: alpha(opacity=40);
+  }
+}
+
+.donateLink {
+  font-weight: normal;
+  background-color: transparent;
+  color: $text-gray;
+  margin-left: 12px;
+  @include user-select(none);
+
+  &:active {
+    opacity: 0.5;
+    transition: 80ms ease;
+  }
+
+  &:hover {
+    color: $text-hover;
+  }
+}
+
+.mobileWalletButton {
+  background-color: #c9c9c9;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0.25rem 0.3rem;
+  width: fit-content;
+  border: none;
+  outline: none;
+  border-radius: 1vh;
+  font-weight: bold;
+  color: #464646;
+  transition: 120ms ease-in;
+
+  &:hover {
+    background-color: #e7e7e7;
+  }
+}
