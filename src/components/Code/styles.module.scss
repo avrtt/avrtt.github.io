@@ -1,0 +1,27 @@
+@import '../../styles/mixins';
+
+.codeWrapper {
+  @include respond-to(mobile) {
+    display: inline-block;
+    width: 100vw;
+    margin-left: -2rem;
+  }
+  @include respond-to(small-tablet) {
+    display: inline-block;
+    width: 104vw;
+    margin-left: -3rem;
+  }
+  @include respond-to(tablet) {
+    display: inline-block;
+    width: 95vw;
+    margin-left: -6rem;
+  }
+  @include respond-to(small-desktop) {
+    width: fit-content;
+    margin: 0 auto;
+  }
+  @include respond-to(desktop) {
+    width: fit-content;
+    margin: 0 auto;
+  }
+}
