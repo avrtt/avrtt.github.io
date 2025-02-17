@@ -23,11 +23,18 @@ exports.createPages = async ({ actions, graphql }) => {
     throw new Error(result.errors);
   }
 
-  // process mdx files of posts by checking if the contentFilePath includes 'src/pages/posts'
+  const excludedFiles = [
+    'adventures_template.mdx',
+    'research_template.mdx',
+    'thoughts_template.mdx'
+  ]
+
+  // process mdx files of posts by checking if the contentFilePath includes 'src/pages/posts', but not excludedFiles
   result.data.allMdx.nodes.forEach((node) => {
-    const PostTemplate = path.resolve(`./src/templates/post.js`);
+    if ( excludedFiles.some((templateName) => node.internal.contentFilePath.includes(templateName)) ) { return }
 
     if (node.internal.contentFilePath.includes('src/pages/posts')) {
+      const PostTemplate = path.resolve(`./src/templates/post.js`);
       const section = `/${node.frontmatter.slug.split('/')[1]}/`;
 
       createPage({
