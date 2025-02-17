@@ -60,7 +60,6 @@ module.exports = {
       },
     },
     `gatsby-transformer-yaml`,
-    `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
