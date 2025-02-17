@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import RemoveMarkdown from 'remove-markdown';
 import { graphql } from 'gatsby';
-import { Helmet } from 'react-helmet';
+import SEO from '../../components/seo'
 import Box from '@mui/material/Box';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
@@ -16,8 +16,6 @@ import * as stylesButtonsCommon from "../../styles/buttons_common.module.scss"
 import * as stylesCompactViews from "../../styles/compact_views.module.scss"
 import * as stylesTagBadges from "../../styles/tag_badges.module.scss";
 import 'animate.css/animate.min.css';
-
-const TITLE = 'Thoughts - avrtt.blog'
 
 function formatReadTime(minutes) {
 	if (minutes <= 10) return '~10 min';
@@ -97,10 +95,6 @@ const Posts = ({ data }) => {
 				animate={{ opacity: 1 }}
 				exit={{ opacity: 0 }}
 				transition={{ duration: 0.15 }}>
-	
-				<Helmet>
-					<title>{TITLE}</title>
-				</Helmet>
 
 				<div className={stylesCompactViews.viewButtonWrapper}>
 					<motion.button onClick={toggleView} class="noselect" whileTap={{ scale: 0.95 }} className={stylesCompactViews.viewButton}>
@@ -226,3 +220,15 @@ export const query = graphql`
 `;
   
 export default Posts;
+
+export const Head = () => (
+  <SEO 
+    title="Thoughts - avrtt.blog"
+    description=""
+    keywords={[""]}
+    image={""}
+    canonicalUrl=""
+    schemaType=""
+    children
+  />
+)

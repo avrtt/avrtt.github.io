@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import RemoveMarkdown from 'remove-markdown';
-import { Helmet } from 'react-helmet';
+import SEO from '../../components/seo'
 import { Link, graphql } from "gatsby";
 import { motion } from 'framer-motion';
 import M from '../../components/Markdown';
@@ -11,8 +11,6 @@ import { courseLastUpdated } from '../../data/lastUpdated';
 import { wordsPerMinuteResearch } from '../../data/commonVariables';
 import * as stylesSpoilers from "../../styles/spoilers.module.scss"
 import 'animate.css/animate.min.css';
-
-const TITLE = 'Course - avrtt.blog'
 
 function formatReadTime(minutes) {
 	if (minutes <= 10) return '~10 min';
@@ -117,10 +115,6 @@ const Course = ({ data }) => {
 			animate={{ opacity: 1 }}
 			exit={{ opacity: 0 }}
 			transition={{ duration: 0.15 }}>
-  
-			<Helmet>
-				<title>{TITLE}</title>
-			</Helmet>
 
 			<div class="courseBody">
 				<M text="Here you can find tutorials on machine learning, data science and several other fields organized as a sequential, in-depth theoretical course presented in modules. I've created it single-handedly by studying and summarizing a huge amount of material, and launched together with this blog as open source."/>
@@ -264,3 +258,15 @@ export const query = graphql`
 `;
 
 export default Course;
+
+export const Head = () => (
+  <SEO 
+    title="Course - avrtt.blog"
+    description=""
+    keywords={[""]}
+    image={""}
+    canonicalUrl=""
+    schemaType=""
+    children
+  />
+)

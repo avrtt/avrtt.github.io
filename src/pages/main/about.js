@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Helmet } from 'react-helmet';
+import SEO from '../../components/seo'
 import { AnimationOnScroll } from 'react-animation-on-scroll';
 import { motion } from 'framer-motion';
 import M from '../../components/Markdown';
@@ -37,8 +37,6 @@ import LocationAnnouncements from "../../components/LocationAnnouncements";
 import * as stylesTagBadges from "../../styles/tag_badges.module.scss";
 import * as stylesAboutPage from "../../styles/about_page.module.scss";
 import * as stylesSpoilers from "../../styles/spoilers.module.scss";
-
-const TITLE = 'About - avrtt.blog'
 
 const greetingsStyle = {
     display: 'flex',
@@ -118,11 +116,7 @@ const About = () => {
             animate={{opacity: 1 }}
             exit={{opacity: 0 }}
             transition={{ duration: 0.15 }}>
-                    
-            <Helmet>
-                <title>{ TITLE }</title>
-            </Helmet>
-        
+                       
             <div class="aboutBodyTile">
                 <div className={`${stylesAboutPage.greetingsWrapper} ${stylesAboutPage.tileContainer} noselect`}>
                     <p style={greetingsStyle}>
@@ -642,3 +636,15 @@ const About = () => {
 };
   
 export default About;
+
+export const Head = () => (
+  <SEO 
+    title="About - avrtt.blog"
+    description=""
+    keywords={[""]}
+    image={""}
+    canonicalUrl=""
+    schemaType=""
+    children
+  />
+)

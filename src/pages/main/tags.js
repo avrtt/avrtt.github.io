@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { graphql } from 'gatsby';
-import { Helmet } from 'react-helmet';
+import SEO from '../../components/seo'
 import { motion } from 'framer-motion';
 import { Link } from "gatsby";
 import Box from '@mui/material/Box';
@@ -8,8 +8,6 @@ import PugDance from "../../stickers/pug_dance.gif"
 import * as stylesTagsPage from "../../styles/tags_page.module.scss";
 import * as stylesButtonsCommon from "../../styles/buttons_common.module.scss"
 import * as stylesTagBadges from "../../styles/tag_badges.module.scss";
-
-const TITLE = 'Tags - avrtt.blog';
 
 const Tags = ({ data }) => {
   useEffect(() => {
@@ -61,10 +59,6 @@ const Tags = ({ data }) => {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.15 }}>
-
-        <Helmet>
-          <title>{TITLE}</title>
-        </Helmet>
 
         <div style={{ display: 'flex' }}>
           <motion.div 
@@ -162,3 +156,15 @@ export const query = graphql`
 `;
 
 export default Tags;
+
+export const Head = () => (
+  <SEO 
+    title="Tags - avrtt.blog"
+    description=""
+    keywords={[""]}
+    image={""}
+    canonicalUrl=""
+    schemaType=""
+    children
+  />
+)

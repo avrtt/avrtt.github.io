@@ -1,5 +1,5 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
+import SEO from '../../components/seo'
 import { Link } from "gatsby";
 import { motion } from 'framer-motion';
 import { AnimationOnScroll } from 'react-animation-on-scroll';
@@ -8,8 +8,6 @@ import { talksLastUpdated } from '../../data/lastUpdated';
 import * as stylesPlaques from "../../styles/plaques.module.scss"
 import 'animate.css/animate.min.css';
 
-const TITLE = 'Talks - avrtt.blog'
-
 const Talks = () => {
 	return (
 		<motion.div
@@ -17,10 +15,6 @@ const Talks = () => {
 			animate={{ opacity: 1 }}
 			exit={{ opacity: 0 }}
 			transition={{ duration: 0.15 }}>
-  
-			<Helmet>
-				<title>{TITLE}</title>
-			</Helmet>
 
 			<div class="talksBody">
 				<br/>
@@ -36,3 +30,15 @@ const Talks = () => {
 };
   
 export default Talks;
+
+export const Head = () => (
+  <SEO 
+    title="Talks - avrtt.blog"
+    description=""
+    keywords={[""]}
+    image={""}
+    canonicalUrl=""
+    schemaType=""
+    children
+  />
+)

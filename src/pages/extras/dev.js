@@ -1,18 +1,13 @@
 import React from "react"
-import { Helmet } from "react-helmet"
+import SEO from '../../components/seo'
 import { Link } from "gatsby"
 import web from "../../images/spider_web.png"
 import HiddenNotice from "../../components/HiddenNotice"
 import S from "../../components/Shine"
 
-const TITLE = '/dev'
-
 const Dev = () => {
   return (
     <>
-      <Helmet>
-        <title>{TITLE}</title>
-      </Helmet>
       <div
         className="noselect"
         style={{
@@ -68,3 +63,15 @@ const Dev = () => {
 };
 
 export default Dev;
+
+export const Head = () => (
+  <SEO 
+    title="/dev"
+    description=""
+    keywords={[""]}
+    image={""}
+    canonicalUrl=""
+    schemaType=""
+    children
+  />
+)

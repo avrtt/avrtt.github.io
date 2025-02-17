@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { graphql } from 'gatsby';
-import { Helmet } from 'react-helmet';
+import SEO from '../../components/seo'
 import { motion } from 'framer-motion';
 import { Link } from "gatsby";
 import Box from '@mui/material/Box';
-
-const TITLE = 'Posts - avrtt.blog';
 
 const Posts = ({ data }) => {
 
@@ -25,10 +23,6 @@ const Posts = ({ data }) => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.15 }}>
-
-      <Helmet>
-        <title>{TITLE}</title>
-      </Helmet>
 
       <div style={{ display: 'flex' }}>
         <motion.div 
@@ -79,3 +73,15 @@ export const query = graphql`
 `;
 
 export default Posts;
+
+export const Head = () => (
+  <SEO 
+    title="Posts - avrtt.blog"
+    description=""
+    keywords={[""]}
+    image={""}
+    canonicalUrl=""
+    schemaType=""
+    children
+  />
+)

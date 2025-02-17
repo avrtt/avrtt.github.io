@@ -1,11 +1,9 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
+import SEO from '../../components/seo'
 import { motion } from 'framer-motion';
 import M from '../../components/Markdown';
 import Code from "../../components/Code"
 import * as stylesWallets from "../../styles/wallets.module.scss"
-
-const TITLE = 'Contact - avrtt.blog'
 
 const Contact = () => {
     return (
@@ -14,10 +12,6 @@ const Contact = () => {
             animate={{opacity: 1 }}
             exit={{opacity: 0 }}
             transition={{ duration: 0.15 }}>
-            
-            <Helmet>
-                <title>{ TITLE }</title>
-            </Helmet>
             
             <div class="contactBody">
                 <M text="Questions, corrections, business proposals, creative suggestions, bucket list ideas, offers to travel together, just chatting:"/>
@@ -62,3 +56,15 @@ oukZqhXuxAdlr5geyAbMceZFWz7aYO8GBw==
 };
 
 export default Contact;
+
+export const Head = () => (
+  <SEO 
+    title="Contact - avrtt.blog"
+    description=""
+    keywords={[""]}
+    image={""}
+    canonicalUrl=""
+    schemaType=""
+    children
+  />
+)

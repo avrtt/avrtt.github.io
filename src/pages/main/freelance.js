@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { Helmet } from 'react-helmet';
+import SEO from '../../components/seo'
 import { motion } from 'framer-motion';
 import { AnimationOnScroll } from 'react-animation-on-scroll';
 import M from '../../components/Markdown';
@@ -38,8 +38,6 @@ import * as stylesWallets from "../../styles/wallets.module.scss"
 import * as stylesDonateCommon from "../../styles/donate_common.module.scss"
 import * as stylesSpoilers from "../../styles/spoilers.module.scss"
 import * as stylesFreelancePages from "../../styles/freelance_pages.module.scss"
-
-const TITLE = 'Freelance - avrtt.blog'
 
 const logoStyle = {
 	'vertical-align': 'middle'
@@ -125,10 +123,6 @@ const Freelance = () => {
 			animate={{opacity: 1 }}
 			exit={{opacity: 0 }}
 			transition={{ duration: 0.15 }}>
-			
-			<Helmet>
-				<title>{ TITLE }</title>
-			</Helmet>
 
 			<div class="noselect" className={stylesFreelancePages.languageSwitchWrapper}>
 				<Link to="/freelance/ru">
@@ -530,3 +524,15 @@ const Freelance = () => {
 };
   
 export default Freelance;
+
+export const Head = () => (
+  <SEO 
+    title="Freelance - avrtt.blog"
+    description=""
+    keywords={[""]}
+    image={""}
+    canonicalUrl=""
+    schemaType=""
+    children
+  />
+)

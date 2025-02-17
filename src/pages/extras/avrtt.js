@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Helmet } from "react-helmet";
+import SEO from '../../components/seo';
 import spoody from "../../gifs/spoody.gif";
 import web from "../../images/spider_web.png";
-
-const TITLE = '‎ '
 
 const DevNull = () => {
   const [randomNum] = useState(() => Math.random() * 10);
@@ -37,9 +35,6 @@ const DevNull = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{TITLE}</title>
-      </Helmet>
       <div
         className="noselect"
         style={{
@@ -86,3 +81,15 @@ const DevNull = () => {
 };
 
 export default DevNull;
+
+export const Head = () => (
+  <SEO 
+    title="‎ "
+    description=""
+    keywords={[""]}
+    image={""}
+    canonicalUrl=""
+    schemaType=""
+    children
+  />
+)

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet';
+import SEO from '../../components/seo'
 import { motion } from 'framer-motion';
 import { StaticImage } from "gatsby-plugin-image"
 import M from '../../components/Markdown';
@@ -20,8 +20,6 @@ import QR from "../../images/donate/qr.png";
 import { KofiLink, KofiHandle, PaypalLink, PaypalHandle, PatreonLink, PatreonHandle, SberbankCardCopy, SberbankCardDisplay, SberbankSBPCopy, SberbankSBPDisplay, BitcoinWallet, BEP20Wallet, ERC20Wallet } from "../../data/paymentMethods.js";
 import * as stylesWallets from "../../styles/wallets.module.scss"
 import * as stylesDonateCommon from "../../styles/donate_common.module.scss"
-
-const TITLE = 'Donate - avrtt.blog'
 
 const logoStyle = {
 	'vertical-align': 'middle'
@@ -70,10 +68,6 @@ const Donate = () => {
             animate={{opacity: 1 }}
             exit={{opacity: 0 }}
             transition={{ duration: 0.15 }}>
-            
-            <Helmet>
-                <title>{ TITLE }</title>
-            </Helmet>
             
             <div class="donateBody">
                 <M text="So, have any reason to thank me? You could use one of the following donation methods:"/>
@@ -192,3 +186,15 @@ const Donate = () => {
 };
 
 export default Donate;
+
+export const Head = () => (
+  <SEO 
+    title="Donate - avrtt.blog"
+    description=""
+    keywords={[""]}
+    image={""}
+    canonicalUrl=""
+    schemaType=""
+    children
+  />
+)

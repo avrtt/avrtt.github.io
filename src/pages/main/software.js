@@ -1,5 +1,5 @@
 import React from 'react';
-import { Helmet } from 'react-helmet';
+import SEO from '../../components/seo'
 import { Link } from "gatsby";
 import { motion } from 'framer-motion';
 import { AnimationOnScroll } from 'react-animation-on-scroll';
@@ -8,8 +8,6 @@ import { softwareLastUpdated } from '../../data/lastUpdated';
 import * as stylesPlaques from "../../styles/plaques.module.scss"
 import 'animate.css/animate.min.css';
 
-const TITLE = 'Software - avrtt.blog'
-
 const Software = () => {
 	return (
 		<motion.div
@@ -17,10 +15,6 @@ const Software = () => {
 			animate={{ opacity: 1 }}
 			exit={{ opacity: 0 }}
 			transition={{ duration: 0.15 }}>
-  
-			<Helmet>
-				<title>{TITLE}</title>
-			</Helmet>
 
 			<div class="softwareBody">
 				<br/>
@@ -36,3 +30,15 @@ const Software = () => {
 };
   
 export default Software;
+
+export const Head = () => (
+  <SEO 
+    title="Software - avrtt.blog"
+    description=""
+    keywords={[""]}
+    image={""}
+    canonicalUrl=""
+    schemaType=""
+    children
+  />
+)

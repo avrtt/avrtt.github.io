@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Helmet } from 'react-helmet'
+import SEO from '../../components/seo'
 import { motion } from 'framer-motion';
 import { TelegramComments } from 'react-telegram-comments';
 import { placesArr } from '../../data/exploration/temp';
@@ -12,8 +12,6 @@ import { AnimationOnScroll } from 'react-animation-on-scroll';
 import { explorationLastUpdated } from '../../data/lastUpdated';
 import info from "../../images/goals/info.svg";
 import * as stylesPlaques from "../../styles/plaques.module.scss"
-
-const TITLE = 'Exploration - avrtt.blog'
 
 const divStyle = {
 	width: '100%',
@@ -353,11 +351,7 @@ const Exploration = () => {
 		animate={{ opacity: 1 }}
 		exit={{ opacity: 0 }}
 		transition={{ duration: 0.15 }}>
-		
-		<Helmet>
-			<title>{ TITLE }</title>
-		</Helmet>
-	
+
 		<div class='explorationBody'> 
 			<br/>
 			<div class={stylesPlaques.yellowNotice}>
@@ -370,3 +364,15 @@ const Exploration = () => {
 };
   
 export default Exploration;
+
+export const Head = () => (
+  <SEO 
+    title="Exploration - avrtt.blog"
+    description=""
+    keywords={[""]}
+    image={""}
+    canonicalUrl=""
+    schemaType=""
+    children
+  />
+)

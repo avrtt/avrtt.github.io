@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Helmet } from 'react-helmet';
+import SEO from '../../components/seo'
 import { motion } from 'framer-motion';
 import M from '../../components/Markdown';
 import { projects, categories } from '../../data/freelance/arrays';
@@ -25,8 +25,6 @@ projectsFiltered.sort(function (a, b) {
 	return b.id - a.id;
   });
 
-const TITLE = 'Research projects - avrtt.blog'
-
 const Research = () => {
 	
   return (
@@ -36,10 +34,6 @@ const Research = () => {
 		exit={{opacity: 0 }}
 		transition={{ duration: 0.15 }}>
 		
-		<Helmet>
-			<title>{ TITLE }</title>
-		</Helmet>
-
 		<GoBackButton link="/freelance" />
 	
 		<div class={stylesFreelancePages.categorySwitchWrapper}> 
@@ -93,3 +87,15 @@ const Research = () => {
 };
   
 export default Research;
+
+export const Head = () => (
+  <SEO 
+    title="Research projects - avrtt.blog"
+    description=""
+    keywords={[""]}
+    image={""}
+    canonicalUrl=""
+    schemaType=""
+    children
+  />
+)

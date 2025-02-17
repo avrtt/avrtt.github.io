@@ -1,5 +1,5 @@
 import React from "react"
-import { Helmet } from "react-helmet"
+import SEO from '../../components/seo'
 import HiddenNotice from "../../components/HiddenNotice"
 import AnomalyNotice from "../../components/AnomalyNotice"
 import Notice from "../../components/Notice"
@@ -8,14 +8,9 @@ import Notice from "../../components/Notice"
 import img1 from "../../images/posts/adventures/content/magnitoshakhtinsk/photo_2025-01-27_19-55-49.jpg"
 import img2 from "../../images/posts/adventures/content/magnitoshakhtinsk/photo_2025-01-27_19-34-56.jpg"
 
-const TITLE = ''
-
 const Dev = () => {
   return (
     <>
-      <Helmet>
-        <title>{TITLE}</title>
-      </Helmet>
       <div
         className="noselect"
         style={{
@@ -43,3 +38,15 @@ const Dev = () => {
 };
 
 export default Dev;
+
+export const Head = () => (
+  <SEO 
+    title=""
+    description=""
+    keywords={[""]}
+    image={""}
+    canonicalUrl=""
+    schemaType=""
+    children
+  />
+)

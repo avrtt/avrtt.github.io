@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Helmet } from 'react-helmet';
+import SEO from '../../components/seo'
 import { motion } from 'framer-motion';
 import { AnimationOnScroll } from 'react-animation-on-scroll';
 import M from '../../components/Markdown';
@@ -8,8 +8,6 @@ import Stack from'../../components/Stack'
 import CvPosition from'../../components/CvPosition'
 import CvPositionFirst from'../../components/CvPositionFirst'
 import * as stylesPlaques from "../../styles/plaques.module.scss"
-
-const TITLE = 'CV - avrtt.blog'
 
 const downloadStyle = {
 	"text-align": "center",
@@ -29,10 +27,6 @@ const CV = () => {
 		animate={{opacity: 1 }}
 		exit={{opacity: 0 }}
 		transition={{ duration: 0.15 }}>
-		
-		<Helmet>
-			<title>{ TITLE }</title>
-		</Helmet>
 
 		<div class="cvBody">
 			<br/>
@@ -47,3 +41,15 @@ const CV = () => {
 };
   
 export default CV;
+
+export const Head = () => (
+  <SEO 
+    title="CV - avrtt.blog"
+    description=""
+    keywords={[""]}
+    image={""}
+    canonicalUrl=""
+    schemaType=""
+    children
+  />
+)

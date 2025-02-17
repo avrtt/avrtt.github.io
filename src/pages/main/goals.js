@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Helmet } from 'react-helmet'
+import SEO from '../../components/seo'
 import { motion } from 'framer-motion';
 import { TelegramComments } from 'react-telegram-comments';
 import { graphql, useStaticQuery } from 'gatsby';
@@ -19,8 +19,6 @@ import * as stylesCommentsSections from '../../styles/comments_sections.module.s
 
 const goalsTagsSpecific = goalsTags.filter((x) => x.name === 'COMMON' || x.name === 'UNCOMMON' || x.name === 'RARE' || x.name === 'LEGENDARY' || x.name === 'SAFE' || x.name === 'UNSAFE' || x.name === 'DANGEROUS');
 const goalsTagsCategories = goalsTags.filter((x) => !goalsTagsSpecific.includes(x));
-
-const TITLE = 'Goals - avrtt.blog'
 
 const spanStyle = {
 	'opacity': 0.5,
@@ -153,10 +151,6 @@ const Goals = () => {
 		animate={{opacity: 1 }}
 		exit={{opacity: 0 }}
 		transition={{ duration: 0.15 }}>
-		
-        <Helmet>
-            <title>{ TITLE }</title>
-        </Helmet>
 
         <div class='goalsBody'>
 
@@ -318,3 +312,15 @@ const Goals = () => {
 };
 
 export default Goals;
+
+export const Head = () => (
+  <SEO 
+    title="Goals - avrtt.blog"
+    description=""
+    keywords={[""]}
+    image={""}
+    canonicalUrl=""
+    schemaType=""
+    children
+  />
+)
