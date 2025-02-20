@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import info from "../../images/goals/info.svg"
 import * as styles from "./styles.module.scss"
 
-const Tooltip = ({ text }) => {
+const Tooltip = ({ text, isBadge=false }) => {
     const [isOpen, setIsOpen] = useState(false);
     const tooltipRef = useRef(null);
 
@@ -25,7 +25,7 @@ const Tooltip = ({ text }) => {
 
     return (
         <span className={styles.tooltipWrapper} ref={tooltipRef}>
-            <img id={styles.info} src={info} alt='info' onClick={handleIconClick}/>
+            <img id={isBadge ? styles.infoBadge : styles.info} src={info} alt='info' onClick={handleIconClick}/>
             <span className={isOpen ? `${styles.tooltiptext} ${styles.visible}` : styles.tooltiptext}>
                 {text}
             </span>
