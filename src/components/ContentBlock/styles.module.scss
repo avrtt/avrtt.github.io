@@ -1,4 +1,47 @@
+@import '../../styles/mixins';
+
 .contentBlock {
   display: flex;
   flex-direction: column;
+  @include respond-to(mobile) { 
+    line-height: 1.25rem; 
+    padding: 0 !important; 
+    border-radius: 2vh !important; 
+    transform: none !important;
+    margin-bottom: 0.4rem;
+  }
+  @include respond-to(small-tablet) { 
+    line-height: 1.25rem; 
+    padding: 0 !important; 
+    border-radius: 2vh !important; 
+    transform: none !important;
+    margin-bottom: 0.4rem;
+  }
+  @include respond-to(tablet) { 
+    line-height: 1.25rem; 
+    padding: 0 !important; 
+    border-radius: 2vh !important; 
+    transform: none !important;
+    margin-bottom: 0.4rem;
+  }
+  @include respond-to(small-desktop) { line-height: 1.8rem; }
+  @include respond-to(desktop) { line-height: 1.8rem; }
+}
+
+.emoji {
+  @include respond-to(mobile) { 
+    margin: 0 0 -1.75rem 0 !important; 
+    opacity: 1 !important; 
+    transform: translateY(-1rem) !important;
+  }
+  @include respond-to(small-tablet) { 
+    margin: 0 0 -1.75rem 0 !important; 
+    opacity: 1 !important; 
+    transform: translateY(-1rem) !important; 
+  }
+  @include respond-to(tablet) {
+    margin: 0 0 -1.75rem 0 !important; 
+    opacity: 1 !important; 
+    transform: translateY(-1rem) !important;
+  }
 }

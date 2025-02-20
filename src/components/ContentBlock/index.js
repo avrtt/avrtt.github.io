@@ -8,15 +8,15 @@ const ContentBlock = ({
     emoji,
     emojiGif,
     description,
-    fontSize = '24px',
-    fontSizeTitle = '26px',
-    fontSizeEmoji = '45px',
-    gifSizeEmoji = '52.4px',
+    fontSize = 'clamp(0.9rem, 2.5vw, 1.3rem)',
+    fontSizeTitle = '1.625rem',
+    fontSizeEmoji = '2.8125rem',
+    gifSizeEmoji = '3.275rem',
     backgroundColor = '#ffffff',
     textColor = '#000000',
     titleColor = '#000000',
-    padding = '0px',
-    paddingDescription = '0 30px',
+    padding = '1.8rem 0 0 0',
+    paddingDescription = '1.8rem 2rem',
     alignment = 'left',
     borderRadius = '2vh',
     width = '100%',
@@ -85,8 +85,8 @@ const ContentBlock = ({
     const emojiStyle = {
         fontSize: fontSizeEmoji,
         textAlign: emojiAlign,
-        transform: 'translateY(50%)',
-        marginBottom: '0.4em',
+        transform: 'translateY(1rem)',
+        marginBottom: '0em',
         marginTop: '-1.4em',
         marginLeft: '-0.2em',
         marginRight: '-0.2em',
@@ -99,9 +99,9 @@ const ContentBlock = ({
     if (emojiAlign === "center") {
         emojiGifStyle = {
             width: gifSizeEmoji,
-            transform: `translateY(50%) scale(${isHovered ? 1.2 : 1})`,
-            marginBottom: '0.763em',
-            marginTop: '-2.95em',
+            transform: `translateY(2.4rem) scale(${isHovered ? 1.2 : 1})`,
+            marginBottom: '0em',
+            marginTop: '-3em',
             marginLeft: 'auto',
             marginRight: 'auto',
             transition: 'transform 0.3s ease, opacity 0.3s ease',
@@ -110,9 +110,9 @@ const ContentBlock = ({
     } else if (emojiAlign === "left") {
         emojiGifStyle = {
             width: gifSizeEmoji,
-            transform: `translateY(50%) scale(${isHovered ? 1.2 : 1})`,
-            marginBottom: '0.763em',
-            marginTop: '-2.95em',
+            transform: `translateY(2.4rem) scale(${isHovered ? 1.2 : 1})`,
+            marginBottom: '0em',
+            marginTop: '-3em',
             marginLeft: '-0.3em',
             marginRight: 'auto',
             transition: 'transform 0.3s ease, opacity 0.3s ease',
@@ -121,9 +121,9 @@ const ContentBlock = ({
     } else if (emojiAlign === "right") {
         emojiGifStyle = {
             width: gifSizeEmoji,
-            transform: `translateY(50%) scale(${isHovered ? 1.2 : 1})`,
-            marginBottom: '0.763em',
-            marginTop: '-2.95em',
+            transform: `translateY(2.4rem) scale(${isHovered ? 1.2 : 1})`,
+            marginBottom: '0em',
+            marginTop: '-3em',
             marginLeft: 'auto',
             marginRight: '-0.3em',
             transition: 'transform 0.3s ease, opacity 0.3s ease',
@@ -143,8 +143,8 @@ const ContentBlock = ({
             onMouseLeave={handleMouseLeave}
         >
             {title && <p style={titleStyle}>{title}</p>}
-            {emoji && <p class="noselect" style={emojiStyle}>{emoji}</p>}
-            {emojiGif && <img class="noselect" style={emojiGifStyle} src={emojiGif} alt={emoji} />}
+            {emoji && <p className={`noselect ${styles.emoji}`} style={emojiStyle}>{emoji}</p>}
+            {emojiGif && <img class="noselect desktopOnlySupport" style={emojiGifStyle} src={emojiGif} alt={emoji} />}
             {description && (
                 <span style={descriptionStyle}>
                     <M text={description} />
@@ -159,8 +159,8 @@ const ContentBlock = ({
             onMouseLeave={handleMouseLeave}
         >
             {title && <p style={titleStyle}>{title}</p>}
-            {emoji && <p class="noselect" style={emojiStyle}>{emoji}</p>}
-            {emojiGif && <img class="noselect" style={emojiGifStyle} src={emojiGif} alt={emoji} />}
+            {emoji && <p className={`noselect ${styles.emoji}`} style={emojiStyle}>{emoji}</p>}
+            {emojiGif && <img class="noselect desktopOnlySupport" style={emojiGifStyle} src={emojiGif} alt={emoji} />}
             {description && (
                 <span style={descriptionStyle}>
                     {description}
