@@ -1,4 +1,5 @@
 import React from "react"
+import SEO from '../../components/seo';
 import HiddenNotice from "../../components/HiddenNotice"
 import AnomalyNotice from "../../components/AnomalyNotice"
 import Notice from "../../components/Notice"
@@ -37,3 +38,10 @@ const Dev = () => {
 };
 
 export default Dev;
+
+export const Head = () => (
+  <SEO 
+    title="‎ "
+    flagHidden={true}
+  />
+)

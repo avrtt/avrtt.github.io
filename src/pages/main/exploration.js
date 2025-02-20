@@ -5,7 +5,7 @@ import { TelegramComments } from 'react-telegram-comments';
 import { placesArr } from '../../data/exploration/temp';
 import { countriesArr } from '../../data/exploration/temp';
 import { mapData } from '../../data/exploration/temp';
-import CountryMap from '../../components/CountryMap';
+//import CountryMap from '../../components/CountryMap';
 import TravelMap from '../../components/TravelMap';
 import M from '../../components/Markdown';
 import { AnimationOnScroll } from 'react-animation-on-scroll';

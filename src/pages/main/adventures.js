@@ -70,7 +70,7 @@ const Posts = ({ data }) => {
 			<div className="smallScreenNotice noselect">
 				<p>This page is not supported on small screen devices (and I'm a lazy ass to fix it). Use "Posts" page instead.</p>
 				<div style={{ display: 'flex', justifyContent: 'center' }}>
-					<img src={PugDance} style={{ width: '4rem' }}/>
+					<img src={PugDance} style={{ width: '4rem' }} alt="dancing-pug" />
 				</div>
 			</div>
 			<motion.div className='desktopOnlySupport noselect'

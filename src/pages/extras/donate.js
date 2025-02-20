@@ -170,7 +170,8 @@ const Donate = () => {
                                 "margin-right": "auto",
                                 "display": "block"
                             }} 
-                            src="../../images/donate/me.jpg" 
+                            src="../../images/donate/me.jpg"
+                            alt="muddybara"
                         />
                     </div>
                 )}

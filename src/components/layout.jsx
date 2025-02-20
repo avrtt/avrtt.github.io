@@ -5,10 +5,19 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 const Layout = ({ children, location }) => {
   const path = location?.pathname || '';
+  
+  var isDevNull = false;
+  if (
+    path === "/dev/null/" ||
+    path === "/dev/magnitoshakhtinsk/" ||
+    path === "/dev/" ||
+    path === "/null/" ||
+    path === "/avrtt/"
+  ) { isDevNull = true }
 
   return (
     <>
-      <Navbar />
+      {!isDevNull && <Navbar />}
       <AnimatePresence mode='wait'>
         <motion.main
           key={path} 
@@ -20,7 +29,7 @@ const Layout = ({ children, location }) => {
           {children}
         </motion.main>
       </AnimatePresence>
-      <Footer />
+      {!isDevNull && <Footer />}
     </>
   );
 };

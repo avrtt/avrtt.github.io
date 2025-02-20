@@ -85,5 +85,6 @@ export default DevNull;
 export const Head = () => (
   <SEO 
     title="‎ "
+    flagHidden={true}
   />
 )

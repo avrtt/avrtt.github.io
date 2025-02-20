@@ -128,7 +128,7 @@ const Freelance = () => {
 			<div class="noselect" className={stylesFreelancePages.languageSwitchWrapper}>
 				<Link to="/freelance/ru">
 					<span class={stylesFreelancePages.languageButton}>
-						<img style={flagStyle} src={russian}/>
+						<img style={flagStyle} src={russian} alt="russian-flag" />
 						<span style={codeStyle}>RU</span>
 					</span>
 				</Link>

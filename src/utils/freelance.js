@@ -1,4 +1,9 @@
-import { currentZoneUTC, freelanceWorkHourStart, freelanceWorkHourEnd } from '../data/freelance/variables';
+import { freelanceWorkHourStart, freelanceWorkHourEnd } from '../data/freelance/variables';
+import { countryCode, exactTimezone } from '../data/announcements';
+import { getTimezoneByCountryCode } from "../utils/location"
+
+// get current timezone string by country code
+const currentZoneUTC =  getTimezoneByCountryCode(countryCode, exactTimezone)
 
 // fetch my current time zone and working hours (ints)
 const myTimeOffset = parseInt(currentZoneUTC)

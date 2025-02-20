@@ -168,13 +168,13 @@ const Goals = () => {
                             <div className={stylesSpoilers.spoilerContentGoals}>
                                 <M text="Before you dive deep, here's a little explanation of the notation:"/>
                                 <ul>
-                                    <li><span class={stylesGoalsPage.tooltipGoals}><img id={stylesGoalsPage.infoStyle} style={textImg} src={info} class={stylesGoalsPage.c} alt='checkbox'/></span> will show additional information about a goal on hover </li>
-                                    <li><img src={refLink} style={textImg} /> can be a reference, inspiration, or extra source to describe a goal</li>
-                                    <li><img src={resultLink} style={textImg} /> is a link to the result or proof of accomplishing a goal</li>
+                                    <li><span class={stylesGoalsPage.tooltipGoals}><img id={stylesGoalsPage.infoStyle} style={textImg} src={info} class={stylesGoalsPage.c} alt='info-icon'/></span> will show additional information about a goal on hover </li>
+                                    <li><img src={refLink} style={textImg} alt="reference-icon" /> can be a reference, inspiration, or extra source to describe a goal</li>
+                                    <li><img src={resultLink} style={textImg} alt="result-link-icon" /> is a link to the result or proof of accomplishing a goal</li>
                                     <li>The right side of the page shows two tags: difficulty/rareness (stars) and the level of risk</li>
                                     <li>The date/text after "–" reflects a rough deadline for a goal</li>
                                     <li>The bunch of icons after each goal description represent the category tags for navigation and the statistics at the bottom of the page</li>
-                                    <li>Hovering over the <span class={stylesGoalsPage.tooltipGoals}><img id={stylesGoalsPage.checkboxStyle} style={textImg} src={checkbox} class={stylesGoalsPage.c} alt='checkbox'/><span style={{ left: "50%"}} class={stylesGoalsPage.tooltiptextGoals}>You've discovered mouse control!</span></span> icons displays the date and location of completion</li>
+                                    <li>Hovering over the <span class={stylesGoalsPage.tooltipGoals}><img id={stylesGoalsPage.checkboxStyle} style={textImg} src={checkbox} class={stylesGoalsPage.c} alt='checkbox-icon'/><span style={{ left: "50%"}} class={stylesGoalsPage.tooltiptextGoals}>You've discovered mouse control!</span></span> icons displays the date and location of completion</li>
                                 </ul>
                             </div>
                         </div>

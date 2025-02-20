@@ -47,8 +47,9 @@ const greetingsStyle = {
 }
 
 const About = () => {
-	
-    const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+    const isBrowser = typeof window !== 'undefined';
+    const [screenWidth, setScreenWidth] = useState(isBrowser ? window.innerWidth : 1200);
     const collRef = useRef([]);
     
     useEffect(() => {
@@ -78,10 +79,11 @@ const About = () => {
     };
 
     useEffect(() => {
+        if (!isBrowser) return;
         const handleResize = () => setScreenWidth(window.innerWidth);
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
-    }, []);
+    }, [isBrowser]);
 
     var mapWidth, mapHeight, mapMarginLeft, mapMarginRight, mapWidthFlat, mapHeightFlat, scaleFlat, widthDivisorFlat
     if (screenWidth <=991) { 
@@ -125,7 +127,7 @@ const About = () => {
                         <span>Hi there! I'm Vlad.</span>
                         <StaticImage
                             src="../../images/about/photoAbout.jpg"
-                            alt="photo"
+                            alt="photo-vladislav-averett"
                             placeholder="blurred"
                             width={350}
                             quality="100"

@@ -224,8 +224,6 @@ export function Head({ data }) {
   const description = frontmatter.descSEO || frontmatter.desc
   const descriptionOG = frontmatter.descOG || description
   const descriptionTwitter = frontmatter.descTwitter || description
-  const prioritySitemap = frontmatter.prioritySitemap || "0.4"
-  const changefreqSitemap = frontmatter.changefreqSitemap || "yearly"
   const schemaType = frontmatter.schemaType || "BlogPosting"
   const keywords = frontmatter.keywordsSEO
   const datePublished = frontmatter.date
@@ -239,7 +237,7 @@ export function Head({ data }) {
   const mainTag = frontmatter.mainTag || "Posts"
   const section = frontmatter.slug.split('/')[1] || "posts"
   const type = "article"
-  
+
   const { siteUrl } = useSiteMetadata()
 
   const breadcrumbJSON = {
@@ -275,8 +273,6 @@ export function Head({ data }) {
       description={description}
       descriptionOG={descriptionOG}
       descriptionTwitter={descriptionTwitter}
-      prioritySitemap={prioritySitemap}
-      changefreqSitemap={changefreqSitemap}
       schemaType={schemaType}
       keywords={keywords}
       datePublished={datePublished}
@@ -313,8 +309,6 @@ export const query = graphql`
         descTwitter
         date
         updated
-        prioritySitemap
-        changefreqSitemap
         extraReadTimeMin
         difficultyLevel
         flagDraft

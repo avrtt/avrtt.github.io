@@ -67,5 +67,6 @@ export default Dev;
 export const Head = () => (
   <SEO 
     title="/dev"
+    flagHidden={true}
   />
 )
