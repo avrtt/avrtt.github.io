@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useSiteMetadata } from "../hooks/useSiteMetadata"
 import RemoveMarkdown from 'remove-markdown';
 import { motion } from 'framer-motion';
+import SEO from "../components/seo"
 import PostBanner from '../components/PostBanner';
 import PostBottom from'../components/PostBottom'; 
 import { wordsPerMinuteAdventures, wordsPerMinuteResearch, wordsPerMinuteThoughts } from '../data/commonVariables';
@@ -213,15 +215,106 @@ export function PostTemplate({ data: { mdx, allMdx }, children }) {
 
 export default PostTemplate;
 
+export function Head({ data }) {
+  const { frontmatter } = data.mdx
+
+  const title = frontmatter.titleSEO || frontmatter.title
+  const titleOG = frontmatter.titleOG || title
+  const titleTwitter = frontmatter.titleTwitter || title 
+  const description = frontmatter.descSEO || frontmatter.desc
+  const descriptionOG = frontmatter.descOG || description
+  const descriptionTwitter = frontmatter.descTwitter || description
+  const prioritySitemap = frontmatter.prioritySitemap || "0.4"
+  const changefreqSitemap = frontmatter.changefreqSitemap || "yearly"
+  const schemaType = frontmatter.schemaType || "BlogPosting"
+  const keywords = frontmatter.keywordsSEO
+  const datePublished = frontmatter.date
+  const dateModified = frontmatter.updated || datePublished
+  const imageOG = frontmatter.imageOG || frontmatter.banner?.childImageSharp?.gatsbyImageData?.images?.fallback?.src
+  const imageAltOG = frontmatter.imageAltOG || descriptionOG
+  const imageTwitter = frontmatter.imageTwitter || imageOG
+  const imageAltTwitter = frontmatter.imageAltTwitter || descriptionTwitter
+  const canonicalUrl = frontmatter.canonicalURL
+  const flagHidden = frontmatter.flagHidden || false
+  const mainTag = frontmatter.mainTag || "Posts"
+  const section = frontmatter.slug.split('/')[1] || "posts"
+  const type = "article"
+  
+  const { siteUrl } = useSiteMetadata()
+
+  const breadcrumbJSON = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": siteUrl
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": mainTag,
+        "item": `${siteUrl}/${frontmatter.slug.split('/')[1]}`
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": title,
+        "item": `${siteUrl}${frontmatter.slug}`
+      }
+    ]
+  }
+
+  return (
+    <SEO
+      title={title + " - avrtt.blog"}
+      titleOG={titleOG}
+      titleTwitter={titleTwitter}
+      description={description}
+      descriptionOG={descriptionOG}
+      descriptionTwitter={descriptionTwitter}
+      prioritySitemap={prioritySitemap}
+      changefreqSitemap={changefreqSitemap}
+      schemaType={schemaType}
+      keywords={keywords}
+      datePublished={datePublished}
+      dateModified={dateModified}
+      imageOG={imageOG}
+      imageAltOG={imageAltOG}
+      imageTwitter={imageTwitter}
+      imageAltTwitter={imageAltTwitter}
+      canonicalUrl={canonicalUrl}
+      flagHidden={flagHidden}
+      mainTag={mainTag}
+      section={section}
+      type={type}
+    >
+      <script type="application/ld+json">
+        {JSON.stringify(breadcrumbJSON)}
+      </script>
+    </SEO>
+  )
+}
+
 export const query = graphql`
   query($id: String!, $section: String!) {
     mdx(id: { eq: $id }) {
       frontmatter {
         index
         title
+        titleSEO
+        titleOG
+        titleTwitter
         desc
+        descSEO
+        descOG
+        descTwitter
         date
         updated
+        prioritySitemap
+        changefreqSitemap
         extraReadTimeMin
         difficultyLevel
         flagDraft
@@ -235,8 +328,10 @@ export const query = graphql`
         flagCognitohazard
         flagHidden
         flagWideLayoutByDefault
+        schemaType
         mainTag
         otherTags
+        keywordsSEO
         banner {
           childImageSharp {
             gatsbyImageData(
@@ -246,6 +341,11 @@ export const query = graphql`
 						)
           }
         }
+        imageOG
+        imageAltOG
+        imageTwitter
+        imageAltTwitter
+        canonicalURL
         slug
       }
       body
