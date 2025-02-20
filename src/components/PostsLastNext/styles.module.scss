@@ -1,125 +1,81 @@
-.readNextWrapper {
-  margin-top: 1vw;
-  margin-bottom: 20vw;
+@import '../../styles/mixins';
+
+$spacing-small: 1vw;
+$spacing-large: 20vw;
+$image-width: 28vw;
+$image-height: 30vh;
+$image-radius: 2vh;
+$image-opacity: 0.65;
+$image-brightness: 60%;
+$transition-speed: 110ms ease-in;
+$arrow-width: 12vw;
+$arrow-offset: 58.5%;
+
+@mixin disable-user-select {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
-.readNextWrapper:hover {
-  margin-top: 1vw;
-  margin-bottom: 20vw;
+.readNextWrapper {
+  margin-top: $spacing-small;
+  margin-bottom: $spacing-large;
+
+  &:hover {
+    margin-top: $spacing-small;
+    margin-bottom: $spacing-large;
+  }
+
+  @include respond-to(mobile) { display: none }
+  @include respond-to(small-tablet) { display: none }
+  @include respond-to(tablet) { display: none }
+}
+
+@mixin post-style($position, $side) {
+  position: absolute;
+  #{$side}: 50.5%;
+  width: $image-width;
+  height: $image-height;
+  border-radius: $image-radius;
+  object-fit: cover;
+  filter: brightness($image-brightness);
+  opacity: $image-opacity;
+  transition: $transition-speed;
+  @include disable-user-select;
+
+  &:hover {
+    opacity: 1;
+    transform: scale(0.98);
+    -webkit-transform: scale(0.98);
+    -ms-transform: scale(0.98);
+  }
 }
 
 .lastPost {
-  position: absolute;
-  left: 50.5%;
-  width: 28vw;
-  border-radius: 2vh;
-  object-fit: cover;
-  height: 30vh;
-  filter: brightness(60%);
-  opacity: 0.65;
-  transition: 110ms ease-in;
-	-webkit-touch-callout: none;
-    -webkit-user-select: none; 
-     -khtml-user-select: none;
-       -moz-user-select: none; 
-        -ms-user-select: none;
-            user-select: none;
+  @include post-style(absolute, left);
 }
 
 .nextPost {
-  position: absolute;
-  right: 50.5%;
-  width: 28vw;
-  border-radius: 2vh;
-  object-fit: cover;
-  height: 30vh;
-  filter: brightness(60%);
-  opacity: 0.65;
-  transition: 110ms ease-in;
-	-webkit-touch-callout: none;
-    -webkit-user-select: none; 
-     -khtml-user-select: none;
-       -moz-user-select: none; 
-        -ms-user-select: none;
-            user-select: none;
+  @include post-style(absolute, right);
 }
 
-.lastPost:hover {
+@mixin arrow-style($side) {
   position: absolute;
-  left: 50.5%;
-  width: 28vw;
-  border-radius: 2vh;
-  object-fit: cover;
-  height: 30vh;
-  opacity: 1;
-  transform: scale(0.98);
-  transition: 110ms ease-in;
-  -webkit-transform: scale(0.98);
-	  -webkit-touch-callout: none;
-	    -ms-transform: scale(0.98);
-      -webkit-user-select: none; 
-       -khtml-user-select: none;
-         -moz-user-select: none; 
-          -ms-user-select: none;
-              user-select: none;
-}
-
-.nextPost:hover {
-  position: absolute;
-  right: 50.5%;
-  width: 28vw;
-  border-radius: 2vh;
-  object-fit: cover;
-  height: 30vh;
-  opacity: 1;
-  transform: scale(0.98);
-  transition: 110ms ease-in;
-  -webkit-transform: scale(0.98);
-	  -webkit-touch-callout: none;
-	    -ms-transform: scale(0.98);
-      -webkit-user-select: none; 
-       -khtml-user-select: none;
-         -moz-user-select: none; 
-          -ms-user-select: none;
-              user-select: none;
-}
-
-.lastArrow {
-  position: absolute;
-  left: 58.5%;
-  width: 12vw;
-  border-radius: 2vh;
-  object-fit: cover;
-  transform: translateY(10%);
-  pointer-events: none
-}
-
-.nextArrow {
-  position: absolute;
-  right: 58.5%;
-  width: 12vw;
-  border-radius: 2vh;
-  object-fit: cover;
-  transform: translateY(10%);
-  pointer-events: none
-}
-
-.lastArrow:hover {
-  position: absolute;
-  left: 58.5%;
-  width: 12vw;
-  border-radius: 2vh;
-  object-fit: cover;
-  transform: translateY(10%);
-  pointer-events: none
-}
-
-.nextArrow:hover {
-  position: absolute;
-  right: 58.5%;
-  width: 12vw;
-  border-radius: 2vh;
+  #{$side}: $arrow-offset;
+  width: $arrow-width;
+  border-radius: $image-radius;
   object-fit: cover;
   transform: translateY(10%);
   pointer-events: none;
+}
+
+.lastArrow {
+  @include arrow-style(left);
+}
+
+.nextArrow {
+  @include arrow-style(right);
 }
