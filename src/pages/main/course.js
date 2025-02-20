@@ -7,6 +7,7 @@ import M from '../../components/Markdown';
 import S from '../../components/Shine';
 import H from '../../components/Highlight';
 import StickerPack from '../../components/StickerPack';
+import photoAbout from "../../images/about/photoAbout.jpg";
 import { courseLastUpdated } from '../../data/lastUpdated';
 import { wordsPerMinuteResearch } from '../../data/commonVariables';
 import * as stylesSpoilers from "../../styles/spoilers.module.scss"
@@ -253,20 +254,51 @@ export const query = graphql`
         		}
 				body
       		}
+			group(field: {frontmatter: {courseCategoryName: SELECT}}) {
+				fieldValue
+			}
     	}
 	}
 `;
 
 export default Course;
 
-export const Head = () => (
-  <SEO 
-    title="Course - avrtt.blog"
-    description=""
-    keywords={[""]}
-    image={""}
-    canonicalUrl=""
-    schemaType=""
-    children
-  />
-)
+export const Head = ({ data }) => {
+	const categories = data.allMdx.group
+		.map(g => g.fieldValue)
+		.filter(category => category && category !== "Uncategorized")
+
+  	return (
+		<SEO 
+			title="Course - avrtt.blog"
+			description="Free tutorials on machine learning, data science and artificial intelligence. Structured curriculum with hands-on projects and theoretical depth."
+			keywords={categories}
+			image={""}
+			canonicalUrl="https://avrtt.github.io/course"
+			schemaType="Course"
+			children
+		>
+			<script type="application/ld+json">
+				{JSON.stringify({
+					"@context": "https://schema.org",
+					"@type": "Course",
+					"name": "Vladislav Averett's Course on Data Science and Machine Learning - avrtt.blog",
+					"url": "https://avrtt.github.io/course",
+					"description": "Comprehensive course covering advanced AI algorithms, classical machine learning, data analysis, and other statistical methods. Structured learning path for aspiring data scientists and AI engineers.",
+					"keywords": categories.join(", "),
+					"provider": {
+						"@type": "Person",
+						"name": "Vladislav Averett",
+						"url": "https://avrtt.github.io/about",
+						"image": photoAbout
+					},
+					"educationalLevel": "Intermediate",
+					"hasCourseInstance": {
+						"@type": "CourseInstance",
+						"courseMode": ["online", "self-paced"]
+					}
+				})}
+			</script>
+		</SEO>
+	)
+}
