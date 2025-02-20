@@ -26,14 +26,14 @@ const TileContainer = ({
 
     return animationonscroll ? (
         <AnimationOnScroll offset={offset} duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
-            <div style={containerStyle} className={styles.tileContainer}>
+            <div className={styles.tileContainer} style={containerStyle}>
                 {React.Children.map(children, (child) =>
                     React.cloneElement(child, { width: child.props.width || blockWidth })
                 )}
             </div>
         </AnimationOnScroll>
     ) : (
-        <div style={containerStyle} className={styles.tileContainer}>
+        <div className={styles.tileContainer} style={containerStyle}>
             {React.Children.map(children, (child) =>
                 React.cloneElement(child, { width: child.props.width || blockWidth })
             )}
