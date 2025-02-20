@@ -85,11 +85,5 @@ export default DevNull;
 export const Head = () => (
   <SEO 
     title="‎ "
-    description=""
-    keywords={[""]}
-    image={""}
-    canonicalUrl=""
-    schemaType=""
-    children
   />
 )

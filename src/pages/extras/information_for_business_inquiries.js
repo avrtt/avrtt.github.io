@@ -31,11 +31,6 @@ export default Business;
 export const Head = () => (
   <SEO 
     title="Information for Business Inquiries - avrtt.blog"
-    description=""
-    keywords={[""]}
-    image={""}
-    canonicalUrl=""
-    schemaType=""
-    children
+    canonicalUrl="https://avrtt.github.io/information_for_business_inquiries"
   />
 )

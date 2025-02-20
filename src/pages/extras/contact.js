@@ -60,11 +60,11 @@ export default Contact;
 export const Head = () => (
   <SEO 
     title="Contact - avrtt.blog"
-    description=""
-    keywords={[""]}
+    description="Find out how to contact Vladislav Averett in multiple ways."
+    keywords={["contact me", "contact page"]}
     image={""}
-    canonicalUrl=""
-    schemaType=""
+    canonicalUrl="https://avrtt.github.io/contact"
+    schemaType="ContactPage"
     children
   />
 )

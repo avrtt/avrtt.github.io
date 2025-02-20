@@ -190,11 +190,10 @@ export default Donate;
 export const Head = () => (
   <SEO 
     title="Donate - avrtt.blog"
-    description=""
-    keywords={[""]}
+    description="Find out how to send a donation to Vladislav Averett in a variety of ways to say thanks."
+    keywords={["donation page", "support me", "buy me a coffee", "donate me"]}
     image={""}
-    canonicalUrl=""
-    schemaType=""
+    canonicalUrl="https://avrtt.github.io/donate"
     children
   />
 )

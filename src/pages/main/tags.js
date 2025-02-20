@@ -160,11 +160,10 @@ export default Tags;
 export const Head = () => (
   <SEO 
     title="Tags - avrtt.blog"
-    description=""
-    keywords={[""]}
+    description="Seach my blog posts by tag."
+    keywords={["website search", "filter by tag", "search by keyword"]}
     image={""}
-    canonicalUrl=""
-    schemaType=""
+    canonicalUrl="https://avrtt.github.io/tags"
     children
   />
 )

@@ -77,11 +77,6 @@ export default Posts;
 export const Head = () => (
   <SEO 
     title="Posts - avrtt.blog"
-    description=""
-    keywords={[""]}
-    image={""}
-    canonicalUrl=""
-    schemaType=""
-    children
+    canonicalUrl="https://avrtt.github.io/all"
   />
 )

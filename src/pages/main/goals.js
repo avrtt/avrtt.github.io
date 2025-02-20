@@ -316,11 +316,10 @@ export default Goals;
 export const Head = () => (
   <SEO 
     title="Goals - avrtt.blog"
-    description=""
-    keywords={[""]}
+    description="Explore my bucket list filled with various life goals."
+    keywords={["bucket list", "list of achievements", "list of life goals", "personal goals", "personal achievements"]}
     image={""}
-    canonicalUrl=""
-    schemaType=""
+    canonicalUrl="https://avrtt.github.io/goals"
     children
   />
 )
