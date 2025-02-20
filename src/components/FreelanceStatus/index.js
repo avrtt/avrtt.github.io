@@ -135,7 +135,7 @@ const FreelanceStatus = ({ isRussian=false, isHome=false }) => {
 				{isHome && isArrowVisible ? 
 					<span>
 						<Link to="/freelance">
-							<img src={arrow} className={stylesAnnouncements.linkArrow}/>
+							<img src={arrow} className={stylesAnnouncements.linkArrow} alt="link-to-freelance-page"/>
 						</Link>
 					</span> : ""
 				}
