@@ -39,6 +39,7 @@ import CursedEmoji1 from "../../stickers/cursed_emoji1.png"
 import CursedEmoji2 from "../../stickers/cursed_emoji2.png"
 import Bibizan from "../../stickers/bibizan.gif"
 import BabelTower from "../../stickers/babel_tower.png"
+import Hater from "../../stickers/hater.png"
 
 const StickerPack = ({ sticker, marginLeft = "4px", marginRight = "0px" }) => {
 
@@ -51,45 +52,46 @@ const StickerPack = ({ sticker, marginLeft = "4px", marginRight = "0px" }) => {
     marginLeft: marginLeft,
   }
 
-  if (sticker == "babel_tower") { return ( <img style={stickerStyle} src={BabelTower}/> ) }
-  if (sticker == "bibizan") { return ( <img style={stickerStyle} src={Bibizan}/> ) }
-  if (sticker == "mda") { return ( <img style={stickerStyle} src={Mda}/> ) }
-  if (sticker == "cursed_emoji1") { return ( <img style={stickerStyle} src={CursedEmoji1}/> ) }
-  if (sticker == "cursed_emoji2") { return ( <img style={stickerStyle} src={CursedEmoji2}/> ) }
-  if (sticker == "pepe_wink") { return ( <img style={stickerStyle} src={PepeWink}/> ) }
-  if (sticker == "gandonio") { return ( <img style={stickerStyle} src={Gandonio}/> ) }
-  if (sticker == "ya_piska") { return ( <img style={stickerStyle} src={CatYaPiska}/> ) }
-  if (sticker == "dog_nerd") { return ( <img style={stickerStyle} src={DogNerd}/> ) }
-  if (sticker == "pepe_dance") { return ( <img style={stickerStyle} src={PepeDance}/> ) }
-  if (sticker == "pepe_cry") { return ( <img style={stickerStyle} src={PepeCry}/> ) }
-  if (sticker == "pepe_money") { return ( <img style={stickerStyle} src={PepeMoney}/> ) }
-  if (sticker == "beluga") { return ( <img style={stickerStyle} src={Beluga}/> ) }
-  if (sticker == "cat_smile") { return ( <img style={stickerStyle} src={CatSmile}/> ) }
-  if (sticker == "trollface") { return ( <img style={stickerStyle} src={Trollface}/> ) }
-  if (sticker == "pepe_meditation") { return ( <img style={stickerStyle} src={PepeMeditation}/> ) }
-  if (sticker == "pepe_chill") { return ( <img style={stickerStyle} src={PepeChill}/> ) }
-  if (sticker == "yoba_pledik") { return ( <img style={stickerStyle} src={YobaPledik}/> ) }
-  if (sticker == "pepe_linux") { return ( <img style={stickerStyle} src={PepeLinux}/> ) }
-  if (sticker == "pepe_mage") { return ( <img style={stickerStyle} src={PepeMage}/> ) }
-  if (sticker == "cat_bw") { return ( <img style={stickerStyle} src={CatBW}/> ) }
-  if (sticker == "morshu_gnome") { return ( <img style={stickerStyle} src={MorshuGnome}/> ) }
-  if (sticker == "nerazdyplenish1") { return ( <img style={stickerStyle} src={Nerazdyplenish1}/> ) }
-  if (sticker == "nerazdyplenish2") { return ( <img style={stickerStyle} src={Nerazdyplenish2}/> ) }
-  if (sticker == "cat_sleep") { return ( <img style={stickerStyle} src={CatSleep}/> ) }
-  if (sticker == "cat_stand") { return ( <img style={stickerStyle} src={CatStand}/> ) }
-  if (sticker == "pepe_pledik") { return ( <img style={stickerStyle} src={PepePledik}/> ) }
-  if (sticker == "pepe_agree") { return ( <img style={stickerStyle} src={PepeAgree}/> ) }
-  if (sticker == "pepe_punch") { return ( <img style={stickerStyle} src={PepePunch}/> ) }
-  if (sticker == "pepe_run") { return ( <img style={stickerStyle} src={PepeRun}/> ) }
-  if (sticker == "pepe_serious") { return ( <img style={stickerStyle} src={PepeSerious}/> ) }
-  if (sticker == "pepe_chair") { return ( <img style={stickerStyle} src={PepeChair}/> ) }
-  if (sticker == "pug_dance") { return ( <img style={stickerStyle} src={PugDance}/> ) }
-  if (sticker == "yoba_dovolen") { return ( <img style={stickerStyle} src={YobaDovolen}/> ) }
-  if (sticker == "hedgehog") { return ( <img style={stickerStyle} src={Hedgehog}/> ) }
-  if (sticker == "chad") { return ( <img style={stickerStyle} src={Chad}/> ) }
-  if (sticker == "burnt") { return ( <img style={stickerStyle} src={Burnt}/> ) }
-  if (sticker == "nerazdyplenish3") { return ( <img style={stickerStyle} src={Nerazdyplenish3}/> ) }
-  if (sticker == "cat_shake") { return ( <img style={stickerStyle} src={CatShake}/> ) }
+  if (sticker == "hater") { return ( <img alt="sticker" style={stickerStyle} src={Hater}/> ) }
+  if (sticker == "babel_tower") { return ( <img alt="sticker" style={stickerStyle} src={BabelTower}/> ) }
+  if (sticker == "bibizan") { return ( <img alt="sticker" style={stickerStyle} src={Bibizan}/> ) }
+  if (sticker == "mda") { return ( <img alt="sticker" style={stickerStyle} src={Mda}/> ) }
+  if (sticker == "cursed_emoji1") { return ( <img alt="sticker" style={stickerStyle} src={CursedEmoji1}/> ) }
+  if (sticker == "cursed_emoji2") { return ( <img alt="sticker" style={stickerStyle} src={CursedEmoji2}/> ) }
+  if (sticker == "pepe_wink") { return ( <img alt="sticker" style={stickerStyle} src={PepeWink}/> ) }
+  if (sticker == "gandonio") { return ( <img alt="sticker" style={stickerStyle} src={Gandonio}/> ) }
+  if (sticker == "ya_piska") { return ( <img alt="sticker" style={stickerStyle} src={CatYaPiska}/> ) }
+  if (sticker == "dog_nerd") { return ( <img alt="sticker" style={stickerStyle} src={DogNerd}/> ) }
+  if (sticker == "pepe_dance") { return ( <img alt="sticker" style={stickerStyle} src={PepeDance}/> ) }
+  if (sticker == "pepe_cry") { return ( <img alt="sticker" style={stickerStyle} src={PepeCry}/> ) }
+  if (sticker == "pepe_money") { return ( <img alt="sticker" style={stickerStyle} src={PepeMoney}/> ) }
+  if (sticker == "beluga") { return ( <img alt="sticker" style={stickerStyle} src={Beluga}/> ) }
+  if (sticker == "cat_smile") { return ( <img alt="sticker" style={stickerStyle} src={CatSmile}/> ) }
+  if (sticker == "trollface") { return ( <img alt="sticker" style={stickerStyle} src={Trollface}/> ) }
+  if (sticker == "pepe_meditation") { return ( <img alt="sticker" style={stickerStyle} src={PepeMeditation}/> ) }
+  if (sticker == "pepe_chill") { return ( <img alt="sticker" style={stickerStyle} src={PepeChill}/> ) }
+  if (sticker == "yoba_pledik") { return ( <img alt="sticker" style={stickerStyle} src={YobaPledik}/> ) }
+  if (sticker == "pepe_linux") { return ( <img alt="sticker" style={stickerStyle} src={PepeLinux}/> ) }
+  if (sticker == "pepe_mage") { return ( <img alt="sticker" style={stickerStyle} src={PepeMage}/> ) }
+  if (sticker == "cat_bw") { return ( <img alt="sticker" style={stickerStyle} src={CatBW}/> ) }
+  if (sticker == "morshu_gnome") { return ( <img alt="sticker" style={stickerStyle} src={MorshuGnome}/> ) }
+  if (sticker == "nerazdyplenish1") { return ( <img alt="sticker" style={stickerStyle} src={Nerazdyplenish1}/> ) }
+  if (sticker == "nerazdyplenish2") { return ( <img alt="sticker" style={stickerStyle} src={Nerazdyplenish2}/> ) }
+  if (sticker == "cat_sleep") { return ( <img alt="sticker" style={stickerStyle} src={CatSleep}/> ) }
+  if (sticker == "cat_stand") { return ( <img alt="sticker" style={stickerStyle} src={CatStand}/> ) }
+  if (sticker == "pepe_pledik") { return ( <img alt="sticker" style={stickerStyle} src={PepePledik}/> ) }
+  if (sticker == "pepe_agree") { return ( <img alt="sticker" style={stickerStyle} src={PepeAgree}/> ) }
+  if (sticker == "pepe_punch") { return ( <img alt="sticker" style={stickerStyle} src={PepePunch}/> ) }
+  if (sticker == "pepe_run") { return ( <img alt="sticker" style={stickerStyle} src={PepeRun}/> ) }
+  if (sticker == "pepe_serious") { return ( <img alt="sticker" style={stickerStyle} src={PepeSerious}/> ) }
+  if (sticker == "pepe_chair") { return ( <img alt="sticker" style={stickerStyle} src={PepeChair}/> ) }
+  if (sticker == "pug_dance") { return ( <img alt="sticker" style={stickerStyle} src={PugDance}/> ) }
+  if (sticker == "yoba_dovolen") { return ( <img alt="sticker" style={stickerStyle} src={YobaDovolen}/> ) }
+  if (sticker == "hedgehog") { return ( <img alt="sticker" style={stickerStyle} src={Hedgehog}/> ) }
+  if (sticker == "chad") { return ( <img alt="sticker" style={stickerStyle} src={Chad}/> ) }
+  if (sticker == "burnt") { return ( <img alt="sticker" style={stickerStyle} src={Burnt}/> ) }
+  if (sticker == "nerazdyplenish3") { return ( <img alt="sticker" style={stickerStyle} src={Nerazdyplenish3}/> ) }
+  if (sticker == "cat_shake") { return ( <img alt="sticker" style={stickerStyle} src={CatShake}/> ) }
 }
 export default StickerPack
 

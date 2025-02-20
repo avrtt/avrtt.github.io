@@ -60,7 +60,7 @@ const S = ({
     >
       {children}
       {sparkles.map(s => (
-        <img key={s.id} src={sparkle} style={s.style} />
+        <img key={s.id} src={sparkle} style={s.style} alt="sparkle" />
       ))}
 
       {/* define the keyframes for the sparkle animation */}

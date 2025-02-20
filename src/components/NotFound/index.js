@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { navigate } from 'gatsby'
 import { StaticImage } from 'gatsby-plugin-image';
+import SEO from '../../components/seo'
 
 const notFoundStyle = {
   'display': 'block',
@@ -34,4 +35,10 @@ const NotFound = () => {
 };
 
 export default NotFound;
-export const Head = () => <title>404 - avrtt.blog</title>
+
+export const Head = () => (
+  <SEO 
+    title="404 - avrtt.blog"
+    flagHidden={true}
+  />
+)

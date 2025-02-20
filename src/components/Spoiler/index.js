@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import M from "../Markdown";
 import * as stylesSpoilers from "../../styles/spoilers.module.scss"
 
+// legacy code
 // refactor this component
 
 const Spoiler = ({ title, 
@@ -54,6 +55,7 @@ const Spoiler = ({ title,
       <div class={stylesSpoilers.spoilerContentWrapper}>
         <div class={stylesSpoilers.spoilerContent}>
           <br/>
+          <span class="mobileOnlySupport"><br/></span>
           <M text={block1}/>
           <M text={block2}/>
           <M text={block3}/>

@@ -210,7 +210,7 @@ const Navbar = () => {
               <StaticImage
                 className={`${styles.hamburger} ${mobileMenuOpen ? styles.hamburgerOpen : ''}`}
                 src="./hamburger.png"
-                alt="menu"
+                alt="menu-hamburger-icon"
                 loading="eager"
                 backgroundColor="transparent"
                 placeholder="none"
@@ -228,7 +228,7 @@ const Navbar = () => {
       <div className={`${styles.mobileMenu} ${mobileMenuOpen ? styles.open : ""}`}>
         <div className={styles.mobileMenuContent}>
           <motion.button onClick={toggleMobileMenu} className={styles.closeButton} style={{ opacity: 0.5 }} whileTap={{ scale: 0.9, opacity: 1 }}>
-            <img src={close} width="30rem" height="30rem"/>
+            <img src={close} width="30rem" height="30rem" alt="close-menu-icon"/>
           </motion.button>
 
           <Link className={styles.mobileNavLink} to="/" onClick={toggleMobileMenu}>

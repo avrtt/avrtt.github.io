@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from "gatsby";
 import russian from "../../images/flags/russia.svg"
-import englishRussian from "../../images/flags/uk_russia.svg"
+import englishRussian from "../../images/flags/us_russia.svg"
 
 const LinkBlock = ({
     link,
@@ -92,6 +92,7 @@ const LinkBlock = ({
         padding: paddingDescription,
         wordWrap: 'break-word',
         overflowWrap: 'break-word',
+        lineHeight: '1.5rem'
     }
 
     const inactiveNoticeStyle = {
@@ -148,7 +149,7 @@ const LinkBlock = ({
                 <div style={blockContentStyle}>
                     <img style={iconStyle} className=".makeBlackAndWhite" src={icon} alt={`${name} icon`} />
                     <div style={textWrapperStyle}>
-                        <img title={!inactive && (isRussian ? "Russian language mostly" : null || isEnglishAndRussian ? "Bilingual" : null)} style={flagStyle} src={!inactive && (isRussian ? russian : null || isEnglishAndRussian ? englishRussian : null)}/>
+                        <img title={!inactive && (isRussian ? "Russian language mostly" : null || isEnglishAndRussian ? "Bilingual" : null)} style={flagStyle} src={!inactive && (isRussian ? russian : null || isEnglishAndRussian ? englishRussian : null)} alt="country-flag"/>
                         <span style={nameStyle}>
                             {name}
                             <span title={categoryName} style={categoryEmojiStyle}>{inactive || categoryEmoji}</span>

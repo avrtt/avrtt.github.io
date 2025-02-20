@@ -53,13 +53,13 @@ const Spoiler = ({ title, services = [], spoilerExtraDesc, isEnglish=true }) => 
               block.text && block.icon && (
                 <p key={index} id={stylesSpoilers.spoilerBlockServices}>
                   <span className="noselect">
-                    <img src={block.icon} alt="" />
+                    <img src={block.icon} alt="service-category-icon" />
                     &nbsp;&nbsp;
                   </span>
                   <span>{block.text}</span>
                   &nbsp;&thinsp;
                   <a href={"/freelance/services/#" + index}>
-                    <img title="Go to detailed description" src={Arrow} alt="" id={stylesSpoilers.anchorArrow}/>
+                    <img title="Go to detailed description" src={Arrow} alt="button-icon" id={stylesSpoilers.anchorArrow}/>
                   </a>
                 </p>
               )
@@ -92,13 +92,13 @@ const Spoiler = ({ title, services = [], spoilerExtraDesc, isEnglish=true }) => 
               block.textRu && block.icon && (
                 <p key={index} id={stylesSpoilers.spoilerBlockServices}>
                   <span className="noselect">
-                    <img src={block.icon} alt="" />
+                    <img src={block.icon} alt="service-category-icon" />
                     &nbsp;&nbsp;
                   </span>
                   <span>{block.textRu}</span>
                   &nbsp;&thinsp;
                   <a href={"/freelance/ru/services/#" + index}>
-                    <img title="Go to detailed description" src={Arrow} alt="" id={stylesSpoilers.anchorArrow}/>
+                    <img title="Go to detailed description" src={Arrow} alt="button-icon" id={stylesSpoilers.anchorArrow}/>
                   </a>
                 </p>
               )
