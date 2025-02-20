@@ -32,6 +32,7 @@ import pencil from "../../gifs/pencil.gif";
 import dove from "../../gifs/dove.gif";
 import hide from "../../gifs/hide.gif";
 import monocle from "../../gifs/monocle.gif";
+import photoAbout from "../../images/about/photoAbout.jpg";
 import { Link } from 'gatsby';
 import LocationAnnouncements from "../../components/LocationAnnouncements";
 import * as stylesTagBadges from "../../styles/tag_badges.module.scss";
@@ -638,13 +639,46 @@ const About = () => {
 export default About;
 
 export const Head = () => (
-  <SEO 
-    title="About - avrtt.blog"
-    description=""
-    keywords={[""]}
-    image={""}
-    canonicalUrl=""
-    schemaType=""
-    children
-  />
+    <SEO 
+        title="About - avrtt.blog"
+        description="About page that introduces Vladislav Averett — an adventurous traveler, digital nomad, YouTuber, blogger, data scientist, freelancer, artificial intelligence researcher, developer, and musician. The page features general information about the personality, his biography timeline, interests, and professional career, as well as photo."
+        keywords={["about me", "personal page", "media personality"]}
+        image={photoAbout}
+        canonicalUrl="https://avrtt.github.io/about"
+        schemaType="Person"
+        type="profile"
+        children
+    >
+        <script type="application/ld+json">
+            {JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "Person",
+                "name": "Vladislav Averett",
+                "additionalName": "Vlad Averett",
+                "givenName": "Vladislav",
+                "image": photoAbout,
+                "description": "Traveler, content creator (YouTuber & blogger), data scientist, freelancer, artificial intelligence researcher, developer, and musician.",
+                "url": "https://avrtt.github.io/about",
+                "sameAs": [
+                    "https://youtube.com/@vladaverett",
+                    "https://instagram.com/avrttv",
+                    "https://twitter.com/vladaverett",
+                    "https://tiktok.com/@vladaverett",
+                    "https://github.com/avrtt",
+                    "https://facebook.com/vladaverett",
+                    "https://youtube.com/@avheuristics",
+                    "https://t.me/venturingforth",
+                    "https://t.me/avheuristics",
+                    "https://kaggle.com/lenferdetroud",
+                    "https://couchsurfing.com/people/averett",
+                    "https://youtube.com/@noiserett",
+                    "https://facebook.com/averett.freelance",
+                    "https://facebook.com/avrttblog",
+                ]
+            })}
+        </script>
+        <meta property="profile:first_name" content="Vladislav" />
+        <meta property="profile:last_name" content="Averett" />
+        <meta property="profile:username" content="avrtt" />
+    </SEO>
 )
