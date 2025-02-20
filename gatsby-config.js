@@ -7,6 +7,7 @@ module.exports = {
     siteName: `avrtt.blog — notes of a lifelong explorer`,
     author: `Vladislav Averett`,
     twitterUsername: `@vladaverett`,
+    facebookUsername: `@vladaverett`,
   },
   plugins: [
     {
@@ -14,6 +15,11 @@ module.exports = {
       options: {
         query: `
           {
+            site {
+              siteMetadata {
+                siteUrl
+              }
+            }
             allSitePage {
               nodes {
                 path
@@ -30,11 +36,33 @@ module.exports = {
             }
           }
         `,
-        serialize: ({ path, node }) => {
+        resolvePages: ({
+          allSitePage: { nodes: allPages },
+          allMdx: { nodes: allMdxNodes },
+        }) => {
+          return allPages.map(page => {
+            const mdxNode = allMdxNodes.find(mdx =>
+              mdx.frontmatter.slug === page.path.replace(/\/+$/, "")
+            )
+            if (mdxNode) {
+              page.frontmatter = mdxNode.frontmatter
+            }
+            return page
+          })
+        },
+        serialize: (page) => {
+          const isAboutPage = (page.path === "/about/" || page.path === "/about")
+          const changefreq = isAboutPage
+            ? "yearly"
+            : page.frontmatter?.changefreqSitemap || "weekly"
+          const priority = isAboutPage
+            ? 1.0
+            : parseFloat(page.frontmatter?.prioritySitemap) || 0.4
           return {
-            url: `https://avrtt.github.io${path}`,
-            changefreq: node?.frontmatter?.changefreqSitemap || "weekly",
-            priority: parseFloat(node?.frontmatter?.prioritySitemap) || 0.4,
+            url: `https://avrtt.github.io${page.path}`,
+            changefreq,
+            priority,
+            lastmod: new Date().toISOString(),
           }
         },
       },
@@ -52,7 +80,14 @@ module.exports = {
       options: {
         "icon": "src/images/icon.png"
       }
-    }, 
+    },
+    {
+      resolve: `gatsby-plugin-page-creator`,
+      options: {
+        path: `${__dirname}/src/pages`,
+        ignore: [`**/strings/**`],
+      },
+    },
     "gatsby-plugin-image", 
     "gatsby-plugin-sharp", 
     "gatsby-plugin-sass",
