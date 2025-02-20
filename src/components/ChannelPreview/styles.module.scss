@@ -1,74 +1,89 @@
+@import '../../styles/mixins';
+
+$primary-bg-color: #282828;
+$primary-text-color: #ffffff;
+$secondary-text-color: #8e8e8e;
+$border-radius: 2vh;
+$hover-scale: 0.97;
+$transition-duration: 0.1s;
+
+@mixin disable-user-select {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none; 
+  -khtml-user-select: none;
+  -moz-user-select: none; 
+  -ms-user-select: none;
+  user-select: none;
+}
+
 .moreContentWrapper {
   animation: fadeIn 0.7s linear forwards;
   width: 100%;
   margin-top: 8vh;
   display: flex;
   justify-content: center;
-  -webkit-touch-callout: none;
-    -webkit-user-select: none; 
-     -khtml-user-select: none;
-       -moz-user-select: none; 
-        -ms-user-select: none;
-            user-select: none;
-}
+  @include disable-user-select;
 
-.moreContentWrapper a {
-  text-decoration: none;
+  a {
+    text-decoration: none;
+  }
 }
 
 .blockLeft {
   margin-right: 1.5vw;
-  width: 67vh; 
-	height: 18vw;
-  background-color: #282828;
-  border-radius: 2vh;
-  transition: transform .1s;
-	cursor: pointer;
-  -webkit-transition-duration: 0.1s;
-  transition-duration: 0.1s;
-  -webkit-touch-callout: none;
-    -webkit-user-select: none; 
-     -khtml-user-select: none;
-       -moz-user-select: none; 
-        -ms-user-select: none;
-            user-select: none;
+  width: 67vh;
+  height: 18vw;
+  background-color: $primary-bg-color;
+  border-radius: $border-radius;
+  transition: transform $transition-duration;
+  cursor: pointer;
+  @include disable-user-select;
+  @include respond-to(mobile) { width: 22rem; height: 8.2rem; margin-bottom: -2rem; }
+  @include respond-to(small-tablet) { }
+  @include respond-to(tablet) {  }
+
+  &:hover {
+    transform: scale($hover-scale);
+  }
 }
 
 .blockLeftTitle {
   font-size: 3.5vh;
-  color: rgb(255, 255, 255);
+  color: $primary-text-color;
   text-decoration: none;
   font-weight: 800;
   position: absolute;
   margin: 6.5vh 0 0 2vh;
+  @include respond-to(mobile) { display: none }
 }
 
 .blockLeftLink {
   font-size: 2.5vh;
-  color: #8e8e8e;
+  color: $secondary-text-color;
   text-decoration: none;
   font-weight: 800;
   position: absolute;
   margin: 11.5vh 0 0 2vh;
+  @include respond-to(mobile) { font-size: 1.6rem; margin: 0.1rem 0 0 1rem; color: #f2f2f2 }
 }
 
 .blockLeftDesc {
   font-size: 2.2vh;
-  color: #8e8e8e;
+  color: $secondary-text-color;
   text-decoration: none;
   margin: 2vh 0 0 4vh;
-  width: 70%;
-}
-
-.blockLeft:hover {
-  transform: scale(0.97);
+  width: 60%;
+  @include respond-to(mobile) { font-size: 1rem; line-height: 1.2rem; margin: -5.4rem 0 0 8.6rem; }
 }
 
 .blockRight {
   margin-left: 1.5vw;
-  width: 67vh; 
-	height: 18vw;
-  border-radius: 2vh;
+  width: 67vh;
+  height: 18vw;
+  border-radius: $border-radius;
+  @include respond-to(mobile) { display: none }
+  @include respond-to(small-tablet) { display: none }
+  @include respond-to(tablet) { display: none }
 }
 
 .tgChannelPicture {
@@ -76,4 +91,7 @@
   height: 15vh;
   width: 15vh;
   margin: 4vh 0 0 4vh;
+  @include respond-to(mobile) { width: 7rem; height: 7rem; margin: 0.5rem 0 0 0.5rem; }
+  @include respond-to(small-tablet) { }
+  @include respond-to(tablet) {  }
 }
