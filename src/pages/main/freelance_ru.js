@@ -29,9 +29,10 @@ import facebook from "../../images/links/facebook.svg"
 import upwork from "../../images/links/upwork.svg"
 import fiverr from "../../images/links/fiverr.svg"
 import kwork from "../../images/links/kwork.svg"
-import english from "../../images/flags/uk.svg"
+import english from "../../images/flags/us.svg"
 import FreelanceStatus from "../../components/FreelanceStatus"
 import Tooltip from "../../components/Tooltip";
+import photoAbout from "../../images/about/photoAbout.jpg";
 import { textMain } from "../strings/freelance"
 import { SberbankCardCopy, SberbankCardDisplay, SberbankSBPCopy, SberbankSBPDisplay, BitcoinWallet, BEP20Wallet, ERC20Wallet } from "../../data/paymentMethods.js";
 import * as stylesWallets from "../../styles/wallets.module.scss"
@@ -527,13 +528,61 @@ const FreelanceRu = () => {
 export default FreelanceRu;
 
 export const Head = () => (
-  <SEO 
-    title="Фриланс - avrtt.blog"
-    description=""
-    keywords={[""]}
-    image={""}
-    canonicalUrl=""
-    schemaType=""
-    children
-  />
+	<SEO 
+		title="Freelance - avrtt.blog"
+		description="Фрилансер, предлагающий услуги преимущественно в области науки о данных, искусственного интеллекта, машинного обучения и разработки программного обеспечения на Python. Имеет опыт анализа данных, визуализации данных, веб-разработки, технического писательства, исследований и автоматизации. Предоставляет проектную работу, консультирование, сопровождение систем и обучение с 2020 года. Ознакомьтесь с выполненными проектами, отзывами клиентов и процессом взаимодействия. Обращайтесь к нам за профессиональными решениями в области искусственного интеллекта, анализом данных и эффективной разработкой программного обеспечения. Узнайте о рабочих процессах, ценах и опыте прошлых клиентов."
+		keywords={[
+			"Фрилансер дата саентист",
+			"Фрилансер ИИ",
+			"Эксперт по машинному обучению",
+			"Python разработчик",
+			"Data science консультации",
+			"Раззработчик ИИ алгоритмов",
+			"Аналитик данных",
+			"Услуги по визуалиация данных",
+			"Услуги веб-разработчика",
+			"Услуги ИИ инженера",
+			"Проекты по data science",
+			"Python-автоматизация",
+			"Эксперт в статистическом анализе",
+			"ИИ-консультации фриланс",
+			"Услуги технического специалиста",
+			"Разработка ИИ моделей",
+			"Услуги сбора данных",
+			"Фрилансер бизнес-аналитик",
+		]}
+		image={""}
+		canonicalUrl="https://avrtt.github.io/freelance/ru"
+		children
+	>
+		<script type="application/ld+json">
+			{JSON.stringify({
+				"@context": "https://schema.org",
+				"@type": "Person",
+				"name": "Владислав Аверетт",
+				"url": "https://avrtt.github.io/about",
+				"image": photoAbout,
+				"jobTitle": "Фрилансер в Data Science и ИИ-разработке",
+				"description": "Профессиональные услуги в области AI/ML и науки о данных, включая разработку моделей, анализ данных, визуализацию, сбор данных, промпт-инжиниринг, техническое письмо, разработку на Python и автоматизацию процессов.",
+				"knowsAbout": ["data science", "machine learning", "data analysis", "data collection", "statistics", "data visualization", "python", "frontend", "prompt engineering", "technical writing", "sql", "javascript", "typescript", "tensorflow", "pytorch", "keras", "opencv", "sklearn", "pyspark", "pandas", "numpy", "matplotlib", "plotly", "seaborn", "scipy", "react", "xgboost", "postgresql", "sqlite", "beautifulsoup", "scrapy", "streamlit", "flask", "gatsby", "html", "css", "sass", "scss", "docker", "aws", "linux", "d3", "dash", "superset", "grafana", "tableau"],
+				"offers": {
+					"@type": "Service",
+					"serviceType": "AI Development & Data Science",
+					"areaServed": "Worldwide",
+					"availableChannel": {
+						"@type": "ServiceChannel",
+						"serviceUrl": "https://avrtt.github.io/freelance"
+					}
+				},
+				"sameAs": [
+					"https://facebook.com/averett.freelance",
+					"https://www.linkedin.com/in/vladaverett",
+					"https://github.com/avrtt",
+					"https://youtube.com/@avheuristics",
+					"https://kaggle.com/lenferdetroud",
+					"https://t.me/avheuristics",
+				]
+			})}
+		</script>
+	</SEO>
 )

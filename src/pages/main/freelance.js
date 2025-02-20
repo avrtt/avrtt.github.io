@@ -32,6 +32,7 @@ import kwork from "../../images/links/kwork.svg"
 import russian from "../../images/flags/russia.svg"
 import FreelanceStatus from "../../components/FreelanceStatus"
 import Tooltip from "../../components/Tooltip";
+import photoAbout from "../../images/about/photoAbout.jpg";
 import { textMain } from "../strings/freelance"
 import { SberbankCardCopy, SberbankCardDisplay, SberbankSBPCopy, SberbankSBPDisplay, BitcoinWallet, BEP20Wallet, ERC20Wallet } from "../../data/paymentMethods.js";
 import * as stylesWallets from "../../styles/wallets.module.scss"
@@ -526,13 +527,75 @@ const Freelance = () => {
 export default Freelance;
 
 export const Head = () => (
-  <SEO 
-    title="Freelance - avrtt.blog"
-    description=""
-    keywords={[""]}
-    image={""}
-    canonicalUrl=""
-    schemaType=""
-    children
-  />
+	<SEO 
+		title="Freelance - avrtt.blog"
+		description="Freelancer offering services primarily in data science, artificial intelligence, machine learning, and Python software development. Experienced in data analysis, data visualization, web development, technical writing, research, and automation. Providing project-based work, consulting, system maintenance, and teaching since 2020. Explore completed projects, client testimonials, and engagement process. Contact for professional AI solutions, data-driven insights, and efficient software development. Learn about workflow, pricing, and past client experiences."
+		keywords={[
+			"Freelance data scientist",
+			"AI freelancer",
+			"Machine learning expert",
+			"Python developer for hire",
+			"Data science consulting",
+			"AI algorithm development",
+			"Data analysis services",
+			"Data visualization freelancer",
+			"Web development freelancer",
+			"AI software engineer",
+			"Data science projects",
+			"Python automation freelancer",
+			"Statistical analysis expert",
+			"Freelance AI consultant",
+			"Tech freelance services",
+			"AI model development",
+			"Data scraping services",
+			"Business intelligence freelancer",
+			"Remote AI engineer",
+			"Hire a data scientist for a short-term project",
+			"Freelance Python programmer for AI applications",
+			"Best AI freelancer for data-driven solutions",
+			"Machine learning consulting services for businesses",
+			"Short-term AI development projects",
+			"Data visualization and dashboard creation services",
+			"AI-powered automation for business optimization",
+			"Freelance expert in deep learning and NLP",
+			"Custom AI solutions for startups and enterprises",
+			"Python scripting and automation for workflow optimization"
+		]}
+		image={""}
+		canonicalUrl="https://avrtt.github.io/freelance"
+		children
+	>
+		<script type="application/ld+json">
+			{JSON.stringify({
+				"@context": "https://schema.org",
+				"@type": "Person",
+				"name": "Vladislav Averett",
+				"url": "https://avrtt.github.io/about",
+				"image": photoAbout,
+				"jobTitle": "Freelance Data Scientist & AI Developer",
+				"description": "Professional AI/ML & data science services including model development, data analysis, visualization, data collection, prompt engineering, technical writing, Python software, and process automation.",
+				"knowsAbout": ["data science", "machine learning", "data analysis", "data collection", "statistics", "data visualization", "python", "frontend", "prompt engineering", "technical writing", "sql", "javascript", "typescript", "tensorflow", "pytorch", "keras", "opencv", "sklearn", "pyspark", "pandas", "numpy", "matplotlib", "plotly", "seaborn", "scipy", "react", "xgboost", "postgresql", "sqlite", "beautifulsoup", "scrapy", "streamlit", "flask", "gatsby", "html", "css", "sass", "scss", "docker", "aws", "linux", "d3", "dash", "superset", "grafana", "tableau"],
+				"offers": {
+					"@type": "Service",
+					"serviceType": "AI Development & Data Science",
+					"areaServed": "Worldwide",
+					"availableChannel": {
+						"@type": "ServiceChannel",
+						"serviceUrl": "https://avrtt.github.io/freelance"
+					}
+				},
+				"sameAs": [
+					"https://facebook.com/averett.freelance",
+					"https://www.linkedin.com/in/vladaverett",
+					"https://github.com/avrtt",
+					"https://youtube.com/@avheuristics",
+					"https://kaggle.com/lenferdetroud",
+					"https://t.me/avheuristics",
+				]
+			})}
+		</script>
+	</SEO>
 )
+
+
+
