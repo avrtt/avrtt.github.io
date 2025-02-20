@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "gatsby"
 import BTC from "../../images/donate/btc.svg";
 import ETH from "../../images/donate/eth.svg";
 import BNB from "../../images/donate/bnb.svg";
@@ -58,12 +59,30 @@ const PostDonate = () => {
             <a target="_blank" href={PatreonLink}>
                 <img src={Patreon} class={styles.postDonateIcon2} alt="patreon_logo" style={logoStyle} />
             </a>
-            
-            <img src={BTC} id={styles.myImg1Post} class={styles.postDonateIcon4} style={logoStyle} onClick={() => navigator.clipboard.writeText(BitcoinWallet)} />
-			<img src={BNB} id={styles.myImg3Post} class={styles.postDonateIcon5} style={logoStyle} onClick={() => navigator.clipboard.writeText(BEP20Wallet)} />
-			<img src={ETH} id={styles.myImg2Post} class={styles.postDonateIcon6} style={logoStyle} onClick={() => navigator.clipboard.writeText(ERC20Wallet)} />	
+            <img src={BTC} id={styles.myImg1Post} class={styles.postDonateIcon4} style={logoStyle} onClick={() => navigator.clipboard.writeText(BitcoinWallet)} alt="btc-logo" />
+			<img src={BNB} id={styles.myImg3Post} class={styles.postDonateIcon5} style={logoStyle} onClick={() => navigator.clipboard.writeText(BEP20Wallet)} alt="bnb-logo" />
+			<img src={ETH} id={styles.myImg2Post} class={styles.postDonateIcon6} style={logoStyle} onClick={() => navigator.clipboard.writeText(ERC20Wallet)} alt="eth-logo" />	
 		</div>
-		
+		<div class={styles.postDonateIconsWrapperMobile}>
+            <a target="_blank" href={KofiLink}>
+                <img src={KoFi} class={styles.postDonateIcon1} alt="kofi_logo" style={logoStyle} />
+            </a>
+            <a target="_blank" href={PaypalLink}>
+                <img src={PayPal} class={styles.postDonateIcon3} alt="paypal_logo" style={logoStyle} />
+            </a>
+            <a target="_blank" href={PatreonLink}>
+                <img src={Patreon} class={styles.postDonateIcon2} alt="patreon_logo" style={logoStyle} />
+            </a>
+            <Link to="/donate">
+				<img src={BTC} id={styles.myImg1Post} class={styles.postDonateIcon4} style={logoStyle} alt="btc-logo" />
+			</Link>
+			<Link to="/donate">
+				<img src={BNB} id={styles.myImg3Post} class={styles.postDonateIcon5} style={logoStyle} alt="bnb-logo" />
+			</Link>
+			<Link to="/donate">
+				<img src={ETH} id={styles.myImg2Post} class={styles.postDonateIcon6} style={logoStyle} alt="eth-logo" />	
+			</Link>
+		</div>
         <div id="myModal" class={stylesDonateCommon.modal}>
 	        <div class={stylesDonateCommon.close}>
 		        <img class={stylesDonateCommon.modalContent} id="img01" alt="modal-img" />

@@ -1,165 +1,61 @@
-#myImg1Post, #myImg2Post, #myImg3Post {
-  opacity: 1;
-  transition: 170ms ease-in;
-  cursor: pointer;
-  z-index: 999;
+@import '../../styles/mixins';
+
+$transition-duration: 110ms;
+$hover-scale: 0.95;
+$opacity: 1;
+$transition-type: ease-in;
+$icon-size: 6vh;
+
+@mixin user-select-none {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
-#myImg1Post:hover, #myImg2Post:hover, #myImg3Post:hover {
-  opacity: 1;
-  transition: 200ms ease-in;
+@mixin hover-effect {
+  transform: scale($hover-scale);
+  transition: $transition-duration $transition-type;
+  -webkit-transform: scale($hover-scale);
+  @include user-select-none;
+}
+
+#myImg1Post, #myImg2Post, #myImg3Post {
+  opacity: $opacity;
+  transition: 170ms $transition-type;
+  cursor: pointer;
+  z-index: 999;
+
+  &:hover {
+    opacity: $opacity;
+    transition: 200ms $transition-type;
+  }
 }
 
 .postDonateIconsWrapper {
   text-align: center;
+  @include respond-to(mobile) { display: none; }
+  @include respond-to(small-tablet) { display: none; }
 }
 
-.postDonateIcon1 {
-  width: 6vh;
+.postDonateIconsWrapperMobile {
+  text-align: center;
+  @include respond-to(mobile) { margin: 2.2rem 0 -1rem 0; }
+  @include respond-to(small-tablet) {  }
+  @include respond-to(tablet) { display: none; }
+  @include respond-to(small-desktop) { display: none; }
+  @include respond-to(desktop) { display: none; }
+}
+
+.postDonateIcon1, .postDonateIcon2, .postDonateIcon3, .postDonateIcon4, .postDonateIcon5, .postDonateIcon6 {
+  width: $icon-size;
   height: 100%;
-  transition: 110ms ease-in;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none; 
-     -khtml-user-select: none;
-       -moz-user-select: none; 
-        -ms-user-select: none;
-            user-select: none;
-}
+  transition: $transition-duration $transition-type;
+  @include user-select-none;
 
-.postDonateIcon1:hover {
-  transform: scale(0.95);
-  transition: 110ms ease-in;
-  -webkit-transform: scale(0.95);
-      -webkit-touch-callout: none;
-        -ms-transform: scale(0.95);
-      -webkit-user-select: none; 
-       -khtml-user-select: none;
-         -moz-user-select: none; 
-          -ms-user-select: none;
-              user-select: none;
-}
-
-.postDonateIcon2 {
-  width: 6vh;
-  height: 100%;
-  transition: 110ms ease-in;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none; 
-     -khtml-user-select: none;
-       -moz-user-select: none; 
-        -ms-user-select: none;
-            user-select: none;
-}
-
-.postDonateIcon2:hover {
-  transform: scale(0.95);
-  transition: 110ms ease-in;
-  -webkit-transform: scale(0.95);
-      -webkit-touch-callout: none;
-        -ms-transform: scale(0.95);
-      -webkit-user-select: none; 
-       -khtml-user-select: none;
-         -moz-user-select: none; 
-          -ms-user-select: none;
-              user-select: none;
-}
-
-.postDonateIcon3 {
-  width: 6vh;
-  height: 100%;
-  transition: 110ms ease-in;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none; 
-     -khtml-user-select: none;
-       -moz-user-select: none; 
-        -ms-user-select: none;
-            user-select: none;
-}
-
-.postDonateIcon3:hover {
-  transform: scale(0.95);
-  transition: 110ms ease-in;
-  -webkit-transform: scale(0.95);
-      -webkit-touch-callout: none;
-        -ms-transform: scale(0.95);
-      -webkit-user-select: none; 
-       -khtml-user-select: none;
-         -moz-user-select: none; 
-          -ms-user-select: none;
-              user-select: none;
-}
-
-.postDonateIcon4 {
-  width: 6vh;
-  height: 100%;
-  transition: 110ms ease-in;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none; 
-     -khtml-user-select: none;
-       -moz-user-select: none; 
-        -ms-user-select: none;
-            user-select: none;
-}
-
-.postDonateIcon4:hover {
-  transform: scale(0.95);
-  transition: 110ms ease-in;
-  -webkit-transform: scale(0.95);
-      -webkit-touch-callout: none;
-        -ms-transform: scale(0.95);
-      -webkit-user-select: none; 
-       -khtml-user-select: none;
-         -moz-user-select: none; 
-          -ms-user-select: none;
-              user-select: none;
-}
-
-.postDonateIcon5 {
-  width: 6vh;
-  height: 100%;
-  transition: 110ms ease-in;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none; 
-     -khtml-user-select: none;
-       -moz-user-select: none; 
-        -ms-user-select: none;
-            user-select: none;
-}
-
-.postDonateIcon5:hover {
-  transform: scale(0.95);
-  transition: 110ms ease-in;
-  -webkit-transform: scale(0.95);
-      -webkit-touch-callout: none;
-        -ms-transform: scale(0.95);
-      -webkit-user-select: none; 
-       -khtml-user-select: none;
-         -moz-user-select: none; 
-          -ms-user-select: none;
-              user-select: none;
-}
-
-.postDonateIcon6 {
-  width: 6vh;
-  height: 100%;
-  transition: 110ms ease-in;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none; 
-     -khtml-user-select: none;
-       -moz-user-select: none; 
-        -ms-user-select: none;
-            user-select: none;
-}
-
-.postDonateIcon6:hover {
-  transform: scale(0.95);
-  transition: 110ms ease-in;
-  -webkit-transform: scale(0.95);
-      -webkit-touch-callout: none;
-        -ms-transform: scale(0.95);
-      -webkit-user-select: none; 
-       -khtml-user-select: none;
-         -moz-user-select: none; 
-          -ms-user-select: none;
-              user-select: none;
+  &:hover {
+    @include hover-effect;
+  }
 }
