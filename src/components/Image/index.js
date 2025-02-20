@@ -1,25 +1,23 @@
 import React from "react";
 import { AnimationOnScroll } from 'react-animation-on-scroll';
 import Zoom from 'react-medium-image-zoom'
+import * as styles from './styles.module.scss';  
 import 'animate.css/animate.min.css';  
   
-const captionStyle = {
-    'color': '#8e8e8e',
-    'font-weight': 'bold',
-    'font-size': '22px',
-    'margin-top': '-60px'
-}
-  
-const Image = ({ p, c="", w="100%", offset="300" }) => {
+const Image = ({ alt, p, c="", w="100%", offset="300" }) => {
+
+  if (!alt) alert(`An image with missing alt prop was detected! Please provide an informative description required for SEO. Path: ${p}`)
+
   return (
     <center>
     	<AnimationOnScroll offset={offset} duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
     		<Zoom>
-    			<img alt="img" src={p} width={w} />
+    			<img alt={alt} src={p} width={w} />
     		</Zoom>
-    		<p style={captionStyle}>{c}</p>
+    		<p className={styles.caption}>{c}</p>
     	</AnimationOnScroll>
     </center>
   );
 };
+
 export default Image;

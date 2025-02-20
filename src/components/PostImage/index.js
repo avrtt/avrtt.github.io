@@ -3,6 +3,7 @@ import { AnimationOnScroll } from 'react-animation-on-scroll';
 import { GatsbyImage, getImage, StaticImage } from 'gatsby-plugin-image';
 import { graphql, useStaticQuery } from "gatsby";
 import Zoom from 'react-medium-image-zoom';
+import * as styles from './styles.module.scss'; 
 import 'react-medium-image-zoom/dist/styles.css'
 import 'animate.css/animate.min.css';  
 
@@ -10,14 +11,6 @@ const imageStyle = {
   "padding-bottom": "0px",
   "margin-top": "8px",
   "border-radius": "2vh",
-}
-
-const captionStyle = {
-  'color': '#8e8e8e',
-  'font-weight': 'bold',
-  'font-size': '22px',
-  'margin-top': '0px',
-  'margin-bottom': '30px'
 }
 
 const notFoundStyle = {
@@ -30,7 +23,7 @@ const notFoundStyle = {
   'margin': '40px 0px'
 }
 
-const Image = ({ path, caption="", zoom=false, offset="300" }) => {
+const Image = ({ path, alt, caption="", zoom=false, offset="300" }) => {
   const data = useStaticQuery(graphql`
     query {
       allFile(
@@ -53,6 +46,8 @@ const Image = ({ path, caption="", zoom=false, offset="300" }) => {
     }
   `);
 
+  if (!alt) alert(`An image with missing alt prop was detected! Please provide an informative description required for SEO. Path: ${path}`)
+
   const image = data.allFile.nodes.find(node => node.relativePath === path);
   const imageData = getImage(image.childImageSharp.gatsbyImageData);
 
@@ -61,7 +56,8 @@ const Image = ({ path, caption="", zoom=false, offset="300" }) => {
       <div style={notFoundStyle}>
         <span>
           <StaticImage 
-            src="../../images/mysterious_frog.png" 
+            src="../../images/mysterious_frog.png"
+            alt="mysterious_frog"
             style={{"width": "100px"}} 
           />
         </span>
@@ -83,13 +79,13 @@ const Image = ({ path, caption="", zoom=false, offset="300" }) => {
         {zoom ? (
           <Zoom>
             <div class="noselect">
-              <GatsbyImage style={imageStyle} image={imageData} alt={caption} />
+              <GatsbyImage style={imageStyle} image={imageData} alt={alt} />
             </div>
           </Zoom>
         ) : (
-          <GatsbyImage style={imageStyle} image={imageData} alt={caption} />
+          <GatsbyImage style={imageStyle} image={imageData} alt={alt} />
         )}
-        {caption && <p style={captionStyle}>{caption}</p>}
+        {caption && <p className={styles.caption}>{caption}</p>}
       </AnimationOnScroll>
     </center>
   );  
