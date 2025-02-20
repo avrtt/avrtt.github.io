@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import Views from "../../images/posts/eye.svg";
 import { GatsbyImage, getImage } from "gatsby-plugin-image";
 
@@ -6,6 +6,13 @@ const prevImgStyle = {
 	"width": "55%",
 	"clip-path": "inset(25% 0px 30% 0px round 1.6vh)",
 	"transform": "scale(1.8)",
+	"filter": "brightness(70%)",
+}
+
+const prevImgStyleMobile = {
+	"width": "100%",
+	"border-radius": "2vh",
+	"margin-bottom": "2rem",
 	"filter": "brightness(70%)",
 }
 
@@ -75,6 +82,22 @@ const prevNumberStyle = {
 	"border-radius": "0"
 }
 
+const prevNumberStyleMobile = {
+	"position": "absolute",
+	"top": "clamp(6.5rem, 20vw, 7.5rem)",
+	"right": "clamp(2rem, 2vw, 4rem)",
+	"width": "3vw",
+	"transform": "translate(-50%, -70%)",
+	"margin": "0",
+	"padding": "0",
+	"color": "#ffffff",
+	"font-size": "1rem",
+	"font-family": "'Quicksand', sans-serif",
+	"font-weight": "900",
+	"opacity": "1",
+	"border-radius": "0"
+}
+
 const viewsWrapperStyle = {
     "position": "absolute",
 	"transform": "translate(2vw, -7.5vh)",
@@ -127,6 +150,24 @@ const PostBanner = ({ postNumber, date, updated, readTime, difficulty, title, de
     	"border-radius": "2vh"
     }
 
+	const prevTextStyleMobile = {
+    	"position": "absolute",
+    	"top": "clamp(9rem, 28vw, 18rem)",
+    	"left": "50%",
+    	"width": "100vw",
+		"max-width": "100%",
+    	"transform": "translate(-50%, -70%)",
+    	"margin": "0",
+    	"padding": "0 2vw 0 2vw",
+    	"color": "#7C7C7C",
+    	"font-size": "clamp(1.25rem, 5vw, 2rem)",
+    	"font-family": "'Quicksand', sans-serif",
+    	"font-weight": "1000",
+    	"background-color": "#f2f2f2",
+    	"opacity": "1",
+    	"border-radius": "2vh"
+    }
+
     const prevDescStyle = {
     	"position": "absolute",
     	"top": "57%",
@@ -143,6 +184,23 @@ const PostBanner = ({ postNumber, date, updated, readTime, difficulty, title, de
     	"border-radius": "0"
   	}
 
+	  const prevDescStyleMobile = {
+    	"position": "absolute",
+    	"top": "clamp(12rem, 35vw, 30rem)",
+    	"left": "50%",
+    	"width": "85vw",
+		"justify-content": "start",
+		"line-height": "1rem",
+    	"transform": "translate(-50%, -70%)",
+    	"margin": "0",
+		"max-width": "100%",
+    	"color": "#ffffff",
+    	"font-size": "clamp(0.9rem, 3vw, 1.5rem)",
+    	"font-family": "'Quicksand', sans-serif",
+    	"font-weight": "bold",
+    	"opacity": "1",
+  	}
+
   	const mainTagStyle = {
 		"background-color": "rgb(255, 255, 255)", 
 		"padding": "6px 11px 6px 11px", 
@@ -155,6 +213,19 @@ const PostBanner = ({ postNumber, date, updated, readTime, difficulty, title, de
 		"padding": "6px 11px 6px 11px", 
 		"borderRadius": "10px",
 		"color": "#7C7C7C",
+	}
+
+	const readTimeStyleMobile = {
+		"position": "absolute",
+    	"top": "clamp(17rem, 68vw, 40rem)",
+    	"left": "50%",
+		"transform": "translate(-50%, -70%)",
+		"background-color": "rgb(255, 255, 255)", 
+		"padding": "0.1rem 0.4rem 0.1rem 0.4rem", 
+		"borderRadius": "10px",
+		"color": "#7C7C7C",
+		"font-weight": "1000",
+		"font-size": "clamp(0.8rem, 3vw, 1.4rem)"
 	}
 
 	var difficultyEmoji, difficultyText
@@ -201,7 +272,7 @@ const PostBanner = ({ postNumber, date, updated, readTime, difficulty, title, de
   return (
     <>
         <center>
-            <div class='noselect' style={prevStyle}>
+            <div className='desktopOnlySupport noselect' style={prevStyle}>
 				<GatsbyImage style={prevImgStyle} image={image} alt="banner" />
 			    <b><div style={prevTextStyle}>{title}</div></b>
 			    <div style={prevDescStyle}>{desc}</div>
@@ -217,10 +288,17 @@ const PostBanner = ({ postNumber, date, updated, readTime, difficulty, title, de
 			    <div style={prevNumberStyle}>#{postNumber}</div>
 			    <br/>
 		    </div>
-		    <div class="noselect" style={viewsWrapperStyle}>
-		        <img style={svgStyle} src={Views} alt="badge"/>
-		        <img style={viewsStyle} src={viewsLink} alt="badge"/>
+		    <div className="desktopOnlySupport noselect" style={viewsWrapperStyle}>
+		        <img style={svgStyle} src={Views} alt="views-badge"/>
+		        <img style={viewsStyle} src={viewsLink} alt="views-badge"/>
 		    </div>
+			<div className="mobileOnlySupport">
+				<GatsbyImage style={prevImgStyleMobile} image={image} alt="banner" />
+				<b><div style={prevTextStyleMobile}>{title}</div></b>
+				<div style={prevDescStyleMobile}>{desc}</div>
+				<span style={readTimeStyleMobile}>⌛&#8239;&#8239;{readTime}</span>
+			    <div style={prevNumberStyleMobile}>#{postNumber}</div>
+      		</div>
 		</center>
 	</>
   );
