@@ -42,7 +42,7 @@ const Footer = () => {
             <img
               className={`${styles.footerBadgeStyle} ${styles.badgeFirst}`}
               src="https://img.shields.io/badge/🎁%20Donate-f2f2f2?style=flat-square"
-              alt="badge"
+              alt="donate-badge"
             />
           </Link>
 
@@ -50,7 +50,7 @@ const Footer = () => {
             <img
               className={`${styles.footerBadgeStyle} ${styles.badgeSecond}`}
               src="https://img.shields.io/badge/🐞%20Report%20a%20bug-f2f2f2?style=flat-square"
-              alt="badge"
+              alt="report-bug-badge"
             />
           </a>
 
@@ -58,7 +58,7 @@ const Footer = () => {
             <img
               className={`${styles.footerBadgeStyle} ${styles.badgeThird}`}
               src="https://img.shields.io/badge/🤓%20README.md-f2f2f2?style=flat-square"
-              alt="badge"
+              alt="readme-badge"
             />
           </a>
 
@@ -66,7 +66,7 @@ const Footer = () => {
             <img
               className={`${styles.footerBadgeStyle} ${styles.badgeFourth}`}
               src="https://img.shields.io/github/last-commit/avrtt/avrtt.github.io/gh-pages?style=flat-square&label=⚙️%20Last%20deploy%3A&labelColor=%23f2f2f2&color=%23f2f2f2"
-              alt="badge"
+              alt="last-deploy-badge"
             />
           </a>
 
@@ -74,14 +74,14 @@ const Footer = () => {
             <img
               className={`${styles.footerBadgeStyle} ${styles.badgeFifth}`}
               src="https://img.shields.io/github/commit-activity/t/avrtt/avrtt.github.io/main?style=flat-square&label=🧩%20Commits%20(main%20branch)%3A&labelColor=%23f2f2f2&color=%23f2f2f2"
-              alt="badge"
+              alt="commit-activity-badge"
             />
           </a>
 
           <img
             className={`${styles.footerBadgeStyle} ${styles.badgeSixth}`}
             src="https://img.shields.io/github/repo-size/avrtt/avrtt.github.io?style=flat-square&label=📦%20Repo%20size%3A&labelColor=%23f2f2f2&color=%23f2f2f2"
-            alt="badge"
+            alt="repository-size-badge"
           />
         </div>
 
@@ -90,12 +90,12 @@ const Footer = () => {
           <img
             className={styles.visitsTodayBadge}
             src="https://api.visitorbadge.io/api/daily?path=https%3A%2F%2Favrtt.github.io%2F&label=TODAY&labelColor=%23f2f2f2&countColor=%23D9D9D9&style=flat-square&labelStyle=none"
-            alt="badge"
+            alt="visits-today-badge"
           />
           <img
             className={styles.visitsTotalBadge}
             src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Favrtt.github.io%2F&label=TOTAL&labelColor=%23f2f2f2&countColor=%23D9D9D9&style=flat-square&labelStyle=none"
-            alt="badge"
+            alt="visits-total-badge"
           />
         </div>
 
@@ -109,7 +109,7 @@ const Footer = () => {
             <img
               className={`${styles.footerContactStyle} ${styles.contactButtonStyle}`}
               src="https://img.shields.io/badge/💬%20Contact-282828?style=flat-square"
-              alt="badge"
+              alt="contact-badge"
             />
           </Link>
         </div>
