@@ -33,7 +33,7 @@ export const projects = [
 		extraDescRu: '', 
 		demoImg1: '', demoImg2: '', demoImg3: '', // '../images/freelance/projects/[PROJECT]/[IMAGE]'
 		demoVidYTKey: '',
-		showAsServiceExample: '6', // number of service from the "services" array
+		showAsServiceExample: '17', // number of service from the "services" array
 		emoji: '🪶'},
 	{id: 2, 
 		categoryKey: 'misc',
@@ -61,8 +61,8 @@ export const projects = [
 		categoryKey: 'web_development',
 		projectName: 'avrtt.blog', 
 		projectNameRu: 'avrtt.blog', 
-		projectDesc: 'Static MDX-based (and simply based) website designed and written completely from scratch & with love using React, Gatsby, TypeScript and Sass modules', 
-		projectDescRu: 'Статическое веб-приложение, написанное с нуля с использованием React, Gatsby, TypeScript и Sass-модулей', 
+		projectDesc: 'Static MDX-based (and simply based) website with SEO — designed and written completely from scratch & with love using React, Gatsby, TypeScript and Sass modules', 
+		projectDescRu: 'Статическое веб-приложение с базовым SEO, написанное с нуля с использованием React, Gatsby, TypeScript и Sass-модулей', 
 		date: '', 
 		dateRu: '', 
 		duration: 'Maintenance since May 29, 2022', 
@@ -143,8 +143,8 @@ export const services = [{},
 	{icon: WD, 
 		title: "Static websites", // 8
 		titleRu: "Статические сайты",
-		text: "Design and build a static website, such as a blog, portfolio or landing page (Next.js/Gatsby/Jekyll, CMS)",
-		textRu: "Спроектировать и создать статический сайт, например блог, страницу портфолио или лендинг (Next.js/Gatsby/Jekyll, CMS)"}, 
+		text: "Design and build a static website with SEO, such as a blog, portfolio or landing page (Next.js/Gatsby/Jekyll, CMS)",
+		textRu: "Спроектировать и создать статический сайт с SEO, например блог, страницу портфолио или лендинг (Next.js/Gatsby/Jekyll, CMS)"}, 
 	{icon: PA, 
 		title: "Bots", // 9
 		titleRu: "Боты",

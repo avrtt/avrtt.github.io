@@ -1,14 +1,14 @@
 // code of a current country
-export const countryCode = "ru"
+export const countryCode = "kz"
 
 // (optional) if the country has more than 1 timezone
 export const exactTimezone = "+5" // [+/-]<offset>
 
 // country name, city, region, etc.
-export const location = ""
+export const location = "Kazakhstan"
 
 // locations and dates, if any
-export const plans = "Kazakhstan ➡️ Uzbekistan ➡️ Tajikistan ➡️ Kyrgyzstan (spring 2025)"
+export const plans = "Uzbekistan ➡️ Tajikistan ➡️ Kyrgyzstan (spring 2025)"
 
 // one of the working statuses:
 // 1 - 👀 open to anything
