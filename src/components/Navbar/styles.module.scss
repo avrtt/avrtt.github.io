@@ -61,7 +61,7 @@ $fade-in-down: fadeInDown 0.3s ease forwards;
   z-index: 999;
 }
 
-.dropdownMenu {
+.dropdownMenuLeft {
   display: flex;
   flex-direction: column;
   position: absolute;
@@ -71,6 +71,41 @@ $fade-in-down: fadeInDown 0.3s ease forwards;
   border-radius: 1vh;
   padding: 1vh;
   margin-left: -1vh;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+
+  .dropdown:hover &,
+  .dropdown:focus-within & {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+    animation: $fade-in-down;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -2vh;
+    left: 0;
+    right: 0;
+    height: 2vh;
+  }
+}
+
+.dropdownMenuRight {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 120%;
+  right: 0;
+  background-color: #e6e3e3;
+  border-radius: 1vh;
+  padding: 1vh;
+  margin-right: -1vh;
   opacity: 0;
   visibility: hidden;
   transform: translateY(-10px);
@@ -184,6 +219,10 @@ $fade-in-down: fadeInDown 0.3s ease forwards;
   }
 }
 
+.hideOnSmallDesktops {
+  @include respond-to(small-desktop) { display: none }
+}
+
 .logo {
   width: 11.5vh;
   transition: all 0.1s;
@@ -200,7 +239,7 @@ $fade-in-down: fadeInDown 0.3s ease forwards;
   @include respond-to(mobile) { display: none }
   @include respond-to(small-tablet) { display: none }
   @include respond-to(tablet) { display: none }
-  @include respond-to(small-desktop) { margin-right: 3vh }
+  @include respond-to(small-desktop) { pointer-events: none; opacity: 0; margin-right: 3vh }
   @include respond-to(desktop) { margin-right: 3vh }
 }
 

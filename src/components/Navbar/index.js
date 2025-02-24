@@ -3,6 +3,7 @@ import { Link } from "gatsby";
 import { useLocation } from "@reach/router";
 import { StaticImage } from "gatsby-plugin-image";
 import { motion } from "framer-motion";
+import S from "../../components/Shine";
 import CountPosts from "../../fetchers/count_posts";
 import close from "./close.svg";
 import * as styles from "./styles.module.scss";
@@ -11,6 +12,8 @@ const Navbar = () => {
   const location = useLocation();
   const [dropdownPostsVisible, setDropdownPostsVisible] = useState(false);
   const [dropdownWorksVisible, setDropdownWorksVisible] = useState(false);
+  const [dropdownArchiveVisible, setDropdownArchiveVisible] = useState(false);
+  const [dropdownMiscVisible, setDropdownMiscVisible] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const isHomePage = location.pathname === "/";
@@ -26,6 +29,10 @@ const Navbar = () => {
   const hidePostsDropdown = () => setDropdownPostsVisible(false);
   const showWorksDropdown = () => setDropdownWorksVisible(true);
   const hideWorksDropdown = () => setDropdownWorksVisible(false);
+  const showArchiveDropdown = () => setDropdownArchiveVisible(true);
+  const hideArchiveDropdown = () => setDropdownArchiveVisible(false);
+  const showMiscDropdown = () => setDropdownMiscVisible(true);
+  const hideMiscDropdown = () => setDropdownMiscVisible(false);
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen((prev) => !prev);
@@ -63,7 +70,10 @@ const Navbar = () => {
               Works
             </Link>
             {dropdownWorksVisible && (
-              <div className={styles.dropdownMenu}>
+              <div className={styles.dropdownMenuLeft}>
+                <Link className={styles.dropdownItem} to="/handbook" activeClassName={styles.active}>
+                  Travel handbook
+                </Link>
                 <Link className={styles.dropdownItem} to="/publications" activeClassName={styles.active}>
                   Publications
                 </Link>
@@ -92,8 +102,9 @@ const Navbar = () => {
               }}
             >
               Posts
-              &#8198;
+              <span className={styles.hideOnSmallDesktops}>&nbsp;&#8198;</span>
               <span 
+                className={styles.hideOnSmallDesktops}
                 style={{
                   color: "#bababa",
                   pointerEvents: "none",
@@ -105,7 +116,7 @@ const Navbar = () => {
               </span>
             </Link>
             {dropdownPostsVisible && (
-              <div className={styles.dropdownMenu}>
+              <div className={styles.dropdownMenuLeft}>
                 <Link
                   to="/adventures"
                   activeClassName={styles.active}
@@ -198,6 +209,97 @@ const Navbar = () => {
             About
           </Link>
 
+          <div
+            className={styles.dropdown}
+            onMouseEnter={showArchiveDropdown}
+            onMouseLeave={hideArchiveDropdown}
+          >
+            <Link
+              activeClassName={styles.active}
+              className={`${dropdownArchiveVisible ? styles.active : ""} ${styles.navLink}`}
+              style={{
+                opacity: dropdownArchiveVisible ? "0.5" : "1",
+                backgroundColor: "transparent",
+                paddingRight: "1px",
+              }}
+            >
+              Archive
+            </Link>
+            {dropdownArchiveVisible && (
+              <div className={styles.dropdownMenuRight}>
+                <Link className={styles.dropdownItem} to="/gallery" activeClassName={styles.active}>
+                  Gallery
+                </Link>
+                <Link className={styles.dropdownItem} to="/stories" activeClassName={styles.active}>
+                  Stories
+                </Link>
+                <Link className={styles.dropdownItem} to="/zettelkasten" activeClassName={styles.active}>
+                  Zettelkasten
+                </Link>
+                <Link className={styles.dropdownItem} to="/articles" activeClassName={styles.active}>
+                  Saved articles
+                </Link>
+                <Link className={styles.dropdownItem} to="/websites" activeClassName={styles.active}>
+                  Saved sites
+                </Link>
+                <Link className={styles.dropdownItem} to="/videos" activeClassName={styles.active}>
+                  Saved videos
+                </Link>
+              </div>
+            )}
+          </div>
+
+          <div
+            className={styles.dropdown}
+            onMouseEnter={showMiscDropdown}
+            onMouseLeave={hideMiscDropdown}
+          >
+            <Link
+              activeClassName={styles.active}
+              className={`${dropdownMiscVisible ? styles.active : ""} ${styles.navLink}`}
+              style={{
+                opacity: dropdownMiscVisible ? "0.5" : "1",
+                backgroundColor: "transparent",
+              }}
+            >
+              Misc
+            </Link>
+            {dropdownMiscVisible && (
+              <div className={styles.dropdownMenuRight}>
+                <Link className={styles.dropdownItem} to="/feed" activeClassName={styles.active}>
+                  Feed
+                </Link>
+                <Link className={styles.dropdownItem} to="/playlists" activeClassName={styles.active}>
+                  Playlists
+                </Link>
+                <Link className={styles.dropdownItem} to="/albums" activeClassName={styles.active}>
+                  Top albums
+                </Link>
+                <Link className={styles.dropdownItem} to="/films" activeClassName={styles.active}>
+                  Top films
+                </Link>
+                <Link className={styles.dropdownItem} to="/bookshelf" activeClassName={styles.active}>
+                  Bookshelf
+                </Link>
+                <Link className={styles.dropdownItem} to="/hall_of_fame" activeClassName={styles.active}>
+                  Hall of fame
+                </Link>
+                <Link className={styles.dropdownItem} to="/gear" activeClassName={styles.active}>
+                  Gear & tools
+                </Link>
+                <Link className={styles.dropdownItem} to="/calisthenics" activeClassName={styles.active}>
+                  Calisthenics
+                </Link>
+                <Link className={styles.dropdownItem} to="/friends" activeClassName={styles.active}>
+                  Friend blogs
+                </Link>
+                <Link className={styles.dropdownItem} to="/habits" activeClassName={styles.active}>
+                  Habits
+                </Link>
+              </div>
+            )}
+          </div>
+
           <Link to="/all" className={`${styles.all} ${styles.mobileNavLinkMain}`} activeClassName={styles.active}>
             📝 Posts
           </Link>
@@ -234,6 +336,9 @@ const Navbar = () => {
           <Link className={styles.mobileNavLink} to="/" onClick={toggleMobileMenu}>
             🏠 Home
           </Link>
+          <Link className={styles.mobileNavLink} to="/handbook" onClick={toggleMobileMenu}>
+            📕 Travel handbook
+          </Link>
           <Link className={styles.mobileNavLink} to="/publications" onClick={toggleMobileMenu}>
             📄 Publications
           </Link>
@@ -263,6 +368,54 @@ const Navbar = () => {
           </Link>
           <Link className={styles.mobileNavLink} to="/cv" onClick={toggleMobileMenu}>
             💼 CV
+          </Link>
+          <Link className={styles.mobileNavLink} to="/gallery" onClick={toggleMobileMenu}>
+            🖼️ Gallery
+          </Link>
+          <Link className={styles.mobileNavLink} to="/stories" onClick={toggleMobileMenu}>
+            📜 Stories
+          </Link>
+          <Link className={styles.mobileNavLink} to="/zettelkasten" onClick={toggleMobileMenu}>
+            🧠 Zettelkasten
+          </Link>
+          <Link className={styles.mobileNavLink} to="/articles" onClick={toggleMobileMenu}>
+            🔗 Saved articles
+          </Link>
+          <Link className={styles.mobileNavLink} to="/websites" onClick={toggleMobileMenu}>
+            🔗 Saved sites
+          </Link>
+          <Link className={styles.mobileNavLink} to="/videos" onClick={toggleMobileMenu}>
+            🔗 Saved videos
+          </Link>
+          <Link className={styles.mobileNavLink} to="/feed" onClick={toggleMobileMenu}>
+            📲 Feed
+          </Link>
+          <Link className={styles.mobileNavLink} to="/playlists" onClick={toggleMobileMenu}>
+            📁 Playlists
+          </Link>
+          <Link className={styles.mobileNavLink} to="/albums" onClick={toggleMobileMenu}>
+            💽 Top albums
+          </Link>
+          <Link className={styles.mobileNavLink} to="/films" onClick={toggleMobileMenu}>
+            🎞️ Top films
+          </Link>
+          <Link className={styles.mobileNavLink} to="/bookshelf" onClick={toggleMobileMenu}>
+            📚 Bookshelf
+          </Link>
+          <Link className={styles.mobileNavLink} to="/hall_of_fame" onClick={toggleMobileMenu}>
+            <S>⭐ Hall of fame</S>
+          </Link>
+          <Link className={styles.mobileNavLink} to="/gear" onClick={toggleMobileMenu}>
+            🛠️ Gear & tools
+          </Link>
+          <Link className={styles.mobileNavLink} to="/calisthenics" onClick={toggleMobileMenu}>
+            💪 Calisthenics
+          </Link>
+          <Link className={styles.mobileNavLink} to="/friends" onClick={toggleMobileMenu}>
+            👥 Friend blogs
+          </Link>
+          <Link className={styles.mobileNavLink} to="/habits" onClick={toggleMobileMenu}>
+            🌱 Habits
           </Link>
           <Link className={styles.mobileNavLink} to="/about" onClick={toggleMobileMenu}>
             👤 About
