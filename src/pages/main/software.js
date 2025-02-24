@@ -4,6 +4,8 @@ import { Link } from "gatsby";
 import { motion } from 'framer-motion';
 import { AnimationOnScroll } from 'react-animation-on-scroll';
 import M from '../../components/Markdown';
+import cover from '../../images/covers/software.jpg';
+import { StaticImage } from "gatsby-plugin-image";
 import { softwareLastUpdated } from '../../data/lastUpdated';
 import * as stylesPlaques from "../../styles/plaques.module.scss"
 import 'animate.css/animate.min.css';
@@ -15,6 +17,12 @@ const Software = () => {
 			animate={{ opacity: 1 }}
 			exit={{ opacity: 0 }}
 			transition={{ duration: 0.15 }}>
+
+			<StaticImage
+				className="pageCover" 
+				src="../../images/covers/software.jpg" 
+				alt="Page cover: a painting depicting long-haired man looking at a laptop in a cozy room"
+			/>
 
 			<div class="softwareBody">
 				<br/>
@@ -36,8 +44,8 @@ export const Head = () => (
     title="Software - avrtt.blog"
     description=""
     keywords={[""]}
-    image={""}
-    canonicalUrl=""
+    image={cover}
+    canonicalUrl="https://avrtt.github.io/software"
     schemaType=""
     children
   />

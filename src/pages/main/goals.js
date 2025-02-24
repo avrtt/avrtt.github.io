@@ -6,6 +6,8 @@ import { graphql, useStaticQuery } from 'gatsby';
 import { goalsTags } from '../../data/goals/tags';
 import { goalsLastUpdated } from '../../data/lastUpdated';
 import M from '../../components/Markdown';
+import cover from '../../images/covers/goals.jpg';
+import { StaticImage } from "gatsby-plugin-image";
 import StickerPack from '../../components/StickerPack';
 import GoalCategory from '../../components/GoalCategory';
 import checkbox from "../../images/goals/checked.svg";
@@ -151,6 +153,12 @@ const Goals = () => {
 		animate={{opacity: 1 }}
 		exit={{opacity: 0 }}
 		transition={{ duration: 0.15 }}>
+
+        <StaticImage
+            className="pageCover" 
+            src="../../images/covers/goals.jpg" 
+            alt="Page cover: a painting depicting a trophy room"
+        />
 
         <div class='goalsBody'>
 
@@ -318,7 +326,7 @@ export const Head = () => (
     title="Goals - avrtt.blog"
     description="Explore my bucket list filled with various life goals."
     keywords={["bucket list", "list of achievements", "list of life goals", "personal goals", "personal achievements"]}
-    image={""}
+    image={cover}
     canonicalUrl="https://avrtt.github.io/goals"
     children
   />

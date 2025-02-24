@@ -371,7 +371,7 @@ export const Head = () => (
     description=""
     keywords={[""]}
     image={""}
-    canonicalUrl=""
+    canonicalUrl="https://avrtt.github.io/exploration"
     schemaType=""
     children
   />

@@ -4,6 +4,8 @@ import { Link } from "gatsby";
 import { motion } from 'framer-motion';
 import { AnimationOnScroll } from 'react-animation-on-scroll';
 import M from '../../components/Markdown';
+import cover from '../../images/covers/publications.jpg';
+import { StaticImage } from "gatsby-plugin-image";
 import { publicationsLastUpdated } from '../../data/lastUpdated';
 import * as stylesPlaques from "../../styles/plaques.module.scss"
 import 'animate.css/animate.min.css';
@@ -15,6 +17,12 @@ const Publications = () => {
 			animate={{ opacity: 1 }}
 			exit={{ opacity: 0 }}
 			transition={{ duration: 0.15 }}>
+
+			<StaticImage
+				className="pageCover" 
+				src="../../images/covers/publications.jpg" 
+				alt="Page cover: a painting depicting scientific papers with books and a feather"
+			/>
 
 			<div class="publicationsBody">
 				<br/>
@@ -36,8 +44,8 @@ export const Head = () => (
     title="Publications - avrtt.blog"
     description=""
     keywords={[""]}
-    image={""}
-    canonicalUrl=""
+    image={cover}
+    canonicalUrl="https://avrtt.github.io/publications"
     schemaType=""
     children
   />
