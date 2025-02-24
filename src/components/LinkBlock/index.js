@@ -115,6 +115,9 @@ const LinkBlock = ({
         borderRadius: '6px',
     }
 
+    let isDonate
+    if (link === "/donate") { isDonate = true }
+
     return isExternalLink ? (
         <a href={link} target="_blank" rel="noopener noreferrer">
             <div
@@ -149,7 +152,7 @@ const LinkBlock = ({
                 <div style={blockContentStyle}>
                     <img style={iconStyle} className=".makeBlackAndWhite" src={icon} alt={`${name} icon`} />
                     <div style={textWrapperStyle}>
-                        <img title={!inactive && (isRussian ? "Russian language mostly" : null || isEnglishAndRussian ? "Bilingual" : null)} style={flagStyle} src={!inactive && (isRussian ? russian : null || isEnglishAndRussian ? englishRussian : null)} alt="country-flag"/>
+                        <img title={!inactive && (isRussian ? "Russian language mostly" : null || isEnglishAndRussian ? "Bilingual" : null)} style={flagStyle} src={!inactive && (isRussian ? russian : null || isEnglishAndRussian ? englishRussian : null)} alt={isDonate ? "" : "country-flag"}/>
                         <span style={nameStyle}>
                             {name}
                             <span title={categoryName} style={categoryEmojiStyle}>{inactive || categoryEmoji}</span>
