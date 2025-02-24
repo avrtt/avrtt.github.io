@@ -9,6 +9,7 @@ import Tooltip from '../../components/Tooltip';
 import ContentBlock from '../../components/ContentBlock';
 import TileContainer from '../../components/TileContainer';
 import VisitedCountriesMap from '../../components/VisitedCountriesMap';
+import LastThreeGalleryImages from '../../components/LastThreeGalleryImages'
 import { aboutLastUpdated } from '../../data/lastUpdated';
 import { getNumOfVisitedISOa2, getNumOfAllISOa2 } from '../../utils/countryCounters';
 import { StaticImage } from 'gatsby-plugin-image';
@@ -453,7 +454,7 @@ const About = () => {
                         <div class={stylesTagBadges.badgesAboutWrapper}>
                             <div class={stylesTagBadges.badgeAbout}>🎒 Travel theory <Tooltip isBadge={true} text="This may sound ridiculous, but comfortable, interesting, cheap and safe (all in one) travel ALWAYS requires planning and extensive knowledge, e.g., understanding methods of transportation, local guidelines, tricks to save money, ways to find essentials and lodging w/o money, clothing and gear materials, proper communication with people, cartography, orienteering, basic survival skills, mending, weight optimization, natural phenomena and environments, physics, physiology, food energy value, different situations and many other topics along with common sense. Travel is a philosophy, a science and an art, and I'm all for rational travel."/></div>
                             <div class={stylesTagBadges.badgeAboutMarked}>📜 History <Tooltip isBadge={true} text="I'm interested in the history of all regions and nations of the world, trying to invest some time in learning about places I visit — which makes a big difference in travel experience."/></div>
-                            <div class={stylesTagBadges.badgeAbout}>🤗 World cultures <Tooltip isBadge={true} text="Especially Slavic, Nordic and Himalayan cultures, as well as Japanese and Chinese art."/></div>
+                            <div class={stylesTagBadges.badgeAbout}>🤗 World cultures <Tooltip isBadge={true} text="Especially Nordic, Slavic and Himalayan cultures, as well as Japanese and Chinese art."/></div>
                             <div class={stylesTagBadges.badgeAbout}>☯️ Eastern philosophy</div>
                             <div class={stylesTagBadges.badgeAbout}>🗽 Political science</div>
                             <div class={stylesTagBadges.badgeAbout}>📢 Politics</div>
@@ -483,7 +484,7 @@ const About = () => {
                             <div class={stylesTagBadges.badgeAbout}>🧠 Philosophy of AI</div>
                             {/* Cybernetics, Transhumanism */}
                         </div>
-                        <p><H color={"#ffd56a"}>Orange</H> indicates the topics and skills that I'm predominantly dedicated to right now (studying, practicing or simply being especially interested in). Actively learning/doing the same? Feel free to <Link to="/contact">text me</Link>.</p>
+                        <p><H color={"#ffd56a"}>Orange</H> indicates the topics and skills that I'm predominantly dedicated to right now (studying, practicing or simply being especially interested in). Actively learning/doing the same or want to share something? Feel free to <Link to="/contact">text me</Link>.</p>
                     </div>
                 </AnimationOnScroll>
                 <div className="mobileOnlySupport">
@@ -633,6 +634,12 @@ const About = () => {
                     <M text="This place is reserved for something good. A family photo? Someday."/>
                 </div>
             </AnimationOnScroll>
+            <div className="desktopOnlySupport" style={{ marginTop: "4rem" }}>
+                <span style={{ fontSize: "1.3rem", color: "black" }}>
+                    <center><H style={{ padding: "0.5rem 6rem" }}>LATEST FROM GALLERY</H></center>
+                </span>
+                <LastThreeGalleryImages />
+            </div>
             <div class="lastUpdatedAbout">UPDATED ON {aboutLastUpdated}</div>
         </motion.div>
     );
