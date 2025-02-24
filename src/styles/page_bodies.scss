@@ -20,7 +20,7 @@ body {
   @include mix.respond-to(desktop) { max-width: 73%; padding: 0 2.4em }
 }
 
-.homeBodyRegular, .courseBody, .freelanceBody, .aboutBodyRegular, .postBody, .donateBody, .contactBody {
+.generalBody, .homeBodyRegular, .courseBody, .freelanceBody, .aboutBodyRegular, .postBody, .donateBody, .contactBody, .handbookBody {
   @extend %body-box;
   font-size: clamp(1rem, 2.5vw, 1.4rem);
   transition: margin 1s ease, padding 1s ease;
@@ -93,4 +93,16 @@ body {
 
 .publicationsBody, .softwareBody, .musicBody, .talksBody, .explorationBody, .explorationBodyNested, .cvBody {
   /* ... */
+}
+
+.pageCover {
+  @extend %body-box;
+  border-radius: 2vh;
+  transition: margin 1s ease, padding 1s ease;
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
+  @include mix.respond-to(mobile) {}
+  @include mix.respond-to(small-tablet) {}
+  @include mix.respond-to(tablet) { margin-left: 3%; margin-right: 3%; padding: 1em 2.5em }
+  @include mix.respond-to(small-desktop) { margin-left: 4%; margin-right: 4%; padding: 1.2em 3em }
+  @include mix.respond-to(desktop) { margin-left: 5%; margin-right: 5%; padding: 2.5em 4em; height: clamp(25rem, 2vw, 40rem); }
 }
