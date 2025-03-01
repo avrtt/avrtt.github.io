@@ -48,8 +48,11 @@ const Image = ({ path, alt, caption="", zoom=false, offset="300" }) => {
 
   if (!alt) alert(`An image with missing alt prop was detected! Please provide an informative description required for SEO. Path: ${path}`)
 
-  const image = data.allFile.nodes.find(node => node.relativePath === path);
-  const imageData = getImage(image.childImageSharp.gatsbyImageData);
+  var image, imageData
+  if (path) {
+    image = data.allFile.nodes.find(node => node.relativePath === path);
+    imageData = getImage(image.childImageSharp.gatsbyImageData);
+  }
 
   if (!image) {
     return (
@@ -61,8 +64,10 @@ const Image = ({ path, alt, caption="", zoom=false, offset="300" }) => {
             style={{"width": "100px"}} 
           />
         </span>
-        <p>An image was requested, but the frog was found</p>
-        <p>Missing path: <strong>{path}</strong></p>
+        <p>An image was requested, but the frog was found.</p>
+        {alt ? <p>Alt: "{alt}"</p> : <p>No alt specified!</p>}
+        {caption ? <p>Caption: "{caption}"</p> : <p>No caption specified!</p>}
+        {path ? <p>Missing path: <strong>"{path}"</strong></p> : <p>Error type: <strong>missing path</strong></p>}
       </div>
     )
   }
