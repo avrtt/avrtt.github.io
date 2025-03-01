@@ -1,5 +1,6 @@
 import React from 'react';
 import SEO from '../../components/seo'
+import { Link } from "gatsby";
 import { motion } from 'framer-motion';
 import M from '../../components/Markdown';
 import Code from "../../components/Code"
@@ -23,7 +24,7 @@ const Contact = () => {
                     `}/>
                 </div>
                 <M text="I'm open to making friends with people all over the world."/>
-                <M text="If you're reaching out about business (i.e. ads and collaboration), please consider reading the [Information for Business Inquiries](/information_for_business_inquiries)."/>
+                <p>If you're reaching out about business (i.e. ads and collaboration), please consider reading the <Link to="/information_for_business_inquiries">Information for Business Inquiries</Link>. If you're addressing a question, it may have already been answered <Link to="/faq">here</Link>.</p>
                 <span className="desktopOnlySupport">
                 <br/>
                 <M text="---"/>
