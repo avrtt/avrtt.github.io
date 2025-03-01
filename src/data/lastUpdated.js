@@ -25,5 +25,6 @@ export const articlesLastUpdated = "FEB 7, 2025"
 export const websitesLastUpdated = "FEB 7, 2025"
 export const videosLastUpdated = "FEB 7, 2025"
 export const habitsLastUpdated = "FEB 7, 2025"
+export const faqLastUpdated = "FEB 7, 2025"
 
 export const footerYear = "2025"
