@@ -17,6 +17,7 @@ import UnreliablyNotice from "../components/UnreliablyNotice"
 import PoliticsNotice from "../components/PoliticsNotice"
 import CognitohazardNotice from "../components/CognitohazardNotice"
 import HiddenNotice from "../components/HiddenNotice"
+import PartOfCourseNotice from "../components/PartOfCourseNotice"
 import * as stylesButtonsCommon from "../styles/buttons_common.module.scss"
 import * as stylesCustomPostLayouts from "../styles/custom_post_layouts.module.scss"
 import * as stylesTableOfContents from "../styles/table_of_contents.module.scss"
@@ -194,6 +195,7 @@ export function PostTemplate({ data: { mdx, allMdx }, children }) {
       }}>
         <div className={`${stylesCustomPostLayouts.textContent} ${isAnimating ? stylesCustomPostLayouts.fadeOut : stylesCustomPostLayouts.fadeIn}`}>
           {frontmatter.flagDraft ? <NotFinishedNotice/> : ""}
+          {frontmatter.indexCourse ? <PartOfCourseNotice index={frontmatter.indexCourse} category={frontmatter.courseCategoryName} /> : "" }
           {frontmatter.flagMindfuckery ? <MindfuckeryNotice/> : ""}
           {frontmatter.flagRewrite ? <RewriteNotice/> : ""}
           {frontmatter.flagOffensive ? <OffensiveNotice/> : ""}
@@ -299,10 +301,12 @@ export const query = graphql`
     mdx(id: { eq: $id }) {
       frontmatter {
         index
+        indexCourse
         title
         titleSEO
         titleOG
         titleTwitter
+        courseCategoryName
         desc
         descSEO
         descOG
