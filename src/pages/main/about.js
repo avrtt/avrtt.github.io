@@ -526,7 +526,7 @@ const About = () => {
                         emoji="😶‍🌫️"
                         emojiGif={hide}
                         description={<>
-                            <p>Before 2022 I wanted to move to 🇷🇺 <a href="https://en.wikipedia.org/wiki/Saint_Petersburg">Saint Petersburg</a>, but had to put this idea on hold for an indefinite period of time. I'm still considering this city for permanent residence in the future, yet supposing permanent emigration if returning to Russia won't be possible for the next few years.&nbsp; <Tooltip text="At the moment, if I return to Russia, I won't be able to leave the country and will face repressive laws, losing many other rights — because I'm conscripted for military service (travel restrictions are imposed automatically)."/>
+                            <p>Before 2022 I wanted to move to 🇷🇺 <a href="https://en.wikipedia.org/wiki/Saint_Petersburg">Saint Petersburg</a>, but had to put this idea on hold for an indefinite period of time&nbsp; <Tooltip text="At the moment, if I return to Russia, I won't be able to leave the country and will face repressive laws, losing many other rights — because I'm conscripted for military service (travel restrictions are imposed automatically)."/>. I'm still considering this city for permanent residence in the future, yet supposing permanent emigration if returning to Russia won't be possible for the next few years.&nbsp; <Tooltip text={`Note to self: I consider 🇦🇷 Buenos Aires on a "Nómadas digitales" visa as my top priority migration option in case I can't/won't go back to Russia, as I'd like to learn Spanish and it's possible to get citizenship there quickly (opening up free travel to Europe), so I see this passport as a good investment of ~2 years.`}/>
                             </p>
                         </>}
                         backgroundColor="#dbdbdb"
@@ -586,18 +586,18 @@ const About = () => {
             </div>
             <AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
                 <div class={stylesTagBadges.badgesAboutWrapper}>
-                    <div class={stylesTagBadges.badgeAbout}>🌅 Early bird</div>
-                    <div class={stylesTagBadges.badgeAbout}>🍏 Flexitarian</div>
-                    <div class={stylesTagBadges.badgeAbout}>👶 Childless</div>
-                    <div class={stylesTagBadges.badgeAbout}>🐱 Pet-free</div>
-                    <div class={stylesTagBadges.badgeAbout}>🥃 Non-drinker</div>
-                    <div class={stylesTagBadges.badgeAbout}>🚬 Non-smoker</div>
-                    <div class={stylesTagBadges.badgeAbout}>🥶 Prefer cold climate</div>
-                    <div class={stylesTagBadges.badgeAbout}>😌 Prefer to live alone</div>
-                    <div class={stylesTagBadges.badgeAbout}>🇬🇧 C1</div>
-                    <div class={stylesTagBadges.badgeAbout}>🇪🇸 A2</div>
-                    <div class={stylesTagBadges.badgeAbout}>🇸🇪 A1</div>
-                    <div class={stylesTagBadges.badgeAbout}>🇷🇺 Native</div>
+                    <div class={stylesTagBadges.badgeAbout} style={{ backgroundColor: "#f2f2f2", color: "black" }}><H>Leisure & favorite activities</H> &nbsp;</div>
+                    <div class={stylesTagBadges.badgeAbout}>🧭 Exploring little-known places <Tooltip isBadge={true} text="From private underground clubs and industrial landscapes (such as factory rooftops or abandoned subway stations) to the weirdest locations like cemeteries and remote villages: my life feels like an open-world game with achievements about searching for something."/></div>
+                    <div class={stylesTagBadges.badgeAbout}>💪 Calisthenics <Tooltip isBadge={true} text="There is nothing more satisfying in this world than working out in the cold with brutal metal in your ears. I love calisthenics for mobility (workout anywhere) and as a much healthier alternative to gym for my joints and heart."/></div>
+                    <div class={stylesTagBadges.badgeAbout}>🖼 Gazing at artworks <Tooltip isBadge={true} text="Especially I love Russian and Dutch landscape painters."/></div>
+                    <div class={stylesTagBadges.badgeAbout}>📝 Wikipedia <Tooltip isBadge={true} text="I have an addiction to reading Wikipedia for years, at times I edit it."/></div>
+                    <div class={stylesTagBadges.badgeAbout}>🏰 Fantasy RPG <Tooltip isBadge={true} text="Fantasy and medieval aesthetics seems to be my favorite theme in video games. Sometimes I also play DnD."/></div>
+                    <div class={stylesTagBadges.badgeAbout}>🏃 Trail running & hiking <Tooltip isBadge={true} text="I love nature and running, especially at dawn, and I avoid hurrying people. Running outdoors fits just right, as well as other outdoor activities."/></div>
+                    <div class={stylesTagBadges.badgeAbout}>📚 Libraries <Tooltip isBadge={true} text="I enjoy exploring libraries in different cities, often working from there (instead of boring coworking spaces), or reading encyclopedias."/></div>
+                    {/* 
+                        🍄 Foraging
+                        🧘‍♂️ Meditation
+                     */}
                 </div>
                 <div style={{ marginTop: "-1.5rem" }} class={stylesTagBadges.badgesAboutWrapper}>
                     <div class={stylesTagBadges.badgeAbout} style={{ backgroundColor: "#f2f2f2", color: "black" }}><H>Music preferences</H> &nbsp;</div>
@@ -614,18 +614,19 @@ const About = () => {
                     {/* stoner/doom, psychedelic/occult rock/metal, classical music */}
                 </div>
                 <div style={{ marginTop: "-1.5rem" }} class={stylesTagBadges.badgesAboutWrapper}>
-                    <div class={stylesTagBadges.badgeAbout} style={{ backgroundColor: "#f2f2f2", color: "black" }}><H>Leisure & favorite activities</H> &nbsp;</div>
-                    <div class={stylesTagBadges.badgeAbout}>🧭 Exploring little-known places <Tooltip isBadge={true} text="From private underground clubs and industrial landscapes (such as factory rooftops or abandoned subway stations) to the weirdest locations like cemeteries and remote villages: my life feels like an open-world game with achievements about searching for something."/></div>
-                    <div class={stylesTagBadges.badgeAbout}>💪 Calisthenics</div>
-                    <div class={stylesTagBadges.badgeAbout}>🖼 Gazing at artworks <Tooltip isBadge={true} text="Especially I love Russian and Dutch landscape painters."/></div>
-                    <div class={stylesTagBadges.badgeAbout}>📝 Wikipedia <Tooltip isBadge={true} text="I have an addiction to reading Wikipedia for years, at times I edit it."/></div>
-                    <div class={stylesTagBadges.badgeAbout}>🏰 Fantasy RPG <Tooltip isBadge={true} text="Fantasy and medieval aesthetics seems to be my favorite theme in video games. Sometimes I also play DnD."/></div>
-                    <div class={stylesTagBadges.badgeAbout}>🏃 Trail running & hiking <Tooltip isBadge={true} text="I love nature and running, especially at dawn, and I avoid hurrying people. Running outdoors fits just right, as well as other outdoor activities."/></div>
-                    <div class={stylesTagBadges.badgeAbout}>📚 Libraries <Tooltip isBadge={true} text="I enjoy exploring libraries in different cities, often working from there (instead of boring coworking spaces), or reading encyclopedias."/></div>
-                    {/* 
-                        🍄 Foraging
-                        🧘‍♂️ Meditation
-                     */}
+                    <div class={stylesTagBadges.badgeAbout} style={{ backgroundColor: "#f2f2f2", color: "black" }}><H>Misc</H> &nbsp;</div>
+                    <div class={stylesTagBadges.badgeAbout}>🌅 Early bird</div>
+                    <div class={stylesTagBadges.badgeAbout}>🍏 Flexitarian</div>
+                    <div class={stylesTagBadges.badgeAbout}>👶 Childless</div>
+                    <div class={stylesTagBadges.badgeAbout}>🐱 Pet-free</div>
+                    <div class={stylesTagBadges.badgeAbout}>🥃 Non-drinker</div>
+                    <div class={stylesTagBadges.badgeAbout}>🚬 Non-smoker</div>
+                    <div class={stylesTagBadges.badgeAbout}>🥶 Prefer cold climate</div>
+                    <div class={stylesTagBadges.badgeAbout}>😌 Prefer to live alone</div>
+                    <div class={stylesTagBadges.badgeAbout}>🇺🇸 C1</div>
+                    <div class={stylesTagBadges.badgeAbout}>🇪🇸 A2</div>
+                    <div class={stylesTagBadges.badgeAbout}>🇸🇪 A1</div>
+                    <div class={stylesTagBadges.badgeAbout}>🇷🇺 Native</div>
                 </div>
             </AnimationOnScroll>
             <AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">

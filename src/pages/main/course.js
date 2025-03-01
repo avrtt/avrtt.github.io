@@ -6,6 +6,8 @@ import { motion } from 'framer-motion';
 import M from '../../components/Markdown';
 import S from '../../components/Shine';
 import H from '../../components/Highlight';
+import Notice from '../../components/Notice';
+import MoreCoursesNotice from '../../components/MoreCoursesNotice';
 import StickerPack from '../../components/StickerPack';
 import photoAbout from "../../images/about/photoAbout.jpg";
 import { courseLastUpdated } from '../../data/lastUpdated';
@@ -118,6 +120,10 @@ const Course = ({ data }) => {
 			transition={{ duration: 0.15 }}>
 
 			<div class="courseBody">
+				
+				<MoreCoursesNotice/>
+				<Notice title="☝️ FYI" text="This course was revised in **March 2025**. However, there are still a considerable amount of **gaps** and **bland narration**. I'm still working hard to make this course engaging, so please be patient."/>
+				
 				<M text="Here you can find tutorials on machine learning, data science and several other fields organized as a sequential, in-depth theoretical course presented in modules. I've created it single-handedly by studying and summarizing a huge amount of material, and launched together with this blog as open source."/>
 				<p>I also have plans to make video tutorials based on <Link to="/research">Research</Link> posts for my YouTube channel <Link to="https://www.youtube.com/@avheuristics">@avheuristics</Link> in the future.</p>
 				<div>
@@ -168,7 +174,7 @@ const Course = ({ data }) => {
 - **Create** new pages, sub-chapters, practical exercises, code notebooks, homework, quizzes, etc.
 				`}/>
 				<M text="Please use [GitHub Issues](https://github.com/avrtt/avrtt.github.io/issues/new) for reports and suggestions. You can open a new PR [here](https://github.com/avrtt/avrtt.github.io/compare) and check accepted changes [here](https://github.com/avrtt/avrtt.github.io/pulls?q=is%3Aclosed). For more information, see the repository's [README.md](https://github.com/avrtt/avrtt.github.io/blob/main/README.md)."/>
-				<p>Your contributions are important in building accessible education in AI (and beyond). GitHub profiles of people who contribute significantly will be listed on this page. <StickerPack sticker="dog_nerd"/></p>
+				<p>Your contributions are important in building accessible education in AI (and beyond). GitHub profiles of people who contribute significantly will be listed on this page (and, probably, in the <S><Link to="/hall_of_fame">Hall of fame</Link></S>).</p>
 				<M text="Questions? [Text me](/contact)!"/>
 				<br/>
 				<M text="### Adding new pages"/>
@@ -176,7 +182,7 @@ const Course = ({ data }) => {
 				<M text="Research posts are written in `.mdx` format and located [here](https://github.com/avrtt/avrtt.github.io/tree/main/src/pages/posts/research), while images (banners and post content) are stored [here](https://github.com/avrtt/avrtt.github.io/tree/main/src/images/posts/research). Gatsby's frontmatter must include `indexCourse`, `titleCourse` and `courseCategoryName` to properly display your page in the table of contents."/>
 				<br/>
 				<M text="### Licensing"/>
-				<M text="**TL;DR**: you're free to use, distribute and modify [only] the course-related content of this website, as long as you attribute."/>
+				<p><b>TL;DR</b>: you're free to use, distribute and modify [only] the course-related content of this website, <i>as long as you attribute</i>. <StickerPack sticker="dog_nerd"/></p>
 				<span style={{opacity: "0.5"}}><M text="---"/></span>
 				<M text="The *course material* is distributed under a separate [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) license, which is a special sublicense extending the permissions of the main website's content protection [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/) license. This sublicense allows you to copy and redistribute the *course material* in any medium or format for any purpose (even commercially) and adapt it (remix, transform and build upon the material for any purpose, even commercially) with attribution under the same license (CC BY-SA 4.0)."/>
 				<M text="The *course material* covers all the internal pages **referenced** in the table of contents above (i.e., `.mdx` files of the referenced posts located in the [website's GitHub repository](https://github.com/avrtt/avrtt.github.io), including all the `/research` category posts covered in the course), as well as the current page (`/course`). The sublicense applies to the text of the mentioned pages and to the media files on these pages (except for those already copyrighted by someone else)."/>

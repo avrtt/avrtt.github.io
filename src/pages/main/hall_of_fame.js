@@ -24,7 +24,7 @@ const HallOfFame = () => {
 			/>
 
 			<div class="generalBody">
-				<p>This will be a list of the people who have helped me the most, whether they are donators or just people who gave me a helping hand. I'm posting their links if they don't mind.</p>
+				<p>This will be a list of the people who have helped me the most, whether they are donators, contributors or just people who gave me a helping hand. I'm posting their links if they don't mind.</p>
 			</div>
 			<div class="lastUpdatedTalks">UPDATED ON {hallOfFameLastUpdated}</div>
 
