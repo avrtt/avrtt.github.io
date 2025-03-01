@@ -296,6 +296,9 @@ const Navbar = () => {
                 <Link className={styles.dropdownItem} to="/habits" activeClassName={styles.active}>
                   Habits
                 </Link>
+                <Link className={styles.dropdownItem} to="/faq" activeClassName={styles.active}>
+                  FAQ
+                </Link>
               </div>
             )}
           </div>
@@ -416,6 +419,9 @@ const Navbar = () => {
           </Link>
           <Link className={styles.mobileNavLink} to="/habits" onClick={toggleMobileMenu}>
             🌱 Habits
+          </Link>
+          <Link className={styles.mobileNavLink} to="/faq" onClick={toggleMobileMenu}>
+            ❓ FAQ
           </Link>
           <Link className={styles.mobileNavLink} to="/about" onClick={toggleMobileMenu}>
             👤 About
