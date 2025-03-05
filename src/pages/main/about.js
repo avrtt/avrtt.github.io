@@ -227,7 +227,7 @@ const About = () => {
                     <ContentBlock
                         emoji='👣'
                         emojiGif={footprints}
-                        description={<><p>At the moment I'm sticking to <H>hobo travel style</H>, namely the triad: <a href="https://en.wikipedia.org/wiki/Ultralight_backpacking">lightpacking</a>, <a href="https://en.wikipedia.org/wiki/Hitchhiking">hitchhiking</a> and <a href="https://en.wikipedia.org/wiki/Couch_surfing">couchsurfing</a>. I almost always travel solo, over long distances at a time, co-op with other <a href="https://en.wikipedia.org/wiki/Digital_nomad">digital nomads</a> at stopovers, and stay away from touristy spots, occasionally venturing out on small 1-2 day <a href="https://en.wikipedia.org/wiki/Backpacking_(hiking)">treks</a> with a tent. This style requires almost no money, and therefore allows me to work much less often. I also intend to try <b>moto-traveling</b> and <b>van-dwellling</b> in the future, but for now extreme is preferred — the lack of pretentiousness makes it possible to understand people better by living alongside them, as well as to learn how to get out of trouble, speak to people, not give up.</p></>}
+                        description={<><p>At the moment I'm <Link to="/gear">sticking</Link> to <H>hobo travel style</H>, namely the triad: <a href="https://en.wikipedia.org/wiki/Ultralight_backpacking">lightpacking</a>, <a href="https://en.wikipedia.org/wiki/Hitchhiking">hitchhiking</a> and <a href="https://en.wikipedia.org/wiki/Couch_surfing">couchsurfing</a>. I almost always travel solo, over long distances at a time, co-op with other <a href="https://en.wikipedia.org/wiki/Digital_nomad">digital nomads</a> at stopovers, and stay away from touristy spots, occasionally venturing out on small 1-2 day <a href="https://en.wikipedia.org/wiki/Backpacking_(hiking)">treks</a> with a tent. This style requires almost no money, and therefore allows me to work much less often. I also intend to try <b>moto-traveling</b> and <b>van-dwellling</b> in the future, but for now extreme is preferred — the lack of pretentiousness makes it possible to understand people better by living alongside them, as well as to learn how to get out of trouble, speak to people, not give up.</p></>}
                         backgroundColor="#E5E5E5"
                         justifyContent = 'start'
                         emojiAlign='center'
@@ -248,7 +248,7 @@ const About = () => {
                             emoji="🌍"
                             emojiGif={globe}
                             description={<>
-                                <p>I love <H>maps</H>, and especially to draw maps <i>of</i> and <i>for</i> my journeys. I turned map planning into a science, so now I treat traveling accordingly: <i>absolute</i> spontaneity isn't my style; I always need a plan and methodology. <br/><br/> So far, I've visited <H>{getNumOfVisitedISOa2()}</H><b>/{getNumOfAllISOa2()}</b> countries & territories. The globe is simplified: it omits routes and region/subject subdivision; for more detailed maps, see <Link to="/exploration">Exploration</Link>. <br/><br/> I'd like to save my methods and routes to share the stories behind them with people from around the world. One day, I hope to welcome guests to my home country with the same hospitality that I've experienced in my travels.</p>
+                                <p>I love <H>maps</H>, and especially to draw maps <i>of</i> and <i>for</i> my journeys. I turned map planning into a science, so now I treat traveling accordingly: <i>absolute</i> spontaneity isn't my style; I always need a plan and methodology. <br/><br/> So far, I've visited <H>{getNumOfVisitedISOa2()}</H><b>/{getNumOfAllISOa2()}</b> countries & territories. The globe is simplified: it omits routes and region/subject subdivision; for more detailed maps, see <Link to="/exploration">Exploration</Link>. <br/><br/> I'd like to <Link to="/handbook">save my methods</Link> and routes to share the stories behind them with people from around the world. One day, I hope to welcome guests to my home country with the same hospitality that I've experienced in my travels.</p>
                             </>}
                             isMarkdown={false}
                             backgroundColor="#dbdbdb"
@@ -452,36 +452,36 @@ const About = () => {
                     <div class="aboutBodyRegular">
                         <M text="# 🔥 INTERESTS"/>
                         <div class={stylesTagBadges.badgesAboutWrapper}>
-                            <div class={stylesTagBadges.badgeAbout}>🎒 Travel theory <Tooltip isBadge={true} text="This may sound ridiculous, but comfortable, interesting, cheap and safe (all in one) travel ALWAYS requires planning and extensive knowledge, e.g., understanding methods of transportation, local guidelines, tricks to save money, ways to find essentials and lodging w/o money, clothing and gear materials, proper communication with people, cartography, orienteering, basic survival skills, mending, weight optimization, natural phenomena and environments, physics, physiology, food energy value, different situations and many other topics along with common sense. Travel is a philosophy, a science and an art, and I'm all for rational travel."/></div>
-                            <div class={stylesTagBadges.badgeAboutMarked}>📜 History <Tooltip isBadge={true} text="I'm interested in the history of all regions and nations of the world, trying to invest some time in learning about places I visit — which makes a big difference in travel experience."/></div>
-                            <div class={stylesTagBadges.badgeAbout}>🤗 World cultures <Tooltip isBadge={true} text="Especially Nordic, Slavic and Himalayan cultures, as well as Japanese and Chinese art."/></div>
-                            <div class={stylesTagBadges.badgeAbout}>☯️ Eastern philosophy</div>
-                            <div class={stylesTagBadges.badgeAbout}>🗽 Political science</div>
-                            <div class={stylesTagBadges.badgeAbout}>📢 Politics</div>
-                            <div class={stylesTagBadges.badgeAbout}>🧭 Cartography</div>
-                            <div class={stylesTagBadges.badgeAbout}>🌍 Geography</div>
-                            <div class={stylesTagBadges.badgeAbout}>📊 Statistics</div>
-                            <div class={stylesTagBadges.badgeAboutMarked}>🤖 Machine learning</div>
-                            <div class={stylesTagBadges.badgeAbout}>🪶 Ultralight backpacking</div>
-                            <div class={stylesTagBadges.badgeAboutMarked}>📹 Vlogging</div>
-                            <div class={stylesTagBadges.badgeAbout}>🎥 Filmmaking <Tooltip isBadge={true} text="It's better to portray the spirit of wanderlust in fewer words, making an immersive experience of pure arthouse."/></div>
-                            <div class={stylesTagBadges.badgeAbout}>🎵 Music composition</div>
-                            <div class={stylesTagBadges.badgeAbout}>🏔️ Mountaineering <Tooltip isBadge={true} text="Nothing extreme, just casual mountain ascending. There is no better place in the world than mountains."/></div>
-                            <div class={stylesTagBadges.badgeAbout}>🌲 Bushcraft <Tooltip isBadge={true} text="Camping and wilderness survival skills: environmental understanding, tracking and observation, situational awareness, navigation, firecraft, food & water procurement, etc."/></div>
-                            <div class={stylesTagBadges.badgeAbout}>🔒 Cryptography <Tooltip isBadge={true} text="I'm fascinated by cryptography since high school (you know, felt like a hacker & netstalker), though I'm not savvy at it. Just curious about encryption methods and privacy in general, and would like to explore cybersec and complex algorithms deeply."/></div>
-                            <div class={stylesTagBadges.badgeAbout}>🌐 Cyberliberty <Tooltip isBadge={true} text="It's mostly about privacy-enhancing technologies (e.g., decentralized systems) and the culture of cypherpunks."/></div> 
-                            <div class={stylesTagBadges.badgeAbout}>🗄️ Self-hosting</div>   
-                            <div class={stylesTagBadges.badgeAbout}>👍 Hitchhiking</div>
-                            <div class={stylesTagBadges.badgeAboutMarked}>🛋️ Couchsurfing</div>
-                            <div class={stylesTagBadges.badgeAbout}>🔢 Number theory</div>
-                            <div class={stylesTagBadges.badgeAbout}>👾 Theoretical computer science <Tooltip isBadge={true} text="Especially information theory."/></div>
-                            <div class={stylesTagBadges.badgeAbout}>🎛️ Mixing & DJing</div>
-                            <div class={stylesTagBadges.badgeAboutMarked}>🔎 Data analysis</div>
-                            <div class={stylesTagBadges.badgeAboutMarked}>📶 Data visualization</div>
-                            <div class={stylesTagBadges.badgeAbout}>🏍️ Motorcycles <Tooltip isBadge={true} text="I like enduro bikes, but realistically, I'd rather buy a more practical motorcycle for traveling."/></div>
-                            <div class={stylesTagBadges.badgeAboutMarked}>📖 Russian literature</div>
-                            <div class={stylesTagBadges.badgeAbout}>🦾 AI research</div>
-                            <div class={stylesTagBadges.badgeAbout}>🧠 Philosophy of AI</div>
+                            <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🎒</span> Travel theory <Tooltip isBadge={true} text="This may sound ridiculous, but comfortable, interesting, cheap and safe (all in one) travel ALWAYS requires planning and extensive knowledge, e.g., understanding methods of transportation, local guidelines, tricks to save money, ways to find essentials and lodging w/o money, clothing and gear materials, proper communication with people, cartography, orienteering, basic survival skills, mending, weight optimization, natural phenomena and environments, physics, physiology, food energy value, different situations and many other topics along with common sense. Travel is a philosophy, a science and an art, and I'm all for rational travel."/></div>
+                            <div class={stylesTagBadges.badgeAboutMarked}><span class={stylesTagBadges.badgeEmoji}>📜</span> History <Tooltip isBadge={true} text="I'm interested in the history of all regions and nations of the world, trying to invest some time in learning about places I visit — which makes a big difference in travel experience."/></div>
+                            <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🤗</span> World cultures <Tooltip isBadge={true} text="Especially Nordic, Slavic and Himalayan cultures, as well as Japanese and Chinese art."/></div>
+                            <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>☯️</span> Eastern philosophy</div>
+                            <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🗽</span> Political science</div>
+                            <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>📢</span> Politics</div>
+                            <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🧭</span> Cartography</div>
+                            <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🌍</span> Geography</div>
+                            <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>📊</span> Statistics</div>
+                            <div class={stylesTagBadges.badgeAboutMarked}><span class={stylesTagBadges.badgeEmoji}>🤖</span> Machine learning</div>
+                            <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🪶</span> Ultralight backpacking</div>
+                            <div class={stylesTagBadges.badgeAboutMarked}><span class={stylesTagBadges.badgeEmoji}>📹</span> Vlogging</div>
+                            <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🎥</span> Filmmaking <Tooltip isBadge={true} text="It's better to portray the spirit of wanderlust in fewer words, making an immersive experience of pure arthouse."/></div>
+                            <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🎵</span> Music composition</div>
+                            <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🏔️</span> Mountaineering <Tooltip isBadge={true} text="Nothing extreme, just casual mountain ascending. There is no better place in the world than mountains."/></div>
+                            <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🌲</span> Bushcraft <Tooltip isBadge={true} text="Camping and wilderness survival skills: environmental understanding, tracking and observation, situational awareness, navigation, firecraft, food & water procurement, etc."/></div>
+                            <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🔒</span> Cryptography <Tooltip isBadge={true} text="I'm fascinated by cryptography since high school (you know, felt like a hacker & netstalker), though I'm not savvy at it. Just curious about encryption methods and privacy in general, and would like to explore cybersec and complex algorithms deeply."/></div>
+                            <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🌐</span> Cyberliberty <Tooltip isBadge={true} text="It's mostly about privacy-enhancing technologies (e.g., decentralized systems) and the culture of cypherpunks."/></div> 
+                            <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🗄️</span> Self-hosting</div>   
+                            <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>👍</span> Hitchhiking</div>
+                            <div class={stylesTagBadges.badgeAboutMarked}><span class={stylesTagBadges.badgeEmoji}>🛋️</span> Couchsurfing</div>
+                            <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🔢</span> Number theory</div>
+                            <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>👾</span> Theoretical computer science <Tooltip isBadge={true} text="Especially information theory."/></div>
+                            <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🎛️</span> Mixing & DJing</div>
+                            <div class={stylesTagBadges.badgeAboutMarked}><span class={stylesTagBadges.badgeEmoji}>🔎</span> Data analysis</div>
+                            <div class={stylesTagBadges.badgeAboutMarked}><span class={stylesTagBadges.badgeEmoji}>📶</span> Data visualization</div>
+                            <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🏍️</span> Motorcycles <Tooltip isBadge={true} text="I like enduro bikes, but realistically, I'd rather buy a more practical motorcycle for traveling."/></div>
+                            <div class={stylesTagBadges.badgeAboutMarked}><span class={stylesTagBadges.badgeEmoji}>📖</span> Russian literature</div>
+                            <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🦾</span> AI research</div>
+                            <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🧠</span> Philosophy of AI</div>
                             {/* Cybernetics, Transhumanism */}
                         </div>
                         <p><H color={"#ffd56a"}>Orange</H> indicates the topics and skills that I'm predominantly dedicated to right now (studying, practicing or simply being especially interested in). Actively learning/doing the same or want to share something? Feel free to <Link to="/contact">text me</Link>.</p>
@@ -552,7 +552,7 @@ const About = () => {
                         emoji="🐍"
                         emojiGif={snake}
                         description={<>
-                            <p>In most of my political attitudes, I support the ideas of <a href="https://en.wikipedia.org/wiki/Right-libertarianism">right-wing libertarianism</a> (more towards <a href="https://en.wikipedia.org/wiki/Classical_liberalism">classical liberalism</a>) and <a href="https://en.wikipedia.org/wiki/Cultural_conservatism">cultural conservatism</a> — as I'm moderately conservative overall.&nbsp; <Tooltip text={<>The closest political association to my views in Russia is the <b>Libertarian Party of Russia</b>, which is completely in political exile. <br/><br/> I keep supporting the party's efforts in distingushing Russian people from the Russian state, and defending them from collective discrimination.</>}/>
+                            <p>In most of my political attitudes, I support the ideas of <a href="https://en.wikipedia.org/wiki/Right-libertarianism">right-wing libertarianism</a> (more towards <a href="https://en.wikipedia.org/wiki/Classical_liberalism">classical liberalism</a>) and <a href="https://en.wikipedia.org/wiki/Cultural_conservatism">cultural conservatism</a> — as I'm moderately conservative overall.&nbsp; <Tooltip text={<>I support some initiatives of the <b>Libertarian Party of Russia</b> since 2018. The party proposes libertarian reforms in the political system of Russia, but since 2022 it has been completely in political exile, mostly being focused on distingushing Russian people from the Russian state against the backdrop of collective discrimination.</>}/>
                             </p>
                         </>}
                         backgroundColor="#fff491"
@@ -586,47 +586,47 @@ const About = () => {
             </div>
             <AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
                 <div class={stylesTagBadges.badgesAboutWrapper}>
-                    <div class={stylesTagBadges.badgeAbout} style={{ backgroundColor: "#f2f2f2", color: "black" }}><H>Leisure & favorite activities</H> &nbsp;</div>
-                    <div class={stylesTagBadges.badgeAbout}>🧭 Exploring little-known places <Tooltip isBadge={true} text="From private underground clubs and industrial landscapes (such as factory rooftops or abandoned subway stations) to the weirdest locations like cemeteries and remote villages: my life feels like an open-world game with achievements about searching for something."/></div>
-                    <div class={stylesTagBadges.badgeAbout}>💪 Calisthenics <Tooltip isBadge={true} text="There is nothing more satisfying in this world than working out in the cold with brutal metal in your ears. I love calisthenics for mobility (workout anywhere) and as a much healthier alternative to gym for my joints and heart."/></div>
-                    <div class={stylesTagBadges.badgeAbout}>🖼 Gazing at artworks <Tooltip isBadge={true} text="Especially I love Russian and Dutch landscape painters."/></div>
-                    <div class={stylesTagBadges.badgeAbout}>📝 Wikipedia <Tooltip isBadge={true} text="I have an addiction to reading Wikipedia for years, at times I edit it."/></div>
-                    <div class={stylesTagBadges.badgeAbout}>🏰 Fantasy RPG <Tooltip isBadge={true} text="Fantasy and medieval aesthetics seems to be my favorite theme in video games. Sometimes I also play DnD."/></div>
-                    <div class={stylesTagBadges.badgeAbout}>🏃 Trail running & hiking <Tooltip isBadge={true} text="I love nature and running, especially at dawn, and I avoid hurrying people. Running outdoors fits just right, as well as other outdoor activities."/></div>
-                    <div class={stylesTagBadges.badgeAbout}>📚 Libraries <Tooltip isBadge={true} text="I enjoy exploring libraries in different cities, often working from there (instead of boring coworking spaces), or reading encyclopedias."/></div>
+                    <div class={stylesTagBadges.badgeAbout} style={{ backgroundColor: "#f2f2f2", color: "black" }}><H>Leisure & favorite activities</H> <span className="desktopOnlySupport">&nbsp;</span></div>
+                    <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🧭</span> Exploring little-known places <Tooltip isBadge={true} text="From private underground clubs and industrial landscapes (such as factory rooftops or abandoned subway stations) to the weirdest locations like cemeteries and remote villages: my life feels like an open-world game with achievements about searching for something."/></div>
+                    <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>💪</span> Calisthenics <Tooltip isBadge={true} text="There is nothing more satisfying in this world than working out in the cold with brutal metal in your ears. I love calisthenics for mobility (workout anywhere) and as a much healthier alternative to gym for my joints and heart."/></div>
+                    <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🖼</span> Gazing at artworks <Tooltip isBadge={true} text="Especially I love Russian and Dutch landscape painters."/></div>
+                    <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>📝</span> Wikipedia <Tooltip isBadge={true} text="I have an addiction to reading Wikipedia for years, at times I edit it."/></div>
+                    <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🏰</span> Fantasy RPG <Tooltip isBadge={true} text="Fantasy and medieval aesthetics seems to be my favorite theme in video games. Sometimes I also play DnD."/></div>
+                    <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🏃</span> Trail running & hiking <Tooltip isBadge={true} text="I love nature and running, especially at dawn, and I avoid hurrying people. Running outdoors fits just right, as well as other outdoor activities."/></div>
+                    <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>📚</span> Libraries <Tooltip isBadge={true} text="I enjoy exploring libraries in different cities, often working from there (instead of boring coworking spaces), or reading encyclopedias."/></div>
                     {/* 
                         🍄 Foraging
                         🧘‍♂️ Meditation
                      */}
                 </div>
                 <div style={{ marginTop: "-1.5rem" }} class={stylesTagBadges.badgesAboutWrapper}>
-                    <div class={stylesTagBadges.badgeAbout} style={{ backgroundColor: "#f2f2f2", color: "black" }}><H>Music preferences</H> &nbsp;</div>
-                    <div class={stylesTagBadges.badgeAbout}>👿 Black metal <Tooltip isBadge={true} text={<>For many years, black metal – especially <b>atmospheric/ambient</b> BM and <b>folk/pagan</b> BM – has remained my absolute favorite genre. There's a special place in my heart for such cold music featuring themes of nature and solitude. I must mention a project called Paysage d'Hiver here, as my source of inspiration.</>}/></div>
-                    <div class={stylesTagBadges.badgeAbout}>🫥 Drone <Tooltip isBadge={true} text={<>Amps go <span style={{ opacity: 0.4 }}>BBBBBBBBBBBBBBBRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR~</span></>}/></div>
-                    <div class={stylesTagBadges.badgeAbout}>👁️ Dark ambient</div>
-                    <div class={stylesTagBadges.badgeAbout}>🫠 Noise</div>
-                    <div class={stylesTagBadges.badgeAbout}>🧙🏻‍♂️ Dungeon synth</div>
-                    <div class={stylesTagBadges.badgeAbout}>✖ Punk/crust</div>
-                    <div class={stylesTagBadges.badgeAbout}>🎸 Classic rock</div>
-                    <div class={stylesTagBadges.badgeAbout}>👽 Techno</div>
-                    <div class={stylesTagBadges.badgeAbout}>🪈 Folk music</div>
-                    <div class={stylesTagBadges.badgeAbout}>💀 Grindcore</div>
+                    <div class={stylesTagBadges.badgeAbout} style={{ backgroundColor: "#f2f2f2", color: "black" }}><H>Music preferences</H> <span className="desktopOnlySupport">&nbsp;</span></div>
+                    <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>👿</span> Black metal <Tooltip isBadge={true} text={<>For many years, black metal – especially <b>atmospheric/ambient</b> BM and <b>folk/pagan</b> BM – has remained my absolute favorite genre. There's a special place in my heart for such cold music featuring themes of nature and solitude. I must mention a project called Paysage d'Hiver here, as my source of inspiration.</>}/></div>
+                    <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🫥</span> Drone <Tooltip isBadge={true} text={<>Amps go <span style={{ opacity: 0.4 }}>BBBBBBBBBBBBBBBRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR~</span></>}/></div>
+                    <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>👁️</span> Dark ambient</div>
+                    <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🫠</span> Noise</div>
+                    <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🧙🏻‍♂️</span> Dungeon synth</div>
+                    <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>✖</span> Punk/crust</div>
+                    <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🎸</span> Classic rock</div>
+                    <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>👽</span> Techno</div>
+                    <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🪈</span> Folk music</div>
+                    <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>💀</span> Grindcore</div>
                     {/* stoner/doom, psychedelic/occult rock/metal, classical music */}
                 </div>
                 <div style={{ marginTop: "-1.5rem" }} class={stylesTagBadges.badgesAboutWrapper}>
-                    <div class={stylesTagBadges.badgeAbout} style={{ backgroundColor: "#f2f2f2", color: "black" }}><H>Misc</H> &nbsp;</div>
-                    <div class={stylesTagBadges.badgeAbout}>🌅 Early bird</div>
-                    <div class={stylesTagBadges.badgeAbout}>🍏 Flexitarian</div>
-                    <div class={stylesTagBadges.badgeAbout}>👶 Childless</div>
-                    <div class={stylesTagBadges.badgeAbout}>🐱 Pet-free</div>
-                    <div class={stylesTagBadges.badgeAbout}>🥃 Non-drinker</div>
-                    <div class={stylesTagBadges.badgeAbout}>🚬 Non-smoker</div>
-                    <div class={stylesTagBadges.badgeAbout}>🥶 Prefer cold climate</div>
-                    <div class={stylesTagBadges.badgeAbout}>😌 Prefer to live alone</div>
-                    <div class={stylesTagBadges.badgeAbout}>🇺🇸 C1</div>
-                    <div class={stylesTagBadges.badgeAbout}>🇪🇸 A2</div>
-                    <div class={stylesTagBadges.badgeAbout}>🇸🇪 A1</div>
-                    <div class={stylesTagBadges.badgeAbout}>🇷🇺 Native</div>
+                    <div class={stylesTagBadges.badgeAbout} style={{ backgroundColor: "#f2f2f2", color: "black" }}><H>Misc</H> <span className="desktopOnlySupport">&nbsp;</span></div>
+                    <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🌅</span> Early bird</div>
+                    <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🍏</span> Flexitarian</div>
+                    <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>👶</span> Childless</div>
+                    <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🐱</span> Pet-free</div>
+                    <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🥃</span> Non-drinker</div>
+                    <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🚬</span> Non-smoker</div>
+                    <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🥶</span> Prefer cold climate</div>
+                    <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>😌</span> Prefer to live alone</div>
+                    <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🇺🇸</span> C1</div>
+                    <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🇪🇸</span> A2</div>
+                    <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🇸🇪</span> A1</div>
+                    <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🇷🇺</span> Native</div>
                 </div>
             </AnimationOnScroll>
             <AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">

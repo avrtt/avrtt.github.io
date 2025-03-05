@@ -24,6 +24,12 @@ $font-weight-bold: bold;
   @include badge-styles($badge-bg-default);
 }
 
+.badgeEmoji {
+  @include respond-to(mobile) { display: none }
+  @include respond-to(small-tablet) { display: none }
+  @include respond-to(tablet) { display: none }
+}
+
 .badgeAboutMarked {
   @include badge-styles($badge-bg-marked);
 }
