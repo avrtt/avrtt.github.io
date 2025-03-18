@@ -34,7 +34,9 @@
   },
   "devDependencies": {
     "@types/d3": "^7.4.3",
-    "gh-pages": "^4.0.0"
+    "gh-pages": "^4.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
@@ -57,7 +59,6 @@
     "gatsby-source-filesystem": "^5.13.1",
     "gatsby-transformer-sharp": "^5.13.1",
     "gatsby-transformer-yaml": "^5.13.1",
-    "react": "^18.3.1",
     "react-animation-on-scroll": "^5.1.0",
     "react-jvectormap": "^0.0.16",
     "react-latex-next": "^3.0.0",
