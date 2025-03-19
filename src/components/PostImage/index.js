@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { AnimationOnScroll } from 'react-animation-on-scroll';
 import { GatsbyImage, getImage, StaticImage } from 'gatsby-plugin-image';
-import { graphql, useStaticQuery } from "gatsby";
+import { ImageContext } from '../../context/ImageContext';
 import Zoom from 'react-medium-image-zoom';
 import * as styles from './styles.module.scss'; 
 import 'react-medium-image-zoom/dist/styles.css'
-import 'animate.css/animate.min.css';  
+import 'animate.css/animate.min.css';
 
 const imageStyle = {
   "padding-bottom": "0px",
@@ -24,37 +24,19 @@ const notFoundStyle = {
 }
 
 const Image = ({ path, alt, caption="", zoom=false, offset="300" }) => {
-  const data = useStaticQuery(graphql`
-    query {
-      allFile(
-        filter: { 
-          sourceInstanceName: { eq: "images" },
-          relativePath: { regex: "/posts/(adventures|research|thoughts)/" }
-        }
-      ) {
-        nodes {
-          childImageSharp {
-            gatsbyImageData(
-              layout: CONSTRAINED
-              placeholder: DOMINANT_COLOR
-              quality: 100
-            )
-          }
-          relativePath
-        }
-      }
-    }
-  `);
+  const { images, basePath } = useContext(ImageContext);
 
   if (!alt) alert(`An image with missing alt prop was detected! Please provide an informative description required for SEO. Path: ${path}`)
 
-  var image, imageData
+  let imageNode, imageData
   if (path) {
-    image = data.allFile.nodes.find(node => node.relativePath === path);
-    imageData = getImage(image.childImageSharp.gatsbyImageData);
+    imageNode = images.find(node => node.relativePath === `${basePath}${path}`);
+    if (imageNode) {
+      imageData = getImage(imageNode.childImageSharp.gatsbyImageData);
+    }
   }
 
-  if (!image) {
+  if (!imageNode) {
     return (
       <div style={notFoundStyle}>
         <span>
@@ -67,14 +49,14 @@ const Image = ({ path, alt, caption="", zoom=false, offset="300" }) => {
         <p>An image was requested, but the frog was found.</p>
         {alt ? <p>Alt: "{alt}"</p> : <p>No alt specified!</p>}
         {caption ? <p>Caption: "{caption}"</p> : <p>No caption specified!</p>}
-        {path ? <p>Missing path: <strong>"{path}"</strong></p> : <p>Error type: <strong>missing path</strong></p>}
+        {path ? <p>Missing path: <strong>"{basePath}{path}"</strong></p> : <p>Error type: <strong>missing path</strong></p>}
       </div>
     )
   }
 
-  if (zoom == "true") {
+  if (zoom === "true") {
     zoom = true
-  } else if (zoom = "false") {
+  } else if (zoom === "false") {
     zoom = false
   }
 

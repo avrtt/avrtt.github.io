@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useSiteMetadata } from "../hooks/useSiteMetadata"
 import RemoveMarkdown from 'remove-markdown';
+import { ImageContext } from '../context/ImageContext';
+import { MDXProvider } from '@mdx-js/react';
+import Image from '../components/PostImage';
 import { motion } from 'framer-motion';
 import SEO from "../components/seo"
 import PostBanner from '../components/PostBanner';
@@ -72,7 +75,7 @@ const TableOfContents = ({ toc }) => {
   )
 }
 
-export function PostTemplate({ data: { mdx, allMdx }, children }) {
+export function PostTemplate({ data: { mdx, allMdx, allPostImages }, children, pageContext }) {
 
   const { frontmatter, body, tableOfContents } = mdx;
   const index = frontmatter.index;
@@ -83,7 +86,9 @@ export function PostTemplate({ data: { mdx, allMdx }, children }) {
   const currentIndex = sortedPosts.findIndex(post => post.frontmatter.index === index);
   const nextPost = sortedPosts[currentIndex + 1];
   const lastPost = sortedPosts[currentIndex - 1];
-  const keyCurrent = /[^/]*$/.exec(frontmatter.slug)[0];
+  const trimmedSlug = frontmatter.slug.replace(/\/$/, '');
+  const keyCurrent = /[^/]*$/.exec(trimmedSlug)[0];
+  const basePath = `posts/${section}/content/${keyCurrent}/`;
   
   const [isWideLayout, setIsWideLayout] = useState(frontmatter.flagWideLayoutByDefault);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -205,7 +210,16 @@ export function PostTemplate({ data: { mdx, allMdx }, children }) {
           {frontmatter.flagPolitical ? <PoliticsNotice/> : ""}
           {frontmatter.flagCognitohazard ? <CognitohazardNotice/> : ""}
           {frontmatter.flagHidden ? <HiddenNotice/> : ""}
-          {children}
+          <ImageContext.Provider
+            value={{
+              images: allPostImages.nodes,
+              basePath: basePath.replace(/\/$/, '') + '/',
+            }}
+          >
+            <MDXProvider components={{ Image }}>
+              {children}
+            </MDXProvider>
+          </ImageContext.Provider>
         </div>
       </div>
 
@@ -297,7 +311,7 @@ export function Head({ data }) {
 }
 
 export const query = graphql`
-  query($id: String!, $section: String!) {
+  query($id: String!, $postsFilterRegex: String!, $imagePathRegex: String!) {
     mdx(id: { eq: $id }) {
       frontmatter {
         index
@@ -349,7 +363,7 @@ export const query = graphql`
       body
       tableOfContents(maxDepth: 3)
     }
-    allMdx(filter: {frontmatter: {slug: {regex: $section}}}) {
+    allMdx(filter: {frontmatter: {slug: {regex: $postsFilterRegex}}}) {
       nodes {
         frontmatter {
           index
@@ -366,7 +380,22 @@ export const query = graphql`
         }
       }
     }
+    allPostImages: allFile(
+      filter: { 
+        sourceInstanceName: { eq: "images" },
+        relativePath: { regex: $imagePathRegex }
+      }
+    ) {
+      nodes {
+        relativePath
+        childImageSharp {
+          gatsbyImageData(
+            layout: CONSTRAINED
+            placeholder: DOMINANT_COLOR
+            quality: 100
+          )
+        }
+      }
+    }
   }
 `;
-
-

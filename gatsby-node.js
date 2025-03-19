@@ -48,14 +48,19 @@ exports.createPages = async ({ actions, graphql }) => {
 
     if (node.internal.contentFilePath.includes('src/pages/posts')) {
       const PostTemplate = path.resolve(`./src/templates/post.js`);
-      const section = `/${node.frontmatter.slug.split('/')[1]}/`;
-
+      const slug = node.frontmatter.slug;
+      const slugParts = slug.split('/').filter(part => part !== '');
+      const section = slugParts[0];
+      const postName = slugParts[1];
+      const postsFilterRegex = `/${section}/`;
+      
       createPage({
         path: node.frontmatter.slug, 
         component: `${PostTemplate}?__contentFilePath=${node.internal.contentFilePath}`,
         context: { 
           id: node.id,
-          section,
+          postsFilterRegex,
+          imagePathRegex: `^posts/${section}/content/${postName}/`,
         },
       });
     }
