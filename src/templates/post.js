@@ -10,16 +10,6 @@ import PostBanner from '../components/PostBanner';
 import PostBottom from'../components/PostBottom'; 
 import { wordsPerMinuteAdventures, wordsPerMinuteResearch, wordsPerMinuteThoughts } from '../data/commonVariables';
 import { graphql } from 'gatsby';
-import NotFinishedNotice from "../components/NotFinishedNotice"
-import MindfuckeryNotice from "../components/MindfuckeryNotice"
-import RewriteNotice from "../components/RewriteNotice"
-import OffensiveNotice from "../components/OffensiveNotice"
-import ProfanityNotice from "../components/ProfanityNotice"
-import MultilingualNotice from "../components/MultilingualNotice"
-import UnreliablyNotice from "../components/UnreliablyNotice"
-import PoliticsNotice from "../components/PoliticsNotice"
-import CognitohazardNotice from "../components/CognitohazardNotice"
-import HiddenNotice from "../components/HiddenNotice"
 import PartOfCourseNotice from "../components/PartOfCourseNotice"
 import * as stylesButtonsCommon from "../styles/buttons_common.module.scss"
 import * as stylesCustomPostLayouts from "../styles/custom_post_layouts.module.scss"
@@ -124,6 +114,31 @@ export function PostTemplate({ data: { mdx, allMdx, allPostImages }, children, p
   const totalReadTime = baseReadTimeMinutes + extraTime;
   const readTime = formatReadTime(totalReadTime);
 
+  const notices = [
+    { flag: frontmatter.flagDraft, component: () => import("../components/NotFinishedNotice") },
+    { flag: frontmatter.flagMindfuckery, component: () => import("../components/MindfuckeryNotice") },
+    { flag: frontmatter.flagRewrite, component: () => import("../components/RewriteNotice") },
+    { flag: frontmatter.flagOffensive, component: () => import("../components/OffensiveNotice") },
+    { flag: frontmatter.flagProfane, component: () => import("../components/ProfanityNotice") },
+    { flag: frontmatter.flagMultilingual, component: () => import("../components/MultilingualNotice") },
+    { flag: frontmatter.flagUnreliably, component: () => import("../components/UnreliablyNotice") },
+    { flag: frontmatter.flagPolitical, component: () => import("../components/PoliticsNotice") },
+    { flag: frontmatter.flagCognitohazard, component: () => import("../components/CognitohazardNotice") },
+    { flag: frontmatter.flagHidden, component: () => import("../components/HiddenNotice") },
+  ];
+
+  const [loadedNotices, setLoadedNotices] = useState([]);
+
+  useEffect(() => {
+    notices.forEach(({ flag, component }) => {
+      if (flag) {
+        component().then((module) => {
+          setLoadedNotices((prev) => [...prev, module.default]);
+        });
+      }
+    });
+  }, []);
+
   return (
     <motion.div 
       initial={{opacity: 0}} 
@@ -199,17 +214,8 @@ export function PostTemplate({ data: { mdx, allMdx, allPostImages }, children, p
           transition: "margin 1s ease, max-width 1s ease, padding 1s ease",
       }}>
         <div className={`${stylesCustomPostLayouts.textContent} ${isAnimating ? stylesCustomPostLayouts.fadeOut : stylesCustomPostLayouts.fadeIn}`}>
-          {frontmatter.flagDraft ? <NotFinishedNotice/> : ""}
+          {loadedNotices.map((NoticeComponent, index) => <NoticeComponent key={index} />)}
           {frontmatter.indexCourse ? <PartOfCourseNotice index={frontmatter.indexCourse} category={frontmatter.courseCategoryName} /> : "" }
-          {frontmatter.flagMindfuckery ? <MindfuckeryNotice/> : ""}
-          {frontmatter.flagRewrite ? <RewriteNotice/> : ""}
-          {frontmatter.flagOffensive ? <OffensiveNotice/> : ""}
-          {frontmatter.flagProfane ? <ProfanityNotice/> : ""}
-          {frontmatter.flagMultilingual ? <MultilingualNotice/> : ""}
-          {frontmatter.flagUnreliably ? <UnreliablyNotice/> : ""}
-          {frontmatter.flagPolitical ? <PoliticsNotice/> : ""}
-          {frontmatter.flagCognitohazard ? <CognitohazardNotice/> : ""}
-          {frontmatter.flagHidden ? <HiddenNotice/> : ""}
           <ImageContext.Provider
             value={{
               images: allPostImages.nodes,
