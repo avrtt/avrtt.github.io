@@ -12,7 +12,7 @@ const LastThreeGalleryImages = () => {
           sourceInstanceName: { eq: "images" }
           relativeDirectory: { eq: "gallery" }
         }
-        sort: { fields: birthtime, order: DESC }
+        sort: { birthtime: DESC }
         limit: 3
       ) {
         nodes {
