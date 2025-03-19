@@ -1,4 +1,4 @@
-@import 'mixins';
+@use 'mixins';
 
 $bg-light: #e7e7e7;
 $btn-bg: #c9c9c9;
@@ -25,11 +25,11 @@ $border-radius: 1vh;
   border-radius: 0 $border-radius $border-radius $border-radius;
   max-width: 100%;
   font-weight: lighter;
-  @include respond-to(mobile) { line-height: 1.25rem; border-radius: $border-radius; }
-  @include respond-to(small-tablet) { line-height: 1.4rem; border-radius: $border-radius; }
-  @include respond-to(tablet) { line-height: 1.6rem; border-radius: $border-radius; }
-  @include respond-to(small-desktop) { line-height: 1.8rem; }
-  @include respond-to(desktop) { line-height: 1.8rem; }
+  @include mixins.respond-to(mobile) { line-height: 1.25rem; border-radius: $border-radius; }
+  @include mixins.respond-to(small-tablet) { line-height: 1.4rem; border-radius: $border-radius; }
+  @include mixins.respond-to(tablet) { line-height: 1.6rem; border-radius: $border-radius; }
+  @include mixins.respond-to(small-desktop) { line-height: 1.8rem; }
+  @include mixins.respond-to(desktop) { line-height: 1.8rem; }
 }
 
 .spoilerContent,
@@ -37,11 +37,17 @@ $border-radius: 1vh;
 .spoilerContentGoals,
 .spoilerContentFAQ {
   @include content-base;
-  @include respond-to(mobile) { line-height: 1.25rem; }
-  @include respond-to(small-tablet) { line-height: 1.4rem; }
-  @include respond-to(tablet) { line-height: 1.6rem; }
-  @include respond-to(small-desktop) { line-height: 1.8rem; }
-  @include respond-to(desktop) { line-height: 1.8rem; }
+  @include mixins.respond-to(mobile) { line-height: 1.25rem; }
+  @include mixins.respond-to(small-tablet) { line-height: 1.4rem; }
+  @include mixins.respond-to(tablet) { line-height: 1.6rem; }
+  @include mixins.respond-to(small-desktop) { line-height: 1.8rem; }
+  @include mixins.respond-to(desktop) { line-height: 1.8rem; }
+
+  ul li {
+    @include mixins.respond-to(mobile) { margin: 0; }
+    @include mixins.respond-to(small-tablet) { margin: 0; }
+    @include mixins.respond-to(tablet) { margin: 0; }
+  }
 }
 
 .spoilerContent {
@@ -60,8 +66,8 @@ $border-radius: 1vh;
 }
 
 .spoilerContentGoals {
-  @include respond-to(small-desktop) { margin-top: 2.5rem; margin-bottom: 2rem; }
-  @include respond-to(desktop) { margin-top: 2.5rem; margin-bottom: 2rem; }
+  @include mixins.respond-to(small-desktop) { margin-top: 2.5rem; margin-bottom: 2rem; }
+  @include mixins.respond-to(desktop) { margin-top: 2.5rem; margin-bottom: 2rem; }
 
   li {
     margin: 0.75rem 0;
@@ -76,13 +82,13 @@ $border-radius: 1vh;
 .spoilerContentAbout {
   margin: 0;
   padding: 0 1rem 0.5rem 1rem;
-  @include respond-to(small-desktop) { padding: 0 1rem 1.5rem 1rem; }
-  @include respond-to(desktop) { padding: 0 1rem 1.5rem 1rem; }
+  @include mixins.respond-to(small-desktop) { padding: 0 1rem 1.5rem 1rem; }
+  @include mixins.respond-to(desktop) { padding: 0 1rem 1.5rem 1rem; }
 }
 
 .spoilerContentFAQ {
-  @include respond-to(small-desktop) { margin-top: 2.5rem; margin-bottom: 2rem; }
-  @include respond-to(desktop) { margin-top: 2.5rem; margin-bottom: 2rem; }
+  @include mixins.respond-to(small-desktop) { margin-top: 2.5rem; margin-bottom: 2rem; }
+  @include mixins.respond-to(desktop) { margin-top: 2.5rem; margin-bottom: 2rem; }
 }
 
 .spoilerBlockQA {
@@ -127,8 +133,8 @@ $border-radius: 1vh;
   margin-top: -1.5rem;
   margin-bottom: 1.375rem;
   line-height: 1rem;
-  @include respond-to(small-desktop) { line-height: 1.4rem; }
-  @include respond-to(desktop) { line-height: 1.4rem; }
+  @include mixins.respond-to(small-desktop) { line-height: 1.4rem; }
+  @include mixins.respond-to(desktop) { line-height: 1.4rem; }
 }
 
 .spoilerText {
@@ -152,11 +158,11 @@ $border-radius: 1vh;
   font-weight: bold;
   color: $btn-text;
 
-  @include respond-to(mobile) { padding: 0.5rem; display: block; margin-left: auto; margin-right: auto; }
-  @include respond-to(small-tablet) { padding: 0.5rem; display: block; margin-left: auto; margin-right: auto; }
-  @include respond-to(tablet) { padding: 0.5rem; display: block; margin-left: auto; margin-right: auto; }
-  @include respond-to(small-desktop) { padding: 0.7rem; }
-  @include respond-to(desktop) { padding: 0.75rem; }
+  @include mixins.respond-to(mobile) { padding: 0.5rem; display: block; margin-left: auto; margin-right: auto; }
+  @include mixins.respond-to(small-tablet) { padding: 0.5rem; display: block; margin-left: auto; margin-right: auto; }
+  @include mixins.respond-to(tablet) { padding: 0.5rem; display: block; margin-left: auto; margin-right: auto; }
+  @include mixins.respond-to(small-desktop) { padding: 0.7rem; }
+  @include mixins.respond-to(desktop) { padding: 0.75rem; }
 
   &:hover {
     background-color: $btn-hover-bg;

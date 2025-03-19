@@ -1,4 +1,4 @@
-@import 'mixins';
+@use 'mixins';
 
 $bg-dark: rgb(70, 70, 70);
 $bg-light: #ffffff;
@@ -42,11 +42,11 @@ $padding-default: 20px 20px 8px 20px;
   width: 100%; 
   height: 100%;
   box-sizing: border-box;
-  @include respond-to(mobile) { line-height: 1.25rem; }
-  @include respond-to(small-tablet) { line-height: 1.4rem; }
-  @include respond-to(tablet) { line-height: 1.6rem; }
-  @include respond-to(small-desktop) { line-height: 1.8rem; }
-  @include respond-to(desktop) { line-height: 1.8rem; }
+  @include mixins.respond-to(mobile) { line-height: 1.25rem; }
+  @include mixins.respond-to(small-tablet) { line-height: 1.4rem; }
+  @include mixins.respond-to(tablet) { line-height: 1.6rem; }
+  @include mixins.respond-to(small-desktop) { line-height: 1.8rem; }
+  @include mixins.respond-to(desktop) { line-height: 1.8rem; }
 }
 
 .sourceIcon {
@@ -74,9 +74,9 @@ $padding-default: 20px 20px 8px 20px;
   margin: 0 auto;
   max-width: 100%; 
   box-sizing: border-box;
-  @include respond-to(mobile) { grid-template-columns: 1fr; }
-  @include respond-to(small-tablet) { grid-template-columns: 1fr; }
-  @include respond-to(tablet) { grid-template-columns: 1fr; }
+  @include mixins.respond-to(mobile) { grid-template-columns: 1fr; }
+  @include mixins.respond-to(small-tablet) { grid-template-columns: 1fr; }
+  @include mixins.respond-to(tablet) { grid-template-columns: 1fr; }
 }
 
 .freelanceCategoryWrapper:hover {
@@ -112,15 +112,15 @@ $padding-default: 20px 20px 8px 20px;
 }
 
 .categorySwitchWrapper {
-  @include respond-to(mobile) { display: none }
-  @include respond-to(small-tablet) { display: none }
-  @include respond-to(tablet) { display: none }
+  @include mixins.respond-to(mobile) { display: none }
+  @include mixins.respond-to(small-tablet) { display: none }
+  @include mixins.respond-to(tablet) { display: none }
 }
 
 .languageSwitchWrapper {
-  @include respond-to(mobile) { transform: translate(0, 0); left: 0; right: 0; top: 5.5rem; margin-inline: auto; width: fit-content; }
-  @include respond-to(small-tablet) { transform: translate(0, 0); left: 0; right: 0; top: 5.5rem; margin-inline: auto; width: fit-content; }
-  @include respond-to(tablet) { transform: translate(0, 0); left: 0; right: 0; top: 7rem; margin-inline: auto; width: fit-content; }
+  @include mixins.respond-to(mobile) { transform: translate(0, 0); left: 0; right: 0; top: 5.5rem; margin-inline: auto; width: fit-content; }
+  @include mixins.respond-to(small-tablet) { transform: translate(0, 0); left: 0; right: 0; top: 5.5rem; margin-inline: auto; width: fit-content; }
+  @include mixins.respond-to(tablet) { transform: translate(0, 0); left: 0; right: 0; top: 7rem; margin-inline: auto; width: fit-content; }
 }
 
 .languageButton {
@@ -137,9 +137,9 @@ $padding-default: 20px 20px 8px 20px;
   color: $color-gray;
   opacity: 1;
   @include transition(opacity, 0.1s);
-  @include respond-to(mobile) { width: 3.5rem; height: 1.5rem; padding-right: 1rem }
-  @include respond-to(small-tablet) { width: 5rem; height: 2.2rem; }
-  @include respond-to(tablet) { width: 5.5rem; height: 2.5rem; }
+  @include mixins.respond-to(mobile) { width: 3.5rem; height: 1.5rem; padding-right: 1rem }
+  @include mixins.respond-to(small-tablet) { width: 5rem; height: 2.2rem; }
+  @include mixins.respond-to(tablet) { width: 5.5rem; height: 2.5rem; }
 
   &:hover {
     opacity: 0.8;
@@ -204,6 +204,6 @@ $padding-default: 20px 20px 8px 20px;
 }
 
 #freelanceWorkflowItem {
-  @include respond-to(small-desktop) { margin-left: 40px; }
-  @include respond-to(desktop) { margin-left: 40px; }
+  @include mixins.respond-to(small-desktop) { margin-left: 40px; }
+  @include mixins.respond-to(desktop) { margin-left: 40px; }
 }

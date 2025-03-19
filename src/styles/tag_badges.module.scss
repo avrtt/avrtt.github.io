@@ -1,4 +1,4 @@
-@import 'mixins';
+@use 'mixins';
 
 $badge-bg-default: #D7D7D7;
 $badge-bg-marked: #ffd56a;
@@ -25,9 +25,9 @@ $font-weight-bold: bold;
 }
 
 .badgeEmoji {
-  @include respond-to(mobile) { display: none }
-  @include respond-to(small-tablet) { display: none }
-  @include respond-to(tablet) { display: none }
+  @include mixins.respond-to(mobile) { display: none }
+  @include mixins.respond-to(small-tablet) { display: none }
+  @include mixins.respond-to(tablet) { display: none }
 }
 
 .badgeAboutMarked {
@@ -39,7 +39,7 @@ $font-weight-bold: bold;
   max-width: 100%;
   text-align: center;
   font-size: clamp(0.8rem, 2.5vw, 1.4rem);
-  @include respond-to(mobile) {
+  @include mixins.respond-to(mobile) {
     max-width: 100vw;
     width: 100vw;
     margin-left: calc(-50vw + 50%);
@@ -48,7 +48,7 @@ $font-weight-bold: bold;
     padding-right: 0.5rem;
     box-sizing: border-box;
   }
-  @include respond-to(small-tablet) {
+  @include mixins.respond-to(small-tablet) {
     max-width: 100vw;
     width: 100vw;
     margin-left: calc(-50vw + 50%);
@@ -57,7 +57,7 @@ $font-weight-bold: bold;
     padding-right: 0.5rem;
     box-sizing: border-box;
   }
-  @include respond-to(tablet) {
+  @include mixins.respond-to(tablet) {
     max-width: 100vw;
     width: 100vw;
     margin-left: calc(-50vw + 50%);
@@ -72,9 +72,9 @@ $font-weight-bold: bold;
   @include badge-styles($badge-bg-default, 11px, 1px 2.5px);
   font-size: 19px;
   padding: 0 11px;
-  @include respond-to(mobile) { display: none }
-  @include respond-to(small-tablet) { display: none }
-  @include respond-to(tablet) { display: none }
+  @include mixins.respond-to(mobile) { display: none }
+  @include mixins.respond-to(small-tablet) { display: none }
+  @include mixins.respond-to(tablet) { display: none }
 }
 
 .mainTagGallery {

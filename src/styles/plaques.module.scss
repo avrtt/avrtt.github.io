@@ -1,14 +1,14 @@
-@import 'mixins';
+@use 'mixins';
 
 .greyNotice, .yellowNotice, .greyNoticeCompact {
   max-width: 100%;
   border-radius: 2vh;
   font-weight: lighter;
-  @include respond-to(mobile) { line-height: 1.25rem; }
-  @include respond-to(small-tablet) { line-height: 1.4rem; }
-  @include respond-to(tablet) { line-height: 1.6rem; }
-  @include respond-to(small-desktop) { line-height: 1.8rem; }
-  @include respond-to(desktop) { line-height: 2rem; }
+  @include mixins.respond-to(mobile) { line-height: 1.25rem; }
+  @include mixins.respond-to(small-tablet) { line-height: 1.4rem; }
+  @include mixins.respond-to(tablet) { line-height: 1.6rem; }
+  @include mixins.respond-to(small-desktop) { line-height: 1.8rem; }
+  @include mixins.respond-to(desktop) { line-height: 2rem; }
 }
 
 .greyNotice {
@@ -17,8 +17,8 @@
   padding: 0.1em 1em 0.1em 1em;
   margin-top: 1rem;
   margin-bottom: 3rem;
-  @include respond-to(small-desktop) { padding: 0.5em 2.5em; }
-  @include respond-to(desktop) { padding: 0.5em 2.5em; }
+  @include mixins.respond-to(small-desktop) { padding: 0.5em 2.5em; }
+  @include mixins.respond-to(desktop) { padding: 0.5em 2.5em; }
 }
 
 .yellowNotice {
@@ -27,8 +27,8 @@
   padding: 0.1em 1em 0.1em 1em;
   margin-top: 1rem;
   margin-bottom: 3rem;
-  @include respond-to(small-desktop) { padding: 0.5em 2.5em; }
-  @include respond-to(desktop) { padding: 0.5em 2.5em; }
+  @include mixins.respond-to(small-desktop) { padding: 0.5em 2.5em; }
+  @include mixins.respond-to(desktop) { padding: 0.5em 2.5em; }
 }
 
 .greyNoticeCompact {
@@ -36,6 +36,6 @@
   background-color: #f2f2f2;
   padding: 0.1em 1em 0.1em 1em;
   margin-top: 1rem;
-  @include respond-to(small-desktop) { padding: 0.5em 2em 0.1em 2em; }
-  @include respond-to(desktop) { padding: 0.5em 2em 0.1em 2em; }
+  @include mixins.respond-to(small-desktop) { padding: 0.5em 2em 0.1em 2em; }
+  @include mixins.respond-to(desktop) { padding: 0.5em 2em 0.1em 2em; }
 }

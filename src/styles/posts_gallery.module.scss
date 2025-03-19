@@ -1,13 +1,13 @@
-@import 'mixins';
+@use 'mixins';
 
 .prevHome {
   display: block;
   width: 100%;
   max-width: 100%;
-  @include respond-to(mobile) { display: none }
-  @include respond-to(small-tablet) { display: none }
-  @include respond-to(tablet) { display: none }
-  @include respond-to(small-desktop) { display: none }
+  @include mixins.respond-to(mobile) { display: none }
+  @include mixins.respond-to(small-tablet) { display: none }
+  @include mixins.respond-to(tablet) { display: none }
+  @include mixins.respond-to(small-desktop) { display: none }
 }
   
 .prew {
@@ -31,10 +31,10 @@
   text-shadow: 0 0px 0 #7C7C7C;
   padding: 0 1em;
   margin: 0.3em 0;
-  @include respond-to(mobile) { display: none }
-  @include respond-to(small-tablet) { display: none }
-  @include respond-to(tablet) { display: none }
-  @include respond-to(small-desktop) { display: none }
+  @include mixins.respond-to(mobile) { display: none }
+  @include mixins.respond-to(small-tablet) { display: none }
+  @include mixins.respond-to(tablet) { display: none }
+  @include mixins.respond-to(small-desktop) { display: none }
 }
   
 .titleblock {

@@ -1,4 +1,4 @@
-@import 'mixins';
+@use 'mixins';
 
 $primary-gray: #444444;
 $light-gray: #8e8e8e;
@@ -62,9 +62,9 @@ $legendary-bg: #fc7e00;
   color: $dark-gray;
   margin-right: 12px;
   @include transition(width 0.3s ease, background-color 0.1s ease);
-  @include respond-to(mobile) { margin: 2px; padding: 0.5rem; }
-  @include respond-to(small-tablet) { margin: 2px; padding: 0.5rem; }
-  @include respond-to(tablet) { margin: 2px; padding: 0.5rem; }
+  @include mixins.respond-to(mobile) { margin: 2px; padding: 0.5rem; }
+  @include mixins.respond-to(small-tablet) { margin: 2px; padding: 0.5rem; }
+  @include mixins.respond-to(tablet) { margin: 2px; padding: 0.5rem; }
 
   &:hover {
     background-color: $hover-gray;
@@ -119,17 +119,17 @@ $legendary-bg: #fc7e00;
 }
 
 #checkboxStyle, #checkboxStyleEmptyDate {
-  @include respond-to(mobile) { margin-left: -1.4rem }
-  @include respond-to(small-tablet) { margin-left: -1.4rem }
-  @include respond-to(tablet) { margin-left: -2rem }
-  @include respond-to(small-desktop) { margin-left: -3rem }
-  @include respond-to(desktop) { margin-left: -4rem }
+  @include mixins.respond-to(mobile) { margin-left: -1.4rem }
+  @include mixins.respond-to(small-tablet) { margin-left: -1.4rem }
+  @include mixins.respond-to(tablet) { margin-left: -2rem }
+  @include mixins.respond-to(small-desktop) { margin-left: -3rem }
+  @include mixins.respond-to(desktop) { margin-left: -4rem }
 }
 
 #infoExtra {
-  @include respond-to(mobile) { margin-right: -1.4rem }
-  @include respond-to(small-tablet) { margin-right: -1.4rem }
-  @include respond-to(tablet) { margin-right: -2rem }
+  @include mixins.respond-to(mobile) { margin-right: -1.4rem }
+  @include mixins.respond-to(small-tablet) { margin-right: -1.4rem }
+  @include mixins.respond-to(tablet) { margin-right: -2rem }
 }
 
 #infoExtra.y {
@@ -148,7 +148,7 @@ $legendary-bg: #fc7e00;
 }
 
 .textExtra {
-  @include respond-to(mobile) { padding-left: 0.5rem; }
+  @include mixins.respond-to(mobile) { padding-left: 0.5rem; }
 }
 
 #link, #checkboxStyle, #checkboxStyleEmptyDate {
@@ -167,8 +167,8 @@ $legendary-bg: #fc7e00;
 
 .goalCategoryTable th, td {
   padding-bottom: 0.2rem;
-  @include respond-to(small-desktop) { padding-bottom: 0.5rem }
-  @include respond-to(desktop) { padding-bottom: 0.5rem }
+  @include mixins.respond-to(small-desktop) { padding-bottom: 0.5rem }
+  @include mixins.respond-to(desktop) { padding-bottom: 0.5rem }
 }
 
 .tooltipGoals {
@@ -192,7 +192,7 @@ $legendary-bg: #fc7e00;
     transition: opacity 0.3s;
     pointer-events: none;
     line-height: 1.25rem;
-    @include respond-to(mobile) { 
+    @include mixins.respond-to(mobile) { 
         position: fixed; 
         top: 50%; 
         left: 50%; 
@@ -207,7 +207,7 @@ $legendary-bg: #fc7e00;
         -ms-user-select: none;
         user-select: none;
     }
-    @include respond-to(small-tablet) { 
+    @include mixins.respond-to(small-tablet) { 
         position: fixed; 
         top: 50%; 
         left: 50%; 
@@ -222,7 +222,7 @@ $legendary-bg: #fc7e00;
         -ms-user-select: none;
         user-select: none;
     }
-    @include respond-to(tablet) { 
+    @include mixins.respond-to(tablet) { 
         position: fixed; 
         top: 50%; 
         left: 50%; 

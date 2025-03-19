@@ -1,4 +1,4 @@
-@import 'mixins';
+@use 'mixins';
 
 $color-gray-light: #858585;
 $color-gray-medium: #999999;
@@ -27,9 +27,9 @@ h1 {
   font-size: clamp(1.2rem, 2.5vw, 1.5rem);
   @include no-select;
 
-  @include respond-to(tablet) { margin: -0.5rem -10vw 1rem -10vw; border-radius: 2vh; }
-  @include respond-to(small-desktop) { margin: -0.5rem -10vw 1rem -10vw; border-radius: 2vh; }
-  @include respond-to(desktop) {
+  @include mixins.respond-to(tablet) { margin: -0.5rem -10vw 1rem -10vw; border-radius: 2vh; }
+  @include mixins.respond-to(small-desktop) { margin: -0.5rem -10vw 1rem -10vw; border-radius: 2vh; }
+  @include mixins.respond-to(desktop) {
     color: $color-gray-light;
     font-weight: lighter;
     padding: 0;
@@ -53,8 +53,8 @@ h3 {
   display: block;
   padding: 0.4rem 0;
   text-align: center;
-  @include respond-to(small-desktop) { display: inline; padding: 6px 15px; vertical-align: middle; text-align: start };
-  @include respond-to(desktop) { display: inline; padding: 6px 15px; vertical-align: middle; text-align: start };
+  @include mixins.respond-to(small-desktop) { display: inline; padding: 6px 15px; vertical-align: middle; text-align: start };
+  @include mixins.respond-to(desktop) { display: inline; padding: 6px 15px; vertical-align: middle; text-align: start };
 }
 
 h6 {

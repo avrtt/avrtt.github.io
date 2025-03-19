@@ -1,4 +1,4 @@
-@import 'mixins';
+@use 'mixins';
 
 $btn-bg-color: #c9c9c9;
 $btn-hover-bg-color: #e7e7e7;
@@ -8,11 +8,11 @@ $btn-transition: width 0.3s ease, background-color 0.1s ease;
 $text-opacity-transition: opacity 0.2s ease;
 
 #postLayoutSwitchButton {
-  @include respond-to(mobile) { display: none; }
-  @include respond-to(small-tablet) { display: none; }
-  @include respond-to(tablet) { display: none; }
-  @include respond-to(small-desktop) { display: none; }
-  @include respond-to(desktop) { display: inline; }
+  @include mixins.respond-to(mobile) { display: none; }
+  @include mixins.respond-to(small-tablet) { display: none; }
+  @include mixins.respond-to(tablet) { display: none; }
+  @include mixins.respond-to(small-desktop) { display: none; }
+  @include mixins.respond-to(desktop) { display: inline; }
 }
 
 .postButton {
@@ -28,7 +28,7 @@ $text-opacity-transition: opacity 0.2s ease;
   margin-right: $margin-right;
   transition: $btn-transition;  
   
-  @include respond-to(desktop) {
+  @include mixins.respond-to(desktop) {
     padding: 12px;
     font-size: 18px;
     border-radius: 1vh;

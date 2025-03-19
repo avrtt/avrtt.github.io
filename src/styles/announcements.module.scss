@@ -1,11 +1,11 @@
-@import 'mixins';
+@use 'mixins';
 
 .announcementsHomeWrapper {
-  @include respond-to(mobile) { padding-bottom: 1.5rem }
-  @include respond-to(small-tablet) { padding-bottom: 1.5rem }
-  @include respond-to(tablet) { padding-bottom: 2rem }
-  @include respond-to(small-desktop) {}
-  @include respond-to(desktop) {}
+  @include mixins.respond-to(mobile) { padding-bottom: 1.5rem }
+  @include mixins.respond-to(small-tablet) { padding-bottom: 1.5rem }
+  @include mixins.respond-to(tablet) { padding-bottom: 2rem }
+  @include mixins.respond-to(small-desktop) {}
+  @include mixins.respond-to(desktop) {}
 }
 
 .linkArrow {

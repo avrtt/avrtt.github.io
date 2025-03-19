@@ -1,4 +1,4 @@
-@import 'mixins';
+@use 'mixins';
 
 $margin-left: 2.5rem;
 
@@ -14,63 +14,63 @@ $margin-left: 2.5rem;
 
 .list {
   text-indent: calc(clamp(1.5rem, 2.5vw, 2.2rem) * -1);
-  @include respond-to(mobile) { margin-left: 0; line-height: 1.4rem }
-  @include respond-to(small-tablet) { margin-left: 0; line-height: 1.5rem }
-  @include respond-to(tablet) { margin-left: 0; line-height: 1.6rem }
-  @include respond-to(small-desktop) { margin-left: $margin-left; }
-  @include respond-to(desktop) { margin-left: $margin-left; }
+  @include mixins.respond-to(mobile) { margin-left: 0; line-height: 1.4rem }
+  @include mixins.respond-to(small-tablet) { margin-left: 0; line-height: 1.5rem }
+  @include mixins.respond-to(tablet) { margin-left: 0; line-height: 1.6rem }
+  @include mixins.respond-to(small-desktop) { margin-left: $margin-left; }
+  @include mixins.respond-to(desktop) { margin-left: $margin-left; }
 }
 
 .list ul {
   list-style-type: none;
-  @include respond-to(mobile) { margin-left: calc(clamp(1rem, 2.5vw, 2.2rem) * -1); }
-  @include respond-to(small-tablet) { margin-left: calc(clamp(1rem, 2.5vw, 2.2rem) * -1); }
-  @include respond-to(tablet) { margin-left: calc(clamp(1rem, 2.5vw, 2.2rem) * -1); }
+  @include mixins.respond-to(mobile) { margin-left: calc(clamp(1rem, 2.5vw, 2.2rem) * -1); }
+  @include mixins.respond-to(small-tablet) { margin-left: calc(clamp(1rem, 2.5vw, 2.2rem) * -1); }
+  @include mixins.respond-to(tablet) { margin-left: calc(clamp(1rem, 2.5vw, 2.2rem) * -1); }
 }
 
 ul:not(.list ul) {
-  @include respond-to(mobile) { margin-left: calc(clamp(1rem, 2.5vw, 2.2rem) * -1); line-height: 1.4rem }
-  @include respond-to(small-tablet) { margin-left: calc(clamp(1rem, 2.5vw, 2.2rem) * -1); line-height: 1.5rem }
-  @include respond-to(tablet) { margin-left: calc(clamp(1rem, 2.5vw, 2.2rem) * -1); line-height: 1.6rem }
+  @include mixins.respond-to(mobile) { margin-left: calc(clamp(1rem, 2.5vw, 2.2rem) * -1); line-height: 1.4rem }
+  @include mixins.respond-to(small-tablet) { margin-left: calc(clamp(1rem, 2.5vw, 2.2rem) * -1); line-height: 1.5rem }
+  @include mixins.respond-to(tablet) { margin-left: calc(clamp(1rem, 2.5vw, 2.2rem) * -1); line-height: 1.6rem }
 }
 
 ol:not(.list ol) {
-  @include respond-to(mobile) { margin-left: calc(clamp(1rem, 2.5vw, 2.2rem) * -1); line-height: 1.4rem }
-  @include respond-to(small-tablet) { margin-left: calc(clamp(1rem, 2.5vw, 2.2rem) * -1); line-height: 1.5rem }
-  @include respond-to(tablet) { margin-left: calc(clamp(1rem, 2.5vw, 2.2rem) * -1); line-height: 1.6rem }
+  @include mixins.respond-to(mobile) { margin-left: calc(clamp(1rem, 2.5vw, 2.2rem) * -1); line-height: 1.4rem }
+  @include mixins.respond-to(small-tablet) { margin-left: calc(clamp(1rem, 2.5vw, 2.2rem) * -1); line-height: 1.5rem }
+  @include mixins.respond-to(tablet) { margin-left: calc(clamp(1rem, 2.5vw, 2.2rem) * -1); line-height: 1.6rem }
 }
 
 .courseContents {
-  @include respond-to(mobile) { margin-left: calc(clamp(2.4rem, 2.5vw, 5rem) * -1) !important }
-  @include respond-to(small-tablet) { margin-left: calc(clamp(2.4rem, 2.5vw, 5rem) * -1) !important }
-  @include respond-to(tablet) { margin-left: calc(clamp(2.4rem, 2.5vw, 5rem) * -1) !important }
+  @include mixins.respond-to(mobile) { margin-left: calc(clamp(2.4rem, 2.5vw, 5rem) * -1) !important }
+  @include mixins.respond-to(small-tablet) { margin-left: calc(clamp(2.4rem, 2.5vw, 5rem) * -1) !important }
+  @include mixins.respond-to(tablet) { margin-left: calc(clamp(2.4rem, 2.5vw, 5rem) * -1) !important }
 }
 
 .listDescTime {
   margin-top: 2rem;
   font-size: clamp(1.1rem, 2vw, 1.2rem);
   font-weight: bold;
-  @include respond-to(mobile) { margin-left: -1.5rem }
-  @include respond-to(small-tablet) { margin-left: -1.5rem; }
-  @include respond-to(tablet) { margin-left: -1.5rem; }
+  @include mixins.respond-to(mobile) { margin-left: -1.5rem }
+  @include mixins.respond-to(small-tablet) { margin-left: -1.5rem; }
+  @include mixins.respond-to(tablet) { margin-left: -1.5rem; }
 }
 
 .listDescTime ul {
-  @include respond-to(mobile) { list-style-type: none; }
-  @include respond-to(small-tablet) { list-style-type: none; }
-  @include respond-to(tablet) { list-style-type: none; }
+  @include mixins.respond-to(mobile) { list-style-type: none; }
+  @include mixins.respond-to(small-tablet) { list-style-type: none; }
+  @include mixins.respond-to(tablet) { list-style-type: none; }
 }
 
 .listDescItem {
   @include list-style(-28px, -20px, clamp(1rem, 2vw, 1.3rem), 1.3rem);
-  @include respond-to(mobile) { margin-bottom: -1.75rem; margin-top: -1.4rem; margin-left: 0rem; }
-  @include respond-to(small-tablet) { margin-bottom: -1.75rem; margin-top: -1.4rem; margin-left: 0rem;}
-  @include respond-to(tablet) { margin-bottom: -1.75rem; margin-top: -1.4rem; margin-left: 0rem; }
+  @include mixins.respond-to(mobile) { margin-bottom: -1.75rem; margin-top: -1.4rem; margin-left: 0rem; }
+  @include mixins.respond-to(small-tablet) { margin-bottom: -1.75rem; margin-top: -1.4rem; margin-left: 0rem;}
+  @include mixins.respond-to(tablet) { margin-bottom: -1.75rem; margin-top: -1.4rem; margin-left: 0rem; }
 }
 
 .listDescItemLast {
   @include list-style(-2rem, -3rem, clamp(1rem, 2vw, 1.3rem), 1.3rem);
-  @include respond-to(mobile) { margin-bottom: 1rem; }
-  @include respond-to(small-tablet) { margin-bottom: 1rem; }
-  @include respond-to(tablet) { margin-bottom: 1rem; }
+  @include mixins.respond-to(mobile) { margin-bottom: 1rem; }
+  @include mixins.respond-to(small-tablet) { margin-bottom: 1rem; }
+  @include mixins.respond-to(tablet) { margin-bottom: 1rem; }
 }
