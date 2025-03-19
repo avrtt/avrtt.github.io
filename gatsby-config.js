@@ -90,7 +90,15 @@ module.exports = {
     },
     "gatsby-plugin-image", 
     "gatsby-plugin-sharp", 
-    "gatsby-plugin-sass",
+    {
+      resolve: "gatsby-plugin-sass",
+      options: {
+        sassOptions: {
+          api: "modern",
+          silenceDeprecations: ['legacy-js-api'],
+        }
+      }
+    },
     "gatsby-transformer-sharp", 
     {
       resolve: 'gatsby-source-filesystem',
