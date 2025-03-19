@@ -47,12 +47,11 @@
   color: #777;
   grid-template-columns: repeat(auto-fill, minmax(0px, 1fr));
   grid-gap: 0.3vw;
+  font-weight: bold;
 
   @media (max-width: 1000px) {
     grid-template-columns: repeat(auto-fill, minmax(0px, 1fr));
   }
-
-  font-weight: bold;
 }
 
 .footerLink {
