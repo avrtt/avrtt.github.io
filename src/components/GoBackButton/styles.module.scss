@@ -1,4 +1,4 @@
-@import "../../styles/mixins";
+@use "../../styles/mixins";
 
 .goBackWrapper {
   position: sticky;
@@ -8,9 +8,9 @@
   transition: top 0.3s ease-out;
   transform: translateY(7.5vh);
   margin-top: -6vh;
-  @include respond-to(mobile) { display: none }
-  @include respond-to(small-tablet) { display: none }
-  @include respond-to(tablet) { display: none }
+  @include mixins.respond-to(mobile) { display: none }
+  @include mixins.respond-to(small-tablet) { display: none }
+  @include mixins.respond-to(tablet) { display: none }
 }
 
 .goBack {

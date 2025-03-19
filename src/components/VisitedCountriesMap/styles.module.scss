@@ -1,7 +1,7 @@
-@import '../../styles/mixins';
+@use '../../styles/mixins';
 
 .flatLayout {
-    @include respond-to(mobile) { display: flex; justify-content: center; align-items: center; }
-    @include respond-to(small-tablet) { display: flex; justify-content: center; align-items: center; }
-    @include respond-to(tablet) { display: flex; justify-content: center; align-items: center; }
+    @include mixins.respond-to(mobile) { display: flex; justify-content: center; align-items: center; }
+    @include mixins.respond-to(small-tablet) { display: flex; justify-content: center; align-items: center; }
+    @include mixins.respond-to(tablet) { display: flex; justify-content: center; align-items: center; }
 }

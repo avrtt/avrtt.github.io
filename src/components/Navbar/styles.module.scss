@@ -1,4 +1,4 @@
-@import '../../styles/mixins';
+@use '../../styles/mixins';
 
 $fade-in-down: fadeInDown 0.3s ease forwards;
 
@@ -23,11 +23,11 @@ $fade-in-down: fadeInDown 0.3s ease forwards;
   z-index: 12;
   user-select: none;
   justify-content: space-between;
-  @include respond-to(mobile) { padding-top: 8rem; margin-bottom: 1rem; margin-top: -6.5rem; padding: 7.5rem 0 1rem 0 }
-  @include respond-to(small-tablet) { padding-top: 8rem; margin-bottom: 1rem; margin-top: -6.5rem; padding: 7.5rem 0 0.3rem 0 }
-  @include respond-to(tablet) { padding-top: 8rem; margin-bottom: 1rem; margin-top: -6.5rem; padding: 7.5rem 0 0.5rem 0 }
-  @include respond-to(small-desktop) { justify-content: center }
-  @include respond-to(desktop) { justify-content: center }
+  @include mixins.respond-to(mobile) { padding-top: 8rem; margin-bottom: 1rem; margin-top: -6.5rem; padding: 7.5rem 0 1rem 0 }
+  @include mixins.respond-to(small-tablet) { padding-top: 8rem; margin-bottom: 1rem; margin-top: -6.5rem; padding: 7.5rem 0 0.3rem 0 }
+  @include mixins.respond-to(tablet) { padding-top: 8rem; margin-bottom: 1rem; margin-top: -6.5rem; padding: 7.5rem 0 0.5rem 0 }
+  @include mixins.respond-to(small-desktop) { justify-content: center }
+  @include mixins.respond-to(desktop) { justify-content: center }
 }
 
 .navbarMenu {
@@ -203,11 +203,11 @@ $fade-in-down: fadeInDown 0.3s ease forwards;
     }
   }
   
-  @include respond-to(mobile) { display: none }
-  @include respond-to(small-tablet) { display: none }
-  @include respond-to(tablet) { display: none }
-  @include respond-to(small-desktop) {}
-  @include respond-to(desktop) {}
+  @include mixins.respond-to(mobile) { display: none }
+  @include mixins.respond-to(small-tablet) { display: none }
+  @include mixins.respond-to(tablet) { display: none }
+  @include mixins.respond-to(small-desktop) {}
+  @include mixins.respond-to(desktop) {}
 }
 
 .navbarPostSection {
@@ -220,7 +220,7 @@ $fade-in-down: fadeInDown 0.3s ease forwards;
 }
 
 .hideOnSmallDesktops {
-  @include respond-to(small-desktop) { display: none }
+  @include mixins.respond-to(small-desktop) { display: none }
 }
 
 .logo {
@@ -236,11 +236,11 @@ $fade-in-down: fadeInDown 0.3s ease forwards;
   //@include respond-to(mobile) { position: absolute; left: 2vw; top: 1.5vw; width: 5.5rem }
   //@include respond-to(small-tablet) { position: absolute; left: 2vw; top: 1.5vw; width: 6rem }
   //@include respond-to(tablet) { position: absolute; left: 2vw; top: 1.5vw; width: 7.5rem }
-  @include respond-to(mobile) { display: none }
-  @include respond-to(small-tablet) { display: none }
-  @include respond-to(tablet) { display: none }
-  @include respond-to(small-desktop) { pointer-events: none; opacity: 0; margin-right: 3vh }
-  @include respond-to(desktop) { margin-right: 3vh }
+  @include mixins.respond-to(mobile) { display: none }
+  @include mixins.respond-to(small-tablet) { display: none }
+  @include mixins.respond-to(tablet) { display: none }
+  @include mixins.respond-to(small-desktop) { pointer-events: none; opacity: 0; margin-right: 3vh }
+  @include mixins.respond-to(desktop) { margin-right: 3vh }
 }
 
 .hamburger {
@@ -257,11 +257,11 @@ $fade-in-down: fadeInDown 0.3s ease forwards;
     transition-duration: 0.1s;
   }
 
-  @include respond-to(mobile) { position: fixed; right: 0.6rem; top: 0.4rem }
-  @include respond-to(small-tablet) { position: fixed; right: 0.6rem; top: 0.4rem }
-  @include respond-to(tablet) { position: fixed; right: 0.6rem; top: 0.4rem }
-  @include respond-to(small-desktop) {}
-  @include respond-to(desktop) {}
+  @include mixins.respond-to(mobile) { position: fixed; right: 0.6rem; top: 0.4rem }
+  @include mixins.respond-to(small-tablet) { position: fixed; right: 0.6rem; top: 0.4rem }
+  @include mixins.respond-to(tablet) { position: fixed; right: 0.6rem; top: 0.4rem }
+  @include mixins.respond-to(small-desktop) {}
+  @include mixins.respond-to(desktop) {}
 }
 
 .hamburgerWrapper {
@@ -272,11 +272,11 @@ $fade-in-down: fadeInDown 0.3s ease forwards;
   cursor: pointer;
   display: flex;
 
-  @include respond-to(mobile) {}
-  @include respond-to(small-tablet) {}
-  @include respond-to(tablet) {}
-  @include respond-to(small-desktop) { display: none; }
-  @include respond-to(desktop) { display: none; }
+  @include mixins.respond-to(mobile) {}
+  @include mixins.respond-to(small-tablet) {}
+  @include mixins.respond-to(tablet) {}
+  @include mixins.respond-to(small-desktop) { display: none; }
+  @include mixins.respond-to(desktop) { display: none; }
 }
 
 .mobileMenu {
@@ -298,11 +298,11 @@ $fade-in-down: fadeInDown 0.3s ease forwards;
     transform: translateX(0);
   }
 
-  @include respond-to(mobile) {}
-  @include respond-to(small-tablet) {}
-  @include respond-to(tablet) {}
-  @include respond-to(small-desktop) { display: none; }
-  @include respond-to(desktop) { display: none; }
+  @include mixins.respond-to(mobile) {}
+  @include mixins.respond-to(small-tablet) {}
+  @include mixins.respond-to(tablet) {}
+  @include mixins.respond-to(small-desktop) { display: none; }
+  @include mixins.respond-to(desktop) { display: none; }
 }
 
 .mobileMenuContent {
@@ -353,15 +353,15 @@ $fade-in-down: fadeInDown 0.3s ease forwards;
   position: absolute;
 
   &.all {
-    @include respond-to(mobile) { left: 0.8rem }
-    @include respond-to(small-tablet) { left: 1.5rem }
-    @include respond-to(tablet) { left: 1.5rem }
+    @include mixins.respond-to(mobile) { left: 0.8rem }
+    @include mixins.respond-to(small-tablet) { left: 1.5rem }
+    @include mixins.respond-to(tablet) { left: 1.5rem }
   }
 
   &.about {
-    @include respond-to(mobile) { left: 8.5rem }
-    @include respond-to(small-tablet) { left: 9rem }
-    @include respond-to(tablet) { left: 9rem }
+    @include mixins.respond-to(mobile) { left: 8.5rem }
+    @include mixins.respond-to(small-tablet) { left: 9rem }
+    @include mixins.respond-to(tablet) { left: 9rem }
   }
 
   &.active {
@@ -395,9 +395,9 @@ $fade-in-down: fadeInDown 0.3s ease forwards;
     }
   }
   
-  @include respond-to(mobile) { top: 2.5rem }
-  @include respond-to(small-tablet) { top: 2.5rem }
-  @include respond-to(tablet) { top: 2.5rem }
-  @include respond-to(small-desktop) { display: none }
-  @include respond-to(desktop) { display: none }
+  @include mixins.respond-to(mobile) { top: 2.5rem }
+  @include mixins.respond-to(small-tablet) { top: 2.5rem }
+  @include mixins.respond-to(tablet) { top: 2.5rem }
+  @include mixins.respond-to(small-desktop) { display: none }
+  @include mixins.respond-to(desktop) { display: none }
 }

@@ -1,4 +1,4 @@
-@import '../../styles/mixins';
+@use '../../styles/mixins';
 
 $spacing-small: 1vw;
 $spacing-large: 20vw;
@@ -29,9 +29,9 @@ $arrow-offset: 58.5%;
     margin-bottom: $spacing-large;
   }
 
-  @include respond-to(mobile) { display: none }
-  @include respond-to(small-tablet) { display: none }
-  @include respond-to(tablet) { display: none }
+  @include mixins.respond-to(mobile) { display: none }
+  @include mixins.respond-to(small-tablet) { display: none }
+  @include mixins.respond-to(tablet) { display: none }
 }
 
 @mixin post-style($position, $side) {

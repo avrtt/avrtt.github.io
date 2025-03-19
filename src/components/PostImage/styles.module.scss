@@ -1,4 +1,4 @@
-@import '../../styles/mixins';
+@use '../../styles/mixins';
 
 .caption {
     color: #8e8e8e;
@@ -6,9 +6,9 @@
     font-size: clamp(0.8rem, 2vw, 1.2rem);
     margin-top: 1rem;
     margin-bottom: 2rem;
-    @include respond-to(mobile) { line-height: 0.8rem; }
-    @include respond-to(small-tablet) { line-height: 1rem; }
-    @include respond-to(tablet) { line-height: 1.2rem; }
-    @include respond-to(small-desktop) { line-height: 1.4rem; }
-    @include respond-to(desktop) { line-height: 1.4rem; }
+    @include mixins.respond-to(mobile) { line-height: 0.8rem; }
+    @include mixins.respond-to(small-tablet) { line-height: 1rem; }
+    @include mixins.respond-to(tablet) { line-height: 1.2rem; }
+    @include mixins.respond-to(small-desktop) { line-height: 1.4rem; }
+    @include mixins.respond-to(desktop) { line-height: 1.4rem; }
 }

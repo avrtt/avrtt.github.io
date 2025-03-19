@@ -1,4 +1,4 @@
-@import '../../styles/mixins';
+@use '../../styles/mixins';
 
 $transition-duration: 110ms;
 $hover-scale: 0.95;
@@ -36,17 +36,17 @@ $icon-size: 6vh;
 
 .postDonateIconsWrapper {
   text-align: center;
-  @include respond-to(mobile) { display: none; }
-  @include respond-to(small-tablet) { display: none; }
+  @include mixins.respond-to(mobile) { display: none; }
+  @include mixins.respond-to(small-tablet) { display: none; }
 }
 
 .postDonateIconsWrapperMobile {
   text-align: center;
-  @include respond-to(mobile) { margin: 2.2rem 0 -1rem 0; }
-  @include respond-to(small-tablet) {  }
-  @include respond-to(tablet) { display: none; }
-  @include respond-to(small-desktop) { display: none; }
-  @include respond-to(desktop) { display: none; }
+  @include mixins.respond-to(mobile) { margin: 2.2rem 0 -1rem 0; }
+  @include mixins.respond-to(small-tablet) {  }
+  @include mixins.respond-to(tablet) { display: none; }
+  @include mixins.respond-to(small-desktop) { display: none; }
+  @include mixins.respond-to(desktop) { display: none; }
 }
 
 .postDonateIcon1, .postDonateIcon2, .postDonateIcon3, .postDonateIcon4, .postDonateIcon5, .postDonateIcon6 {

@@ -1,4 +1,4 @@
-@import '../../styles/mixins';
+@use '../../styles/mixins';
 
 $primary-bg: rgb(70, 70, 70);
 $text-color: #F1F1F1;
@@ -13,9 +13,9 @@ $hover-scale: 0.985;
   margin: 0 auto;
   max-width: 100%;
   box-sizing: border-box;
-  @include respond-to(mobile) { grid-template-columns: 1fr; }
-  @include respond-to(small-tablet) { grid-template-columns: 1fr; }
-  @include respond-to(tablet) { grid-template-columns: 1fr; }
+  @include mixins.respond-to(mobile) { grid-template-columns: 1fr; }
+  @include mixins.respond-to(small-tablet) { grid-template-columns: 1fr; }
+  @include mixins.respond-to(tablet) { grid-template-columns: 1fr; }
 }
 
 .courseWrapper {
@@ -33,20 +33,20 @@ $hover-scale: 0.985;
     transform: scale($hover-scale);
   }
 
-  @include respond-to(mobile) { line-height: 1.25rem; }
-  @include respond-to(small-tablet) { line-height: 1.4rem; }
-  @include respond-to(tablet) { line-height: 1.6rem; }
-  @include respond-to(small-desktop) { line-height: 1.8rem; }
-  @include respond-to(desktop) { line-height: 1.8rem; }
+  @include mixins.respond-to(mobile) { line-height: 1.25rem; }
+  @include mixins.respond-to(small-tablet) { line-height: 1.4rem; }
+  @include mixins.respond-to(tablet) { line-height: 1.6rem; }
+  @include mixins.respond-to(small-desktop) { line-height: 1.8rem; }
+  @include mixins.respond-to(desktop) { line-height: 1.8rem; }
 }
 
 .title {
   font-weight: bold;
-  @include respond-to(mobile) { font-size: 1.2rem; margin-left: 0.15rem; }
-  @include respond-to(small-tablet) { font-size: 1.2rem; margin-left: 0.15rem; }
-  @include respond-to(tablet) { font-size: 1.2rem; margin-left: 0.15rem; }
-  @include respond-to(small-desktop) { margin-left: 0.875rem; }
-  @include respond-to(desktop) { margin-left: 0.875rem; }
+  @include mixins.respond-to(mobile) { font-size: 1.2rem; margin-left: 0.15rem; }
+  @include mixins.respond-to(small-tablet) { font-size: 1.2rem; margin-left: 0.15rem; }
+  @include mixins.respond-to(tablet) { font-size: 1.2rem; margin-left: 0.15rem; }
+  @include mixins.respond-to(small-desktop) { margin-left: 0.875rem; }
+  @include mixins.respond-to(desktop) { margin-left: 0.875rem; }
 }
 
 .rightUpperCornerWrapper {
@@ -61,18 +61,18 @@ $hover-scale: 0.985;
   font-size: 1.125rem;
   color: #bababa;
   line-height: 46.5px;
-  @include respond-to(mobile) { display: none }
-  @include respond-to(small-tablet) { display: none }
-  @include respond-to(tablet) { display: none }
+  @include mixins.respond-to(mobile) { display: none }
+  @include mixins.respond-to(small-tablet) { display: none }
+  @include mixins.respond-to(tablet) { display: none }
 }
 
 .courseIcon {
   vertical-align: middle;
-  @include respond-to(mobile) { width: 2.8rem; height: 2.8rem; margin: -1rem -0.2rem 0 0; }
-  @include respond-to(small-tablet) { width: 3rem; height: 3rem; margin: -1rem -0.2rem 0 0; }
-  @include respond-to(tablet) { width: 3rem; height: 3rem; margin: -1rem -0.2rem 0 0; }
-  @include respond-to(small-desktop) { width: 60px; height: 60px; margin-right: 2px; }
-  @include respond-to(desktop) { width: 60px; height: 60px; margin-right: 2px; }
+  @include mixins.respond-to(mobile) { width: 2.8rem; height: 2.8rem; margin: -1rem -0.2rem 0 0; }
+  @include mixins.respond-to(small-tablet) { width: 3rem; height: 3rem; margin: -1rem -0.2rem 0 0; }
+  @include mixins.respond-to(tablet) { width: 3rem; height: 3rem; margin: -1rem -0.2rem 0 0; }
+  @include mixins.respond-to(small-desktop) { width: 60px; height: 60px; margin-right: 2px; }
+  @include mixins.respond-to(desktop) { width: 60px; height: 60px; margin-right: 2px; }
 }
 
 .courseDesc {
@@ -81,9 +81,9 @@ $hover-scale: 0.985;
   margin-left: 14px;
   margin-top: 42px;
   width: 90%;
-  @include respond-to(mobile) { font-size: 0.85rem; margin-top: 0.8rem; margin-left: 0.15rem; }
-  @include respond-to(small-tablet) { font-size: 0.85rem; margin-top: 0.8rem; margin-left: 0.15rem; }
-  @include respond-to(tablet) { font-size: 0.85rem; margin-top: 0.8rem; margin-left: 0.15rem; }
+  @include mixins.respond-to(mobile) { font-size: 0.85rem; margin-top: 0.8rem; margin-left: 0.15rem; }
+  @include mixins.respond-to(small-tablet) { font-size: 0.85rem; margin-top: 0.8rem; margin-left: 0.15rem; }
+  @include mixins.respond-to(tablet) { font-size: 0.85rem; margin-top: 0.8rem; margin-left: 0.15rem; }
 }
 
 .courseInfo {
@@ -93,9 +93,9 @@ $hover-scale: 0.985;
   margin-top: 20px;
   width: 90%;
   color: #bababa;
-  @include respond-to(mobile) { display: none }
-  @include respond-to(small-tablet) { display: none }
-  @include respond-to(tablet) { display: none }
-  @include respond-to(small-desktop) {}
-  @include respond-to(desktop) {}
+  @include mixins.respond-to(mobile) { display: none }
+  @include mixins.respond-to(small-tablet) { display: none }
+  @include mixins.respond-to(tablet) { display: none }
+  @include mixins.respond-to(small-desktop) {}
+  @include mixins.respond-to(desktop) {}
 }

@@ -1,4 +1,4 @@
-@import '../../styles/mixins';
+@use '../../styles/mixins';
 
 .tileContainer {
   width: 100%;
@@ -6,7 +6,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--gap);
-  @include respond-to(mobile) {
+  @include mixins.respond-to(mobile) {
     flex-direction: column;
     gap: 0 !important;
     margin: 0 !important;
@@ -14,7 +14,7 @@
       width: 100% !important;
     }
   }
-  @include respond-to(small-tablet) {
+  @include mixins.respond-to(small-tablet) {
     flex-direction: column;
     gap: 0 !important;
     margin: 0 !important;
@@ -22,7 +22,7 @@
       width: 100% !important;
     }
   }
-  @include respond-to(tablet) {
+  @include mixins.respond-to(tablet) {
     flex-direction: column;
     gap: 0 !important;
     margin: 0 !important;

@@ -1,4 +1,4 @@
-@import '../../styles/mixins';
+@use '../../styles/mixins';
 
 $primary-bg-color: #282828;
 $primary-text-color: #ffffff;
@@ -38,9 +38,9 @@ $transition-duration: 0.1s;
   transition: transform $transition-duration;
   cursor: pointer;
   @include disable-user-select;
-  @include respond-to(mobile) { width: 22rem; height: 8.2rem; margin-bottom: -2rem; }
-  @include respond-to(small-tablet) { }
-  @include respond-to(tablet) {  }
+  @include mixins.respond-to(mobile) { width: 22rem; height: 8.2rem; margin-bottom: -2rem; }
+  @include mixins.respond-to(small-tablet) { }
+  @include mixins.respond-to(tablet) {  }
 
   &:hover {
     transform: scale($hover-scale);
@@ -54,7 +54,7 @@ $transition-duration: 0.1s;
   font-weight: 800;
   position: absolute;
   margin: 6.5vh 0 0 2vh;
-  @include respond-to(mobile) { display: none }
+  @include mixins.respond-to(mobile) { display: none }
 }
 
 .blockLeftLink {
@@ -64,7 +64,7 @@ $transition-duration: 0.1s;
   font-weight: 800;
   position: absolute;
   margin: 11.5vh 0 0 2vh;
-  @include respond-to(mobile) { font-size: 1.6rem; margin: 0.1rem 0 0 1rem; color: #f2f2f2 }
+  @include mixins.respond-to(mobile) { font-size: 1.6rem; margin: 0.1rem 0 0 1rem; color: #f2f2f2 }
 }
 
 .blockLeftDesc {
@@ -73,7 +73,7 @@ $transition-duration: 0.1s;
   text-decoration: none;
   margin: 2vh 0 0 4vh;
   width: 60%;
-  @include respond-to(mobile) { font-size: 1rem; line-height: 1.2rem; margin: -5.4rem 0 0 8.6rem; }
+  @include mixins.respond-to(mobile) { font-size: 1rem; line-height: 1.2rem; margin: -5.4rem 0 0 8.6rem; }
 }
 
 .blockRight {
@@ -81,9 +81,9 @@ $transition-duration: 0.1s;
   width: 67vh;
   height: 18vw;
   border-radius: $border-radius;
-  @include respond-to(mobile) { display: none }
-  @include respond-to(small-tablet) { display: none }
-  @include respond-to(tablet) { display: none }
+  @include mixins.respond-to(mobile) { display: none }
+  @include mixins.respond-to(small-tablet) { display: none }
+  @include mixins.respond-to(tablet) { display: none }
 }
 
 .tgChannelPicture {
@@ -91,7 +91,7 @@ $transition-duration: 0.1s;
   height: 15vh;
   width: 15vh;
   margin: 4vh 0 0 4vh;
-  @include respond-to(mobile) { width: 7rem; height: 7rem; margin: 0.5rem 0 0 0.5rem; }
-  @include respond-to(small-tablet) { }
-  @include respond-to(tablet) {  }
+  @include mixins.respond-to(mobile) { width: 7rem; height: 7rem; margin: 0.5rem 0 0 0.5rem; }
+  @include mixins.respond-to(small-tablet) { }
+  @include mixins.respond-to(tablet) {  }
 }

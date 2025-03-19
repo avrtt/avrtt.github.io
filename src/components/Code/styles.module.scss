@@ -1,26 +1,26 @@
-@import '../../styles/mixins';
+@use '../../styles/mixins';
 
 .codeWrapper {
-  @include respond-to(mobile) {
+  @include mixins.respond-to(mobile) {
     display: inline-block;
     width: 100vw;
     margin-left: -2rem;
   }
-  @include respond-to(small-tablet) {
+  @include mixins.respond-to(small-tablet) {
     display: inline-block;
     width: 104vw;
     margin-left: -3rem;
   }
-  @include respond-to(tablet) {
+  @include mixins.respond-to(tablet) {
     display: inline-block;
     width: 95vw;
     margin-left: -6rem;
   }
-  @include respond-to(small-desktop) {
+  @include mixins.respond-to(small-desktop) {
     width: fit-content;
     margin: 0 auto;
   }
-  @include respond-to(desktop) {
+  @include mixins.respond-to(desktop) {
     width: fit-content;
     margin: 0 auto;
   }

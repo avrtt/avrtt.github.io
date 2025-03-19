@@ -1,4 +1,4 @@
-@import '../../styles/mixins';
+@use '../../styles/mixins';
 
 .footerBadgeStyle {
   transition: 110ms ease-in;
@@ -16,9 +16,9 @@
   &:hover {
     opacity: 0.75;
   }
-  @include respond-to(mobile) { display: none }
-  @include respond-to(small-tablet) { display: none }
-  @include respond-to(tablet) { display: none }
+  @include mixins.respond-to(mobile) { display: none }
+  @include mixins.respond-to(small-tablet) { display: none }
+  @include mixins.respond-to(tablet) { display: none }
 }
 
 .box {
@@ -72,11 +72,11 @@
 
 .footerCopyStyle {
   font-size: clamp(0.9rem, 0.9vw, 1.4rem);
-  @include respond-to(mobile) { position: absolute; left: 0; right: 0; margin-inline: auto; width: fit-content; }
-  @include respond-to(small-tablet) { position: absolute; left: 0; right: 0; margin-inline: auto; width: fit-content; }
-  @include respond-to(tablet) { position: absolute; left: 0; right: 0; margin-inline: auto; width: fit-content; }
-  @include respond-to(small-desktop) { margin-top: 3.5vw; transform: translate(-5.5vw, 0); }
-  @include respond-to(desktop) { margin-top: 3.5vw; transform: translate(-5.5vw, 0); }
+  @include mixins.respond-to(mobile) { position: absolute; left: 0; right: 0; margin-inline: auto; width: fit-content; }
+  @include mixins.respond-to(small-tablet) { position: absolute; left: 0; right: 0; margin-inline: auto; width: fit-content; }
+  @include mixins.respond-to(tablet) { position: absolute; left: 0; right: 0; margin-inline: auto; width: fit-content; }
+  @include mixins.respond-to(small-desktop) { margin-top: 3.5vw; transform: translate(-5.5vw, 0); }
+  @include mixins.respond-to(desktop) { margin-top: 3.5vw; transform: translate(-5.5vw, 0); }
 }
 
 .footerNameStyle {
@@ -84,19 +84,19 @@
 }
 
 .footerLinksStyle {
-  @include respond-to(mobile) { transform: translateY(1.2rem); }
-  @include respond-to(small-tablet) { transform: translateY(1.2rem); }
-  @include respond-to(tablet) { transform: translateY(1.2rem); }
-  @include respond-to(small-desktop) { transform: translateY(1.2rem); }
-  @include respond-to(desktop) { transform: translateY(2.5rem); }
+  @include mixins.respond-to(mobile) { transform: translateY(1.2rem); }
+  @include mixins.respond-to(small-tablet) { transform: translateY(1.2rem); }
+  @include mixins.respond-to(tablet) { transform: translateY(1.2rem); }
+  @include mixins.respond-to(small-desktop) { transform: translateY(1.2rem); }
+  @include mixins.respond-to(desktop) { transform: translateY(2.5rem); }
 }
 
 .badgesLeftWrapper {
   justify-content: left;
   margin-left: 5%;
-  @include respond-to(mobile) { display: none }
-  @include respond-to(small-tablet) { display: none }
-  @include respond-to(tablet) { display: none }
+  @include mixins.respond-to(mobile) { display: none }
+  @include mixins.respond-to(small-tablet) { display: none }
+  @include mixins.respond-to(tablet) { display: none }
 }
 
 .badgesRightWrapper {
@@ -159,9 +159,9 @@
 }
 
 .visitsTodayBadge, .visitsTotalBadge {
-  @include respond-to(mobile) { display: none }
-  @include respond-to(small-tablet) { display: none }
-  @include respond-to(tablet) { display: none }
+  @include mixins.respond-to(mobile) { display: none }
+  @include mixins.respond-to(small-tablet) { display: none }
+  @include mixins.respond-to(tablet) { display: none }
 }
 
 .contactButtonStyle {
