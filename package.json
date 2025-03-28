@@ -15,8 +15,8 @@
   "scripts": {
     "predeploy": "gatsby build",
     "deploy": "gh-pages -d public",
-    "start": "gatsby develop",
-    "build": "gatsby build",
+    "start": "NODE_OPTIONS=--max-old-space-size=6144 gatsby develop",
+    "build": "NODE_OPTIONS=--max-old-space-size=4096 gatsby build",
     "serve": "gatsby serve",
     "clean": "gatsby clean"
   },
