@@ -47,7 +47,11 @@ exports.createPages = async ({ actions, graphql }) => {
     if ( excludedFiles.some((templateName) => node.internal.contentFilePath.includes(templateName)) ) { return }
 
     if (node.internal.contentFilePath.includes('src/pages/posts')) {
-      const PostTemplate = path.resolve(`./src/templates/post.js`);
+
+      const PostTemplate = process.env.NODE_ENV === "development"
+        ? path.resolve(`./src/templates/post_development.js`)
+        : path.resolve(`./src/templates/post.js`);
+
       const slug = node.frontmatter.slug;
       const slugParts = slug.split('/').filter(part => part !== '');
       const section = slugParts[0];
