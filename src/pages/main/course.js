@@ -69,20 +69,22 @@ const Course = ({ data }) => {
 		.map(post => ({...post.frontmatter, readTime: calculateReadTime(post.body, post.frontmatter.extraReadTimeMin || 0)}))
     	.sort((a, b) => a.indexCourse - b.indexCourse);
 
-	const groupedByCategory = posts.reduce((acc, post) => {
-		const category = post.courseCategoryName || "Uncategorized"
-		if (!acc[category]) {
-			acc[category] = []
-		}
-		acc[category].push(post)
-		return acc
-	}, {})
+	const postsWithCategory = posts.map(post => ({
+		...post,
+		courseCategoryName: post.courseCategoryName || "Uncategorized"
+	}));
+	
+	const sortedPosts = postsWithCategory.sort((a, b) => a.indexCourse - b.indexCourse);
 
-	const sortedCategories = Object.entries(groupedByCategory).sort(([categoryA], [categoryB]) => {
-		if (categoryA === "Uncategorized") return 1;
-		if (categoryB === "Uncategorized") return -1;
-		return categoryA.localeCompare(categoryB);
-	})
+	const groupedSequentially = sortedPosts.reduce((groups, post) => {
+		const lastGroup = groups[groups.length - 1];
+		if (lastGroup && lastGroup.category === post.courseCategoryName) {
+		  lastGroup.posts.push(post);
+		} else {
+		  groups.push({ category: post.courseCategoryName, posts: [post] });
+		}
+		return groups;
+	}, []);
 
 	const collRef = useRef([]);
 
@@ -148,12 +150,12 @@ const Course = ({ data }) => {
 			<div class="courseBody noselect">
 				<M text="# 📋 CONTENTS"/>
 				<M text="0. [Where the course began: an introduction about AI and research](/research/on_research)"/>
-				{sortedCategories.map(([category, posts]) => (
-					<div key={category} className="courseCategoryName">
-						<h2>{category}</h2>
+				{groupedSequentially.map(group => (
+					<div key={group.category} className="courseCategoryName">
+						<h2>{group.category}</h2>
 						<ul className="courseContents">
-							{posts.map(post => (
-								<div>
+							{group.posts.map(post => (
+								<div key={post.indexCourse}>
 									<span style={{ "border-left": "solid", "margin-left": "-15px", "border-width": "0.3em", "border-color": parseDifficulty(post.difficultyLevel, post.flagMindfuckery) }}><span style={{ "margin-left": "10px" }}>{post.indexCourse}</span>. </span>
 									<Link to={post.slug}>{post.titleCourse}</Link>
 									<span style={{ opacity: 0.4 }}>&nbsp;{post.readTime}</span>
