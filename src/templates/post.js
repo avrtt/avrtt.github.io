@@ -65,7 +65,7 @@ const TableOfContents = ({ toc }) => {
   )
 }
 
-export function PostTemplate({ data: { mdx, allMdx, allPostImages }, children, pageContext }) {
+export function PostTemplate({ data: { mdx, allMdx, allPostImages }, children }) {
 
   const { frontmatter, body, tableOfContents } = mdx;
   const index = frontmatter.index;
