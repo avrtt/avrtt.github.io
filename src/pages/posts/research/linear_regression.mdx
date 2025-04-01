@@ -1,0 +1,343 @@
+---
+index: 17
+indexCourse: 24
+indexFavorites:
+title: "Linear regression"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Linear regression"
+courseCategoryName: "Regression"
+desc: "The most basic thing here"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "05.10.2022"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 1
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/linear_regression.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/linear_regression"
+slug: "/research/linear_regression"
+---
+
+import Tooltip from "../../../components/Tooltip"
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+Для этого поста разобрать Obsidian-заметку (см. папку "🚧 Unfinished").
+
+*/}
+
+
+Linear regression is one of the foundational methods in machine learning and statistics, used widely in both academic research and practical applications. It provides a systematic way to model the relationship between one or more explanatory variables (also called features or predictors) and a continuous target variable. Despite being one of the oldest and perhaps simplest forms of regression, linear regression remains a cornerstone for understanding model building, interpretability, and optimization in data science. 
+
+### Motivation and overview of linear regression in machine learning
+
+Motivation for linear regression stems from its ability to capture a linear (or linearly transformed) relationship between inputs and a continuous output. In other words, it tries to find a hyperplane in the feature space that best fits the observed data. This "best fit" is typically defined by minimizing some form of error measure, most commonly the sum of squared errors.
+
+Many real-world phenomena — such as forecasting housing prices, predicting the lifespan of an engineering component, or relating health factors to overall well-being — can often be approximated with a linear model if we limit the scope or cleverly design features. Even in modern deep learning systems, linear components appear in the final layers for tasks like regression or classification (logistic regression being the linear model for classification). 
+
+### Historical background and practical applications
+
+Linear regression can be traced back to the 19th century, where it was studied in the context of astronomical observations and social statistics. Pioneers like Adrien-Marie Legendre and Carl Friedrich Gauss formalized the method of least squares, the mathematical backbone of linear regression.
+
+From this historical standpoint, linear regression has grown into a ubiquitous tool across disciplines:
+- <Highlight>Economics</Highlight>: to predict economic indicators (e.g., GDP growth, inflation rates).
+- <Highlight>Healthcare</Highlight>: to model risk factors against patient outcomes like blood pressure or insurance claim amounts.
+- <Highlight>Marketing and sales</Highlight>: to understand relationships between advertising spend and sales revenue.
+- <Highlight>Engineering</Highlight>: to estimate how factors like stress, temperature, or load affect a system's performance.
+
+Its popularity persists largely because of its interpretability: each coefficient has a meaningful explanation relating a specific feature to the outcome.
+
+## The linear model in a regression problem
+
+A regression problem differs from classification primarily in that the target variable <Tooltip text="Label or response variable"/> is continuous rather than discrete. A linear regression model posits that the target <Latex text="\(y\)"/> can be described (or approximated) by a weighted sum of input features <Latex text="\(x_1, x_2, \dots, x_p\)"/> plus an intercept (often called bias in machine learning contexts).
+
+Formally, for a single feature <Latex text="\(x\)"/>:
+<Latex text="\[
+y = a + b x
+\]"/>
+where <Latex text="\(a\)"/> is the intercept and <Latex text="\(b\)"/> the slope. We can write this in vector form for multiple features:
+<Latex text="\[
+\hat{y} = w_0 + w_1 x_1 + \ldots + w_p x_p
+\]"/>
+
+When using a more compact notation, we incorporate <Latex text="\(w_0\)"/> (the intercept) into the weight vector by extending each feature vector with a constant 1:
+<Latex text="\[
+\hat{y} = \mathbf{w}^\top \mathbf{x} = w_0 \times 1 + w_1 x_1 + \dots + w_p x_p.
+\]"/>
+
+**Basic assumptions** of linear regression commonly include:
+1. **Linearity**: The relationship between inputs and the output is linear in parameters.
+2. **Independence**: Observations are assumed to be independent.
+3. **Homoscedasticity**: The variance of the error terms is constant.
+4. **Normality of residuals**: The error terms are often assumed (though not strictly required) to be normally distributed for small-sample inference.
+
+**Interpretation of coefficients**: Each coefficient <Latex text="\(w_i\)"/> indicates how much the predicted value changes with respect to a unit change in feature <Latex text="\(x_i\)"/>, holding other features constant. This interpretability is a major advantage of linear models.
+
+## Cost function and error metrics
+
+A central theme in regression modeling is how to measure the discrepancy between model predictions and actual observed values. This measurement is crucial for both training (where we minimize the cost) and evaluation (where we assess performance). Below are the most frequently used metrics, each with its own implications:
+
+### Mean squared error (MSE)
+
+<Latex text="\[
+\text{MSE}(\hat{y}, y) = \frac{1}{n}\sum_{i=1}^{n} (y_i - \hat{y}_i)^2
+\]"/>
+
+Here, <Latex text="\(y_i\)"/> is the true target, <Latex text="\(\hat{y}_i\)"/> is the predicted value, and <Latex text="\(n\)"/> is the number of observations. It is also commonly used as the cost function to optimize in linear regression via least squares. The squaring of the errors penalizes large deviations more heavily, making MSE sensitive to outliers. Variables in the formula:
+- <Latex text="\(y_i\)"/>: Ground truth label for sample <Latex text="\(i\)"/>.
+- <Latex text="\(\hat{y}_i\)"/>: Predicted label for sample <Latex text="\(i\)"/>.
+- <Latex text="\(n\)"/>: Total number of samples.
+
+### Mean absolute error (MAE)
+
+<Latex text="\[
+\text{MAE}(\hat{y}, y) = \frac{1}{n}\sum_{i=1}^{n} |y_i - \hat{y}_i|
+\]"/>
+
+MAE measures the average magnitude of the errors without squaring. Therefore, unlike MSE, it penalizes all residuals in a more uniform way and is less sensitive to outliers. However, it is not differentiable at zero, which can complicate the analytic solutions or certain gradient-based optimizations (though subgradient methods do exist).
+
+### Root mean squared error (RMSE)
+
+<Latex text="\[
+\text{RMSE}(\hat{y}, y) = \sqrt{\frac{1}{n}\sum_{i=1}^{n} (y_i - \hat{y}_i)^2}
+\]"/>
+
+RMSE is simply the square root of MSE, bringing the error metric back to the same units as the target variable. This makes RMSE often easier to interpret in many practical scenarios.
+
+### Mean absolute percentage error (MAPE) and symmetric MAPE (SMAPE)
+
+**MAPE** gauges the relative size of the errors by dividing by the actual target values:
+<Latex text="\[
+\text{MAPE}(\hat{y}, y) = \frac{100\%}{n} \sum_{i=1}^{n} \left|\frac{y_i - \hat{y}_i}{y_i}\right|.
+\]"/>
+
+This is particularly useful if you want to measure the error in percentage terms (e.g., if an error of 10k on a 1 million-dollar house is less serious than a 10k error on a 100k-dollar house).
+
+**SMAPE** modifies MAPE to account for both predicted and actual values in the denominator:
+<Latex text="\[
+\text{SMAPE}(\hat{y}, y) = \frac{100\%}{n} \sum_{i=1}^{n} \frac{|y_i - \hat{y}_i|}{(|y_i| + |\hat{y}_i|)/2}.
+\]"/>
+
+This helps control skew issues when <Latex text="\(y_i\)"/> is very large or very small.
+
+### R-squared (coefficient of determination)
+
+<Latex text="\[
+R^2 = 1 - \frac{\sum_{i=1}^{n}(y_i - \hat{y}_i)^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2}
+\]"/>
+
+Here, <Latex text="\(\bar{y}\)"/> denotes the mean of the observed data. <Highlight>R-squared</Highlight> measures how much better (or worse) your regression model is compared to a simple baseline that predicts the mean of <Latex text="\(y\)"/> for all observations. An <Latex text="\(R^2\)"/> value of 1 indicates a perfect fit, and 0 indicates that your model does no better than the naive mean-based approach.
+
+### Other potential metrics
+
+- **Adjusted R-squared**: Adjusts for the number of features, preventing artificially high <Latex text="\(R^2\)"/> due to adding irrelevant predictors.
+- **AIC and BIC**: Information criteria used for model selection (these go beyond measuring pure predictive error, incorporating complexity penalties).
+- **Explained variance score**: Indicates how much variance is explained by the model vs. total variance in the data.
+
+## Analytical approach to linear regression
+
+### Derivation of the normal equation
+
+When using the **least squares** approach and MSE as the cost function, one can solve for the optimal weights <Latex text="(\mathbf{w})"/> in closed form. Suppose you have a dataset <Latex text="(\mathbf{X}, \mathbf{y})"/>, where <Latex text="\(\mathbf{X}\)"/> is an <Latex text="\(n \times (p+1)\)"/> matrix of features (including a column of ones for the intercept) and <Latex text="\(\mathbf{y}\)"/> is an <Latex text="\(n\)"/>-dimensional vector of targets. The cost function in matrix form is:
+
+<Latex text="\[
+J(\mathbf{w}) = \frac{1}{2}(\mathbf{X}\mathbf{w} - \mathbf{y})^\top(\mathbf{X}\mathbf{w} - \mathbf{y}),
+\]"/>
+
+where the factor of <Latex text="\(1/2\)"/> is simply a convenience for cleaner derivatives. Differentiating and setting to zero yields:
+
+<Latex text="\[
+\nabla_{\mathbf{w}}J(\mathbf{w}) = \mathbf{X}^\top(\mathbf{X}\mathbf{w} - \mathbf{y}) = 0.
+\]"/>
+
+If <Latex text="\(\mathbf{X}^\top\mathbf{X}\)"/> is invertible (non-singular), the **normal equation** becomes:
+
+<Latex text="\[
+\mathbf{w}^* = (\mathbf{X}^\top \mathbf{X})^{-1}\mathbf{X}^\top \mathbf{y}.
+\]"/>
+
+### Advantages and limitations of the analytical solution
+
+**Advantages**:
+- Direct formula, no need for iterative methods if the dimensionality is manageable.
+- Conceptual simplicity, easy to understand from a linear algebra perspective.
+
+**Limitations**:
+- <Highlight>Computational cost</Highlight>: Inverting a <Latex text="\(p+1\)"/> by <Latex text="\(p+1\)"/> matrix can be expensive and numerically unstable for large <Latex text="\(p\)"/>.
+- **Ill-conditioning**: If features are collinear or nearly collinear, <Latex text="(\mathbf{X}^\top\mathbf{X})"/> can become singular or poorly conditioned, leading to unstable solutions.
+
+### Computational considerations for large-scale problems
+
+For high-dimensional scenarios (large <Latex text="\(p\)"/>), direct matrix inversion is impractical. Instead, methods such as <Highlight>gradient descent</Highlight>, <Highlight>stochastic gradient descent</Highlight>, or advanced linear algebra techniques (e.g., Singular Value Decomposition, QR decomposition) are typically used. These methods can handle very large datasets where the matrix <Latex text="(\mathbf{X}^\top\mathbf{X})"/> wouldn't even fit in memory for direct computation.
+
+## Multiple linear regression
+
+### Extending from simple to multiple predictors
+
+In multiple linear regression, we allow more features. Conceptually, the line becomes a plane (for two features) or a hyperplane (for higher dimensions). Our model is:
+
+<Latex text="\[
+\hat{y} = w_0 + w_1 x_1 + w_2 x_2 + \cdots + w_p x_p.
+\]"/>
+
+### Geometric interpretation (hyperplanes)
+
+Each data point in <Latex text="\(p\)"/>-dimensional space is projected onto a hyperplane defined by the weights <Latex text="(\mathbf{w}\)"/>. The objective is to find the hyperplane that minimizes the sum of squared distances to the observed data points in the target dimension.
+
+### Common pitfalls and multicollinearity
+
+When two or more features are almost linearly dependent, it causes **multicollinearity**. This can lead to large swings in the values of the estimated coefficients. Methods like Ridge Regression or Lasso (discussed in a later chapter on regularization) introduce penalties that help mitigate these issues by shrinking coefficients.
+
+## Polynomial features
+
+### Motivation for non-linear patterns
+
+A purely linear model might be insufficient for certain phenomena that exhibit curvature or more intricate relationships. <Highlight>Polynomial features</Highlight> allow us to handle such cases without leaving the conceptual framework of linear regression.
+
+### Generating polynomial terms
+
+For a single feature <Latex text="\(x\)"/>, generating polynomial features up to degree <Latex text="\(d\)"/> means you include <Latex text="\(x, x^2, \ldots, x^d\)"/> as if they were separate input features in a linear model. The resulting hypothesis remains linear in terms of these extended features but can fit non-linear patterns in <Latex text="\(x\)"/>.
+
+<Latex text="\[
+\hat{y} = w_0 + w_1 x + w_2 x^2 + \dots + w_d x^d.
+\]"/>
+
+### Balancing complexity and overfitting risks
+
+Higher-degree polynomials can capture complex trends, yet they are prone to overfitting. A polynomial model of very high degree could track noise in the data rather than the underlying relationship. Regularization strategies (e.g., Ridge, Lasso, or ElasticNet) help penalize large coefficients, reducing variance and improving generalization.
+
+## Practical implementation hints
+
+In applying linear regression, several practical considerations can make the difference between a robust model and a misleading one:
+
+1. **Data preprocessing**:  
+   - Handle missing values appropriately (imputation or removal if justified).
+   - Address outliers if they are suspected to distort the fit.
+   - Use feature scaling (standardization or min-max normalization) especially when using gradient-based optimizers.
+
+2. **Choosing the right metric**:  
+   - If outliers are critical to capture, MSE might be preferable.
+   - If you care about overall consistency in magnitude of errors, MAE might be a better choice.
+   - If relative performance is important (e.g., 10k difference means different things for small vs. large values), consider MAPE or SMAPE.
+
+3. **Best practices for model evaluation**:
+   - Use cross-validation to obtain a more reliable estimate of performance.
+   - Examine residual plots to detect patterns in errors (non-linearity, heteroskedasticity, etc.).
+   - Compare the model against baseline approaches (e.g., predicting the mean, or a simpler model) using <Latex text="\(R^2\)"/> or other relevant statistics.
+
+4. **Handling multicollinearity**:  
+   - If features are highly correlated, consider dimension reduction techniques (e.g., PCA, introduced later in the course) or apply regularization.  
+   - Sometimes removing redundant features or combining them in a more meaningful way is sufficient.
+
+5. **Large-scale data**:  
+   - Instead of the closed-form normal equation, rely on gradient descent or its variants. Libraries like <Highlight>scikit-learn</Highlight> often default to more numerically stable decompositions (like SVD).
+   - For extremely large datasets, consider stochastic gradient methods and frameworks with automatic differentiation (e.g., TensorFlow, PyTorch).
+
+### Example implementations in Python
+
+Below is a simple demonstration of using Python with <Highlight>scikit-learn</Highlight>. This example uses a single feature for simplicity, but it easily extends to multiple features.
+
+<Code text={`
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
+
+# Hypothetical dataset
+X = np.array([1, 2, 3, 4, 5]).reshape(-1,1)
+y = np.array([2.3, 2.9, 3.6, 4.5, 5.1])
+
+# Fit the model
+model = LinearRegression()
+model.fit(X, y)
+
+# Predictions
+y_pred = model.predict(X)
+
+# Evaluate
+mse = mean_squared_error(y, y_pred)
+print("MSE:", mse)
+print("Weights:", model.coef_, "Intercept:", model.intercept_)
+
+# Visualization
+plt.scatter(X, y, label="Data")
+plt.plot(X, y_pred, color="orange", label="Fitted line")
+plt.legend()
+plt.show()
+`}/>
+
+By adding polynomial features:
+
+<Code text={`
+from sklearn.preprocessing import PolynomialFeatures
+
+poly_transform = PolynomialFeatures(degree=2, include_bias=False)
+X_poly = poly_transform.fit_transform(X)
+model_poly = LinearRegression()
+model_poly.fit(X_poly, y)
+
+y_pred_poly = model_poly.predict(X_poly)
+mse_poly = mean_squared_error(y, y_pred_poly)
+print("Polynomial MSE:", mse_poly)
+`}/>
+
+If you have more extensive feature sets or large data volumes, consider gradient descent-based methods such as <Highlight>SGDRegressor</Highlight> in scikit-learn or frameworks like TensorFlow and PyTorch for automatic differentiation and more advanced optimization strategies.
+
+<Image alt="Linear regression line illustration" path="" caption="Straight-line fit on a synthetic dataset" zoom="false" />
+
+For multicollinearity, or ill-conditioned feature matrices, you can switch to <Highlight>Ridge</Highlight> or <Highlight>Lasso</Highlight>:
+
+<Code text={`
+from sklearn.linear_model import Ridge
+
+ridge_model = Ridge(alpha=1.0)
+ridge_model.fit(X, y)
+`}/>
+
+Larger <Latex text="(\alpha\)"/> in Ridge means more shrinkage on coefficients, mitigating large coefficient blow-ups in near-singular systems.
+
+---
+
+**Key takeaways**:
+- Linear regression, despite its apparent simplicity, provides a critical stepping stone for more advanced machine learning methods.
+- Proper understanding of cost functions and error metrics ensures consistent optimization and model evaluation.
+- Analytical solutions can be derived neatly, but in practice, we often rely on numerical methods for large-scale or ill-posed problems.
+- Polynomial features allow linear regression to capture non-linearities, albeit with caution regarding overfitting.
+- Thorough data preprocessing, metric selection, and the right blend of regularization remain essential for robust performance.
+
+This chapter sets the stage for deeper discussions on regularization, model interpretability, and advanced optimization methods. Mastering the fundamentals of linear regression is essential before moving on to more complex machine learning algorithms.

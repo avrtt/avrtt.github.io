@@ -1,0 +1,583 @@
+---
+index: 141
+indexCourse: 119
+indexFavorites:
+title: "Neural ODEs"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Neural ODEs"
+courseCategoryName: "Specialized & advanced architectures"
+desc: "Differential equations for psychopaths"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "13.12.2024"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 3
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/neural_odes.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/neural_odes"
+slug: "/research/neural_odes"
+---
+
+import Tooltip from "../../../components/Tooltip"
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+[DS - Dynamical Systems & Neural ODEs](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Dynamical_systems/dynamical_systems_neural_odes.html)
+    - [0. Introduction](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Dynamical_systems/dynamical_systems_neural_odes.html#0.-Introduction)
+    - [1. Differential Equations](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Dynamical_systems/dynamical_systems_neural_odes.html#1.-Differential-Equations)
+    - [2. Neural ODEs](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Dynamical_systems/dynamical_systems_neural_odes.html#2.-Neural-ODEs)
+    - [Further Reading](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Dynamical_systems/dynamical_systems_neural_odes.html#Further-Reading)
+    - [References](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Dynamical_systems/dynamical_systems_neural_odes.html#References)
+https://alexanderdyakonov.wordpress.com/2019/06/13/%d0%bd%d0%b5%d0%b9%d1%80%d0%be%d0%bd%d0%bd%d1%8b%d0%b5-%d0%be%d0%b1%d1%8b%d0%ba%d0%bd%d0%be%d0%b2%d0%b5%d0%bd%d0%bd%d1%8b%d0%b5-%d0%b4%d0%b8%d1%84%d1%84%d0%b5%d1%80%d0%b5%d0%bd%d1%86%d0%b8%d0%b0%d0%bb/
+
+*/}
+
+
+{/*
+
+1. Introduction  
+- Motivation and scope: Highlight the goals of the text and the breadth of topics covered.  
+- Prerequisites and background knowledge: Specify the mathematical and programming foundations needed.  
+- Overview of dynamical systems and neural ODEs: Define what they are and explain why they matter.  
+2. Dynamical systems primer  
+- Formal definition of a dynamical system: Explain time evolution, the role of states, and deterministic vs. stochastic systems.  
+- State space, parameter space, and evolution: Describe how variables and parameters define a system's behavior over time.  
+- Flows in continuous time: Introduce the concept of flows and trajectories governed by differential equations.  
+- Relevance in machine learning and data science: Discuss how dynamical systems frameworks inform modern ML approaches (e.g., recurrent networks, continuous normalizing flows).  
+- Discrete vs. continuous systems: Contrast maps (discrete updates) with flows (continuous updates) and their respective uses.  
+- Bifurcations and stability: Provide a high-level overview of how small parameter changes can qualitatively alter system behavior.  
+3. Ordinary differential equations (ODEs)  
+- Initial value problems (IVPs): Define IVPs, typical forms, and typical real-world examples.  
+- Existence and uniqueness (Picard–Lindelöf theorem): Outline the conditions under which solutions are guaranteed to exist and be unique.  
+- Lipschitz continuity and its role in ODEs: Explain why Lipschitz conditions matter for well-posedness of ODEs.  
+- Boundary value problems (BVPs) vs. IVPs: Brief comparison and relevance to different application areas.  
+- Analytical solutions and feasibility: Discuss scenarios where closed-form solutions exist vs. when numerical methods become necessary.  
+- Applications and examples: Show ODE usage in physics, biology, chemistry, and engineering.  
+4. Numerical methods for solving ODEs  
+- The Euler method: Present the forward finite difference approach and step-by-step derivation.  
+- Runge-Kutta methods (RK family): Cover the classic RK4 procedure, its intuition from Taylor expansions, and generalizations.  
+- Local vs. total truncation errors: Highlight how errors accumulate and strategies to manage them.  
+- Adaptive step-size methods: Mention advanced solvers (e.g., Dormand–Prince) for better performance and error control.  
+- Implicit vs. explicit methods: Introduce the difference and discuss when each class is preferred (e.g., stiff ODEs).  
+- Example: Lotka–Volterra equations: Show how to define the system, set up the IVP, and compare solutions with Euler vs. RK4.  
+5. Phase space and phase portraits  
+- Phase space variables and dimensionality: Define how state variables form a geometric space of possible system states.  
+- Example: Simple pendulum system: Demonstrate how energy conservation and periodic motion appear in the phase portrait.  
+- Equilibrium points and stability: Introduce fixed points, attractors, and their significance.  
+- Plotting phase portraits for various initial conditions: Explain how to visualize trajectories and interpret the geometry.  
+- Lotka–Volterra phase portrait: Illustrate predator–prey cycles in a 2D phase plane.  
+- Chaotic dynamics and strange attractors: Briefly mention Lorenz system and sensitivity to initial conditions.  
+6. Neural ODEs  
+- Introduction and intuition: Present the concept of a continuously parameterized "depth" in neural networks.  
+- Comparison to ResNet architectures: Draw parallels between discrete residual blocks and continuous dynamics.  
+- Backpropagation through ODE solvers: Outline the computational graph and where gradients flow.  
+- Naive backprop vs. adjoint sensitivity method: Contrast memory usage, computational cost, and accuracy.  
+- Memory vs. accuracy trade-off: Discuss practical challenges in training neural ODEs.  
+- Implementation with Torchdiffeq: Provide a high-level guide on setting up neural ODEs in a popular Python framework.  
+- Classification example: Half Moons dataset: Detail data preprocessing, model building, training loop, and results.  
+- Visualizing learned trajectories: Show how decision boundaries evolve as solutions to learned ODEs.  
+7. Topological constraints and limitations  
+- Why Neural ODEs can only describe homeomorphisms: Explain the inherent invertibility requirement.  
+- Concentric circles dataset example: Illustrate a classic case where standard neural ODEs struggle.  
+- The "cheating" effect in practice: Explore how models may artificially bypass topological obstructions.  
+- Discussion on generalization pitfalls: Emphasize potential issues in real applications.  
+- Potential solutions and open research problems: Mention partial remedies and highlight areas for future study.  
+8. Augmented Neural ODEs  
+- Augmenting dimensions to overcome topological limits: Introduce the concept of adding extra dimensions.  
+- Formulating the augmented ODE problem: Detail how augmented states are trained alongside original variables.  
+- Implementation details and training: Describe practical tips for building and optimizing augmented models.  
+- Visualizing trajectories in higher dimensions: Offer strategies to interpret the augmented latent space.  
+- Theoretical considerations on expressivity: Discuss why higher dimensions can capture more complex data manifolds.  
+9. Practical considerations  
+- Choosing activation functions (Lipschitz constraints): Highlight how smoother activations can stabilize training.  
+- Handling stiff ODEs and advanced solvers: Discuss when specialized methods (e.g., implicit solvers) may be required.  
+- GPU vs. CPU usage and performance tips: Provide best practices for large-scale experiments.  
+- Hyperparameter tuning: Step size, solver choice, regularization, and other crucial decisions.  
+- Working with real-world data and noise: Incorporate data preprocessing, normalization, and robustness considerations.  
+- Debugging and troubleshooting common issues: Suggest systematic approaches to track down numerical instabilities or divergence.  
+10. Further reading and resources  
+- Extensions: Neural SDEs, CDEs, Hamiltonian neural networks, symplectic ODEs, and other variants.  
+- Recommended libraries: Torchdyn, JAX-based diff. equation solvers, and domain-specific frameworks.  
+- Blogs, tutorials, and code repositories: Point to community-driven resources for deeper exploration.  
+- Closing remarks and future directions: Summarize main takeaways and highlight emerging research trends.  
+- Collaboration and community development: Encourage sharing of open-source code and active participation in relevant forums.  
+
+*/}
+
+
+Welcome to this comprehensive exploration of neural ordinary differential equations (<Highlight>neural ODEs</Highlight>), a cutting-edge paradigm at the intersection of deep learning and dynamical systems. My goal is to offer a thorough, in-depth discussion spanning from fundamental principles of ordinary differential equations (<Tooltip text="ODEs are equations relating a function and its derivatives; solutions typically represent how a system evolves over time."/>), all the way to advanced neural ODE frameworks that have sparked significant excitement in the machine learning community. By taking the continuous-time perspective, neural ODEs have opened up a realm of novel insights into how we parameterize and train deep models.
+
+This text, while advanced, remains explanatory in nature. I will assume you have a decent working knowledge of:
+
+- Linear algebra (vectors, matrices, transformations).
+- Basic calculus (differentiation, integration, partial derivatives, chain rule).
+- Fundamentals of machine learning (familiarity with feed-forward neural networks, gradient-based optimization, cost functions).
+- Python programming (e.g., using PyTorch, NumPy, or similar libraries).
+
+Additionally, a grasp of concepts like residual networks (ResNets) and normalizing flows will allow you to draw parallels more easily to neural ODEs and their continuous transformations. Throughout the article, I will also allude to research papers and advanced developments, so some familiarity with reading scientific literature (like from NeurIPS, ICML, or JMLR) may be beneficial, but it is certainly not mandatory to gain value from this material.
+
+Why do we care about continuous-time formulations in modern machine learning? One reason is that many real-world systems are inherently governed by continuous or near-continuous evolution rules (think of physical, biological, ecological, or chemical processes). Another is that building neural networks that effectively treat model "depth" as a continuous variable often leads to improved memory efficiency when backpropagating through time, and can reveal novel insights about how deep representations evolve.
+
+In essence, neural ODEs offer:
+- A perspective that unifies discrete deep neural architectures (like ResNets) with classical dynamical systems.
+- The possibility to adapt step sizes in "depth" during inference, and potentially more flexible function approximations.
+- Connections to continuous normalizing flows, invertible transformations, and generative modeling.
+
+Given these motivations, let us embark on a journey that starts from first principles of dynamical systems, ensuring the conceptual foundations are solid, then progresses into the numerical methods for solving ODEs, culminating in an extensive treatment of neural ODE models, their limitations, augmentations, and practical considerations.
+
+## Dynamical systems primer
+
+### Formal definition of a dynamical system
+A <Highlight>dynamical system</Highlight> generally describes how a state vector evolves over time according to some rule. In the simplest deterministic continuous-time formulation, we write:
+
+<Latex text="\[
+\frac{d\mathbf{x}}{dt} = f(\mathbf{x}(t), t; \boldsymbol{\theta}),
+\]"/>
+
+where <Latex text="\( \mathbf{x}(t) \)"/> in <Latex text="\( \mathbb{R}^n \)"/> is the state vector at time <Latex text="\( t \)"/>, <Latex text="\( f \)"/> is a function that governs the time evolution (sometimes referred to as a vector field), and <Latex text="\( \boldsymbol{\theta} \)"/> are parameters. The solution to such an equation, assuming well-posedness, is a trajectory <Latex text="\( \mathbf{x}(t) \)"/> tracing out how the system changes over the continuous variable <Latex text="\( t \)"/>.
+
+Dynamical systems can also be discrete, in which case time is indexed by steps, <Latex text="\( k = 0, 1, 2, \ldots \)"/>. Then, we might write:
+
+<Latex text="\[
+\mathbf{x}_{k+1} = g(\mathbf{x}_k, k; \boldsymbol{\theta}).
+\]"/>
+
+Though many real-world processes are intrinsically continuous, discrete dynamical systems can be an excellent approximation (e.g., sampling every second, minute, or day). The classification into deterministic vs. stochastic further refines whether there is random noise or uncertainty in how states evolve. Stochastic differential equations are also highly relevant in certain contexts (like finance and physics), but for neural ODEs in this article, we will primarily focus on deterministic continuous ODE settings.
+
+### State space, parameter space, and evolution
+When we solve an ODE, the solution <Latex text="\( \mathbf{x}(t) \)"/> lives in the <Highlight>state space</Highlight>. This is the domain of possible states the system might occupy. The parameters <Latex text="\( \boldsymbol{\theta} \)"/> (if present) typically reside in a <Highlight>parameter space</Highlight>, which can influence the shape of the function <Latex text="\( f \)"/>. As <Latex text="\( t \)"/> changes, the continuous trajectory <Latex text="\( \mathbf{x}(t) \)"/> in state space is determined by <Latex text="\( f \)"/>.
+
+In machine learning terms, for neural ODEs, the <Latex text="\( \boldsymbol{\theta} \)"/> typically represent the trainable weights of a neural network defining the vector field <Latex text="\( f \)"/>. Instead of layering a network in discrete blocks, the idea is that we are specifying a continuous transformation by integrating a learned vector field over time.
+
+### Flows in continuous time
+Consider a continuous dynamical system <Latex text="\( d\mathbf{x}/dt = f(\mathbf{x}(t)) \)"/>. A <Highlight>flow</Highlight> can be understood as a function <Latex text="\( \Phi_t(\mathbf{x}_0) \)"/> describing the solution at time <Latex text="\( t \)"/> given the initial condition <Latex text="\( \mathbf{x}_0 \)"/> at <Latex text="\( t=0 \)"/>. Thus,
+
+<Latex text="\[
+\mathbf{x}(t) = \Phi_t(\mathbf{x}_0).
+\]"/>
+
+Flows can be invertible if <Latex text="\( f \)"/> is well-behaved (satisfying the right conditions), meaning <Latex text="\( \Phi_{-t}(\Phi_t(\mathbf{x}_0)) = \mathbf{x}_0 \)"/>. This invertibility property is central to continuous normalizing flows, which are a class of generative models leveraging neural ODE frameworks.
+
+### Relevance in machine learning and data science
+Dynamical systems theory has influenced many areas of ML. Recurrent neural networks (RNNs) can be interpreted as discrete dynamical systems with hidden states updated at each time step. More recently, continuous normalizing flows and neural ODEs further unify the viewpoint that "depth" can be treated as a continuous variable.
+
+The synergy between ODEs and ML also manifests in advanced generative modeling, time-series analysis (continuous-time RNN analogs), and physically inspired neural networks that incorporate known scientific structure. If you are studying complex processes — from climate modeling to neuron spiking to chemical kinetics — a deep understanding of dynamical systems can help incorporate domain knowledge into ML models or, conversely, interpret neural networks from a physics-based perspective.
+
+### Discrete vs. continuous systems
+A discrete system with update <Latex text="\( \mathbf{x}_{k+1} = \mathbf{x}_k + h \, f(\mathbf{x}_k) \)"/> can approximate a continuous system <Latex text="\( d\mathbf{x}/dt = f(\mathbf{x}(t)) \)"/> using some finite step <Latex text="\( h \)"/>. In deep learning, one can draw a direct analogy between:
+- <Highlight>Discrete layers</Highlight> in a feed-forward or residual network.
+- <Highlight>Continuous layers</Highlight> in a neural ODE.
+
+Discrete systems can exhibit drastically different behavior if <Latex text="\( h \)"/> changes or if the system is chaotic. Continuous systems, by contrast, have a smooth time parameter, but can also be chaotic depending on <Latex text="\( f \)"/>. Neural ODEs let us switch from the discrete viewpoint of repeated function compositions to a smooth integral-based perspective.
+
+### Bifurcations and stability
+A <Highlight>bifurcation</Highlight> occurs when tiny changes in parameters cause a qualitative change in the long-term behavior of the system (e.g., changing from a stable fixed point to oscillatory behavior or chaos). Stability addresses whether solutions to the ODE remain bounded and converge to particular states, or diverge under small perturbations.
+
+In ML, while we do not typically talk about <Tooltip text="Bifurcations in neural networks are not as common as in classical dynamic systems, but the concept of abrupt transitions can appear in training."/> in the same sense as classical nonlinear dynamics, understanding that small parameter changes can drastically shift model behavior is conceptually important — especially in advanced architectures that harness continuous transformations.
+
+## Ordinary differential equations (ODEs)
+
+### Initial value problems (IVPs)
+The typical ODE we solve in ML or engineering is given by:
+
+<Latex text="\[
+\begin{cases}
+\frac{d\mathbf{x}}{dt} = f(\mathbf{x}(t), t), \\
+\mathbf{x}(t_0) = \mathbf{x}_0.
+\end{cases}
+\]"/>
+
+Here, <Latex text="\( \mathbf{x}_0 \)"/> is the initial condition at time <Latex text="\( t_0 \)"/>. The entire problem of finding <Latex text="\( \mathbf{x}(t) \)"/> for <Latex text="\( t > t_0 \)"/> is what we call an <Highlight>initial value problem</Highlight> (IVP). Neural ODEs essentially solve IVPs where <Latex text="\( f \)"/> is parameterized by a neural network. The training process modifies the neural network's weights so that the solution <Latex text="\( \mathbf{x}(t) \)"/> fits data or solves a classification/regression objective.
+
+### Existence and uniqueness (Picard–Lindelöf theorem)
+The <Highlight>Picard–Lindelöf theorem</Highlight> states that if <Latex text="\( f(\mathbf{x}, t) \)"/> is Lipschitz continuous in <Latex text="\( \mathbf{x} \)"/> and continuous in <Latex text="\( t \)"/> on some domain, then there exists a unique local solution to the IVP. This is important in neural ODEs because we need to ensure the forward pass (solving the ODE) yields a well-defined trajectory. If <Latex text="\( f \)"/> is not Lipschitz continuous, solutions could be non-unique or might blow up in finite time.
+
+### Lipschitz continuity and its role in ODEs
+A function <Latex text="\( f \)"/> is Lipschitz continuous if there exists a constant <Latex text="\( L \)"/> such that for any two points <Latex text="\( \mathbf{x}_1, \mathbf{x}_2 \)"/>:
+
+<Latex text="\[
+\| f(\mathbf{x}_1) - f(\mathbf{x}_2) \| \leq L \|\mathbf{x}_1 - \mathbf{x}_2\|.
+\]"/>
+
+A smaller Lipschitz constant <Latex text="\( L \)"/> implies <Latex text="\( f \)"/> does not change "too abruptly", facilitating stable solutions. In neural ODEs, certain activation functions and weight constraints can help keep <Latex text="\( f \)"/> Lipschitz, thereby ensuring stable training and well-posedness.
+
+### Boundary value problems (BVPs) vs. IVPs
+In boundary value problems, we specify conditions at two points in time (e.g., <Latex text="\( \mathbf{x}(t_0) = \mathbf{x}_0 \)"/> and <Latex text="\( \mathbf{x}(t_1) = \mathbf{x}_1 \)"/>), rather than just an initial condition. BVPs arise in applications like heat conduction or structural mechanics. They are less common in standard neural ODE scenarios, but appear in some advanced or specialized contexts (e.g., certain trajectory optimization tasks).
+
+### Analytical solutions and feasibility
+Many ODEs do not have closed-form solutions that can be written down using elementary functions. Even seemingly simple ODEs can require special functions for solutions. Hence, in practice — especially for neural ODEs — we rely heavily on <Highlight>numerical methods</Highlight>.
+
+### Applications and examples
+Ordinary differential equations arise in <Tooltip text="Newtonian mechanics: Force = mass * acceleration."/> physics (e.g., motion under forces), chemical reactions, epidemiological models (like SIR), population dynamics (predator-prey, logistic growth), circuit dynamics, and beyond. Within ML, they appear in recurrent modeling, generative flows, and bridging the gap between continuous transformations and deep nets.
+
+## Numerical methods for solving ODEs
+
+### The Euler method
+The simplest solver is the <Highlight>forward Euler method</Highlight>. We discretize time into steps <Latex text="\( t_n = t_0 + n\,h \)"/> with step size <Latex text="\( h \)"/>. We approximate:
+
+<Latex text="\[
+\mathbf{x}_{n+1} = \mathbf{x}_n + h\, f(\mathbf{x}_n, t_n).
+\]"/>
+
+Although easy to implement, Euler's method can be inaccurate for larger <Latex text="\( h \)"/> and can be unstable for stiff problems. 
+
+#### Example code snippet:
+<Code text={`
+import numpy as np
+
+def euler_step(x, t, h, f):
+    # x: current state
+    # t: current time
+    # h: step size
+    # f: function f(x, t)
+    return x + h * f(x, t)
+
+# Example usage:
+def lotka_volterra(x, t, alpha=1.1, beta=0.4, delta=0.1, gamma=0.4):
+    # x: [prey, predator]
+    dxdt = alpha*x[0] - beta*x[0]*x[1]
+    dydt = delta*x[0]*x[1] - gamma*x[1]
+    return np.array([dxdt, dydt])
+
+t0, tf = 0.0, 20.0
+h = 0.1
+num_steps = int((tf - t0)/h)
+times = np.linspace(t0, tf, num_steps)
+x = np.array([10.0, 5.0])  # initial state
+
+trajectory = [x]
+for i in range(num_steps-1):
+    x = euler_step(x, times[i], h, lotka_volterra)
+    trajectory.append(x)
+`}/>
+
+### Runge–Kutta methods (RK family)
+Runge–Kutta (RK) methods achieve higher accuracy by sampling <Latex text="\( f \)"/> at multiple points within each step. The classic <Highlight>RK4</Highlight> method, for instance, is:
+
+<Latex text="\[
+\mathbf{k}_1 = f(\mathbf{x}_n, t_n),
+\]"/>
+<Latex text="\[
+\mathbf{k}_2 = f\Bigl(\mathbf{x}_n + \frac{h}{2}\mathbf{k}_1, t_n + \frac{h}{2}\Bigr),
+\]"/>
+<Latex text="\[
+\mathbf{k}_3 = f\Bigl(\mathbf{x}_n + \frac{h}{2}\mathbf{k}_2, t_n + \frac{h}{2}\Bigr),
+\]"/>
+<Latex text="\[
+\mathbf{k}_4 = f(\mathbf{x}_n + h\,\mathbf{k}_3, t_n + h),
+\]"/>
+<Latex text="\[
+\mathbf{x}_{n+1} = \mathbf{x}_n + \frac{h}{6}\bigl(\mathbf{k}_1 + 2\mathbf{k}_2 + 2\mathbf{k}_3 + \mathbf{k}_4\bigr).
+\]"/>
+
+Here, the intermediate <Latex text="\( \mathbf{k}_i \)"/> values are essentially estimates of the slope at different points in the interval <Latex text="\( [t_n, t_n + h] \)"/>. This approach usually yields much better accuracy than Euler for the same step size.
+
+### Local vs. total truncation errors
+<Highlight>Local error</Highlight> is the error made in one step, assuming perfect knowledge of <Latex text="\( \mathbf{x}_n \)"/>. <Highlight>Total error</Highlight> (or global error) accumulates over many steps. Higher-order methods like RK4 reduce local error more rapidly, thus improving overall accuracy at the cost of additional function evaluations per step.
+
+### Adaptive step-size methods
+Sophisticated solvers (Dormand–Prince, Bogacki–Shampine, etc.) dynamically adjust <Latex text="\( h \)"/> depending on local error estimates. This is extremely useful in neural ODE contexts, since the solver can take large steps in regions where <Latex text="\( f \)"/> does not change much and smaller steps where <Latex text="\( f \)"/> is more rapidly varying, thereby balancing speed and accuracy.
+
+### Implicit vs. explicit methods
+- <Highlight>Explicit</Highlight> methods compute <Latex text="\( \mathbf{x}_{n+1} \)"/> directly from known quantities. They can fail or require very small step sizes for stiff problems.
+- <Highlight>Implicit</Highlight> methods solve an equation involving <Latex text="\( \mathbf{x}_{n+1} \)"/> (like backward Euler), which is more stable for stiff systems but can be more computationally expensive per step.
+
+### Example: Lotka–Volterra equations
+The Lotka–Volterra predator–prey model is a classic demonstration of ODE solvers. You can see how different methods (Euler vs. RK4 vs. adaptive) capture the oscillatory nature of the predator and prey populations. By adjusting step sizes, you can explore how numerical stability and accuracy vary.
+
+## Phase space and phase portraits
+
+### Phase space variables and dimensionality
+A system with <Latex text="\( n \)"/> state variables can be viewed as evolving in an <Latex text="\( n \)"/>-dimensional phase space. Each point in that space corresponds to a unique configuration of the system. As time progresses, a trajectory is traced out in this space.
+
+### Example: Simple pendulum system
+A simple pendulum's state can be described by angle <Latex text="\( \theta \)"/> and angular velocity <Latex text="\( \omega = d\theta/dt \)"/>. That makes a 2D phase space (<Latex text="\( \theta \)"/>, <Latex text="\( \omega \)"/>). Since energy is conserved (assuming no friction), trajectories form closed loops in phase space.
+
+<Image alt="Simple pendulum phase portrait example" path="" caption="Idealized simple pendulum phase portrait with energy contours." zoom="false" />
+
+### Equilibrium points and stability
+An <Highlight>equilibrium point</Highlight> (or fixed point) is where <Latex text="\( d\mathbf{x}/dt = \mathbf{0} \)"/>. If small perturbations decay over time, the equilibrium is stable; if they grow, it is unstable. In neural ODEs, stable equilibria can sometimes correspond to attractors in the function space that the neural network learns.
+
+### Plotting phase portraits for various initial conditions
+Plotting a 2D system can be done by picking a grid of points and drawing arrows or lines that represent <Latex text="\( f(\mathbf{x}, t) \)"/>. By overlaying multiple trajectories from different initial conditions, you gain insight into the global behavior (e.g., whether solutions converge to attractors or revolve around cycles).
+
+### Lotka–Volterra phase portrait
+If you visualize the predator–prey populations in a 2D plane (<Latex text="\( x \)"/> for prey, <Latex text="\( y \)"/> for predator), the system's cyclical nature becomes readily apparent. Orbits revolve around a central point, representing out-of-phase population oscillations.
+
+### Chaotic dynamics and strange attractors
+Systems like the <Highlight>Lorenz system</Highlight> exhibit chaos, meaning sensitive dependence on initial conditions. Neural ODEs can theoretically approximate chaotic flows as well, but training them to do so reliably remains an open research challenge in many contexts.
+
+## Neural ODEs
+
+### Introduction and intuition
+Neural ODEs were popularized by (Chen and gang, NeurIPS 2018). The main idea is that instead of stacking discrete layers <Latex text="\( h_{k+1} = h_k + f(h_k) \)"/> (think of a ResNet's skip connection), we parameterize a continuous transformation of a hidden state <Latex text="\( \mathbf{z}(t) \)"/> via an ODE:
+
+<Latex text="\[
+\frac{d\mathbf{z}}{dt} = f(\mathbf{z}(t), t; \theta).
+\]"/>
+
+Then, we use a black-box ODE solver to integrate from <Latex text="\( t = 0 \)"/> to <Latex text="\( t = 1 \)"/> (or any interval we choose). This effectively replaces discrete layers with a continuous-depth network. The advantage is that we only evaluate as many intermediate steps as needed for the desired accuracy (controlled by the ODE solver), and we can train the parameters <Latex text="\( \theta \)"/> end-to-end to perform classification or other tasks.
+
+### Comparison to ResNet architectures
+A ResNet block with a small step size <Latex text="\( h \)"/> can be viewed as:
+
+<Latex text="\[
+\mathbf{z}_{k+1} = \mathbf{z}_k + h \, f(\mathbf{z}_k),
+\]"/>
+
+where if <Latex text="\( h \)"/> is small and <Latex text="\( k \)"/> is large, the transformations approximate a continuous evolution. Neural ODEs push this concept to the limit: they literally treat the transformation as an ODE in continuous time, removing the notion of a finite number of layers altogether. Depth becomes a variable that the ODE solver can adapt dynamically.
+
+### Backpropagation through ODE solvers
+A naive approach might record all intermediate states to perform standard backpropagation, but that can become very memory-intensive. Instead, (Chen and gang) introduced the <Highlight>adjoint sensitivity method</Highlight>, which solves another ODE backwards in time to compute gradients, removing the need to store the entire forward pass. This can reduce memory usage dramatically.
+
+#### Naive backprop vs. adjoint sensitivity method
+- <Highlight>Naive backprop</Highlight>: The solver obtains states <Latex text="\( \mathbf{z}(t_0), \ldots, \mathbf{z}(t_N) \)"/>. Then a standard backprop pass is done, requiring memory of each state.
+- <Highlight>Adjoint method</Highlight>: We keep only the final state, then integrate a specially derived equation for the adjoint variable <Latex text="\( \frac{\partial L}{\partial \mathbf{z}(t)} \)"/> backwards in time to find the gradient with respect to parameters and the initial state.
+
+### Memory vs. accuracy trade-off
+Using the adjoint method can lead to <Tooltip text="Reverse-mode integration can have numerical issues, e.g., requiring fine step sizes if the forward trajectory is sensitive."/> concerns about numeric stability and accuracy. In some tasks, standard backprop might be simpler if memory permits. In large-scale problems, the memory savings of adjoint-based approaches can be critical.
+
+### Implementation with Torchdiffeq
+The <Highlight>torchdiffeq</Highlight> library provides <Code text={`
+pip install torchdiffeq
+`}/> a simple way to define neural ODEs in PyTorch:
+
+<Code text={`
+import torch
+from torch import nn
+from torchdiffeq import odeint
+
+class ODEFunc(nn.Module):
+    def __init__(self):
+        super(ODEFunc, self).__init__()
+        self.net = nn.Sequential(
+            nn.Linear(2, 50),
+            nn.Tanh(),
+            nn.Linear(50, 2),
+        )
+    
+    def forward(self, t, z):
+        return self.net(z)
+
+# Usage:
+func = ODEFunc()
+z0 = torch.tensor([1.0, 0.0])
+t = torch.linspace(0, 1, 100)
+z_t = odeint(func, z0, t)
+`}/>
+
+Here, <Latex text="\( ODEFunc \)"/> defines the vector field <Latex text="\( f(\mathbf{z}, t) \)"/>, and <Latex text="\( odeint \)"/> integrates from <Latex text="\( t=0 \)"/> to <Latex text="\( t=1 \)"/>.
+
+### Classification example: Half Moons dataset
+A classic 2D classification test problem is the half-moons dataset. One can specify <Latex text="\( \mathbf{z}(0) = \text{input features} \)"/> and integrate to <Latex text="\( \mathbf{z}(1) \)"/>. Then feed <Latex text="\( \mathbf{z}(1) \)"/> into a linear layer or simply interpret the integrated features as a final representation for classification. By training the parameters of the ODE function, we aim to separate the half-moons in the final space.
+
+<Code text={`
+import torch
+import numpy as np
+from torchdiffeq import odeint_adjoint as odeint  # Using adjoint version for memory efficiency
+import matplotlib.pyplot as plt
+
+# Generate half moons data
+N = 2000
+# We'll keep it small for demonstration, but can be bigger
+from sklearn.datasets import make_moons
+X, y = make_moons(n_samples=N, noise=0.1)
+
+X = torch.from_numpy(X).float()
+y = torch.from_numpy(y).long()
+
+class ODEFunc(nn.Module):
+    def __init__(self, hidden_dim=16):
+        super(ODEFunc, self).__init__()
+        self.net = nn.Sequential(
+            nn.Linear(2, hidden_dim),
+            nn.Tanh(),
+            nn.Linear(hidden_dim, 2)
+        )
+    def forward(self, t, z):
+        return self.net(z)
+
+class ODEBlock(nn.Module):
+    def __init__(self, odefunc, solver='rk4'):
+        super(ODEBlock, self).__init__()
+        self.odefunc = odefunc
+        self.solver = solver
+    
+    def forward(self, x, t=torch.tensor([0., 1.])):
+        # Solve from t=0 to t=1
+        z = odeint(self.odefunc, x, t, method=self.solver)
+        # z shape: [time, batch, features]
+        return z[-1]
+
+class ODEModel(nn.Module):
+    def __init__(self, hidden_dim=16):
+        super(ODEModel, self).__init__()
+        self.odeblock = ODEBlock(ODEFunc(hidden_dim=hidden_dim))
+        self.classifier = nn.Linear(2, 2)
+    
+    def forward(self, x):
+        z = self.odeblock(x)
+        return self.classifier(z)
+
+model = ODEModel()
+optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
+loss_fn = nn.CrossEntropyLoss()
+
+# Simple training loop
+for epoch in range(50):
+    optimizer.zero_grad()
+    pred = model(X)
+    loss = loss_fn(pred, y)
+    loss.backward()
+    optimizer.step()
+    if epoch % 10 == 0:
+        print(f"Epoch {epoch} - Loss: {loss.item():.4f}")
+
+# Evaluate
+with torch.no_grad():
+    preds = model(X).argmax(dim=1)
+    acc = (preds == y).float().mean().item()
+    print(f"Train Accuracy: {acc*100:.2f}%")
+`}/>
+
+As you train, the ODE-based model learns a flow that separates the classes in the integrated representation.
+
+### Visualizing learned trajectories
+You can sample <Latex text="\( \mathbf{z}(0) \)"/> from a grid over the 2D plane (spanning the half moons) and plot <Latex text="\( \mathbf{z}(t) \)"/> at intermediate time points. This yields a continuous flow field that warps the plane so as to pull apart the classes.
+
+## Topological constraints and limitations
+
+### Why neural ODEs can only describe homeomorphisms
+The continuous flows they generate are invertible (assuming certain regularity conditions). This implies that in 2D, a neural ODE map cannot <Highlight>tear apart</Highlight> a connected region of space into two disconnected regions. In topological terms, the transformation is a homeomorphism. Consequently, if your dataset classes are topologically distinct (like two concentric circles with empty space between them), a single continuous flow that starts as a single connected region cannot easily separate them unless it does so in a continuous manner that does not violate invertibility.
+
+### Concentric circles dataset example
+Suppose you have an inner circle labeled 0 and an outer ring labeled 1. A neural ODE that is purely 2D can have trouble learning a function that linearly separates the classes after time <Latex text="\( T \)"/>. Intuitively, an invertible continuous transformation cannot create or remove holes in the domain.
+
+### The "cheating" effect in practice
+Empirically, neural ODEs can sometimes <Tooltip text="One possibility is that the solver can revolve or stretch the data near singular boundaries, effectively 'threading a needle' topologically."/> appear to circumvent strict topological constraints. Still, these illusions often rely on subtle distortions or numerical approximations. True topological obstructions remain a key limitation.
+
+### Discussion on generalization pitfalls
+Because of these constraints, neural ODEs might not generalize well to problems requiring non-invertible transformations or intricate topological changes. They can also be susceptible to stiff dynamics, requiring specialized solvers.
+
+### Potential solutions and open research problems
+Researchers have proposed ways to address these topological constraints, such as:
+- **Augmented neural ODEs.**
+- **Adding diffusion or noise** (leading to neural SDEs).
+- **Piecewise defined ODE fields** that can incorporate boundary conditions, though these remain complex in practice.
+
+## Augmented Neural ODEs
+
+### Augmenting dimensions to overcome topological limits
+Augmented Neural ODEs (ANODEs) (Dupont and gang, NeurIPS 2019) introduce extra channels or dimensions, effectively embedding the data in a higher-dimensional space where the flow can separate classes more easily. This can circumvent the topological constraints in lower dimensions.
+
+<Latex text="\[
+\frac{d}{dt}
+\begin{pmatrix}
+\mathbf{z}(t) \\
+\mathbf{a}(t)
+\end{pmatrix}
+=
+\begin{pmatrix}
+f(\mathbf{z}(t), \mathbf{a}(t), t; \theta) \\
+g(\mathbf{z}(t), \mathbf{a}(t), t; \theta)
+\end{pmatrix},
+\]"/>
+
+where <Latex text="\( \mathbf{a}(t) \)"/> is the augmented component with arbitrary dimension. This new dimension can effectively provide new degrees of freedom to warp data.
+
+### Formulating the augmented ODE problem
+One simple approach is to initialize <Latex text="\( \mathbf{a}(0) \)"/> to zeros (or random values) of dimension <Latex text="\( d_{aug} \)"/>, then let it evolve alongside <Latex text="\( \mathbf{z}(t) \)"/>. The final readout might ignore these extra dimensions or incorporate them into the classification layer.
+
+### Implementation details and training
+The training loop is largely the same, except your ODE function sees a concatenated vector <Latex text="\( [\mathbf{z}(t), \mathbf{a}(t)] \)"/>. You might also tie or freeze parts of <Latex text="\( g \)"/> to force the model to learn specific behaviors or to reduce complexity. This can help the model break the homeomorphism restriction in the original low-dimensional space.
+
+### Visualizing trajectories in higher dimensions
+Although direct visualization beyond 3D is trickier, you can still visualize the final 2D projection. Or use dimensionality reduction techniques (like PCA) to see how the augmented dimension modifies the data's manifold structure.
+
+### Theoretical considerations on expressivity
+By embedding data into a higher-dimensional manifold, the model can represent transformations that were previously impossible. This can significantly enhance expressivity but may also introduce more parameters and potential overfitting.
+
+## Practical considerations
+
+### Choosing activation functions (Lipschitz constraints)
+To ensure stability, it is often recommended to use smoother, carefully bounded activation functions (e.g., <Highlight>tanh</Highlight>, <Highlight>softplus</Highlight>, <Highlight>swish</Highlight>). Harsh nonlinearities like ReLU can cause large Lipschitz constants. Some advanced neural ODE frameworks explicitly parameterize Lipschitz-constrained layers to guarantee well-behaved flows.
+
+### Handling stiff ODEs and advanced solvers
+Stiffness arises when different components of <Latex text="\( \mathbf{z}(t) \)"/> evolve on very different time scales, forcing the solver to use very small steps. Implicit solvers or specialized methods can handle stiffness but at a higher computational cost. In neural ODE training, if you notice extremely small step sizes, that may hint at stiff behavior in your learned vector field. Techniques like spectral normalization or restricting layer depth can help mitigate stiffness.
+
+### GPU vs. CPU usage and performance tips
+Because ODE solvers might require many function evaluations (especially higher-order methods), GPU acceleration can be extremely beneficial, but your mileage may vary depending on how many times <Latex text="\( f \)"/> is called and how large your batch sizes are. For CPU-based systems, consider simpler solvers or smaller batch sizes. Also, caching repeated operations or using specialized libraries like <Highlight>torchdiffeq</Highlight> can help.
+
+### Hyperparameter tuning
+- **Step size** or <Highlight>solver tolerance</Highlight>: In adaptive solvers, you typically set a relative and absolute tolerance. Tighter tolerances produce more accurate solutions but require more function evaluations.
+- **Regularization**: Weight decay or other forms of regularization can help keep <Latex text="\( f \)"/> from becoming too large or too rapidly changing.
+- **Network architecture**: The dimension of hidden layers, the number of layers in <Latex text="\( f \)"/> itself, and activation choices can drastically affect performance.
+
+### Working with real-world data and noise
+Real data is seldom noise-free. The ODE viewpoint assumes a certain level of continuity or smoothness. If your data is heavily corrupted or sampling times are irregular, specialized approaches (like neural CDEs, which handle continuous-time data streams) or robust solvers might be needed. Preprocessing steps — smoothing or filtering your data — can also help.
+
+### Debugging and troubleshooting common issues
+- If the solver takes tiny steps or runs extremely slowly, suspect stiffness in your learned <Latex text="\( f \)"/>.
+- If training fails to converge, try simpler architectures or limit the range of time integration.
+- If you see unbounded blow-ups in <Latex text="\( \mathbf{z}(t) \)"/>, check for extremely large parameter values or extremely steep activation functions, which might break Lipschitz continuity.
+
+## Further reading and resources
+
+### Extensions: Neural SDEs, CDEs, Hamiltonian neural networks, symplectic ODEs, and other variants
+- **Neural SDEs**: Add stochastic terms to handle random processes.
+- **Neural CDEs**: Model data coming in as continuous streams (Kidger and gang).
+- **Hamiltonian neural networks**: Enforce Hamiltonian structure for systems with conserved energy (e.g., in physics).
+- **Symplectic ODEs**: For systems with symplectic structure, specialized integrators preserve volume in phase space.
+
+### Recommended libraries
+- **torchdiffeq**: The go-to library in PyTorch for neural ODE functionality.
+- **Torchdyn**: Offers a higher-level interface with additional features like neural SDEs.
+- **JAX-based** frameworks: For automatic differentiation with HPC-friendly backends.
+- Domain-specific frameworks: E.g., for computational physics or biology where ODE solutions and ML converge.
+
+### Blogs, tutorials, and code repositories
+- <Highlight>Neural ODEs: The Technical Details</Highlight> (blog by David Duvenaud's group).
+- <Highlight>GitHub: DiffEqFlux.jl</Highlight> (Julia-based library for neural differential equations).
+- <Highlight>Arxiv papers</Highlight> from Chen and gang and follow-up works by Dupont and gang on ANODEs.
+
+### Closing remarks and future directions
+Neural ODEs bring an elegant continuous-time viewpoint to deep learning, bridging classical numerical analysis with cutting-edge ML. They open interesting avenues for memory-efficient training, invertible transformations, and physically informed modeling. Ongoing research explores deeper theoretical underpinnings (such as well-posedness in high dimensions, better handling of stiffness, and topological constraints) and broader applications across domains like finance, signal processing, climate science, and generative modeling.
+
+### Collaboration and community development
+I encourage you to share your own experiments and open-source code with the broader community. Many neural ODE enthusiasts gather in specialized forums and GitHub repositories, where best practices and solver innovations are constantly evolving. By collaborating, we can refine these methods, discover their limitations, and push the frontiers of modern machine learning in a direction that harmonizes with the timeless beauty of continuous dynamical systems.
+
+I hope this extensive journey has provided both breadth and depth to your understanding of neural ordinary differential equations. If you are new to the area, try replicating the half-moons classification experiment. If you are experienced, explore augmented ODEs or neural SDEs. In all cases, stay curious about the interplay of continuous mathematics, numerical methods, and neural architectures — the synergy is likely to continue advancing the field in remarkable ways!

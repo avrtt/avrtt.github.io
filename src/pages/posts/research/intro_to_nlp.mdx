@@ -1,0 +1,514 @@
+---
+index: 66
+indexCourse: 86
+indexFavorites:
+title: "Intro to NLP"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Intro to NLP"
+courseCategoryName: "Natural language processing"
+desc: "Everything around is woven from words"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "11.08.2023"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 1
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: false
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/introduction_to_nlp.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/intro_to_nlp"
+slug: "/research/intro_to_nlp"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+[https://www.youtube.com/watch?v=p7rWgv3L2-g&list=PL4_hYwCyhAvZLp0CTIDVQr9FtDR_7DaUr&index=2](https://www.youtube.com/watch?v=p7rWgv3L2-g&list=PL4_hYwCyhAvZLp0CTIDVQr9FtDR_7DaUr&index=2)  
+[https://www.youtube.com/watch?v=8mcGg0kKurE&list=PL4_hYwCyhAvZLp0CTIDVQr9FtDR_7DaUr&index=3](https://www.youtube.com/watch?v=8mcGg0kKurE&list=PL4_hYwCyhAvZLp0CTIDVQr9FtDR_7DaUr&index=3)  
+https://en.wikipedia.org/wiki/Machine_translation
+[https://www.youtube.com/watch?v=6HibilFua-U&list=PL4_hYwCyhAvY7k32D65q3xJVo8X8dc3Ye&index=4](https://www.youtube.com/watch?v=6HibilFua-U&list=PL4_hYwCyhAvY7k32D65q3xJVo8X8dc3Ye&index=4)  
+Data Science from Scratch - глава 21, стр. 356
+file:///home/lenferdetroud/Documents/Data%20Science%20from%20Scratch%20(2nd%20Edition).pdf
+Kaggle Course: Natural Language Processing (не забыть выложить задания на гитхаб)
+[https://www.youtube.com/playlist?list=PLLssT5z_DsK8HbD2sPcUIDfQ7zmBarMYv](https://www.youtube.com/playlist?list=PLLssT5z_DsK8HbD2sPcUIDfQ7zmBarMYv)
+Мичиганский курс 'Text Mining'
+[https://www.coursera.org/learn/python-text-mining/home/welcome](https://www.coursera.org/learn/python-text-mining/home/welcome)
+Не забыть выложить задания на GitHub
+Artificial Intelligence: A Modern Approach, Global Edition, 4ed: chapters 24 + 25
+Вопросы разобрать и запостить в ML-канал:
+1. Что знаете про LSTM слои, GRU слои? Отличия. Сколько в них гейтов?
+2. Как работает W2V?
+3. Attention, positional encoding
+4. Подходы к решению задач NLP
+5. Нормализация текста: что это, когда нужно и когда не нужно?
+Обработка естественного языка
+https://neerc.ifmo.ru/wiki/index.php?title=%D0%9E%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B0_%D0%B5%D1%81%D1%82%D0%B5%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D0%B3%D0%BE_%D1%8F%D0%B7%D1%8B%D0%BA%D0%B0 
+Классификация текстов и анализ тональности
+https://neerc.ifmo.ru/wiki/index.php?title=%D0%9A%D0%BB%D0%B0%D1%81%D1%81%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%86%D0%B8%D1%8F_%D1%82%D0%B5%D0%BA%D1%81%D1%82%D0%BE%D0%B2_%D0%B8_%D0%B0%D0%BD%D0%B0%D0%BB%D0%B8%D0%B7_%D1%82%D0%BE%D0%BD%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D1%81%D1%82%D0%B8
++
+https://neerc.ifmo.ru/wiki/index.php?title=%D0%98%D0%B7%D0%B2%D0%BB%D0%B5%D1%87%D0%B5%D0%BD%D0%B8%D0%B5_%D1%8D%D0%BC%D0%BE%D1%86%D0%B8%D0%B9
+
+*/}
+
+
+{/*
+
+Text Preprocessing: Learn various text preprocessing steps like tokenization (splitting text into words or sentences), stemming (reducing words to their root form), lemmatization (similar to stemming but considers the context), stop word removal, etc.
+Feature Extraction Techniques: Become familiar with techniques to convert text data into a format that can be understood by machine learning algorithms. Key methods include Bag-of-words (BoW), Term Frequency-Inverse Document Frequency (TF-IDF), and n-grams.
+
+*/}
+
+
+{/*
+
+1. Introduction to Natural Language Processing  
+- Definition of NLP: Highlights the intersection of machine learning and mathematical linguistics, focusing on methods to analyze and synthesize natural language; employed in speech recognition, natural language understanding, and natural language generation.  
+- Importance in Data Science: Discusses how NLP techniques enable tasks such as text classification, sentiment analysis, and machine translation; explains the growing integration of NLP in voice assistants, automated translation, and text filtering.  
+- Historical Milestones: Reviews early rule-based systems, transition to statistical methods, and the modern emergence of neural approaches, including the shift from symbolic AI to deep learning.  
+- Main NLP Tasks: Introduces foundational tasks such as speech recognition, text synthesis, morphological analysis, tokenization, part-of-speech tagging, named entity recognition, syntactic parsing, topic analysis, and machine translation.  
+- Core Definitions (e.g., Corpora): Defines "corpus" as a structured collection of texts (with consistent processing rules) for language research; covers how corpora underpin most NLP modeling.
+2. NLP Fundamentals: Text Preprocessing and Morphological Analysis  
+- Text Preprocessing Steps: Explains lowercase or uppercase conversion, digit handling, punctuation removal, whitespace trimming, and basic noise cleaning.  
+- Tokenization: Breaks text into tokens (words, subwords, or sentences) via rules or regular expressions; underpins subsequent steps of processing.  
+- Stop Word Removal: Removes frequent but semantically weak words (e.g., "the," "and") to reduce noise in text analysis.  
+- Stemming and Lemmatization: Covers algorithms (Porter, Snowball, WordNet lemmatizer) to convert words to a base or dictionary form; discusses language-specific morphological complexities (e.g., Russian morphology).  
+- Morphological Analysis: Describes morphological analyzers (like pymorphy2 for Russian) to handle inflection, conjugation, and parts of speech in richly inflected languages.  
+- POS Tagging (Part-of-Speech Tagging): Shows how words are labeled according to their parts of speech (noun, verb, adjective, etc.) by approaches such as Hidden Markov Models or rule-based systems.  
+- Deduplication: Explains the need to remove near-duplicate or identical documents in large corpora to reduce redundancy; introduces locally sensitive hashing to speed up comparisons.
+3. Word Embeddings & Factor Analysis  
+- Feature Extraction Techniques: Overviews Bag-of-Words (BoW), TF-IDF, and n-grams; notes how these represent documents numerically while losing word order information.  
+- Factor Analysis for Text Data: Explains how factor analysis underlies latent semantic methods; discusses dimension-reduction techniques that reveal hidden structure (topics, semantic factors).  
+- Word Embeddings: Defines distributed word representations, describing how methods such as Word2Vec, GloVe, and FastText capture semantic relationships by placing words in continuous vector spaces.  
+- Word2Vec Fundamentals: Details the skip-gram and CBOW (continuous bag-of-words) architectures and how they learn vector representations by predicting context words.  
+4. Advanced Transformations: LSA, pLSA, and GLSA  
+- Latent Semantic Analysis (LSA): Shows how singular value decomposition (SVD) on term-document matrices reduces dimensionality and uncovers latent semantic dimensions.  
+- Probabilistic LSA (pLSA): Introduces the probabilistic model that factors documents into topics and topics into words, explaining the EM algorithm used to estimate these distributions.  
+- GLSA Techniques: Explores Generalized LSA approaches that incorporate additional linguistic or contextual cues for dimensionality reduction.  
+- Relationship to Factor Analysis: Connects pLSA and LSA with the broader theme of factorization methods, highlighting how they decompose text into latent components.
+5. Model Architectures: Seq2Seq, Attention, and Positional Encoding  
+- Exploring Seq2Seq Architecture: Discusses encoder-decoder frameworks for machine translation, text summarization, and other sequence-generation tasks.  
+- The Role of Attention in NLP: Covers the mechanism that learns relevance scores between tokens for improved context handling in translation, summarization, and more.  
+- Positional Encoding for Sequence Models: Explains how Transformers encode positional information to handle tokens in parallel; includes mention of self-attention.  
+- Transformers: References the evolution from RNN-based seq2seq to Transformer-based architectures (e.g., BERT, GPT), emphasizing multi-head attention and large-scale pretraining.
+6. Core NLP Tasks  
+- Text Classification & Sentiment Analysis: Describes categorizing documents into predefined classes (topics or sentiment polarity); covers supervised approaches (Naive Bayes, SVM) and dictionary-based methods.  
+- Named Entity Recognition (NER): Identifies and classifies entities (people, organizations, locations) in text.  
+- Machine Translation: Details rule-based and neural methods, culminating in modern Transformer-based translation systems.  
+- Question Answering (QA): Outlines systems that retrieve and/or generate answers to natural language queries; references reading comprehension and open-domain QA.  
+- Text Mining Approaches: Summarizes relation extraction, topic modeling (LDA), and classification tasks in large text corpora; includes semantic role labeling and plagiarism detection.  
+- Emotion Analysis: Introduces extraction of emotions (e.g., joy, anger, sadness) from text; discusses keyword-based, lexicon-based, machine learning, and hybrid methods.  
+7. Evaluating NLP Systems  
+- Common NLP Metrics: Presents accuracy, precision, recall, F1-score, confusion matrices; introduces BLEU for machine translation and ROUGE for summarization.  
+- Best Practices for Model Evaluation: Advises using held-out test sets, cross-validation, and careful hyperparameter tuning; emphasizes reproducibility and proper error analysis.  
+- Multi-Class and Multi-Label Tasks: Covers handling tasks that require multiple categories (sentiment with more than two classes, multi-topic classification).  
+8. Advanced Breakthroughs & Conclusion  
+- The CLIP Model: Shows how contrastive language-image pretraining opens new multimodal applications.  
+- Future Directions in NLP: Mentions continual learning, zero-shot/few-shot learning, and increasing emphasis on interpretability and fairness.  
+- Libraries & Tools: Outlines popular Python libraries (NLTK, spaCy, scikit-learn, gensim), deep-learning frameworks (PyTorch, TensorFlow), and specialized libraries for morphological analysis (pymorphy2) or named entity recognition (Natasha).  
+- Summary of Key Points: Recaps the importance of preprocessing, embeddings, advanced architectures, and consistent evaluation; highlights how NLP is critical in analyzing vast amounts of human-generated text.
+
+*/}
+
+
+Natural language processing (NLP) is a field at the intersection of <Highlight>machine learning</Highlight> and mathematical linguistics, dedicated to the analysis and generation of text and speech in human language. At its heart, NLP combines sophisticated algorithmic techniques with linguistic theory to enable computers to "understand" or manipulate human language input in meaningful ways. Over the last few decades, NLP has become a cornerstone in modern data science and artificial intelligence, serving as a foundational approach for tasks like automated translation, speech recognition, sentiment analysis, topic modeling, dialogue systems, and more.
+
+Modern NLP methods are employed in a wide spectrum of applications — from personal voice assistants that transcribe and interpret spoken commands, to advanced text classification systems that filter spam or identify offensive content, to large-scale language models that generate coherent text or answer complex questions. 
+
+The historical evolution of NLP reflects a tension between two broad paradigms:
+
+1. **Rule-based** or symbolic approaches, which rely on handcrafted rules about language structure, syntax, and semantics.  
+2. **Statistical** or machine-learning-based approaches, which derive patterns from vast corpora of textual data.
+
+Today, the pendulum has swung decisively toward deep learning frameworks that rely on large pretrained models, massive textual corpora, and high-performance hardware. However, both symbolic insights and earlier statistical methods remain invaluable, especially in certain specialized tasks or resource-constrained domains.  
+
+### Definition of NLP
+At a high level, NLP can be described as:
+
+<Highlight>
+"The set of computational techniques aimed at analyzing, understanding, and generating texts (or speech) in natural language."
+</Highlight>
+
+By "natural language," we typically mean human languages as opposed to formal languages like programming languages or mathematical notation. This broad definition encompasses the subfields of:
+
+- **Speech recognition**, or how to transform raw audio signals into text.
+- **Natural language understanding**, or how to parse, interpret, and reason about the meaning behind text.
+- **Natural language generation**, or how to generate text in ways that reflect human-like fluency and coherence.
+
+### Importance in data science
+NLP is crucial in modern data science for a variety of reasons:
+
+- **Text classification** (e.g., spam detection, sentiment analysis, or topic labeling): Many real-world datasets include unstructured textual data, and classifying these at scale can reveal valuable insights.
+- **Sentiment analysis**: Businesses and researchers routinely extract sentiments and opinions from social media data, customer reviews, and forums to assess product reception or user experience.
+- **Machine translation**: Globalization has intensified the need for robust translation systems, which rely heavily on NLP. Neural machine translation has improved rapidly, showcasing how advanced NLP can facilitate cross-lingual communication.
+- **Voice assistants**: Virtual assistants (e.g., Alexa, Siri, Google Assistant) parse natural language commands, respond to user queries, and sometimes even maintain short dialogues.
+- **Automated text filtering and content moderation**: As online content grows exponentially, automated systems for filtering offensive or harmful text become indispensable.
+
+### Historical milestones
+NLP has undergone multiple transformations in its short but vibrant history:
+
+- **1950s — 1960s: The dawn of symbolic AI**. Early systems (like ELIZA, created by Joseph Weizenbaum in the mid-1960s) used pattern matching and rule-based heuristics. Researchers pursued fully symbolic approaches: they attempted to encode grammar rules and dictionary definitions by hand.
+- **1970s — 1980s: Rule-based and knowledge-based methods**. In these decades, symbolic approaches and expert systems were still popular. Researchers built vast knowledge bases, manually encoding domain-specific rules. However, language's inherent ambiguity and complexity created difficulties in scaling or generalizing these methods.
+- **1990s — early 2000s: Emergence of statistical NLP**. With increased computing power and availability of large corpora, researchers began applying Bayesian models, Hidden Markov Models (HMMs), and other statistical approaches to tasks such as part-of-speech tagging, syntactic parsing, and named entity recognition (NER).
+- **Early 2010s: Neural networks**. The rise of deep learning transformed how we approach NLP. Word embeddings such as Word2Vec (Mikolov and gang) became popular, revealing how neural networks capture semantic nuances in vector spaces.
+- **Mid–late 2010s: Sequence models and attention**. Recurrent neural networks (RNNs), especially LSTM (Long Short-Term Memory) networks, dominated tasks like machine translation, only to be superseded by attention-based architectures such as the Transformer (Vaswani and gang).
+- **Late 2010s — 2020s: Large-scale pretrained language models**. Transformer-based models like BERT (Devlin and gang), GPT (OpenAI), and T5 (Raffel and gang) significantly advanced state-of-the-art performance in many NLP tasks, sometimes even surpassing human benchmarks in carefully controlled tasks. Today, these large language models often form the backbone of production-level NLP systems.
+
+### Main NLP tasks
+There are numerous subfields within NLP, but commonly cited tasks include:
+
+- **Speech recognition**: Converting spoken audio into textual form.
+- **Text synthesis (text-to-speech)**: Generating spoken output from text.
+- **Morphological analysis**: Understanding word forms, inflections, and morphological features such as tense, case, gender.
+- **Tokenization**: Splitting text into smaller units (tokens), such as words or subwords.
+- **Part-of-speech (POS) tagging**: Labeling words in a sentence with their grammatical role (noun, verb, etc.).
+- **Named entity recognition (NER)**: Identifying references to entities like persons, organizations, locations.
+- **Syntactic parsing**: Constructing a syntactic tree or dependency graph for a sentence.
+- **Topic analysis**: Grouping documents or text segments into broad thematic categories.
+- **Machine translation**: Translating from one language to another using rule-based, statistical, or neural methods.
+- **Question answering (QA)**: Automatically answering user queries based on knowledge bases or relevant documents.
+
+### Core definitions (e.g., corpora)
+A fundamental resource for all NLP tasks is the <Highlight>corpus</Highlight>, defined as a systematically collected body of text that often comes with specific processing and annotation rules. Corpora are integral because they serve as the data foundation for both training and evaluating NLP models. Examples range from small curated text sets to massive web-scraped corpora containing billions of tokens.
+
+Because so many advanced methods rely on large training datasets, the availability and quality of corpora frequently determine how effective an NLP model can be in practice.  
+
+## NLP fundamentals: text preprocessing and morphological analysis
+
+Text preprocessing and morphological analysis are critical first steps for any downstream NLP pipeline. Even cutting-edge neural architectures benefit from well-prepared, consistent input. The general objective of preprocessing is to "clean" and normalize textual input, remove extraneous information (like excessive punctuation or HTML tags), handle morphological variations, and split text into segments that are easier for algorithms to process.
+
+### Text preprocessing steps
+1. **Case normalization**: For many tasks, it is standard to convert all letters to lowercase (or uppercase) to reduce vocabulary size. However, caution is advised: in certain tasks (like NER), uppercase letters can carry vital information (e.g., the presence of initial capital letters for proper nouns).
+2. **Digit handling**: Either removing or mapping digits to a placeholder (like `<num>`) is common, especially if numeric values do not convey significant meaning. In some contexts, though, preserving numbers is essential (e.g., in financial or scientific texts).
+3. **Punctuation removal**: Often, punctuation marks are stripped or replaced with special tokens. But tasks like sentiment analysis or question answering might need punctuation as signals for sentiment or question boundaries.
+4. **Whitespace trimming**: Collapsing consecutive whitespace characters into a single space is typically performed to reduce noise.
+5. **Basic noise cleaning**: Removing URLs, HTML tags, emojis, or special characters can help if these do not directly contribute to the learning objective. 
+6. **Language-specific expansions**: In English, for instance, mapping contractions (e.g., "don't") to expanded forms ("do not") can help unify forms that otherwise appear distinct in a model's vocabulary.
+
+A minimal example in Python might look like:
+
+```
+<Code text={`
+import re
+
+def basic_preprocess(text):
+    # Convert to lowercase
+    text = text.lower()
+    # Remove URLs
+    text = re.sub(r'https?://\\S+|www\\.\\S+', '', text)
+    # Remove punctuation
+    text = re.sub(r'[\\p{P}+]', '', text)
+    # Remove extra whitespace
+    text = re.sub(r'\\s+', ' ', text).strip()
+    return text
+
+sample = "Check out https://example.com! It's amazing, right??"
+print(basic_preprocess(sample))
+`}/>
+```
+
+### Tokenization
+Tokenization is the process of segmenting text into smaller units called tokens. These tokens may be words, subwords, or even individual characters, depending on the approach. Tokenization is essential because it transforms raw text into discrete elements that can be mapped to embeddings or processed by machine learning algorithms.
+
+- **Rule-based tokenization**: Relies on whitespace and punctuation. Quick to implement but can struggle with languages lacking whitespace-delimited words (e.g., Chinese) or with contractions (e.g., "I'm").
+- **Regex-based tokenization**: Leverages regular expressions to handle more complex patterns. 
+- **Subword tokenization** (e.g., Byte Pair Encoding, WordPiece): Splits rare or unknown words into smaller units, improving handling of morphological or lexical variety.
+
+For instance, using the `nltk` library:
+
+```
+<Code text={`
+import nltk
+from nltk.tokenize import word_tokenize
+
+text = "In this sentence, we have many words, let's split them!"
+tokens = word_tokenize(text)
+print(tokens)
+`}/>
+```
+
+### Stop word removal
+Many words, such as "the," "and," "or," appear extremely frequently but carry relatively little semantic content. Removing them can simplify models like TF-IDF or bag-of-words. However, in advanced contexts, discarding stop words outright may remove relevant context (especially in tasks requiring an understanding of function words). 
+
+```
+<Code text={`
+from nltk.corpus import stopwords
+
+stop_words = set(stopwords.words('english'))
+tokens_no_stops = [w for w in tokens if w.lower() not in stop_words]
+print(tokens_no_stops)
+`}/>
+```
+
+### Stemming and lemmatization
+Morphological variations of words can increase the size and sparsity of a vocabulary. Two important strategies to address this:
+
+- **Stemming**: Reduces words to their "stem" by chopping off word endings using heuristics. (Example: "crying" → "cri" or "cry.")
+- **Lemmatization**: Maps words to their dictionary form (lemma) using morphological analysis (e.g., POS tags). "Came" with part-of-speech as a verb → lemma is "come."
+
+Popular stemmers include Porter, Snowball, and Lancaster; a popular lemmatizer is WordNetLemmatizer (English). For languages with richer morphology (e.g., Russian), specialized tools like `pymorphy2` are employed.
+
+### Morphological analysis
+Languages differ in their morphological complexity. English uses relatively simple morphological inflections compared to Slavic languages (like Russian or Polish). <Highlight>Morphological analyzers</Highlight> interpret words by assigning grammatical features such as part of speech, case, gender, number, or tense. 
+
+In Russian, for instance, libraries like `pymorphy2` can handle declensions and conjugations:
+```
+<Code text={`
+import pymorphy2
+
+morph = pymorphy2.MorphAnalyzer()
+parsed_word = morph.parse("словами")[0]
+print(parsed_word.normal_form, parsed_word.tag.POS)
+`}/>
+```
+
+In languages with rich morphology, morphological analysis is highly beneficial for tasks like entity recognition or topic modeling, where naive tokenization alone can miss crucial morphological signals.
+
+### POS tagging
+Part-of-speech tagging assigns each word its grammatical category (noun, verb, adjective, etc.). Traditional POS tagging approaches rely on:
+
+- **Rule-based methods**: A set of handcrafted rules.  
+- **Stochastic methods**: Counting how frequently words appear with certain tags (and bigram or trigram transitions).  
+- **Hidden Markov models (HMMs)**: Modeling tags as hidden states and words as emissions.  
+- **Neural approaches**: Leveraging deep architectures (e.g., BiLSTM + CRF layers) for state-of-the-art performance.
+
+POS tagging is fundamental: it provides structure and disambiguation for many advanced tasks, including syntactic parsing, named entity recognition, and more.
+
+### Deduplication
+When dealing with large corpora, near-duplicate documents can inflate dataset sizes and bias model training. One solution is to leverage a similarity measure (e.g., cosine similarity on TF-IDF vectors) to detect duplicates, though at scale this can become computationally expensive. Locality-sensitive hashing (LSH) can accelerate such comparisons by hashing semantically similar documents into the same bucket, reducing pairwise checks.
+
+## Word embeddings & factor analysis
+
+Moving from preprocessing to feature extraction, the next step in many NLP pipelines is to represent text in a form suitable for numerical machine learning algorithms. Historically, bag-of-words and TF-IDF have been popular. However, these lose word order information and cannot capture synonyms or semantic relationships well. Modern NLP relies on <Highlight>word embeddings</Highlight>: distributed vector representations that place semantically similar words close together in a high-dimensional space.
+
+### Feature extraction techniques
+**Bag-of-Words (BoW)**: Each document is represented as a vector over the vocabulary, storing the counts (or frequencies) of words present. Simple but discards word order entirely.
+
+**TF-IDF** (<Latex text="\( \text{term frequency – inverse document frequency} \)"/>): Weights each word's importance by how often it appears in a particular document (TF) and how rare it is across the entire corpus (IDF). Words that appear in many documents get reduced weight. 
+
+**n-grams**: Instead of unigrams (single words), n-grams capture sequences of length <Latex text="\(n\)"/>. A bigram approach, for example, keeps pairs of consecutive words, partly addressing the limitation of bag-of-words by incorporating local context.
+
+### Factor analysis for text data
+Traditional factor analysis and principal component analysis (PCA) can be applied to text data to reduce dimensionality. When we build a term-document matrix <Latex text="\( M \)"/> of shape <Latex text="\( (\text{documents} \times \text{vocabulary}) \)"/>, we can apply SVD or other factorization techniques to discover latent semantic factors. This is at the heart of Latent Semantic Analysis (LSA).
+
+### Word embeddings
+In more advanced approaches, each word is embedded into a vector space, typically of dimension 50 to 1000 (depending on the model). Some influential methods:
+
+1. **Word2Vec** (Mikolov and gang, Google): Learns embeddings using either skip-gram (predict context from a target word) or CBOW (predict a target word from its context).  
+2. **GloVe** (Pennington and gang, Stanford): Uses aggregated global word-word co-occurrence statistics to learn embeddings.  
+3. **FastText** (Bojanowski and gang): Extends Word2Vec by incorporating subword information, beneficial for handling rare words or morphological variations.
+
+#### Word2Vec fundamentals
+The skip-gram model tries to predict context words given a center word. Formally, let <Latex text="\( w_{t} \)"/> be the center word at position <Latex text="\( t \)"/> in a sequence, and let <Latex text="\( w_{t+j} \)"/> be a context word (where <Latex text="\(j\)"/> is the offset within a window). The skip-gram training objective is to maximize:
+
+<Latex text="\[
+\sum_{t=1}^{T} \sum_{-c \leq j \leq c, j \neq 0} \log p(w_{t+j} \mid w_t)
+\]"/>
+
+where <Latex text="\( p(w_{t+j} \mid w_t) \)"/> is modeled via a neural network that learns embeddings. Each variable:
+- <Latex text="\( T \)"/> is the total number of words in the corpus.
+- <Latex text="\( c \)"/> is the window size (e.g., 5).
+- <Latex text="\( w_{t} \)"/> is the input (center) word at position <Latex text="\( t \)"/>.
+- <Latex text="\( w_{t+j} \)"/> is a context word within the window around <Latex text="\( t \)"/>.
+
+The result is that semantically related words (like "dog" and "cat") end up close together in the embedding space.  
+
+## Advanced transformations: LSA, pLSA, and GLSA
+
+Beyond simple embeddings, researchers have explored more sophisticated factorization methods to identify latent topics or semantic aspects in text.
+
+### Latent semantic analysis (LSA)
+LSA uses singular value decomposition (SVD) on a term-document matrix to discover latent semantic dimensions. Let <Latex text="\( X \)"/> be the matrix where each row is a term and each column is a document. SVD decomposes <Latex text="\( X \)"/> as:
+
+<Latex text="\[
+X = U \Sigma V^T
+\]"/>
+
+where:
+- <Latex text="\( U \)"/> is an orthonormal matrix of dimension <Latex text="\( (\text{terms} \times r) \)"/>.
+- <Latex text="\( \Sigma \)"/> is a diagonal matrix of singular values (sorted descending).
+- <Latex text="\( V \)"/> is an orthonormal matrix of dimension <Latex text="\( (\text{documents} \times r) \)"/>.
+- <Latex text="\( r \)"/> is the rank of <Latex text="\( X \)"/> or a chosen lower dimension if we truncate the SVD.
+
+Truncating to the top <Latex text="\( k \)"/> singular values yields a low-dimensional representation capturing the most important semantic relationships.
+
+### Probabilistic LSA (pLSA)
+Probabilistic latent semantic analysis reinterprets LSA with a probabilistic model. We assume each word <Latex text="\( w \)"/> in a document <Latex text="\( d \)"/> is generated by a latent topic <Latex text="\( z \)"/>. So:
+
+<Latex text="\[
+p(w \mid d) = \sum_{z \in Z} p(w \mid z)p(z \mid d)
+\]"/>
+
+where:
+- <Latex text="\( p(z \mid d) \)"/> is a per-document distribution over topics.
+- <Latex text="\( p(w \mid z) \)"/> is a per-topic distribution over words.
+
+We learn <Latex text="\( p(w \mid z) \)"/> and <Latex text="\( p(z \mid d) \)"/> using the EM algorithm. pLSA underlies many topic modeling approaches, although more advanced Bayesian variants (e.g., Latent Dirichlet Allocation, LDA) often surpass pLSA in real-world tasks.  
+
+### GLSA techniques
+Generalized Latent Semantic Analysis (GLSA) extends LSA by incorporating more advanced weighting or additional external resources like lexical databases or morphological analyzers. These advanced factorization approaches often preserve more nuanced relationships, especially in languages where morphological or syntactic cues are critical.
+
+### Relationship to factor analysis
+LSA and pLSA are direct analogs to classical factorization methods. Instead of analyzing correlations in numeric data, we treat word-document co-occurrence or term frequency as the basis for discovering latent factors. This conceptual link has spurred widespread use of matrix factorization or neural factorization in modern NLP pipelines, especially for tasks like topic modeling or text clustering.
+
+## Model architectures: Seq2Seq, attention, and positional encoding
+
+In earlier decades, natural language generation or translation tasks used phrase-based statistical systems or RNN-based seq2seq models. The last few years have seen a massive shift to architectures involving attention and Transformers.
+
+### Exploring seq2seq architecture
+The encoder-decoder or seq2seq framework is a neural approach originally popularized for machine translation. An **encoder** network processes input tokens (e.g., words in the source language) and produces a latent representation. A **decoder** network then generates the output sequence (e.g., words in the target language), one token at a time. Recurrent neural networks (LSTM or GRU variants) were once the standard building block.
+
+### The role of attention in NLP
+A key innovation that improved seq2seq models is the <Highlight>attention mechanism</Highlight> (Bahdanau and gang, 2015). Attention allows a model to focus on specific parts of the encoder's output for each step of the decoder, learning alignment automatically rather than compressing an entire sentence into a single vector. 
+
+Formally, an attention mechanism produces context vectors:
+
+<Latex text="\[
+\text{context}_t = \sum_{i=1}^{T_{enc}} \alpha_{t,i} h_i
+\]"/>
+
+where:
+- <Latex text="\( h_i \)"/> are encoder hidden states.
+- <Latex text="\( \alpha_{t,i} \)"/> is a learned weight that shows how strongly the decoder at time <Latex text="\( t \)"/> attends to encoder position <Latex text="\( i \)"/>.
+
+This mechanism significantly improves performance in translation, summarization, and other generation tasks.
+
+### Positional encoding for sequence models
+As we move away from purely recurrent approaches, the Transformer architecture (Vaswani and gang, 2017) does not rely on recurrence. Instead, it processes a sequence in parallel, but must be aware of the token order. This awareness is introduced via <Highlight>positional encoding</Highlight>, which uses sinusoidal or learned embeddings to encode relative positions:
+
+<Latex text="\[
+PE_{(pos,2i)} = \sin\left(\frac{\text{pos}}{10000^{2i/d_{\text{model}}}}\right), \quad
+PE_{(pos,2i+1)} = \cos\left(\frac{\text{pos}}{10000^{2i/d_{\text{model}}}}\right)
+\]"/>
+
+where:
+- <Latex text="\( pos \)"/> is the position in the sequence.
+- <Latex text="\( i \)"/> indexes each dimension.
+- <Latex text="\( d_{\text{model}} \)"/> is the embedding dimension size.
+
+### Transformers
+Transformers represent the current state-of-the-art in many NLP tasks. They rely entirely on attention modules (multi-head self-attention) to handle context, and often come in extremely large pretrained variants. Examples include:
+
+- **BERT** (Devlin and gang, 2018): A bidirectional Transformer for masked language modeling and next-sentence prediction. 
+- **GPT series** (OpenAI): A unidirectional Transformer specialized in generative tasks.
+- **T5** (Raffel and gang, 2020): A text-to-text framework unifying multiple NLP tasks under a single Transformer-based architecture.
+
+These large Transformer-based models have revolutionized NLP tasks, enabling low-data solutions (few-shot learning) and driving new research in interpretability, fairness, and domain adaptation.
+
+## Core NLP tasks
+
+Though countless tasks exist, a few major categories stand out in both industrial and research settings.
+
+### Text classification & sentiment analysis
+Classification is among the most common tasks. Examples include labeling a news article by topic or determining user sentiment (positive, negative, neutral). Traditional machine learning approaches (e.g., Naive Bayes, SVMs) remain used in small or specialized contexts. However, large pretrained Transformers often dominate benchmarks.
+
+In **sentiment analysis**, the goal is to assess how positive, negative, or neutral a piece of text is. One can also do **emotion analysis**, extracting finer-grained categories such as joy, anger, sadness, fear, or disgust. Lexicon-based techniques (dictionary-based), rule-based approaches, or supervised machine learning on labeled data are typical solutions.
+
+### Named entity recognition (NER)
+NER focuses on labeling occurrences of real-world entities in text, usually with classes like `<Person>`, `<Organization>`, `<Location>`, `<Date>`, `<Misc>`, etc. Neural architectures, especially BiLSTM + CRF or Transformers fine-tuned for token-level classification, achieve excellent performance on standard benchmarks like CoNLL-2003.  
+
+### Machine translation
+Early systems were rule-based, then statistical phrase-based, and now neural. Neural machine translation (NMT) started with RNN-based seq2seq and advanced to Transformer-based approaches, which currently define the state-of-the-art in many language pairs.
+
+### Question answering (QA)
+QA systems answer user queries by either extracting relevant spans from a reference text (extractive QA) or generating new responses (generative QA). Modern large language models can do open-domain QA with minimal additional training, though specialized architectures for retrieval plus reading comprehension remain popular (e.g., RAG — Retrieval-Augmented Generation).
+
+### Text mining approaches
+Text mining tasks range from **relation extraction** (deriving semantic relationships between entities) and **topic modeling** (like LDA) to **classification** and **semantic role labeling** (who did what to whom). Another relevant use case is plagiarism detection, often employing n-gram overlap and/or more advanced similarity measures.
+
+### Emotion analysis
+Emotion analysis (closely linked to sentiment analysis but more fine-grained) attempts to categorize text into emotional states. Research in this area has expanded in recent years, as businesses and social scientists look to measure consumer or societal emotion at scale. Tools can rely on keyword-based approaches (using sets of emotional words) or neural methods that classify text into a discrete set of emotions (e.g., Ekman's basic emotions: anger, disgust, fear, happiness, sadness, surprise).
+
+## Evaluating NLP systems
+
+Proper evaluation is vital for reliable progress. The metrics and evaluation methodology chosen can radically influence how a system is perceived or improved.
+
+### Common NLP metrics
+1. **Accuracy**: Fraction of test examples correctly predicted.  
+2. **Precision**: Of all predicted positives, how many are correct?  
+3. **Recall**: Of all actual positives, how many did we predict correctly?  
+4. **F1-score**: Harmonic mean of precision and recall, used when there is an uneven class distribution.  
+5. **Confusion matrix**: A table that shows counts of actual versus predicted classes, highlighting misclassifications.  
+6. **BLEU** (Bilingual Evaluation Understudy): Common for machine translation, measuring n-gram overlap between system output and reference translations.  
+7. **ROUGE** (Recall-Oriented Understudy for Gisting Evaluation): Favored in summarization tasks, focusing on overlap in n-grams or longest common subsequences.
+
+### Best practices for model evaluation
+- **Use a held-out test set**: Helps ensure your model does not just memorize the training data.  
+- **Cross-validation**: Helpful for smaller datasets.  
+- **Hyperparameter tuning**: Tools such as cross-validation or specialized search strategies (grid search, Bayesian optimization) can significantly improve performance.  
+- **Reproducibility**: Always keep track of random seeds, library versions, and data preprocessing steps.  
+- **Error analysis**: Go beyond metrics to understand specific failure modes. For instance, do errors cluster on specific syntactic structures or domain-specific vocabulary?
+
+### Multi-class and multi-label tasks
+In multi-class classification (e.g., five sentiment categories from "highly negative" to "highly positive"), metrics like macro-average or weighted-average precision/recall can measure system performance across multiple classes. In multi-label tasks (where a text may belong to multiple categories simultaneously), one uses metrics like the Hamming loss, subset accuracy, or F1-scores at the label level.
+
+## Advanced breakthroughs & conclusion
+
+NLP is one of the fastest-moving fields within machine learning, and each year sees new innovations and refinements. Below are some of the more recent breakthroughs beyond the core tasks discussed.
+
+### The CLIP model
+CLIP (Contrastive Language-Image Pretraining, Radford and gang) from OpenAI is a powerful multimodal approach that aligns images and textual descriptions in a shared embedding space. Although not strictly an NLP model, it demonstrates how text encoding can interface with image encoding in tasks like zero-shot image classification. These multimodal approaches are increasingly popular, bridging NLP and computer vision.
+
+### Future directions in NLP
+- **Continual learning**: Models that adapt to new tasks without forgetting old ones.  
+- **Zero-shot/few-shot learning**: With large pretrained language models, practitioners can rapidly adapt to new tasks with minimal labeled data, sometimes simply by providing instructions or prompts.  
+- **Interpretability and fairness**: As NLP systems are deployed in sensitive areas (e.g., hiring, lending, legal analysis), efforts are ongoing to interpret black-box models and mitigate bias.
+
+### Libraries & tools
+Commonly used Python libraries for NLP include:
+
+- **NLTK (Natural Language Toolkit)**: An older but comprehensive library containing tokenizers, POS taggers, chunkers, and more. Good for educational settings.  
+- **spaCy**: A modern, efficient library with a faster tokenizer, named entity recognizer, and pretrained pipelines for many languages.  
+- **scikit-learn**: Provides classical machine learning algorithms for classification, regression, and clustering; includes straightforward text-processing modules (like `CountVectorizer` or `TfidfVectorizer`).  
+- **gensim**: Focused on topic modeling (LDA) and word embedding methods (Word2Vec, Doc2Vec).  
+- **pymorphy2 & Natasha** (for Russian): Tools to handle morphological inflection and named entity recognition for Russian.  
+- **PyTorch**, **TensorFlow**, **Keras**: General deep learning frameworks used to implement advanced custom NLP architectures.  
+- **Hugging Face Transformers**: A widely used library for pretrained models (BERT, GPT-2, GPT-3-like models, T5, etc.) with straightforward APIs for training, fine-tuning, and inference.
+
+These tools reflect both tradition (rule-based, carefully engineered components) and modern approaches (neural networks, Transformers, large-scale pretraining).  
+
+### Summary of key points
+- **Preprocessing**: Basic cleaning, tokenization, and morphological normalization remain essential steps.  
+- **Embeddings**: Distributed word representations (Word2Vec, GloVe, FastText) and advanced factorization or topic modeling approaches (LSA, pLSA, etc.) capture lexical and semantic relationships better than older bag-of-words.  
+- **Advanced architectures**: Transformers have revolutionized how we approach sequence tasks, offering better parallelization and superior performance compared to RNN-based seq2seq.  
+- **Evaluation**: Thorough metric-based evaluation (accuracy, precision, recall, BLEU, ROUGE) and proper methodological rigor ensure that improvements are genuine.  
+- **Modern breakthroughs**: Large language models have opened doors to zero-shot and few-shot learning, while multimodal models like CLIP expand NLP into new territory.
+
+NLP underpins a huge spectrum of real-world applications and has become central to many data science workflows. As the field continues to advance, data scientists and ML engineers gain ever more powerful tools for extracting insights from textual data. Yet there remain formidable open problems around interpretability, bias, low-resource languages, code-switching, and real-world robustness. Mastery of both foundational concepts — like preprocessing, morphological analysis, embeddings, and factorization — and advanced techniques — such as attention-driven Transformers — provides an excellent foundation for building cutting-edge NLP solutions.
+
+<Image alt="nlp_architecture_simplified" path="" caption="An illustrative (and highly simplified) diagram of an NLP pipeline: from data ingestion and preprocessing to advanced neural networks and final evaluation." zoom="false" />
+
+Ultimately, NLP sits at a marvelous intersection of linguistics, mathematics, and computer science. It challenges us to understand the nuances of human language while employing advanced algorithms for large-scale text processing. In the broader machine learning & data science course, you will see how these NLP principles connect with deep learning, generative modeling, specialized domains (like dialogue systems), and more.  
+
+If there is one key takeaway, it is the recognition that robust language understanding and generation require both the **linguistic grounding** that symbolic approaches once emphasized and the **scalability** and **adaptability** that modern neural architectures deliver. The synergy of these insights — plus a wealth of new research — promises to drive NLP forward to even more remarkable capabilities in the near future.

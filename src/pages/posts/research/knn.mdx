@@ -1,0 +1,562 @@
+---
+index: 26
+indexCourse: 31
+indexFavorites:
+title: "K-nearest neighbors"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "K-nearest neighbors"
+courseCategoryName: "Classification basics & ensembling"
+desc: "Old but gold"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "14.12.2022"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 1
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/k_nearest_neighbors.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/knn"
+slug: "/research/knn"
+---
+
+import Tooltip from "../../../components/Tooltip"
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+{/*
+
+Data Science from Scratch - глава 12, стр. 216
+file:///home/lenferdetroud/Documents/Data%20Science%20from%20Scratch%20(2nd%20Edition).pdf
+[https://github.com/lenferdetroud/jupyter-notebooks/blob/master/knn.ipynb](https://github.com/lenferdetroud/jupyter-notebooks/blob/master/knn.ipynb)
+[https://www.youtube.com/watch?v=DRbjpuqOsjk](https://www.youtube.com/watch?v=DRbjpuqOsjk)
+[https://www.youtube.com/watch?v=wsUqBJ0zXYE&list=PLA0M1Bcd0w8zxDIDOTQHsX68MCDOAJDtj&index=29](https://www.youtube.com/watch?v=wsUqBJ0zXYE&list=PLA0M1Bcd0w8zxDIDOTQHsX68MCDOAJDtj&index=29)
+[https://www.youtube.com/watch?v=H4P6u4918fI&list=PLA0M1Bcd0w8zxDIDOTQHsX68MCDOAJDtj&index=30](https://www.youtube.com/watch?v=H4P6u4918fI&list=PLA0M1Bcd0w8zxDIDOTQHsX68MCDOAJDtj&index=30)
+https://www.cs.cornell.edu/courses/cs4780/2024sp/lectures/lecturenote02_kNN.html
+https://neerc.ifmo.ru/wiki/index.php?title=%D0%9C%D0%B5%D1%82%D1%80%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%D0%BA%D0%BB%D0%B0%D1%81%D1%81%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82%D0%BE%D1%80_%D0%B8_%D0%BC%D0%B5%D1%82%D0%BE%D0%B4_%D0%B1%D0%BB%D0%B8%D0%B6%D0%B0%D0%B9%D1%88%D0%B8%D1%85_%D1%81%D0%BE%D1%81%D0%B5%D0%B4%D0%B5%D0%B9 
+https://neerc.ifmo.ru/wiki/index.php?title=%D0%9F%D0%BE%D0%B8%D1%81%D0%BA_%D0%B1%D0%BB%D0%B8%D0%B6%D0%B0%D0%B9%D1%88%D0%B8%D1%85_%D1%81%D0%BE%D1%81%D0%B5%D0%B4%D0%B5%D0%B9_%D1%81_%D0%BF%D0%BE%D0%BC%D0%BE%D1%89%D1%8C%D1%8E_%D0%B8%D0%B5%D1%80%D0%B0%D1%80%D1%85%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%BE%D0%B3%D0%BE_%D0%BC%D0%B0%D0%BB%D0%B5%D0%BD%D1%8C%D0%BA%D0%BE%D0%B3%D0%BE_%D0%BC%D0%B8%D1%80%D0%B0 
+
+*/}
+
+
+{/*
+
+1. Theoretical foundations  
+    Overview of k-nearest neighbors. Basic principles. Mathematical formulation. Bias-variance tradeoff in KNN.
+2. Distance metrics  
+    2.1 Euclidean distance  
+    2.2 Manhattan distance  
+    2.3 Minkowski distance  
+    2.4 Cosine similarity  
+    2.5 Impact of choosing different metrics
+3. Classification with KNN  
+    3.1 Decision boundaries  
+    3.2 Choosing the optimal value of k  
+    3.3 Weighted KNN for improved accuracy  
+    3.4 Handling class imbalances  
+4. Regression with KNN  
+    4.1 Averaging approaches  
+    4.2 Weighted methods for regression  
+5. Advanced techniques  
+    5.1 Dimensionality reduction and feature selection  
+    5.2 Dealing with high-dimensional data  
+    5.3 Approximate nearest neighbor searches  
+    5.4 Hierarchical navigable small world (HNSW)  
+    5.5 Optimizing KNN for scalability
+6. Practical considerations  
+    6.1 Data preprocessing (normalization, missing values)  
+    6.2 Memory usage and computational complexity  
+    6.3 Parameter tuning and cross-validation  
+    6.4 Handling noise and outliers  
+    6.5 Model interpretability and explainability
+7. Implementation   
+8. Use cases  
+    Image recognition and computer vision, recommendation systems, anomaly detection and fraud detection, healthcare and diagnostics, other industry-specific scenarios
+
+*/}
+
+
+{/*
+
+KNN - это метрический алгоритм классификации.
+Предположим, у нас есть датасет, который выглядит так:
+Новый example (чёрная точка), будет определен к классу ближайших соседей. Это определение происходит просто: считается расстояние от новой точки до соседних. Количество соседних точек, с которыми будет подсчитано расстояние, является гиперпараметром и обозначается как K.
+На примере выше, если K=1, то новый example будет отнесен к зелёному классу, так как ближайшая известная точка - зелёная. (нарисовать линию между точками)
+Новая точка будет определена к красному классу при K=1. При K=11 алгоритм вычислит дистанции до 11 соседних точек, и эти точки будут относиться к разным классам. Алгоритм выберет тот класс, который получил больше 'голосов', то есть тот, у которого больше точек, отнесенных к ближайшим.
+И потому точка будет отнесена к красному классу.
+Важно отметить, что в случае с чётным количеством соседей (K=2, 4, 6, etc.) алгоритм может выбрать два класса как равные классы.
+Например, когда у нас 5 отнесено к красным и 5 к зелёным. Поведение алгоритма в sklearn в этом случае такое, что к новая точка будет отнесена к классу с самым близким соседом.
+Тем не менее, я советую вам всегда указывать количество соседей нечётным из-за такого поведения.
+Как выбрать подходящее значение K? Здесь как всегда работает золотое правило: всё лучшее где-то посередине. При малом K новая точке может быть отнесена к outliers, при больших - вы рискуете определить точку к другому классу, содержащему большее количество точек, чем нужный вам.
+Расстояние считается как евклидовой метрике.  
+Какая алгоритмическая сложность алгоритма ближайшего соседа?
+Главный минус классического kNN: если у вас 10 миллионов объектов в 1000-мерном пространстве, то, с появлением нового объекта, вам нужно будет 10 миллионов раз посчитать расстояние, причем каждый раз это будет расстояние будет между двумя 1000-мерными векторами. На больших данных его не любят.
+Важное замечание: для этого алгоритма нужно нормировать design matrix, ведь мы работаем с расстояниями.
+Какая алгоритмическая сложность у KNN? (см. ML-канал)
+
+*/}
+
+
+The <Highlight>k-nearest neighbors (KNN)</Highlight> algorithm is a foundational technique in both classical and modern machine learning, valued for its conceptual simplicity, intuitive appeal, and effectiveness in certain application domains. In essence, this model belongs to the family of <Highlight>instance-based or lazy-learning methods</Highlight>. The key idea is to classify or predict the label of a new data point by looking at its "neighbors" in the feature space — that is, the most similar or closest points from the training set — and using their labels to make an inference.
+
+This chapter dives into the mathematics, intuition, and theoretical properties that underlie the KNN approach. We will also discuss the <Highlight>bias-variance tradeoff</Highlight> for KNN, potential pitfalls, convergence guarantees, and references to both traditional and cutting-edge research.
+
+### Overview of k-nearest neighbors
+
+At a high level, KNN presupposes that <Tooltip text="Objects that are near each other in feature space are likely to share the same or similar labels"/>. This often goes hand-in-hand with the so-called "smoothness" or "compactness" assumption: if two samples are sufficiently close under a suitable distance metric, they should belong to the same class (in classification) or have similar numeric values (in regression).
+
+Concretely, the classification version of KNN works as follows:
+
+- You are given a training set of <Latex text="\( m \)"/> labeled samples, <Latex text="\( \{(x_1, y_1), (x_2, y_2), \ldots, (x_m, y_m)\} \)"/>. Each <Latex text="\( x_i \)"/> is typically an <Latex text="\(n\)"/>-dimensional feature vector, and each <Latex text="\( y_i \)"/> is the label or target.  
+- You have a distance or similarity measure <Latex text="\( \rho(\cdot,\cdot) \)"/>. For example, Euclidean distance is commonly used, but other metrics can be substituted.  
+- To predict the label of a new, unseen sample <Latex text="\( x \)"/>, you compute the distance from <Latex text="\( x \)"/> to all training samples <Latex text="\( x_i \)"/>.  
+- You select the <Latex text="\( k \)"/> nearest points (i.e., the <Latex text="\( k \)"/> samples in the training set with the smallest distances to <Latex text="\( x \)"/>).  
+- You aggregate the labels (for classification) or numeric targets (for regression) of those <Latex text="\( k \)"/> points in order to make your prediction.  
+
+Mathematically, for classification, a general KNN-based predictor <Latex text="\( a(u) \)"/> for a new point <Latex text="\( u \)"/> can be written as:
+
+<Latex text="\[
+a(u) = \mathrm{arg}\max_{y \in Y} \sum_{i=1}^{m} \bigl[\, y_{i;u} = y \bigr] \, w(i,u),
+\]"/>
+
+where <Latex text="\( y_{i;u} \)"/> denotes the label of the <Latex text="\(i\)"/>-th nearest neighbor of <Latex text="\( u \)"/>, and <Latex text="\( w(i,u) \)"/> is a weight function that determines how much the <Latex text="\(i\)"/>-th neighbor contributes to the classification of <Latex text="\( u \)"/>. The simplest scenario is:
+
+- **Unweighted / majority vote KNN:** <Latex text="\( w(i,u) = [i \leq k] \)"/>, meaning that we only count the top <Latex text="\(k\)"/> neighbors equally, ignoring all others.  
+- **Weighted KNN:** The neighbors are weighted inversely by their distance to <Latex text="\( u \)"/>, or perhaps by a kernel function, ensuring that closer neighbors exert a stronger influence.  
+
+For regression, the logic is much the same, except we compute (for instance) the mean of the <Latex text="\( k \)"/> nearest neighbors' numeric values, potentially weighting them as a function of distance.
+
+### Basic principles
+
+KNN is considered a <Highlight>lazy learner</Highlight> because it defers computation until inference time (classification or regression). There is no explicit training process in the same sense as parameter-based models (e.g., linear or logistic regression, neural networks, etc.). Instead, the entire training set is often stored, and queries require scanning or indexing that training set. This "train-later, predict-now" characteristic has implications for both memory consumption and computational cost at inference.
+
+The underpinnings of KNN's consistency results (the fact that it can perform well asymptotically) trace back to the seminal work of T. Cover and P. Hart from 1967, who proved that the <Highlight>1-nearest neighbor classifier</Highlight> is guaranteed to achieve at most twice the Bayes error rate in the limit of infinite samples (Cover and Hart, 1967, IEEE Transactions on Information Theory).
+
+### Mathematical formulation
+
+A rigorous way to describe KNN is to define, for each new input <Latex text="\( x \)"/>, the set <Latex text="\( S_x \subseteq D \)"/> of its <Latex text="\( k \)"/> nearest neighbors. Concretely, <Latex text="\( S_x \)"/> is chosen so that <Latex text="\( \lvert S_x \rvert = k \)"/> and every point not in <Latex text="\( S_x \)"/> is at least as far from <Latex text="\( x \)"/> as the farthest point in <Latex text="\( S_x \)"/>. The KNN classifier <Latex text="\( h \)"/> can then be written as:
+
+<Latex text="\[
+h(x) = \text{mode} \Bigl\{\, y'' \;|\; (x'', y'') \in S_x \Bigr\}.
+\]"/>
+
+That is, you select the label that appears most frequently among the <Latex text="\( k \)"/> neighbors.
+
+### Bias-variance tradeoff in KNN
+
+In KNN, the <Highlight>bias</Highlight> and <Highlight>variance</Highlight> are primarily controlled by <Latex text="\( k \)"/> and by the choice of distance metric. Roughly speaking:
+
+- For very small <Latex text="\( k \)"/> (e.g., <Latex text="\(k = 1\)"/>), the model has <Highlight>low bias</Highlight> (it can fit extremely local structures) but can have <Highlight>high variance</Highlight>, as it is sensitive to noise or outlier points.  
+- For larger <Latex text="\( k \)"/>, the model has <Highlight>higher bias</Highlight> (it effectively takes broader neighborhoods, smoothing out local fluctuations) and <Highlight>lower variance</Highlight>, resulting in more stable predictions.  
+
+Because KNN has no parametric form, it can adapt to very complex decision boundaries. However, in high-dimensional spaces or in the presence of very large training data sets, naive KNN can become computationally expensive.
+
+## Distance metrics
+
+One of the most critical components in KNN is the distance metric or similarity measure. The standard approach might be Euclidean distance, but the real power (and risk) of KNN lies in how well the chosen distance metric reflects semantic similarity among data points.
+
+### Euclidean distance
+
+Often the default choice, the Euclidean distance between two vectors <Latex text="\( x = (x_1,\ldots,x_n) \)"/> and <Latex text="\( y = (y_1,\ldots,y_n) \)"/> in an <Latex text="\(n\)"/>-dimensional space is:
+
+<Latex text="\[
+\rho_{\text{euclid}}(x, y) \;=\; \sqrt{\sum_{i=1}^{n} (x_i - y_i)^2}.
+\]"/>
+
+Euclidean distance has an intuitive geometric interpretation: the length of the straight line between the points in Euclidean space. However, it can be very sensitive to magnitude differences among features. To mitigate this, you often <Highlight>normalize or standardize</Highlight> each feature dimension so that they are on a comparable scale.
+
+### Manhattan distance
+
+Also called the L1 metric or "taxicab" metric, the Manhattan distance is:
+
+<Latex text="\[
+\rho_{\text{manhattan}}(x, y) \;=\; \sum_{i=1}^n \lvert x_i - y_i \rvert.
+\]"/>
+
+When you have reason to assume that <Highlight>coordinate-wise differences</Highlight> are more robust or meaningful for your task, or if you want the distance measure to be less sensitive to outliers in a single dimension, Manhattan distance can be beneficial.
+
+### Minkowski distance
+
+The Minkowski class of metrics generalizes multiple norms in a single formula:
+
+<Latex text="\[
+\rho_{p}(x, y) \;=\; \Bigl(\sum_{i=1}^n \lvert x_i - y_i \rvert^p \Bigr)^{1/p}.
+\]"/>
+
+- <Latex text="\( p=1 \)"/>: recovers the Manhattan distance  
+- <Latex text="\( p=2 \)"/>: recovers the Euclidean distance  
+- <Latex text="\( p \to \infty \)"/>: recovers the Chebyshev distance (the maximum absolute difference along any dimension)
+
+This flexibility helps you experiment with different norms. Each might capture subtle differences in how distance is measured. However, one must carefully tune <Latex text="\( p \)"/> because the data geometry can vary drastically with different norms.
+
+### Cosine similarity
+
+Cosine similarity (or equivalently, cosine distance if you transform it into a distance measure) focuses on the angle between two vectors rather than their magnitude. It is commonly used in high-dimensional and sparse contexts such as text mining or natural language processing. If <Latex text="\( x \)"/> and <Latex text="\( y \)"/> are real vectors in <Latex text="\(\mathbb{R}^n\)"/>, the <Highlight>cosine similarity</Highlight> is:
+
+<Latex text="\[
+\text{sim}_{\cos}(x,y) \;=\; \frac{x \cdot y}{\|x\| \,\|y\|}.
+\]"/>
+
+One can convert this similarity into a distance by <Latex text="\( \rho_{\cos}(x,y) = 1 - \text{sim}_{\cos}(x,y) \)"/>. This is especially relevant in fields like information retrieval, textual clustering, or word embeddings, where directional closeness in the vector space is more important than raw Euclidean magnitude.
+
+### Impact of choosing different metrics
+
+Your choice of metric can profoundly affect performance. For example, with high-dimensional data, Euclidean distance might become less meaningful (the "curse of dimensionality"), so sometimes people turn to alternatives (e.g., <Highlight>Mahalanobis distance</Highlight> with an appropriate covariance matrix, or even learned distance metrics like LMNN or FaceNet embeddings). Real-world success with KNN depends heavily on whether the distance measure aligns with how classes or underlying patterns separate in the feature space.
+
+## Classification with KNN
+
+### Decision boundaries
+
+A classic visual of KNN is the <Highlight>non-linear decision boundary</Highlight> that forms when you partition the feature space based on nearest neighbors. Because no explicit parametric shape is assumed, the boundary can be quite complicated. 
+
+If you imagine a 2D or 3D feature space, you can see that for each point <Latex text="\( x \)"/>, KNN effectively claims: "the decision region around <Latex text="\( x \)"/> belongs to whichever class the majority of the <Latex text="\( k \)"/> neighbors from the training data represent." The resulting boundary can be highly irregular and sensitive to noise if <Latex text="\( k \)"/> is small, or overly smooth (missing local details) if <Latex text="\( k \)"/> is large.
+
+<Image alt="knn-decision-boundary" path="" caption="An illustrative 2D example of a KNN decision boundary, where each region is colored according to its predicted class." zoom="false" />
+
+### Choosing the optimal value of k
+
+Selecting <Latex text="\( k \)"/> is crucial:
+
+- <Latex text="\( k=1 \)"/> can perfectly classify training data but is prone to overfitting and very sensitive to noise.  
+- Larger <Latex text="\( k \)"/> reduces variance but can increase bias.  
+- There is often a sweet spot that balances the two extremes.  
+
+In practice, one typically performs <Highlight>cross-validation</Highlight> (e.g., grid search over candidate values) to find the optimal <Latex text="\( k \)"/> that yields the best average validation accuracy.
+
+### Weighted KNN for improved accuracy
+
+One refinement is to weight each neighbor's contribution by a function of distance, so that closer neighbors have a stronger vote. A simple approach is:
+
+<Latex text="\[
+w_i \;=\; \frac{1}{\rho(x, x_i) + \epsilon},
+\]"/>
+
+where <Latex text="\( \rho(\cdot,\cdot) \)"/> is the chosen metric and <Latex text="\( \epsilon \)"/> is a small constant to avoid dividing by zero. More sophisticated approaches include kernels like the <Highlight>Gaussian, tricube, or other smoothing kernels</Highlight>, reminiscent of Parzen window estimators.
+
+### Handling class imbalances
+
+KNN on imbalanced data sets can be dominated by the majority class. Some strategies to address this:
+
+1. **Resampling** the dataset (e.g., oversampling the minority class, undersampling the majority class).  
+2. **Applying class-dependent weighting** to the KNN distances or to the final decision function.  
+3. **Combining KNN with anomaly or outlier detection** so minority points do not get "washed out" by the majority.  
+
+Sometimes, <Highlight>SMOTE</Highlight> or other synthetic oversampling can help correct severe imbalance prior to fitting a KNN-based classifier.
+
+## Regression with KNN
+
+KNN extends naturally to regression by considering the real-valued outputs of neighbors and combining them, typically via a weighted average:
+
+### Averaging approaches
+
+A straightforward approach is to take the simple mean of the <Latex text="\( k \)"/> neighbors' numeric outputs:
+
+<Latex text="\[
+\hat{y}(x) \;=\; \frac{1}{k} \sum_{i \in N_k(x)} y_i,
+\]"/>
+
+where <Latex text="\( N_k(x) \)"/> is the set of indices for the <Latex text="\( k \)"/> nearest neighbors. This yields a local, non-parametric estimate that can adapt to quite complicated data relationships.
+
+### Weighted methods for regression
+
+Analogous to the classification setting, you can weigh each neighbor's contribution by a function of distance. A common kernel-based approach is:
+
+<Latex text="\[
+\hat{y}(x) = \frac{\sum_{i \in N_k(x)} K\!\bigl(\rho(x,x_i)\bigr)\, y_i}{\sum_{i \in N_k(x)} K\!\bigl(\rho(x,x_i)\bigr)}.
+\]"/>
+
+In practice, you might define <Latex text="\( K(r) = \exp(-\alpha\, r^2) \)"/> or some other shape. Weighted averaging can substantially enhance performance when the data's underlying relationship is fairly smooth and local neighborhoods are meaningful.
+
+## Advanced techniques
+
+### Dimensionality reduction and feature selection
+
+A recurring difficulty in KNN is the <Highlight>curse of dimensionality</Highlight>. Distances in very high-dimensional spaces can be misleading (points tend to appear equidistant), making the notion of "nearest" less useful. Common strategies:
+
+- **Dimensionality reduction** (PCA, t-SNE, or more advanced methods) to project to a lower-dimensional subspace where the data is more compact.  
+- **Feature selection**: systematically remove features that do not help discriminate or that add noise. In a real pipeline, you might apply domain knowledge or use wrapper/filter methods to identify a subset of meaningful features.  
+
+### Dealing with high-dimensional data
+
+When you cannot easily reduce dimensionality, you may turn to specialized metrics or learned embeddings that better reflect the notion of similarity for your domain. For instance, in computer vision tasks (like face recognition), networks such as <Highlight>FaceNet</Highlight> or <Highlight>ArcFace</Highlight> learn to embed images into a space where Euclidean distance correlates strongly with identity. Then, performing a KNN search in that space can work surprisingly well, even though the raw pixel dimension is extremely large.
+
+### Approximate nearest neighbor searches
+
+Because naive KNN queries require comparing the test point to all training points (<Highlight>O(n)</Highlight> complexity per query), large-scale usage can be prohibitive. This has motivated advanced data structures and algorithms that efficiently retrieve approximate neighbors:
+
+- <Highlight>k-d trees</Highlight>  
+- <Highlight>Ball trees</Highlight>  
+- <Highlight>Product quantization (PQ)</Highlight>  
+- <Highlight>Inverted file indices</Highlight>  
+- <Highlight>Hierarchical Navigable Small World (HNSW)</Highlight>  
+
+Approximate nearest neighbor (ANN) methods trade off a small accuracy penalty for substantial speed boosts. They are critical in real-time systems such as image retrieval, recommendation, or large-scale clustering.
+
+### Hierarchical navigable small world (HNSW)
+
+The <Highlight>HNSW</Highlight> data structure (Malkov and Yashunin, 2018) is a sophisticated graph-based ANN technique. It organizes data points in a multi-layer "small-world" graph where edges provide both short-range and random long-range connections, ensuring that queries can be routed quickly to relevant regions of the graph. The search proceeds greedily layer by layer, drastically reducing search times compared to naive exhaustive scans.
+
+The overall structure is layered as follows:
+
+- Level 0 (lowest) contains all <Latex text="\( N \)"/> points.  
+- Each higher level is a sparser subset of points, randomly chosen.  
+- Searching begins at the top layer with a random entry point, then descends layer by layer, greedily moving closer to the query vector. On the final layer, it gathers candidate neighbors for a more refined local search.  
+
+The net effect is near <Highlight>logarithmic complexity</Highlight> in many practical cases, enabling KNN queries on extremely large data sets (hundreds of millions or even billions of points) with feasible latency.
+
+#### Code snippet (example in Python with hnswlib)
+
+<Image alt="HNSW Graph Diagram" path="" caption="A hierarchical navigable small world structure for approximate nearest neighbor search." zoom="false" />
+
+Below is an illustrative snippet using the <Highlight>hnswlib</Highlight> library in Python:
+
+<Code text={`
+import hnswlib
+import numpy as np
+
+# Dimensionality of the vectors.
+dim = 128
+
+# Number of elements (example).
+num_elements = 10000
+
+# Create random data.
+data = np.float32(np.random.random((num_elements, dim)))
+labels = np.arange(num_elements)
+
+# Instantiate an HNSW index in L2 (Euclidean) space.
+p = hnswlib.Index(space='l2', dim=dim)  
+
+# Initialize the index
+p.init_index(max_elements=num_elements, ef_construction=200, M=16)
+
+# Add the data
+p.add_items(data, labels)
+
+# Set ef parameter for queries (controls recall/quality vs. speed).
+p.set_ef(50)  # ef must be >= k
+
+# Query for the nearest neighbor
+neighbors, distances = p.knn_query(data, k=1)
+print("Approximate neighbors shape:", neighbors.shape)
+print("Distances shape:", distances.shape)
+`}/>
+
+This snippet illustrates how easy it is to build an HNSW graph structure and query neighbors with library support. In production, you might tweak <Latex text="\( M \)"/> and <Latex text="\( ef \)"/> to balance performance and accuracy.
+
+### Optimizing KNN for scalability
+
+Beyond approximate methods, additional strategies to make KNN scalable include:
+
+1. **Data compression or prototype selection:** Removing redundant points, or representing clusters of points by their centroids (or medoids).  
+2. **Specialized hardware acceleration:** Exploit GPU or vectorized instructions to speed up distance calculations.  
+3. **Distributed or parallel indexing:** For truly massive data sets, frameworks like Apache Spark or HPC libraries can parallelize neighbor searches.  
+
+## Practical considerations
+
+### Data preprocessing (normalization, missing values)
+
+Data preprocessing is essential with KNN. Common guidelines:
+
+1. **Normalization:** Transform each feature so that they all lie in similar ranges (e.g., 0 to 1 or <Latex text="\(-1\)"/> to <Latex text="\(+1\)"/>), or so they have zero mean and unit variance. This prevents large-valued features from overpowering the distance measure.  
+2. **Handling missing data:** The distance metric must be defined carefully. Some practitioners impute missing values (e.g., mean imputation), while more advanced approaches skip distance computations on missing dimensions or infer them in a more sophisticated manner.  
+
+### Memory usage and computational complexity
+
+The classic (exact) KNN requires:
+
+- Storing all training data (memory overhead).
+- A query time of <Latex text="\( O(m) \)"/> per test sample, where <Latex text="\( m \)"/> is the training set size.  
+
+As <Latex text="\( m \)"/> grows large, naive KNN quickly becomes impractical. Even for moderate <Latex text="\( m \)"/>, repeated queries can be expensive. Approximate methods or advanced data structures become critical.
+
+### Parameter tuning and cross-validation
+
+KNN has relatively few hyperparameters:
+
+1. <Latex text="\( k \)"/> — the number of neighbors  
+2. <Latex text="\( p \)"/> in Minkowski distance (if relevant)  
+3. Possibly weighting or kernel function parameters  
+
+A typical best practice is to run <Highlight>cross-validation</Highlight> (e.g., five-fold or ten-fold) across a grid of possible <Latex text="\( k \)"/> values (like 1, 3, 5, 7, ..., 31, etc.), as well as exploring different distance metrics or weighting schemes. You pick the combination that yields the highest validation accuracy (in classification) or the lowest MSE/MAE (in regression).
+
+### Handling noise and outliers
+
+KNN can be very sensitive to noisy or mislabeled points, especially if <Latex text="\( k \)"/> is small. Some common practices:
+
+- **Filtering or cleaning** suspicious training points with domain knowledge.  
+- Using <Highlight>STOLP</Highlight> or other "prototype selection" methods to remove outliers that degrade classification.  
+- Weighted KNN can reduce outlier impact by diminishing influence with distance.  
+
+### Model interpretability and explainability
+
+KNN is sometimes praised for interpretability, at least from a <Highlight>"reasoning by analogy"</Highlight> perspective: "We predict the label of <Latex text="\( x \)"/> to be Y because its nearest neighbors are labeled Y." That said, with a huge training set, it is less trivial to interpret or visualize the actual boundaries. The local explanation, however, remains straightforward: you can show examples in the training data that are close in distance to the new data point.
+
+## Implementation
+
+Below is a short example in Python (using <Highlight>scikit-learn</Highlight>) for KNN classification. We assume you have data <Latex text="\( X \)"/> (features) and <Latex text="\( y \)"/> (labels), plus any needed preprocessing.
+
+<Code text={`
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import classification_report
+
+# Suppose X is your feature matrix of shape (m, n)
+# Suppose y is a vector of class labels of shape (m,)
+# Example: You might load from a CSV or a dataset
+# X, y = ...
+
+# Split into train/test
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# It's often useful to scale the features for KNN
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled  = scaler.transform(X_test)
+
+# Create a KNN classifier
+knn = KNeighborsClassifier(n_neighbors=5, metric='euclidean', weights='distance')
+
+# Fit on training data
+knn.fit(X_train_scaled, y_train)
+
+# Predict on test data
+y_pred = knn.predict(X_test_scaled)
+
+# Evaluate
+print(classification_report(y_test, y_pred))
+`}/>
+
+This code snippet demonstrates a typical scikit-learn workflow:
+
+1. Train/test split.  
+2. Optional but recommended feature scaling (<Highlight>StandardScaler</Highlight>).  
+3. Instantiating <Highlight>KNeighborsClassifier</Highlight> with your chosen hyperparameters (<Latex text="\( k \) = 5"/> in this example).  
+4. Evaluating predictions with standard metrics.  
+
+For KNN regression, scikit-learn provides a <Highlight>KNeighborsRegressor</Highlight>, used similarly but returning continuous outputs.
+
+## Use cases
+
+Although KNN's naive variant can be slow for huge data sets, it remains a versatile tool in many domains. Here are some notable applications:
+
+1. **Image recognition and computer vision**  
+   - <Highlight>Face recognition</Highlight> is a canonical example: one can embed faces into a lower-dimensional space (e.g., 128D from FaceNet) and then use KNN to classify or retrieve the identity.  
+   - <Highlight>Content-based image retrieval</Highlight> often relies on KNN queries in a feature embedding space.
+
+2. **Recommendation systems**  
+   - "User-based collaborative filtering" can be viewed as a form of KNN: find the users most similar to you, see which items they like, and recommend accordingly.  
+   - Item-based approaches also frequently rely on KNN among item embeddings.  
+
+3. **Anomaly detection and fraud detection**  
+   - For credit-card transactions or intrusion detection, a KNN approach can isolate points that lack close neighbors in normal regions of the feature space. Weighted or distance-based outlier detection is related to KNN.  
+
+4. **Healthcare and diagnostics**  
+   - KNN can be straightforwardly applied to diagnosing diseases from clinical metrics, gene expression data, or radiological images.  
+   - Careful metric design or dimensionality reduction is often needed due to the complexity of medical data.  
+
+5. **Other industry-specific scenarios**  
+   - From retail analytics (predicting store demand by local "neighbors" of stores in feature space) to environmental modeling (predicting pollution at a site from the nearest sensor stations), KNN can be a building block.
+
+----
+
+## Extra expansion: Additional theoretical insights
+
+Because the audience is advanced, it is worth highlighting a few deeper aspects of KNN theory:
+
+1. **Convergence to the Bayes optimal classifier**  
+   - For large <Latex text="\( m \)"/> and under certain assumptions (i.i.d. sampling, well-defined distance measure, etc.), <Highlight>the KNN classifier's error will approach the Bayes error</Highlight>.  
+   - Specifically, the 1-NN classifier's error is bounded above by <Latex text="\(2 \times \epsilon_{\text{Bayes}}\)"/> asymptotically.  
+
+2. **Cover trees, vantage-point trees, and other data structures**  
+   - Beyond classic k-d trees, many specialized data structures exist to accelerate nearest neighbor searches in metric spaces with certain properties.  
+
+3. **Prototype selection**  
+   - Reducing the size of the training set to store only the most "informative" points can speed up inference dramatically. Algorithms like <Highlight>Condensed Nearest Neighbor (CNN)</Highlight>, <Highlight>Edited Nearest Neighbor (ENN)</Highlight>, and <Highlight>STOLP</Highlight> systematically remove outliers or redundant points.  
+
+4. **Relation to kernel density estimation**  
+   - Weighted KNN with a kernel that depends on distance is conceptually related to non-parametric density estimation. This close connection means you can interpret KNN in a probabilistic sense if you assume certain forms of local densities.  
+
+----
+
+## Extremely extended discussion on HNSW and large-scale scenarios
+
+Because large-scale nearest neighbor queries are a big part of modern data science, we add more detail on <Highlight>Hierarchical Navigable Small World (HNSW)</Highlight>:
+
+### Main idea
+
+- Build a layered graph. The bottom layer (level 0) includes all points.  
+- Points also appear in higher layers with some probability <Latex text="\( p \)"/>.  
+- Each point in a layer is connected to neighbors within that layer, using some bounding criterion on the number of edges.  
+
+### Searching in HNSW
+
+When you query a new point <Latex text="\( q \)"/>:
+
+1. Start from a random entry point in the top layer.  
+2. Greedily move to the neighbor that is closer to <Latex text="\( q \)"/> than your current node, until you can no longer improve.  
+3. Descend to the layer below at that node, repeat the greedy search, now with possibly more candidates.  
+4. Upon reaching the bottom layer, you carry out a final local search for the <Latex text="\( k \)"/> nearest neighbors.  
+
+Empirical results show that this yields extremely fast searches, with the "small world" property ensuring you do not get stuck in local minima too easily. The probability-based layering and the random links provide a near <Latex text="\( O(\log N) \)"/> complexity in many real data sets, plus insertion or deletion of points is relatively efficient.
+
+### Real-world example: Face recognition at scale
+
+Consider a social network with <Latex text="\( 10^{11} \)"/> user images. Suppose each user face is embedded into a <Latex text="\( 128 \)"/>-dimensional vector space. We can build an HNSW structure to store all those face embeddings. Then, for a new face, we:
+
+1. Compute its embedding vector (using a deep CNN).  
+2. Perform an approximate KNN query in the HNSW to find the top few candidates.  
+3. If the same user consistently appears in the top results, we predict that this face belongs to that user.  
+
+This approach is used in production systems at internet scale (Malkov and Yashunin, 2018).  
+
+## Final remarks
+
+The <Highlight>k-nearest neighbors</Highlight> technique, while ancient in terms of machine learning history, remains relevant thanks to modern hardware, advanced indexing, and embedding-based distance metrics. It stands at the intersection of <Highlight>simplicity</Highlight> and <Highlight>potential complexity</Highlight>, bridging purely local, example-based reasoning with sophisticated large-scale system designs.
+
+KNN is conceptually easy to grasp, simple to implement, and surprisingly powerful with the right distance metric or feature embedding. Yet it is crucial to remember the computational burdens, the curse of dimensionality, and the careful engineering steps required for real-world, large-scale usage. By combining dimensionality reduction, approximate nearest neighbor techniques, and careful hyperparameter tuning, practitioners can push KNN well beyond its naive baseline and achieve state-of-the-art performance in many specialized tasks.
+
+----
+
+## References and suggested reading
+
+- **Cover, T., & Hart, P. (1967).** Nearest neighbor pattern classification. *IEEE Transactions on Information Theory*, 13(1), 21–27.  
+- **Malkov, Yu. A., & Yashunin, D. A. (2018).** Efficient and robust approximate nearest neighbor search using Hierarchical Navigable Small World graphs. *arXiv:1603.09320*.  
+- **Hastie, T., Tibshirani, R., & Friedman, J. (2009).** *The Elements of Statistical Learning* (2nd ed.). Springer. (A standard text for advanced machine learning and statistics, with coverage of KNN.)  
+- **Weinberger, K. Q., & Saul, L. K. (2009).** Distance metric learning for large margin nearest neighbor classification. *Journal of Machine Learning Research*. (Describes LMNN for learning metrics that improve KNN classification.)  
+- **FaceNet:** Schroff, F., Kalenichenko, D., & Philbin, J. (2015). FaceNet: A unified embedding for face recognition and clustering. In *CVPR*.  
+
+----
+
+This concludes our comprehensive treatment of the k-nearest neighbors algorithm — from the fundamental concept, through theoretical guarantees, to advanced approximate search structures such as HNSW, and on to practical considerations for real-world deployment.

@@ -1,0 +1,429 @@
+---
+index: 108
+indexCourse: 163
+indexFavorites:
+title: "Multithreading in ML"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Multithreading in ML"
+courseCategoryName: "Scaling & distributed learning"
+desc: "Bullets will run out before legs do"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "20.05.2024"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 2
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/multithreading_in_ml.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/multithreading_in_ml"
+slug: "/research/multithreading_in_ml"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+https://neerc.ifmo.ru/wiki/index.php?title=%D0%9C%D0%BD%D0%BE%D0%B3%D0%BE%D0%BF%D0%BE%D1%82%D0%BE%D1%87%D0%BD%D0%BE%D1%81%D1%82%D1%8C_%D0%B2_%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D0%BD%D0%BE%D0%BC_%D0%BE%D0%B1%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B8 
+
+*/}
+
+
+{/*
+
+1. Introduction  
+   Background on modern machine learning workloads  
+   Why concurrency matters in ML  
+2. Foundations of multithreading  
+   Definitions and key concepts  
+   Concurrency vs. parallelism  
+   Thread life cycle and management  
+   etc. 
+3. Multithreading in machine learning  
+   CPU-bound vs. I/O-bound ML tasks  
+   Data parallelism and model parallelism  
+   Typical thread usage in training and inference  
+   Synchronization in ML workflows  
+   etc.  
+4. Popular libraries and frameworks  
+   4.1. Threading features in Python (GIL, threading module)  
+   4.2. Using multiprocessing in Python for ML  
+   4.3. Thread management in C++ libraries for ML  
+   4.4. Multithreading in deep learning frameworks   
+5. Practical implementation considerations  
+   Hardware limitations and resource constraints  
+   hoosing between threading, multiprocessing, or distributed systems  
+   Strategies for scaling up ML applications  
+   Debugging and profiling multithreaded code  
+   Parallel data loading and preprocessing  
+   Distributed model training with thread optimization  
+   Common concurrency patterns in production ML   
+6. (... other topics: lock-free programming approaches, asynchronous data pipelines, optimizing memory usage in multithreaded environments, etc. )  
+
+*/}
+
+
+Machine learning workloads in modern industrial and research contexts often involve enormous datasets and computation-heavy algorithms, whether one is training deep neural networks with billions of parameters or performing large-scale hyperparameter optimization across dozens of configurations. The scale of these tasks can be so substantial that simply waiting for a single-core computation to finish would be impractical. As a result, exploiting concurrency has become an increasingly critical aspect of machine learning engineering.
+
+Multithreading — that is, using multiple threads of execution within a single process — is one of several ways to achieve concurrency. Other forms of parallelism, such as GPU acceleration or distributed computing over multiple machines, are also popular and frequently combined with multithreading to achieve maximum performance. However, focusing specifically on multithreading provides a deeper understanding of shared-memory parallelism and how it can accelerate different stages of machine learning pipelines, from data loading and preprocessing to model training and inference.
+
+In this article, I will discuss why concurrency matters so profoundly for contemporary ML, review the conceptual and technical underpinnings of multithreading, examine how multithreading is employed in actual machine learning frameworks and code, and finally explore practical considerations and pitfalls such as synchronization, debugging, or balancing computational loads. This article is intended for intermediate to advanced practitioners who already have a solid understanding of machine learning and want to dive deeper into the nuances of multithreaded ML systems.
+
+
+### Background on modern machine learning workloads
+
+High-level machine learning workloads typically involve:
+
+- **Data ingestion and preprocessing**: Reading large datasets from disk or streaming them from a database or a web endpoint, then performing data transformations (tokenization, feature extraction, filtering, normalization, etc.).
+- **Model training**: Using algorithms such as gradient descent, stochastic gradient descent (SGD), or variants thereof to optimize model parameters based on a loss function. For large models, this typically involves repeated multiplication of large matrices or tensors.
+- **Inference or prediction**: Applying the trained model to new, unseen data. Though often less computationally expensive than training, inference can still be heavy for certain architectures (for example, large language models).
+- **Hyperparameter search**: Running repeated training cycles with different hyperparameter settings to find an optimal configuration. Techniques such as grid search, random search, or Bayesian optimization can be trivially parallelized since each configuration runs independently.
+- **Ensemble methods**: Training multiple ML models or sub-models in parallel (e.g., random forest, gradient boosting with multiple weak learners, etc.).
+
+Given that many of these steps can be parallelized at least partially, concurrency has become indispensable for modern machine learning pipelines. Multithreading is often a first step before exploring more complex approaches such as GPUs, FPGAs, or distributed HPC clusters.
+
+
+### Why concurrency matters in ML
+
+Beyond just raw performance gains, concurrency helps solve practical bottlenecks in ML workflows:
+
+- **Reduced training times**: Especially for CPU-bound models or tasks that cannot be trivially offloaded to GPUs, multiple CPU threads can significantly reduce training time. This can be vital for iterating quickly in data science experiments.
+- **Scalable data pipelines**: Data loading, feature transformation, and augmentation can often run concurrently with model training, ensuring the computational units (CPU or GPU) remain fully utilized without stalling.
+- **Real-time and low-latency systems**: In production environments or real-time inference systems, concurrency is essential to handle multiple requests in parallel. For instance, a recommendation engine or an online fraud-detection service typically deals with thousands of simultaneous requests.
+- **Resource utilization**: Modern CPUs commonly have multiple cores. Efficiently using all cores through multithreading can yield significant performance benefits for computationally intensive tasks, especially linear algebra routines that appear ubiquitously in ML.
+
+
+## Foundations of multithreading
+
+### Definitions and key concepts
+
+At its core, multithreading refers to multiple threads of execution sharing the memory space of a single process. Each thread executes instructions sequentially, has its own stack, but shares global memory and resources with other threads. This stands in contrast to multiprocess approaches, where each process has its own address space.
+
+Key multithreading concepts:
+
+- **Thread**: A basic unit of CPU utilization; threads share process resources (memory, file descriptors, etc.).
+- **Concurrency**: When multiple tasks can start, run, and complete in overlapping time periods. Conceptually, concurrency is about dealing with multiple tasks but not necessarily at the same instant.
+- **Parallelism**: When multiple tasks actually execute at the same physical instant (requiring multiple CPU cores or multiple machines).
+- **Synchronization**: Techniques to ensure that concurrent threads access shared data in a consistent, conflict-free manner. Examples: locks, semaphores, barriers, atomic operations, etc.
+- **Race conditions**: Unwanted behavior that arises when the output or state of a system depends on the non-deterministic scheduling of multiple threads. The canonical example is multiple threads updating the same variable in memory.
+
+These concepts appear constantly in parallel ML workflows. For example, if two threads simultaneously update the weights of a model without proper synchronization, the model could end up in a corrupted or unpredictable state — unless the algorithm is tolerant to such concurrency (as in some variants of asynchronous SGD).
+
+
+### Concurrency vs. parallelism
+
+While these terms are often used interchangeably, there's a subtle distinction:
+
+- **Concurrency** is about *managing multiple tasks at once*, potentially interleaving them even on a single CPU core, depending on how the operating system schedules them.
+- **Parallelism** is about *performing multiple tasks simultaneously* on different physical cores (or machines).
+
+In machine learning, concurrency might be used to keep the CPU always busy with data loading and data augmentation tasks while the GPU handles forward and backward passes. Parallelism comes into play when truly performing computations on multiple cores or multiple GPUs at the same time. In practice, many ML solutions rely on a combination of concurrency and parallelism.
+
+
+### Thread life cycle and management
+
+A typical thread life cycle involves:
+
+1. **Creation**: A new thread is spawned within a running process. On many platforms, this is done through a library call (e.g., `pthread_create` in POSIX C, `std::thread` constructor in C++, `threading.Thread` in Python).
+2. **Runnable**: After creation, the thread is in a runnable state, waiting for the CPU to schedule it.
+3. **Running**: The thread is assigned a CPU core and is actively executing instructions.
+4. **Blocked or waiting**: If the thread performs an I/O operation (like reading a file) or tries to acquire a lock that is held by another thread, it transitions into a blocked state.
+5. **Termination**: The thread completes execution of its function or is terminated by the system or another thread.
+
+In machine learning pipelines, threads often block for I/O tasks or wait on synchronization constructs if they share data. A well-designed ML system tries to minimize blocking by organizing workloads so that threads can proceed with useful tasks as independently as possible.
+
+
+### Other core concurrency concepts
+
+- **Mutual exclusion**: Mechanisms (often called "mutexes") that allow only one thread at a time to access a shared piece of data or resource.
+- **Deadlock**: A situation where two or more threads are waiting for each other to release resources, and thus none proceed.
+- **Lock-free** or **wait-free** algorithms: Approaches that avoid using locks entirely, thus eliminating many concurrency bottlenecks. This is explored in certain advanced ML training strategies (e.g., Hogwild).
+- **Memory model**: Defines how operations on memory (loads and stores) appear to interleave and become visible to other threads. This can become crucial in languages like C++ and Java, which have well-defined but complex memory models that specify when changes to shared variables become visible in other threads.
+
+
+## Multithreading in machine learning
+
+### CPU-bound vs. I/O-bound ML tasks
+
+Broadly speaking, an ML workload might be:
+
+- **CPU-bound**: The process is primarily limited by CPU computations, e.g., large matrix multiplications, large ensemble operations, etc. In these cases, adding more CPU threads can significantly improve performance, but one must also consider the overhead of synchronization and data sharing.
+- **I/O-bound**: The workload spends most of its time waiting on input or output operations, such as reading huge datasets from disk or a network, or writing model checkpoints. Multithreading can help here by enabling asynchronous I/O: while one thread waits for I/O, another can do useful computations.
+
+Many real-world ML tasks combine both CPU- and I/O-bound components (e.g., reading large images from disk while also training a CPU-heavy model). A typical pattern is to use concurrency for data loading/preprocessing in one or more threads while the main thread handles GPU-based training.
+
+
+### Data parallelism and model parallelism
+
+When scaling machine learning tasks, two main parallelism strategies commonly appear:
+
+- **Data parallelism**: Splitting the data across multiple threads, each thread processes a portion of the dataset, calculates partial updates, and then merges or reduces these updates to obtain the final result. This is commonly seen in minibatch gradient descent, where each thread or worker processes a distinct minibatch.
+  
+  <Image alt="data parallel schematic" path="" caption="Conceptual illustration of data parallel training across multiple threads." zoom="false" />
+
+- **Model parallelism**: Splitting the model itself across multiple threads (or devices). For instance, in large neural networks that cannot fit entirely on a single GPU, some layers might be assigned to one device or thread, and other layers to another device/thread. Coordination overhead is typically more complex here than data parallelism.
+
+In CPU-based ML, model parallelism can also happen if certain parts of the model are more efficiently computed in parallel or if memory constraints require distributing the model. For instance, large matrix computations in SVM training or big linear algebra tasks in linear regression might be parallelized using specialized libraries that handle concurrency.
+
+
+### Typical thread usage in training and inference
+
+In many frameworks (like scikit-learn, PyTorch, TensorFlow, XGBoost, etc.), multithreading is often handled under the hood by optimized numeric libraries such as BLAS, cuBLAS, MKL, or OpenMP-accelerated code. For instance, you might notice that scikit-learn automatically parallelizes certain operations (e.g., random forest training) across multiple CPU cores if they are available.
+
+**Inference** can also benefit from multithreading, especially in real-time systems or microservices that serve multiple incoming requests. Each request might be processed in its own thread, or a thread pool might be used to handle a queue of inference tasks.
+
+
+### Synchronization in ML workflows
+
+When multiple threads share model parameters or data, synchronization can become a bottleneck:
+
+- **Fine-grained locking**: Locking small portions of shared data can reduce contention but can be more complex to implement and debug.
+- **Coarse-grained locking**: Locking larger data structures (like the entire parameter vector) is simpler but can lead to performance bottlenecks when many threads need concurrent access.
+- **Lock-free methods**: For certain methods like Hogwild (Niu and gang, 2011), threads update shared model parameters asynchronously, relying on the stochastic nature of updates to make consistent progress without explicit locks. In practice, this approach can be surprisingly effective for large-scale sparse problems.
+
+Many deep learning frameworks handle synchronization internally when performing distributed or multi-threaded training, so users only see an interface that automatically merges gradients or handles updates. However, understanding how those synchronization mechanisms work under the hood is beneficial if you need to fine-tune performance or debug concurrency issues.
+
+
+### Other examples of multithreading in ML
+
+- **k-nearest neighbors**: Searching for neighbors in a large dataset can be parallelized by splitting the dataset among multiple threads, each computing distances to a subset of points (Ahmed, 2019). The results can then be merged.
+- **Cross-validation**: In k-fold cross-validation, each fold can be trained and evaluated by a separate thread, later aggregating results (e.g., average accuracy).
+- **Hyperparameter search**: Independent training tasks for different hyperparameter configurations can easily run concurrently (grid search, random search, Bayesian search, etc.).
+- **Linear regression**: Certain matrix factorization or decomposition algorithms (e.g., SVD or QR factorization used in solving ordinary least squares) can be parallelized across multiple threads. Libraries like ScaLAPACK support parallel linear algebra decomposition methods (ScaLAPACK, archived documentation).
+- **SVM**: Quadratic optimization can partially be expressed in terms of large matrix computations or parallel block updates in algorithms such as SMO (Brugger, 2006).
+
+
+## Popular libraries and frameworks
+
+### 4.1. Threading features in Python (GIL, threading module)
+
+Python is widely used in machine learning, yet it's notorious for its Global Interpreter Lock (GIL). The GIL ensures that only one thread at a time executes Python bytecodes. This means CPU-bound operations in pure Python won't truly run in parallel. However:
+
+- If your workload *releases* the GIL (like I/O operations or calls into native libraries), multiple threads can run concurrently. This is common with NumPy, SciPy, PyTorch, or TensorFlow, which invoke optimized numeric routines in C/C++ that release the GIL.
+- The built-in `threading` module allows creation of Python threads, but for CPU-bound tasks in pure Python, you often see no speedup due to the GIL.
+- Many numeric or deep learning operations are actually executed in C/C++ (via BLAS, MKL, cuBLAS, or custom kernels), which can use multiple CPU threads outside the GIL.
+
+Below is a small example that demonstrates Python's threading for a CPU-bound function that partially relies on NumPy's native routines. Notice that heavy numeric operations might release the GIL automatically:
+
+<Code text={`
+import threading
+import numpy as np
+
+def compute_expensive_operation(size):
+    # The heavy-lifting here is done by NumPy, which can release the GIL
+    arr = np.random.randn(size)
+    return np.linalg.norm(arr)  # calling a numeric routine
+
+def thread_task(name, size):
+    result = compute_expensive_operation(size)
+    print(f"Thread {name} result: {result}")
+
+threads = []
+for i in range(4):
+    t = threading.Thread(target=thread_task, args=(i, 10**7))
+    threads.append(t)
+    t.start()
+
+for t in threads:
+    t.join()
+print("All threads completed.")
+`}/>
+
+This snippet may or may not yield actual speedups depending on how NumPy is compiled and how it releases the GIL. Nonetheless, it illustrates the standard library's basic approach to spawning threads in Python.
+
+
+### 4.2. Using multiprocessing in Python for ML
+
+Due to the GIL, many Python-based ML practitioners turn to the `multiprocessing` module or joblib-based solutions. `multiprocessing` spawns separate processes, each with its own Python interpreter and memory space. Communication between processes happens via pickle-based message passing. This avoids the GIL but introduces inter-process communication overhead:
+
+<Code text={`
+import multiprocessing
+import numpy as np
+
+def compute_expensive_operation(size):
+    arr = np.random.randn(size)
+    return np.linalg.norm(arr)
+
+if __name__ == '__main__':
+    pool = multiprocessing.Pool(processes=4)
+    results = pool.map(compute_expensive_operation, [10**7]*4)
+    print("Results:", results)
+    pool.close()
+    pool.join()
+`}/>
+
+Here, each process independently handles data. This pattern is extremely common in CPU-bound Python code that doesn't rely heavily on shared state. Many scikit-learn functions, such as parallel cross-validation and parallel ensemble training, use joblib under the hood, which often wraps `multiprocessing` or `loky` to spawn multiple processes for parallel execution.
+
+
+### 4.3. Thread management in C++ libraries for ML
+
+C++ has rich multithreading capabilities in its standard library (`<thread>`, `<future>`, `<mutex>`, `<atomic>`, etc.). Many high-performance ML libraries, such as those built on top of BLAS or custom HPC frameworks, rely on language-level concurrency or libraries like OpenMP, Intel TBB (Threading Building Blocks), or even specialized HPC solutions like MPI for distributed memory.
+
+For example, a typical parallel loop in C++ with OpenMP:
+
+<Code text={`
+#include <iostream>
+#include <vector>
+#include <omp.h>
+
+int main() {
+    std::vector<double> data(10000000, 1.0);
+    double sum = 0.0;
+    
+    #pragma omp parallel for reduction(+:sum)
+    for (int i = 0; i < (int)data.size(); i++) {
+        sum += data[i];
+    }
+
+    std::cout << "Sum: " << sum << std::endl;
+    return 0;
+}
+`}/>
+
+When compiled with `-fopenmp`, this code divides the loop across multiple threads, summing up the array in parallel. The `reduction(+:sum)` clause automatically handles summing partial results from each thread, avoiding race conditions. Large-scale ML libraries frequently use patterns like this internally for matrix multiplication or gradient updates.
+
+
+### 4.4. Multithreading in deep learning frameworks
+
+Deep learning frameworks (TensorFlow, PyTorch, MXNet, JAX) all rely on highly optimized libraries that exploit concurrency. Typically:
+
+- **Parallel CPU kernels**: Under the hood, operations like matrix multiplication or convolution can be threaded across multiple CPU cores.
+- **GPU acceleration**: When using GPU-based computations, concurrency is handled primarily by GPU kernels. Nonetheless, frameworks often spawn multiple threads on the CPU side for tasks like data preprocessing, queueing, or even orchestrating multiple GPU streams.
+- **Data pipelines**: Frameworks like TensorFlow or PyTorch incorporate data pipeline abstractions (e.g., `tf.data.Dataset.map`) that can run data transformations asynchronously and in parallel with training.
+- **Thread pools**: PyTorch, for instance, can use thread pools for CPU-bound operations, pinned memory for data transfers, and parallel data loaders.
+
+
+## Practical implementation considerations
+
+### Hardware limitations and resource constraints
+
+While spawning many threads can in theory exploit concurrency, in practice it's bounded by:
+
+- **Number of physical cores**: If a system has 8 physical cores, spawning 64 threads might lead to heavy context switching overhead and minimal gains.
+- **Cache hierarchy**: Performance might degrade if threads contend for the same cache lines. Minimizing false sharing or structuring data so that each thread works on separate regions of memory is crucial.
+- **Memory bandwidth**: If your workload is memory-intensive, saturating memory bandwidth might become the bottleneck, and additional threads won't help.
+
+As a rule of thumb, the maximum practical concurrency is often around the number of physical cores (or hardware threads, if hyperthreading is beneficial for the particular workload).
+
+
+### Choosing between threading, multiprocessing, or distributed systems
+
+- **Threading**: Good for tasks that share large in-memory data structures. Avoids the overhead of inter-process communication, but watch out for GIL limitations in Python and potential race conditions.
+- **Multiprocessing**: Helps side-step the GIL in Python for CPU-bound tasks by using multiple processes. Each process is fully independent with separate memory. Communication overhead via pickling may be non-trivial, especially for large data.
+- **Distributed systems**: If the dataset or model is too large to fit on a single machine, or if you need an entire cluster, frameworks such as Spark, Dask, or HPC solutions like MPI are used. This is beyond the scope of single-host multithreading, but still a key concurrency model for large-scale ML.
+
+Many teams use a hybrid approach: for example, each node in a cluster might run multiple processes, each process might use multiple threads, and heavy GPU tasks can proceed in parallel across multiple GPUs.
+
+
+### Strategies for scaling up ML applications
+
+Scaling up ML with concurrency involves:
+
+1. **Profile your code** to find bottlenecks: Are you I/O-bound, CPU-bound, or both?
+2. **Apply concurrency** where it matters: For instance, parallel data loading, matrix operations that are easily parallelized, or distributing hyperparameter search tasks.
+3. **Use concurrency-aware libraries** that handle synchronization and parallel operations under the hood. Let well-optimized libraries do the heavy lifting.
+4. **Avoid naive oversubscription**: Too many threads can degrade performance because of overhead from context switches and cache conflicts. 
+5. **Consider GPU acceleration** or specialized hardware to complement CPU multithreading. Many deep learning tasks see greater benefits from GPU parallelism.
+
+A well-known principle for parallelization is <Highlight>Amdahl's law</Highlight>, which states that the speedup <Latex text="\(S\)"/> for a parallelized fraction <Latex text="\(p\)"/> of a program on <Latex text="\(n\)"/> processors is <Latex text="\( S = \frac{1}{(1-p) + \frac{p}{n}} \)"/>. Here, <Latex text="\(p\)"/> is the portion of the code that can be perfectly parallelized, <Latex text="\(1-p\)"/> the portion that is strictly serial, and <Latex text="\(n\)"/> the number of parallel processing units. This formula underscores the limitation of concurrency when parts of the workload are inherently serial.
+
+
+### Debugging and profiling multithreaded code
+
+Multithreaded ML code can exhibit subtle bugs, such as race conditions or deadlocks. Common debugging techniques:
+
+- **Logging**: Insert diagnostic logging or counters. However, be mindful that logging from multiple threads can further complicate concurrency, so you might need thread-local logs.
+- **Thread sanitizers**: Tools like `ThreadSanitizer` (Clang/LLVM) or specialized concurrency analyzers can detect data races or incorrect synchronization usage.
+- **Profilers**: Tools like `perf`, `VTune`, or integrated profilers in PyCharm or Visual Studio can reveal how threads are scheduled, how long they wait for locks, etc. Some frameworks (e.g., TensorBoard) also show concurrency in GPU utilization, queueing, etc.
+- **Unit tests**: Testing concurrency can be tricky, but coverage for concurrency invariants (such as ensuring no data races when a function is called from multiple threads) helps reduce the risk of concurrency bugs.
+
+
+### Parallel data loading and preprocessing
+
+In many ML workflows, data loading or preprocessing can be as time-consuming as the model's forward-backward pass. For example, if you are training a convolutional neural network on large images, reading the images from disk and performing augmentations (resizing, rotating, flipping, etc.) might throttle the GPU.
+
+- **Background threads**: A common pattern is to load and transform data in background threads or processes so that the GPU or the main training thread is never idle.
+- **Batches in queues**: A typical approach is a producer-consumer pattern: a producer thread loads and prepares data and enqueues ready batches; the consumer thread (the training loop) dequeues them.
+
+In PyTorch, for instance, you can specify `num_workers` in the `DataLoader` constructor, which spawns separate processes to load data in parallel. Similarly, `tf.data` in TensorFlow offers `prefetch` and parallel `map` transformations to keep the pipeline fed.
+
+
+### Distributed model training with thread optimization
+
+When scaling beyond a single machine, distributed training frameworks (Horovod, PyTorch Distributed, TensorFlow's MultiWorkerMirroredStrategy, etc.) handle inter-process communication, usually via MPI or specialized communication libraries (NCCL for GPUs). Even in these scenarios, each process might further parallelize tasks using threads.
+
+An example is training with multiple threads per process, each pinned to a different CPU core, while also performing distributed gradient reduction across machines. Tuning the number of threads in each process can significantly affect overall throughput. Often the recommended approach is to let well-tested libraries handle concurrency details, but for advanced performance tuning, you may need to tweak environment variables or specific library settings (e.g., OMP_NUM_THREADS).
+
+
+### Common concurrency patterns in production ML
+
+- **Producer-consumer (queue-based)** for data ingestion.
+- **Fork-join** or **map-reduce** approaches for tasks like cross-validation or hyperparameter search.
+- **Pipelines** with separate stages (e.g., data cleaning, feature extraction, model inference) each running in a distinct thread pool and passing data along.
+- **Master-worker**: A master thread or node coordinates tasks (like parameter updates, aggregator of partial results) while workers handle shards of data or partial computations. 
+- **Lock-free or asynchronous** updates in advanced training algorithms (Hogwild, asynchronous SGD).
+
+Being aware of these patterns helps you design more robust and scalable ML pipelines that effectively utilize modern hardware.
+
+
+## (other topics: lock-free programming approaches, asynchronous data pipelines, optimizing memory usage in multithreaded environments, etc.)
+
+It is worth expanding on several other advanced topics that frequently come up when combining ML with concurrency:
+
+- **Lock-free programming approaches**: As mentioned, Hogwild (Niu and gang, 2011) exemplifies how an ML training algorithm can often tolerate slightly inconsistent updates. Lock-free data structures (e.g., concurrent queues, concurrent hash tables) are valuable for building high-throughput pipelines. However, one must be cautious to ensure correctness and handle corner cases where lost updates degrade performance or accuracy.
+  
+  - *Atomic operations*: In some architectures or frameworks, partial updates to shared variables use atomic instructions that ensure updates are eventually consistent. 
+  - *Relaxed memory ordering*: Advanced scenarios involve fine-tuning memory ordering for maximum performance, relying on the language's memory model for synchronization. This is typically for library authors rather than end users, but it can be critical for HPC-level performance.
+
+- **Asynchronous data pipelines**: In addition to producing and consuming data in parallel threads, some frameworks adopt asynchronous pipelines. For instance, some data transformations can be performed as soon as prior steps complete, without waiting for an entire batch to finalize. This can be especially beneficial in streaming or online learning scenarios.
+
+- **Optimizing memory usage in multithreaded environments**: Memory can quickly become a bottleneck if each thread demands large allocations or if there's excessive overhead in dynamic allocation. Techniques include:
+
+  1. *Pooling memory*: Maintaining a memory pool from which threads allocate buffers to reduce heap fragmentation.
+  2. *Using local caches or thread-local storage* to avoid false sharing in caches.
+  3. *Batching memory operations* so that large contiguous allocations are performed once, rather than many times in different threads.
+
+- **GPU concurrency**: While this article focuses on CPU multithreading, it's good to acknowledge GPU concurrency. GPU kernels themselves run on hundreds or thousands of lightweight threads. Host code can also launch multiple kernels in parallel streams for tasks such as data copying and inference. This effectively combines CPU multithreading and GPU concurrency.
+
+- **Real-time inference concurrency**: In production ML, concurrency plays a huge role in serving real-time requests, especially for large-scale systems. Thread pools or asynchronous frameworks like Node.js, Java's NIO, or Python's `asyncio` are frequently used to handle large numbers of concurrent requests while delegating heavy computation to specialized threads or GPU queues.
+
+- **Example of a lock-free approach**: Hogwild! for asynchronous SGD. Typically, gradient updates are applied to the parameter vector without any locking. Although race conditions occur, the effect is akin to additional gradient noise, which can be acceptable or even beneficial in certain large-scale or sparse ML problems. The concept can be represented as:
+
+  <Latex text="\[
+  \theta \leftarrow \theta - \alpha \nabla_\theta L(\theta, x_{i})
+  \]"/>
+
+  where <Latex text="\( \theta \)"/> is the shared parameter vector, <Latex text="\( \alpha \)"/> is the learning rate, and <Latex text="\( \nabla_\theta L(\theta, x_{i}) \)"/> is the stochastic gradient. In a fully synchronized approach, each thread would lock <Latex text="\( \theta \)"/> before updating. In Hogwild, no lock is used, so concurrent writes can conflict, but often the final result remains close to the optimum for many practical problems.
+
+Putting everything together, multithreading in ML is essential not only for raw performance but also for building robust, scalable pipelines. The details matter at every layer — from how numeric libraries parallelize matrix multiplies, to how Python or C++ handle concurrency, and even up to advanced distributed training that harnesses multiple threads on each node. With careful design, concurrency pitfalls can be avoided, and significant speedups or throughput gains can be achieved, fueling faster research cycles and more capable real-time systems.

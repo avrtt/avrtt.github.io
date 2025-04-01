@@ -1,0 +1,260 @@
+---
+index: 22
+indexCourse: 29
+indexFavorites:
+title: "Decision trees"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Decision trees"
+courseCategoryName: "Classification basics & ensembling"
+desc: "How primitive can we get"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "08.11.2022"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 1
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/decision_trees.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/decision_trees"
+slug: "/research/decision_trees"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+Для этого поста разобрать Obsidian-заметку (см. папку "🚧 Unfinished").
+
+*/}
+
+ 
+Decision trees are among the most intuitive and widely used models in machine learning. They partition data space into smaller and simpler regions, making predictions within each region using straightforward rules. Historically, decision trees date back to the 1960s, where early work on symbolic decision-making systems in AI provided the conceptual basis for tree-like decision structures. Over the decades, famous algorithms such as <Highlight>ID3</Highlight>, <Highlight>C4.5</Highlight> (Quinlan, J. R., 1986), and <Highlight>CART</Highlight> (Breiman and gang, 1984) have further refined how decision trees are constructed, making them highly practical and efficient for both classification and regression.  
+
+Today, decision trees find application in numerous areas: from marketing (customer segmentation) and finance (credit-risk evaluation) to bioinformatics (gene expression data analysis). They remain a staple of many predictive modeling tasks because of their interpretability: each node in the tree is a yes/no or threshold-based question, which can be easily understood and visualized.  
+
+## 2. Decision tree intuition and in-depth review  
+
+### 2.1. Understanding tree-based models  
+A decision tree is a flowchart-like structure where each internal node represents a test on a feature (for example, whether a feature value exceeds some threshold), each branch represents the outcome of the test, and each leaf node represents a final classification or regression value. Formally, a <Highlight>binary decision tree</Highlight> repeatedly splits the dataset into two subsets according to some "best" rule, until a stopping criterion is met (e.g., no further splits are beneficial, or the tree reaches a maximum depth).  
+
+Intuitively, the tree tries to reduce the <Highlight>"mixedness"</Highlight> or uncertainty of data at each node. After enough splits, the leaves ideally contain data points that are mostly homogeneous (e.g., points from one class in classification, or points with minimal variance in regression).  
+
+### 2.2. Visualizing a simple decision tree  
+One way to visualize a simple binary decision tree is to imagine a top-down splitting of your feature space:  
+
+<Image alt="Simple decision tree splitting on 2D data" path="" caption="A conceptual illustration of a decision tree boundary in 2D space" zoom="false" />
+
+- Each non-leaf node checks whether a feature <Latex text="\( x_j \)"/> is less than or greater than some threshold <Latex text="\( t \)"/>.  
+- Points for which <Latex text="\( x_j \le t \)"/> go to the left branch; the rest go to the right branch.  
+- This process repeats recursively down every branch until stopping conditions are met.
+
+### 2.3. Advantages and limitations  
+**Advantages**  
+- <Highlight>Interpretability:</Highlight> The hierarchical, rule-based structure is easy to interpret compared to many other machine learning models.  
+- <Highlight>Non-linearity:</Highlight> Decision boundaries can be arbitrarily complex, since a series of orthogonal splits can adapt to complex data patterns.  
+- <Highlight>Feature scaling invariance:</Highlight> Decision trees work with raw feature values — no normalization or standardization is typically required.  
+- <Highlight>Mixed feature types:</Highlight> Easily handle both numeric and categorical features.  
+
+**Limitations**  
+- <Highlight>Overfitting:</Highlight> An unconstrained tree can grow very deep, creating many leaf nodes that fit training data almost perfectly but generalize poorly.  
+- <Highlight>Instability:</Highlight> Small changes in the training data can produce large changes in the final model structure.  
+- <Highlight>Greedy splitting:</Highlight> Standard tree-building is based on local heuristics (greedy strategy), which might not yield a globally optimal tree.  
+
+## 3. Building a decision tree  
+
+### 3.1. Choosing a split criterion  
+Choosing how to split at each node is crucial. Common criteria include <Highlight>entropy and information gain</Highlight> (famously used in ID3/C4.5) and <Highlight>Gini impurity</Highlight> (used in CART).
+
+#### Entropy and information gain  
+Entropy (<Latex text="\( \mathrm{H}(S) \)"/>), from information theory, is a measure of uncertainty (or "disorder") in a set <Latex text="\( S \)"/>. For a dataset with <Latex text="\( k \)"/> classes, we define the fraction of examples belonging to class <Latex text="\( i \)"/> as <Latex text="\( p_i \)"/>. The entropy is:
+
+<Latex text="\[
+\mathrm{H}(S) = - \sum_{i=1}^k p_i \log_2(p_i).
+\]"/>
+
+- <Latex text="\( p_i \)"/> is the proportion of samples in class <Latex text="\( i \)"/>.  
+- <Latex text="\( \mathrm{H}(S) \)"/> is <Highlight>0</Highlight> if all elements are of the same class, and maximal if the data is perfectly balanced across all classes.
+
+When we apply a split that partitions <Latex text="\( S \)"/> into subsets <Latex text="\( \{S_1, S_2, \dots \} \)"/>, the entropy after splitting is a weighted sum of the entropies of each subset. The metric <Highlight>information gain (IG)</Highlight> is:
+
+<Latex text="\[
+\mathrm{IG}(S, \text{split}) = \mathrm{H}(S) \;-\;\sum_{j} \frac{|S_j|}{|S|} \,\mathrm{H}(S_j).
+\]"/>
+
+A larger information gain indicates a better split: you have "removed" more entropy or, equivalently, introduced greater purity.
+
+##### Binary classification example  
+Consider a binary classification with classes <Latex text="\( \{0,1\} \)"/>. Suppose we split the dataset at threshold <Latex text="\( t \)"/> on some feature. We compute:
+
+1. Entropy of the original set <Latex text="\( S \)"/>.
+2. Entropy of the left subset <Latex text="\( S_{\le t} \)"/> and the right subset <Latex text="\( S_{> t} \)"/>.
+3. The weighted sum of left/right entropies.  
+4. The information gain as the difference between the original entropy and the weighted sum.  
+
+We repeat for every possible threshold and pick the threshold that gives the maximum information gain.
+
+#### Gini impurity  
+Another common measure is <Highlight>Gini impurity</Highlight>. For a dataset with <Latex text="\( k \)"/> classes and class proportions <Latex text="\( p_1, p_2, \ldots, p_k \)"/>, the Gini impurity is:
+
+<Latex text="\( G(S) = 1 - \sum_{i=1}^{k} p_i^2. \)"/>
+
+Equivalently, it can be seen as the probability of misclassifying a sample if we randomly label it according to the class distribution in <Latex text="\( S \)"/>. Like entropy, a lower Gini value means higher purity. Many libraries (such as scikit-learn) default to Gini due to its computational convenience and similar performance to entropy in practice.
+
+### 3.2. Stopping criteria  
+A naive approach might keep splitting until every leaf contains examples from only one class or until a certain maximum depth is reached. But other practical stopping rules often include:  
+- <Highlight>Maximum depth:</Highlight> Stop splitting if the tree reaches a specified depth.  
+- <Highlight>Minimum samples in a node:</Highlight> Require each node to have at least <Latex text="\( n_\text{min} \)"/> samples to further split.  
+- <Highlight>Minimum information gain or impurity reduction:</Highlight> If no split yields an improvement beyond a certain threshold, stop.  
+
+### 3.3. Handling categorical vs. numerical features  
+Decision trees can handle both discrete (categorical) and continuous (numeric) variables:  
+
+- **For numeric data**, the split <Latex text="\( [ x_j \le t ] \)"/> is typical, scanning over potential threshold values.  
+- **For categorical data**, the tree checks membership in one or more categories or enumerates ways to separate the categories into distinct branches. In practice, this can become computationally intensive for high-cardinality features, so heuristics (e.g., grouping or one-hot-encoding) are common.  
+
+## 4. Decision trees in classification and regression  
+
+### 4.1. How decision trees handle classification tasks  
+In classification, each leaf outputs a class label — often determined by majority voting among the training samples that fall into that leaf. The cost function that drives the splits is usually based on <Highlight>information gain</Highlight> or <Highlight>Gini impurity</Highlight>, as described above.
+
+### 4.2. Adapting trees to regression problems  
+For regression, each leaf outputs a numeric value, frequently the mean of the target values of the training samples in that leaf. Instead of using Gini or entropy, the algorithm can use metrics like variance or mean squared error (MSE) to evaluate potential splits.  
+
+For example, if <Latex text="\( S \)"/> is a subset of training points <Latex text="\( \{(x_i, y_i)\} \)"/> in a leaf, a common approach is to minimize:
+
+<Latex text="\[
+\mathrm{MSE}(S) = \frac{1}{|S|}\sum_{(x_i, y_i)\in S}(y_i - \bar{y})^2,
+\]"/>
+
+where <Latex text="\( \bar{y} \)"/> is the mean target value in <Latex text="\( S \)"/>.  
+
+### 4.3. Comparison of classification and regression trees  
+- **Target variable type**: Classification deals with discrete class labels; regression handles continuous targets.  
+- **Split criteria**: Classification commonly uses impurity-based metrics (entropy, Gini). Regression uses variance reduction (e.g., MSE or MAE) as a measure of split quality.  
+- **Leaf predictions**: Classification leaves predict a class, regression leaves predict a numeric value (often the mean).  
+
+## 5. Pruning and optimization  
+
+### 5.1. Overfitting in decision trees  
+Because decision trees grow greedily, they can overfit the training set by creating too many splits that capture noise rather than generalizable patterns. The tree might end up with an excessive number of leaves, each covering only a few samples.  
+
+### 5.2. Post-pruning vs. pre-pruning  
+- **Pre-pruning** (early stopping): Halt the tree growth early if splitting further is unlikely to reduce generalization error. Examples include limiting the maximum depth or imposing a minimum number of samples in each node. However, an early stop may discard useful splits.  
+- **Post-pruning**: Allow the tree to grow and then prune back sub-trees if they do not improve performance on a validation set. This often uses a separate <Highlight>validation set</Highlight> or cross-validation to verify which sub-trees truly generalize well and which ones overfit.  
+
+### 5.3. Using validation sets or cross-validation for pruning  
+A common practice is to:  
+1. Build a large tree.  
+2. Systematically cut back (prune) sub-trees.  
+3. Evaluate each pruned version on a validation set or via cross-validation.  
+4. Select the pruned tree that yields the best validation score.  
+
+This helps manage the bias-variance tradeoff: deeper, more flexible trees have lower bias but higher variance; shallower trees have higher bias but lower variance.
+
+## 6. Random forest and random subspace method (RSM)  
+
+One of the major breakthroughs in overcoming the limitations of single decision trees was the invention of <Highlight>Random Forests</Highlight> (Breiman, 2001). They form an ensemble of multiple decision trees, typically trained via <Highlight>bagging</Highlight> (bootstrapped aggregation) and <Highlight>feature randomness</Highlight> (random subspace method).  
+
+### 6.1. Key idea of random forests  
+A random forest is an ensemble of decision trees trained on different bootstrapped subsets of the data. Each tree typically:  
+1. Is grown to a large depth (often with minimal or no pruning).  
+2. Chooses candidate splits from a random subset of features at each node.  
+
+After training, the model aggregates (usually by majority vote in classification or averaging in regression) the predictions from all trees.  
+
+#### 6.1.1. Bagging refresher (conceptual)  
+<Highlight>Bagging</Highlight> means each tree is trained on a <Highlight>bootstrap sample</Highlight> — a random sample taken with replacement from the training set — often as large as the original dataset but containing duplicates and omissions of some samples. This increases the variance among individual trees while decreasing the correlation between them, helping the combined model generalize better.  
+
+#### 6.1.2. RSM explained in detail  
+<Highlight>Random subspace method (RSM)</Highlight> randomly selects a subset of features at each split. If a dataset has <Latex text="\( d \)"/> features, we might pick <Latex text="\( \sqrt{d} \)"/> or <Latex text="\( \log_2(d) \)"/> features at random for each node. This further diversifies the trees in the ensemble, reducing correlation and improving overall performance.  
+
+#### 6.1.3. Why random forest = RSM + bagging  
+By combining (1) random sampling of data points (bagging) and (2) random sampling of features (RSM), each tree in the forest is trained on a unique "view" of the dataset. Although each tree can be quite overfit to its subsample, the overall <Highlight>ensemble average</Highlight> smooths out the overfitting, usually yielding superior results compared to a single tree.  
+
+### 6.2. Feature selection and randomness in tree construction  
+A further advantage is that random forests inherently perform a form of feature selection: features less useful for splitting are rarely chosen, while strong predictors tend to produce more informative splits. The randomness introduced (both in data sampling and feature selection) makes random forests resilient to noise in training data and robust in many real-world scenarios.
+
+## 7. Example of a random forest with bootstrapped dataset  
+
+### 7.1. Step-by-step bootstrapping process  
+1. **Original dataset**: Suppose we have <Latex text="\( N \)"/> training samples.  
+2. **Bootstrap sample**: We create a new dataset by randomly picking <Latex text="\( N \)"/> samples from the original, *with replacement*. Some samples may appear multiple times, others not at all.  
+3. **Train a decision tree**: Build a tree on that bootstrapped dataset to its full (or near-full) depth.  
+
+We repeat these steps multiple times, generating multiple trees.
+
+### 7.2. Building multiple trees  
+For a random forest, each tree is also restricted in which features it can split on at each node. For instance, each node might only consider <Latex text="\( m \)"/> random features (with <Latex text="\( m \le d \)"/>, where <Latex text="\( d \)"/> is the total number of features).  
+
+<Image alt="Random forest flow" path="" caption="Illustration of how random forests build multiple trees from bootstrapped data and random subsets of features" zoom="false" />
+
+### 7.3. Aggregating predictions and interpretation  
+To predict a label for a new sample <Latex text="\( x^* \)"/>:  
+- **Classification**: each tree votes for a class, and we take the majority vote.  
+- **Regression**: each tree outputs a real value, and we take the mean.  
+
+This ensemble approach typically yields robust performance and is far less prone to overfitting than a single deep decision tree.  
+
+Below is a short Python example illustrating a random forest using scikit-learn on a simple dataset:
+
+<Code text={`
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_iris
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+
+# Load data
+iris = load_iris()
+X = iris.data  # shape (150, 4)
+y = iris.target
+
+# Train/test split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+# Create a random forest
+clf = RandomForestClassifier(n_estimators=100, max_depth=None, random_state=42)
+clf.fit(X_train, y_train)
+
+# Evaluate
+accuracy = clf.score(X_test, y_test)
+print("Accuracy on test set: ", accuracy)
+`}/>
+
+In this example, each of the 100 trees is trained on a bootstrapped sample of <Highlight>70%</Highlight> of the data, and each node chooses from a random subset of features when finding the best split. The final prediction is an ensemble of all trees.
+
+----
+
+Such tree-based ensembles continue to be improved upon in research and practice. But even in their basic form, decision trees and random forests remain powerful, explainable, and often surprisingly accurate methods for a wide range of tasks.

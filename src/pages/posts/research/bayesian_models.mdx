@@ -1,0 +1,886 @@
+---
+index: 60
+indexCourse: 56
+indexFavorites:
+title: "Bayesian models"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Bayesian models"
+courseCategoryName: "Probabilistic models & Bayesian methods"
+desc: "One formula, dozens of new approaches"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "01.07.2023"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 1
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/bayesian_models.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/bayesian_models"
+slug: "/research/bayesian_models"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+import Tooltip from "../../../components/Tooltip"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+[https://ml-handbook.ru/chapters/prob_bayes/bayes](https://ml-handbook.ru/chapters/prob_bayes/bayes)
+[https://www.youtube.com/watch?v=IYAYwxYkZmY&list=PLA0M1Bcd0w8zxDIDOTQHsX68MCDOAJDtj&index=16](https://www.youtube.com/watch?v=3yVaheFr6dc)
+https://www.cs.cornell.edu/courses/cs4780/2024sp/lectures/lecturenote05.html
+Байесовская классификация
+https://neerc.ifmo.ru/wiki/index.php?title=%D0%91%D0%B0%D0%B9%D0%B5%D1%81%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F_%D0%BA%D0%BB%D0%B0%D1%81%D1%81%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%86%D0%B8%D1%8F
+[https://www.youtube.com/watch?v=OzIGqaizOAo&list=PLA0M1Bcd0w8zxDIDOTQHsX68MCDOAJDtj&index=17](https://www.youtube.com/watch?v=OzIGqaizOAo&list=PLA0M1Bcd0w8zxDIDOTQHsX68MCDOAJDtj&index=17)
+[https://jakevdp.github.io/PythonDataScienceHandbook/05.05-naive-bayes.html](https://jakevdp.github.io/PythonDataScienceHandbook/05.05-naive-bayes.html)
+[https://youtu.be/H3EjCKtlVog](https://youtu.be/H3EjCKtlVog)
+[http://www.machinelearning.ru/wiki/index.php?title=Байесовский_классификатор](http://www.machinelearning.ru/wiki/index.php?title=%D0%91%D0%B0%D0%B9%D0%B5%D1%81%D0%BE%D0%B2%D1%81%D0%BA%D0%B8%D0%B9_%D0%BA%D0%BB%D0%B0%D1%81%D1%81%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82%D0%BE%D1%80)
+[https://neerc.ifmo.ru/wiki/index.php?title=Байесовская_классификация](https://neerc.ifmo.ru/wiki/index.php?title=%D0%91%D0%B0%D0%B9%D0%B5%D1%81%D0%BE%D0%B2%D1%81%D0%BA%D0%B0%D1%8F_%D0%BA%D0%BB%D0%B0%D1%81%D1%81%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%86%D0%B8%D1%8F)
+Data Science from Scratch - глава 13, стр. 229
+file:///home/lenferdetroud/Documents/Data%20Science%20from%20Scratch%20(2nd%20Edition).pdf
+[http://www.machinelearning.ru/wiki/index.php?title=Наивный_байесовский_классификатор](http://www.machinelearning.ru/wiki/index.php?title=%D0%9D%D0%B0%D0%B8%D0%B2%D0%BD%D1%8B%D0%B9_%D0%B1%D0%B0%D0%B9%D0%B5%D1%81%D0%BE%D0%B2%D1%81%D0%BA%D0%B8%D0%B9_%D0%BA%D0%BB%D0%B0%D1%81%D1%81%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%82%D0%BE%D1%80)
+[https://youtu.be/7uRXcMSkgpY?list=PL4_hYwCyhAvYPOWn6e44RKxEfRWEsPA1z](https://youtu.be/7uRXcMSkgpY?list=PL4_hYwCyhAvYPOWn6e44RKxEfRWEsPA1z)
+[Байесовская линейная регрессия](https://towardsdatascience.com/introduction-to-bayesian-linear-regression-e66e60791ea7).
+Гауссовский процесс
+[https://habr.com/ru/company/skillfactory/blog/562892/](https://habr.com/ru/company/skillfactory/blog/562892/)
+
+*/}
+
+
+{/*
+
+# Байесовские классификаторы
+Байесовские классификаторы - это группа простых и невероятно быстрых моделей на основе теоремы Байеса.
+  
+Суть их проста
+...
+Несмотря на наивный вид и, несомненно, очень упрощенные условия, наивные байесовские классификаторы часто работают намного лучше нейронных сетей во многих сложных жизненных ситуациях.
+Достоинством наивного байесовского классификатора является малое количество данных, необходимых для обучения, оценки параметров и классификации.
+Because they are so fast and have so few tunable parameters, they end up being very useful as a quick-and-dirty baseline for a classification problem.
+  
+Допустим, мы имеем **20** писем на почте. **17** из них являются нормальными письмами от коллег, а оставшиеся **3** - всякими рекламными предложениями и фишингом.
+И вдруг в голову приходит идея: создать такой алгоритм, который автоматически отправляет нежелательные письма в спам.
+Для этого, как вы уже догадались, нужны данные. Соберём их из имеющихся, построив гистограммы частот слов отдельно для нормальных (**не спам**) и нежелательных писем (**спам**):
+
+<Рисунок с голубыми колонками>
+<Рисунок с красными колонками>
+
+Общее количество слов: для нормальных писем (**не спам**) - **100**, для нежелательных (**спам**) - **50**. Для удобства договоримся, что в обеих гистограммах на месте троеточия находится ещё 10 столбцов (т.е в каждой гистограмме 15 столбцов), а общих столбцов у гистограмм лишь два - это слова “_нормально_” и “_предложение_”. Таким образом, количество уникальных слов во всех 20-ти письмах - **28**.
+  
+Мы можем найти вероятность появления этих слов в тексте:
+**==работай==****:**
+P(работай | not spam) = 34/100 = **0.34**
+  
+**==пожалуйста==****: 0.26**
+**==нормально==****: 0.14**
+... (ещё 10 слов)
+**==предложение==****: 0.04**
+**==зарплата==****: 0.01**
+**==предложение==****:**
+P(предложение | spam) = 14/50 = **0.28**
+  
+**==криптовалюта==****: 0.22**
+**==деньги==****: 0.12**
+... (ещё 10 слов)
+**==спасибо==****: 0.04**
+**==нормально==****: 0.02**
+  
+Уже становится понятно, что отправить новое сообщение в спам можно, если найти в нём много слов, часто встречающихся в “плохих” письмах. Но как это сделать?
+# Минутка тервера
+Нас интересует вот такая условная вероятность:
+
+P(class|words)
+
+То есть вероятность получения определенного класса (”спам” или “не спам”) при условии, что даны определенные слова (признаки).
+Формула Байеса позволяет представить это в следующем виде:
+
+( P(words|class)P(class) ) / P(words)
+  
+В этом выражении:
+- Вероятности появления слов при условии их принадлежности к определенному классу мы посчитали выше;
+- Вероятность получения из выборки спам-письма: 3/20 = **0.15** (соответственно, не спам-письма - **0.85**);
+Перепишем:
+
+P(spam|words) = P(words|spam)*0.15
+P(not spam|words) = P(words|not spam)*0.85
+  
+Эти два выражения мы будем сравнивать. То есть, если **первое больше второго**, то письмо отправится в **спам**. Именно поэтому из выражений я исключил знаменатели - они никак не повлияют на результат сравнения.
+# Наивный байесовский классификатор
+Мы вновь посрались с недалёким проджект-менеджером и он отправляет нам очередное письмо с текстом: “_Работай нормально, пожалуйста_”.
+Нашему спам-фильтру нужно определить условные вероятности и сравнить их. Но что такое для нашего алгоритма последовательность слов “_работай_”, “_нормально_” и “_пожалуйста_”?
+Сейчас все три слова рассматриваются как один целый объект. Это значит, что данная последовательность имеет для модели определенный смысл. И это делает её очень сложной. Поэтому мы допустим, что наши признаки независимы:
+
+P(word1, word2, word3 | spam) = 
+\= P(word1|spam)P(word2|spam)P(word3|spam) 
+
+Проще говоря, теперь порядок слов для модели не важен. Это предположение является **наивным**, поэтому полученный алгоритм называется **наивным байесовским классификатором**.
+  
+На этом этапе мы бы могли уже подставить все числа в формулы и сделать заключение о характере письма, но есть один момент.
+В спам-словах нет таких слов, как “_работай_” и “_пожалуйста_”_._ Эта проблема решается очень просто: добавляем в оба списка (в обе гистограммы) по одному уникальному слову из всего множества слов (из обеих гистограмм). То есть, в обе гистограммы добавится по **28** слов. Если такое слово существует, то к его частоте прибавится 1. Если нет - оно появляется в списке с частотой 1.
+Теперь мы можем посчитать вероятности появления слов при условии их принадлежности к классу спам-писем:
+- P(работай | spam) = 1/(50+28) ≈ **0.013**
+- P(нормально | spam) = 2/(50+28) ≈ **0.026** (+1 к существующему)
+- P(пожалуйста | spam) = 1/(50+28) ≈ **0.013**
+  
+Аналогично считаем для второго класса и в итоге получаем:
+
+P(spam|words) = 0.013*0.0.26*0.013*0.15
+P(not spam | words) = 0.27*0.21*0.12*0.85
+  
+Даже досчитывать не буду. Очевидно, что второе выражение больше первого. Следовательно, письмо с текстом “_Работай нормально, пожалуйста_” - **не спам**.
+  
+Формальнее:
+...
+
+*/}
+
+
+{/*
+
+1. Introduction to bayesian models  
+   - Context and motivation for bayesian approaches in machine learning  
+   - Key differences between frequentist and bayesian perspectives  
+2. Foundations of bayesian statistics  
+   - Prior, likelihood, and posterior
+   - Probability distributions in the bayesian framework    
+   - Conjugate priors and predictive distributions  
+   - Common conjugate pairs in machine learning (e.g., beta-binomial, normal-normal)  
+   - Why conjugate priors simplify computation  
+   - Bayesian inference in practice  
+   - Examples of prior knowledge and how it shapes our posterior  
+   - Posterior predictive distribution  
+   - Markov chain Monte Carlo (MCMC), variational inference, and other methods  
+   - etc.  
+3. Bayes classification  
+   - Overview of bayes classifier  
+   - Basics of naive bayes classifier  
+   - Decision boundaries and posterior probabilities  
+   - Relationship to maximum a posteriori (MAP) decision rule  
+   - Conditional independence assumption  
+   - Simplifications and typical use cases  
+   - etc.  
+4. Multinomial naive bayes  
+   - Application to text classification  
+   - Handling word counts and discrete features  
+   - etc.
+5. Gaussian naive bayes  
+   - Assumption of normally distributed features  
+   - Use cases in continuous feature spaces  
+   - etc.
+6. AODE (averaged one-dependence estimators)  
+   - Relaxing some assumptions of naive bayes  
+   - Combining multiple simple bayesian models for robust results  
+   - etc.  
+7. BBN (bayesian belief networks)  
+   - Representation of conditional independencies via directed acyclic graphs  
+   - Exact vs. approximate inference in BBN  
+   - etc.  
+8. BN (bayesian networks) in classification tasks  
+   - Building and interpreting bayesian networks  
+   - etc.
+9. Bayesian regression  
+   - Introduction to bayes regression  
+   - From linear regression to a bayesian perspective  
+   - Linear bayesian regression with priors  
+   - Model complexity and regularization  
+   - Capturing parameter uncertainty  
+   - Common prior choices (e.g., normal prior on weights)  
+   - Posterior computation and predictive distribution  
+   - etc.  
+10. Step-by-step implementations in Python  
+   - Implementing basic Naive Bayes  
+   - Implementing multinomial Naive Bayes  
+   - Implementing Gaussian Naive Bayes  
+   - Implementing AODE  
+   - Implementing BBN & BN  
+   - Implementing Bayesian regression  
+11. Misc notes    
+   - The role of priors in controlling overfitting  
+   - Hierarchical bayesian models  
+   - Training and regularization  
+   - Improving (tuning) bayesian models  
+   - Use cases  
+   - General recommendations  
+   - etc.  
+12. Summary  
+
+*/}
+
+
+Bayesian methods have become foundational in machine learning, data science, and statistical modeling because they offer a principled way to handle uncertainty, incorporate prior knowledge, and update beliefs in light of new evidence. This is often contrasted with frequentist approaches, in which parameters of a model are treated as fixed (though unknown) quantities. In the Bayesian worldview, parameters themselves are considered random variables, endowed with a prior distribution that expresses our initial assumptions. Then, upon seeing data, we leverage Bayes' rule to obtain a posterior distribution over these parameters. This shift — from thinking of parameters as unknown constants to viewing them as probability distributions — is at the heart of Bayesian reasoning and is the source of much of its conceptual power.
+
+While the frequentist approach often revolves around point estimates such as the maximum likelihood estimate (MLE) or the maximum a posteriori (MAP) estimate, Bayesian methods provide not just a single estimate but an entire distribution over possible parameter values. This posterior distribution can then be used for inference, prediction, decision making, or further modeling. In practical machine learning work, Bayesian models are appealing because they can naturally model parameter uncertainty, help with regularization by way of informative priors, and allow for intuitive interpretations of predictions (e.g., predictive distributions rather than single predictions).
+
+It can be illuminating to view classical machine learning models (like linear regression, logistic regression, or even neural networks) from a Bayesian perspective. Bayesian linear regression, for instance, modifies ordinary linear regression by placing priors on the regression coefficients. Bayesian neural networks do similarly for network weights, though often with approximate inference techniques to handle the computational complexity.  
+
+There is a spectrum of complexity when building Bayesian models. At one end, one might rely on closed-form formulas for posterior distributions (using conjugate priors). At the other end, advanced Monte Carlo and variational inference methods can handle cases where those closed forms do not exist. The elegance and flexibility of these approaches, however, must be balanced with the computational overhead that typically arises in Bayesian computations. 
+
+In this article, I aim to demonstrate how Bayesian modeling ideas permeate various facets of machine learning, from classical classifiers such as <Highlight>Naive Bayes</Highlight> to more sophisticated constructs like <Highlight>Bayesian Belief Networks</Highlight> and <Highlight>Bayesian regression</Highlight>. I begin with the foundations of Bayesian statistics, exploring key concepts like prior, posterior, and likelihood. I then discuss classification with Bayes' theorem, detailing how the <Tooltip text="Naive Bayes is so named because of the (usually unrealistic) assumption that all features are conditionally independent given the class"/>Naive Bayes family of algorithms emerges from those principles. Further on, I explain advanced Bayesian approaches such as Bayesian networks (BBNs) and Bayesian regression. Throughout, I also provide step-by-step implementations in Python, present best practices (e.g., the role of priors in controlling overfitting), and mention alternative or extended techniques like hierarchical Bayesian models and advanced inference methods. 
+
+By the end, you should see how Bayesian thinking helps unify seemingly disparate tasks: classification, regression, inference, and decision-making, all revolve around the central idea of using probabilities to represent our uncertainty about unknown quantities. Let's begin with the theoretical underpinnings.
+
+<br/>
+
+## 2. Foundations of bayesian statistics
+
+### 2.1 Prior, likelihood, and posterior
+
+Bayesian reasoning uses three core components to frame a statistical model: the prior distribution, the likelihood of observed data, and the posterior distribution. 
+
+1. **Prior distribution**: Denoted as <Latex text="\(p(\theta)\)"/>, it encapsulates our beliefs (or assumptions) about the parameters <Latex text="\(\theta\)"/> before seeing any data. This can be highly informative or weakly informative (even uniform). For instance, in a simple coin-flip scenario, we might choose a <Highlight>Beta(<Latex text="\(\alpha, \beta\)"/>)</Highlight> prior to describe our initial assumptions about the bias of the coin.
+
+2. **Likelihood**: Denoted as <Latex text="\(p(D \mid \theta)\)"/>, it expresses how probable the observed data <Latex text="\(D\)"/> are, conditional on a particular parameter setting <Latex text="\(\theta\)"/>. For example, in the coin-flip problem, the likelihood might be a binomial distribution specifying the probability of observing a certain number of heads in a series of flips, given a particular bias <Latex text="\(\theta\)"/>.
+
+3. **Posterior distribution**: Denoted as <Latex text="\(p(\theta \mid D)\)"/>, it combines the prior and the likelihood according to Bayes' rule. Formally:
+   <Latex text="\[
+   p(\theta \mid D) = \frac{p(D \mid \theta) \, p(\theta)}{p(D)}.
+   \]"/>
+   Here, <Latex text="\(p(D)\)"/> is the evidence (or marginal likelihood), which is often expressed as <Latex text="\(p(D) = \int p(D \mid \theta)\,p(\theta)\,d\theta\)"/>. For many models, this integral can be difficult to compute analytically.
+
+Intuitively, Bayesian inference is the process of starting from a prior belief, then observing data and updating that prior to obtain a posterior belief. This iterative refinement of beliefs as new data arrive is a very natural way to incorporate domain knowledge, constraints, or assumptions into an ML pipeline.
+
+### 2.2 Probability distributions in the bayesian framework
+
+In Bayesian statistics, parameters are random variables. This means that the full distribution of parameters is central. When we attempt to do predictions or classification, we can integrate over all possible parameter values, weighted by their posterior probability. We thereby obtain the <Highlight>posterior predictive distribution</Highlight>. For a new data point <Latex text="\(x_{\text{new}}\)"/> and target variable <Latex text="\(y_{\text{new}}\)"/>, the posterior predictive is:
+
+<Latex text="\[
+p\bigl(y_{\text{new}} \mid x_{\text{new}}, D\bigr) = \int p\bigl(y_{\text{new}} \mid x_{\text{new}}, \theta\bigr)\,p\bigl(\theta \mid D\bigr)\,d\theta.
+\]"/>
+
+In practice, performing that integral exactly is challenging except for certain special cases (e.g., conjugate priors). That is why the computational tools to approximate or sample from the posterior, such as Markov Chain Monte Carlo (MCMC) or variational inference, are so important.
+
+### 2.3 Conjugate priors and predictive distributions
+
+A prior <Latex text="\(p(\theta)\)"/> is said to be **conjugate** to a likelihood <Latex text="\(p(D\mid \theta)\)"/> if the posterior <Latex text="\(p(\theta\mid D)\)"/> is in the same functional family as the prior. For example, the Beta distribution is conjugate to the binomial likelihood, and the Normal distribution is conjugate to itself under a Normal likelihood (with known variance). Conjugate priors simplify computation drastically because:
+
+- The posterior has the same form as the prior, making analytic updates straightforward.
+- Posterior predictive distributions often come in closed form.
+
+An example is the **Beta-Binomial** pairing:
+- If <Latex text="\(\theta\)"/> is the probability of success in a Bernoulli/Binomial process,
+- A Beta(<Latex text="\(\alpha, \beta\)"/>) prior on <Latex text="\(\theta\)"/> yields a posterior that is Beta(<Latex text="\(\alpha + k, \beta + n - k\)"/>), where <Latex text="\(k\)"/> is the number of observed successes out of <Latex text="\(n\)"/> trials. This is a direct application of:
+  <Latex text="\[
+    p(\theta \mid D) \;\propto\; p(D \mid \theta)\,p(\theta).
+  \]"/>
+
+Common conjugate pairs in ML include:
+- Beta-Binomial
+- Dirichlet-Multinomial
+- Normal-Normal (e.g., for Bayesian linear regression with known variance)
+- Gamma-Poisson
+
+When models can be expressed in terms of such conjugacies, Bayesian updates (and posterior predictive calculations) become almost formulaic. This synergy is part of the reason for the popularity of <Highlight>Naive Bayes classifiers</Highlight>, in which each feature-likelihood distribution can be chosen to have a conjugate prior.
+
+### 2.4 Bayesian inference in practice
+
+In many real-world tasks, we don't have neat conjugate forms or we have large, complex models (e.g., hierarchical Bayesian models, deep Bayesian networks). We then need approximate inference. Two large families of techniques exist:
+
+1. **Markov Chain Monte Carlo (MCMC)**: This involves constructing a Markov chain over the parameter space whose stationary distribution is the posterior. Common methods include:
+   - <Highlight>Metropolis-Hastings</Highlight>  
+   - <Highlight>Gibbs sampling</Highlight>  
+   - <Highlight>Hamiltonian Monte Carlo (HMC)</Highlight>, including the No-U-Turn Sampler (NUTS)  
+
+   MCMC can produce samples from arbitrarily complex posteriors, though it may be computationally expensive and often requires careful tuning for convergence.
+
+2. **Variational inference**: Instead of sampling, we posit a parametric family of approximations <Latex text="\(q(\theta)\)"/> to the true posterior <Latex text="\(p(\theta \mid D)\)"/> and attempt to find the best fit in that family via optimization. The method typically involves minimizing the Kullback-Leibler divergence <Latex text="\(\mathrm{KL}(q \parallel p)\)"/> or maximizing the evidence lower bound (ELBO). Variational inference is often much faster for high-dimensional models, but the approximation might be biased by the chosen family <Latex text="\(q(\cdot)\)"/>.
+
+Bayesian practitioners in advanced settings may mix both (e.g., using variational inference as an initialization before finishing with MCMC) or use specialized algorithms like <Highlight>Sequential Monte Carlo</Highlight>, bridging the gap between purely sampling-based approaches and purely optimization-based approaches.
+
+### 2.5 Examples of prior knowledge and how it shapes our posterior
+
+One of the biggest advantages of Bayesian methods is the ability to incorporate real, domain-specific beliefs. For example:
+- If you expect a parameter in your regression to be very small, you might place a strongly peaked prior around zero. This acts similarly to an <Latex text="\(\ell_2\)"/> regularization in frequentist terms, but is more interpretable in the Bayesian sense.
+- If you believe most data points come from a distribution with small variance, you might use an <Highlight>Inverse-Gamma</Highlight> prior over the variance parameter. This would bias the posterior to favor smaller variances unless the data strongly suggests otherwise.
+- In hierarchical Bayesian modeling, a hyperprior can encode how parameters differ across subgroups but still share commonalities at a higher level. 
+
+### 2.6 Posterior predictive distribution
+
+Once you have a posterior <Latex text="\(p(\theta \mid D)\)"/>, you can form predictions about new data <Latex text="\(x_{\text{new}}\)"/> (and possibly the associated label or target <Latex text="\(y_{\text{new}}\)"/>). The Bayesian prescription is:
+
+<Latex text="\[
+p(y_{\text{new}} \mid x_{\text{new}}, D) \;=\; \int p(y_{\text{new}} \mid x_{\text{new}}, \theta)\,p(\theta \mid D)\, d\theta.
+\]"/>
+
+This integral can be intractable for complicated models, but approximate methods or closed-form solutions (in conjugate scenarios) can yield a distribution rather than just a point estimate. The shape of this predictive distribution reveals how uncertain the model is about the outcome.
+
+### 2.7 Overview of MCMC, variational inference, and other methods
+
+Although the remainder of this article focuses primarily on simpler Bayesian classifiers (Naive Bayes) and some direct Bayesian regression methods, it's crucial to remember that large-scale Bayesian modeling is possible when combined with MCMC or variational approaches:
+- MCMC is often used in fields like Bayesian hierarchical modeling, Bayesian neural networks, and complex graphical models.
+- Variational methods are popular in high-dimensional scenarios where MCMC might be prohibitively slow.
+- There are also specialized inference approaches like the <Highlight>Expectation-Maximization (EM)</Highlight> algorithm for latent variable models such as Gaussian Mixture Models, although strictly speaking EM can be interpreted in both Bayesian and frequentist settings.
+
+In the next chapters, we apply this foundation to classical supervised tasks like classification and regression. By focusing on simpler, more direct Bayesian classifiers (and the linear regression example), we can concretely see how Bayesian updating is performed, how posterior distributions yield predictions, and how strong or weak priors affect results.
+
+<br/>
+
+## 3. Bayes classification
+
+Bayes classification is a general framework for decision making under uncertainty. The ideal classifier, often called the <Highlight>Bayes Optimal Classifier</Highlight>, assigns a label <Latex text="\(y\)"/> to an input <Latex text="\(\mathbf{x}\)"/> by maximizing:
+
+<Latex text="\[
+h(\mathbf{x}) = \arg\max_y \; p(y \mid \mathbf{x}).
+\]"/>
+
+This formula can be expanded using Bayes' theorem as:
+
+<Latex text="\[
+h(\mathbf{x}) = \arg\max_y \; \frac{p(\mathbf{x} \mid y)\,p(y)}{p(\mathbf{x})}.
+\]"/>
+
+Because <Latex text="\(p(\mathbf{x})\)"/> is constant for all candidate labels, we only compare:
+
+<Latex text="\[
+h(\mathbf{x}) = \arg\max_y \;\;p(\mathbf{x} \mid y) \;p(y).
+\]"/>
+
+In practice, we don't know <Latex text="\(p(\mathbf{x}\mid y)\)"/> or <Latex text="\(p(y)\)"/> exactly. Instead, we estimate them from data. For classification tasks, we typically assume a parametric form for <Latex text="\(p(\mathbf{x}\mid y)\)"/> and specify or estimate <Latex text="\(p(y)\)"/> based on class frequencies or domain knowledge. 
+
+### 3.1 Overview of bayes classifier
+
+The Bayes classifier is an ideal baseline: if we truly knew the data-generating process, it would be the best possible classifier for that process (minimizing the expected error rate). In practice, we approximate it. The simplest approach uses the training set to estimate <Latex text="\(p(y)\)"/> (the prior class distribution) and <Latex text="\(p(\mathbf{x}\mid y)\)"/>. Then predictions are made by applying the Bayes rule for any new <Latex text="\(\mathbf{x}\)"/>.
+
+### 3.2 Relationship to MAP decision rule
+
+If we consider that the parameters themselves are unknown and we have a prior distribution over them, then in principle we might want to average over all parameter possibilities. In simpler treatments, we might just fix a point estimate for the parameters, known as a MAP estimate. Even though this is no longer purely Bayesian (strictly speaking, a fully Bayesian approach would marginalize over the parameter posterior), using MAP or MLE parameter estimates still yields a classifier that we can conceptually treat as an approximation of the full Bayes classifier.
+
+### 3.3 Decision boundaries and posterior probabilities
+
+A fascinating outcome of the Bayes rule is that the decision boundary is typically formed by comparing:
+
+<Latex text="\[
+p(\mathbf{x} \mid y_1)\,p(y_1) \quad\text{vs.}\quad p(\mathbf{x} \mid y_2)\,p(y_2),
+\]"/>
+
+for multiple classes <Latex text="\(y_1, y_2, \dots\)"/>. Often these distributions become something simple (e.g., Gaussians), in which case the decision boundary might be linear or quadratic. For instance, Gaussian Naive Bayes in a two-class scenario with the same variance across classes can yield linear boundaries.
+
+### 3.4 Conditional independence assumption
+
+When modeling <Latex text="\(p(\mathbf{x}\mid y)\)"/>, we might face the curse of dimensionality if <Latex text="\(\mathbf{x}\)"/> is high-dimensional. A widely used simplification is the <Highlight>Naive Bayes assumption</Highlight> — that features <Latex text="\(x_1, x_2, \dots, x_d\)"/> are conditionally independent given <Latex text="\(y\)"/>. In that case:
+
+<Latex text="\[
+p(\mathbf{x} \mid y) = \prod_{\alpha=1}^d p\bigl(x_\alpha \mid y\bigr).
+\]"/>
+
+Although rarely true in practice, it often works well in classification tasks, especially text classification or spam detection, where feature dependencies might be complicated but not strong enough to overshadow the benefits of the assumption.
+
+### 3.5 Basic naive bayes classifier
+
+Thus, the naive Bayes classifier is:
+
+<Latex text="\[
+\hat{y} = \arg\max_y \; p(y)\;\prod_{\alpha=1}^d p(x_\alpha \mid y).
+\]"/>
+
+Depending on the nature of the features (continuous, categorical, or count-based), we obtain different variants like Gaussian Naive Bayes, Multinomial Naive Bayes, or Bernoulli/Categorical Naive Bayes.
+
+<br/>
+
+## 4. Multinomial naive bayes
+
+### 4.1 Application to text classification
+
+Multinomial Naive Bayes is a popular choice when dealing with features representing discrete counts — for instance, word frequencies in a text document. Let <Latex text="\(x_\alpha\)"/> be the count of word <Latex text="\(\alpha\)"/> in a document, and let <Latex text="\(d\)"/> be the total vocabulary size. Then <Latex text="\(\mathbf{x}\)"/> is a <Tooltip text="Vector with nonnegative integer entries that sum to the total word count in the document."/>count vector of dimension <Latex text="\(d\)"/>. The model posits:
+
+<Latex text="\[
+P(\mathbf{x} \mid y=c) \;=\; \frac{(\sum_{\alpha=1}^d x_\alpha)!}{\prod_{\alpha=1}^d (x_\alpha!)}\;\prod_{\alpha=1}^d (\theta_{\alpha c})^{\,x_\alpha},
+\]"/>
+
+where <Latex text="\(\theta_{\alpha c}\)"/> is the probability of word <Latex text="\(\alpha\)"/> in class <Latex text="\(c\)"/>. In practice, we do not handle factorials of huge numbers explicitly, because classification only requires comparing log probabilities, which simplifies the formula to a sum of <Latex text="\(x_\alpha \log(\theta_{\alpha c})\)"/> terms.
+
+### 4.2 Handling word counts and discrete features
+
+You can see how well suited the multinomial distribution is for text classification: each document is conceptually the result of sampling a certain number of words from a distribution over words associated with the class. By calibrating <Latex text="\(\theta_{\alpha c}\)"/> using training data from each class, we effectively learn which words are most indicative of each class label.
+
+Practically, for each class <Latex text="\(c\)"/>, we collect all documents in that class, sum up the total occurrences of each word across those documents, and then normalize to obtain <Latex text="\(\theta_{\alpha c}\)"/>. Smoothing (e.g., Laplace or additive smoothing) is typically used to avoid zero probabilities for words not observed in the training set.
+
+<br/>
+
+## 5. Gaussian naive bayes
+
+### 5.1 Assumption of normally distributed features
+
+Gaussian Naive Bayes is used for continuous features where we assume each feature <Latex text="\(x_\alpha\)"/> is (conditionally) normally distributed around a mean <Latex text="\(\mu_{\alpha c}\)"/> with variance <Latex text="\(\sigma_{\alpha c}^2\)"/> for each class <Latex text="\(c\)"/>. Formally:
+
+<Latex text="\[
+p(x_\alpha \mid y=c) = \frac{1}{\sqrt{2\pi}\,\sigma_{\alpha c}}\exp\!\Bigl(-\frac{(x_\alpha - \mu_{\alpha c})^2}{2\,\sigma_{\alpha c}^2}\Bigr).
+\]"/>
+
+By the naive Bayes assumption,
+
+<Latex text="\[
+p(\mathbf{x}\mid y=c) = \prod_{\alpha=1}^d p(x_\alpha \mid y=c).
+\]"/>
+
+This approach often works well in settings where continuous data is at least somewhat unimodal around class-specific means, though real data might deviate from the normal shape.
+
+### 5.2 Use cases in continuous feature spaces
+
+Gaussian Naive Bayes finds applications in tasks like:
+- Real-valued sensor data classification, where each sensor dimension is treated as a Gaussian.
+- Simple image recognition tasks where pixel intensities can be approximated as Gaussians for each class (though more advanced methods are usually preferred).
+- Preliminary experiments in new domains with real-valued features, just to get a baseline classification performance.
+
+<br/>
+
+## 6. AODE (averaged one-dependence estimators)
+
+### 6.1 Relaxing some assumptions of naive bayes
+
+Naive Bayes drastically assumes independence among features given the class. AODE (<Highlight>Averaged One-Dependence Estimators</Highlight>) tries to improve upon this by allowing each feature to depend on the class and one other feature, but not more. In other words, it introduces a single additional edge in the Bayesian network for each feature. This is sometimes called a <Highlight>one-dependence</Highlight> classifier.
+
+### 6.2 Combining multiple simple bayesian models for robust results
+
+AODE effectively averages over multiple “weakly dependent” naive Bayes models, each capturing an extra conditional dependence. This often yields better accuracy than naive Bayes, at the cost of more computational overhead. The name “averaged” arises because it constructs many such one-dependence models and averages their predictions, reminiscent of ensemble methods.
+
+In practice, AODE can be seen as a stepping stone between naive Bayes and more complex Bayesian networks that capture arbitrary conditional dependencies. 
+
+<br/>
+
+## 7. BBN (bayesian belief networks)
+
+### 7.1 Representation of conditional independencies via directed acyclic graphs
+
+A <Highlight>Bayesian Belief Network</Highlight> (BBN) — or more succinctly, a Bayesian Network (BN) — is a directed acyclic graph (DAG) where nodes represent random variables and edges encode direct dependencies. The joint distribution factorizes according to:
+
+<Latex text="\[
+p(X_1, X_2, \dots, X_n) \;=\; \prod_{i=1}^n p\bigl(X_i \mid \text{Parents}(X_i)\bigr).
+\]"/>
+
+This offers an expressive but compact way to represent complex distributions. Naive Bayes is actually a very simple Bayesian network where the class node has arrows pointing to each feature node, with no edges among features themselves. Real-world BNs can be far more intricate, capturing context-specific dependencies and conditional independencies.
+
+### 7.2 Exact vs. approximate inference in BBN
+
+In a general Bayesian Network with many interconnected variables, computing the exact posterior of a node can be <Tooltip text="NP-hard in the worst case"/>computationally challenging. Therefore, we might rely on:
+- **Exact inference** methods like variable elimination, junction trees, and belief propagation in smaller networks or networks with special structures.
+- **Approximate inference** methods such as MCMC or variational algorithms for large networks.
+
+Bayesian Belief Networks find broad usage in domains like medical diagnosis, sensor fusion, risk assessment, and anywhere else we want an interpretable model of uncertain relationships.
+
+<br/>
+
+## 8. BN (bayesian networks) in classification tasks
+
+### 8.1 Building and interpreting bayesian networks
+
+When focusing on classification, we typically designate a node <Latex text="\(Y\)"/> for the class label, and other nodes for features <Latex text="\(\mathbf{X}\)"/>. The edges define how features depend on each other and/or on the class. If we keep it fully naive, each feature depends only on <Latex text="\(Y\)"/>, leading to a star-like structure from <Latex text="\(Y\)"/> to each <Latex text="\(X_\alpha\)"/>. Alternatively, we can incorporate additional edges among features if we have domain knowledge.
+
+Bayesian networks for classification can be seen as a generalization of naive Bayes. The advantage is better modeling of correlations among features. The disadvantage is that the network structure must be learned or specified, and inference can become more complex. 
+
+### 8.2 Example: extended naive bayes with dependencies
+
+Consider a spam detection scenario. Suppose you know that the presence of specific words is strongly correlated (e.g., synonyms or certain phrases). You might create edges among those words in the BN, indicating that their distributions are not independent once you know the class. Learning or hand-crafting such networks can yield better classification accuracy than naive Bayes if done well.
+
+<br/>
+
+## 9. Bayesian regression
+
+### 9.1 Introduction to bayes regression
+
+In Bayesian regression, we place priors on the parameters of a regression model, such as linear regression. For a linear model:
+
+<Latex text="\[
+y = \mathbf{w}^\top \mathbf{x} + \epsilon,
+\]"/>
+
+we might treat <Latex text="\(\mathbf{w}\)"/> as a random vector, typically with a prior like <Latex text="\(\mathbf{w}\sim \mathcal{N}(\mathbf{0}, \sigma^2_w \mathbf{I})\)"/>. Observations come with noise <Latex text="\(\epsilon\sim \mathcal{N}(0, \sigma^2)\)"/>. Then, after seeing data <Latex text="\(D = \{(\mathbf{x}_i, y_i)\}\)"/>, the posterior distribution of <Latex text="\(\mathbf{w}\)"/> is also Gaussian in the <Highlight>conjugate</Highlight> case (assuming the noise variance is known). 
+
+### 9.2 From linear regression to a bayesian perspective
+
+Classical (frequentist) linear regression solves for the least-squares estimate. Bayesian linear regression solves for the posterior <Latex text="\(p(\mathbf{w}\mid D)\)"/>. This posterior is typically:
+
+<Latex text="\[
+\mathbf{w} \mid D \sim \mathcal{N}(\mathbf{\mu}_w, \Sigma_w),
+\]"/>
+
+where <Latex text="\(\mathbf{\mu}_w\)"/> and <Latex text="\(\Sigma_w\)"/> can be derived analytically when the prior is Gaussian and the likelihood is Gaussian. For instance, with prior <Latex text="\(\mathbf{w}\sim\mathcal{N}(\mathbf{0},\alpha^{-1} \mathbf{I})\)"/>, the posterior mean is:
+
+<Latex text="\[
+\mathbf{\mu}_w = \beta \Sigma_w \sum_{i=1}^n y_i \mathbf{x}_i,
+\]"/>
+
+and the posterior covariance <Latex text="\(\Sigma_w\)"/> is:
+
+<Latex text="\[
+\Sigma_w = \bigl(\alpha \mathbf{I} + \beta \sum_{i=1}^n \mathbf{x}_i \mathbf{x}_i^\top \bigr)^{-1}.
+\]"/>
+
+Here, <Latex text="\(\beta\)"/> is the inverse of the noise variance <Latex text="\(\sigma^2\)"/>.  
+
+### 9.3 Model complexity and regularization
+
+The Bayesian perspective automatically injects a form of regularization through the prior distribution. A Gaussian prior with small variance around zero on <Latex text="\(\mathbf{w}\)"/> shrinks the parameter estimates, preventing overfitting. In frequentist terms, this is akin to ridge regression with a penalty. But the Bayesian viewpoint also provides an entire distribution that quantifies uncertainty over <Latex text="\(\mathbf{w}\)"/>.
+
+### 9.4 Capturing parameter uncertainty
+
+Rather than a single “best fit” vector <Latex text="\(\mathbf{w}^*\)"/>, the posterior distribution expresses how uncertain we are about each parameter, given the data. When making predictions for a new input <Latex text="\(\mathbf{x}_{\text{new}}\)"/>, the predictive distribution is:
+
+<Latex text="\[
+p(y_{\text{new}}\mid \mathbf{x}_{\text{new}}, D) = \int p(y_{\text{new}}\mid \mathbf{x}_{\text{new}}, \mathbf{w}) \; p(\mathbf{w}\mid D)\, d\mathbf{w}.
+\]"/>
+
+If everything is Gaussian, this integral has a closed form:
+
+<Latex text="\[
+y_{\text{new}}\mid \mathbf{x}_{\text{new}}, D \sim \mathcal{N}\!\bigl(\mathbf{\mu}_w^\top \mathbf{x}_{\text{new}}, \;\mathbf{x}_{\text{new}}^\top \Sigma_w\,\mathbf{x}_{\text{new}} + \sigma^2 \bigr).
+\]"/>
+
+This distribution conveys not only the expected outcome (the mean) but also how uncertain we are (the variance).
+
+### 9.5 Common prior choices
+
+- **Gaussian prior on weights**: The standard approach for Bayesian linear regression. 
+- **Sparsity-inducing priors**: E.g., Laplace priors to mimic <Latex text="\(\ell_1\)"/>-type regularization or a horseshoe prior for improved sparsity in large parametric spaces.
+- **Hierarchical priors**: If we have groups of features, we might want a hierarchical structure to share statistical strength across them (akin to partial pooling in hierarchical linear models).
+
+<br/>
+
+## 10. Step-by-step implementations in python
+
+Below are minimal, educational Python examples showcasing how to implement various Bayesian models from scratch (for demonstration) and using libraries (like `scikit-learn` or `pymc`/`pymc3`/`pymc4`). Real-world usage typically relies on well-tested libraries, but implementing toy versions helps clarify the underlying concepts.
+
+### 10.1 Implementing basic naive bayes
+
+Let's illustrate a simple Bernoulli Naive Bayes from scratch. Assume each feature <Latex text="\(x_\alpha\)"/> is 0 or 1. We want to model <Latex text="\(p(y=c)\)"/> and <Latex text="\(p(x_\alpha=1\mid y=c)\)"/>:
+
+<Code text={`
+import numpy as np
+
+class BernoulliNaiveBayes:
+    def __init__(self, alpha=1.0):
+        self.alpha = alpha  # Laplace smoothing parameter
+        
+    def fit(self, X, y):
+        # X is shape (n_samples, n_features), each feature is 0 or 1
+        # y is shape (n_samples,), representing class labels
+        self.classes_ = np.unique(y)
+        n_samples, n_features = X.shape
+        self.class_counts_ = {}
+        self.class_log_prior_ = {}
+        self.feature_probs_ = {}
+        
+        for cls in self.classes_:
+            X_c = X[y == cls]
+            # P(y=cls)
+            self.class_counts_[cls] = X_c.shape[0]
+            self.class_log_prior_[cls] = np.log((X_c.shape[0] + self.alpha) 
+                                                / (n_samples + len(self.classes_) * self.alpha))
+            # P(x_alpha=1|y=cls)
+            # Using Laplace smoothing for each feature
+            feature_sum = X_c.sum(axis=0)
+            self.feature_probs_[cls] = (feature_sum + self.alpha) / (X_c.shape[0] + 2 * self.alpha)
+        
+    def predict(self, X):
+        # Compute log posterior = log p(y) + sum over features of log p(x_alpha|y) or log(1 - p(x_alpha|y))
+        predictions = []
+        for x in X:
+            class_scores = {}
+            for cls in self.classes_:
+                log_prob = self.class_log_prior_[cls]
+                # sum log probabilities across features
+                for alpha_i, x_val in enumerate(x):
+                    p_alpha_1 = self.feature_probs_[cls][alpha_i]
+                    if x_val == 1:
+                        log_prob += np.log(p_alpha_1)
+                    else:
+                        log_prob += np.log(1.0 - p_alpha_1)
+                class_scores[cls] = log_prob
+            predictions.append(max(class_scores, key=class_scores.get))
+        return np.array(predictions)
+
+# Example usage:
+X = np.array([[0,1,1],[1,1,0],[0,0,1],[1,1,1],[1,0,1],[0,0,0]])
+y = np.array([0,0,1,1,1,0])  # 2 classes: 0 and 1
+model = BernoulliNaiveBayes(alpha=1.0)
+model.fit(X, y)
+preds = model.predict(X)
+print("Predictions:", preds)
+`}/>
+
+This demonstrates the naive Bayes structure: we estimate the class prior log probability and the probability of each feature being 1 given the class. At prediction time, we compute the log posterior for each class and pick the maximum.
+
+### 10.2 Implementing multinomial naive bayes
+
+For text classification with bag-of-words:
+
+<Code text={`
+import numpy as np
+
+class MultinomialNaiveBayes:
+    def __init__(self, alpha=1.0):
+        self.alpha = alpha
+        
+    def fit(self, X, y):
+        # X is (n_samples, n_features) of nonnegative integer counts
+        self.classes_ = np.unique(y)
+        n_samples, n_features = X.shape
+        
+        # Count total words per class
+        self.class_word_count_ = {}
+        self.class_counts_ = {}
+        self.feature_log_probs_ = {}
+        self.class_log_prior_ = {}
+        
+        for cls in self.classes_:
+            X_c = X[y == cls]
+            class_count = X_c.shape[0]
+            self.class_counts_[cls] = class_count
+            # Prior
+            self.class_log_prior_[cls] = np.log((class_count + self.alpha)
+                                                / (n_samples + len(self.classes_)*self.alpha))
+            # Sum of word counts in each dimension
+            word_sum = X_c.sum(axis=0)
+            total_count_in_class = word_sum.sum()
+            # Probability of each word in the vocabulary
+            self.feature_log_probs_[cls] = np.log((word_sum + self.alpha)
+                                                  / (total_count_in_class + n_features*self.alpha))
+            self.class_word_count_[cls] = total_count_in_class
+    
+    def predict(self, X):
+        # For each sample, compute log p(y) + sum_{features} [ x_alpha * log p(word_alpha|y) ]
+        predictions = []
+        for x in X:
+            class_scores = {}
+            for cls in self.classes_:
+                log_prob = self.class_log_prior_[cls]
+                log_prob += (x * self.feature_log_probs_[cls]).sum()
+                class_scores[cls] = log_prob
+            predictions.append(max(class_scores, key=class_scores.get))
+        return np.array(predictions)
+
+# Example usage:
+X = np.array([[2,1,0,0],[0,2,0,1],[1,0,1,0],[0,0,0,3]])  # Word counts
+y = np.array([0,0,1,1])
+model = MultinomialNaiveBayes(alpha=1.0)
+model.fit(X, y)
+preds = model.predict(X)
+print("Predictions:", preds)
+`}/>
+
+### 10.3 Implementing gaussian naive bayes
+
+A simple version with continuous features:
+
+<Code text={`
+import numpy as np
+
+class GaussianNaiveBayes:
+    def __init__(self):
+        pass
+    
+    def fit(self, X, y):
+        self.classes_ = np.unique(y)
+        n_samples, n_features = X.shape
+        self.class_stats_ = {}
+        self.class_prior_ = {}
+        
+        for cls in self.classes_:
+            X_c = X[y==cls]
+            self.class_prior_[cls] = X_c.shape[0] / n_samples
+            means = X_c.mean(axis=0)
+            vars_ = X_c.var(axis=0)
+            self.class_stats_[cls] = (means, vars_)
+            
+    def predict(self, X):
+        predictions = []
+        for x in X:
+            class_scores = {}
+            for cls in self.classes_:
+                prior = self.class_prior_[cls]
+                means, vars_ = self.class_stats_[cls]
+                # Gaussian PDF in each feature
+                log_likelihood = 0.0
+                for alpha_i, val in enumerate(x):
+                    mu = means[alpha_i]
+                    sigma2 = vars_[alpha_i] if vars_[alpha_i] > 1e-9 else 1e-9
+                    log_coeff = -0.5*np.log(2.0*np.pi*sigma2)
+                    log_exp = - ((val - mu)**2)/(2*sigma2)
+                    log_likelihood += log_coeff + log_exp
+                class_scores[cls] = np.log(prior) + log_likelihood
+            predictions.append(max(class_scores, key=class_scores.get))
+        return np.array(predictions)
+
+# Example usage:
+X = np.array([[1.5,2.3],[2.1,2.2],[10.0,8.0],[9.8,8.2],[2.2,2.1],[9.0,7.9]])
+y = np.array([0,0,1,1,0,1])
+model = GaussianNaiveBayes()
+model.fit(X, y)
+preds = model.predict(X)
+print("Predictions:", preds)
+`}/>
+
+### 10.4 Implementing AODE
+
+AODE is more complex than naive Bayes because we must consider one-dependence for each feature. For brevity, I'll outline the conceptual steps rather than produce a fully-fledged code:
+
+1. For each feature <Latex text="\(X_j\)"/>, treat it as a “superparent,” building a network where all other features <Latex text="\(X_i\)"/> depend on <Latex text="\(X_j\)"/> and the class <Latex text="\(Y\)"/>.  
+2. Estimate the conditional distributions <Latex text="\(p(X_i \mid Y, X_j)\)"/>.  
+3. Combine or average the predictions from all such networks.  
+
+The averaging step helps mitigate the strong independence assumptions. Implementations can be found in various machine learning libraries or specialized code for AODE.
+
+### 10.5 Implementing BBN & BN
+
+Implementing a full Bayesian Belief Network from scratch can be quite involved, especially if we allow arbitrary DAG structures. We can use libraries like `pgmpy` or `bnlearn` in Python. For instance, using `pgmpy`:
+
+<Code text={`
+# This is just a schematic usage example:
+from pgmpy.models import BayesianNetwork
+from pgmpy.factors.discrete import TabularCPD
+
+# Define the structure
+model = BayesianNetwork([('Y', 'X1'), ('Y', 'X2'), ('X1','X3')])
+
+# Define the CPDs
+cpd_Y = TabularCPD(variable='Y', variable_card=2,
+                   values=[[0.6], [0.4]])  # Prior for Y
+cpd_X1 = TabularCPD(variable='X1', variable_card=2,
+                    values=[[0.2, 0.7],[0.8, 0.3]],
+                    evidence=['Y'], evidence_card=[2])
+
+cpd_X2 = TabularCPD(variable='X2', variable_card=2,
+                    values=[[0.3, 0.4],[0.7, 0.6]],
+                    evidence=['Y'], evidence_card=[2])
+
+cpd_X3 = TabularCPD(variable='X3', variable_card=2,
+                    values=[[0.9,0.5,0.8,0.2],[0.1,0.5,0.2,0.8]],
+                    evidence=['X1','Y'], evidence_card=[2,2])
+
+model.add_cpds(cpd_Y, cpd_X1, cpd_X2, cpd_X3)
+model.check_model()
+
+# Then we can do inference:
+from pgmpy.inference import VariableElimination
+infer = VariableElimination(model)
+posterior = infer.query(['Y'], evidence={'X1':1,'X2':0})
+print(posterior)
+`}/>
+
+This exemplifies how to define a small BN, specify conditional probability tables, and run queries to obtain posterior probabilities for a node of interest.
+
+### 10.6 Implementing bayesian regression
+
+A straightforward approach uses PyMC (now `pymc` library) or PyStan, etc. Here's a small PyMC example for Bayesian linear regression:
+
+<Code text={`
+!pip install pymc  # If not installed
+
+import pymc as pm
+import numpy as np
+
+# Generate some synthetic data
+np.random.seed(42)
+N = 100
+X = np.linspace(0,1,N)
+true_w0 = 1.0
+true_w1 = 2.5
+true_sigma = 0.2
+y = true_w0 + true_w1*X + np.random.normal(0,true_sigma,N)
+
+with pm.Model() as model:
+    # Priors
+    w0 = pm.Normal('w0', mu=0, sigma=10)
+    w1 = pm.Normal('w1', mu=0, sigma=10)
+    sigma = pm.HalfCauchy('sigma', beta=1)
+    
+    # Likelihood
+    mu = w0 + w1*X
+    y_obs = pm.Normal('y_obs', mu=mu, sigma=sigma, observed=y)
+    
+    # Sampling from the posterior
+    trace = pm.sample(1000, tune=1000, cores=1)
+    
+pm.summary(trace)
+`}/>
+
+We specify priors for <Latex text="\(w_0\)"/>, <Latex text="\(w_1\)"/>, and <Latex text="\(\sigma\)"/>. We define the likelihood for the observed data <Latex text="\(y\)"/>. PyMC then uses MCMC (by default, the No-U-Turn Sampler) to sample from the joint posterior of these parameters.
+
+<br/>
+
+## 11. Misc notes
+
+### 11.1 The role of priors in controlling overfitting
+
+Placing a prior on model parameters can be viewed as imposing a regularization penalty in a frequentist sense. If you place a small-variance Gaussian prior on a weight <Latex text="\(w\)"/>, you strongly believe that <Latex text="\(w\)"/> is near zero unless data strongly indicates otherwise. This effectively shrinks the parameter estimates, preventing them from exploding in magnitude and leading to overfitting. 
+
+In classification tasks, specifying a prior over class probabilities or feature-likelihood parameters can also help when the training set is small or if certain classes are more (or less) common than the data alone might indicate. For instance, in a spam detection system, your prior might be that 80% of email is non-spam; even if your training set is somewhat skewed, that prior will keep the model from drifting too far if the sample misrepresents reality.
+
+### 11.2 Hierarchical bayesian models
+
+Hierarchical (or multilevel) Bayesian models add another layer of complexity (and interpretability). Parameters that describe different subsets of the data share hyperparameters, capturing partial pooling. This can be especially powerful in scenarios like:
+- Repeated measurements from multiple subjects (e.g., biomedical or psychological studies).
+- Group-level structures (e.g., schools, states, counties).
+- Time-series with state-space models.
+
+Hierarchical models can reduce overfitting by borrowing statistical strength across groups. However, they do require advanced inference methods or large datasets if the model is complex.
+
+### 11.3 Training and regularization
+
+In a Bayesian viewpoint, “training” can be thought of as computing or approximating the posterior distribution. Meanwhile, “regularization” naturally arises from priors. Tuning hyperparameters of the prior (e.g., the variance of a Gaussian prior) serves a similar role to tuning regularization strength in a frequentist model.
+
+### 11.4 Improving (tuning) bayesian models
+
+Practical aspects that can drastically improve performance:
+- **Choice of prior**: If domain knowledge is available, using an informed prior can be very helpful.
+- **Feature engineering**: As with any ML approach, the quality of features matters.
+- **Inference method**: Using more robust sampling or optimization-based approximations can help, especially if the posterior has multiple modes or strong correlations among parameters.
+- **Model selection**: Tools like <Highlight>Bayes factors</Highlight> or <Highlight>Deviance Information Criterion (DIC)</Highlight> can help compare different models or priors in a Bayesian context, although they can be expensive to compute.
+
+### 11.5 Use cases
+
+Bayesian models are used extensively in:
+- **Medical domain**: BNs for diagnosis, hierarchical modeling of treatment effects, etc.
+- **Finance**: Bayesian forecasting, volatility modeling, risk assessment with prior knowledge from historical events.
+- **Natural Language Processing**: Spam detection, text classification with naive Bayes, topic modeling with Dirichlet priors.
+- **Scientific research**: Where interpretability and quantification of uncertainty are paramount, e.g., astrophysics or ecology.
+
+### 11.6 General recommendations
+
+When deciding whether to adopt a Bayesian approach, weigh the interpretability and uncertainty quantification benefits against the computational cost. For many problems, a well-structured Bayesian model can yield more robust predictions and richer insights into uncertainty. That said, approximate inference is typically required outside the realm of conjugate priors, so plan your computational resources accordingly.
+
+<br/>
+
+## 12. Summary
+
+Bayesian models ground machine learning in the language of probability theory, allowing you to encode prior knowledge, handle uncertainty in parameters, and systematically update beliefs based on observed data. Beginning with the fundamental notions of priors, likelihoods, and posteriors, we've explored how these ideas manifest in:
+
+- **Naive Bayes classifiers**, which, despite making strong conditional independence assumptions, can work remarkably well in practice, especially for text classification (multinomial NB) or continuous data (Gaussian NB).  
+- **AODE**, which relaxes naive Bayes by allowing one-dependence among features.  
+- **Bayesian Belief Networks**, offering a more general DAG-based approach to capture complex dependencies.  
+- **Bayesian regression**, particularly in linear models, where priors serve as regularizers, and posterior distributions quantify the uncertainty in the regression coefficients.  
+
+Along the way, we encountered the significance of conjugate priors, the complexities of inference (MCMC, variational methods), and the importance of carefully specifying priors to reflect domain knowledge or desired model complexity. 
+
+While naive Bayes variants can be trained with closed-form or simple counting approaches, general Bayesian models often rely on advanced computational machinery. Nevertheless, the conceptual clarity of the Bayesian framework — representing knowledge as a distribution that evolves with data — remains a powerful tool for interpretability and robust predictions. 
+
+Bayesian approaches will continue to play an important role in machine learning, whether in purely generative scenarios, structured graphical models, or combined with neural architectures (e.g., Bayesian deep learning). With the knowledge gained here, you can confidently explore the rich universe of Bayesian methods and decide when and how to use them in your own data science and machine learning pipelines.

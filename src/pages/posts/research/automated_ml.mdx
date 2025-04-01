@@ -1,0 +1,381 @@
+---
+index: 106
+indexCourse: 141
+indexFavorites:
+title: "Automated ML, pt. 1"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Automated ML, pt. 1"
+courseCategoryName: "Other ML problems & advanced methods"
+desc: "Because I'm lazy"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "12.05.2024"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 2
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/automated_machine_learning.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/automated_ml"
+slug: "/research/automated_ml"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+Автоматическое машинное обучение
+https://neerc.ifmo.ru/wiki/index.php?title=%D0%90%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%BE%D0%B5_%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D0%BD%D0%BE%D0%B5_%D0%BE%D0%B1%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5
+Поиск архитектуры нейронной сети
+https://neerc.ifmo.ru/wiki/index.php?title=%D0%9F%D0%BE%D0%B8%D1%81%D0%BA_%D0%B0%D1%80%D1%85%D0%B8%D1%82%D0%B5%D0%BA%D1%82%D1%83%D1%80%D1%8B_%D0%BD%D0%B5%D0%B9%D1%80%D0%BE%D0%BD%D0%BD%D0%BE%D0%B9_%D1%81%D0%B5%D1%82%D0%B8 
+Мета-обучение
+https://neerc.ifmo.ru/wiki/index.php?title=%D0%9C%D0%B5%D1%82%D0%B0-%D0%BE%D0%B1%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5 
+- [Tutorial 16: Meta-Learning - Learning to Learn](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial16/Meta_Learning.html)
+    - [Few-shot classification](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial16/Meta_Learning.html#Few-shot-classification)
+    - [Prototypical Networks](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial16/Meta_Learning.html#Prototypical-Networks)
+    - [MAML and ProtoMAML](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial16/Meta_Learning.html#MAML-and-ProtoMAML)
+    - [Domain adaptation](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial16/Meta_Learning.html#Domain-adaptation)
+    - [Conclusion](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial16/Meta_Learning.html#Conclusion)
+
+*/}
+
+
+{/*
+
+1. Introduction  
+    1.1 Purpose of the article  
+    1.2 Brief history of automated machine learning (AutoML)  
+    1.3 Scope and audience
+    
+2. Why automated machine learning?  
+    2.1 Definition and core concepts of AutoML  
+    2.2 Advantages and motivations behind automating machine learning  
+    2.3 Common challenges and pain points in traditional ML workflows
+    
+3. Full AutoML workflow  
+    3.1 Data preparation and ingestion  
+    3.1.1 Handling raw data in miscellaneous formats  
+    3.1.2 Column type detection (boolean, discrete numerical, continuous numerical, text)  
+    3.1.3 Column intent detection (target/label, stratification field, numerical feature, categorical text feature, free text feature)  
+    3.1.4 Task detection (binary classification, regression, clustering, ranking)  
+    3.2 Feature engineering  
+    3.2.1 Feature selection  
+    3.2.2 Feature extraction  
+    3.2.3 Meta-learning and transfer learning  
+    3.2.4 Detection and handling of skewed data and missing values  
+    3.3 Model selection  
+    3.3.1 Evaluating different machine learning algorithms  
+    3.3.2 Comparing software implementations  
+    3.4 Ensembling  
+    3.4.1 Concept of consensus among multiple models  
+    3.4.2 Strategies for ensembling  
+    3.5 Hyperparameter optimization  
+    3.5.1 Searching the hyperparameter space  
+    3.5.2 Neural architecture search for deep learning models  
+    3.6 Pipeline selection  
+    3.6.1 Considering time, memory, and complexity constraints  
+    3.6.2 Automated pipeline configuration  
+    3.7 Selection of evaluation metrics and validation procedures  
+    3.7.1 Cross-validation, train-validation splits, and beyond  
+    3.7.2 Metrics for classification, regression, and specialized tasks  
+    3.8 Problem checking  
+    3.8.1 Leakage detection  
+    3.8.2 Misconfiguration detection  
+    3.9 Analysis of obtained results  
+    3.9.1 Interpreting performance metrics  
+    3.9.2 Identifying sources of error  
+    3.10 Creating user interfaces and visualizations  
+    3.10.1 Reporting results in dashboards  
+    3.10.2 Interactive model exploration
+    
+4. Meta-learning in AutoML  
+    4.1 Introduction to meta-learning  
+    4.2 Building on prior knowledge across tasks  
+    4.3 Role in selecting algorithms and hyperparameters
+    
+5. Popular frameworks and algorithms  
+    5.1 Auto-sklearn  
+    5.2 TPOT (Tree-based Pipeline Optimization Tool)  
+    5.3 H2O AutoML  
+    5.4 Google Cloud AutoML and other cloud-based solutions  
+    5.5 Comparison of features, performance, and ease of use
+    
+6. Challenges and considerations  
+    6.1 Data privacy and governance  
+    6.2 Scalability and computational costs  
+    6.3 Interpretability and transparency of automated systems  
+    6.4 Dealing with domain-specific requirements  
+    6.5 Ethical and social implications
+    
+7. Future trends in AutoML  
+    7.1 Advances in neural architecture search  
+    7.2 Real-time automated ML pipelines  
+    7.3 Federated learning and distributed systems  
+    7.4 Potential for fully autonomous data science workflows
+
+---
+
+Разобрать менее подробное содержание, включить в то, что выше:
+
+2. Fundamentals of automated machine learning  
+    2.1 Definition and key concepts  
+    2.2 Historical context and evolution  
+    2.3 Core components of automl systems  
+    2.4 Common challenges and limitations
+    
+3. Key tasks in automl  
+    3.1 Model selection  
+    3.2 Hyperparameter optimization  
+    3.3 Automated feature engineering  
+    3.4 Data preprocessing and pipeline configuration
+    
+4. Neural architecture search  
+    4.1 Overview of nas  
+    4.2 Search strategies and algorithms  
+    4.3 Popular nas frameworks and tools  
+    4.4 Challenges in nas and future directions
+    
+5. Popular automl methods and frameworks  
+    5.1 Bayesian optimization  
+    5.2 Random and grid search in automl  
+    5.3 Genetic algorithms and evolutionary strategies  
+    5.4 Open-source and commercial automl platforms
+    
+6. Evaluation of automl systems  
+    6.1 Performance metrics  
+    6.2 Benchmark datasets and competitions  
+    6.3 Fairness, bias, and ethical considerations
+    
+7. Practical applications of automl  
+    7.1 Industry use cases (finance, healthcare, e-commerce)  
+    7.2 Research applications and academic impact  
+    7.3 Case studies of end-to-end automl workflows
+    
+8. Integration in the machine learning pipeline  
+    8.1 Workflow orchestration  
+    8.2 Model interpretability and explainability  
+    8.3 Real-time inference and deployment
+    
+9. Advanced techniques and future trends  
+    9.1 Meta-learning and transfer learning in automl  
+    9.2 Reinforcement learning approaches  
+    9.3 nas refinements and emerging strategies  
+    9.4 Scalability and distributed computing
+
+
+Убедиться, что всё это есть в содержании:
+
+- hyperparameter optimization in AutoML
+- meta-learning
+- some of the most popular frameworks/algorithms in AutoML
+- full AutoML workflow (stages to automate and methods)
+
+Steps to automate are:
+- Data preparation and ingestion (from raw data and miscellaneous formats)
+	- Column type detection; e.g., Boolean, discrete numerical, continuous numerical, or text
+	- Column intent detection; e.g., target/label, stratification field, numerical feature, categorical text feature, or free text feature
+	- Task detection; e.g., binary classification, regression, clustering, or ranking
+- Feature engineering
+	- Feature selection
+	- Feature extraction
+	- Meta-learning and transfer learning
+	- Detection and handling of skewed data and/or missing values
+- Model selection - choosing which machine learning algorithm to use, often including multiple competing software implementations
+- Ensembling - a form of consensus where using multiple models often gives better results than any single model[6]
+- Hyperparameter optimization of the learning algorithm and featurization
+	- Neural architecture search
+- Pipeline selection under time, memory, and complexity constraints
+- Selection of evaluation metrics and validation procedures
+- Problem checking
+	- Leakage detection
+	- Misconfiguration detection
+- Analysis of obtained results
+- Creating user interfaces and visualizations
+
+*/}
+
+
+Automated Machine Learning (AutoML) has emerged as one of the most promising areas in the field of machine learning, with the potential to democratize data science by making complex machine learning tasks accessible to non-experts, while also providing experts with tools to streamline and automate repetitive tasks. The primary purpose of this article is to offer a comprehensive guide to AutoML, covering its fundamental concepts, methodologies, and practical applications. This article also provides insights into the workflow of AutoML systems, highlights key tasks that can be automated, and explores the future of this rapidly evolving field.
+
+### Brief history of automated machine learning (AutoML)
+
+The journey of AutoML began with the aim to alleviate the burden on data scientists and machine learning practitioners, who often spend the majority of their time on tasks like model selection, hyperparameter tuning, and data preprocessing. The initial concept of automating these steps arose from the need for tools that could not only automate repetitive tasks but also improve the performance of machine learning systems. Over time, AutoML evolved with contributions from diverse domains including meta-learning, neural architecture search (NAS), and evolutionary algorithms. 
+
+In the early 2010s, key developments in AutoML began with frameworks like Auto-WEKA, which automated model selection and hyperparameter tuning. However, it was with the advent of more sophisticated algorithms and computing power that frameworks like Auto-sklearn, TPOT, and H2O AutoML gained significant traction. These platforms enabled the automation of entire machine learning workflows, such as data preprocessing, feature engineering, and model selection, which were traditionally done manually by data scientists. 
+
+### Scope and audience
+
+This article is intended for machine learning practitioners, data scientists, and researchers with a deep understanding of machine learning concepts and a desire to explore the state-of-the-art tools that make machine learning more accessible and efficient. If you are familiar with basic machine learning workflows, this article will dive into how AutoML systems can be used to automate various stages of these workflows, save time, and potentially improve the results.
+
+## Why Automated Machine Learning?
+
+### Definition and core concepts of AutoML
+
+At its core, AutoML refers to the process of automating the design, training, and optimization of machine learning models. AutoML systems aim to reduce the human intervention required in the typical machine learning pipeline, allowing non-experts to build high-quality models and enabling experts to focus on more complex tasks like model interpretation or domain-specific problem-solving. 
+
+The central concept behind AutoML is the automation of the following machine learning tasks:
+1. **Data preprocessing and feature engineering**: Automatic cleaning, transformation, and selection of features from raw data.
+2. **Model selection**: Choosing the best machine learning algorithm for a given task.
+3. **Hyperparameter tuning**: Automatically adjusting the hyperparameters of the model to improve performance.
+4. **Model ensembling**: Combining the predictions of multiple models to achieve better results.
+5. **Evaluation and validation**: Selecting the appropriate evaluation metrics and validation techniques.
+
+### Advantages and motivations behind automating machine learning
+
+The primary motivation behind AutoML is to enhance the efficiency of machine learning processes by automating time-consuming tasks. Some of the main advantages of AutoML include:
+- **Speed**: It significantly reduces the time taken to develop a machine learning model by automating repetitive and manual steps.
+- **Improved performance**: AutoML systems can fine-tune models and explore hyperparameter spaces in ways that humans may not, potentially yielding better performance.
+- **Accessibility**: AutoML opens the door to machine learning for non-experts by lowering the barrier to entry.
+- **Reproducibility**: By automating workflows, AutoML ensures that models and results are reproducible, as each step in the process is clearly defined.
+
+### Common challenges and pain points in traditional ML workflows
+
+While machine learning workflows can be highly effective, they also come with challenges:
+- **Manual labor**: Data preprocessing, feature engineering, and model selection often require significant time and expertise.
+- **Hyperparameter tuning**: Choosing the right set of hyperparameters for a model is critical for performance but can be a very time-consuming process.
+- **Lack of consistency**: It's easy for human error to introduce inconsistencies or bias, especially when handling large datasets.
+- **Model complexity**: Understanding and optimizing models, particularly deep learning networks, can require substantial expertise and resources.
+
+AutoML addresses these challenges by introducing automation, reducing human error, and providing solutions for faster and more efficient model development.
+
+## Full AutoML Workflow
+
+### Data preparation and ingestion
+
+One of the first and most critical stages of any machine learning project is the preparation and ingestion of data. In a typical ML pipeline, data comes in various formats and sources, and it requires substantial effort to clean and preprocess it. In AutoML, this stage is fully automated, allowing the system to handle raw, unstructured data.
+
+#### Handling raw data in miscellaneous formats
+
+Data comes in different forms, ranging from structured tabular data (CSV, Excel) to unstructured data (text, images). AutoML systems are designed to ingest these different formats, transforming them into a standard representation suitable for machine learning tasks.
+
+#### Column type detection
+
+AutoML platforms use algorithms to automatically detect the type of each column in the dataset. This includes recognizing whether a column contains:
+- **Boolean values** (True/False)
+- **Discrete numerical values**** (real numbers)
+- **Textual data** (such as categories or free-form text)
+
+#### Column intent detection
+
+AutoML systems also automatically detect the intended use of each column. This can include recognizing columns that represent the:
+- **Target/label**: The column that contains the values we want to predict.
+- **Stratification field**: The field used for stratification during cross-validation, ensuring that the splits are representative.
+- **Numerical features**: Columns with numerical data that are used for prediction.
+- **Categorical text features**: Columns with categorical data represented as text.
+- **Free-text features**: Columns containing unstructured text (e.g., user reviews, descriptions).
+
+#### Task detection
+
+The task at hand also needs to be detected automatically. AutoML systems can identify the appropriate type of machine learning task, such as:
+- **Binary classification**: Classifying data into two categories (e.g., spam vs. not spam).
+- **Regression**: Predicting continuous values (e.g., house prices).
+- **Clustering**: Grouping data points based on similarity (e.g., customer segmentation).
+- **Ranking**: Ranking items based on relevance (e.g., search engine results).
+
+### Feature engineering
+
+Feature engineering is the process of selecting, transforming, and extracting features from raw data. In traditional machine learning, this step requires domain knowledge and considerable time investment. AutoML automates feature engineering through various strategies:
+
+#### Feature selection
+
+Feature selection involves choosing the most relevant features for the model, often based on metrics like correlation, mutual information, or importance scores.
+
+#### Feature extraction
+
+AutoML can automate the creation of new features through transformations like:
+- **Principal Component Analysis (PCA)** for dimensionality reduction.
+- **One-hot encoding** for categorical variables.
+- **Text vectorization** (e.g., TF-IDF, word embeddings) for text data.
+
+#### Meta-learning and transfer learning
+
+Meta-learning, or "learning to learn", is a technique where a model uses prior knowledge gained from previous tasks to improve the learning process on new tasks. AutoML leverages meta-learning to optimize the model selection and hyperparameter tuning processes. Transfer learning, where a pre-trained model is fine-tuned for a new task, is also a powerful technique that can be automated.
+
+#### Detection and handling of skewed data and missing values
+
+AutoML systems detect data imbalances (e.g., in classification tasks with imbalanced classes) and missing values. These issues are automatically addressed through resampling techniques or imputation methods.
+
+### Model selection
+
+In the model selection stage, AutoML systems automatically evaluate different algorithms to determine the best one for the given task. This process typically involves training and evaluating models such as:
+- **Linear models** (e.g., Logistic Regression, Linear Regression)
+- **Tree-based models** (e.g., Decision Trees, Random Forests, XGBoost)
+- **Support Vector Machines (SVM)**
+- **Neural networks** (e.g., MLPs, CNNs, RNNs)
+
+The system compares the performance of various algorithms, selecting the best one based on predefined criteria such as accuracy, speed, and memory usage.
+
+### Ensembling
+
+Ensembling is a method where multiple models are combined to make predictions, often yielding better performance than any single model. AutoML systems employ several ensembling techniques, such as:
+- **Bagging**: Training multiple instances of the same model on different subsets of data and combining their predictions.
+- **Boosting**: Sequentially training models, where each subsequent model corrects the errors of the previous one.
+- **Stacking**: Using the predictions of several models as features for a final meta-model.
+
+### Hyperparameter optimization
+
+Hyperparameter optimization is the process of fine-tuning the parameters of the selected model to improve its performance. AutoML systems typically use techniques such as:
+- **Grid search**: Exhaustively searching over a specified hyperparameter space.
+- **Random search**: Randomly sampling hyperparameters and evaluating their performance.
+- **Bayesian optimization**: A probabilistic model-based approach to optimize hyperparameters more efficiently.
+
+#### Neural architecture search (NAS)
+
+For deep learning models, AutoML systems also incorporate **neural architecture search (NAS)**, which involves searching for the optimal architecture of neural networks (e.g., the number of layers, type of connections, etc.) to improve performance.
+
+### Pipeline selection
+
+In addition to individual model optimization, AutoML systems automate the selection of the optimal machine learning pipeline. This includes choosing the appropriate preprocessing steps, feature transformations, and model types. Constraints such as time, memory usage, and computational complexity are taken into account to select the best pipeline.
+
+### Selection of evaluation metrics and validation procedures
+
+AutoML systems automatically choose the evaluation metrics that are most appropriate for the task at hand, such as accuracy for classification tasks, mean squared error for regression, or silhouette score for clustering. Additionally, the system selects the best validation method, such as cross-validation or train-validation splits, to assess the model's performance.
+
+### Problem checking
+
+Problem checking is a crucial part of any machine learning system. AutoML platforms automatically check for:
+- **Data leakage**: Ensuring that no information from the validation or test set has been used during training.
+- **Misconfigurations**: Detecting issues such as incorrect data preprocessing steps, improper handling of categorical features, or incompatible model types.
+
+### Analysis of obtained results
+
+Once the models have been trained, AutoML systems provide an analysis of the obtained results, including interpreting performance metrics, identifying sources of error, and offering recommendations for further improvement.
+
+### Creating user interfaces and visualizations
+
+Finally, AutoML systems present results through user-friendly interfaces and visualizations, such as dashboards and interactive model exploration tools. This allows users to gain insights into the models' behavior and make informed decisions based on the results.
+
+---
+
+This concludes the first part of our exploration into the world of Automated Machine Learning. In the next sections, we will dive deeper into the key methodologies, tools, and frameworks that power AutoML systems, with a focus on meta-learning, hyperparameter optimization, and neural architecture search. Stay tuned for the next installment.

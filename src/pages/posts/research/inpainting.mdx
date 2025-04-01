@@ -1,0 +1,486 @@
+---
+index: 87
+indexCourse: 105
+indexFavorites:
+title: "Inpainting"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Inpainting"
+courseCategoryName: "Computer vision"
+desc: "Use it the right way ( ͡° ͜ʖ ͡°)"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "12.12.2023"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 2
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/inpainting.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/inpainting"
+slug: "/research/inpainting"
+---
+
+import Tooltip from "../../../components/Tooltip"
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+Вписывание части изображения
+https://neerc.ifmo.ru/wiki/index.php?title=%D0%92%D0%BF%D0%B8%D1%81%D1%8B%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5_%D1%87%D0%B0%D1%81%D1%82%D0%B8_%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F
+
+*/}
+
+
+{/*
+
+1. Introduction      
+2. Mathematical foundations  
+    Partial differential equations methods  
+    Variational and optimization-based approaches  
+    Energy minimization principles
+    etc.
+3. Deep learning techniques for inpainting  
+    Convolutional neural networks  
+    Generative adversarial networks  
+    Autoencoders and other architectures  
+    Transfer learning for improved results
+    etc.
+4. Training and implementation details  
+    Data preparation and augmentation  
+    Loss functions commonly used in inpainting  
+    Model hyperparameters and tuning strategies  
+    Practical tips for faster convergence
+    etc.
+5. Evaluation metrics  
+    Peak signal-to-noise ratio (PSNR)  
+    Structural similarity index measure (SSIM)  
+    Perceptual metrics and human evaluation  
+    Trade-offs between quantitative and qualitative assessments
+    etc.
+6. Applications      
+7. Challenges and limitations  
+    Dealing with large missing regions, overfitting and lack of generalization, etc.
+
+*/}
+
+
+Inpainting is a specialized image processing task in which missing or corrupted regions of an image are filled in with plausible content that preserves global coherence and realism. Although the term "inpainting" might be reminiscent of artistic touch-ups or museum-level restoration of paintings, in the field of computer vision and machine learning, it is usually a much more general operation, involving repairing lost or damaged data within an image. I find this domain fascinating because, in many applications, successful inpainting models can achieve visually seamless results, thereby enabling a wide array of functionalities that were once considered impossible or extremely time-consuming — such as removing unwanted objects, reconstructing damaged photographs, restoring details lost to noise, and even generating entirely new features in a photograph based on contextual cues.
+
+The tradition of image inpainting dates back many decades in computer vision, with many classical methods relying on partial differential equations (<Highlight>PDEs</Highlight>) and variational calculus to achieve realistic reconstructions. Over time, approaches grew more sophisticated by incorporating ideas from statistics, optimization-based frameworks, and patch-based search or sampling. In recent years, the explosion of deep learning methods — especially generative modeling and convolutional architectures — has taken inpainting performance to new levels of quality, enabling semantically aware solutions that understand which objects, textures, or patterns should be plausibly inferred within missing regions.
+
+This article dives into both the traditional concepts of inpainting (rooted in PDEs, variational techniques, and energy minimization) and the modern deep learning approaches that leverage advanced neural architectures such as convolutional neural networks (CNNs), generative adversarial networks (GANs), autoencoders, and more specialized models (e.g. partial convolution, gated convolution, multi-stage or two-stage networks). You will see that the solutions go well beyond mere pixel interpolation — they aim to "understand" the image content so as to produce a faithful fill-in of the occluded areas.
+
+I will also discuss training and implementation details, highlight commonly used inpainting loss functions (including perceptual, style, adversarial, and total variation losses), and explore evaluation metrics such as peak signal-to-noise ratio (PSNR), structural similarity index measure (SSIM), and the more nuanced perceptual evaluations that often guide real-world usage. We will end with a broad look at challenges, limitations, and real-world applications, as well as some advanced references pointing to state-of-the-art research in the field.
+
+---
+
+## Mathematical foundations
+
+### Partial differential equations methods
+
+Classical image inpainting research is deeply rooted in the idea of leveraging partial differential equations (<Tooltip text="Differential equations involving functions of several variables and their partial derivatives"/>) to propagate local structural information from known areas to missing regions. One of the earliest groundbreaking works along these lines is often credited to Bertalmio and gang ("Image Inpainting," SIGGRAPH 2000), in which they drew from concepts in fluid dynamics to propose PDE-based image restoration.
+
+A PDE-based method for inpainting typically does the following:
+- It defines a small boundary region around the missing (or corrupted) parts of the image.
+- It infers the directions and intensities of the image's isophotes (level lines of equal intensity or color).
+- It propagates these isophotes continuously into the interior of the unknown region, under constraints that aim to preserve gradient smoothness or color continuity.
+
+One well-known example is the *fast marching method* (Telea, 2004). This algorithm systematically reconstructs unknown pixels by working inwards from the boundary of the damaged region, determining each new pixel as a weighted combination of the known neighbors. It is relatively straightforward yet surprisingly effective for small, thin, or otherwise uncomplicated missing areas. Another PDE approach involves the *Navier–Stokes method* (Bertalmio and gang, 2001), named after the famous fluid flow equations. The method enforces that the gradients of color or brightness remain continuous across the boundary, effectively "flowing" the information inside the inpainting domain.
+
+Typically, let <Latex text="\( \Omega \subset \mathbb{R}^2 \)"/> be the domain of the image and <Latex text="\( D \subset \Omega \)"/> the region to be inpainted. If <Latex text="\( I: \Omega \to \mathbb{R}^3 \)"/> denotes the RGB image (or grayscale for simplicity), a PDE-based inpainting method might solve:
+
+<Latex text="\[
+    \frac{\partial I(x,y)}{\partial t} = F\bigl(I, \nabla I, \nabla^2 I, \dots\bigr), \quad (x,y) \in D,
+\]"/>
+
+with boundary conditions such that <Latex text="\( I(x,y) \)"/> is fixed on <Latex text="\( \partial D \)"/>. The choice of the function <Latex text="\( F \)"/> depends on the PDE approach at hand. Fast marching-based inpainting, for instance, might revolve around extending intensities in the direction normal to the boundary, while Navier–Stokes-based methods incorporate fluid-flow inspired constraints that attempt to preserve edge continuity and gradient direction.
+
+In practice, PDE-based solutions work best for small holes or cracks in images where the primary need is to continue lines and textures. Once the missing region becomes large or visually complex, PDE-based approaches often fail to capture the overall semantic structure needed for a truly coherent fill. That's where more sophisticated frameworks come into play.
+
+### Variational and optimization-based approaches
+
+Another major class of classical inpainting solutions arises from **variational** methods, in which one defines an *energy functional* that quantifies how well a reconstructed image agrees with both the known data and some desired smoothness or regularity prior. The inpainting task becomes an optimization problem: minimize the energy with respect to the unknown pixels, given boundary constraints on the known region.
+
+A prototypical variational formulation can be expressed as:
+
+<Latex text="\[
+    \min_I \quad E(I) = \int_{D} \Phi\bigl(\nabla I(x,y)\bigr) \, dx \, dy 
+    + \lambda \int_{\Omega \setminus D} \|I(x,y) - I_{\text{obs}}(x,y)\|^2 \, dx \, dy,
+\]"/>
+
+where:
+- <Latex text="\( D \)"/> is the region of missing or corrupted data,
+- <Latex text="\( I_{\text{obs}} \)"/> denotes the observed (known) pixels,
+- <Latex text="\( \Phi \)"/> is a functional designed to enforce regularity or penalize large image gradients (thus encouraging smoothness or continuity of edges),
+- <Latex text="\( \lambda \)"/> is a weighting parameter controlling the balance between fidelity to known data and regularization.
+
+Methods based on *total variation* (TV) or higher-order smoothness constraints typically fall in this category. These approaches can produce results that preserve edges relatively well, although they can also introduce oversmoothing in more elaborate or texture-rich scenes.
+
+A popular notion is that many classical inpainting energies rely on *patch-based approaches*, which explicitly sample or copy existing patches from known portions of the image into the unknown region to preserve local structures. These methods gained prominence in the mid-2000s due to their effectiveness in reconstructing large regions, provided the same or similar textures/patterns existed elsewhere in the image. The well-known *PatchMatch* algorithm (Barnes and gang, 2009) is an example that computes approximate nearest neighbor correspondences between patches in an image, making it possible to fill in large holes by reusing existing content. While not purely PDE-based or purely variational, patch-based approaches can be seen as a type of optimization-based framework, often with energy functions that measure patch similarity between the unknown region and candidate source patches.
+
+### Energy minimization principles
+
+In general, energy minimization methods unify PDE-based and variational approaches under a single perspective: the inpainting solution is the image <Latex text="\( I \)"/> that minimizes some carefully chosen energy functional. The PDE viewpoint interprets the Euler–Lagrange equation of that energy functional, leading to a differential equation that can be iteratively solved.
+
+These classical approaches, while extremely important historically and still quite relevant for smaller holes or simpler images, have certain limitations:
+
+- **Lack of semantic knowledge**: Traditional PDEs or patch-based frameworks do not truly "understand" the high-level content of a scene (e.g., that it's a person's face, or that it's a car with particular textures). They rely on low-level cues (gradients, intensities, edges, patch similarity).
+- **Difficulty with large holes**: As soon as the missing region is large, PDE-based methods often fail to hallucinate realistic content, and patch-based methods can produce repetitive or unnatural patterns if the image does not contain enough relevant source patches.
+- **Computational cost**: Some classical methods can be quite expensive, especially patch-based ones that rely on repeated nearest neighbor searches within the image.
+
+---
+
+## Deep learning techniques for inpainting
+
+### Convolutional neural networks
+
+With the rise of deep learning, convolutional neural networks (<Highlight>CNNs</Highlight>) have become a core workhorse for image analysis and synthesis. Their ability to extract hierarchical features from images and to capture local patterns has made them an attractive tool for inpainting. Instead of using PDEs to propagate local structure, a CNN can learn how to fill missing pixels by seeing millions of examples of incomplete images during training and learning a mapping from masked (partially erased) inputs to plausible completions.
+
+The earliest CNN-based inpainting approaches typically used an encoder-decoder structure, similar to an autoencoder, in which:
+1. An encoder transforms the input image (with missing patches) into a compact latent representation.
+2. A decoder attempts to reconstruct the original image from that latent code.
+
+During training, the network is fed masked images and asked to produce the ground truth original. By minimizing a reconstruction loss (often <Latex text="\( L_1 \)"/> or <Latex text="\( L_2 \)"/> on pixel differences), the network slowly learns to fill in plausible details, guided by the distribution of training images. However, naive autoencoder-based CNN approaches often lead to blurry or overly smooth completions, especially if the training loss does not incorporate additional structural or perceptual terms.
+
+The subsequent wave of innovations introduced many improvements:
+- **Dilated (atrous) convolutions**: to increase the receptive field without increasing the parameter count, enabling networks to incorporate more global context.
+- **Partial or gated convolutions**: to handle irregular or free-form masks and to incorporate a learned gating mechanism that modulates how much the network relies on valid vs. invalid (erased) pixels.
+- **Multi-scale or coarse-to-fine architectures**: to first predict a rough fill of the missing region, then refine it with higher-frequency details.
+
+### Generative adversarial networks
+
+A major leap forward in inpainting quality arrived with **generative adversarial networks** (<Highlight>GANs</Highlight>), introduced by Goodfellow and gang (NeurIPS 2014). GAN-based image inpainting typically pairs a generator network (which synthesizes the completed image) with a discriminator network (which tries to distinguish real images from generated ones). By training the generator to fool the discriminator, the generator learns to produce completions that are not just consistent at a pixel level but also appear realistic and natural under the learned distribution of real images.
+
+One pioneering approach is the work of Iizuka and gang (SIGGRAPH 2017), who introduced a global and local discriminator: 
+- The **global** discriminator sees the entire image, ensuring that the overall composition looks realistic.
+- The **local** discriminator focuses specifically on the inpainted region, ensuring that the filled-in content is plausible and coherent with its immediate surroundings.
+
+Many subsequent approaches improved on these ideas by using more advanced generator architectures, better training losses (e.g., **perceptual losses**, **style losses**, **feature matching**), and new forms of discriminator design (e.g., PatchGAN, SN-PatchGAN). The synergy of CNN-based encoders/decoders and adversarial training provides results that often incorporate meaningful semantic structure and texture details beyond the capabilities of purely classical methods.
+
+### Autoencoders and other architectures
+
+While a basic autoencoder can be used for inpainting, specialized variations often perform better:
+- **U-Net** style networks (Ronneberger and gang, 2015) incorporate skip-connections between encoder and decoder layers, allowing higher-resolution features (edges, color gradients) to pass forward to the decoding stages. This technique is widely used in segmentation tasks but has also proven valuable for inpainting, especially in multi-stage or coarse-to-fine frameworks.
+- **VAE (Variational Autoencoders)** can also be adapted for inpainting, though less commonly so than purely deterministic encoder-decoder or GAN-based models. A VAE would attempt to learn a probabilistic latent space from which to generate possible completions, but many practitioners find that adversarial training better captures high-frequency details.
+- **Flow-based or diffusion-based** generative models (a more recent development) can also be adapted to inpainting. These methods define an invertible transformation or a gradual noising/denoising process, enabling sampling from learned distributions in a more controlled manner. Though not as common for inpainting as GANs or autoencoders, they represent an exciting frontier for generative modeling.
+
+### Transfer learning for improved results
+
+In many industrial or research scenarios, training an inpainting model from scratch for each new domain (faces, scenery, medical imaging, etc.) can be expensive. Instead, one can:
+- **Pretrain** a network on a large general-purpose dataset (such as ImageNet, MS-COCO, or other broad image collections).
+- **Finetune** that network on a smaller domain-specific dataset, adjusting only the last layers or using mild weight decay to preserve learned features.
+
+Such transfer learning often leads to faster convergence and better generalization, particularly when data for a specialized domain are scarce. For instance, SC-FEGAN (Jo and Park, SIGGRAPH Asia 2019) and other face inpainting methods might utilize general CNN or GAN backbones pretrained on large face datasets, then adapt them with user sketches or color constraints.
+
+---
+
+## Training and implementation details
+
+### Data preparation and augmentation
+
+High-quality data is crucial for inpainting. Typical training data consist of original images <Latex text="\(I_{\text{gt}}\)"/> and corresponding masks <Latex text="\(M\)"/> that indicate which pixels are missing or corrupted. The simplest approach is to artificially create masks by randomly erasing patches. Many modern papers generate **free-form** masks with random shapes, lines, or strokes, better reflecting real-world scenarios where the missing region isn't necessarily a simple rectangle.
+
+Data augmentation often helps expand the diversity of training pairs. Common augmentations include:
+- Random cropping or scaling
+- Horizontal flips, rotations, or color jitter
+- Adding random noise or synthetic text overlays to mimic real imperfections
+
+### Loss functions commonly used in inpainting
+
+Deep inpainting models usually combine multiple losses to ensure both pixel-wise faithfulness and visually pleasing structure. Below are popular components:
+
+1. **Pixel reconstruction loss (L1 or L2)**  
+   Measures direct differences between generated pixels and ground truth. A typical <Latex text="\( L_1 \)"/>-based formulation might be:
+
+   <Latex text="\[
+   L_{\text{per-pixel}} = \frac{1}{N_{I_{\text{gt}}}} \bigl\| M \odot (I_{\text{gen}} - I_{\text{gt}})\bigr\|_1 
+   + \alpha \, \frac{1}{N_{I_{\text{gt}}}} \bigl\|(1 - M) \odot (I_{\text{gen}} - I_{\text{gt}})\bigr\|_1,
+   \]"/>
+
+   where <Latex text="\( I_{\text{gen}} \)"/> is the generated image, <Latex text="\( I_{\text{gt}} \)"/> is the ground truth image, <Latex text="\( M \)"/> is the binary mask, <Latex text="\( \alpha \)"/> is a hyperparameter adjusting the relative weighting between missing and non-missing regions, and <Latex text="\( \odot \)"/> denotes elementwise multiplication.
+
+2. **Perceptual loss**  
+   Instead of comparing raw pixels, one can compare high-level feature representations extracted by a deep network like VGG-16 (Simonyan and Zisserman, 2015). Formally:
+
+   <Latex text="\[
+   L_{\text{percept}} = \sum_{q} \frac{\|\Theta_{q}(I_{\text{gen}}) - \Theta_{q}(I_{\text{gt}})\|_1}{N_{\Theta_{q}(I_{\text{gt}})}} 
+   + \sum_{q} \frac{\|\Theta_{q}(I_{\text{comp}}) - \Theta_{q}(I_{\text{gt}})\|_1}{N_{\Theta_{q}(I_{\text{gt}})}},
+   \]"/>
+
+   where <Latex text="\( I_{\text{comp}} \)"/> is a composite image that uses generated pixels in the missing region but preserves ground truth in the known region; <Latex text="\( \Theta_{q} \)"/> denotes feature maps from the <Latex text="\( q \)"/>-th layer of a pretrained network.
+
+3. **Style loss**  
+   Comparing Gram matrices of deep features to align the textures and color distributions of the generated image with those of the ground truth. This idea is borrowed from neural style transfer, capturing local correlations of feature maps to ensure consistent "style". A simplified version can be written as:
+
+   <Latex text="\[
+   L_{\text{style}} = \sum_{q} \frac{1}{C_q^2} \Bigl\| \frac{G_{q}(I_{\text{gen}}) - G_{q}(I_{\text{gt}})}{N_q} \Bigr\|,
+   \]"/>
+
+   where <Latex text="\( G_{q}(x) = (\Theta_{q}(x))^\mathrm{T}\,\Theta_{q}(x) \)"/> is the Gram matrix for the <Latex text="\( q \)"/>-th layer's feature maps, and <Latex text="\( C_q \)"/> is the dimension of those feature maps.
+
+4. **Total variation (TV) loss**  
+   Encourages spatial smoothness and consistency across neighboring pixels:
+
+   <Latex text="\[
+   L_{\text{tv}} = \sum_{(i,j)\in R} \frac{\| I_{\text{comp}}^{i,j+1} - I_{\text{comp}}^{i,j}\|}{N_{I_{\text{comp}}}}
+   + \sum_{(i,j)\in R} \frac{\| I_{\text{comp}}^{i+1,j} - I_{\text{comp}}^{i,j}\|}{N_{I_{\text{comp}}}},
+   \]"/>
+
+   where <Latex text="\( I_{\text{comp}} \)"/> is again the composite image and <Latex text="\( R \)"/> indexes valid pixels within the image boundary.
+
+5. **Adversarial loss**  
+   In GAN-based methods, the generator <Latex text="\( G \)"/> tries to fool a discriminator <Latex text="\( D \)"/>:
+
+   <Latex text="\[
+   L_{\text{adv}} = \mathbb{E}\bigl[\log D(H_{\text{gt}}, I_{\text{gray}})\bigr] + \mathbb{E}\bigl[\log \bigl(1 - D(H_{\text{gen}}, I_{\text{gray}})\bigr)\bigr],
+   \]"/>
+
+   where <Latex text="\( H_{\text{gt}} \)"/> and <Latex text="\( H_{\text{gen}} \)"/> might be edge or boundary maps of the ground truth and generated images, and <Latex text="\( I_{\text{gray}} \)"/> some grayscale input image. Different inpainting models adapt the adversarial loss to their own architecture, sometimes focusing on only the inpainted region (local discriminator), or the entire image (global discriminator), or both.
+
+6. **Feature-matching loss**  
+   Encourages the intermediate feature representations of the real and generated images, as computed by the discriminator's hidden layers, to be similar:
+
+   <Latex text="\[
+   L_{\text{FM}} = \mathbb{E}\Bigl[\sum_{i=1}^L \frac{1}{N_i}\|D^{(i)}(H_{\text{gt}}) - D^{(i)}(H_{\text{gen}})\|\Bigr],
+   \]"/>
+
+   where <Latex text="\( D^{(i)} \)"/> is the <Latex text="\( i \)"/>-th layer's activations of the discriminator, and <Latex text="\( N_i \)"/> is the dimension of that layer.
+
+In practice, many advanced inpainting models combine several of these losses, each weighted by a hyperparameter to balance low-level fidelity, style, and global realism. For instance, a model might have a total loss like:
+
+<Latex text="\[
+L = \lambda_{\text{rec}} L_{\text{per-pixel}} + \lambda_{\text{perc}} L_{\text{percept}} 
+ + \lambda_{\text{style}} L_{\text{style}} + \lambda_{\text{adv}} L_{\text{adv}} + \dots
+\]"/>
+
+### Model hyperparameters and tuning strategies
+
+Hyperparameter choices in inpainting models vary widely. Some common ones include:
+- **Learning rate**: Typically in the range of <Latex text="\(10^{-4}\)"/> to <Latex text="\(10^{-5}\)"/> for generator networks in adversarial training, with the discriminator often trained at a slightly different rate or using distinct scheduling.
+- **Batch size**: Larger batches can stabilize training, but memory constraints sometimes limit the maximum size. In inpainting tasks, patch-based or region-based training might reduce the effective image size needed.
+- **Loss weighting**: The relative weights among the reconstruction loss, perceptual loss, style loss, and adversarial loss can drastically affect the final visual quality. A typical approach is to start with a stronger pixel or perceptual term (for stable content) and gradually increase the adversarial term to add more realistic details once the basic structure is learned.
+- **Mask generation strategy**: For free-form inpainting, random strokes or shapes can be used. The percentage of removed pixels can also be varied (e.g., from small random holes to very large occlusions).
+
+Tuning these parameters is often empirical. Researchers commonly rely on a validation set of masked images and compare metrics such as SSIM or user-based perceptual judgments to decide which hyperparameter setting produces the best results.
+
+### Practical tips for faster convergence
+
+1. **Progressive or coarse-to-fine training**: Start with a smaller image resolution or smaller missing region, then gradually increase complexity. This approach can help the model learn global structure first before focusing on fine details.
+2. **Use pretrained encoders**: Employing a backbone (like a pretrained VGG or ResNet) to encode the image can significantly speed up training and improve the quality of the latent features.
+3. **Multi-stage architecture**: Some models do a rough fill, then pass the partially completed image to a second network for refinement. This can yield sharper textures in large missing regions.
+4. **Employ advanced normalization**: Techniques like spectral normalization, instance normalization, or batch normalization with carefully chosen parameters can keep training stable and reduce artifacts. 
+5. **Prevent mode collapse**: In adversarial training, periodically check that the discriminator is not overpowering the generator or vice versa. Adjust the learning rates or training frequency of each network accordingly.
+
+---
+
+## Evaluation metrics
+
+Evaluating inpainting is tricky because an image can be filled in multiple plausible ways, and purely pixel-wise metrics are not always reflective of perceived visual quality.
+
+### Peak signal-to-noise ratio (PSNR)
+
+<Latex text="\( \text{PSNR} \)"/> is a classic metric for image restoration tasks, computed as:
+
+<Latex text="\[
+\text{PSNR}(I_{\text{gen}}, I_{\text{gt}}) = 10 \cdot \log_{10}\Bigl(\frac{ \max(I_{\text{gt}})^2 }{ \text{MSE}(I_{\text{gen}}, I_{\text{gt}}) }\Bigr),
+\]"/>
+
+where <Latex text="\( \text{MSE} \)"/> is the mean squared error between generated and ground truth images. While PSNR can be useful for narrower tasks such as denoising, it often correlates poorly with subjective judgments, especially for larger missing regions.
+
+### Structural similarity index measure (SSIM)
+
+<Latex text="\( \text{SSIM} \)"/> is more perceptually inspired, comparing luminance, contrast, and structural information in a patchwise manner:
+
+<Latex text="\[
+\text{SSIM}(x,y) = \frac{(2\mu_x \mu_y + C_1)(2\sigma_{xy}+C_2)}{(\mu_x^2+\mu_y^2 + C_1)(\sigma_x^2+\sigma_y^2 + C_2)},
+\]"/>
+
+where <Latex text="\( \mu \)"/> and <Latex text="\( \sigma \)"/> denote patch means and standard deviations. SSIM can be more aligned with human perception than PSNR but is still not perfect for evaluating the realism of large-scale inpainting.
+
+### Perceptual metrics and human evaluation
+
+An alternative is to measure how well the generated images fool pretrained classifiers or how close their higher-level feature distributions align with real images. Some works use *FID (Fréchet Inception Distance)* or *LPIPS (Learned Perceptual Image Patch Similarity)* to quantify perceptual distances. Ultimately, many studies also rely on **human evaluation** — asking human annotators to compare real vs. inpainted results or to pick the most realistic fill among multiple candidate completions.
+
+### Trade-offs between quantitative and qualitative assessments
+
+In real-world usage, small differences in PSNR or SSIM may be meaningless if an image subjectively looks better. On the other hand, relying exclusively on subjective metrics can obscure consistent biases or artifacts. Consequently, a combination of metrics — including user studies, reference-based metrics (PSNR, SSIM, etc.), and distribution-based metrics (FID, etc.) — is typically employed to draw robust conclusions about an inpainting model's performance.
+
+---
+
+## Applications
+
+Inpainting has a variety of practical uses across domains:
+
+1. **Photo retouching and object removal**: Removing unwanted objects (like power lines, blemishes, or photo-bombers) is perhaps the most popular usage. Applications like Adobe Photoshop's "Content-Aware Fill" rely on advanced inpainting to produce seamless results.
+2. **Historical document and artwork restoration**: Classical PDE-based and patch-based inpainting are widely used to restore old paintings or documents that have cracks, stains, or missing pieces. Deep learning methods are beginning to augment or replace these classical techniques.
+3. **Image-based editing**: With user guidance, advanced models like SC-FEGAN or DeepFillv2 can not only remove objects but also fill them with sketches or custom textures. This is especially popular for face editing — for example, removing or redrawing hair, changing eye color, or adding new accessories.
+4. **Medical imaging**: Inpainting can help remove artifacts in MRI or CT scans or fill in missing slices. Researchers have also used it for data anonymization, e.g. removing identifying features from scans, though caution is needed if the inpainting distorts clinically relevant areas.
+5. **Video inpainting**: An extension of image inpainting to videos must consider temporal coherence. PDE-based approaches have been extended to 3D (2D space + time), and deep networks incorporate recurrent or 3D convolutions to fill missing frames in a temporally consistent manner.
+6. **AR/VR content creation**: In augmented or virtual reality, inpainting can be leveraged to fill occluded backgrounds when objects or participants are removed, or to create 360° panoramas with no visible seams.
+
+---
+
+## Challenges and limitations
+
+Despite major advances in generative models, inpainting still faces numerous challenges:
+
+1. **Large missing regions**: As the hole size grows, it becomes increasingly difficult to produce correct global structure. Models must effectively "hallucinate" entire objects or backgrounds.
+2. **Complex, high-frequency textures**: Fine textures like fur, hair, or intricate patterns can be tough to synthesize realistically without repetition or obvious artifacts.
+3. **Semantic ambiguity**: There might be multiple plausible ways to fill a missing region. Single-output models often choose a single guess that may or may not align with the user's desired outcome. More recent work (e.g., *Pluralistic Image Completion*) tries to offer multiple completions.
+4. **Overfitting and domain specificity**: An inpainting model trained primarily on certain scenes (e.g., faces) may produce strange completions when confronted with very different data (e.g., outdoor landscapes).
+5. **User input**: Some advanced methods allow the user to supply sketches or color hints to guide the fill. While this can produce better results, it also requires a specialized user interface and carefully designed network inputs.
+6. **Computational cost**: Large-scale or high-resolution inpainting networks, especially those with multi-stage refinement or large discriminators, require significant GPU resources. For real-time or embedded applications, this can be prohibitive.
+7. **Temporal consistency (video)**: In videos, the inpainted region should remain consistent across frames, an even harder constraint. Many algorithms that work for single images struggle with flickering or shifting artifacts in the temporal domain.
+
+---
+
+## Extended discussion of modern models and references
+
+Before concluding, let's highlight a few state-of-the-art networks that illustrate the progress and the broad design space of inpainting:
+
+- **SC-FEGAN** (Jo and Park, SIGGRAPH Asia 2019): Focuses on face editing with user sketches. A single discriminator takes as input the generated image, mask, and user sketch, enabling flexible modifications such as redrawing parts of a face, changing hair style, etc.
+  
+- **DeepFillv2** (Yu and gang, ECCV 2018): Introduces *gated convolution* for free-form masks, plus an advanced patch-based discriminator (SN-PatchGAN) that adaptively focuses on different image parts. Combines a coarse network and a refinement network for high-quality results.
+
+- **Pluralistic Image Completion** (Zheng and gang, CVPR 2019): Produces multiple plausible completions by modeling the missing region using a learned prior distribution. Users can pick whichever completion best fits their taste, thus addressing the inherent ambiguity in large missing areas.
+
+- **EdgeConnect** (Nazeri and gang, BMVC 2019): Splits inpainting into an edge-generation stage and a content-completion stage. The first network is a generator/discriminator that attempts to predict edges of the missing region; the second then inpaints the image guided by these edges. PatchGAN-based training is used to encourage local realism.
+
+- **Deep Image Prior** (Ulyanov and gang, CVPR 2018): Intriguingly requires no external dataset. It trains a network from scratch on a single image, leveraging the fact that CNN architecture itself imposes sufficient structure to prioritize meaningful image content over noise. This method can be slow for large images, but it is widely cited as an elegant demonstration that the structure of a CNN can serve as a powerful image prior, even without large-scale training data.
+
+---
+
+## Example code snippet
+
+Below is a simplified example in PyTorch of how one might set up a training loop for an inpainting generator network. It is highly abridged and omits many details — for instance, the creation of the network architecture, the discriminator, or the advanced loss terms. Nevertheless, it offers a glance at the typical flow:
+
+<Code text={`
+import torch
+import torch.nn as nn
+import torch.optim as optim
+
+# Suppose we have a generator network g_model, 
+# a discriminator d_model, and a dataset of (image, mask) pairs.
+
+g_optimizer = optim.Adam(g_model.parameters(), lr=1e-4, betas=(0.5, 0.999))
+d_optimizer = optim.Adam(d_model.parameters(), lr=4e-4, betas=(0.5, 0.999))
+
+criterion_adv = nn.BCEWithLogitsLoss()
+criterion_l1 = nn.L1Loss()
+
+for epoch in range(num_epochs):
+    for images, masks in dataloader:
+        # images: [batch_size, 3, H, W]
+        # masks:  [batch_size, 1, H, W] (1 means masked, 0 means valid)
+        
+        images = images.to(device)
+        masks = masks.to(device)
+        
+        # Create input by combining the masked region.
+        # For instance, we can zero out the masked region in images.
+        input_with_holes = images * (1 - masks)
+        
+        # === Train Generator ===
+        g_optimizer.zero_grad()
+        generated = g_model(input_with_holes, masks)  
+        # Typically, the generator might condition on both the partial image and the mask.
+        
+        # Compute some adversarial loss
+        pred_fake = d_model(generated, masks)
+        adv_loss = criterion_adv(pred_fake, torch.ones_like(pred_fake))
+        
+        # Compute L1 reconstruction loss (only on masked area)
+        l1_loss = criterion_l1(generated * masks, images * masks)
+        
+        g_loss = adv_loss + lambda_l1 * l1_loss
+        g_loss.backward()
+        g_optimizer.step()
+        
+        # === Train Discriminator ===
+        d_optimizer.zero_grad()
+        # Real images
+        pred_real = d_model(images, masks)
+        d_loss_real = criterion_adv(pred_real, torch.ones_like(pred_real))
+        
+        # Fake images
+        pred_fake_d = d_model(generated.detach(), masks)
+        d_loss_fake = criterion_adv(pred_fake_d, torch.zeros_like(pred_fake_d))
+        
+        d_loss = (d_loss_real + d_loss_fake) / 2
+        d_loss.backward()
+        d_optimizer.step()
+        
+    print(f"Epoch [{epoch}/{num_epochs}] -- G_loss: {g_loss.item():.4f}, D_loss: {d_loss.item():.4f}")
+`}/>
+
+Of course, real inpainting code is more sophisticated, typically including perceptual losses, style losses, or partial/gated convolutions. Additionally, it's common to adopt multi-scale discriminators or incorporate advanced normalization layers to stabilize training. Nonetheless, the principle remains: the generator tries to fill the masked regions in a visually realistic manner, and the discriminator tries to discriminate between real and generated images.
+
+---
+
+## Final thoughts
+
+Image inpainting stands at the crossroads between classical computer vision (with PDE-based and variational methods) and modern deep learning (with CNN- or GAN-based generative models). The new wave of deep networks has drastically improved both the speed and quality of inpainting, going from strictly texture-based completions to generating entire plausible objects that respect global context and semantics. Nevertheless, inpainting remains an active research area, with ongoing investigations into:
+
+- **Handling extremely large or irregular holes**
+- **Modeling multi-modal or uncertain completions** (where many reconstructions are equally valid)
+- **Improving user-guided inpainting** with better sketches or color hints
+- **Reducing reliance on large supervised datasets** (e.g., self-supervised or single-image methods)
+- **Extending to video or 3D inpainting** with consistent results over time or across different viewpoints
+
+From a practical perspective, the future of inpainting will likely see more synergy with interactive user interfaces, letting artists, photographers, or general users precisely control how their images are restored or manipulated. Meanwhile, advanced pipelines in medical imaging, historical restoration, and augmented reality will increasingly rely on inpainting solutions that are robust, domain-aware, and computationally efficient.
+
+<Image alt="Inpainting illustration" path="" caption="Conceptual illustration showing a large masked area and the predicted reconstruction." zoom="false" />
+
+The continued refinement of generative methods — including partial convolutions, gated convolutions, attention-based mechanisms, diffusion models, and normalizing flows — promises that the boundary between a missing region and a newly synthesized region will become ever more invisible to the naked eye, pushing us closer to the ultimate goal: truly seamless, semantically accurate image completions.
+
+---
+
+### References and further reading
+
+- Bertalmio, M., Bertozzi, A. L., & Sapiro, G. (2001). "Navier–Stokes, Fluid Dynamics, and Image and Video Inpainting". *CVPR.*  
+- Iizuka, S., Simo-Serra, E., & Ishikawa, H. (2017). "Globally and Locally Consistent Image Completion". *ACM Transactions on Graphics (SIGGRAPH).*  
+- Jo, Y., & Park, J. (2019). "SC-FEGAN: Face Editing Generative Adversarial Network with User's Sketch and Color". *SIGGRAPH Asia.*  
+- Nazeri, K., Ng, E., Joseph, T., Qureshi, F. Z., & Ebrahimi, M. (2019). "EdgeConnect: Generative Image Inpainting with Adversarial Edge Learning". *BMVC.*  
+- Ronneberger, O., Fischer, P., & Brox, T. (2015). "U-Net: Convolutional Networks for Biomedical Image Segmentation". *MICCAI.*  
+- Simonyan, K., & Zisserman, A. (2015). "Very Deep Convolutional Networks for Large-Scale Image Recognition". *ICLR.*  
+- Telea, A. (2004). "An Image Inpainting Technique Based on the Fast Marching Method". *Journal of Graphics Tools.*  
+- Ulyanov, D., Vedaldi, A., & Lempitsky, V. (2018). "Deep Image Prior". *CVPR.*  
+- Yu, J., Lin, Z., Yang, J., Shen, X., Lu, X., & Huang, T. (2018). "Free-Form Image Inpainting with Gated Convolution". *ECCV.*  
+- Zheng, C., Cham, T.-J., & Cai, J. (2019). "Pluralistic Image Completion". *CVPR.*  
+
+<Image alt="EdgeConnect architecture" path="" caption="Illustration of the EdgeConnect approach, which splits boundary prediction and content completion." zoom="false" />
+
+These works, among others presented at top-tier conferences such as NeurIPS, ICCV, CVPR, and ICML, continue to push the frontier of inpainting research. For those looking to dive deeper, I suggest exploring the open-source implementations (many are publicly available on GitHub), experimenting with variations of data augmentation strategies, and testing different combinations of losses to see how each model behaves for your specific domain.
+
+By understanding the deeper theoretical underpinnings (PDE-based or energy minimization) and the advanced neural architectures (GAN-based, partial convolution, multi-stage, or otherwise), you will be well-equipped to tackle real-world inpainting challenges and potentially innovate new solutions that blend classical rigor with the powerful generative modeling capabilities of deep learning.

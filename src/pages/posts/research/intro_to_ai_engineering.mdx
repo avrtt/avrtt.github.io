@@ -1,0 +1,661 @@
+---
+index: 149
+indexCourse: 155
+indexFavorites:
+title: "Intro to AI engineering"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Intro to AI engineering"
+courseCategoryName: "AI engineering"
+desc: "Please be gentle"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "14.02.2025"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 2
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: false
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/introduction_to_artificial_intelligence_engineering.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/intro_to_ai_engineering"
+slug: "/research/intro_to_ai_engineering"
+---
+
+import Tooltip from "../../../components/Tooltip"
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+AI Engineering is the process of designing and implementing AI systems using pre-trained models and existing AI tools to solve practical problems. AI Engineers focus on applying AI in real-world scenarios, improving user experiences, and automating tasks, without developing new models from scratch. They work to ensure AI systems are efficient, scalable, and can be seamlessly integrated into business applications, distinguishing their role from AI Researchers and ML Engineers, who concentrate more on creating new models or advancing AI theory.
+
+About AI engineering
+AI engineer vs ML engineer / data scientist / AI researcher
+An AI Engineer uses pre-trained models and existing AI tools to improve user experiences. They focus on applying AI in practical ways, without building models from scratch. This is different from AI Researchers and ML Engineers, who focus more on creating new models or developing AI theory.
+AI engineering transforms product development by automating tasks, enhancing data-driven decision-making, and enabling the creation of smarter, more personalized products. It speeds up design cycles, optimizes processes, and allows for predictive maintenance, quality control, and efficient resource management. By integrating AI, companies can innovate faster, reduce costs, and improve user experiences, giving them a competitive edge in the market.
+AI Engineers are responsible for designing, developing, and deploying AI systems that solve real-world problems. Their roles include building machine learning models, implementing data processing pipelines, and integrating AI solutions into existing software or platforms. They work on tasks like data collection, cleaning, and labeling, as well as model training, testing, and optimization to ensure high performance and accuracy. AI Engineers also focus on scaling models for production use, monitoring their performance, and troubleshooting issues. Additionally, they collaborate with data scientists, software developers, and other stakeholders to align AI projects with business goals, ensuring that solutions are reliable, efficient, and ethically sound.
+
+Common terminology: AI vs AGI vs ASI, LLMs, inference, training, embeddings, vector databases, AI agents, RAG, prompt engineering, and many more
+
+# Pre-trained models
+Pre-trained models are Machine Learning (ML) models that have been previously trained on a large dataset to solve a specific task or set of tasks. These models learn patterns, features, and representations from the training data, which can then be fine-tuned or adapted for other related tasks. Pre-training provides a good starting point, reducing the amount of data and computation required to train a new model from scratch.
+
+https://www.sciencedirect.com/science/article/pii/S2666651021000231
+
+Using pre-trained models
+
+Benefits of Pre-trained Models
+Pre-trained models offer several benefits in AI engineering by significantly reducing development time and computational resources because these models are trained on large datasets and can be fine-tuned for specific tasks, which enables quicker deployment and better performance with less data. They help overcome the challenge of needing vast amounts of labeled data and computational power for training from scratch. Additionally, pre-trained models often demonstrate improved accuracy, generalization, and robustness across different tasks, making them ideal for applications in natural language processing, computer vision, and other AI domains.
+
+Limitations and Considerations
+Pre-trained models, while powerful, come with several limitations and considerations. They may carry biases present in the training data, leading to unintended or discriminatory outcomes, these models are also typically trained on general data, so they might not perform well on niche or domain-specific tasks without further fine-tuning. Another concern is the "black-box" nature of many pre-trained models, which can make their decision-making processes hard to interpret and explain.
+
+OpenAI models
+OpenAI provides a variety of models designed for diverse tasks. GPT models like GPT-3 and GPT-4 handle text generation, conversation, and translation, offering context-aware responses, while Codex specializes in generating and debugging code across multiple languages. DALL-E creates images from text descriptions, supporting applications in design and content creation, and Whisper is a speech recognition model that converts spoken language to text for transcription and voice-to-text tasks.
+
+Capabilities / Context Length
+A key aspect of the OpenAI models is their context length, which refers to the amount of input text the model can process at once. Earlier models like GPT-3 had a context length of up to 4,096 tokens (words or word pieces), while more recent models like GPT-4 can handle significantly larger context lengths, some supporting up to 32,768 tokens. This extended context length enables the models to handle more complex tasks, such as maintaining long conversations or processing lengthy documents, which enhances their utility in real-world applications like legal document analysis or code generation.
+
+https://platform.openai.com/docs/guides/text-generation/managing-context-for-text-generation
+
+Cut-off Dates / Knowledge
+OpenAI models, such as GPT-3.5 and GPT-4, have a knowledge cutoff date, which refers to the last point in time when the model was trained on data. For instance, as of the current version of GPT-4, the knowledge cutoff is October 2023. This means the model does not have awareness or knowledge of events, advancements, or data that occurred after that date. Consequently, the model may lack information on more recent developments, research, or real-time events unless explicitly updated in future versions. This limitation is important to consider when using the models for time-sensitive tasks or inquiries involving recent knowledge.
+
+https://computercity.com/artificial-intelligence/knowledge-cutoff-dates-llms
+https://otterly.ai/blog/knowledge-cutoff/
+
+Popular AI models
+
+Anthropic's Claude is an AI language model designed to facilitate safe and scalable AI systems. Named after Claude Shannon, the father of information theory, Claude focuses on responsible AI use, emphasizing safety, alignment with human intentions, and minimizing harmful outputs. Built as a competitor to models like OpenAI's GPT, Claude is designed to handle natural language tasks such as generating text, answering questions, and supporting conversations, with a strong focus on aligning AI behavior with user goals while maintaining transparency and avoiding harmful biases.
+
+Google Gemini is an advanced AI model by Google DeepMind, designed to integrate natural language processing with multimodal capabilities, enabling it to understand and generate not just text but also images, videos, and other data types. It combines generative AI with reasoning skills, making it effective for complex tasks requiring logical analysis and contextual understanding. Built on Google's extensive knowledge base and infrastructure, Gemini aims to offer high accuracy, efficiency, and safety, positioning it as a competitor to models like OpenAI's GPT-4.
+
+Azure AI is a suite of AI services and tools provided by Microsoft through its Azure cloud platform. It includes pre-built AI models for natural language processing, computer vision, and speech, as well as tools for developing custom machine learning models using services like Azure Machine Learning. Azure AI enables developers to integrate AI capabilities into applications with APIs for tasks like sentiment analysis, image recognition, and language translation. It also supports responsible AI development with features for model monitoring, explainability, and fairness, aiming to make AI accessible, scalable, and secure across industries.
+
+AWS SageMaker is a fully managed machine learning service from Amazon Web Services that enables developers and data scientists to build, train, and deploy machine learning models at scale. It provides an integrated development environment, simplifying the entire ML workflow, from data preparation and model development to training, tuning, and inference. SageMaker supports popular ML frameworks like TensorFlow, PyTorch, and Scikit-learn, and offers features like automated model tuning, model monitoring, and one-click deployment. It's designed to make machine learning more accessible and scalable, even for large enterprise applications.
+
+Hugging Face models are a collection of pre-trained machine learning models available through the Hugging Face platform, covering a wide range of tasks like natural language processing, computer vision, and audio processing. The platform includes models for tasks such as text classification, translation, summarization, question answering, and more, with popular models like BERT, GPT, T5, and CLIP. Hugging Face provides easy-to-use tools and APIs that allow developers to access, fine-tune, and deploy these models, fostering a collaborative community where users can share, modify, and contribute models to improve AI research and application development.
+
+Mistral AI is a company focused on developing open-weight, large language models (LLMs) to provide high-performance AI solutions. Mistral aims to create models that are both efficient and versatile, making them suitable for a wide range of natural language processing tasks, including text generation, translation, and summarization. By releasing open-weight models, Mistral promotes transparency and accessibility, allowing developers to customize and deploy AI solutions more flexibly compared to proprietary models.
+
+Cohere is an AI platform that specializes in natural language processing (NLP) by providing large language models designed to help developers build and deploy text-based applications. Cohere's models are used for tasks such as text classification, language generation, semantic search, and sentiment analysis. Unlike some other providers, Cohere emphasizes simplicity and scalability, offering an easy-to-use API that allows developers to fine-tune models on custom data for specific use cases. Additionally, Cohere provides robust multilingual support and focuses on ensuring that its NLP solutions are both accessible and enterprise-ready, catering to a wide range of industries.
+
+Replicate is a platform that allows developers to run machine learning models in the cloud without needing to manage infrastructure. It provides a simple API for deploying and scaling models, making it easy to integrate AI capabilities like image generation, text processing, and more into applications. Users can select from a library of pre-trained models or deploy their own, with the platform handling tasks like scaling, monitoring, and versioning.
+
+OpenAI Embedding Models
+OpenAI's embedding models convert text into dense vector representations that capture semantic meaning, allowing for efficient similarity searches, clustering, and recommendations. These models are commonly used for tasks like semantic search, where similar phrases are mapped to nearby points in a vector space, and for building recommendation systems by comparing embeddings to find related content. OpenAI's embedding models offer versatility, supporting a range of applications from document retrieval to content classification, and can be easily integrated through the OpenAI API for scalable and efficient deployment.
+
+# OpenAI API
+The OpenAI API provides access to powerful AI models like GPT, Codex, DALL-E, and Whisper, enabling developers to integrate capabilities such as text generation, code assistance, image creation, and speech recognition into their applications via a simple, scalable interface.
+
+Chat Completions API
+The OpenAI Chat Completions API is a powerful interface that allows developers to integrate conversational AI into applications by utilizing models like GPT-3.5 and GPT-4. It is designed to manage multi-turn conversations, keeping context across interactions, making it ideal for chatbots, virtual assistants, and interactive AI systems. With the API, users can structure conversations by providing messages in a specific format, where each message has a role (e.g., "system" to guide the model, "user" for input, and "assistant" for responses).
+
+Writing Prompts
+Prompts for the OpenAI API are carefully crafted inputs designed to guide the language model in generating specific, high-quality content. These prompts can be used to direct the model to create stories, articles, dialogue, or even detailed responses on particular topics. Effective prompts set clear expectations by providing context, specifying the format, or including examples, such as "Write a short sci-fi story about a future where humans can communicate with animals," or "Generate a detailed summary of the key benefits of using renewable energy." Well-designed prompts help ensure that the API produces coherent, relevant, and creative outputs, making it easier to achieve desired results across various applications.
+
+Managing tokens
+
+Maximum Tokens
+The OpenAI API has different maximum token limits depending on the model being used. For instance, GPT-3 has a limit of 4,096 tokens, while GPT-4 can support larger inputs, with some versions allowing up to 8,192 tokens, and extended versions reaching up to 32,768 tokens. Tokens include both the input text and the generated output, so longer inputs mean less space for responses. Managing token limits is crucial to ensure the model can handle the entire input and still generate a complete response, especially for tasks involving lengthy documents or multi-turn conversations.
+
+Token Counting
+Token counting refers to tracking the number of tokens processed during interactions with language models, including both input and output text. Tokens are units of text that can be as short as a single character or as long as a word, and models like GPT process text by splitting it into these tokens. Knowing how many tokens are used is crucial because the API has token limits (e.g., 4,096 for GPT-3 and up to 32,768 for some versions of GPT-4), and costs are typically calculated based on the total number of tokens processed.
+
+Pricing Considerations
+When using the OpenAI API, pricing considerations depend on factors like the model type, usage volume, and specific features utilized. Different models, such as GPT-3.5, GPT-4, or DALL-E, have varying cost structures based on the complexity of the model and the number of tokens processed (inputs and outputs). For cost efficiency, you should optimize prompt design, monitor usage, and consider rate limits or volume discounts offered by OpenAI for high usage.
+
+OpenAI Playground
+The OpenAI Playground is an interactive web interface that allows users to experiment with OpenAI's language models, such as GPT-3 and GPT-4, without needing to write code. It provides a user-friendly environment where you can input prompts, adjust parameters like temperature and token limits, and see how the models generate responses in real-time. The Playground helps users test different use cases, from text generation to question answering, and refine prompts for better outputs. It's a valuable tool for exploring the capabilities of OpenAI models, prototyping ideas, and understanding how the models behave before integrating them into applications.
+
+OpenAI API fine-tuning
+Fine-tuning the OpenAI API involves adapting pre-trained models, such as GPT, to specific use cases by training them on custom datasets. This process allows you to refine the model's behavior and improve its performance on specialized tasks, like generating domain-specific text or following particular patterns. By providing labeled examples of the desired input-output pairs, you guide the model to better understand and predict the appropriate responses for your use case.
+
+OpenAI Assistant API
+The OpenAI Assistant API enables developers to create advanced conversational systems using models like GPT-4. It supports multi-turn conversations, allowing the AI to maintain context across exchanges, which is ideal for chatbots, virtual assistants, and interactive applications. Developers can customize interactions by defining roles, such as system, user, and assistant, to guide the assistant's behavior. With features like temperature control, token limits, and stop sequences, the API offers flexibility to ensure responses are relevant, safe, and tailored to specific use cases.
+
+OpenAI Embeddings API
+The OpenAI Embeddings API allows developers to generate dense vector representations of text, which capture semantic meaning and relationships. These embeddings can be used for various tasks, such as semantic search, recommendation systems, and clustering, by enabling the comparison of text based on similarity in vector space. The API supports easy integration and scalability, making it possible to handle large datasets and perform tasks like finding similar documents, organizing content, or building recommendation engines. Learn more from the following resources:
+
+Deep dive into prompt engineering (will be covered in next posts)
+
+# AI safety
+
+Prompt Injection Attacks
+Prompt injection attacks are a type of security vulnerability where malicious inputs are crafted to manipulate or exploit AI models, like language models, to produce unintended or harmful outputs. These attacks involve injecting deceptive or adversarial content into the prompt to bypass filters, extract confidential information, or make the model respond in ways it shouldn't. For instance, a prompt injection could trick a model into revealing sensitive data or generating inappropriate responses by altering its expected behavior.
+
+https://www.promptingguide.ai/prompts/adversarial-prompting/prompt-injection
+https://www.wiz.io/academy/prompt-injection-attack
+
+Security and Privacy Concerns
+Security and privacy concerns in AI revolve around the protection of data and the responsible use of models. Key issues include ensuring that sensitive data, such as personal information, is handled securely during collection, processing, and storage, to prevent unauthorized access and breaches. AI models can also inadvertently expose sensitive data if not properly designed, leading to privacy risks through data leakage or misuse. Additionally, there are concerns about model bias, data misuse, and ensuring transparency in how AI decisions are made.
+
+Bias and Faireness
+Bias and fairness in AI refer to the challenges of ensuring that machine learning models do not produce discriminatory or skewed outcomes. Bias can arise from imbalanced training data, flawed assumptions, or biased algorithms, leading to unfair treatment of certain groups based on race, gender, or other factors. Fairness aims to address these issues by developing techniques to detect, mitigate, and prevent biases in AI systems. Ensuring fairness involves improving data diversity, applying fairness constraints during model training, and continuously monitoring models in production to avoid unintended consequences, promoting ethical and equitable AI use.
+
+Understanding AI safety issues and safety best practices
+
+OpenAI Moderation API
+The OpenAI Moderation API helps detect and filter harmful content by analyzing text for issues like hate speech, violence, self-harm, and adult content. It uses machine learning models to identify inappropriate or unsafe language, allowing developers to create safer online environments and maintain community guidelines. The API is designed to be integrated into applications, websites, and platforms, providing real-time content moderation to reduce the spread of harmful or offensive material.
+
+Adding end-user IDs in prompts
+Sending end-user IDs in your requests can be a useful tool to help OpenAI monitor and detect abuse. This allows OpenAI to provide your team with more actionable feedback in the event that we detect any policy violations in your application.
+
+Conducting adversarial testing
+Adversarial testing involves intentionally exposing machine learning models to deceptive, perturbed, or carefully crafted inputs to evaluate their robustness and identify vulnerabilities. The goal is to simulate potential attacks or edge cases where the model might fail, such as subtle manipulations in images, text, or data that cause the model to misclassify or produce incorrect outputs. This type of testing helps to improve model resilience, particularly in sensitive applications like cybersecurity, autonomous systems, and finance.
+
+Robust prompt engineering
+Robust prompt engineering involves carefully crafting inputs to guide AI models toward producing accurate, relevant, and reliable outputs. It focuses on minimizing ambiguity and maximizing clarity by providing specific instructions, examples, or structured formats. Effective prompts anticipate potential issues, such as misinterpretation or inappropriate responses, and address them through testing and refinement. This approach enhances the consistency and quality of the model's behavior, making it especially useful for complex tasks like multi-step reasoning, content generation, and interactive systems.
+
+Know your Customers / Usecases
+To know your customer means deeply understanding the needs, behaviors, and expectations of your target users. This ensures the tools you create are tailored precisely for their intended purpose, while also being designed to prevent misuse or unintended applications. By clearly defining the tool's functionality and boundaries, you can align its features with the users' goals while incorporating safeguards that limit its use in contexts it wasn't designed for. This approach enhances both the tool's effectiveness and safety, reducing the risk of improper use.
+
+Constraining outputs and inputs
+Constraining outputs and inputs in AI models refers to implementing limits or rules that guide both the data the model processes (inputs) and the results it generates (outputs). Input constraints ensure that only valid, clean, and well-formed data enters the model, which helps to reduce errors and improve performance. This can include setting data type restrictions, value ranges, or specific formats. Output constraints, on the other hand, ensure that the model produces appropriate, safe, and relevant results, often by limiting output length, specifying answer formats, or applying filters to avoid harmful or biased responses. These constraints are crucial for improving model safety, alignment, and utility in practical applications.
+
+# Open source AI
+Open-source AI refers to AI models, tools, and frameworks that are freely available for anyone to use, modify, and distribute. Examples include TensorFlow, PyTorch, and models like BERT and Stable Diffusion. Open-source AI fosters transparency, collaboration, and innovation by allowing developers to inspect code, adapt models for specific needs, and contribute improvements. This approach accelerates the development of AI technologies, enabling faster experimentation and reducing dependency on proprietary solutions.
+
+Popular Open Source Models
+Hugging Face, Ollama
+Finding open source models and using them
+
+Hugging Face supports text classification, named entity recognition, question answering, summarization, and translation. It also extends to multimodal tasks that involve both text and images, such as visual question answering (VQA) and image-text matching. Each task is done by various pre-trained models that can be easily accessed and fine-tuned through the Hugging Face library.
+
+The Hugging Face Hub is a comprehensive platform that hosts over 900,000 machine learning models, 200,000 datasets, and 300,000 demo applications, facilitating collaboration and sharing within the AI community. It serves as a central repository where users can discover, upload, and experiment with various models and datasets across multiple domains, including natural language processing, computer vision, and audio tasks. It also supports version control.
+
+Inference SDK
+The Hugging Face Inference SDK is a powerful tool that allows developers to easily integrate and run inference on large language models hosted on the Hugging Face Hub. By using the `InferenceClient`, users can make API calls to various models for tasks such as text generation, image creation, and more. The SDK supports both synchronous and asynchronous operations thus compatible with existing workflows.
+
+Transformers.js
+Transformers.js is a JavaScript library that enables transformer models, like those from Hugging Face, to run directly in the browser or Node.js, without needing cloud services. It supports tasks such as text generation, sentiment analysis, and translation within web apps or server-side scripts. Using WebAssembly (Wasm) and efficient JavaScript, Transformers.js offers powerful NLP capabilities with low latency, enhanced privacy, and offline functionality, making it ideal for real-time, interactive applications where local processing is essential for performance and security.
+
+Ollama
+Ollama is a platform that offers large language models (LLMs) designed to run locally on personal devices, enabling AI functionality without relying on cloud services. It focuses on privacy, performance, and ease of use by allowing users to deploy models directly on laptops, desktops, or edge devices, providing fast, offline AI capabilities. With tools like the Ollama SDK, developers can integrate these models into their applications for tasks such as text generation, summarization, and more, benefiting from reduced latency, greater data control, and seamless local processing.
+
+Ollama provides a collection of large language models (LLMs) designed to run locally on personal devices, enabling privacy-focused and efficient AI applications without relying on cloud services. These models can perform tasks like text generation, translation, summarization, and question answering, similar to popular models like GPT. Ollama emphasizes ease of use, offering models that are optimized for lower resource consumption, making it possible to deploy AI capabilities directly on laptops or edge devices.
+
+The Ollama SDK is a community-driven tool that allows developers to integrate and run large language models (LLMs) locally through a simple API. Enabling users to easily import the Ollama provider and create customized instances for various models, such as Llama 2 and Mistral. The SDK supports functionalities like `text generation` and `embeddings`, making it versatile for applications ranging from `chatbots` to `content generation`. Also Ollama SDK enhances privacy and control over data while offering seamless integration with existing workflows.
+
+Open-Source Embeddings
+Open-source embeddings are pre-trained vector representations of data, usually text, that are freely available for use and modification. These embeddings capture semantic meanings, making them useful for tasks like semantic search, text classification, and clustering. Examples include Word2Vec, GloVe, and FastText, which represent words as vectors based on their context in large corpora, and more advanced models like Sentence-BERT and CLIP that provide embeddings for sentences and images. Open-source embeddings allow developers to leverage pre-trained models without starting from scratch, enabling faster development and experimentation in natural language processing and other AI applications.
+
+# Multimodal AI
+Multimodal AI is an approach that combines and processes data from multiple sources, such as text, images, audio, and video, to understand and generate responses. By integrating different data types, it enables more comprehensive and accurate AI systems, allowing for tasks like visual question answering, interactive virtual assistants, and enhanced content understanding. This capability helps create richer, more context-aware applications that can analyze and respond to complex, real-world scenarios.
+
+OpenAI Vision API
+The OpenAI Vision API enables models to analyze and understand images, allowing them to identify objects, recognize text, and interpret visual content. It integrates image processing with natural language capabilities, enabling tasks like visual question answering, image captioning, and extracting information from photos. This API can be used for applications in accessibility, content moderation, and automation, providing a seamless way to combine visual understanding with text-based interactions.
+
+DALL-E API
+The DALL-E API is a tool provided by OpenAI that allows developers to integrate the DALL-E image generation model into applications. DALL-E is an AI model designed to generate images from textual descriptions, capable of producing highly detailed and creative visuals. The API enables users to provide a descriptive prompt, and the model generates corresponding images, opening up possibilities in fields like design, advertising, content creation, and art.
+
+Whisper API
+The Whisper API by OpenAI enables developers to integrate speech-to-text capabilities into their applications. It uses OpenAI's Whisper model, a powerful speech recognition system, to convert spoken language into accurate, readable text. The API supports multiple languages and can handle various accents, making it ideal for tasks like transcription, voice commands, and automated captions. With the ability to process audio in real time or from pre-recorded files, the Whisper API simplifies adding robust speech recognition features to applications, enhancing accessibility and enabling new interactive experiences.
+
+Multimodal Hugging Face Models
+Hugging Face models are a collection of pre-trained machine learning models available through the Hugging Face platform, covering a wide range of tasks like natural language processing, computer vision, and audio processing. The platform includes models for tasks such as text classification, translation, summarization, question answering, and more, with popular models like BERT, GPT, T5, and CLIP. Hugging Face provides easy-to-use tools and APIs that allow developers to access, fine-tune, and deploy these models, fostering a collaborative community where users can share, modify, and contribute models to improve AI research and application development.
+
+LangChain for Multimodal Apps
+LangChain is a framework designed to build applications that integrate multiple AI models, especially those focusing on language understanding, generation, and multimodal capabilities. For multimodal apps, LangChain facilitates seamless interaction between text, image, and even audio models, enabling developers to create complex workflows that can process and analyze different types of data.
+
+LlamaIndex for Multi-modal Apps
+LlamaIndex enables multi-modal apps by linking language models (LLMs) to diverse data sources, including text and images. It indexes and retrieves information across formats, allowing LLMs to process and integrate data from multiple modalities. This supports applications like visual question answering, content summarization, and interactive systems by providing structured, context-aware inputs from various content types.
+
+# Tools
+AI has given rise to a collection of AI powered development tools of various different varieties. We have IDEs like Cursor that has AI baked into it, live context capturing tools such as Pieces and a variety of brower based tools like V0, Claude and more.
+Code completion tools are AI-powered development assistants designed to enhance productivity by automatically suggesting code snippets, functions, and entire blocks of code as developers type. These tools, such as GitHub Copilot and Tabnine, leverage machine learning models trained on vast code repositories to predict and generate contextually relevant code. They help reduce repetitive coding tasks, minimize errors, and accelerate the development process by offering real-time, intelligent suggestions.
+AI code editors are development tools that leverage artificial intelligence to assist software developers in writing, debugging, and optimizing code. These editors go beyond traditional syntax highlighting and code completion by incorporating machine learning models, natural language processing, and data analysis to understand code context, generate suggestions, and even automate portions of the software development process.
+
+# Knowledge to revisit
+Before diving deep into AI engineering, you should revisit some knowledge from past tutorials, especially: 
+- NLP fundamentals & theory behind LLMs; embeddings and its use cases
+- sentence transformers
+- AI theory series
+- AI agents (theory, usecases)
+- RAG
+- vector databases
+- adversarial ML
+- multimodal models (usecases, tasks)
+
+# What's next
+We're diving into LLM engineering first. We're gonna learn how to run LLMs, how to use RAG for LLMs, how to optimize LLM inference and how to deploy LLMs. Next, we're going to explore prompt engineering.
+
+*/}
+
+
+{/*
+
+1. Introduction  
+- Define AI Engineering as the application of pre-trained models to solve real-world problems, emphasizing integration over model creation.  
+- Contrast AI Engineers with ML Engineers (model builders) and AI Researchers (theory-focused), highlighting roles in deployment vs. innovation.  
+- Explore AI Engineering's impact: automating tasks, enhancing user personalization, and enabling predictive maintenance for business efficiency.  
+- Outline core responsibilities: model fine-tuning, data pipeline development, and cross-functional collaboration for scalable solutions.  
+2. Pre-trained Models: Benefits, Limitations, and Applications  
+- Define pre-trained models as AI systems trained on broad datasets, adaptable via fine-tuning for niche tasks like medical imaging or legal analysis.  
+- Benefits: Reduced data requirements, faster deployment, and improved generalization across languages or industries.  
+- Limitations: Inherited biases from training data, lack of domain-specific expertise, and opacity in decision-making processes.  
+- Highlight models like GPT-4 (text), DALL-E (images), and Whisper (speech), with use cases in content generation and process automation.  
+3. The OpenAI Ecosystem: APIs and Customization  
+- Detail OpenAI's model suite: GPT-4 for text, Codex for code, and Embeddings for semantic analysis.  
+- Chat Completions API: Structure multi-turn conversations with system/user/assistant roles for chatbots and virtual assistants.  
+- Fine-tuning: Adapt models to specialized domains (e.g., legal jargon or medical diagnostics) using custom datasets.  
+- Embeddings API: Convert text to vectors for search, recommendations, and clustering using cosine similarity.  
+- Discuss token limits (e.g., GPT-4's 32k context) and pricing trade-offs between model accuracy and operational costs.  
+4. AI Safety: Mitigating Risks in Real-World Deployments  
+- Prompt injection: Defend against adversarial inputs manipulating model outputs via input sanitization and output validation.  
+- Bias mitigation: Audit training data for representation gaps and apply fairness-aware algorithms in credit scoring or hiring tools.  
+- Moderation API: Automatically filter harmful content in social platforms or user-generated apps.  
+- Privacy safeguards: Anonymize user data in prompts and avoid logging sensitive information (e.g., healthcare records).  
+5. Open-Source AI: Tools and Collaborative Innovation  
+- Hugging Face Hub: Access 900k+ models (e.g., BERT, Stable Diffusion) for NLP, vision, and audio tasks via Transformers.js or Inference SDK.  
+- Ollama: Deploy local LLMs (e.g., Llama 2) for offline, privacy-first apps like confidential document analysis.  
+- Open-source embeddings: Use Sentence-BERT for multilingual search or CLIP for image-text alignment in e-commerce.  
+- Community contributions: Fine-tune and share models (e.g., healthcare-specific BERT) on public repositories.  
+6. Multimodal AI: Bridging Text, Images, and Speech  
+- OpenAI Vision API: Analyze product images for defect detection or generate alt-text for accessibility compliance.  
+- DALL-E API: Create marketing visuals from text briefs or prototype UI designs via iterative prompting.  
+- Whisper API: Transcribe multilingual customer support calls for sentiment analysis and trend reporting.  
+- LangChain: Chain GPT-4 with image classifiers for medical report generation from X-rays and doctor notes.  
+7. AI Development Tools: Accelerating Workflows  
+- GitHub Copilot: Generate boilerplate code and suggest context-aware functions in Python or JavaScript.  
+- Cursor IDE: Debug errors using AI-driven explanations and refactor code via natural language commands.  
+- Replicate: Deploy fine-tuned models as scalable APIs with built-in versioning and monitoring.  
+- Pieces: Capture and reuse code snippets with AI-generated metadata for team knowledge sharing.  
+8. Concepts
+9. Optimization and Deployment Strategies  
+- Token efficiency: Truncate redundant text, use embeddings for context compression, and cache frequent queries.  
+- Cost control: Balance GPT-3.5 (low cost) and GPT-4 (high accuracy) based on task criticality.  
+- Scalability: Containerize models with Docker, deploy on Kubernetes, and monitor latency via Prometheus.  
+- A/B testing: Compare model versions on accuracy, user engagement, and business KPIs before full rollout.  
+
+*/}
+
+
+Artificial intelligence has emerged as a driving force behind myriad transformative applications, from interactive chatbots that provide health advice to cutting-edge recommendation systems that adapt to changing user preferences. As organizations across industries embrace AI to optimize processes and unlock new business value, the strategic deployment of these intelligent systems has become a top priority. In this realm, the role of <Highlight>AI engineering</Highlight> has gained special significance.
+
+Unlike AI researchers and ML engineers who create novel algorithms and investigate theoretical frontiers, AI engineers focus on the practical aspects of applying these breakthroughs to solve real-world challenges. They deploy and integrate pre-trained models, configure pipelines, ensure production-level robustness, maintain system performance over time, and collaborate with cross-functional teams to design solutions that can handle the complexities of real-world data. AI engineering is very much about using existing and proven AI assets — particularly large pre-trained models — and molding them into powerful applications that bring direct value to business and society.
+
+In this article, I define what AI engineering entails and illustrate how it differs from ML engineering and AI research. I then explore the growing impact of AI engineering across diverse domains — from automating repetitive tasks to delivering personalized user experiences. Next, I outline the broad responsibilities of AI engineers, which include data pipeline development, infrastructure design, model fine-tuning, and system deployment at scale. Throughout the discussion, I highlight both the opportunities and pitfalls, touching on the importance of robust safety measures, careful management of biases, and the critical significance of cross-functional collaboration.
+
+By the end, you will have a comprehensive understanding of the essential skill set and knowledge base for AI engineering, the core challenges you might encounter, and the advanced techniques — from leveraging open-source models to building multimodal AI applications — that power many of the most innovative use cases today.
+
+---
+
+## Pre-trained models: benefits, limitations, and applications
+
+Pre-trained models are at the heart of AI engineering. Rather than training an AI system from scratch using massive datasets (a resource- and time-intensive task), AI engineers can leverage models that have already learned general-purpose representations from large corpora. By <Tooltip text="The process of tuning the model's parameters on a specialized dataset to adapt it to a particular domain."/>fine-tuning these models for a targeted application or domain, organizations can achieve powerful results with a fraction of the effort.
+
+### Pre-trained models in context
+
+A <Highlight>pre-trained model</Highlight> is typically trained on extensive datasets — for instance, hundreds of gigabytes of text for an NLP model or millions of labeled images for a computer vision model. The model learns to encode fundamental patterns, features, and relationships in that data. Then, to tackle a domain-specific task (e.g., cancer detection from radiography scans, legal text summarization, or credit default prediction), AI engineers can fine-tune the general-purpose model on a much smaller domain-specific dataset. This process exploits the broad knowledge captured by the original pre-training, often reducing both development time and the volume of data needed.
+
+#### Example: BERT for text classification
+
+If you want to create a text classification engine to detect spam emails, you might start with a language model like BERT, which was trained on a massive corpus of English text. You then fine-tune BERT's layers to distinguish spam from non-spam emails using a labeled dataset of your own. Rather than training a deep neural network from scratch, which could require millions of labeled examples, you might only need tens of thousands or even fewer, because the model already "understands" a great deal about language structures, word contexts, and grammar.
+
+### Benefits of pre-trained models
+
+1. **Reduced data requirements**: Traditional supervised machine learning requires large curated datasets. Pre-trained models alleviate this requirement, as they have already digested large amounts of data. This opens doors for organizations with limited labeled data.
+
+2. **Faster deployment**: Training large-scale models from scratch can take days or weeks even on top-tier GPU clusters. By starting from a pre-trained checkpoint, you can drastically reduce training time and get your model into production much sooner.
+
+3. **Improved generalization**: Pre-training on a diverse dataset often confers robust generalization to new data distributions, especially if the downstream domain has at least some resemblance to what the model saw in pre-training.
+
+4. **Access to advanced architectures**: State-of-the-art model designs (e.g., Transformer-based architectures like GPT-4 or T5) can be quite complex. When you rely on pre-trained versions, you can instantly harness cutting-edge AI research without building these architectures from scratch.
+
+### Limitations and considerations
+
+1. **Inherited biases**: Pre-trained models can inherit biases from the data used for pre-training. For instance, if the model is trained on text that reflects certain stereotypes, those biases can carry over into downstream tasks.
+
+2. **Lack of domain specificity**: A model trained for general text understanding may not have direct knowledge of specialized domains, such as chemical patents or historical legal documents. Fine-tuning helps but may not completely overcome certain domain gaps.
+
+3. **Opacity and interpretability challenges**: Deep neural networks, especially large language models or complicated vision architectures, act as black boxes, making it difficult to interpret how they arrive at their predictions.
+
+4. **Maintenance overhead**: Although pre-trained models save time initially, they may still need updates if the domain or the data distribution shifts over time, requiring continuous monitoring and retraining or re-fine-tuning.
+
+### Industry applications
+
+Pre-trained models power many real-world deployments:
+
+- **Text**: GPT-4 for generating and summarizing documents, BERT-based architectures for sentiment analysis and classification.
+- **Images**: DALL-E for generating marketing visuals, pre-trained ResNets or Vision Transformers for defect detection in manufacturing.
+- **Speech**: Whisper for call center transcription, followed by further classification or sentiment analysis of the resulting text.
+
+<Highlight>These models have become the foundation of numerous AI pipelines</Highlight> in various sectors — from e-commerce (product recommendation and personalization) to healthcare (medical image analysis and patient triage).
+
+---
+
+## The OpenAI ecosystem: APIs and customization
+
+OpenAI has made advanced models accessible through straightforward APIs, revolutionizing how developers and organizations adopt state-of-the-art AI capabilities. Here, I outline some of the most relevant OpenAI offerings for AI engineers, including GPT-4, Codex, and the Embeddings API. While OpenAI stands out as a leading commercial provider, the fundamental concepts apply to many other large-language-model ecosystems.
+
+### GPT-4 for text understanding and generation
+
+GPT-4 is a powerful language model capable of producing coherent, context-aware text for tasks ranging from casual conversation to specialized technical writing. It has a large context window (some variants support up to <Highlight>32,768 tokens</Highlight>), which enables it to handle long-form tasks such as summarizing lengthy documents or analyzing multi-turn chat dialogues.
+
+#### Chat completions API
+
+A popular interface to GPT-based models is the <Highlight>Chat Completions API</Highlight>. Instead of sending raw text, you structure your conversation into roles like <Tooltip text="System messages set instructions or context for the entire conversation, user messages contain the user's query, and assistant messages contain the AI's responses."/> system, user, and assistant. This approach is especially handy when creating conversational applications or interactive systems, since the model maintains context across multiple turns. For instance:
+
+<Code text={`
+import openai
+
+openai.api_key = "YOUR_API_KEY"
+
+messages = [
+    {"role": "system", "content": "You are a helpful financial assistant."},
+    {"role": "user", "content": "What are the main steps to apply for a personal loan?"}
+]
+
+response = openai.ChatCompletion.create(
+    model="gpt-4",
+    messages=messages,
+    max_tokens=500
+)
+
+print(response["choices"][0]["message"]["content"])
+`}/>
+
+This approach ensures the conversation remains cohesive. You can keep appending user and assistant messages to maintain state. For advanced use cases, you might store previous messages in a conversation database, especially if you want to handle multi-turn dialogues across sessions or incorporate advanced logic (like responding to user queries in multiple languages).
+
+### Fine-tuning GPT-based models
+
+OpenAI offers <Highlight>fine-tuning</Highlight> capabilities that let you adapt a base model to your specific domain. While GPT-4 has had limited fine-tuning options historically, earlier GPT-3.5 series models have well-documented fine-tuning endpoints. The process entails supplying a curated dataset of (prompt, completion) pairs. For instance, if you want a GPT-based model to speak like a legal assistant, you can compile a dataset of legal questions and sample correct answers, along with the desired style.
+
+<Code text={`
+import openai
+
+# Prepare your data as a JSONL file with lines like:
+# {"prompt": "<question>", "completion": "<answer>"}
+
+openai.api_key = "YOUR_API_KEY"
+openai.FineTune.create(
+    training_file="file-abc123",
+    model="gpt-3.5-turbo"
+)
+`}/>
+
+Once the model is fine-tuned, you can invoke it by specifying your fine-tuned model name. This allows you to create domain-specific variations of GPT models that are more aligned with specialized tasks (e.g., drafting finance reports, discussing legal opinions, or analyzing genomic data).
+
+### Codex for code generation
+
+OpenAI's <Highlight>Codex</Highlight> model is specialized for code-related tasks, supporting dozens of programming languages. It can generate code completions, debug errors, and even comment code snippets with natural language explanations. While GPT-4 also handles code, Codex is often a strong choice for code-centric tasks like building AI-based development assistants or automated testing tools.
+
+### Embeddings API for similarity and clustering
+
+The <Highlight>Embeddings API</Highlight> converts text into high-dimensional vectors that capture semantic meaning. You can use these embeddings for:
+
+- **Semantic search**: Finding documents related to a query based on vector similarity (e.g., cosine similarity).
+- **Clustering**: Grouping semantically similar items (e.g., user feedback, product descriptions).
+- **Recommendation systems**: Matching user interests to relevant content.
+
+<Code text={`
+import openai
+import numpy as np
+
+openai.api_key = "YOUR_API_KEY"
+
+response = openai.Embedding.create(
+    input=["The capital of France is Paris.", "The Earth is round."],
+    model="text-embedding-ada-002"
+)
+
+embeddings = [r["embedding"] for r in response["data"]]
+similarity = np.dot(embeddings[0], embeddings[1]) / (np.linalg.norm(embeddings[0]) * np.linalg.norm(embeddings[1]))
+print("Cosine similarity:", similarity)
+`}/>
+
+These vectors serve as the backbone of more advanced capabilities, such as building your own semantic search engine or powering classification workflows for large-scale text corpora. Tools like <Tooltip text="Vector databases store embeddings in specialized data structures, enabling efficient nearest-neighbor searches and real-time retrieval."/>vector databases commonly integrate these embeddings to achieve lightning-fast similarity queries.
+
+### Token limits and pricing trade-offs
+
+As you design a production application, be aware of <Highlight>token limits</Highlight>. GPT-3.5 models often have a 4k or 16k token context window, while some GPT-4 variants go up to 32k tokens. Longer contexts can handle bigger inputs but also cost more. On top of that, you pay for both input and output tokens. Balancing cost and performance is a critical piece of AI engineering. You might rely on smaller models for cost-sensitive tasks, reserving GPT-4 for tasks that demand higher accuracy and reasoning capacity.
+
+---
+
+## AI safety: mitigating risks in real-world deployments
+
+When AI systems shift from research labs to real-world settings, new considerations emerge. Large language models can produce harmful or biased content, particularly if manipulated by adversarial prompts. They can inadvertently disclose private or sensitive information. AI engineers have a pivotal role in mitigating such risks.
+
+### Prompt injection and adversarial inputs
+
+<Highlight>Prompt injection</Highlight> is a form of adversarial attack where a malicious user deliberately crafts input to trick the model into disclosing sensitive information, producing disallowed content, or deviating from intended guidelines. For instance, an attacker might instruct the model to ignore or override instructions about not revealing proprietary data.
+
+**Mitigation strategies**:
+- Sanitize user inputs before passing them to the model.
+- Create robust prompt structures with system instructions that reduce the risk of accidental override.
+- Use output validation to check if the model's response is suspicious or violates policy.
+
+### Bias mitigation and fairness
+
+Pre-trained models learn from large data corpora that reflect real-world biases around race, gender, or other protected characteristics. Left unaddressed, these biases can lead to discriminatory outcomes, such as systematically lower loan approvals for certain demographic groups.
+
+**Mitigation strategies**:
+- Conduct an audit on the training data to identify potential sources of bias.
+- Consider fine-tuning the model with fairness-aware techniques or more diverse datasets.
+- Implement post-processing filters (e.g., ensuring certain demographic labels are not treated as negative signals).
+
+### Content moderation
+
+When you build systems that generate user-facing text, image, or audio, you must ensure the content is not harmful. OpenAI's <Highlight>Moderation API</Highlight> classifies user-submitted content and can flag or block it if it violates safety guidelines. This can help you moderate content related to harassment, hate speech, or other sensitive categories.
+
+<Code text={`
+import openai
+
+openai.api_key = "YOUR_API_KEY"
+
+response = openai.Moderation.create(
+    input="Some user input that might be offensive."
+)
+
+print(response["results"])
+`}/>
+
+### Privacy safeguards
+
+Many AI applications process user queries that may contain personally identifiable information (PII), sensitive financial data, or health records. When dealing with such data:
+1. **Anonymize user prompts** by removing names and IDs.
+2. **Avoid logging raw prompts** in production databases.
+3. Use end-user identification tags or pseudonyms so you can track usage without storing direct user data.
+
+### Adversarial testing
+
+A critical step is running <Highlight>adversarial tests</Highlight> before deployment. By intentionally probing the model with boundary cases, contradictory instructions, or manipulative inputs, you can detect vulnerabilities. This proactive approach helps ensure your AI application does not expose private data or produce outputs that run counter to your organization's ethical standards.
+
+---
+
+## Open-source AI: tools and collaborative innovation
+
+While commercial providers like OpenAI, Anthropic, and Google deliver advanced APIs, the open-source AI community has exploded with new frameworks, model checkpoints, and collaborative platforms. <Highlight>Open-source AI</Highlight> fosters transparency, fuels innovation, and offers a cost-effective route for organizations seeking complete control over their AI stack.
+
+### Hugging Face Hub
+
+A cornerstone of open-source AI is the <Highlight>Hugging Face Hub</Highlight>, which hosts over 900,000 models spanning various tasks, from NLP classification to vision-based object detection. Whether you need a GPT-like language model, a stable diffusion model for generative art, or specialized BERT variants in obscure languages, chances are you will find something relevant.
+
+- **Transformers.js**: Enables running transformer models in JavaScript environments, including web browsers.
+- **Inference SDK**: A simpler interface to run inference on Hugging Face models hosted on the platform. 
+
+<Code text={`
+# Example using the Hugging Face Inference Endpoint in Python
+
+from huggingface_hub.inference_api import InferenceApi
+
+inference = InferenceApi(repo_id="bert-base-uncased", token="YOUR_HF_TOKEN")
+input_text = "Hello, world!"
+result = inference(inputs=input_text)
+print(result)
+`}/>
+
+Here, you can trivially test or integrate pre-trained models, and if performance or domain specificity is insufficient, you can upload your fine-tuned variations back to the Hub for sharing with the community.
+
+### Ollama for local LLMs
+
+<Highlight>Ollama</Highlight> is a platform focusing on running large language models locally, prioritizing privacy and offline capabilities. This is particularly advantageous for organizations whose compliance requirements forbid sending data to third-party APIs. Ollama optimizes resource usage, making LLM deployment possible even on laptops or edge devices. With the <Highlight>Ollama SDK</Highlight>, you can easily integrate local LLMs into your applications for tasks like on-premise question answering, summarizing confidential documents, or real-time language analysis on a factory floor with limited internet connectivity.
+
+### Open-source embeddings
+
+Open-source embeddings like Word2Vec, GloVe, and more recent <Highlight>Sentence-BERT</Highlight> or <Highlight>CLIP</Highlight> can serve as powerful drop-in alternatives to proprietary services for tasks like semantic search, recommendation, or zero-shot classification. These embeddings are freely available, can be hosted on your own infrastructure, and can be fine-tuned for domain-specific tasks. If you're working with multilingual data or specialized jargon, custom fine-tuning of open-source embeddings can significantly boost performance.
+
+### Community contributions and model repositories
+
+Open-source AI thrives on a culture of collaboration. Not only can you download pre-trained weights, but you can also contribute your improvements:
+
+- **Health care–specific BERT**: Fine-tune BERT on medical notes for more accurate symptom analysis, then share it publicly for other health providers.
+- **Special domain customizations**: For example, a BERT that excels in analyzing financial regulatory texts, or a GPT-2 that has been retrained on tens of thousands of legal cases.
+
+This communal approach encourages reproducibility, speeds up progress, and ensures that improvements in model architectures and training recipes disseminate rapidly through the AI community.
+
+---
+
+## Multimodal AI: bridging text, images, and speech
+
+Modern applications do not always involve just text or just images in isolation; many real-world scenarios require <Highlight>multimodal AI</Highlight> that interprets and generates text, vision, or audio data simultaneously. For example, a customer service system might process both spoken queries and product images to troubleshoot a device.
+
+### OpenAI Vision API
+
+Alongside textual models, <Highlight>OpenAI Vision API</Highlight> solutions allow the analysis of images (e.g., detecting defects in manufacturing lines or identifying brand logos in user-generated content). Combined with GPT's language skills, the model can produce textual summaries of what it "sees" in images, enabling advanced tasks like automated alt-text generation for accessibility.
+
+<Image alt="AI analyzing product images" path="" caption="AI vision systems are used to detect defects, identify brand elements, and power accessibility solutions." zoom="false" />
+
+### DALL-E for creative image generation
+
+<Highlight>DALL-E</Highlight> is a generative model that turns textual prompts into images. Marketers and designers can rapidly prototype visuals from textual specifications ("Show me a futuristic living room with neon lighting"), while product teams can use DALL-E to generate mock-ups. This drastically speeds up concept ideation and can even produce user interface sketches for app designs.
+
+### Whisper for speech-to-text
+
+<Highlight>Whisper</Highlight> is OpenAI's speech recognition model that supports multiple languages. It can handle transcriptions for call centers, live captioning for events, or accessibility features in software products. By pairing Whisper with GPT-4, you can create an end-to-end pipeline that ingests user speech, transcribes it, and then processes the text to generate meaningful responses.
+
+### LangChain and LlamaIndex for multimodal workflows
+
+- **LangChain**: A framework that chains multiple AI calls together, enabling you to combine large language models with image classifiers, speech recognition, or other specialized modules. For instance, you can build a medical application that analyzes patient X-rays with a vision model, then calls GPT-4 to produce an integrated textual report for doctors.
+- **LlamaIndex**: Allows you to index heterogeneous data sources (e.g., text and images) and feed relevant segments to a language model for analysis. This helps unify textual and visual data into a single information-retrieval pipeline.
+
+---
+
+## AI development tools: accelerating workflows
+
+<Highlight>AI engineering</Highlight> is not just about picking the right model. It also involves using a variety of development tools that streamline coding, debugging, testing, and collaboration.
+
+### GitHub Copilot
+
+Powered by Codex, <Highlight>GitHub Copilot</Highlight> provides real-time code suggestions as you type in popular editors like Visual Studio Code. It can autocomplete function names, propose entire blocks of code, and reduce repetitive coding chores. While it's not perfect, Copilot speeds up the development cycle by offering a quick starting point for many coding tasks.
+
+### Cursor IDE
+
+<Highlight>Cursor IDE</Highlight> integrates AI-driven debugging and refactoring. By interpreting error messages or code patterns, it can propose fixes in natural language, highlight suspicious code blocks, and even recommend structural improvements. This approach transforms the typical test-debug cycle into a more dynamic, AI-assisted process.
+
+### Replicate for scalable model deployment
+
+<Highlight>Replicate</Highlight> is a platform that simplifies hosting custom models, offering versioning, monitoring, and resource scaling out of the box. Rather than spinning up your own GPU-accelerated servers for each new model, you can push your fine-tuned models to Replicate, which exposes them via an API endpoint. This is particularly useful if you have a suite of smaller specialized models that you want to track over time.
+
+### Pieces for knowledge sharing
+
+<Highlight>Pieces</Highlight> is a snippet manager enhanced with AI capabilities, making it easier to capture, tag, and reuse code across large teams. Its AI-generated metadata classifies code snippets by language, functionality, and context, helping developers quickly retrieve the right snippet to solve a particular problem.
+
+---
+
+## Concepts
+
+In AI engineering, you will often encounter a wide array of specialized terms. While many of these are covered in depth throughout the broader course, here is a quick reference:
+
+- **LLMs** (Large Language Models): Transformer-based neural networks (e.g., GPT-4, PaLM, Claude) pre-trained on extensive textual data.
+- **Inference**: The process of running a trained model to generate predictions or responses.
+- **Training**: The process of optimizing model parameters using data. For AI engineers, this is often limited to fine-tuning rather than training from scratch.
+- **Embeddings**: Numeric vector representations of text (or images, audio) used to measure semantic similarity and support tasks like search or clustering.
+- **Prompt engineering**: The art of crafting instructions to guide a model's output effectively. This can involve carefully chosen words, context structuring, or style constraints.
+- **Vector databases**: Specialized databases (e.g., Pinecone, Milvus) that store embeddings in a way that facilitates nearest-neighbor queries over millions or billions of vectors.
+- **RAG** (<Highlight>Retrieval-Augmented Generation</Highlight>): A technique where external documents or knowledge bases are retrieved at query time and combined with a language model's context to enhance factual accuracy and reduce hallucinations.
+
+---
+
+## Optimization and deployment strategies
+
+Once you have developed and tested your AI solution, the final hurdle is getting it into production reliably. This involves not only shipping the model but also ensuring it maintains performance and user satisfaction under real-world demands.
+
+### Token efficiency and context management
+
+In solutions using large language models, <Highlight>token</Highlight> usage can balloon quickly with lengthy user inputs or multi-turn conversations. Because many vendors bill per token, you must strategize:
+
+1. **Input truncation**: If user messages exceed a certain length, summarize them first.
+2. **Context compression**: Use embeddings to store chat context and only re-inject the most relevant pieces into the prompt.
+3. **Caching frequent queries**: If you repeatedly see the same or similar requests, store previously computed responses to reduce cost and latency.
+
+### Cost control
+
+Balancing cost against performance is an ongoing exercise. High-end models like GPT-4 are more accurate but more expensive. Some tips:
+
+- **Hybrid approach**: Use GPT-3.5 for standard requests and only escalate to GPT-4 for complex tasks (e.g., legal or medical queries).
+- **Batch requests**: Where possible, group multiple similar user queries into a single API call to reduce overhead.
+- **Monitoring usage**: Set up dashboards that track token consumption, enabling quick interventions if usage spikes unexpectedly.
+
+### Scalability and containerization
+
+<Highlight>Scalability</Highlight> is essential when your system might experience thousands of requests per second (RPS). Containerization tools such as Docker and orchestration platforms like Kubernetes help you horizontally scale your AI service. Containerizing your model inference server ensures:
+
+1. **Portability**: You can deploy the same container image on different environments (e.g., cloud, on-premises).
+2. **Isolation**: Resource allocation (CPU, GPU, memory) can be more carefully managed across nodes.
+3. **Rollback**: If a new model version or code update causes production issues, you can quickly revert to a stable container image.
+
+<Image alt="Containerized AI deployment" path="" caption="Docker container images can bundle AI models, libraries, and code, simplifying deployment and version control." zoom="false" />
+
+### Monitoring performance
+
+Once deployed, continuous monitoring is crucial:
+
+- **Latency tracking**: Use a tool like Prometheus to capture response times. If inference latency spikes, you may need more GPU instances or improved network bandwidth.
+- **Model accuracy**: Track a real-time accuracy proxy (e.g., user satisfaction scores, acceptance rates, or a small holdout test set run periodically).
+- **Logging and alerting**: Capture inputs (with caution for privacy) and outputs to identify anomalies or drift. Alerts can be triggered if the system starts producing an unusual volume of negative or flagged content.
+
+### A/B testing for safe rollouts
+
+Rather than instantly rolling out a new fine-tuned model to all users, <Highlight>A/B testing</Highlight> compares multiple model variants. You might sample 10% of users on a new model while keeping 90% on the existing version. Then measure performance on key metrics: user engagement, cost per query, error rates, or domain-specific measures like click-through rates. If the new model outperforms, you gradually increase its share until full deployment.
+
+<Code text={`
+# Pseudocode for A/B testing logic in Python
+
+import random
+
+def route_request(user_id):
+    # For demonstration, a 10% chance to route to "Model B"
+    if random.random() < 0.1:
+        return "ModelB"
+    else:
+        return "ModelA"
+`}/>
+
+This ensures you do not disrupt your entire user base with an untested model, mitigating risks and giving you quantifiable insights into performance differences.
+
+---
+
+In summary, AI engineering represents a vibrant intersection of advanced AI techniques and robust software engineering best practices. By leveraging pre-trained models effectively and orchestrating them with the right infrastructure, AI engineers can deliver scalable, accurate, and safe AI applications to production. From harnessing OpenAI's GPT-4 for text-based tasks to integrating open-source solutions like Hugging Face or Ollama for specialized or offline use cases, the key is to balance performance, cost, and reliability in an ever-evolving landscape of data-driven innovation.
+
+AI engineers stand as the champions of real-world AI adoption: weaving powerful models into existing products, ensuring that systems remain fair, transparent, and robust under adversity, and continuously refining the architecture to meet dynamic business and user needs. As more enterprises embrace AI, the demand for skilled AI engineers who can seamlessly bring these solutions to life has never been higher. The potential for breakthroughs is immense — and with the right strategies, technologies, and collaboration, these breakthroughs can translate into impactful, sustainable outcomes in every industry.

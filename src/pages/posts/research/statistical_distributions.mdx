@@ -1,0 +1,434 @@
+---
+index: 10
+indexCourse: 8
+indexFavorites:
+title: "Statistical distributions"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Statistical distributions: types, parameters, characteristics"
+courseCategoryName: "Mathematics"
+desc: "You don't have any friends?"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "24.08.2022"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 1
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: "Mathematics"
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/statistical_distributions.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/statistical_distributions"
+slug: "/research/statistical_distributions"
+---
+
+import Tooltip from "../../../components/Tooltip"
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+Для этого поста разобрать Obsidian-заметку (см. папку "🚧 Unfinished").
+
+*/}
+
+
+## Discrete distributions
+
+### Bernoulli distribution
+
+The <Highlight>Bernoulli distribution</Highlight> is the simplest discrete distribution, describing a single binary trial that can yield either "success" (<Latex text="\( x = 1 \)"/>) with probability <Latex text="\( p \)"/> or "failure" (<Latex text="\( x = 0 \)"/>) with probability <Latex text="\( 1 - p \)"/>. The probability mass function (pmf) is:
+
+<Latex text="\[
+P(X = x) = p^x (1 - p)^{1 - x}, \quad x \in \{0, 1\},\ p \in [0,1].
+\]"/>
+
+- **Support**: <Latex text="\( x \in \{0, 1\} \)"/>
+- **Parameters**: success probability <Latex text="\( p \)"/>
+- **Skewness & kurtosis**: for <Latex text="\( p \neq 0.5 \)"/>, the distribution is skewed; it becomes symmetric at <Latex text="\( p = 0.5 \)"/>. Kurtosis can be relatively high because the distribution is concentrated on two points.
+- **Use cases**: The Bernoulli distribution is at the core of binary classification labels in machine learning. It is often used to model success/failure processes such as "clicked/not clicked" in online advertising.  
+- **Parameter estimation**: The maximum likelihood estimator (MLE) for <Latex text="\( p \)"/> is the sample mean of the observed successes. For instance, if you observe <Latex text="\( n \)"/> trials with <Latex text="\( \sum x_i = s \)"/> successes, the MLE is <Latex text="\( \hat{p} = s / n \)"/>.
+
+<Image alt="Bernoulli pmf" path="" caption="A simple Bernoulli pmf with different values of p." zoom="false" />
+
+### Binomial distribution
+
+A <Highlight>Binomial distribution</Highlight> describes the number of successes in a fixed number <Latex text="\( n \)"/> of independent Bernoulli trials, each with probability of success <Latex text="\( p \)"/>. Its pmf is:
+
+<Latex text="\[
+P(X = k) = \binom{n}{k} p^k (1 - p)^{n - k}, \quad k \in \{0, 1, \dots, n\}.
+\]"/>
+
+- **Support**: <Latex text="\( k \in \{0, 1, \ldots, n\} \)"/>
+- **Parameters**: number of trials <Latex text="\( n \)"/>, success probability <Latex text="\( p \)"/>
+- **Mean & variance**: <Latex text="\( \mathbb{E}[X] = np \)"/> and <Latex text="\( \mathrm{Var}[X] = np(1-p) \)"/>
+- **Skewness**: <Latex text="\( \frac{1-2p}{\sqrt{np(1-p)}} \)"/>
+- **Use cases**: Frequently used in data science for modeling counts of occurrences across multiple trials, such as the number of customers who respond to a campaign out of <Latex text="\( n \)"/> recipients.
+- **Parameter estimation**: The MLE approach again yields <Latex text="\( \hat{p} = \frac{\sum_k k}{n\,m} \)"/>, where <Latex text="\( m \)"/> is the total number of binomial experiments (if data come in aggregated form). If you have separate sequences of trials, you typically estimate <Latex text="\( p \)"/> as the overall fraction of successes.
+
+<Image alt="Binomial pmf" path="" caption="Example binomial distribution with n=10, p=0.3 and n=10, p=0.7." zoom="false" />
+
+### Poisson distribution
+
+The <Highlight>Poisson distribution</Highlight> is used for modeling the number of events occurring in a fixed interval, assuming events happen with a known constant mean rate <Latex text="\( \lambda \)"/> and independently of the time since the last event. Its pmf is:
+
+<Latex text="\[
+P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!}, \quad k \in \{0, 1, 2, \dots\}.
+\]"/>
+
+- **Support**: <Latex text="\( k = 0, 1, 2, \dots \)"/>
+- **Parameter**: rate <Latex text="\( \lambda \)"/> (> 0)
+- **Mean & variance**: <Latex text="\( \mathbb{E}[X] = \mathrm{Var}[X] = \lambda \)"/>
+- **Skewness & kurtosis**: Skewness decreases as <Latex text="\( \lambda \)"/> grows, but it remains right-skewed. 
+- **Use cases**: Modeling counts of rare or random events, e.g., number of arrivals in a queue, number of network requests in a given time frame.  
+- **Parameter estimation**: The MLE for <Latex text="\( \lambda \)"/> is the sample mean of observed counts.
+
+One interesting property is that if <Latex text="\( X \sim \text{Poisson}(\lambda) \)"/> and <Latex text="\( Y \sim \text{Poisson}(\mu) \)"/> are independent, then <Latex text="\( X + Y \)"/> is <Latex text="\( \text{Poisson}(\lambda + \mu) \)"/>.
+
+### Geometric distribution
+
+A <Highlight>Geometric distribution</Highlight> models the number of trials needed to get the first success (or, in another convention, the number of failures before the first success). We'll use the "number of trials" version. Its pmf is:
+
+<Latex text="\[
+P(X = k) = (1-p)^{k-1} p, \quad k \in \{1,2,\ldots\}, \, p \in [0,1].
+\]"/>
+
+- **Support**: <Latex text="\( k = 1, 2, 3, \dots \)"/>
+- **Parameter**: success probability <Latex text="\( p \)"/>
+- **Mean & variance**: <Latex text="\( \mathbb{E}[X] = \frac{1}{p} \)"/>, <Latex text="\( \mathrm{Var}[X] = \frac{1-p}{p^2} \)"/>
+- **Memoryless property**: The probability of success in future trials is independent of the number of failures so far.
+- **Use cases**: Modeling discrete "waiting time" until an event occurs, such as how many times you must roll a die before seeing a certain face.  
+- **Parameter estimation**: The MLE for <Latex text="\( p \)"/> is <Latex text="\( \hat{p} = \frac{1}{\overline{X}} \)"/>, where <Latex text="\( \overline{X} \)"/> is the sample mean of the observed counts until first success.
+
+### Negative binomial distribution
+
+The <Highlight>Negative binomial distribution</Highlight> can be viewed as the number of successes before a specified number of failures is reached, or as a sum of a fixed number of geometric random variables. One popular parametrization (the number of successes before <Latex text="\( r \)"/> failures) has the pmf:
+
+<Latex text="\[
+P(X = k) = \binom{k + r - 1}{k} (1-p)^r p^k, \quad k \in \{0, 1, \dots\}.
+\]"/>
+
+- **Parameters**: <Latex text="\( r \)"/> (the number of failures) and <Latex text="\( p \)"/> (success probability)
+- **Mean & variance**: <Latex text="\( \mathbb{E}[X] = \frac{rp}{1-p} \)"/>, <Latex text="\( \mathrm{Var}[X] = \frac{rp}{(1-p)^2} \)"/>
+- **Use cases**: Particularly useful when the variance in the data exceeds the mean (overdispersion), unlike the Poisson distribution. Common in modeling number of successes in real-world count processes, e.g., number of insurance claims before a threshold of losses is reached.
+- **Parameter estimation**: Methods include MLE and method of moments. Overdispersion can make direct estimation trickier than Poisson. Specialized software functions are often used.
+
+### Multinomial distribution
+
+A <Highlight>Multinomial distribution</Highlight> generalizes the binomial to more than two possible outcomes. If each trial can result in one of <Latex text="\( k \)"/> categories, with probabilities <Latex text="\( p_1, p_2, \dots, p_k \)"/> (summing to 1), and you perform <Latex text="\( n \)"/> independent trials, the probability of observing counts <Latex text="\( x_1, \dots, x_k \)"/> is:
+
+<Latex text="\[
+P(X_1 = x_1, \ldots, X_k = x_k) = \frac{n!}{x_1! \cdots x_k!} p_1^{x_1} \cdots p_k^{x_k},
+\]"/>
+subject to <Latex text="\( \sum_{i=1}^k x_i = n \)"/>.
+
+- **Support**: Nonnegative integer vectors of dimension <Latex text="\( k \)"/> summing to <Latex text="\( n \)"/>
+- **Parameters**: number of trials <Latex text="\( n \)"/>, probability vector <Latex text="\( (p_1, \ldots, p_k) \)"/>
+- **Mean & covariance**: <Latex text="\( \mathbb{E}[X_i] = np_i \)"/>; covariances depend on both <Latex text="\( p_i \)"/> and <Latex text="\( p_j \)"/>
+- **Use cases**: Modeling the counts of outcomes across multiple categories, e.g., how many times each side of a die shows up in <Latex text="\( n \)"/> rolls.
+- **Parameter estimation**: The MLE for <Latex text="\( p_i \)"/> is the fraction of observations falling into category <Latex text="\( i \)"/>: <Latex text="\( \hat{p}_i = \frac{x_i}{n} \)"/>.
+
+### Categorical distribution
+
+The <Highlight>Categorical distribution</Highlight> is to the multinomial what the Bernoulli is to the binomial. It's a single trial that results in exactly one of <Latex text="\( k \)"/> categories, with probabilities <Latex text="\( (p_1, \dots, p_k) \)"/>. The pmf for outcome <Latex text="\( x \in \{1, \dots, k\} \)"/> is:
+
+<Latex text="\( P(X = x) = p_x \)"/>, where <Latex text="\(\sum_{i=1}^{k} p_i = 1 \)"/>.
+
+- **Support**: <Latex text="\( x \in \{1, 2, \dots, k\} \)"/>
+- **Parameters**: probability vector <Latex text="\( (p_1, \ldots, p_k) \)"/>
+- **Use cases**: Class labels in multi-class classification, or any scenario with a single trial and multiple possible outcomes.
+- **Parameter estimation**: The MLE is again the empirical relative frequency for each category.
+
+---
+
+## Continuous distributions
+
+### The gaussian (normal) distribution in-depth
+
+The <Highlight>Gaussian distribution</Highlight> (also known as the Normal distribution) is one of the most important continuous distributions in statistics and machine learning due to the central limit theorem and its convenient analytical properties. Its probability density function (pdf) for a variable <Latex text="\( X \)"/> is:
+
+<Latex text="\[
+f(x) = \frac{1}{\sqrt{2\pi} \,\sigma} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right),
+\]"/>
+where:
+- <Latex text="\( \mu \)"/> is the mean (location parameter).
+- <Latex text="\( \sigma \)"/> is the standard deviation (scale parameter).
+
+**Key properties**:
+- **Symmetry & shape**: Perfectly symmetrical around <Latex text="\( \mu \)"/>.  
+- **Support**: <Latex text="\( x \in (-\infty,\infty) \)"/>
+- **Mean & variance**: <Latex text="\( \mathbb{E}[X] = \mu \)"/> and <Latex text="\( \mathrm{Var}[X] = \sigma^2 \)"/>
+- **Conditional and marginal distributions**: Any linear combination (or conditional distribution) of jointly normal variables is also normally distributed.
+- **Bayes' theorem for Gaussian variables**: Gaussian distributions serve as conjugate priors in many Bayesian inference scenarios, making posterior distributions also Gaussian.  
+- **Maximum likelihood**: The MLE estimates are the sample mean and sample variance for <Latex text="\( \mu \)"/> and <Latex text="\( \sigma^2 \)"/> respectively.
+- **Sequential estimation**: With each new observation, one can update the sample mean and variance incrementally. In a Bayesian context with a Gaussian prior, the posterior is still Gaussian.
+- **Periodic variables**: If data are truly periodic (like angles), simply using a normal distribution may lead to inaccuracies, because normal distributions ignore wraparound effects.
+
+<Image alt="Gaussian pdf" path="" caption="Normal distributions with different means and variances." zoom="false" />
+
+### The exponential distribution and the exponential family
+
+The <Highlight>exponential distribution</Highlight> is a core member of the broader **exponential family** of distributions (which also includes Bernoulli, Poisson, Gamma, and more). Focusing on the exponential distribution itself:
+
+<Latex text="\[
+f(x) = \lambda \exp(-\lambda x), \quad x \ge 0,\ \lambda > 0.
+\]"/>
+
+- **Support**: <Latex text="\( x \in [0,\infty) \)"/>
+- **Parameter**: rate <Latex text="\( \lambda \)"/>
+- **Mean & variance**: <Latex text="\( \mathbb{E}[X] = \frac{1}{\lambda}, \mathrm{Var}[X] = \frac{1}{\lambda^2} \)"/>
+- **Memoryless property**: The exponential distribution is continuous-time analog of the geometric distribution's memorylessness.
+- **Use cases**: Time between events in a Poisson process, reliability analysis, survival analysis.
+- **Parameter estimation**: The MLE for <Latex text="\( \lambda \)"/> is <Latex text="\( \hat{\lambda} = \frac{n}{\sum x_i} \)"/>, where <Latex text="\( x_i \)"/> are the observed waiting times.
+
+#### Conjugate and noninformative priors
+
+- **Conjugate priors**: In Bayesian inference, the gamma distribution is a conjugate prior for <Latex text="\( \lambda \)"/> of an exponential distribution. This means the posterior remains gamma-distributed after observing data.
+- **Noninformative priors**: Sometimes, a Jeffreys prior (<Tooltip text="A Jeffreys prior is derived to be invariant under reparameterization and often used when we have little prior knowledge."/>), which is proportional to the square root of the Fisher information, is used when no strong prior beliefs are held.
+
+### Gamma distribution
+
+The <Highlight>Gamma distribution</Highlight> generalizes the exponential by allowing an additional shape parameter <Latex text="\( k \)"/>. One parametrization is:
+
+<Latex text="\[
+f(x) = \frac{\lambda^k}{\Gamma(k)}\, x^{k-1} e^{-\lambda x}, \quad x \ge 0.
+\]"/>
+(Here <Latex text="\( \Gamma(\cdot) \)"/> is the gamma function, not to be confused with a random variable.)
+
+- **Support**: <Latex text="\( x \in [0,\infty) \)"/>
+- **Parameters**: shape <Latex text="\( k \)"/>, rate <Latex text="\( \lambda \)"/> (sometimes scale <Latex text="\( \theta = 1/\lambda \)"/> is used)
+- **Mean & variance**: <Latex text="\( \mathbb{E}[X] = \frac{k}{\lambda}, \mathrm{Var}[X] = \frac{k}{\lambda^2} \)"/>
+- **Relation to exponential**: The exponential is a special gamma with <Latex text="\( k = 1 \)"/>.
+- **Use cases**: Modeling waiting times, reliability analysis, sum of exponential variables. If events follow a Poisson process, then the waiting time for the <Latex text="\( k \)"/>-th event is gamma-distributed.
+- **Parameter estimation**: Common methods include MLE or method of moments. MLE typically requires numerical optimization (e.g., using Newton-Raphson).
+
+### Beta distribution
+
+Defined on <Latex text="\( [0,1] \)"/>, the <Highlight>Beta distribution</Highlight> is a versatile choice for modeling probabilities or proportions. Its pdf is:
+
+<Latex text="\[
+f(x) = \frac{x^{\alpha - 1} (1 - x)^{\beta - 1}}{B(\alpha,\beta)}, \quad x \in [0,1],
+\]"/>
+where <Latex text="\( B(\alpha,\beta) \)"/> is the beta function (normalizing constant).
+
+- **Support**: <Latex text="\( x \in [0,1] \)"/>
+- **Parameters**: shape parameters <Latex text="\( \alpha, \beta > 0 \)"/>
+- **Mean & variance**: <Latex text="\( \mathbb{E}[X] = \frac{\alpha}{\alpha+\beta} \)"/>, <Latex text="\( \mathrm{Var}[X] = \frac{\alpha \beta}{(\alpha+\beta)^2 (\alpha+\beta+1)} \)"/>
+- **Use cases**: Particularly important in Bayesian inference as conjugate priors for the Bernoulli/binomial parameters; also used in modeling distributions of proportions in a population.
+- **Parameter estimation**: The MLE or method of moments can be used. Bayesian updates for <Latex text="\( \alpha \)"/> and <Latex text="\( \beta \)"/> are very common in posterior inference for unknown probabilities.
+
+### Chi-square distribution
+
+A <Highlight>chi-square distribution</Highlight> with <Latex text="\( \nu \)"/> degrees of freedom is the distribution of a sum of squared independent standard normal variables. Its pdf is:
+
+<Latex text="\[
+f(x) = \frac{1}{2^{\nu/2} \Gamma(\nu/2)} x^{\frac{\nu}{2} - 1} e^{-x/2}, \quad x \ge 0.
+\]"/>
+
+- **Support**: <Latex text="\( x \in [0,\infty) \)"/>
+- **Parameter**: degrees of freedom <Latex text="\( \nu \)"/>
+- **Mean & variance**: <Latex text="\( \mathbb{E}[X] = \nu \)"/>, <Latex text="\( \mathrm{Var}[X] = 2\nu \)"/>
+- **Use cases**: Commonly used in hypothesis testing (chi-square tests), confidence intervals for variance, and other inferential procedures in statistics.
+- **Parameter estimation**: Usually arises as a derived distribution from normal assumptions, rather than from direct fitting. However, method-of-moments can be applied if needed.
+
+### Student's t-distribution
+
+The <Highlight>Student's t-distribution</Highlight> arises when estimating the mean of a normally distributed population in situations where sample size is small and population variance is unknown. Its pdf is:
+
+<Latex text="\[
+f(x) = \frac{\Gamma\!\big(\tfrac{\nu+1}{2}\big)}{\sqrt{\nu\pi}\,\Gamma\!\big(\tfrac{\nu}{2}\big)} \left(1 + \frac{x^2}{\nu}\right)^{-\frac{\nu+1}{2}},
+\]"/>
+where <Latex text="\( \nu \)"/> is the degrees of freedom.
+
+- **Support**: <Latex text="\( x \in (-\infty,\infty) \)"/>
+- **Parameter**: degrees of freedom <Latex text="\( \nu \)"/>
+- **Mean & variance**: The mean is 0 for <Latex text="\( \nu > 1 \)"/>. The variance is <Latex text="\( \frac{\nu}{\nu-2} \)"/> for <Latex text="\( \nu > 2 \)"/>. For lower <Latex text="\( \nu \)"/>, these moments may be undefined.
+- **Heavier tails**: More prone to outliers than the normal. As <Latex text="\( \nu \to \infty \)"/>, it converges to the normal distribution.
+- **Use cases**: In regression models, the t-distribution is favored in small-sample scenarios or when outliers are present.
+
+### F-distribution
+
+An <Highlight>F-distribution</Highlight> is the distribution of a ratio of two chi-square variables, each divided by their respective degrees of freedom. Specifically, if <Latex text="\( U \sim \chi^2_{\nu_1} \)"/> and <Latex text="\( V \sim \chi^2_{\nu_2} \)"/>, then:
+
+<Latex text="\[
+F = \frac{U/\nu_1}{V/\nu_2}
+\]"/>
+follows an F-distribution with <Latex text="\( \nu_1, \nu_2 \)"/> degrees of freedom.
+
+- **Support**: <Latex text="\( x \in [0,\infty) \)"/>
+- **Parameters**: <Latex text="\( \nu_1, \nu_2 \)"/> (degrees of freedom)
+- **Use cases**: Widely used in ANOVA, comparing variances in different populations, or model comparison in regression.
+- **Parameter estimation**: Typically arises in test statistics. Direct "fitting" is less common in routine ML pipelines, but occasionally used in specialized modeling.
+
+### Weibull distribution
+
+A <Highlight>Weibull distribution</Highlight> has the pdf:
+
+<Latex text="\[
+f(x) = \frac{k}{\lambda} \left(\frac{x}{\lambda}\right)^{k-1} \exp\left(-\left(\frac{x}{\lambda}\right)^k\right), \quad x \ge 0.
+\]"/>
+
+- **Support**: <Latex text="\( x \in [0,\infty) \)"/>
+- **Parameters**: shape <Latex text="\( k \)"/>, scale <Latex text="\( \lambda \)"/>
+- **Use cases**: Time-to-failure or survival analysis, reliability engineering, wind speed distributions.
+- **Special cases**: If <Latex text="\( k=1 \)"/>, it becomes the exponential distribution. 
+- **Parameter estimation**: Methods include MLE and method of moments. Often used in engineering to estimate lifetimes of components.
+
+### Log-normal distribution
+
+A random variable <Latex text="\( X \)"/> is <Highlight>log-normally distributed</Highlight> if <Latex text="\( \log(X) \)"/> is normally distributed. The pdf is:
+
+<Latex text="\[
+f(x) = \frac{1}{x \sigma \sqrt{2\pi}} \exp\!\Bigl(-\frac{(\ln x - \mu)^2}{2\sigma^2}\Bigr), \quad x > 0.
+\]"/>
+
+- **Support**: <Latex text="\( x \in (0,\infty) \)"/>
+- **Parameters**: <Latex text="\( \mu, \sigma \)"/> are the mean and standard deviation of the log-transformed variable
+- **Use cases**: Modeling skewed positive data (e.g., certain economic or biological variables). 
+- **Parameter estimation**: Typically done by fitting a normal distribution to the log of the data. MLE is straightforward: estimate the mean and variance of <Latex text="\( \ln(x) \)"/>.
+
+---
+
+## Special distributions in machine learning
+
+### Pareto distribution
+
+The <Highlight>Pareto distribution</Highlight> is a heavy-tailed distribution often used in scenarios exhibiting power-law characteristics, such as wealth distribution or file size distributions on the internet. Its pdf is:
+
+<Latex text="\[
+f(x) = \alpha \frac{x_m^\alpha}{x^{\alpha+1}}, \quad x \ge x_m,\ \alpha > 0.
+\]"/>
+
+- **Support**: <Latex text="\( x \in [x_m,\infty) \)"/>
+- **Parameters**: scale <Latex text="\( x_m > 0 \)"/>, shape <Latex text="\( \alpha \)"/>
+- **Heavy tails**: As <Latex text="\( x \)"/> grows, the distribution decays slowly compared to exponential or Gaussian, making large outliers more probable.
+- **Use cases**: Modeling phenomena with "the rich get richer" dynamics or extreme outliers. In ML, can inform heavy-tailed priors or anomaly detection in big data.
+- **Parameter estimation**: MLE is <Latex text="\( \hat{\alpha} = \frac{n}{\sum_{i=1}^n \ln(x_i/x_m)} \)"/>. Because of the heavy tail, robust estimation techniques are sometimes used to mitigate the impact of outliers.
+
+### Laplace distribution
+
+Also called the <Highlight>double exponential distribution</Highlight>, the <Highlight>Laplace distribution</Highlight> has pdf:
+
+<Latex text="\[
+f(x) = \frac{1}{2b}\,\exp\left(-\frac{|x-\mu|}{b}\right).
+\]"/>
+
+- **Parameters**: location <Latex text="\( \mu \)"/>, diversity <Latex text="\( b \)"/>
+- **Use cases**: In machine learning, the Laplace distribution is central in L1 regularization (Lasso). It has heavier tails compared to the normal distribution, yielding robust behavior against outliers.
+- **Parameter estimation**: The MLE for <Latex text="\( \mu \)"/> is the median of the data (rather than the mean), and <Latex text="\( b \)"/> is the average absolute deviation from the median.
+
+### Gumbel distribution
+
+A <Highlight>Gumbel distribution</Highlight> is often used in extreme value theory for modeling maxima of samples. One form of the pdf is:
+
+<Latex text="\[
+f(x) = \frac{1}{\beta} \exp \Bigl(-z - e^{-z}\Bigr), \quad z = \frac{x - \mu}{\beta}.
+\]"/>
+
+- **Parameters**: location <Latex text="\( \mu \)"/>, scale <Latex text="\( \beta > 0 \)"/>
+- **Use cases**: Modeling extreme events, such as maximum rainfall in a year or worst-case loads on servers. Also arises in logistic regression link functions (the "logit" can be related to a Gumbel distribution difference).
+- **Parameter estimation**: MLE or method of moments are standard. In practice, specialized libraries implement these fittings.
+
+### Cauchy distribution
+
+A <Highlight>Cauchy distribution</Highlight> has the pdf:
+
+<Latex text="\[
+f(x) = \frac{1}{\pi \gamma \bigl[1 + \bigl(\frac{x - x_0}{\gamma}\bigr)^2\bigr]},
+\]"/>
+
+- **Parameters**: location <Latex text="\( x_0 \)"/>, scale <Latex text="\( \gamma \)"/>
+- **Undefined mean & variance**: Unlike most common distributions, the Cauchy has undefined (infinite) mean and variance. This makes parameter estimation challenging.
+- **Heavily heavy-tailed**: Rare but extremely large values occur with non-negligible probability.
+- **Use cases**: Often a cautionary example of distributions that defy certain classical statistical intuitions. Rarely used in direct modeling but important conceptually.
+
+### Dirichlet distribution
+
+The <Highlight>Dirichlet distribution</Highlight> generalizes the Beta distribution to higher dimensions, producing a probability vector in a <Latex text="\( k \)"/>-simplex. Its pdf, for <Latex text="\( x_i \ge 0 \)"/> and <Latex text="\( \sum x_i = 1 \)"/>, is:
+
+<Latex text="\[
+f(x_1,\dots,x_k) = \frac{1}{B(\alpha_1,\dots,\alpha_k)} \prod_{i=1}^k x_i^{\alpha_i - 1},
+\]"/>
+where <Latex text="\( B(\cdot) \)"/> is now the multinomial beta function, and <Latex text="\( \alpha_i > 0 \)"/> are the parameters.
+
+- **Support**: The <Latex text="\( (k-1) \)"/>-dimensional simplex  
+- **Use cases**: Bayesian modeling of categorical or multinomial parameters, topic modeling (LDA uses Dirichlet priors), mixture models, and any problem requiring a distribution over distributions.
+- **Parameter estimation**: Typically done in a Bayesian context. If data are in the form of multiple categorical draws, the posterior distribution of probabilities is also Dirichlet when using a Dirichlet prior.
+
+---
+
+## Conclusion
+
+Choosing the right distribution is crucial for accurate modeling and inference. Discrete distributions like Bernoulli, Binomial, and Poisson help in scenarios with count data or binary outcomes, while continuous ones like Gaussian, Exponential, and Gamma cater to a wide range of phenomena — time-to-event analyses, large-sample approximations, or uncertain probability estimates. Heavy-tailed or specialized distributions (Pareto, Laplace, Cauchy, Gumbel, Dirichlet) are invaluable in certain extreme or specialized ML contexts. 
+
+It's important to:
+- **Check assumptions** (e.g., independence, identical distribution, shape properties).
+- **Estimate parameters** reliably using MLE, method of moments, or Bayesian methods.
+- **Understand relationships** (e.g., exponential is a special Gamma, Beta is a prior for Bernoulli/binomial, etc.).
+
+In practice, data scientists should explore multiple distributions, compare goodness-of-fit, and always remember to validate model assumptions with domain knowledge and empirical tests.
+
+<Image alt="Distribution selection" path="" caption="Selecting an appropriate distribution depends on the nature of the data, assumptions, and analysis goals." zoom="false" />
+
+Below is a brief Python snippet illustrating how to sample from and plot some of these distributions using <Tooltip text="SciPy is a Python library providing many numerical routines including probability distributions."/>:
+
+<Code text={`
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import bernoulli, binom, norm, gamma
+
+# Example: generate random data and plot histograms for different distributions
+np.random.seed(42)
+
+bern_data = bernoulli.rvs(p=0.3, size=1000)
+binom_data = binom.rvs(n=10, p=0.3, size=1000)
+norm_data = norm.rvs(loc=0, scale=1, size=1000)
+gamma_data = gamma.rvs(a=2, scale=1/0.5, size=1000)  # shape=2, rate=0.5
+
+fig, axes = plt.subplots(2, 2, figsize=(8, 6))
+
+axes[0,0].hist(bern_data, bins=[-0.5, 0.5, 1.5], density=True, alpha=0.7, color='blue')
+axes[0,0].set_title("Bernoulli(p=0.3)")
+
+axes[0,1].hist(binom_data, bins=np.arange(12)-0.5, density=True, alpha=0.7, color='green')
+axes[0,1].set_title("Binomial(n=10, p=0.3)")
+
+axes[1,0].hist(norm_data, bins=30, density=True, alpha=0.7, color='red')
+axes[1,0].set_title("Normal(0,1)")
+
+axes[1,1].hist(gamma_data, bins=30, density=True, alpha=0.7, color='purple')
+axes[1,1].set_title("Gamma(k=2, rate=0.5)")
+
+plt.tight_layout()
+plt.show()
+`}/>
+
+Through real-world applications and further chapters in this course, you'll see how choosing appropriate distributions impacts inference, hypothesis testing, and the performance of machine learning models.

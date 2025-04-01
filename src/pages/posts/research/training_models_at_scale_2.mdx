@@ -1,0 +1,632 @@
+---
+index: 133
+indexCourse: 165
+indexFavorites:
+title: "Training models at scale, pt. 2"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Training models at scale, pt. 2"
+courseCategoryName: "Scaling & distributed learning"
+desc: "Advanced cosmic-scale idiocy"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "17.10.2024"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 2
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/training_models_at_scale.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/training_models_at_scale_2"
+slug: "/research/training_models_at_scale_2"
+---
+
+import Tooltip from "../../../components/Tooltip"
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+1. Introduction to Distributed Training
+- Why move from single-GPU to multi-GPU or multi-node setups  
+- Overview of distributed computing concepts  
+- Prerequisites and hardware considerations  
+2. Data Parallelism Fundamentals
+- Splitting the dataset across multiple GPUs or nodes  
+- Keeping a global model while each device processes partial data  
+- Synchronizing gradients and parameters  
+3. Fully-Sharded Data Parallel (FSDP)
+- Concept of sharding parameters to save memory  
+- Benefits and potential overheads  
+- Practical tips for implementing FSDP in JAX or PyTorch  
+4. High-Performance Communication Primitives
+- All-Reduce, Reduce, Broadcast, All-Gather, Reduce-Scatter  
+- How they enable data parallel synchronization  
+- Key libraries (NCCL, MPI, etc.) and usage patterns  
+5. Pipeline Parallelism
+- Splitting model layers across devices  
+- Micro-batching to keep all devices busy  
+- Advantages and complexities in scheduling forward/backward passes  
+6. Looping Pipelines and Advanced Scheduling
+- The looping approach to pipeline parallelism  
+- Minimizing idle time and maximizing throughput  
+- Profiling pipeline-parallel systems  
+7. Tensor Parallelism
+- Partitioning layers at the tensor operation level  
+- Splitting linear layers, attention mechanisms, or feedforward blocks  
+- Balancing communication overhead with compute gains  
+8. Asynchronous Tensor Parallel Methods
+- Overlapping compute and communication  
+- Designing asynchronous linear layers  
+- Analyzing performance trade-offs  
+9. Transformers with Tensor Parallelism
+- Applying tensor parallelism to attention and feed-forward sub-layers  
+- Profiling large Transformer models for memory and speed  
+- Techniques for handling large vocabulary embeddings  
+10. 3D Parallelism (Data, Pipeline, Tensor)
+- Combining data, pipeline, and tensor parallel approaches  
+- When and why to stack multiple parallel techniques  
+- Real-world use cases (language models, large-scale vision models)  
+11. Training on Multiple GPUs and Nodes
+- Setting up multi-node clusters (on-premise or cloud)  
+- Handling different interconnects (InfiniBand, Ethernet)  
+- Failover strategies and distributed logging  
+12. Parameter Servers and Other Distributed Architectures
+- Architecture of parameter servers  
+- Alternative designs (peer-to-peer, ring-based)  
+- Pros and cons for extremely large-scale systems  
+13. Monitoring and Profiling Distributed Systems
+- Tools for distributed profiling (NVIDIA Nsight, TensorBoard, JAX profilers)  
+- Detecting bottlenecks (network vs. compute vs. memory)  
+- How to systematically optimize step-by-step  
+14. Practical Tips for Large-Scale Production Training
+- Managing infrastructure costs and resource allocation  
+- Checkpointing large models and data reliably  
+- Deployment considerations: containerization, cluster orchestration, HPC environments  
+15. Conclusion and Further Resources
+- Summary of distributed training paradigms  
+- Decision tree: when to pick data vs. pipeline vs. tensor parallelism  
+- Additional references (papers, tutorials, frameworks) for next steps  
+
+*/}
+
+
+The question of how to train ever-larger and more sophisticated machine learning models more quickly and efficiently has become an essential concern within the field. As models expand beyond hundreds of millions — or even billions — of parameters, relying on a single GPU setup becomes impractical. In these scenarios, practitioners naturally shift toward multi-GPU or even multi-node setups. This approach — commonly known as distributed training — allows developers and researchers to reduce overall training times, handle exponentially larger datasets, and experiment with more ambitious neural network architectures.
+
+When I talk about distributed training, I'm referring to a general framework whereby a training job is split across multiple devices, which might be multiple GPUs within a single machine or across a cluster of interconnected machines. Each device works on a portion of the problem and periodically communicates with other devices to share model states, gradients, or other relevant data. Modern frameworks like PyTorch, TensorFlow, and JAX provide powerful tools to facilitate this distribution. However, the design and implementation of distributed training systems remain non-trivial, requiring an in-depth understanding of computer architecture, networking principles, and algorithmic parallelization strategies.
+
+In this article, I'll present the essential building blocks of distributed training and dig into advanced forms of parallelism (such as Fully-Sharded Data Parallel, Pipeline Parallelism, and Tensor Parallelism). Along the way, I'll show how these various methods can be combined into so-called "3D parallelism" strategies that push performance to new limits, especially when training very large neural networks like Transformers. Lastly, I'll conclude by highlighting practical tips, best practices, profiling methods, and additional insights that anyone venturing into large-scale training should keep in mind.
+
+### Why move from single-gpu to multi-gpu or multi-node setups
+
+Training a sophisticated model with hundreds of layers or extremely high-dimensional embeddings can quickly exceed the memory capacity or compute capabilities of a single GPU. Even if memory were not a bottleneck, a single GPU or single-machine setup would result in prohibitive training times — sometimes measured in weeks or even months — for large-scale tasks such as language modeling (e.g., GPT-class models) or training advanced image models (e.g., diffusion models, Vision Transformers).
+
+Distributing the training across multiple GPUs or multiple machines:
+
+1. <Highlight>Speeds up the training process</Highlight> by parallelizing computations across multiple devices.
+2. Makes it <Highlight>feasible to train large models</Highlight> that exceed the memory constraints of a single device, especially if specialized parallelization strategies (e.g., tensor sharding) are employed.
+3. Allows <Highlight>larger batch sizes</Highlight>, which can be beneficial for batch normalization or certain forms of gradient-based optimization, though it also brings challenges in terms of generalization behavior and optimization stability.
+4. Permits organizations to leverage their existing infrastructure more effectively. For instance, if a data center or a cloud environment is already outfitted with many GPU machines, distributed training harnesses them in parallel rather than letting them remain idle.
+
+From a theoretical standpoint, distributing the workload (both in terms of computations and data) aligns well with the general principle that training time is inversely proportional to available computational resources. However, the communication overhead — and the careful arrangement of tasks among devices — can diminish the expected linear speedup. The goal of advanced distributed training methods is to mitigate this overhead as much as possible.
+
+### Overview of distributed computing concepts
+
+In the context of deep learning, distributed computing builds upon parallel and concurrent programming but emphasizes efficient gradient synchronization, parameter updates, and scaling strategies for large neural networks. Some fundamental concepts include:
+
+- **Parallelism**: The partitioning of a task such that multiple processing units can handle pieces of that task concurrently.
+- **Synchronization**: The act of exchanging necessary information (e.g., gradient tensors, updated parameters) between parallel processes to maintain coherence.
+- **Communication overhead**: The time spent transferring data across processes or devices instead of performing computations. Minimizing this is key to efficient distributed training.
+- **Scale-out vs. scale-up**: Scale-out refers to increasing the number of machines or GPUs; scale-up refers to using more powerful machines or more powerful GPUs. Distributed training typically focuses on scale-out, although combining both approaches often provides the best performance.
+
+### Prerequisites and hardware considerations
+
+Running large-scale distributed training requires specialized hardware and infrastructure:
+
+1. **High-performance GPUs**. Modern training typically requires GPUs with strong floating-point capabilities and large memory capacity. NVIDIA cards that support the NCCL library (like the A100, V100, or H100 series) are particularly common in data centers.
+2. **Fast interconnects**. Training performance can be severely degraded by slow communication channels. Technologies like NVLink, PCIe 4.0 or 5.0, InfiniBand, and RDMA are standard in high-end HPC clusters and are essential for large-scale parallelization.
+3. **Cluster management system**. When scaling to many nodes, you need to orchestrate how jobs are assigned to different machines, manage concurrency, and handle potential failures. Systems like Kubernetes, Slurm, or specialized HPC batch schedulers are often used.
+4. **Sufficient power and cooling**. For on-premise solutions, hosting dozens (or hundreds) of GPUs has substantial power and thermal requirements.
+
+In the sections that follow, I'll explore how to orchestrate data, parameters, and the flow of computations in a distributed setup, starting with the most intuitive method: data parallelism.
+
+## Data parallelism fundamentals
+
+Data parallelism is typically the first technique used when scaling training from a single GPU to multiple GPUs. It's conceptually straightforward: each GPU processes a different chunk of the overall dataset, computes its local gradients, and then these gradients are averaged (or otherwise combined) to update the single global model.
+
+### Splitting the dataset across multiple gpus or nodes
+
+In a simple data-parallel framework, you divide your dataset into <Latex text="\(N\)"/> shards, each shard being handled by one of the <Latex text="\(N\)"/> devices (GPUs or nodes). During each iteration (or mini-batch), each device processes its portion of data and calculates partial gradients:
+
+<Latex text="\( g_i \)"/> is the gradient computed on device <Latex text="\( i \)"/>. After the local gradients have been computed, they must be aggregated:
+
+<Latex text="\[
+g_{global} = \frac{1}{N} \sum_{i=1}^N g_i
+\]"/>
+
+Here, <Latex text="\(g_{global}\)"/> represents the averaged gradient that will be applied to the global model parameters. Each device updates its local copy of the parameters with <Latex text="\(g_{global}\)"/>, ensuring that all devices remain synchronized for the next iteration.
+
+### Keeping a global model while each device processes partial data
+
+Because each GPU has a replica of the model, parameters need to be shared across replicas at the end of each forward-backward pass. This typically happens via an <Highlight>all-reduce</Highlight> operation over the gradient tensors. Some frameworks do this automatically under the hood once you specify that you want a distributed data-parallel environment.
+
+Each device's partial dataset updates the global model in synergy, approximating the training that would occur on a single device — only in a much faster, parallelized manner. However, it is critical to be mindful of the <Tooltip text="statistical effects of larger effective batch sizes"/>. When you run data parallel training across multiple devices, the effective batch size is multiplied by the number of devices, which can affect convergence dynamics and require adjustments in learning rate or optimizer hyperparameters.
+
+### Synchronizing gradients and parameters
+
+The synchronization of gradients is one of the most resource-intensive tasks in data parallelism. Modern GPU clusters commonly rely on high-performance collective communication libraries like [NCCL (NVIDIA Collective Communications Library)](https://developer.nvidia.com/nccl) or [MPI (Message Passing Interface)](https://www.mpi-forum.org/) to handle these synchronization operations efficiently. The objective is to overlap computation and communication as much as possible, reducing idle GPU time and thus improving overall training throughput. 
+
+## Fully-sharded data parallel (fsdp)
+
+Conventional data parallelism can still be memory-inefficient for extremely large models, because each device holds a complete copy of the model's parameters. FSDP (Fully-Sharded Data Parallel) aims to reduce memory overhead by splitting parameters themselves — along with their gradients — across multiple devices.
+
+### Concept of sharding parameters to save memory
+
+When employing FSDP, each device holds only a shard of the overall parameter set at any given point. During forward and backward passes, the needed shards are collected or broadcast to the relevant device or subset of devices. After computations, the results are scattered back, freeing up memory. This approach drastically reduces peak memory requirements.
+
+<Latex text="\( P \)"/> = set of parameters,
+<Latex text="\( p_i \)"/> = subset of parameters stored on device <Latex text="\( i \)"/>.
+
+A simplified version of what FSDP does in the forward-backward pass is:
+
+1. **Gather** the necessary parameter shards from peers when needed to compute a layer's forward pass.
+2. **Compute** the local partial forward pass.
+3. **Compute** local backward pass and partial gradient.
+4. **Scatter** the partial gradient to relevant peers or aggregate it using a collective operation.
+5. **Shard** updated parameters for the next iteration.
+
+Because the parameters are distributed among devices, you no longer have an entire copy of the model on each device, freeing memory for larger batch sizes or deeper models. That said, the tradeoff is often an increase in communication overhead, particularly if the model architecture demands frequent parameter access.
+
+### Benefits and potential overheads
+
+- **Memory savings**: By not replicating the entire model on each GPU, you can train bigger models or bigger batches.
+- **Compute-communication tradeoff**: In some architectures, you may repeatedly gather and scatter parameters, which can become expensive if the shards are very large or if the interconnect is slow.
+- **Implementation complexity**: While frameworks like PyTorch provide FSDP wrappers (part of [torch.distributed.fsdp](https://pytorch.org/docs/stable/fsdp.html)), careful tuning and knowledge of your model's structure are often needed to avoid bottlenecks.
+
+### Practical tips for implementing fsdp in jax or pytorch
+
+1. **Segment your model** into layers or submodules in a way that reduces the frequency of cross-device data transfers.
+2. **Experiment with shard sizes**: Sometimes, dividing the model into smaller shards can help, but it might lead to excessive overhead if taken to extremes.
+3. **Profile early**: Tools like TensorBoard, PyTorch's [autograd profiler](https://pytorch.org/docs/stable/profiler.html), or JAX's profilers can shed light on whether the communication overhead is dominating your runtime.
+4. **Leverage checkpointing**: In some cases, you can do gradient checkpointing for memory savings combined with FSDP to handle extremely large models in limited-GPU environments.
+
+## High-performance communication primitives
+
+At the heart of distributed training lie specialized communication primitives designed to minimize overhead while guaranteeing that the necessary synchronization and data exchange occur reliably. These include:
+
+### All-reduce, reduce, broadcast, all-gather, reduce-scatter
+
+- **All-reduce**: Each device provides some data (often gradients), and the result is aggregated (e.g., summed or averaged) across all devices. Finally, the aggregated result is distributed back to all participants.
+- **Reduce**: Similar to all-reduce, but the result is only stored on a single "root" device.
+- **Broadcast**: A single device's data is copied to all other devices in the group.
+- **All-gather**: Each device sends its data to all others, so that eventually every device holds the union of the data (e.g., combined shards of a tensor).
+- **Reduce-scatter**: Opposite of all-gather: an aggregated (summed or averaged) operation is performed on the input from all devices, then each device receives a distinct portion of the result.
+
+In practical distributed training, **all-reduce** is the most common for gradient synchronization in data parallelism. However, advanced methods like FSDP or pipeline parallel training also make heavy use of **all-gather** or **reduce-scatter**.
+
+### How they enable data parallel synchronization
+
+When performing data parallel training, the gradient calculations must be combined at the end of each mini-batch. An all-reduce with a "sum" operation is typically used:
+
+1. Each GPU calculates <Latex text="\(g_i\)"/>.
+2. An all-reduce across all GPUs yields <Latex text="\( \sum_i g_i \)"/>.
+3. Optionally, the sum can be divided by <Latex text="\(N\)"/> if the final gradient is the average gradient.
+
+This is exactly how frameworks like PyTorch implement `torch.nn.parallel.DistributedDataParallel`. The underlying communication method is typically an optimized ring-based all-reduce or a hierarchical algorithm that takes advantage of the GPU's local NVLink connections or the node's InfiniBand fabric.
+
+### Key libraries (NCCL, MPI, etc.) and usage patterns
+
+- **NCCL**: Created by NVIDIA, it's optimized for multi-GPU systems and is widely used in PyTorch and TensorFlow. 
+- **MPI**: A more general-purpose library, heavily used in HPC. Tools like Horovod (by Uber) rely on MPI for multi-GPU training, especially in multi-node contexts.
+
+Whether you choose NCCL or MPI often depends on your cluster's architecture and personal preference. NCCL is extremely popular in deep learning for GPU-based cluster setups, offering near-peak hardware bandwidth in many cases.
+
+## Pipeline parallelism
+
+When data parallelism alone is insufficient — especially for gargantuan models — another technique emerges: pipeline parallelism. Rather than replicating the entire model on each device (or employing complex FSDP), pipeline parallelism divides the model into consecutive chunks (or stages), with each stage residing on a different device.
+
+### Splitting model layers across devices
+
+Imagine a neural network with <Latex text="\(L\)"/> layers:
+
+<Latex text="\(f(x) = f_L(\dots f_2(f_1(x)) \dots)\)"/>
+
+In pipeline parallelism, you might split these layers into <Latex text="\(S\)"/> stages:
+
+<Latex text="\( Stage_1: f_1, ..., f_{L_1} \)"/>,  
+<Latex text="\( Stage_2: f_{L_1+1}, ..., f_{L_2} \)"/>,  
+...  
+<Latex text="\( Stage_S: f_{L_{S-1}+1}, ..., f_L \)"/>.
+
+If <Latex text="\(S\)"/> devices are used, each device holds one stage of layers. During forward propagation, the output of <Latex text="\(Stage_1\)"/> is transferred as input to <Latex text="\(Stage_2\)"/>, and so forth until <Latex text="\(Stage_S\)"/>. The backward pass similarly travels in reverse.
+
+Because each stage only holds a fraction of the overall model, pipeline parallelism addresses memory constraints. However, if done naïvely, the first device might finish its forward pass early while later devices are still waiting (or likewise in backward pass). This is where micro-batching helps.
+
+### Micro-batching to keep all devices busy
+
+To avoid idle time, the input mini-batch is further split into smaller micro-batches:
+
+1. Device 1 starts processing the first micro-batch.
+2. Once it finishes the forward pass for micro-batch 1, it passes that output to device 2 and begins working on micro-batch 2.
+
+While device 1 works on micro-batch 2, device 2 concurrently runs the forward pass for micro-batch 1. By the time device 1 is done with micro-batch 2, device 2 is ready for the next chunk. The same pipeline staging logic applies for the backward pass, just in reverse order.
+
+### Advantages and complexities in scheduling forward/backward passes
+
+- **Advantages**:
+  - Dramatically reduces memory usage if the model is the main memory bottleneck.
+  - Potentially increases utilization by overlapping computation on consecutive micro-batches.
+
+- **Complexities**:
+  - The scheduling of micro-batches in forward and backward passes can be tricky. If the scheduling is suboptimal, some devices remain idle, diminishing gains.
+  - Implementations must handle the partial gradient flow in a staged manner, which can introduce new synchronization or debugging challenges.
+
+In frameworks such as Megatron-LM (by NVIDIA) or DeepSpeed (by Microsoft), pipeline parallelism is combined with other parallelization strategies to train massive language models on clusters with hundreds or thousands of GPUs.
+
+## Looping pipelines and advanced scheduling
+
+### The looping approach to pipeline parallelism
+
+A classic approach to pipeline parallelism involves literally creating a "loop" where stages pass micro-batches along. The device at stage 1 repeatedly receives new micro-batches, processes them, and passes them onward. In effect, the pipeline is never idle once it's fully "warmed up". The challenge is ensuring that:
+
+1. **Initial warm-up**: The pipeline is empty at the start. The early stages ramp up first; later stages wait for their input.
+2. **Steady state**: Once the pipeline is full, each device is hopefully working on one micro-batch at a time, in forward or backward mode, with minimal idle time.
+3. **Final drain**: Once the last micro-batch enters the pipeline, there's a tail period in which the subsequent stages finish while earlier stages go idle.
+
+### Minimizing idle time and maximizing throughput
+
+Idle time is the main cause of inefficiency in pipeline parallelism. Techniques to mitigate idle time:
+
+1. **Micro-batch scheduling**: Dynamically reordering micro-batches or adjusting their sizes based on device throughput.
+2. **Interleaving**: Running forward passes for later micro-batches while earlier micro-batches are in their backward pass. 
+3. **Adaptive pipeline depth**: In some advanced setups, one might even re-partition the model or skip certain layers in different parts of training to keep the pipeline balanced.
+
+The optimization of these schedules can become quite intricate, involving integer programming or heuristic approaches to find the best pipeline arrangement for a given cluster.
+
+### Profiling pipeline-parallel systems
+
+Profiling pipeline systems involves measuring:
+- **Device utilization**: Are the GPUs always busy?
+- **Latency**: How quickly does each micro-batch progress through the pipeline?
+- **Communication overhead**: Data transfer times between pipeline stages.
+
+Tools such as PyTorch's built-in profiler, NVIDIA Nsight Systems, or custom trace analyzers for HPC can help identify bottlenecks. The overarching goal is to achieve near-constant GPU utilization once the pipeline is in the steady state.
+
+## Tensor parallelism
+
+While data parallelism splits the dataset and pipeline parallelism splits layers, tensor parallelism splits the operations **within** each layer itself. This approach is especially relevant in large Transformer-based models, where the same architectural block — e.g., a multi-head attention or a large feed-forward layer — repeats multiple times.
+
+### Partitioning layers at the tensor operation level
+
+In a conventional fully-connected layer:
+
+<Latex text="\[
+z = W \cdot x + b
+\]"/>
+
+where <Latex text="\(W\)"/> is of shape <Latex text="(M \times N)\)"/>. Under tensor parallelism, you might split <Latex text="\(W\)"/> horizontally or vertically across multiple devices, so that each device holds a sub-block of <Latex text="\(W\)"/>. Then each device performs a partial matrix multiplication:
+
+<Latex text="\[
+z_i = W_i \cdot x_i + b_i
+\]"/>
+
+with the partial results <Latex text="\(z_i\)"/> being combined (e.g., concatenated or summed) at the end.
+
+Because large Transformer blocks often contain multiple large linear layers and multi-head attention modules, the potential memory and compute savings can be significant. However, the fine-grained partitioning can increase cross-device communication if not carefully planned.
+
+### Splitting linear layers, attention mechanisms, or feedforward blocks
+
+Different ways to split:
+1. **Row-splitting** (or parallelizing the output dimension).
+2. **Column-splitting** (or parallelizing the input dimension).
+3. **Splitting attention heads** among multiple devices.
+
+You can also apply tensor parallelism to the softmax operations or other specialized blocks (e.g., layer normalization) if the dimensionality is high enough to warrant parallelization. The aim is to keep each device's workload balanced.
+
+### Balancing communication overhead with compute gains
+
+Communication overhead arises when partial results must be shared among devices. For instance, if each device handles a fraction of the attention heads, then after each attention block, partial outputs from each device must be aggregated before continuing the forward pass. This overhead can partially offset the parallel speedup.
+
+Hence, an important principle in tensor parallelism is **minimizing dimension boundaries**. In other words, you want to cut across the dimension that leads to the least frequent cross-device interactions. In practice, frameworks such as Megatron-LM or DeepSpeed have extensively optimized these operations, providing reference designs that can yield near-linear scaling in multi-GPU setups for certain extremely large Transformers.
+
+## Asynchronous tensor parallel methods
+
+### Overlapping compute and communication
+
+As models get larger and as we add more specialized forms of parallelism, overlapping computations (e.g., matrix multiplications) and communication (e.g., all-reduce or gather of partial results) becomes increasingly important for performance. Asynchronous methods aim to push data to the network (or to GPU peers) while the GPU is busy with other computations. This is often done through streams and event scheduling at the CUDA level.
+
+A typical approach might be:
+1. Start the matrix multiplication for partial results on one GPU.
+2. Immediately initiate an asynchronous operation to send these partial results to the next GPU or gather them from multiple GPUs, while the local GPU continues with other computations.
+3. Synchronize or block only when the data is actually needed for the next step of the forward pass or backward pass.
+
+### Designing asynchronous linear layers
+
+If you have a standard linear layer <Latex text="\(z = W \cdot x + b\)"/> split across multiple GPUs, you can orchestrate asynchronous calls so that each GPU:
+1. Loads <Latex text="\(W_i\)"/> and <Latex text="\(x\)"/> into local memory (possibly via pinned CPU memory or direct GPU-to-GPU copies).
+2. Launches a kernel to perform the partial product <Latex text="\(W_i \cdot x\)"/>.
+3. Immediately queues a send operation with the partial result <Latex text="\(z_i\)"/>.
+4. While the transfer is ongoing, the GPU can compute another partial product if available or proceed with other tasks in the compute graph.
+
+Some frameworks handle this automatically (e.g., PyTorch with asynchronous kernels or JAX with XLA's lazy execution paradigm), but fine-tuning for maximum concurrency often requires custom scheduling or specialized library calls.
+
+### Analyzing performance trade-offs
+
+By scheduling computations asynchronously, you can reduce waiting time and strive for near 100% GPU utilization. However, it also introduces complexities:
+
+- Potential for out-of-order execution bugs or race conditions if not carefully controlled via synchronization primitives.
+- Harder debugging since errors might manifest asynchronously, well after the original cause.
+
+Still, for large-scale training with multiple forms of parallelism, asynchronous methods are a potent tool in achieving high throughput.
+
+## Transformers with tensor parallelism
+
+Transformers — particularly large ones used in language modeling or large-scale vision tasks — are often prime targets for tensor parallelism. The standard Transformer block includes multi-head self-attention followed by feed-forward sub-layers. Each sub-layer can be partitioned, making it straightforward to spread the computation across multiple devices.
+
+### Applying tensor parallelism to attention and feed-forward sub-layers
+
+For multi-head attention, you might:
+- Assign distinct heads to different GPUs.
+- Split the query, key, and value projections across GPUs, each handling a subset of attention heads or a segment of the hidden dimension.
+
+For the feed-forward sub-layer, which typically includes two large linear layers:
+
+<Latex text="\[
+FFN(x) = \mathrm{ReLU}(x W_1 + b_1) W_2 + b_2
+\]"/>
+
+you can partition <Latex text="\(W_1\)"/> and <Latex text="\(W_2\)"/> among GPUs, each handling a fraction of the dimension. The partial results from each device must then be gathered (or reduced) before continuing.
+
+### Profiling large transformer models for memory and speed
+
+When scaling a Transformer model to billions of parameters:
+
+1. **Memory profiling**: Tools like PyTorch's `summary()`, advanced logging from [DeepSpeed](https://www.deepspeed.ai/), or manual instrumentation can help estimate GPU memory usage at each step.
+2. **Speed profiling**: Look at device utilization, distribution of load among GPUs, and measure how much time is spent in communication.
+
+Advanced users often turn to specialized frameworks (Megatron-LM, DeepSpeed, etc.) that incorporate years of engineering to achieve near-optimal scaling for massive Transformers.
+
+### Techniques for handling large vocabulary embeddings
+
+Language models often contain extremely large embedding matrices for vocabulary tokens. Storing these embeddings on a single GPU can exceed memory constraints if the vocabulary is large (tens or hundreds of thousands of tokens). Tensor parallelism can split the embedding matrix row-wise among multiple GPUs:
+
+- GPU 1 stores vocabulary rows <Latex text="\(0\)"/> to <Latex text="\(M_1\)"/>.
+- GPU 2 stores vocabulary rows <Latex text="\(M_1+1\)"/> to <Latex text="\(M_2\)"/>.
+- ...
+
+During the forward pass, tokens from the mini-batch that map to vocabulary indices in that GPU's range are handled locally. Partial results are combined if needed, typically via an all-gather or similar operation. This approach is essential for extremely large vocabularies used in multi-lingual or domain-specific language models.
+
+## 3d parallelism (data, pipeline, tensor)
+
+So far, I've presented data parallelism, pipeline parallelism, and tensor parallelism as separate ideas. But in real-world large-scale systems (especially for huge language models), they're combined into "3D parallelism."
+
+### Combining data, pipeline, and tensor parallel approaches
+
+1. **Data parallel**: The dataset is split among multiple groups of GPUs. 
+2. **Pipeline parallel**: Within each data-parallel group, the model is further split across devices in a pipeline fashion.
+3. **Tensor parallel**: Each stage of the pipeline is itself split at the tensor level among multiple GPUs.
+
+For instance, if you have 64 GPUs, you might group them into 8 data-parallel groups, each containing 8 GPUs. Those 8 GPUs might be arranged into 2 pipeline stages, each stage with 4 GPUs performing tensor parallel computations. The exact partitioning depends on your model architecture and the cluster's topology.
+
+### When and why to stack multiple parallel techniques
+
+- **Memory constraints**: Even with data parallelism, a single pipeline stage or a single GPU might not hold the entire portion of large layers. Tensor parallelism further splits the heavy linear layers or embeddings.
+- **Compute distribution**: Pipeline parallelism can reduce memory usage per GPU but might not provide enough parallel speedup if the model remains large. Tensor parallelism ensures each stage is also distributed across multiple GPUs for maximum throughput.
+- **Mixed data sizes**: In some workloads, the dataset is huge, but the model is also extremely large. Combining data parallelism and model parallelism (pipeline/tensor) ensures both dataset size and model dimension are handled efficiently.
+
+Combining these techniques is complex, as it requires careful scheduling of micro-batches, pipeline concurrency, and advanced memory management. Yet, it can unlock unprecedented scale.
+
+### Real-world use cases (language models, large-scale vision models)
+
+Cutting-edge natural language processing frameworks — like GPT-3, GPT-4, and other large language models — routinely apply 3D parallelism in data centers with thousands of GPUs. Similarly, large-scale vision models or multi-modal networks that fuse text and image data can benefit from these multi-level parallel strategies, achieving training times that would otherwise be unattainable.
+
+## Training on multiple gpus and nodes
+
+Let's expand beyond single-node multi-GPU configurations. Real HPC or cloud-based setups often involve multiple machines, each containing multiple GPUs.
+
+### Setting up multi-node clusters (on-premise or cloud)
+
+- **On-premise**: You might have a cluster with dedicated GPU nodes, connected via InfiniBand or high-speed Ethernet. You'll use HPC job schedulers like Slurm, PBS, or LSF to allocate nodes and run your distributed tasks.
+- **Cloud**: Platforms like AWS, Azure, or GCP provide GPU instances that can be scaled up or down on demand. Networking is typically over specialized HPC interconnects within the same availability zone, and cluster orchestration can be done via Kubernetes or the platform's managed services.
+
+In both cases, you must configure your job to launch the distributed processes on each node, set appropriate environment variables for communication backends, and handle potential node failures or dynamic resource allocation.
+
+### Handling different interconnects (infiniband, ethernet)
+
+Communication libraries (NCCL or MPI) automatically handle many low-level details of the network. However, bandwidth and latency can vary dramatically:
+
+- **InfiniBand**: Often used in HPC data centers, offering very high bandwidth and low latency. Great for high-performance, large-scale distributed training.
+- **Ethernet**: More common in commodity clusters, with lower bandwidth and higher latency. Achieving top performance can be more challenging.
+
+You can typically adapt to these differences by adjusting the batch size, micro-batch size, or pipeline depth. Some HPC sites also use specialized topologies (e.g., fat-tree or dragonfly networks) that can further complicate your parallelization strategy.
+
+### Failover strategies and distributed logging
+
+In large-scale multi-node systems, a single node or GPU failing shouldn't necessarily crash the entire training job. Techniques such as checkpointing at regular intervals allow you to resume from the last known good state. Some advanced frameworks support [elastic training](https://pytorch.org/elastic/) in PyTorch, where workers can join or leave dynamically, though consistent convergence may demand specialized solutions.
+
+For logging and monitoring, centralized logging systems or distributed logging frameworks (e.g., aggregator instances that collect logs from each node) are often used. For large HPC clusters, consider using job-based ephemeral storage or cluster-wide file systems (like Lustre or GPFS) to store logs and checkpoints reliably.
+
+## Parameter servers and other distributed architectures
+
+While all-reduce-based data parallelism is highly popular in modern deep learning frameworks, the parameter server architecture was once a mainstay and remains relevant in certain large-scale setups.
+
+### Architecture of parameter servers
+
+A parameter server is a dedicated set of nodes (servers) responsible for storing and updating the model parameters. Worker nodes process the data and send gradients to the parameter server. The parameter server updates the parameters and sends the new values back to the workers. This was popularized by early large-scale frameworks like DistBelief and by the original version of TensorFlow.
+
+### Alternative designs (peer-to-peer, ring-based)
+
+- **Peer-to-peer**: Where each node holds a portion of the parameters, and direct communication between workers handles updates, effectively distributing the parameter server role among all nodes.
+- **Ring-based**: Where GPUs or nodes are arranged logically in a ring for gradient exchanges, frequently used in all-reduce implementations.
+
+### Pros and cons for extremely large-scale systems
+
+- **Parameter server approach**:
+  - Pros: Potentially easier to scale to many workers, handle fault tolerance in a modular way, and manage heterogeneous hardware.
+  - Cons: The servers can become a communication bottleneck unless carefully replicated and sharded.
+
+- **All-reduce approach**:
+  - Pros: Tends to be more bandwidth-efficient, especially with advanced collective algorithms. Often more straightforward to integrate with frameworks like PyTorch.
+  - Cons: Might be less flexible for extremely large cluster expansions if the number of participants is huge.
+
+Real-world systems often mix these approaches, using a hierarchical strategy (e.g., all-reduce within a node, parameter server across nodes) for better scalability.
+
+## Monitoring and profiling distributed systems
+
+Distributed training can be more challenging to debug and optimize than single-device training. A small improvement in synchronization efficiency can lead to large time savings at scale, but pinpointing that improvement requires meticulous monitoring and profiling.
+
+### Tools for distributed profiling (nvidia nsight, tensorboard, jax profilers)
+
+- **NVIDIA Nsight Systems**: Offers a timeline view of CPU, GPU, and network events. You can see if GPUs are waiting on communication or vice versa.
+- **TensorBoard**: Includes a profiler plugin that can record execution traces, memory usage, and operator-level details, especially in TensorFlow or PyTorch.
+- **JAX profilers**: For JAX-based systems, there are built-in tools to visualize the XLA computation graph and measure step times.
+
+### Detecting bottlenecks (network vs. compute vs. memory)
+
+In large distributed systems, the main bottlenecks are:
+1. **Compute-limited**: The GPUs are maxed out, and the network is relatively idle.
+2. **Network-limited**: The GPUs often wait for data or gradient synchronization. Possibly the interconnect or the collective algorithms need tuning.
+3. **Memory-limited**: The GPU memory might be exhausted, forcing smaller batch sizes or more frequent parameter sharding or CPU offloading.
+
+Effective profiling will help you categorize these bottlenecks. Different frameworks and HPC libraries often have specific diagnostic APIs to measure how busy each GPU is and to track the data transfer patterns.
+
+### How to systematically optimize step-by-step
+
+1. **Identify the primary bottleneck**: For instance, a slow all-reduce. 
+2. **Experiment with changes**: E.g., reduce micro-batch size, rearrange pipeline stages, or switch from ring all-reduce to tree-based all-reduce, etc.
+3. **Measure again**: Compare metrics to see if the modification reduced or shifted the bottleneck. 
+4. **Iterate**: Continue until you find an optimal (or near-optimal) configuration for your hardware and model.
+
+## Practical tips for large-scale production training
+
+### Managing infrastructure costs and resource allocation
+
+Running large training jobs can be extremely expensive in the cloud or in on-premise HPC environments. Recommendations:
+
+- **Spot instances** (on AWS) or preemptible VMs (on GCP) can reduce costs but require robust failover handling, as these instances might be taken away at short notice.
+- **Prioritize usage**: If you're part of an organization, ensure that GPU clusters are allocated efficiently. A half-utilized GPU due to poor scheduling or pipeline design is effectively wasted resources.
+- **Budgeting**: For extremely large training runs, plan carefully and do small-scale tests first to estimate cost and performance.
+
+### Checkpointing large models and data reliably
+
+- **Incremental checkpointing**: Only store essential parameters or use difference-based checkpoints. 
+- **Sharded checkpoints**: Save parts of the model on each GPU or node to avoid a single node overloading.
+- **Verify consistency**: If you use pipeline or tensor parallelism, ensure that you reconstruct the model state properly when restoring from a checkpoint.
+
+### Deployment considerations: containerization, cluster orchestration, hpc environments
+
+- **Containerization**: Docker or Singularity containers are widely used to standardize software environments. This can reduce version conflicts or library mismatches across nodes.
+- **Cluster orchestration**: Tools like Kubernetes, Marathon, or HPC job schedulers (Slurm) manage resource allocation, scaling, and job scheduling. In large-scale systems, these are almost mandatory to keep track of multi-user or multi-job environments.
+- **HPC environment**: Typically uses specialized resource managers (like Slurm or PBS). HPC clusters might also require you to load modules for CUDA, MPI, or specialized libraries. The workflow might differ from a typical dev-ops approach but can provide exceptional performance.
+
+## Conclusion and further resources
+
+Distributed training is both an art and a science. It encompasses a broad set of strategies — data parallelism, pipeline parallelism, tensor parallelism, and beyond — that can be used separately or in combination to tackle the immense computational and memory needs of today's largest models. Understanding the fundamental building blocks (communication primitives, concurrency patterns, memory sharding) is crucial to designing effective large-scale solutions.
+
+As a brief decision tree:
+- **Data parallel** alone is often easiest but may not suffice if the model is extremely large.
+- **Pipeline parallel** is a natural choice if memory constraints at the single-GPU level are severe and the model is easily separable into stages.
+- **Tensor parallel** is ideal for large, repeated computational blocks, like Transformer feed-forward layers, especially if you want to distribute a single giant layer across multiple GPUs.
+- **3D parallel** combines all the above for truly colossal scenarios.
+
+For further reading:
+
+- **Megatron-LM** (Smith and gang, NeurIPS 2020) provides an in-depth look at scaling language models with tensor and pipeline parallelism.
+- **DeepSpeed** (Microsoft) offers a suite of tools for parallel training, including pipeline parallelism, ZeRO for memory-efficient data parallelism, and numerous optimizations for massive Transformer training.
+- **ZeRO-Infinity** (Rajbhandari and gang, ICML 2021) proposes advanced parameter partitioning and memory offloading strategies, complementing many of the ideas outlined here.
+
+Exploring these frameworks and techniques — combined with careful experimentation and profiling — will enable you to push the boundaries of model size and speed, whether you're working on next-generation language models, large-scale vision tasks, or any other domain that demands training at scale.
+
+------
+
+Below, I've included a small code snippet to illustrate how you might initialize a distributed data parallel training environment in PyTorch for multi-GPU setups, and a placeholder image to visualize a pipeline-parallel architecture.
+
+
+<Image alt="An illustration of a pipeline-parallel architecture with multiple devices" path="" caption="Pipeline parallel layout showing how micro-batches move through stages." zoom="false" />
+
+<Code text={`
+import torch
+import torch.distributed as dist
+import torch.multiprocessing as mp
+from torch.nn.parallel import DistributedDataParallel as DDP
+
+def train(rank, world_size):
+    # Initialize the process group
+    dist.init_process_group(
+        backend='nccl',
+        init_method='tcp://127.0.0.1:23456',
+        world_size=world_size,
+        rank=rank
+    )
+
+    # Set device for this process
+    torch.cuda.set_device(rank)
+    
+    # Create a model and move it to GPU
+    model = MyModel().cuda(rank)
+    
+    # Wrap the model in DDP
+    model = DDP(model, device_ids=[rank], output_device=rank)
+    
+    # Create your dataset & dataloader
+    dataset = MyDataset()
+    sampler = torch.utils.data.distributed.DistributedSampler(dataset, num_replicas=world_size, rank=rank)
+    dataloader = torch.utils.data.DataLoader(dataset, sampler=sampler, batch_size=32)
+    
+    optimizer = torch.optim.Adam(model.parameters(), lr=1e-4)
+
+    for epoch in range(num_epochs):
+        sampler.set_epoch(epoch)
+        for batch in dataloader:
+            inputs, labels = batch
+            inputs = inputs.cuda(rank)
+            labels = labels.cuda(rank)
+            
+            optimizer.zero_grad()
+            outputs = model(inputs)
+            loss = loss_function(outputs, labels)
+            loss.backward()
+            optimizer.step()
+
+def main():
+    world_size = 4  # number of GPUs
+    mp.spawn(train, args=(world_size,), nprocs=world_size, join=True)
+
+if __name__ == "__main__":
+    main()
+`}/>
+
+Feel free to adapt this example for your own large-scale training setup, incorporating FSDP, pipeline parallelism, or tensor parallelism as needed. By building incrementally — profiling for bottlenecks and carefully engineering your network architecture and parallelization approach — you can achieve near-linear speedups and train models that would otherwise exceed single-GPU limits.
+
+------
+
+With this overview of state-of-the-art distributed training techniques, I hope you feel equipped to tackle the challenges of scaling up your own models, whether you're running on a handful of GPUs or orchestrating training across hundreds of nodes in a data center.

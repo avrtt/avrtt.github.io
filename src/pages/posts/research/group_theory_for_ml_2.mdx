@@ -1,0 +1,588 @@
+---
+index: 138
+indexCourse: 13
+indexFavorites:
+title: "Group theory for ML, pt. 2"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Group theory for ML, pt. 2"
+courseCategoryName: "Mathematics"
+desc: "Some sort of mental BDSM"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "13.11.2024"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 3
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/group_theory_for_machine_learning.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/group_theory_for_ml_2"
+slug: "/research/group_theory_for_ml_2"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+1. Recap: Key Concepts from Part 1  
+   - Brief review of group actions, representations, irreps  
+   - Symmetries, invariance, and equivariance  
+   - Motivation: bridging theory to real ML implementations  
+2. Group Theory in the Context of Machine Learning  
+   - Symmetries, Invariances, and Data Augmentation  
+     - Why symmetries matter for ML  
+     - Common transformations in images and signals (rotations, reflections, etc.)  
+   - Equivariance vs. Invariance  
+     - Formal definitions and practical outcomes  
+     - Impact on model performance, generalization, and data efficiency  
+   - Practical Scenarios  
+     - 2D image classification with rotations/reflections  
+     - 3D shape analysis, point clouds  
+     - Time-series and structured data  
+3. Group Convolution and Group Convolutional Networks  
+   - Revisiting the Classical Convolution Operator  
+     - CNNs as translation-equivariant networks  
+     - Inner product interpretation in the spatial domain  
+   - Extending Convolution to Group Domains  
+     - Lifting convolution: from <Latex text="\(\mathbb{R}^n\)"/> to <Latex text="\(\mathbb{R}^n \rtimes G\)"/>  
+     - Regular group convolutions and kernel parameterization over <Latex text="\(G\)"/>  
+     - Equivariance to larger transformations: rotations (<Latex text="\(C_n\)"/>, SO(2)), reflections (dihedral groups), etc.  
+     - Other groups of interest (scaling, dilation, etc.)
+   - Implementing Group Equivariant Networks  
+     - Overview of PyTorch primitives for group convolution  
+     - Interpolation-based kernels (bilinear, trilinear sampling)  
+     - Practical pitfalls (off-grid transformations, discrete vs. continuous groups, boundary effects)  
+4. From Theory to Code: A Step-by-Step Example  
+   - Defining the Group and Its Representation  
+     - Coding the group's base class (GroupBase)  
+     - Matrix representation, product, inverses, identity element  
+   - Building the Kernel Grids  
+     - Generating transformed grids for each group element  
+     - Sampling with `grid_sample()` for discrete domains  
+   - Constructing Group Convolution Layers  
+     - Lifting kernels vs. group convolution kernels  
+     - Combining the group dimension with channels for PyTorch `Conv2D`  
+   - Projection for Invariance  
+     - Summation, averaging, and max over group dimensions  
+     - Integrating with classification tasks  
+5. Equivariance, Invariance, and Projection Layers  
+   - Key Operations for Building Invariance  
+     - Summation, average, max pooling over the group dimension  
+     - Geometric interpretation of "pooling over the group"  
+   - Projection Layer Implementation Details  
+     - From group-defined feature maps to a final invariant descriptor  
+     - Tying in with typical ML pipelines  
+6. Introduction to Steerable Convolutional Networks  
+   - Harmonic Analysis Viewpoint  
+     - Fourier transforms on groups (non-commutative harmonic analysis)  
+     - Band-limited (BL) regular representations for continuous groups (e.g., <Latex text="\(\mathrm{SO}(2)\)"/>)  
+   - Steerable Feature Fields  
+     - Replacing the explicit group dimension with truncated Fourier coefficients  
+     - Advantages for continuous transformations (rotations, possibly reflections)  
+   - Steerable CNN Architecture  
+     - Convolution kernels satisfying the steerability constraint  
+     - Non-linearities in steerable CNNs (Fourier-based or polynomial-based)  
+     - Approximate vs. exact equivariance on pixel grids  
+7. Real-World Applications and Experiments  
+   - Rotated MNIST Case Study  
+     - Training a group-equivariant CNN vs. a standard CNN  
+     - Accuracy on rotated test sets, measuring equivariance error  
+   - Other Benchmark Datasets  
+     - CIFAR variants, medical imaging (MRI, CT) with rotational symmetries  
+     - 3D shapes, point-cloud tasks (e.g., ModelNet)  
+   - Performance Metrics and Results  
+     - Equivariance error measurement (relative vs. absolute error)  
+     - Accuracy vs. transformations  
+     - Computational overhead (kernel sampling, interpolation)  
+8. Implementation Insights and Code Snippets  
+   - Practical Considerations  
+     - Discrete vs. continuous groups (<Latex text="\(C_n\)"/> vs. <Latex text="\(\mathrm{SO}(2)\)"/>)  
+     - Interpolation artifacts, aliasing, and how to mitigate them  
+     - Batch normalization vs. group normalization in equivariant layers  
+     - GPU usage, memory costs for large group expansions  
+   - Debugging Common Issues  
+     - Ensuring consistent group action across different layers  
+     - Checking for shape mismatches in group convolution  
+     - Verifying equivariance numerically  
+9. Broader Directions and Open Research  
+   - Expanding to Larger Groups  
+     - Affine groups, dilation groups, other Lie groups  
+     - Practical challenges with big or infinite groups  
+   - Deep Learning Beyond Euclidean Domains  
+     - Manifold learning, graph neural networks, other geometric settings  
+     - Leveraging group-theoretic ideas for non-Euclidean data  
+   - Theoretical Considerations and Challenges  
+     - Exact vs. approximate equivariance on pixel grids  
+     - Trade-offs in computational cost and accuracy  
+     - Potential directions (E(n)-equivariant networks, gauge equivariance, etc.)  
+10. Conclusion and Future Outlook  
+   - Recap of building group-equivariant and steerable CNNs  
+   - Potential for further improvement (e.g., advanced sampling strategies, better BL expansions)  
+   - Where to go next: advanced group-theoretic frameworks, specialized domains  
+
+*/}
+
+
+## Recap: key concepts from part 1
+
+In the previous installment of this course's exploration of group theory for machine learning — which I referred to informally as "Group theory for ML, pt. 1" — I introduced a wide array of foundational ideas from group theory and how they manifest in machine learning contexts. My plan now is to build on that base by discussing more advanced or extended topics, demonstrating how group-theoretic insights inform the development of new model architectures, and highlighting the bridge from theory to practice.
+
+I will begin with a short recapitulation of the most essential concepts from part 1, which should help anchor your memory and ensure continuity in the flow of ideas. However, if you have not read the previous article, or if you need more background on fundamental group theory (such as the definition of a group, the concept of irreps, and the notion of group actions), I strongly recommend referring to that material first.
+
+### Brief review of group actions, representations, irreps
+
+Let me refresh the core definitions that were central in part 1:
+
+- A <Highlight>group</Highlight>, in the abstract algebraic sense, is a set <Latex text="\(G\)"/> equipped with a binary operation (often denoted multiplicatively) that satisfies closure, associativity, existence of an identity element, and existence of inverse elements. In machine learning contexts, this group <Latex text="\(G\)"/> often represents a collection of symmetries — e.g., all 2D rotations of an image, or the group of permutations of features.
+
+- A <Highlight>group representation</Highlight> is a way to realize the elements of <Latex text="\(G\)"/> as linear transformations of a vector space (often <Latex text="\(\mathbb{R}^n\)"/> or <Latex text="\(\mathbb{C}^n\)"/>). Concretely, each element <Latex text="\(g \in G\)"/> is associated with a matrix <Latex text="\(\rho(g)\)"/> acting on vectors in <Latex text="\(\mathbb{R}^n\)"/>. The representation <Latex text="\(\rho\)"/> preserves group structure, meaning <Latex text="\(\rho(g_1g_2) = \rho(g_1)\rho(g_2)\)"/>.
+
+- An <Highlight>irreducible representation</Highlight> (irrep) is a representation that cannot be decomposed into smaller, non-trivial representations. The famous result from representation theory is that every finite-dimensional representation of a finite group can be expressed uniquely (up to isomorphism) as a direct sum of irreps. This concept is extremely relevant for analyzing how symmetrical transformations can be expressed in a neural network's parameter space or feature maps.
+
+- <Highlight>Group actions</Highlight> formalize the intuitive notion of a group "acting" on a set or a space. When we say <Latex text="\(G\)"/> acts on a set <Latex text="\(X\)"/>, we have a mapping <Latex text="\(G \times X \to X\)"/> (usually denoted <Latex text="\((g, x) \mapsto g \cdot x\)"/>) that satisfies certain natural axioms. In ML, the set <Latex text="\(X\)"/> might be an input space (for instance, image pixels), and we want a representation of transformations that's consistent with how the group acts on that input (e.g., rotating an image by 90 degrees).
+
+### Symmetries, invariance, and equivariance
+
+We then emphasized:
+
+- A function <Latex text="\(f\)"/> is <Highlight>invariant</Highlight> under a group action if applying any element <Latex text="\(g \in G\)"/> to the input does not change the output: 
+  <Latex text="\(f(g\cdot x) = f(x)\)"/>
+  for all <Latex text="\(g \in G\)"/> and all <Latex text="\(x \in X\)"/>.
+
+- A function <Latex text="\(f\)"/> is <Highlight>equivariant</Highlight> under a group action if applying any element <Latex text="\(g \in G\)"/> to the input is equivalent to applying some corresponding transformation to the output. More formally:
+  <Latex text="\(f(g\cdot x) = \rho(g) f(x)\)"/>
+  where <Latex text="\(\rho(g)\)"/> is often a representation of <Latex text="\(g\)"/> on the output space. Equivariance can be seen as the output being transformed "in tandem" with the input.
+
+In part 1, I gave some fundamental reasons why we might care about invariance or equivariance in neural networks. If a dataset exhibits a certain symmetry — for example, the meaning of an image does not change when it is rotated slightly — a network that respects this property can generalize better, use parameters more efficiently, and often reduce the need for large amounts of labeled data (due to built-in constraints or priors).
+
+### Motivation: bridging theory to real ML implementations
+
+Finally, I closed part 1 by explaining the impetus behind going deeper into group theory for ML: the synergy between advanced abstract algebraic tools and practical, state-of-the-art neural architectures. Indeed, as the field of geometric deep learning (which attempts to unify CNNs, GNNs, and other structured neural networks under a group-theoretic lens) grows, more sophisticated group-based methods are emerging.
+
+In this Part 2, I will revisit the context of CNNs specifically, detail the concept of group convolution, show how to construct group-equivariant networks in code, and then explore how these methods can be extended (steerable CNNs, manifold data, etc.). Let's dive right in.
+
+## Group theory in the context of machine learning
+
+Let's reframe group theory within the ML domain, focusing on symmetrical transformations and their interplay with data augmentation, network design, and training strategies.
+
+### Symmetries, invariances, and data augmentation
+
+I want to highlight again why symmetries and invariances are so relevant in practice. One immediate reason: <Highlight>data augmentation</Highlight>. When you augment a dataset by applying transformations to the inputs (e.g., rotating images, flipping them horizontally, etc.), you are implicitly leveraging a group of transformations. If the label or fundamental structure remains the same under these transformations, you are injecting the knowledge that your problem is symmetrical in that manner.
+
+- **Why symmetries matter for ML**: If a symmetry is present in your data — say, the classification of a rotated image should be the same as the original image — then building the network to be invariant (or partially equivariant) to that symmetry can significantly improve performance. This approach can also help limit overfitting by effectively expanding the coverage of your training set.
+
+- **Common transformations in images and signals**: For 2D images, we commonly see the group of translations (implicitly exploited by standard convolutions), the group of discrete rotations by multiples of 90 degrees, or even continuous rotations <Latex text="\(\mathrm{SO}(2)\)"/>. Reflections (which form part of dihedral groups) also appear naturally, e.g., flipping an image horizontally or vertically. In one-dimensional signals (audio, time-series), the primary symmetrical transformation is often translations, but some tasks might also involve time-reversal symmetry. In 3D shape analysis or robotics contexts, the relevant groups can involve rigid motions <Latex text="\(\mathrm{SO}(3)\)"/> or the special Euclidean group <Latex text="\(\mathrm{SE}(3)\)"/>, i.e. combining rotations and translations in 3D.
+
+### Equivariance vs. invariance
+
+To reiterate:
+
+- **Equivariance**: The network's feature maps transform in a predictable, structured way when the input is transformed by an element of the group. Symbolically, <Latex text="\(f(g\cdot x) = \rho(g)f(x)\)"/>. If you have a layer (like a standard convolution) that is translation-equivariant, then shifting the input by one pixel shifts the feature map correspondingly.
+
+- **Invariance**: The network's output is unaffected by the group transformation: <Latex text="\(f(g\cdot x) = f(x)\)"/>. In other words, the final result is the same even if the input is changed by a symmetry transformation.
+
+Both properties matter for different reasons. In many classification tasks, we might want the final classification score or label to be invariant (since a rotated image is presumably the same object), while we want the intermediate representation to be equivariant, so that local features in the data move systematically around the feature map. That is precisely why CNNs are so powerful: their convolution layers are equivariant to translation, but the final output is typically a single label that is translation-invariant.
+
+### Practical scenarios
+
+Let's outline a few real-world domains where group theory and symmetries come into play:
+
+1. **2D image classification with rotations/reflections**: The classical example. Many images are considered the same object or scene even if they are slightly rotated or reflected. That's why building networks with these symmetries built-in can significantly improve performance with fewer training examples.
+
+2. **3D shape analysis, point clouds**: 3D data is usually subject to rotational and translational symmetries. Rotating a 3D mesh or point cloud of a chair doesn't change the fact that it is a chair. We might want our model to be equivariant or invariant to these transformations.
+
+3. **Time-series and structured data**: For time-series, translational invariance is often key (temporal shifts). Certain types of pattern recognition tasks can also involve time-reversal invariance. In structured data like molecular graphs, symmetries might be permutations of atoms or rotations in 3D space.
+
+All these scenarios highlight the growing importance of group theory in ML. Next, let me dive into the notion of *group convolution* and group convolutional networks, which generalize the classical idea of convolution by considering transformations from more general groups than translations alone.
+
+## Group convolution and group convolutional networks
+
+### Revisiting the classical convolution operator
+
+A standard 2D convolutional layer, as used in typical CNN architectures, is translation-equivariant along the spatial dimensions (height and width). If you shift the input image by, say, two pixels to the right, the feature maps produced by the convolution shift correspondingly, no matter which region of the image we're dealing with. Symbolically, the convolution with kernel <Latex text="\(k\)"/> can be written as:
+
+<Latex text="\[
+(f * k)(x) = \sum_{y} f(y) k(x - y).
+\]"/>
+
+For continuous signals, you might see an integral instead of a sum. Convolution is intimately tied to translation symmetry — specifically, it is the representation of the group of translations in a suitable function space.
+
+One can also interpret the standard convolution operator as computing an inner product of the kernel with each translated patch of the input. This perspective extends naturally to group convolutions, except we consider not just translations, but an entire group <Latex text="\(G\)"/> of transformations.
+
+### Extending convolution to group domains
+
+The fundamental insight behind group convolution is that we can consider a function <Latex text="\(f\)"/> defined on some domain (which might be <Latex text="\(\mathbb{R}^n\)"/> or a discrete grid of pixels), and a kernel defined *not only* as a function of a spatial shift but also of an element in a group <Latex text="\(G\)"/>. For example, in group equivariant CNNs for 2D images with rotational symmetry, the group might be the discrete rotations by multiples of 90 degrees, or even the continuous group <Latex text="\(\mathrm{SO}(2)\)"/>.
+
+#### Lifting convolution: from <Latex text="\(\mathbb{R}^n\)"/> to <Latex text="\(\mathbb{R}^n \rtimes G\)"/>
+
+The first step in building a group-equivariant layer is often referred to as the <Highlight>lifting convolution</Highlight>. Instead of mapping a function <Latex text="\(f: \mathbb{R}^n \to \mathbb{R}\)"/> to another function <Latex text="\(\mathbb{R}^n \to \mathbb{R}\)"/>, we map it to a function on the group domain, <Latex text="\(F: G \to \mathbb{R}\)"/>. 
+
+For a simple example, if the group is rotations of the plane by angles <Latex text="\(\theta\)"/>, a point in <Latex text="\(G\)"/> can be parameterized by <Latex text="\(\theta\)"/>. Then, the lifted feature map <Latex text="\(F(\theta)\)"/> might capture how well the kernel aligns with the input when the kernel is rotated by <Latex text="\(\theta\)"/>. The concept extends to <Latex text="\(\mathbb{R}^n \rtimes G\)"/> (the semidirect product space representing both translations and the group transformation) in more advanced contexts, but to keep things accessible, let's remain with a simpler conceptual explanation. The idea is that we're building a function that is aware of the transformations in <Latex text="\(G\)"/>.
+
+#### Regular group convolutions and kernel parameterization over <Latex text="\(G\)"/>
+
+Once we have a feature map on the group domain, we can define a convolution that includes summation (or integration) over the group. For a discrete group <Latex text="\(G\)"/> with <Latex text="\(|G|\)"/> elements, we might define:
+
+<Latex text="\[
+(F * \Psi)(g) = \sum_{h \in G} F(h) \, \Psi(h^{-1}g),
+\]"/>
+
+where <Latex text="\(\Psi\)"/> is a kernel also defined on the group. This is reminiscent of the standard convolution formula, except that the summation runs over <Latex text="\(G\)"/> instead of over the spatial domain. The group element <Latex text="\((h^{-1} g)\)"/> is analogous to the shift <Latex text="\((x-y)\)"/> in the classical formula.
+
+In a 2D setting, if <Latex text="\(G\)"/> is the group of rotations by multiples of 90 degrees (i.e., a cyclic group <Latex text="\(C_4\)"/>), then each group element corresponds to a discrete rotation: <Latex text="\(0^\circ\)"/>, <Latex text="\(90^\circ\)"/>, <Latex text="\(180^\circ\)"/>, <Latex text="\(270^\circ\)"/>. The kernel <Latex text="\(\Psi\)"/> would have separate parameters for each possible rotation. Then the group convolution sums over those rotations in a manner consistent with the group structure.
+
+#### Equivariance to larger transformations
+
+By expanding the notion of convolution from translations to other groups, we can achieve equivariance to more transformations. For instance, using the dihedral group <Latex text="\(D_n\)"/> gives us both rotations and reflections by discrete angles. Using <Latex text="\(\mathrm{SO}(2)\)"/> or <Latex text="\(\mathrm{SO}(3)\)"/> can give us continuous rotational equivariance in 2D or 3D. There are also expansions to scaling, dilation, or affine transformations, each of which can form its own group.
+
+#### Other groups of interest (scaling, dilation, etc.)
+
+Beyond rotational groups, scaling transformations also appear in image and signal processing tasks. For instance, if an object's scale is changed, we might want to preserve certain properties. One can also incorporate color transformations if they correspond to group actions in color space. The possibilities are extensive, but always bounded by whether the transformations you're modeling truly form a mathematical group (i.e., closure, identity, inverses, associativity).
+
+### Implementing group equivariant networks
+
+Implementing group equivariant networks can be done with modern deep learning frameworks (PyTorch, TensorFlow, JAX). The challenge is to handle transformations in a manner consistent with the group, especially for continuous transformations like rotations in 2D or 3D. 
+
+- **PyTorch primitives for group convolution**: Some specialized libraries (e.g., the "e2cnn" library by Weiler & Cesa, or the "escnn" library) provide group convolution layers out of the box. Otherwise, you might implement them manually by building the transformation grids and performing interpolation (as I will discuss in the next sections).
+
+- **Interpolation-based kernels (bilinear, trilinear sampling)**: When applying transformations (like rotating a kernel in the continuous plane), you often have to sample pixel values in between the discrete grid points. Bilinear, bicubic, or trilinear interpolation can be used. This introduces approximation error but is often necessary if you want your transformation to handle sub-pixel rotations or scaling.
+
+- **Practical pitfalls**: Real data is typically discrete, so continuous transformations must be discretized. You must handle boundary conditions (what happens when you rotate an image so that some part is out of the original field-of-view?), and you must decide how large or fine your sampling of the group will be (e.g., how many discrete angles do we approximate <Latex text="\(\mathrm{SO}(2)\)"/> with?). These choices can affect both performance and computational cost.
+
+With this conceptual scaffold in place, I want to illustrate a more step-by-step approach to building group equivariant modules, from defining a group's representation to constructing group convolution kernels, culminating in a final architecture.
+
+## From theory to code: a step-by-step example
+
+I will show a hypothetical scenario where we aim for rotational equivariance to a discrete group of four 2D rotations (i.e., <Latex text="\(C_4\)"/>, the cyclic group of order 4). This means we want the network to handle images so that rotating the input by <Latex text="\(0^\circ\)"/>, <Latex text="\(90^\circ\)"/>, <Latex text="\(180^\circ\)"/>, or <Latex text="\(270^\circ\)"/> in the pixel plane will lead to correspondingly rotated feature maps.
+
+### Defining the group and its representation
+
+Let's define a small Python class to represent the group <Latex text="\(C_4\)"/>. Of course, many libraries exist to handle group logic, but let's see how to do it by hand:
+
+<Code text={`
+import math
+import torch
+
+class Rot90Group:
+    def __init__(self):
+        # We can label the elements of C4 as 0, 1, 2, 3,
+        # representing rotations by 0, 90, 180, 270 degrees
+        self.elements = [0, 1, 2, 3]
+        # Precompute rotation matrices (2x2) or transformations if needed
+        self.matrices = [
+            torch.tensor([[1.0, 0.0], [0.0, 1.0]]),  # 0° rotation
+            torch.tensor([[0.0, -1.0], [1.0,  0.0]]), # 90°
+            torch.tensor([[-1.0,  0.0], [0.0, -1.0]]),# 180°
+            torch.tensor([[0.0,  1.0], [-1.0, 0.0]])  # 270°
+        ]
+    
+    def identity(self):
+        # Identity element is rotation by 0 degrees
+        return 0
+    
+    def inverse(self, g):
+        # For rotation by 90°, the inverse is rotation by 270° and so on
+        return (-g) % 4
+    
+    def product(self, g1, g2):
+        # Summation mod 4
+        return (g1 + g2) % 4
+    
+    def matrix_representation(self, g):
+        # Return the precomputed 2x2 matrix for group element g
+        return self.matrices[g]
+`}/>
+
+Above, I label the four group elements as integers 0, 1, 2, 3, corresponding to rotating the plane by <Latex text="\(\{0^\circ, 90^\circ, 180^\circ, 270^\circ\}\)"/>. The `matrix_representation()` method is giving me a <Latex text="\(2 \times 2\)"/> matrix that rotates 2D coordinates accordingly. This is obviously a very small, discrete group, but it exemplifies how I can systematically define group operations (product, inverse, identity) and representations (matrices).
+
+### Building the kernel grids
+
+To perform group convolution in a typical deep learning framework, you usually need to define how the kernel will be "applied" for each group element. This often involves building sampling grids that transform the kernel or the input feature map. Here is a sketch of how one might create rotation grids to transform the input via bilinear interpolation:
+
+<Code text={`
+import torch.nn.functional as F
+
+def rotate_feature_map(x, angle_index, group: Rot90Group):
+    # x has shape (batch, channels, height, width)
+    # We want to rotate the entire feature map by the group element angle.
+    # For discrete 90° rotations, we can do a special re-indexing or use an affine grid.
+
+    B, C, H, W = x.shape
+    # Convert angle_index to a 2x3 affine matrix for the grid
+    # We know group.matrices[angle_index] is 2x2
+    A = group.matrix_representation(angle_index).clone()
+    
+    # Construct an affine transform matrix (2x3) for use with F.grid_sample
+    affine_matrix = torch.zeros((B, 2, 3), device=x.device)
+    for i in range(B):
+        affine_matrix[i, :2, :2] = A
+    
+    # Create a normalized grid for the desired transform
+    # F.grid_sample expects normalized coordinates in [-1,1]
+    theta = affine_matrix
+    grid = F.affine_grid(theta, [B, C, H, W], align_corners=False)
+
+    # Sample
+    x_rot = F.grid_sample(x, grid, mode='bilinear', padding_mode='zeros', align_corners=False)
+    return x_rot
+`}/>
+
+This snippet (though simplified) demonstrates how you can rotate a feature map in PyTorch using `F.grid_sample`, constructing the appropriate affine transformation matrix. For a discrete group with small cardinality like <Latex text="\(C_4\)"/>, you might do this in a for-loop, or precompute certain transformations. If your group is continuous (<Latex text="\(\mathrm{SO}(2)\)"/>, for instance), you would do something conceptually similar, but with angles in a continuous range and more complicated sampling logic.
+
+### Constructing group convolution layers
+
+To build a group convolution layer, we typically do something akin to a standard convolution, but we sum over all group elements. Let me illustrate the concept of a <Highlight>lifting convolution</Highlight> that takes a standard input image and produces a feature map with an extra dimension for the group:
+
+<Code text={`
+class LiftingConv2D(torch.nn.Module):
+    def __init__(self, in_channels, out_channels, group: Rot90Group, kernel_size=3, padding=1):
+        super().__init__()
+        self.in_channels = in_channels
+        self.out_channels = out_channels
+        self.group = group
+        self.kernel_size = kernel_size
+        self.padding = padding
+        # The weight shape: (out_channels, in_channels, kernel_size, kernel_size)
+        # We'll replicate this for each group element or handle group dimension differently
+        # For simplicity, let's define one kernel for each group element
+        # so we have out_channels * |G| sets of parameters
+        self.weights = torch.nn.Parameter(torch.randn(
+            out_channels * len(group.elements), in_channels, kernel_size, kernel_size
+        ))
+        self.bias = torch.nn.Parameter(torch.zeros(out_channels * len(group.elements)))
+        
+    def forward(self, x):
+        # x: (B, in_channels, H, W)
+        B, C, H, W = x.shape
+        # We'll produce a feature map of shape (B, out_channels * |G|, H, W)
+        # Each group element has a corresponding slice of the kernel, convolving with x
+        conv_out = []
+        
+        # Standard 2D convolution for each group element's kernel
+        # but in a real group conv, we might want to rotate x or the kernel
+        # Here, I'll do the naive approach: rotate x, then apply the "base" kernel
+        for i, g_elem in enumerate(self.group.elements):
+            # rotate the input by group element
+            x_rot = rotate_feature_map(x, g_elem, self.group)
+            # index the correct slice of the kernel
+            w_g = self.weights[i*self.out_channels:(i+1)*self.out_channels, :, :, :]
+            b_g = self.bias[i*self.out_channels:(i+1)*self.out_channels]
+            # perform a standard conv
+            out_g = torch.nn.functional.conv2d(x_rot, w_g, b_g, padding=self.padding)
+            conv_out.append(out_g)
+        
+        # Stack along the channel dimension
+        return torch.cat(conv_out, dim=1)
+`}/>
+
+While this is a rough, simplified demonstration, it illustrates the principle: for each group element, either rotate the input or rotate the kernel (the two approaches are mathematically equivalent, though some prefer to fix the input and rotate the kernel). Then apply a standard convolution for each transformation, and combine them into a single feature map that now has a dimension for the group (in this example, I appended that dimension to the channels, but you could store it separately).
+
+Once you have the feature map that includes all group elements, you can apply subsequent layers that treat these channels as separate transformations, or you can do further group convolutions that mix these transformations in a structured way.
+
+### Projection for invariance
+
+In many classification tasks, we eventually want a globally invariant result (e.g., a label that does not change if we rotate the input). To build invariance from an equivariant representation, we often do a <Highlight>projection</Highlight> or pooling over the group dimension. Common operations include summation, average pooling, or max pooling across the group dimension:
+
+<Latex text="\(F_{\mathrm{inv}}(x) = \sum_{g\in G} F(g, x)\)"/>
+
+or
+
+<Latex text="\(F_{\mathrm{inv}}(x) = \max_{g \in G} F(g, x)\)"/>.
+
+This effectively discards the knowledge of which transformation is present, producing an output that is stable (invariant) with respect to that transformation.
+
+## Equivariance, invariance, and projection layers
+
+### Key operations for building invariance
+
+The typical pipeline in a group-equivariant architecture is:
+
+1. **Lift** the input to a feature map with a group dimension.  
+2. **Apply group convolutions** that preserve equivariance.  
+3. **(Optionally) reduce** the group dimension by pooling if we want invariance.  
+
+When you do a summation or average over the group dimension, you get a feature map that no longer depends on which element of the group is present in the input, thus achieving invariance. Alternatively, you might keep the group dimension for multiple layers and only project to an invariant feature at the end of the network.
+
+### Projection layer implementation details
+
+In code, a simple projection might look like:
+
+<Code text={`
+def group_pool(feature_map, group_size):
+    # feature_map shape: (B, C * group_size, H, W)
+    # we want to pool across the group dimension
+    B, CG, H, W = feature_map.shape
+    C = CG // group_size
+    # reshape and reduce
+    feature_map = feature_map.view(B, C, group_size, H, W)
+    # e.g. take the mean
+    feature_map = feature_map.mean(dim=2)  # average over group dimension
+    return feature_map
+`}/>
+
+This snippet just reshapes the channel dimension (which contains the group dimension in our example) and takes the mean across that group dimension. You could do a sum, a max, or something else that fits your design. If your group dimension is explicitly stored as a separate tensor dimension, you would sum or average over that dimension instead.  
+
+## Introduction to steerable convolutional networks
+
+Steerable CNNs can be viewed as a continuous generalization or a frequency-based approach to building equivariant architectures. Instead of having separate filters for each discrete group element, one can parameterize filters as linear combinations of basis functions that transform in a predictable (steerable) way under the group action. This approach is especially valuable for continuous groups like <Latex text="\(\mathrm{SO}(2)\)"/> or <Latex text="\(\mathrm{SO}(3)\)"/> or for large discrete groups where enumerating all group elements is impractical.
+
+### Harmonic analysis viewpoint
+
+Steerable CNNs are heavily connected to the theory of non-commutative harmonic analysis. The overarching idea:
+
+- Decompose signals in terms of irreducible representations or some suitable "basis" that are <Highlight>eigenfunctions</Highlight> of the group action.  
+- Convolution in the spatial domain corresponds to multiplication in the Fourier (or harmonic) domain.  
+- By constraining filters to transform in specific ways under group actions, we get <Highlight>steerability</Highlight>.
+
+For a continuous group like <Latex text="\(\mathrm{SO}(2)\)"/> (rotations in the plane), the group is abelian, and the irreps are given by complex exponentials <Latex text="\(e^{i m \theta}\)"/> for integer <Latex text="\(m\)"/>. This means we can expand a kernel in a Fourier series. Then rotating that kernel in the spatial domain corresponds to multiplying by a phase factor <Latex text="\(e^{i m \alpha}\)"/> in the Fourier domain.  
+
+### Steerable feature fields
+
+Instead of explicitly representing each angle of rotation, one can store the kernel in terms of a finite number of <Highlight>Fourier modes</Highlight> up to some band-limit <Latex text="\(M\)"/>. This is called a band-limited representation. For instance, a filter might look like:
+
+<Latex text="\[
+k(r, \phi) = \sum_{m=-M}^{M} k_m(r) e^{i m \phi}
+\]"/>
+
+where <Latex text="\((r, \phi)\)"/> are polar coordinates, and <Latex text="\(k_m(r)\)"/> are radial profiles. Under a rotation by <Latex text="\(\alpha\)"/>, <Latex text="\(\phi\mapsto \phi + \alpha\)"/>, which multiplies each mode by <Latex text="\(e^{i m \alpha}\)"/>. This means we can easily "steer" the filter by adjusting the phases.
+
+Advantages: for certain tasks, this approach can produce exact or near-exact rotational equivariance, especially if the sampling is done carefully. It can also reduce the number of parameters if the group is large, as you do not need to store a separate filter for each discrete rotation.
+
+### Steerable CNN architecture
+
+A typical steerable CNN pipeline might:
+
+1. Represent the input or the intermediate feature maps in terms of a "type" — basically specifying how they transform under the group.  
+2. Constrain the convolution kernels to respect the group structure, often by enforcing certain relationships among the kernel's Fourier coefficients.  
+3. Combine these constraints with standard neural network building blocks like ReLUs or batch normalization. Non-linearities in the steerable domain require specialized design, such as complex non-linearities or polynomial expansions that preserve equivariance (since naive ReLU might break equivariance in the Fourier domain).
+
+There is an extensive literature on this topic. Key references include "Worrall and gang, CVPR 2017" on "Harmonic Networks" and "Weiler & Cesa, NeurIPS 2019" on "General E(2)-Equivariant Steerable CNNs".
+
+## Real-world applications and experiments
+
+### Rotated MNIST case study
+
+A classic dataset to illustrate the benefits of group-equivariant networks is <Highlight>Rotated MNIST</Highlight>, where each digit image is randomly rotated by some angle. A standard CNN trained on non-rotated MNIST might perform poorly on these images if it has never seen such rotations in training. Even if you augment the data by random rotations, you might still need a large dataset to fully capture the continuum of angles. A group-equivariant CNN, by construction, can significantly outperform a baseline CNN because it inherently encodes the rotational symmetry of the problem.
+
+Key metrics often reported are:
+
+- **Accuracy on rotated test sets**: This indicates how robust the model is to rotations.  
+- **Equivariance error**: A specialized metric that measures how well the model's output transforms when the input is transformed, i.e., <Latex text="\( \| f(g \cdot x) - \rho(g) f(x) \|\)"/>. If the model is perfectly equivariant, that error is zero.
+
+### Other benchmark datasets
+
+- **CIFAR variants**: Sometimes people construct artificially rotated or flipped versions of CIFAR-10 or CIFAR-100 to test rotational/ reflectional equivariance.  
+- **Medical imaging (MRI, CT) with rotational symmetries**: In certain medical imaging contexts, especially those involving circular cross-sections or radial symmetry, a group-equivariant approach may yield better detection of anomalies.  
+- **3D shapes, point-cloud tasks** (ModelNet, ShapeNet): Particularly relevant for 3D data where orientation might be arbitrary. If your model is not equivariant to 3D rotations, you might require a massive training set to see all possible orientations.
+
+### Performance metrics and results
+
+When adopting group-equivariant networks, you typically look at:
+
+1. **Equivariance error**: A direct measure of how well the model enforces the desired symmetry.  
+2. **Accuracy**: On standard or synthetic test sets.  
+3. **Data efficiency**: Does the model achieve better results with fewer training examples, due to built-in symmetry constraints?  
+4. **Computational overhead**: Expanding the group dimension can inflate the memory usage and the computational cost. Some architectures handle this more efficiently than others, depending on whether the group is discrete, continuous, small, or large.
+
+## Implementation insights and code snippets
+
+### Practical considerations
+
+Let's underscore some practical details that frequently arise:
+
+- **Discrete vs. continuous groups** (<Latex text="\(C_n\)"/> vs. <Latex text="\(\mathrm{SO}(2)\)"/>):  
+  - A small discrete group like <Latex text="\(C_4\)"/> or <Latex text="\(D_8\)"/> is fairly easy to handle by enumerating transformations explicitly.  
+  - A continuous group means we must approximate it, perhaps by sampling angles at a certain resolution or by using a steerable basis.
+
+- **Interpolation artifacts, aliasing**: Whenever you rotate or scale an image on a discrete pixel grid, some aliasing is inevitable, especially if the transformations are large. This might degrade equivariance in practice.
+
+- **Batch normalization vs. group normalization**: In group convolutional networks, the shape of the feature tensor changes (now we have a group dimension). Sometimes group normalization or specialized normalization layers are used to handle these extra dimensions consistently.
+
+- **GPU usage and memory costs**: If you inflate your feature maps with a large group dimension (like 16 or 32 transformations), you might quickly escalate memory usage. This is a key reason to prefer more compact approaches like steerable networks or Fourier-based methods if the group is large.
+
+### Debugging common issues
+
+1. **Ensuring consistent group action across layers**: You must check that the same definition of rotation or transformation is used everywhere. A mismatch can break equivariance.  
+2. **Shape mismatches in group convolution**: Because we add an extra dimension for the group, or we fold it into channels, it's easy to accidentally mismatch shapes.  
+3. **Verifying equivariance numerically**: A good strategy is to feed a sample input, transform it with a group element, run it through the network, and compare it with the network's output on the untransformed input, transformed appropriately at the output. If the difference is large, your architecture might not be implemented correctly.
+
+## Broader directions and open research
+
+### Expanding to larger groups
+
+In many real applications, the relevant group might be more complicated than the small sets of transformations we have been discussing. Examples:
+
+- **Affine groups**: Combining rotations, translations, and scale changes.  
+- **Dilation groups**: Zoom in/out transformations.  
+- **Lie groups**: Continuous groups that are not necessarily commutative (e.g., <Latex text="\(\mathrm{SE}(3)\)"/>, the group of rigid motions in 3D space).  
+
+Building exact equivariant networks for large or continuous groups can be computationally expensive, so approximate or partial methods are still an active area of research.
+
+### Deep learning beyond Euclidean domains
+
+Group theory has strong synergy with:
+
+- **Manifold learning**: If your data lies on a curved manifold (like a sphere or a more abstract shape), you might want to incorporate the manifold's symmetries.  
+- **Graph neural networks (GNNs)**: Permutation invariance or equivariance is essential in GNNs, and certain subgroups of node permutations might be relevant in tasks like chemistry or social network analysis.  
+- **Geometric deep learning**: A broader umbrella term that covers the generalization of deep neural network models to non-Euclidean data (graphs, manifolds, point clouds) using group-theoretic principles.
+
+### Theoretical considerations and challenges
+
+- **Exact vs. approximate equivariance**: On a discrete pixel grid, true continuous rotational equivariance can't be perfect. There's always a discretization error.  
+- **Trade-offs**: The more transformations you want to be equivariant to, the bigger (and more complex) your network might become.  
+- **Potential directions**: Efforts to incorporate <Highlight>E(n)-equivariant networks</Highlight> (where <Latex text="\(n\)"/> is the dimension of Euclidean space) have seen success, especially in 3D geometry tasks. Gauge equivariance and other advanced forms of geometric constraints are also being explored.
+
+## Conclusion and future outlook
+
+I have now walked through many of the deeper concepts relating group theory to machine learning, specifically focusing on group convolution, the extension of classical convolution to broader transformation sets, and the notion of steerable CNNs that rely on harmonic or Fourier-based expansions of filters. Below is a concise bullet point summary of the big ideas:
+
+- The classical convolution in CNNs is deeply connected to translational symmetry.  
+- We can generalize convolution to other groups (rotations, reflections, scaling, etc.) to build networks that are equivariant to these transformations.  
+- This generalization often involves new data structures for feature maps and new parameter-sharing schemes for kernels.  
+- By projecting over the group dimension (via summation, average, or max), we can achieve invariance for classification tasks.  
+- Steerable CNNs extend group equivariance to continuous transformations, using representation theory and harmonic analysis.  
+- Applications of group-equivariant or steerable CNNs are compelling in areas where data transformations are well described by a group, like rotated MNIST, 3D point clouds, or medical imaging with rotational symmetries.  
+- There is still much open research on how to scale to large or complicated groups (like <Latex text="\(\mathrm{SE}(3)\)"/>, <Latex text="\(\mathrm{SE}(n)\)"/>, and beyond) and how to ensure computational efficiency without losing the benefits of symmetry-based constraints.
+
+If you are motivated to explore further, I would recommend digging into the following references:
+
+- "Cohen & Welling, ICML 2016" on "Group Equivariant Convolutional Networks".  
+- "Worrall and gang, CVPR 2017" on "Harmonic Networks".  
+- "Weiler & Cesa, NeurIPS 2019" on "General E(2)-Equivariant Steerable CNNs".
+
+All of these dive deeper into the mathematics of representation theory, discrete vs. continuous groups, and how to implement these methods in code. They also provide comprehensive experiments showing how group-equivariant and steerable networks can outperform conventional CNNs on tasks with known symmetries.
+
+Where to go next? If you need more group theory background, you can consult our continuing coverage in this advanced course or standard references in representation theory. For immediate practical experimentation, you can try out specialized PyTorch libraries for equivariant neural networks (e.g., "e2cnn"), or attempt your own custom code for small groups like <Latex text="\(C_4\)"/>. I believe that the synergy between group-theoretic insight and modern deep learning architectures will only keep growing, leading to improved generalization and data efficiency in a wide variety of tasks.
+
+This concludes "Group theory for ML, pt. 2". The next step might be to experiment with actual group convolution implementations in your own codebase and test them on a dataset like rotated MNIST or your domain-specific data that exhibits known symmetries. Good luck, and keep exploring!

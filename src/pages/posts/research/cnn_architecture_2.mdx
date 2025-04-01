@@ -1,0 +1,716 @@
+---
+index: 52
+indexCourse: 71
+indexFavorites:
+title: "CNN architecture, pt. 2"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "CNN architecture, pt. 2"
+courseCategoryName: "Fundamental NN architectures"
+desc: "Learning to see, but slightly better"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "25.05.2023"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 2
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/cnn_architecture.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/cnn_architecture_2"
+slug: "/research/cnn_architecture_2"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+[https://www.youtube.com/watch?v=IYxU985meTM&list=PLA0M1Bcd0w8yv0XGiF1wjerjSZVSrYbjh&index=17](https://www.youtube.com/watch?v=IYxU985meTM&list=PLA0M1Bcd0w8yv0XGiF1wjerjSZVSrYbjh&index=17)  
+
+*/}
+
+
+{/*
+
+1. LeNet   
+Details and architecture of LeNet  
+Use cases  
+Advantages and disadvantages of LeNet  
+Step-by-step implementation of LeNet (TensorFlow/Keras)  
+2. AlexNet  
+Details and architecture of AlexNet  
+Use cases  
+Advantages and disadvantages of AlexNet  
+Step-by-step implementation of AlexNet (TensorFlow/Keras)  
+3. VGGNet  
+Details and architecture of VGGNet  
+Use cases  
+Advantages and disadvantages of VGGNet  
+VGG-16, VGG-19  
+Step-by-step implementation of VGGNet (TensorFlow/Keras)  
+4. MobileNet  
+Details and architecture of MobileNet  
+Use cases  
+Advantages and disadvantages of MobileNet  
+Step-by-step implementation of MobileNet (TensorFlow/Keras)  
+5. Network in Network (NiN)  
+6. Residual connections  
+7. Inception modules  
+8. Depthwise separable convolutions  
+9. Dilated convolutions  
+10. Grouped convolutions  
+11. Deployment and optimization  
+Model compression (pruning, quantization)  
+GPU/TPU acceleration  
+Distributed training  
+Real-world deployment challenges  
+Conclusion for the article  
+
+*/}
+
+
+## LeNet
+
+### Details and architecture of lenet
+
+LeNet is considered one of the earliest successful convolutional neural network architectures, introduced by Yann LeCun and colleagues in the late 1980s and early 1990s (LeCun and gang, Proceedings of the IEEE, 1998). Although the original design has undergone multiple revisions and naming conventions (e.g., LeNet-1, LeNet-4, LeNet-5), the commonly referenced and most canonical form is LeNet-5. This network was originally devised to perform handwritten digit recognition on the MNIST dataset, which is a staple benchmark for image classification tasks in machine learning education.
+
+The fundamental idea behind LeNet rests on the fact that images (especially handwritten digits) have locally correlated features, and employing specialized layers that exploit these local features — namely convolution and subsampling (pooling) — can yield robust representations that are more invariant to shifts and distortions than a generic, fully connected network. The architecture is substantially simpler compared to more modern networks such as AlexNet or VGG, but the same key building blocks introduced by LeNet, like convolution, pooling, and fully connected layers at the output, remain cornerstones of today's CNNs.
+
+A typical LeNet-5 architecture is comprised of:
+1. **Input layer**: Accepts the input image, commonly 32\<times32 pixels, although the actual images in the MNIST dataset are 28\<times28. Often, zero-padding or other transformations are used to fit the input dimension.
+2. **Convolutional layer (C1)**: Learns local features by sliding filters (or kernels) across the spatial dimension of the image.
+3. **Subsampling layer (S2)**: Often referred to as a pooling layer, typically using average pooling or max pooling to reduce spatial dimensions and thus reduce the number of parameters, while retaining the most important information. Pooling also makes the representation somewhat invariant to small translations.
+4. **Convolutional layer (C3)**: Learns higher-level features. 
+5. **Subsampling layer (S4)**: Another pooling step to further reduce dimensionality.
+6. **Fully connected layers (F5, output layer)**: The extracted feature maps are flattened and passed to fully connected layers to produce the final classification probabilities.
+
+Unlike some more recent designs, LeNet commonly uses fewer channels, smaller filter sizes, and simpler activation functions (historically, tanh rather than ReLU). A typical LeNet-5 design uses <Latex text="\(5 \times 5\)"/> filters in the convolutional layers, with around 6 to 16 filters in earlier versions, though these numbers can vary slightly across different retellings and expansions of the architecture.
+
+Below is a high-level illustration that captures the essence of LeNet:
+
+<Image alt="LeNet architecture diagram" path="" caption="A high-level schematic of the LeNet architecture. Notice the alternating convolution and pooling layers, culminating in fully connected layers." zoom="false" />
+
+In formal terms, the 2D convolution operation performed by a kernel <Latex text="\(K\)"/> on an image (or feature map) <Latex text="\(I\)"/> at location <Latex text="\((x, y)\)"/> can be expressed as:
+
+<Latex text="\[
+(\text{Conv}(I, K))(x, y) = \sum_{a=-\alpha}^{\alpha} \sum_{b=-\beta}^{\beta} I(x+a, y+b)\,K(a, b),
+\]"/>
+
+where <Latex text="\(2\alpha+1\)"/> and <Latex text="\(2\beta+1\)"/> are the filter dimensions (for a <Latex text="\(5 \times 5\)"/> kernel, <Latex text="\(\alpha = 2\)"/> and <Latex text="\(\beta = 2\)"/>). Each such convolutional filter effectively extracts a certain type of local pattern. Pooling (subsampling) is often defined as either an average or maximum over a local neighborhood, for instance:
+
+<Latex text="\[
+(\text{Pool}_{\text{avg}}(M))(x, y) = \frac{1}{k^2} \sum_{a=0}^{k-1}\sum_{b=0}^{k-1} M(x \times k + a, y \times k + b),
+\]"/>
+
+if you are using average pooling with a pool size <Latex text="\(k \times k\)"/>.
+
+### Use cases
+
+Initially, LeNet was proposed for character recognition tasks. Specifically, it was used to read digits on bank checks, which was a major application of early CNNs in the 1990s. Although modern tasks commonly deal with more complex data with higher resolution, LeNet (especially in the form of LeNet-5) remains a standard introductory example due to its simplicity and relatively small number of parameters. Typical uses include:
+
+- **Handwritten digit recognition** (MNIST, USPS datasets).
+- **Introductory labs** in courses that teach fundamental CNN concepts, because the network is easy to train on a CPU and converges quickly.
+- **Proof-of-concept** tasks, where one wants to experiment with a minimal CNN architecture before scaling up.
+
+### Advantages and disadvantages of lenet
+
+**Advantages**  
+- Straightforward design: Easy to implement and interpret.  
+- Low computational cost: Suitable for low-end hardware or demonstration purposes.  
+- Historically significant: A great model to illustrate the basic mechanics of CNNs.
+
+**Disadvantages**  
+- Limited capacity: Not well-suited for large-scale, high-resolution image classification tasks.  
+- Outdated design: Modern activation functions (like ReLU) and deeper networks (with significantly more layers) often provide superior performance for more complex tasks.  
+- Not flexible: The network's dimension assumptions can make it less straightforward to adapt to varying input sizes without modifications.
+
+### Step-by-step implementation of lenet (tensorflow/keras)
+
+Below is a minimal example of how one might implement a LeNet-like architecture in TensorFlow/Keras. The code is simplified for educational purposes, but it captures the core structure of LeNet-5:
+
+<Code text={`
+import tensorflow as tf
+from tensorflow.keras import layers, models
+
+def create_lenet(input_shape=(32, 32, 1), num_classes=10):
+    # Initialize a sequential model
+    model = models.Sequential()
+
+    # First convolutional layer (6 filters, 5x5 kernel, tanh activation historically, 
+    # but often replaced with ReLU in modern variants)
+    model.add(layers.Conv2D(filters=6, kernel_size=(5, 5), activation='tanh', 
+                            input_shape=input_shape, padding='valid'))
+    
+    # Subsampling layer (average pooling or max pooling)
+    model.add(layers.AveragePooling2D(pool_size=(2, 2)))
+    
+    # Second convolutional layer (16 filters, 5x5 kernel, tanh activation)
+    model.add(layers.Conv2D(filters=16, kernel_size=(5, 5), activation='tanh'))
+    
+    # Another subsampling layer
+    model.add(layers.AveragePooling2D(pool_size=(2, 2)))
+    
+    # Flatten the feature maps before passing to fully connected layers
+    model.add(layers.Flatten())
+    
+    # Fully connected layer (120 units)
+    model.add(layers.Dense(120, activation='tanh'))
+    
+    # Another fully connected layer (84 units)
+    model.add(layers.Dense(84, activation='tanh'))
+    
+    # Output layer with softmax activation for classification
+    model.add(layers.Dense(num_classes, activation='softmax'))
+    
+    return model
+
+# Example usage:
+if __name__ == '__main__':
+    lenet_model = create_lenet()
+    lenet_model.compile(
+        optimizer=tf.keras.optimizers.Adam(learning_rate=0.001),
+        loss='sparse_categorical_crossentropy',
+        metrics=['accuracy']
+    )
+    lenet_model.summary()
+`}/>
+
+In the snippet above, I have preserved the spirit of LeNet by choosing tanh activations and average pooling. Nonetheless, one can replace tanh with ReLU or average pooling with max pooling to obtain a slightly more contemporary variant. The fundamental structure, however, remains quintessentially LeNet.
+
+---
+
+## AlexNet
+
+### Details and architecture of alexnet
+
+AlexNet, introduced by Krizhevsky and gang (NIPS 2012), was a groundbreaking network architecture that revitalized interest in deep learning for computer vision tasks. Trained on the large-scale ImageNet dataset, which contains over a million labeled images across 1,000 categories, AlexNet demonstrated a substantial performance leap compared to traditional computer vision pipelines or shallower neural networks.  
+
+Key insights that made AlexNet a breakthrough model include:
+1. **Deeper architecture**: AlexNet has more layers and many more parameters than earlier CNNs like LeNet. This contributes to its capacity to learn complex patterns.
+2. **ReLU activation**: The network extensively uses the rectified linear unit (ReLU), <Latex text="\( \text{ReLU}(x) = \max(0, x) \)"/>, which helps mitigate vanishing gradients, accelerating convergence.
+3. **GPU training**: The authors leveraged two GPUs in parallel to train the model more efficiently. This was one of the earliest demonstrations that GPU acceleration could handle large-scale deep networks.
+4. **Local response normalization (LRN)**: At the time, LRN was used to help the network generalize better, though subsequent architectures often replaced LRN with batch normalization or removed it entirely.
+5. **Overlapping pooling**: Instead of using disjoint pooling regions, AlexNet used overlapping windows, which sometimes yields better performance.
+
+A typical AlexNet architecture consists of:
+- **Input layer** for 224\<times224 RGB images.  
+- **Convolutional layers**: Five convolutional layers in total, often with some grouped convolutions due to GPU memory constraints at the time.  
+- **Normalization layers (LRN)**: Inserted after the first and second convolutional layers in the original design.  
+- **Pooling layers**: Max pooling layers after certain convolutions.  
+- **Fully connected layers**: Three large fully connected layers (FC6, FC7, FC8), culminating in a 1000-way softmax for ImageNet classification.
+
+Below is a simplified illustration:
+
+<Image alt="AlexNet architecture diagram" path="" caption="An overview of the AlexNet architecture for ImageNet classification." zoom="false" />
+
+### Use cases
+
+AlexNet shines in:
+- **Large-scale image classification**: Designed for ImageNet-sized tasks (1,000 classes, ~1.2M training images).  
+- **Feature extraction**: Early layers of AlexNet can be used to extract generic features from images, applicable to tasks beyond classification (e.g., transfer learning).  
+- **Computer vision research**: Provided a baseline that future architectures improved upon (e.g., VGG, Inception, ResNet).  
+
+In modern practice, AlexNet is no longer considered state-of-the-art. However, it remains historically significant, and it's a valuable stepping stone for those learning about the evolution of CNN architectures.
+
+### Advantages and disadvantages of alexnet
+
+**Advantages**  
+- Pioneered deep CNN success on large-scale datasets.  
+- Demonstrated the effectiveness of ReLU activations and GPU-based training.  
+- Provided an architecture that was relatively easy to adapt for other tasks.
+
+**Disadvantages**  
+- Very large model: Over 60 million parameters, making it memory-intensive.  
+- Convolutions in the first layers used large kernels (often 11\<times11, or 7\<times7 in some revised versions), which might not be as parameter-efficient by today's standards.  
+- LRN is rarely used now, and the architecture doesn't incorporate modern best practices like batch normalization.
+
+### Step-by-step implementation of alexnet (tensorflow/keras)
+
+Below is a Keras example that captures the general flow of AlexNet-like architectures. It does not strictly replicate the original two-GPU setup or the exact grouping mechanism, but it serves as a demonstration.
+
+<Code text={`
+import tensorflow as tf
+from tensorflow.keras import layers, models
+
+def create_alexnet(input_shape=(224, 224, 3), num_classes=1000):
+    model = models.Sequential()
+
+    # First convolutional layer 
+    # Original paper: 96 filters of size 11x11, stride = 4, with ReLU activation
+    model.add(layers.Conv2D(filters=96, kernel_size=(11, 11), strides=(4, 4), 
+                            activation='relu', input_shape=input_shape, padding='valid'))
+    # LRN or batch normalization can be used; here we omit for simplicity
+    # model.add(layers.Lambda(...))  # This can represent LRN if you decide to implement it
+
+    model.add(layers.MaxPooling2D(pool_size=(3, 3), strides=(2, 2)))
+
+    # Second convolutional layer
+    model.add(layers.Conv2D(filters=256, kernel_size=(5, 5), padding='same', activation='relu'))
+    model.add(layers.MaxPooling2D(pool_size=(3, 3), strides=(2, 2)))
+
+    # Third convolutional layer
+    model.add(layers.Conv2D(filters=384, kernel_size=(3, 3), padding='same', activation='relu'))
+
+    # Fourth convolutional layer
+    model.add(layers.Conv2D(filters=384, kernel_size=(3, 3), padding='same', activation='relu'))
+
+    # Fifth convolutional layer
+    model.add(layers.Conv2D(filters=256, kernel_size=(3, 3), padding='same', activation='relu'))
+    model.add(layers.MaxPooling2D(pool_size=(3, 3), strides=(2, 2)))
+
+    # Flatten
+    model.add(layers.Flatten())
+
+    # Fully connected layers
+    model.add(layers.Dense(4096, activation='relu'))
+    model.add(layers.Dense(4096, activation='relu'))
+    model.add(layers.Dense(num_classes, activation='softmax'))
+    
+    return model
+
+if __name__ == '__main__':
+    alexnet_model = create_alexnet()
+    alexnet_model.compile(
+        optimizer=tf.keras.optimizers.SGD(learning_rate=0.01, momentum=0.9),
+        loss='categorical_crossentropy',
+        metrics=['accuracy']
+    )
+    alexnet_model.summary()
+`}/>
+
+When training such a model on ImageNet or similarly large data sets, you'll need significant computational power (GPUs or TPUs) and a robust training strategy (e.g., data augmentation, learning rate scheduling). Modern frameworks would typically incorporate batch normalization and advanced regularization to yield improved performance compared to the original AlexNet design.
+
+---
+
+## VGGNet
+
+### Details and architecture of vggnet
+
+VGGNet (Simonyan and Zisserman, ICLR 2015) builds on the success of AlexNet by emphasizing architectural simplicity: it uses very small <Latex text="\(3 \times 3\)"/> convolution filters stacked in increasing depths. The key architectural principle behind VGG is that sequences of small convolutions can simulate larger effective receptive fields with fewer parameters and better performance.  
+
+The hallmark design pattern of a VGGNet is a series of blocks. Each block consists of:
+- **Convolution layers**: Each with <Latex text="\(3 \times 3\)"/> kernels, stride of 1, and padding of 1 to maintain spatial resolution.  
+- **ReLU activation**: After each convolution.  
+- **Pooling layer**: Typically max pooling <Latex text="\(2 \times 2\)"/> with stride 2 at the end of each block to reduce spatial dimensions.
+
+By systematically doubling the number of filters after each block (e.g., 64 -> 128 -> 256 -> 512 -> 512), VGGNet can learn a deep hierarchy of features while still being fairly straightforward in structure. However, the deeper variants (VGG-16, VGG-19) can have hundreds of millions of parameters, making them quite large for practical deployment without specialized hardware or compression techniques.
+
+Below is a basic blueprint of the VGGNet approach:
+
+<Image alt="VGGNet block diagram" path="" caption="A conceptual look at VGGNet blocks. Each block has multiple Conv+ReLU layers followed by a pooling layer, culminating in fully connected layers and an output." zoom="false" />
+
+### Use cases
+
+VGGNet is extremely popular for:
+- **Transfer learning**: Pretrained versions of VGG-16 or VGG-19 often serve as feature extractors for various tasks (e.g., object detection, semantic segmentation, style transfer).
+- **Academic research**: Its simplicity makes it an easy baseline for investigating new ideas like new activation functions, normalization layers, or layer initialization methods.
+- **Benchmarking hardware**: Because VGG requires extensive computations, it has often been used to benchmark GPUs and other accelerators.
+
+### Advantages and disadvantages of vggnet
+
+**Advantages**  
+- Simple, systematic design: Very easy to interpret or adapt.  
+- Strong baseline: Often outperforms older architectures like AlexNet on a variety of tasks.  
+- Transfer learning usage: The robust feature hierarchy makes VGGNet a powerful generic feature extractor.
+
+**Disadvantages**  
+- Very large in terms of parameters: VGG-16 has around 138 million parameters. This can make training and inference expensive.  
+- Memory-intensive: Storing intermediate activations for deeper variants can be prohibitive if you have limited GPU memory.  
+- Slower inference compared to more modern lightweight architectures (e.g., MobileNet).
+
+### VGG-16, VGG-19
+
+Both VGG-16 and VGG-19 differ primarily in the number of convolutional layers in their deepest block configurations:
+- **VGG-16**: 13 convolution layers + 3 fully connected layers = 16 total layers.  
+- **VGG-19**: 16 convolution layers + 3 fully connected layers = 19 total layers.  
+
+They both share the same architecture pattern:
+1. Convolution block (64 filters) repeated.  
+2. Pooling.  
+3. Convolution block (128 filters) repeated.  
+4. Pooling.  
+5. Convolution block (256 filters) repeated.  
+6. Pooling.  
+7. Convolution block (512 filters) repeated.  
+8. Pooling.  
+9. Convolution block (512 filters) repeated.  
+10. Pooling, flatten, fully connected, output.
+
+### Step-by-step implementation of vggnet (tensorflow/keras)
+
+Below is an example of implementing a simplified VGG-16-like model in TensorFlow/Keras:
+
+<Code text={`
+import tensorflow as tf
+from tensorflow.keras import layers, models
+
+def create_vgg16(input_shape=(224, 224, 3), num_classes=1000):
+    model = models.Sequential()
+
+    # Block 1
+    model.add(layers.Conv2D(64, (3, 3), activation='relu', padding='same', 
+                            input_shape=input_shape))
+    model.add(layers.Conv2D(64, (3, 3), activation='relu', padding='same'))
+    model.add(layers.MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+
+    # Block 2
+    model.add(layers.Conv2D(128, (3, 3), activation='relu', padding='same'))
+    model.add(layers.Conv2D(128, (3, 3), activation='relu', padding='same'))
+    model.add(layers.MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+
+    # Block 3
+    model.add(layers.Conv2D(256, (3, 3), activation='relu', padding='same'))
+    model.add(layers.Conv2D(256, (3, 3), activation='relu', padding='same'))
+    model.add(layers.Conv2D(256, (3, 3), activation='relu', padding='same'))
+    model.add(layers.MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+
+    # Block 4
+    model.add(layers.Conv2D(512, (3, 3), activation='relu', padding='same'))
+    model.add(layers.Conv2D(512, (3, 3), activation='relu', padding='same'))
+    model.add(layers.Conv2D(512, (3, 3), activation='relu', padding='same'))
+    model.add(layers.MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+
+    # Block 5
+    model.add(layers.Conv2D(512, (3, 3), activation='relu', padding='same'))
+    model.add(layers.Conv2D(512, (3, 3), activation='relu', padding='same'))
+    model.add(layers.Conv2D(512, (3, 3), activation='relu', padding='same'))
+    model.add(layers.MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+
+    # Fully connected part
+    model.add(layers.Flatten())
+    model.add(layers.Dense(4096, activation='relu'))
+    model.add(layers.Dense(4096, activation='relu'))
+    model.add(layers.Dense(num_classes, activation='softmax'))
+
+    return model
+
+if __name__ == '__main__':
+    vgg16_model = create_vgg16()
+    vgg16_model.compile(
+        optimizer=tf.keras.optimizers.Adam(learning_rate=0.0001),
+        loss='categorical_crossentropy',
+        metrics=['accuracy']
+    )
+    vgg16_model.summary()
+`}/>
+
+While this implementation captures the essence of VGG-16, in practice you'd likely use a pretrained version from a library (e.g., `tf.keras.applications.VGG16`) for transfer learning, and you might freeze certain layers or replace the final classifier layers according to your task.
+
+---
+
+## MobileNet
+
+### Details and architecture of mobilenet
+
+Introduced by Howard and gang (arXiv:1704.04861, 2017), MobileNet is a CNN architecture designed for efficient computation on mobile and embedded devices. The main idea behind MobileNet is to drastically reduce the computational and memory requirements of typical CNNs while retaining a high level of accuracy. It uses **depthwise separable convolutions** as its core building block, replacing the standard convolution with two distinct operations:
+
+1. **Depthwise convolution**: Applies a single convolution filter per input channel.  
+2. **Pointwise convolution**: Uses <Latex text="\(1 \times 1\)"/> kernels to combine the outputs of the depthwise convolution into new feature maps.
+
+By factorizing a standard convolution into these two separate stages, MobileNet achieves fewer parameters and faster inference on resource-constrained devices (e.g., smartphones).  
+
+Additionally, MobileNet introduces two hyperparameters to balance the trade-off between latency and accuracy:
+- **Width multiplier <Latex text="\(\alpha\)"/>**: Scales the number of filters in each layer.  
+- **Resolution multiplier <Latex text="\(\rho\)"/>**: Scales the input resolution.
+
+### Use cases
+
+- **Embedded devices**: Ideal for applications where memory and compute resources are limited, such as mobile phones and edge devices.  
+- **Real-time inference**: For tasks requiring minimal latency (like real-time camera processing).  
+- **Transfer learning for small footprints**: Pretrained MobileNet can be fine-tuned for specialized tasks while preserving efficiency.
+
+### Advantages and disadvantages of mobilenet
+
+**Advantages**  
+- High efficiency: Greatly reduced parameter count and faster inference time.  
+- Flexible hyperparameters: Ability to trade off between model size and accuracy.  
+- Widely adopted on mobile frameworks: Commonly found in frameworks like TensorFlow Lite.
+
+**Disadvantages**  
+- Slight accuracy drop: Typically less accurate compared to heavier models (e.g., ResNet, VGG) on large-scale benchmarks, although the gap has shrunk with improvements like MobileNetV2, MobileNetV3.  
+- Less capacity: For highly complex tasks or high-resolution imagery, you might need more advanced or bigger architectures.
+
+### Step-by-step implementation of mobilenet (tensorflow/keras)
+
+Below is a simplified example of implementing a MobileNet-like architecture in TensorFlow/Keras:
+
+<Code text={`
+import tensorflow as tf
+from tensorflow.keras import layers, models
+
+# Depthwise + pointwise convolution block
+def depthwise_separable_conv_block(inputs, pointwise_filters, stride=1):
+    x = layers.DepthwiseConv2D(kernel_size=(3,3), strides=stride, padding='same')(inputs)
+    x = layers.BatchNormalization()(x)
+    x = layers.ReLU(6.0)(x)  # typical ReLU6 used in MobileNet
+
+    x = layers.Conv2D(pointwise_filters, kernel_size=(1,1), padding='same')(x)
+    x = layers.BatchNormalization()(x)
+    x = layers.ReLU(6.0)(x)
+    return x
+
+def create_mobilenet(input_shape=(224, 224, 3), alpha=1.0, num_classes=1000):
+    inputs = layers.Input(shape=input_shape)
+    
+    # Initial convolution layer
+    x = layers.Conv2D(int(32*alpha), kernel_size=(3,3), strides=(2,2), padding='same')(inputs)
+    x = layers.BatchNormalization()(x)
+    x = layers.ReLU(6.0)(x)
+
+    # Define the depthwise separable blocks
+    # Typical pattern for MobileNet: stride = 1 or 2 depending on layer
+    # This is a simplified sequence
+    layer_configs = [
+        (64, 1),
+        (128, 2),
+        (128, 1),
+        (256, 2),
+        (256, 1),
+        (512, 2),
+        # Then typically 5 blocks with 512 filters each with stride=1
+        (512, 1),
+        (512, 1),
+        (512, 1),
+        (512, 1),
+        (512, 1),
+        (1024, 2),
+        (1024, 1)
+    ]
+
+    for (filters, stride) in layer_configs:
+        x = depthwise_separable_conv_block(x, int(filters*alpha), stride=stride)
+
+    # Global average pooling
+    x = layers.GlobalAveragePooling2D()(x)
+    # Fully connected layer (classifier)
+    outputs = layers.Dense(num_classes, activation='softmax')(x)
+
+    model = models.Model(inputs, outputs)
+    return model
+
+if __name__ == '__main__':
+    mobilenet_model = create_mobilenet()
+    mobilenet_model.compile(
+        optimizer=tf.keras.optimizers.Adam(learning_rate=0.001),
+        loss='categorical_crossentropy',
+        metrics=['accuracy']
+    )
+    mobilenet_model.summary()
+`}/>
+
+This snippet captures the core principle of MobileNet: replacing standard convolutions with a depthwise separable convolution block. MobileNetV2 and MobileNetV3 build upon the same foundation but improve accuracy and reduce latency further via techniques such as inverted residuals and squeeze-and-excitation modules. 
+
+---
+
+## Network in network (nin)
+
+Network in Network (NiN) was introduced by Lin, Chen, and Yan (ICLR 2014). The NiN architecture proposes a novel approach: instead of using a single linear filter at each convolution layer to produce feature maps, NiN uses a **micro-network** (typically a multilayer perceptron) to generate more abstract representations within each local receptive field. This is often approximated or described as **1\<times1 convolutions** combined with non-linear activations, which help the network learn more complex local feature transformations.
+
+In many CNN architectures (such as AlexNet and VGG), the <Latex text="\(1 \times 1\)"/> convolution is seen as a "bottleneck" or "pointwise" convolution. NiN extended this concept by stacking multiple <Latex text="\(1 \times 1\)"/> filters with non-linear activations, effectively forming a tiny MLP that operates across the channels of each spatial position. The NiN modules are often described as:
+
+<Latex text="\[
+\text{NiN block}(X) = \sigma\bigl(W_1 * X\bigr), \quad \sigma\bigl(W_2 * X\bigr), \quad \sigma\bigl(W_3 * X\bigr),
+\]"/>
+
+where each <Latex text="\(W_i\)"/> is a set of <Latex text="\(1 \times 1\)"/> filters, and <Latex text="\(\sigma\)"/> is a non-linear activation function.
+
+**Advantages**:  
+- Allows for more complex transformations within each local receptive field.  
+- Reduces the number of parameters in some cases compared to using bigger convolution filters.
+
+**Disadvantages**:  
+- If not used carefully, can lead to overfitting, as these additional parameters can significantly increase the model capacity.  
+- Sometimes overshadowed by more advanced and widely adopted architectures (ResNet, Inception, etc.).
+
+Despite not being the most popular architecture in mainstream usage, NiN's concept of <Latex text="\(1 \times 1\)"/> "micro-networks" heavily inspired later designs (e.g., Inception modules that make extensive use of <Latex text="\(1 \times 1\)"/> convolutions).
+
+---
+
+## Residual connections
+
+Residual connections, popularized by He and gang (CVPR 2016) in the **ResNet** family of architectures, represent one of the most critical breakthroughs in deep CNN design. The driving motivation behind residual connections is to mitigate the **vanishing gradient** and **degradation** problems that arise when training very deep networks.  
+
+A residual block typically looks like:
+
+<Image alt="Basic ResNet residual block" path="" caption="A simplified depiction of a residual block. The input is added to the output of a series of convolutions and activations, forming a skip connection." zoom="false" />
+
+Mathematically, if we let <Latex text="\(F(x)\)"/> be the non-linear transformation (convolution, activation, etc.), then a residual block's output is:
+
+<Latex text="\[
+y = F(x) + x.
+\]"/>
+
+The presence of the skip (or shortcut) connection that bypasses the non-linear transformations allows gradients to flow directly back to earlier layers, thus alleviating training difficulties. Empirically, ResNet architectures like ResNet-50, ResNet-101, and ResNet-152 achieve significantly better accuracy on tasks like ImageNet while also making it more feasible to train extremely deep networks.
+
+**Advantages**:  
+- Eases training of deeper networks by mitigating gradient issues.  
+- Empirically shown to improve generalization.  
+- Architecture can be scaled to hundreds or even thousands of layers (e.g., ResNet variants).
+
+**Disadvantages**:  
+- Introduces additional overhead in graph structure, though minimal.  
+- Residual networks can still suffer from other forms of overfitting or inefficiency if not designed carefully.
+
+Residual connections are used not only in classical CNNs but also across various deep learning architectures, from segmentation networks to generative adversarial networks (GANs) and beyond.
+
+---
+
+## Inception modules
+
+Inception modules (Szegedy and gang, CVPR 2015), the backbone of **GoogLeNet** (Inception-V1) and subsequent Inception-V2, Inception-V3, Inception-V4, etc., aim to achieve a higher level of efficiency in networks by using multiple filter sizes in parallel and then concatenating their outputs. The guiding principle is that the optimal local architecture in CNNs can vary from layer to layer. Instead of committing to a single filter size (e.g., <Latex text="\(3 \times 3\)"/>), an Inception module tries filters of different sizes (<Latex text="\(1 \times 1\)"/>, <Latex text="\(3 \times 3\)"/>, <Latex text="\(5 \times 5\)"/>) plus pooling, and then merges these transformations.
+
+A simplified Inception module might look like:
+
+<Image alt="Inception module block" path="" caption="A simplified Inception module showing parallel branches of different convolution/pooling operations, whose outputs are then concatenated." zoom="false" />
+
+The usage of <Latex text="\(1 \times 1\)"/> convolutions before the larger convolutions helps reduce dimensionality and thus computational cost. More advanced versions (Inception-V2, Inception-V3) incorporate factorized convolutions (e.g., splitting <Latex text="\(5 \times 5\)"/> into two <Latex text="\(3 \times 3\)"/> convolutions), batch normalization, or additional techniques to improve accuracy and efficiency.
+
+**Advantages**:  
+- Effectively captures features at multiple scales.  
+- Reduces parameter count by carefully factoring convolutions with <Latex text="\(1 \times 1\)"/> bottlenecks.
+
+**Disadvantages**:  
+- The architecture is more complex to design and tune.  
+- Not as lightweight as architectures specifically optimized for mobile deployment (e.g., MobileNet).
+
+---
+
+## Depthwise separable convolutions
+
+As introduced earlier in the MobileNet discussion, depthwise separable convolutions decompose a standard convolution into two steps:
+
+1. **Depthwise convolution**: A filter for each input channel that acts on the spatial dimension.  
+2. **Pointwise convolution**: A <Latex text="\(1 \times 1\)"/> filter that projects the output of the depthwise convolution onto a new feature space.
+
+Formally, if the standard convolution has a computational cost of <Latex text="\(O(D_k \times D_k \times M \times N \times D_f \times D_f)\)"/>, where <Latex text="\(D_k\)"/> is kernel size, <Latex text="\(M\)"/> is the number of input channels, <Latex text="\(N\)"/> is the number of output channels, and <Latex text="\(D_f\)"/> is the spatial dimension of the feature map, a depthwise separable convolution has a cost of <Latex text="\(O(D_k \times D_k \times M \times D_f \times D_f + M \times N \times D_f \times D_f)\)"/>. This factorization often yields fewer operations if <Latex text="\(D_k\)"/> is large relative to <Latex text="\(M\)"/> and <Latex text="\(N\)"/>.
+
+**Advantages**:
+- Significant reduction in computational complexity.  
+- Applicable to many architectures (MobileNet, Xception, etc.) for improved efficiency.  
+
+**Disadvantages**:
+- May slightly reduce accuracy compared to standard convolutions if there's insufficient capacity or suboptimal hyperparameter tuning.  
+
+---
+
+## Dilated convolutions
+
+Dilated (or atrous) convolutions introduce spacing between the kernel elements, effectively expanding the receptive field without increasing the number of parameters. Instead of sampling adjacent pixels, a dilated convolution samples pixels or feature map values at intervals. Formally, a dilated convolution for dilation rate <Latex text="\(r\)"/> is:
+
+<Latex text="\[
+(\text{DilatedConv}(I, K, r))(x, y) = \sum_{a=-\alpha}^{\alpha} \sum_{b=-\beta}^{\beta} I(x+ra, y+rb)\,K(a, b).
+\]"/>
+
+When <Latex text="\(r = 1\)"/>, it's a standard convolution. Larger values of <Latex text="\(r\)"/> expand the receptive field exponentially, allowing the network to capture global context in fewer layers. This approach is popular in semantic segmentation networks, such as DeepLab, which rely on wide receptive fields to capture object contexts in images without resorting to large downsampling or large kernel sizes.
+
+**Advantages**:  
+- Expands receptive field without extra parameters or pooling.  
+- Preserves spatial resolution better than large pooling.  
+
+**Disadvantages**:  
+- Introduces grid artifacts if not carefully designed.  
+- May require careful combination with other components (like multi-scale features) for best results.
+
+---
+
+## Grouped convolutions
+
+Grouped convolutions, used notably in AlexNet (due to GPU memory constraints) and in ResNeXt (a variant of ResNet), split the input channels into groups and apply convolution within each group. Concretely, if you have <Latex text="\(M\)"/> input channels and want <Latex text="\(g\)"/> groups, each group would handle <Latex text="\(M / g\)"/> channels independently. The outputs of each group are concatenated along the channel dimension.
+
+In a standard convolution, the cost is <Latex text="\(O(M \times N \times D_k^2 \times D_f^2)\)"/>. With grouped convolution:
+
+<Latex text="\[
+\text{Cost} = g \times O\left(\frac{M}{g} \times \frac{N}{g} \times D_k^2 \times D_f^2\right) = \frac{MN}{g} D_k^2 D_f^2.
+\]"/>
+
+Hence, grouping can reduce computational complexity when <Latex text="\(g\)"/> > 1. However, if <Latex text="\(g\)"/> is too large relative to <Latex text="\(M\)"/> or <Latex text="\(N\)"/>, it might hamper feature fusion across different channel groups, potentially reducing accuracy unless carefully managed. ResNeXt (Xie and gang, CVPR 2017) used grouped convolutions with the idea of increasing the "cardinality" (the number of groups) as an additional dimension of network design, parallel to depth and width.
+
+**Advantages**:  
+- Reduced computational and memory cost compared to full convolutions if used appropriately.  
+- Allows a form of parallel feature extraction in separate channel groups.
+
+**Disadvantages**:  
+- Potentially reduces representational power if the grouping is not balanced.  
+- More complex design decisions: how many groups to use, interplay with the overall network architecture.
+
+---
+
+## Deployment and optimization
+
+After designing or choosing a CNN architecture — be it something classic like LeNet, AlexNet, or VGGNet, or more modern like MobileNet with depthwise separable convolutions — the next big challenge is **deployment and optimization**. This includes everything from compressing the model for faster inference to scaling training across multiple machines or specialized hardware.
+
+### Model compression (pruning, quantization)
+
+**Model pruning**: Involves removing weights that are deemed insignificant. Techniques like **magnitude-based pruning** remove weights below a certain threshold, while more advanced methods might consider the sensitivity of each layer or channel. Pruning can reduce model size and improve inference speed, especially if the pruning pattern is hardware-friendly (structured pruning).
+
+**Quantization**: Instead of using 32-bit floating-point weights, you can quantize parameters (and sometimes activations) to 16-bit, 8-bit, or even lower-precision formats. In an 8-bit quantized model, weights are stored and computed with 8 bits instead of 32 bits. This can yield a 4x reduction in model size and speed up inference on devices that support integer arithmetic acceleration. However, quantization sometimes introduces accuracy degradation if not carefully calibrated, and certain layers might be more sensitive to lower precision.
+
+**Knowledge distillation**: Another relevant compression technique is **knowledge distillation**, where you train a smaller "student" model to mimic the outputs of a larger "teacher" model, encouraging the student to learn the teacher's softer distribution of outputs. This method can yield a more compact student model that approaches the accuracy of the teacher.
+
+### GPU/TPU acceleration
+
+Graphics Processing Units (GPUs) have become the mainstay of training deep neural networks due to their highly parallel architecture, which handles matrix and vector computations efficiently. When scaling beyond a single GPU, you might distribute computations across multiple GPUs in a single machine or across multiple machines.
+
+Tensor Processing Units (TPUs), developed by Google, are specialized ASICs designed to accelerate TensorFlow computations, particularly for large-scale matrix multiplications commonly found in neural networks. TPUs are integrated into cloud environments (like Google Cloud Platform), offering large-scale, distributed training resources.
+
+### Distributed training
+
+Distributed training can be done in multiple ways:
+- **Data parallelism**: Each worker holds a copy of the model, processes a different batch of data, and then gradients are averaged or reduced across workers.
+- **Model parallelism**: Different parts (layers) of the model are split across workers. This is sometimes used for extremely large models that cannot fit into a single worker's memory.
+- **Pipeline parallelism**: Splits the layers among multiple devices and processes different micro-batches in a pipeline.  
+
+Frameworks like TensorFlow's `tf.distribute.Strategy`, PyTorch's `DistributedDataParallel`, and specialized libraries from HPC contexts can handle the complexities of synchronization, checkpointing, and fault tolerance.  
+
+### Real-world deployment challenges
+
+**Latency constraints**: Many real-time applications cannot tolerate slow inference. Models must be optimized, quantized, or pruned. Sometimes GPU or specialized hardware might be necessary.  
+
+**Memory limitations**: On embedded or mobile devices, memory is at a premium. Techniques like compression, partial offloading, or adopting architectures specifically designed for low memory usage (e.g., MobileNet, SqueezeNet) are crucial.  
+
+**Scalability**: If the application needs to handle millions of requests per day, the model might run on a cluster with load balancing.  
+
+**Maintenance and versioning**: Continual improvements or data updates can require re-training and re-deploying. Proper MLOps pipelines ensure seamless transitions, rollback mechanisms, and consistent performance monitoring.  
+
+**Security**: In adversarial ML contexts, CNNs deployed in production can be subjected to adversarial attacks. Proper security measures and robust defenses (like adversarial training or input sanitization) are relevant.  
+
+---
+
+## Conclusion for the article
+
+In this article, I discussed a broad range of CNN architectures and design innovations, continuing the journey from the historical significance of LeNet, through the revolutionary advances in AlexNet and VGGNet, and arriving at more computationally efficient paradigms such as MobileNet. Along the way, we explored specialized techniques and building blocks like Network in Network, residual connections, Inception modules, depthwise separable convolutions, dilated convolutions, and grouped convolutions — each offering distinct advantages and trade-offs in terms of accuracy, parameter counts, computational cost, and architectural complexity.
+
+When selecting an architecture for a specific task, you'll want to consider the resource constraints of your deployment environment, the size and diversity of your dataset, and the performance metrics that matter most (e.g., accuracy, latency, memory usage). In many real-world scenarios, advanced optimization strategies like pruning, quantization, knowledge distillation, and distributed training can help you strike the right balance between model performance and practicality.
+
+These core CNN designs — from LeNet's simple but groundbreaking structure to MobileNet's cutting-edge efficiency — represent the foundations of modern computer vision. Mastering them can help you quickly grasp more advanced networks (e.g., ResNet, DenseNet, EfficientNet) and tackle a wide variety of tasks that extend beyond image classification, including segmentation, detection, and generative modeling. All these developments underscore a common theme: the synergy between architectural innovations, efficient implementation, and large-scale training can unlock powerful solutions that make computer vision accessible at scale.

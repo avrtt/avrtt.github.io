@@ -1,0 +1,646 @@
+---
+index: 129
+indexCourse: 149
+indexFavorites:
+title: "AI planning"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "AI planning"
+courseCategoryName: "AI theory"
+desc: "First step for problem-solving agents"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "09.10.2024"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 2
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: false
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/ai_planning.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/ai_planning"
+slug: "/research/ai_planning"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+Artificial Intelligence: A Modern Approach, Global Edition, 4ed: 11. Automated Planning 
+
+*/}
+
+
+{/*
+
+1. Introduction
+- Motivation and Role of Planning  
+- Why planning is a core problem in AI  
+- Differences between search, planning, and reasoning  
+- Historical context: STRIPS and early planning systems  
+- Connection to Other Topics in the Series  
+  - Relationship to AI search and AI logic  
+  - Planning as a bridge between theory (logic) and practice (acting in environments)  
+  - Relationship to prior topics: search (as planning often involves state-space search) and logic (for representing actions, preconditions, effects)  
+  - The role of planning in bridging reasoning with action execution  
+- Planning in the Broader AI Landscape  
+  - From classical symbolic planners to modern automated planning systems  
+  - Hybrid approaches integrating planning with machine learning  
+- Key Questions in AI Planning  
+  - How to model goals, actions, and states formally  
+  - Balancing expressiveness with computational tractability  
+  - Addressing uncertainty, time, and resource constraints  
+2. Foundations of Planning in AI
+- Definition of Classical Planning  
+  - "Classical" assumptions (fully observable, deterministic, static environments)  
+  - Planning vs. scheduling vs. control: clarifying boundaries  
+- Planning Representations  
+  - States, actions (operators), goals, and plans  
+  - State-space vs. plan-space representations  
+  - STRIPS-like formalisms (preconditions, effects)  
+3. Classical Planning Algorithms
+- State-Space Search in Planning  
+  - Forward (progression) search vs. backward (regression) search  
+  - Key differences from typical graph search algorithms in AI search  
+- Partial-Order (Plan-Space) Planning  
+  - Concepts of concurrency and partial ordering of actions  
+  - Advantages over strictly sequential (linear) planners  
+- Notable Classical Planning Algorithms  
+  - STRIPS-based methods  
+  - GraphPlan and planning graphs (brief introduction; detailed in heuristics)  
+  - Progression/Regression planners  
+  - SAT-based planning  
+- Limitations of Classical Planning  
+  - Scalability issues in large state spaces  
+  - Inability to handle uncertainty or continuous time  
+4. Heuristics for Planning
+- Rationale for Heuristic Planning  
+  - Limitations of blind (uninformed) planning methods  
+  - Importance of domain-independent vs. domain-dependent heuristics  
+- Automated Planning Heuristics  
+  (Introductory discussion of why heuristics are needed; details below.)  
+- Planning Graphs and GraphPlan  
+  - Construction of a planning graph  
+  - Extraction of plans from the graph (backward search on levels)  
+  - Relationship between GraphPlan's planning graph and heuristic generation  
+- Designing Effective Heuristics  
+  - Relaxation-based heuristics (e.g., ignoring delete effects)  
+  - Landmark-based heuristics (critical milestones toward the goal)  
+  - Pattern databases (precomputed subproblem solutions)  
+  - Admissibility and Consistency (trade-offs between heuristic accuracy and computation)  
+  - Examples (e.g., Manhattan distance in grid worlds, relaxed plan heuristics)  
+5. Hierarchical Planning
+- Overview of Hierarchical Task Network (HTN) Planning  
+  - Breaking complex tasks into subtasks  
+  - Abstraction levels: high-level tasks vs. primitive actions  
+  - Advantages in complex, real-world domains (robotics, enterprise workflows)  
+- Algorithms and Formalisms  
+  - Methods for decomposing tasks  
+  - Handling constraints across multiple abstraction layers  
+- Applications and Use Cases  
+  - Project management, multi-step manufacturing, game AI scripts  
+  - Risks of abstraction: incomplete or incorrect task decompositions  
+6. Planning and Acting in Nondeterministic Domains
+- Nondeterminism and Uncertainty  
+  - Why real-world domains often break classical assumptions  
+  - Expressiveness needed to capture nondeterministic actions  
+- Conformant Planning  
+  - Planning when the initial state or action outcomes are partially unknown  
+  - Ensuring success despite limited sensing capabilities  
+- Contingent (Conditional) Planning  
+  - Branching plans with conditional actions  
+  - Sensing actions and dynamic observation of the environment  
+- Relationship to Partially Observable MDPs (POMDPs)  
+  - When planning merges with probabilistic reasoning and RL  
+- Replanning and Execution Monitoring  
+  - Online planning with real-time feedback (replanning upon failure)  
+  - Probabilistic planning with belief states  
+7. Time, Scheduling, and Resources
+- Time-Dependent Planning  
+  - Extending classical planning to handle temporal constraints  
+  - Representing durations, deadlines, and concurrent actions  
+- Scheduling and Resource Allocation  
+  - Integrating scheduling techniques within planning  
+  - Constraint-based scheduling (CSP approaches)  
+  - Real-world complexities (multiple agents, shared resources)  
+- Temporal Planning Algorithms  
+  - Time modeling approaches: discrete vs. continuous  
+  - Differences between classical and temporal planners (e.g., TPLAN, OPTIC)  
+- Resource-Constrained Planning  
+  - Managing finite resources (fuel, money, bandwidth)  
+  - Integration with scheduling algorithms (e.g., job-shop scheduling)  
+8. Automated Planning Systems
+- Definition and Scope  
+  - Automated vs. manual or semi-automated planning  
+  - Domain-independent planners vs. domain-specific planners  
+- Planning Algorithms and Frameworks  
+  - AI Planning toolkits (e.g., PDDL-based systems)  
+  - Popular planners (FF, Fast Downward, SATPLAN)  
+- Automated Planning Heuristics  
+  - Heuristic engines powering domain-independent planners  
+  - Evolution of heuristics (relaxed planning graphs, critical path methods)  
+- Practical Considerations  
+  - Knowledge engineering: representing the domain (in PDDL or other formalisms)  
+  - Scalability and runtime performance  
+  - Benchmarks (IPC: International Planning Competition) and measuring performance  
+9. Analysis of Planning Approaches
+- Computational Complexity in Planning  
+  - PSPACE-completeness (classical results)  
+  - Hardness results and practical implications  
+- Trade-offs Among Approaches  
+  - State-space vs. plan-space vs. hierarchical vs. graph-based  
+  - Strengths, weaknesses, typical domain suitability  
+- Heuristic Accuracy vs. Computation Time  
+  - Balancing search time with heuristic quality  
+  - When domain-specific heuristics can drastically improve performance  
+- Empirical vs. Theoretical Analysis  
+  - Case studies from known planners  
+  - Domains that highlight algorithmic strengths and weaknesses  
+- Empirical Comparisons  
+  - Benchmark domains (e.g., Blocks World, Logistics, Rover Navigation)  
+  - Metrics: plan quality, time-to-solution, memory usage  
+- Hybrid Approaches  
+  - Integrating planning with machine learning (e.g., learned transition models)  
+  - Neurosymbolic planning: combining logic with neural networks  
+10. Future Directions and Open Problems
+- Integrating Learning and Planning  
+  - Reinforcement Learning meets classical planning  
+  - Learning heuristics or domain models automatically  
+- Probabilistic and Hybrid Planning  
+  - Combining deterministic planners with probabilistic reasoning  
+  - Hybrid symbolic–subsymbolic methods (neuro-symbolic planners)  
+- Multi-Agent Planning  
+  - Coordination and negotiation of plans among agents  
+  - Game-theoretic aspects of joint plans  
+- Ethical and Social Considerations  
+  - Planning for autonomous systems in safety-critical domains  
+  - Accountability in automated decision-making processes  
+11. Conclusion
+- Key Takeaways  
+  - Importance of planning as a unifying concept in AI theory  
+  - Connection to AI search, logic, and reasoning  
+- Links to the Next Article ("AI Reasoning")  
+  - How reasoning about plans transitions into broader forms of logical or probabilistic inference  
+  - Overlap with knowledge representation and inference systems  
+- Further Reading and Resources  
+  - Core planning textbooks and seminal papers  
+  - Online courses, competitions (IPC), and research challenges  
+
+*/}
+
+
+I want to begin by painting a broad picture of what AI planning is and why it is such a crucial pillar in the domain of artificial intelligence. When discussing AI in practical contexts — for instance, a robot's ability to execute a series of tasks in a dynamic environment, or an automated system's capacity to decide on the optimal sequence of actions to achieve a given goal — one inevitably encounters the concept of "planning". Planning lies at the heart of many core AI applications, encompassing everything from robotics to complex workflow management systems, and from game AI to logistics scheduling.
+
+### Motivation and role of planning
+
+Planning can be thought of as the process of selecting and ordering a sequence of actions that, when carried out, will achieve a specified set of goals. This idea transcends the boundaries of classical robotics: it is also relevant in business process automation, high-level strategic reasoning in games, autonomous vehicle navigation, and even in generating narratives or storylines in procedural content generation. The motivation for studying planning stems from our need to act effectively in the world. In essence, we do not merely want to predict or classify situations (the realm of machine learning or general AI reasoning tasks); we also want to decide how to progress from an initial state to a desired outcome, possibly juggling multiple constraints along the way.
+
+Planning stands apart from simpler forms of search in that we typically assume we have a set of actions — each with its own set of conditions for applicability (preconditions) and its consequences (effects) — and we want to weave these actions together in a sequence or structure that achieves a particular objective or set of objectives. It is also different from purely reactive systems, where each action is decided based purely on the current state without an overarching notion of a plan. In planning, there is an emphasis on reasoning about the future and anticipating the outcomes of actions before committing to them.
+
+### Why planning is a core problem in AI
+
+From the early days of AI, researchers have recognized that effectively planning sequences of actions in real or simulated environments is a major challenge that intersects with several other subfields. For one, it intersects with search: one can see planning as a specialized kind of search in the space of possible action sequences or states. It also intersects with logic, because many classical planning frameworks rely on symbolic representations of states, actions, and goals, allowing for logically rigorous ways to express constraints, preconditions, and effects.
+
+But planning is also a standalone subfield with unique challenges. It addresses questions of:
+
+- **Expressiveness vs. tractability**: How do we represent actions in a way that captures real-world complexities, but does not explode computationally?
+- **Heuristics and guidance**: How can we guide the search for a plan in large or continuous state spaces efficiently?
+- **Uncertainty**: How do we handle nondeterministic outcomes or partial observability?
+- **Time, resources, concurrency**: Many real problems require that we plan under time constraints, with concurrency, or with limited resources.
+
+With the emergence of more advanced AI planning systems, the subfield remains central to bridging high-level reasoning with actual deployment of AI in real environments. Whether it is NASA planning activities for Mars rovers, or an automated system orchestrating lab experiments, planning is often the backbone that glues everything together.
+
+### Differences between search, planning, and reasoning
+
+In a conventional sense, "search" often refers to a process of systematically exploring a set of possible configurations (often called states) in order to find a path or solution. Classic search algorithms in AI (such as breadth-first search, depth-first search, A\* search, or iterative deepening search) can indeed be used for planning, particularly in small, discrete environments. However, planning problems typically introduce a richer representation of actions, frequently with logic-based descriptions of what each action does, and possibly more elaborate constraints. Furthermore, planning often requires looking beyond a simple path to a goal; it might also require concurrency (multiple actions at once), resource management, or temporal scheduling. 
+
+On the other hand, "reasoning" is a broader umbrella term that encompasses the process by which AI systems draw conclusions from existing knowledge, prove theorems, or perform inference over symbolic or probabilistic models. Planning is indeed a form of reasoning (it reasons about the future using abstract models of action), but many topics in reasoning (such as default logic, model checking, or knowledge-based inference) are not necessarily about deciding a sequence of actions. So you can think of planning as a specialized subdiscipline that leverages reasoning and search in synergy, typically for the purpose of goal-directed action.
+
+### Historical context: STRIPS and early planning systems
+
+Historically, one of the most influential frameworks in AI planning was **STRIPS** (<Highlight>STanford Research Institute Problem Solver</Highlight>), introduced by Fikes and Nilsson in 1971. STRIPS formalized the representation of planning problems with the notion of a world state described by logical predicates, and actions described in terms of preconditions and add/delete lists (what changes the action applies to the state). This framework established many of the fundamental ideas behind classical symbolic planning: define an initial state, define a goal state, define operators, and search for a sequence of operators that transition the state from initial to goal.
+
+Early planning systems often used either forward search (starting from the initial state and applying actions) or backward search (regressing from the goal conditions back to the initial state). They suffered from combinatorial explosion, but laid the foundation for subsequent breakthroughs, such as GraphPlan, partial-order planning, heuristic-based planners, and the standardized domain language known as **PDDL** (<Highlight>Planning Domain Definition Language</Highlight>).
+
+### Connection to other topics in the series
+
+This article is part of a broader AI course, and planning intersects strongly with several of the previous or future articles:
+
+- **Relationship to AI search and AI logic**: We have just seen that planning heavily relies on search techniques to explore possible sequences of actions, and it also uses logic-based formalisms to describe states, actions, and goals.
+- **Planning as a bridge between theory (logic) and practice (acting in environments)**: Once we have a logical model of the world and the agent's capabilities, planning is the step where we figure out a practical strategy to achieve goals.
+- **Relationship to prior topics (search, logic, knowledge representation)**: The formalisms used in planning often revolve around symbolic representations, which tie into topics like propositional or first-order logic. Planning also has synergy with knowledge representation for describing possible states or constraints in a domain.
+- **Bridging reasoning with action execution**: Even the best plan is worthless if it cannot be executed or adapted to real-time changes. Planning thus paves the way toward integrated systems that reason about actions and actually perform them in the world.
+
+### Planning in the broader AI landscape
+
+Planning is a microcosm of many AI challenges. Historically, planning used a strongly symbolic approach with emphasis on domain-independent solutions (as exemplified by the use of PDDL). However, in more recent years, there has been an interest in integrating planning with machine learning, leading to a variety of **hybrid approaches** that try to learn domain models or heuristics automatically. There are also sophisticated planning systems that reason probabilistically about outcomes, or that incorporate deep neural networks (particularly in large, complicated environments like those found in robotics or advanced strategy games).
+
+### Key questions in AI planning
+
+As you dive deeper into planning, several key questions continually arise:
+
+- **How to model goals, actions, and states formally?** This is typically tackled by specifying a language such as PDDL, or by using an ad-hoc domain-specific representation.
+- **How to balance expressiveness with computational tractability?** The more expressive your planning language, the more capable your system is, but also the more computationally challenging the planning process becomes.
+- **How to address uncertainty, time, and resource constraints?** Real-world planning rarely fits the neat assumptions of classical planning, so advanced frameworks must handle nondeterministic actions, partial observability, real-time deadlines, concurrency, and finite resources. 
+
+All these questions shape the evolution of planning research and drive innovations in both theoretical frameworks and practical algorithms.
+
+## Foundations of planning in AI
+
+### Definition of classical planning
+
+"Classical planning" is a term used to delineate a subset of planning problems where the environment is:
+
+1. **Fully observable**: The agent knows the complete state of the world at all times.
+2. **Deterministic**: Actions have predictable outcomes with no uncertainty.
+3. **Static**: The world does not change except when the agent takes an action.
+4. **Discrete**: States, actions, and time steps are modeled in discrete ways.
+
+Under these assumptions, the planning problem can be stated succinctly as:
+
+- You have an initial state <Latex text="\( s_0 \)"/>.
+- You have a set of possible actions, each with preconditions that must be satisfied to apply the action, and effects that modify the state once the action is taken.
+- You have a goal state description (or a set of goal conditions).
+- The task is to find a finite sequence of actions that transitions the system from <Latex text="\( s_0 \)"/> to a state in which the goal conditions are satisfied.
+
+One might wonder how classical planning differs from scheduling or control. In **scheduling**, we often have a fixed set of tasks (or jobs) that need to be assigned in time or across resources with minimal cost. In **control**, we typically rely on feedback loops and real-time sensor data, especially in continuous domains (as in control theory). Classical planning sits in a slightly different space, focusing on symbolically representing and searching for a sequence of actions from an initial to a goal state.
+
+### Planning representations
+
+In classical (symbolic) planning, we usually describe:
+
+- **States**: Typically sets of atomic propositions, or partial assignments to variables, that describe what is true of the world at a given moment.
+- **Actions (operators)**: Each action has:
+  - **Preconditions**: What must be true in the current state for the action to be applicable.
+  - **Effects**: How the current state is modified. Classically, these are captured by "add lists" and "delete lists" (as in STRIPS), or by more complex conditional effects in modern variants.
+- **Goals**: A logical condition that must be satisfied in a final state of any valid plan.
+- **Plans**: A sequence (or partial ordering) of actions that transforms the initial state into a goal state.
+
+We often distinguish between **state-space representations** (where each node in a search tree corresponds to a complete state) and **plan-space representations** (where each node in the search space is a partial plan that can be successively refined). Both approaches have their pros and cons, with different algorithms having been developed for each.
+
+STRIPS-like formalisms remain influential: in a simplified version, each action is described as:
+
+<Latex text="\[
+action\_name: 
+   preconditions = \{p_1, p_2, ...\}, 
+   add\_effects = \{e_1, e_2, ...\}, 
+   delete\_effects = \{d_1, d_2, ...\}
+\]"/>
+
+where <Latex text="\(p_i\)"/> are propositions that must be true before the action can be taken, <Latex text="\(e_i\)"/> are propositions the action will cause to become true, and <Latex text="\(d_i\)"/> are propositions the action will make false.
+
+## Classical planning algorithms
+
+### State-space search in planning
+
+A straightforward approach to planning is to perform a **state-space search**. The idea is to define a directed graph whose nodes represent possible world states, and whose edges represent the application of an action. Since each action is only applicable if its preconditions are met, we only draw edges where the starting node (state) satisfies the action's preconditions. The search then tries to find a path from the node corresponding to the initial state to a node satisfying the goal conditions.
+
+We can do this in **forward (progression) search** or **backward (regression) search**:
+
+- **Forward search** starts at the initial state and moves forward by applying actions. This can branch widely if actions are widely applicable, but it is straightforward to keep track of the current state.
+- **Backward search** starts from the goal description and tries to figure out which states and actions could have led to that goal. This can be more efficient if the goal description is narrower than the initial state description.
+
+Such search-based approaches are conceptually simple but can be very large, and naive blind search is often infeasible for larger problems. That said, they are the foundation for more advanced algorithms and heuristics.
+
+### Partial-order (plan-space) planning
+
+An alternative to explicitly enumerating states is **plan-space planning** (also known as partial-order planning). Here, the search space consists of partially specified plans, not states. Instead of specifying a linear (total) order of actions from the start, we keep constraints (such as action ordering or causal links) as flexible as possible. The plan is refined step by step, adding actions or imposing ordering constraints only when needed to satisfy preconditions or prevent conflicts.
+
+Key ideas in partial-order planning include:
+
+- **Causal links**: For instance, if action A produces a condition C, and action B requires condition C, then we link A to B with a causal link that states A must occur before B, and no intervening action can destroy condition C.
+- **Open conditions**: Conditions in the plan that are not yet satisfied. Refinement consists of adding actions or reusing existing actions to fulfill these open conditions.
+- **Threat resolution**: Dealing with actions that might delete conditions needed by other actions.
+
+Partial-order planners often produce a plan that is only partially ordered, indicating that some actions can be done concurrently or in any order that satisfies the plan's constraints. This is more general than strict linear sequences and can be advantageous in domains where concurrency is valuable.
+
+### Notable classical planning algorithms
+
+- **STRIPS-based methods**: Early systems that directly used the STRIPS representation and performed forward or backward search.
+- **GraphPlan**: Proposed by Blum and Furst (Proceedings of AAAI, 1995). It constructs a "planning graph" level by level, alternating between layers of states and layers of actions, tracking possible mutual exclusions. GraphPlan uses that structure both to guide a backward search for a valid plan and also to derive heuristics.
+- **Progression/Regression planners**: Various improvements on the straightforward forward or backward search, frequently with better heuristics or data structures for quickly checking preconditions.
+- **SAT-based planning**: Another powerful approach encodes a bounded planning problem (looking for a plan up to some length L) as a Boolean satisfiability problem. Then, a SAT solver is used to see if a valid plan exists at that length. If not, increment L. This approach can exploit highly optimized SAT solvers and has proven surprisingly competitive for certain kinds of problems.
+
+### Limitations of classical planning
+
+Classical planning focuses on deterministic, fully observable, static environments. Real environments often break these assumptions, which leads to issues with **scalability** (the state space can be huge), and an inability to handle **uncertainty** or **dynamic changes**. Furthermore, **continuous variables** (time, geometry, motion, etc.) remain outside the scope of most classical planners unless specifically adapted.
+
+## Heuristics for planning
+
+### Rationale for heuristic planning
+
+Given that even relatively small planning problems can explode combinatorially, **heuristics** are critical in guiding the search. A heuristic function <Latex text="\(h(n)\)"/> estimates how close or far a node (or partial plan) is from the goal. In domain-independent planning, heuristics attempt to do this without hand-crafted knowledge of the domain; in domain-dependent planning, specialized knowledge can drastically reduce the search.
+
+### Automated planning heuristics
+
+Classical planners often rely on **relaxation-based** heuristics. For example, ignoring the "delete effects" of actions is a common trick that yields an (inadmissible) but effective heuristic. The rationale is that if we never delete conditions, we can make an optimistic assumption: once a literal becomes true, it remains available for future actions, thus typically underestimating the true cost.
+
+### Planning graphs and GraphPlan
+
+A planning graph is a layered structure that alternates between a layer of facts (or propositions) and a layer of actions. Each proposition layer contains all propositions that could possibly be true at that step. Each action layer contains all actions that could possibly be applied given the propositions in the previous layer. **Mutual exclusion** (mutex) relations are recorded to indicate pairs of actions or propositions that cannot co-occur.
+
+GraphPlan (Blum and Furst, 1995) uses this planning graph both to detect potential conflicts and to guide a **backward search** for a valid plan. The planning graph can also be used to derive effective heuristics, because the level at which a proposition first appears in the planning graph provides an estimate of how many steps are needed to achieve it.
+
+### Designing effective heuristics
+
+Numerous heuristic design strategies exist:
+
+- **Relaxation-based heuristics**: The ignoring-delete-lists heuristic is a classic example. Others might ignore certain constraints or simplify the domain in a systematic way.
+- **Landmark-based heuristics**: A "landmark" is a fact or action that must be achieved at some point in every valid plan. Once you identify such landmarks, you can create heuristic estimates based on how many still need to be achieved and in what order.
+- **Pattern databases**: Precompute solutions to subproblems of the planning domain (like smaller or abstracted versions), then use the lookup of partial states to get an estimate for the full problem.
+- **Admissibility and consistency**: Sometimes you need heuristics that never overestimate (admissible) or never generate conflicting estimates (consistent). This is particularly relevant if you want an optimal plan.
+
+A typical example in simpler grid-world planning is the **Manhattan distance**: the heuristic is the sum of the absolute differences in the x and y coordinates to a goal. In more complex planning domains, you have to craft or learn analogous heuristics.
+
+## Hierarchical planning
+
+### Overview of hierarchical task network (HTN) planning
+
+When planning tasks become very complex, it is often helpful to **decompose** them into smaller tasks. **Hierarchical Task Network (HTN) planning** is an influential approach for such hierarchical decomposition. At its core, an HTN planner is given high-level tasks that can be expanded into networks of lower-level tasks, culminating in primitive actions that can be executed.
+
+For instance, a high-level task might be "plan a trip", which can be decomposed into subtasks like "book flight", "book hotel", "pack bags", etc. Each subtask can further be decomposed into smaller tasks, until we reach primitive actions that we can represent in a classical planning style. This structure can significantly reduce search complexity and is often closer to how humans break down complex tasks.
+
+### Algorithms and formalisms
+
+In HTN planning, you typically define **methods** that describe how to decompose a high-level task into smaller tasks or subgoals. During planning, you pick a task at some abstraction level and choose a method to expand it, thereby creating new tasks in the plan. The plan is refined until it contains only primitive actions that can be executed directly.
+
+Formalisms like **SHOP** (Simple Hierarchical Ordered Planner) and **SHOP2** (Nau and gang, 2003) or other related systems are commonly used to implement HTN planning. These systems handle constraints between tasks, enabling concurrency and resource constraints at multiple levels of abstraction.
+
+### Applications and use cases
+
+HTN planning has been broadly applied in domains such as:
+
+- **Project management**: Breaking down large-scale projects into tasks and subtasks.
+- **Game AI scripts**: Many modern video games use hierarchical planning or behavior trees (a related idea) to script complex NPC behaviors.
+- **Robotics**: Where tasks like "fetch an object" might break down into navigation, gripping, and sensing subtasks.
+
+A key advantage is interpretability — hierarchical plans map well to human notions of tasks and subtasks. However, hierarchical models can be brittle if the decomposition is incomplete or incorrectly specified.
+
+## Planning and acting in nondeterministic domains
+
+### Nondeterminism and uncertainty
+
+Classical planning assumes a deterministic environment, but many real-world settings involve **nondeterministic actions** (where the outcome is not guaranteed), or partial observability (where we do not fully know the current state). If an action's effects are uncertain, or the initial state is not fully known, classical planners cannot be directly applied without modifications.
+
+### Conformant planning
+
+**Conformant planning** attempts to generate a sequence of actions that will achieve the goal **no matter which of the possible initial states or action outcomes is the actual one**, assuming all relevant possibilities are known. Conformant planners typically reason about sets of possible states (belief states), trying to ensure the plan leads to the goal in all these states. This can be computationally expensive, but it is essential in situations where an agent cannot observe the environment changes or has very limited sensing capability.
+
+### Contingent (conditional) planning
+
+**Contingent planning** or **conditional planning** introduces the notion of branching plans, where you might have an action that senses some aspect of the environment, then conditionally branch to different subplans depending on the result of that sensing. This approach requires a richer action representation that can include sensing actions and conditionals:
+
+<Latex text="\[
+if \; sensor\_reading\_X = true \; then \; do \; subplan\_A ; \; else \; subplan\_B
+\]"/>
+
+Such planners can better handle uncertainty in the environment, as they adapt the plan's execution based on feedback.
+
+### Relationship to partially observable MDPs (POMDPs)
+
+When we incorporate probabilities into uncertain actions and partial observability, the planning problem can become a **Partially Observable Markov Decision Process (POMDP)**. Solving a POMDP yields a policy mapping belief states to actions, which is typically more computationally challenging than classical planning. Research in **decision-theoretic planning** merges classical symbolic techniques with probabilistic or approximate methods for dealing with large or infinite state spaces.
+
+### Replanning and execution monitoring
+
+In practice, especially in robotics, one rarely executes a plan from start to finish without deviation. Instead, systems often utilize:
+
+- **Execution monitoring**: The system observes whether actions have succeeded or if the environment has changed. If the plan no longer matches reality, it triggers a **replanning** step.
+- **Online planning**: Alternatively, plan incrementally or in small horizons, constantly updating the plan as new data arrives.
+
+This interplay between planning and acting in the real world is an active area of research. Some approaches unify planning with **reinforcement learning** methods, where the agent can learn action policies that are robust to uncertainty or partial observability.
+
+## Time, scheduling, and resources
+
+### Time-dependent planning
+
+Real-world applications typically require explicit handling of **time**. For instance, actions have durations, deadlines might exist, and certain actions can happen in parallel. **Temporal planning** extends classical planning formalisms with time. In a temporal domain, each action has a start time, end time, or duration, and concurrency constraints must be respected. 
+
+<Latex text="\[
+action(A) : duration = 5, 
+start\_condition = ConditionA, 
+end\_condition = ConditionB
+\]"/>
+
+Here, we might say that an action A takes 5 time units to complete, requires ConditionA to be true at its start, and ensures ConditionB at its end.
+
+### Scheduling and resource allocation
+
+**Scheduling** is the process of assigning tasks to time slots (and possibly resources) such that constraints like deadlines or capacities are satisfied. In complex applications, one must integrate scheduling with planning: not only must the sequence of actions be valid, but it must also fit into the resource constraints (e.g., you cannot have two actions simultaneously using the same single robot arm if concurrency is not possible for that resource). Many advanced planners combine planning with scheduling, using **constraint satisfaction** techniques or specialized heuristics. 
+
+### Temporal planning algorithms
+
+Several algorithms and systems address **temporal planning**, including:
+
+- **TPPlan**: An older system that used temporal constraints for scheduling-like planning.
+- **OPTIC**: A more recent domain-independent temporal planner that builds upon heuristic search techniques and plan-space refinements.
+
+In these planners, time is often handled either discretely (where each time step is a small uniform increment) or continuously (where start times can be arbitrary real values). The complexity can be high, so heuristics and domain restrictions are essential.
+
+### Resource-constrained planning
+
+In addition to time, real-world tasks often face **resource constraints** — for example, limited budget, fuel, or CPU cycles. A plan that uses more resources than available is invalid. Approaches for resource-constrained planning often integrate ideas from **job-shop scheduling** or **CSP (Constraint Satisfaction Problem)** solving. These methods require:
+
+- **Variables** representing resource usage over time.
+- **Constraints** specifying how actions consume or produce resources.
+- **Search or optimization** procedures to find feasible schedules or to minimize cost.
+
+## Automated planning systems
+
+### Definition and scope
+
+**Automated planning** typically means domain-independent planning, where the system can read a domain description (in, for example, PDDL) and a problem instance (initial state plus goal), and generate a plan without additional domain-specific coding. This contrasts with manual or domain-specific planning approaches, where the developer encodes specialized heuristics or expansions for that domain alone.
+
+### Planning algorithms and frameworks
+
+Over the years, a number of **AI planning toolkits** have been developed, many supporting PDDL as a standard input format. Some well-known domain-independent planners include:
+
+- **FF** (Fast Forward): Uses a relaxed planning graph to derive heuristics, known for speed in many benchmarks.
+- **Fast Downward**: A versatile planner that supports a range of heuristics and search strategies, developed at the University of Freiburg.
+- **SATPlan**: Uses bounded-length transformations into SAT problems, leveraging powerful SAT solvers.
+
+### Automated planning heuristics
+
+We have touched on heuristics earlier, but in automated planning systems, the choice of heuristic can drastically change performance. Domain-independent heuristics like the **FF heuristic** (which effectively ignores delete lists but tries to compute the length of a relaxed plan) have been central to the success of modern planners. Over the years, new heuristics (landmark-based, pattern-based, or synergy-based) have emerged, each pushing the boundary of what domain-independent planners can solve efficiently.
+
+### Practical considerations
+
+1. **Knowledge engineering**: Writing correct, robust domain models is non-trivial. The best planning system in the world is useless if the domain and problem descriptions are incomplete or inaccurate.
+2. **Scalability and runtime performance**: Some planning problems are in PSPACE or EXPSPACE complexity classes, so advanced heuristics and domain knowledge are often needed to handle real-world problems.
+3. **Benchmarks and competitions**: The **International Planning Competition (IPC)** has historically driven progress in domain-independent planning, providing standardized benchmarks (e.g., Blocks World, Logistics, Rovers, TPP, Satellite domains) and comparing planner performance.
+
+## Analysis of planning approaches
+
+### Computational complexity in planning
+
+It is well-known from classical results that general (classical) planning is **PSPACE-complete**. This means that for large problems, we might need to consider exponential or super-polynomial time in the worst case. Many expansions of planning (handling partial observability, time, resources, or uncertainty) push the complexity even higher. Understanding these complexity classes is important in appreciating why heuristic design and domain constraints are so crucial in practice.
+
+### Trade-offs among approaches
+
+When deciding on an approach, you balance:
+
+- **State-space vs. plan-space**: State-space searches can be simpler to implement but might blow up in large domains. Plan-space (partial-order) planning can handle concurrency gracefully but can be more complex to implement and reason about.
+- **Hierarchical vs. non-hierarchical**: Hierarchical approaches can drastically simplify search if the domain decomposition is well designed, but they require more domain knowledge.
+- **Graph-based (e.g., GraphPlan) vs. SAT-based**: GraphPlan can quickly identify mutual exclusions and provide good heuristics. SAT-based approaches can leverage state-of-the-art solvers but might be more memory intensive for large problems.
+
+### Heuristic accuracy vs. computation time
+
+A well-designed heuristic can prune huge portions of the search space but might be expensive to compute. Domain-independent planners often rely on more general but less accurate heuristics, while domain-specific planners can exploit specialized heuristics for huge gains in efficiency. For many real-world problems, the knowledge engineering cost of building domain-specific heuristics is offset by the improvements in speed and plan quality.
+
+### Empirical vs. theoretical analysis
+
+Because planning problems are so diverse, many breakthroughs come from empirical experimentation with standard benchmarks. The International Planning Competition fosters such experimentation. Developers test their planners on logistics problems, blocks-world puzzles, rover navigation tasks (inspired by NASA missions), and other complex tasks. Theoretical analysis often focuses on the worst-case or average-case complexity, but empirical results can show which algorithms and heuristics work best in practice.
+
+### Empirical comparisons
+
+Common metrics used to evaluate planners:
+
+- **Plan quality**: The cost or length of the resulting plan.
+- **Time-to-solution**: How quickly a valid plan is found.
+- **Memory usage**: Some approaches can explode in memory consumption if the state space or intermediate structures are large.
+- **Scalability**: How performance degrades as problem size increases.
+
+### Hybrid approaches
+
+One promising direction involves **combining planning with machine learning**. For instance, an ML component might learn a transition model from data, or learn heuristics from solved examples. Another direction is **neurosymbolic planning**, where a neural network might approximate a submodule (like the next feasible action or state representation), while a symbolic planner ensures logical consistency. These approaches, though still in active research, aim to merge the best of both worlds: the interpretability and rigor of symbolic planning with the flexibility and adaptability of learning-based systems.
+
+## Future directions and open problems
+
+### Integrating learning and planning
+
+The synergy between **reinforcement learning** and planning is particularly interesting. While RL typically learns a policy from trial and error, classical planning builds a plan from a symbolic model of the domain. One approach is to use planning to generate or refine policies, or conversely, to learn domain models or heuristics from RL experience. This has led to frameworks like **model-based RL** that fuse classical planning (with the learned model) and policy optimization.
+
+Another frontier is learning domain models automatically from partial observations. Traditional planning requires a fully specified action model, but in real-world settings, writing or verifying these models might be too time-consuming or error-prone. Recent research (e.g., in NeurIPS or ICML workshops) has explored learning approximate STRIPS operators from data logs, then using those operators for planning.
+
+### Probabilistic and hybrid planning
+
+Many real problems have probabilistic effects. **Probabilistic planning** extends classical planning with probability distributions over action outcomes. Tools like the **PPDDL** language attempt to unify classical planning with Markov decision processes. Meanwhile, **hybrid** approaches incorporate numeric or continuous variables with discrete ones, bridging the gap with classical control theory. Such integrated frameworks are still being refined and require advanced reasoning over large or continuous state spaces.
+
+### Multi-agent planning
+
+In multi-agent systems, we have multiple actors each with their own goals, abilities, and sometimes conflicting constraints. Multi-agent planning includes aspects of **coordination** (ensuring that multiple agents' actions do not conflict) and **negotiation** (resolving conflicting goals). Game-theoretic principles can come into play, especially if agents are self-interested. This domain remains a lively research area, offering a broad set of computational and conceptual challenges.
+
+### Ethical and social considerations
+
+As planning technology becomes integrated into real systems (e.g., drones, self-driving cars, automated factories), we must consider:
+
+- **Safety**: An AI planner that inadvertently orchestrates harmful actions (or fails to consider certain unintended side effects) poses risks.
+- **Fairness and accountability**: Automated planning in social contexts (e.g., resource distribution) might raise fairness concerns. Who is accountable if the plan leads to harm or is biased against certain groups?
+- **Transparency and interpretability**: Stakeholders may demand interpretable, justifiable plans. Hierarchical planning can help with interpretability, but if we also incorporate deep learning elements, it can become opaque.
+
+## Conclusion
+
+### Key takeaways
+
+- Planning is a **foundational** concept in AI, linking abstract reasoning with concrete action. It is often formalized in a symbolic manner, ensuring that each step is grounded in well-defined preconditions and effects.
+- We have classical planning, relying on assumptions of determinism and full observability. Then we have expansions to hierarchical, nondeterministic, probabilistic, and temporal contexts.
+- Effective planning **algorithms** rely on heuristics, partial-order structures, or transformations into other domains (like SAT) to cope with combinatorial complexity.
+- The field is **constantly evolving**, with research exploring hybrid symbolic–subsymbolic planners, multi-agent frameworks, and deeper integration with machine learning.
+
+### Links to the next article ("AI reasoning")
+
+Planning is deeply interwoven with other forms of reasoning. The next article on "AI Reasoning" will likely dive into more generic inference mechanisms, including logical and probabilistic reasoning, knowledge representation, and how these are used to derive or verify the constraints under which planning operates. While planning focuses on the **sequence of actions** to achieve goals, broader AI reasoning can involve diagnosing problems, explaining phenomena, or inferring hidden states — tasks that can inform the modeling and feasibility checking at the heart of the planner.
+
+### Further reading and resources
+
+- **Ghallab, M., Nau, D., & Traverso, P.** (2004). "Automated Planning: Theory and Practice." This textbook provides a broad introduction to classical, hierarchical, and real-world planning issues.
+- **Blum, A., & Furst, M.** (1995). "Fast Planning Through Planning Graph Analysis." This seminal paper introduced GraphPlan, setting the stage for planning-graph-based heuristics.
+- **Fikes, R. E., & Nilsson, N. J.** (1971). "STRIPS: A new approach to the application of theorem proving to problem solving." The foundational paper for classical planning representation.
+- **International Planning Competition (IPC)**: A recurring event that drives state-of-the-art in domain-independent planning. Their website provides benchmarks, results, and links to numerous planners.
+- **Automated Planning and Scheduling (ICAPS)**: A premier conference focusing on planning, scheduling, and combinatorial optimization in AI. Papers there often reveal the leading research directions.
+
+<Image alt="Schematic overview of a planner" path="" caption="A high-level schematic of a classical planner that takes a domain description, a problem instance, and produces a plan." zoom="false" />
+
+-------
+
+Below is a small illustrative snippet in Python that demonstrates, in a highly simplified manner, how one might implement a forward (progression) search for a plan in a toy domain with STRIPS-like operators. This code is only for demonstration and does not handle large or complex scenarios:
+
+<Code text={`
+class Action:
+    def __init__(self, name, preconds, add_effects, del_effects):
+        self.name = name
+        self.preconds = set(preconds)
+        self.add_effects = set(add_effects)
+        self.del_effects = set(del_effects)
+
+    def is_applicable(self, state):
+        # Check if all preconditions are in current state
+        return self.preconds.issubset(state)
+
+    def apply(self, state):
+        # Return the new state after applying the action
+        new_state = set(state)
+        new_state.difference_update(self.del_effects)
+        new_state.update(self.add_effects)
+        return new_state
+
+def forward_search(initial_state, goal, actions):
+    # We'll do a naive BFS for demonstration
+    from collections import deque
+    queue = deque()
+    # Each element is (current_state, plan)
+    queue.append((frozenset(initial_state), []))
+    visited = set([frozenset(initial_state)])
+
+    while queue:
+        current_state, plan = queue.popleft()
+        # Check goal
+        if goal.issubset(current_state):
+            return plan  # Found a plan that satisfies goal
+
+        # Try all applicable actions
+        for act in actions:
+            if act.is_applicable(current_state):
+                next_state = act.apply(current_state)
+                if next_state not in visited:
+                    visited.add(next_state)
+                    new_plan = plan + [act.name]
+                    queue.append((frozenset(next_state), new_plan))
+
+    # If we exhaust the search space, return None
+    return None
+
+# Example usage:
+if __name__ == "__main__":
+    init = {"at_home", "car_needs_fuel"}
+    goal = {"at_work"}
+    actions = [
+        Action("drive_to_station", {"at_home", "car_needs_fuel"}, {"at_station"}, {"at_home"}),
+        Action("fill_tank", {"at_station"}, {"car_full_tank"}, {"car_needs_fuel"}),
+        Action("drive_to_work", {"at_station", "car_full_tank"}, {"at_work"}, {"at_station"})
+    ]
+    plan_found = forward_search(init, goal, actions)
+    print("Plan found:", plan_found)
+`}/>
+
+While this code snippet barely scratches the surface of AI planning, it shows in extremely simplified form how you might represent states as sets of facts, actions as transitions with preconditions and effects, and perform a straightforward BFS search. Real-world planning systems are far more intricate, potentially involving specialized heuristics, partial-order plan representations, temporal constraints, resource management, and more.
+
+And with that, I hope this gives you a comprehensive theoretical and practical overview of AI planning — a field that continues to be vibrant and deeply relevant to both academic research and industrial applications.

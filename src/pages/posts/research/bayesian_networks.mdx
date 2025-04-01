@@ -1,0 +1,651 @@
+---
+index: 145
+indexCourse: 63
+indexFavorites:
+title: "Bayesian networks"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Bayesian networks"
+courseCategoryName: "Probabilistic models & Bayesian methods"
+desc: "The true probabilistic inference as it is"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "16.01.2025"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 3
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/bayesian_networks.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/bayesian_networks"
+slug: "/research/bayesian_networks"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+Байесовские сети
+https://neerc.ifmo.ru/wiki/index.php?title=%D0%91%D0%B0%D0%B9%D0%B5%D1%81%D0%BE%D0%B2%D1%81%D0%BA%D0%B8%D0%B5_%D1%81%D0%B5%D1%82%D0%B8
+
+- [Tutorial 1: Bayesian Neural Networks with Pyro](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Bayesian_Neural_Networks/dl2_bnn_tut1_students_with_answers.html)
+    - [Bayesian Neural Networks](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Bayesian_Neural_Networks/dl2_bnn_tut1_students_with_answers.html#Bayesian-Neural-Networks)
+    - [Simulate data](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Bayesian_Neural_Networks/dl2_bnn_tut1_students_with_answers.html#Simulate-data)
+    - [Getting started with Pyro](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Bayesian_Neural_Networks/dl2_bnn_tut1_students_with_answers.html#Getting-started-with-Pyro)
+    - [Bayesian Neural Network with Gaussian Prior and Likelihood](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Bayesian_Neural_Networks/dl2_bnn_tut1_students_with_answers.html#Bayesian-Neural-Network-with-Gaussian-Prior-and-Likelihood)
+    - [Define and run Markov chain Monte Carlo sampler](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Bayesian_Neural_Networks/dl2_bnn_tut1_students_with_answers.html#Define-and-run-Markov-chain-Monte-Carlo-sampler)
+    - [Exercise 1: Deep Bayesian Neural Network](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Bayesian_Neural_Networks/dl2_bnn_tut1_students_with_answers.html#Exercise-1:-Deep-Bayesian-Neural-Network)
+    - [Train BNNs with mean-field variational inference](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Bayesian_Neural_Networks/dl2_bnn_tut1_students_with_answers.html#Train-BNNs-with-mean-field-variational-inference)
+    - [Exercise 2: Bayesian updating with variational inference](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Bayesian_Neural_Networks/dl2_bnn_tut1_students_with_answers.html#Exercise-2:-Bayesian-updating-with-variational-inference)
+    - [Bayesian update](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Bayesian_Neural_Networks/dl2_bnn_tut1_students_with_answers.html#Bayesian-update)
+- [Tutorial 2: Comparison to other methods of uncertainty quantification](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Bayesian_Neural_Networks/dl2_bnn_tut2_student_with_answers.html)
+    - [Simulate Data](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Bayesian_Neural_Networks/dl2_bnn_tut2_student_with_answers.html#Simulate-Data)
+    - [Define non-Bayesian Neural Network](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Bayesian_Neural_Networks/dl2_bnn_tut2_student_with_answers.html#Define-non-Bayesian-Neural-Network)
+    - [Train one deterministic NN](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Bayesian_Neural_Networks/dl2_bnn_tut2_student_with_answers.html#Train-one-deterministic-NN)
+    - [Deep Ensemble](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Bayesian_Neural_Networks/dl2_bnn_tut2_student_with_answers.html#Deep-Ensemble)
+    - [Monte Carlo Dropout](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Bayesian_Neural_Networks/dl2_bnn_tut2_student_with_answers.html#Monte-Carlo-Dropout)
+    - [Conformal prediction](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Bayesian_Neural_Networks/dl2_bnn_tut2_student_with_answers.html#Conformal-prediction)
+    - [Deterministic Network](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Bayesian_Neural_Networks/dl2_bnn_tut2_student_with_answers.html#Deterministic-Network)
+    - [Rotating the images](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Bayesian_Neural_Networks/dl2_bnn_tut2_student_with_answers.html#Rotating-the-images)
+    - [Monte Carlo Dropout Network](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Bayesian_Neural_Networks/dl2_bnn_tut2_student_with_answers.html#Monte-Carlo-Dropout-Network)
+    - [Deep Ensemble](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Bayesian_Neural_Networks/dl2_bnn_tut2_student_with_answers.html#id1)
+    - [Bayesian Neural Network](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Bayesian_Neural_Networks/dl2_bnn_tut2_student_with_answers.html#Bayesian-Neural-Network)
+    - [Conformal prediction](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Bayesian_Neural_Networks/dl2_bnn_tut2_student_with_answers.html#id2)
+
+*/}
+
+
+{/*
+
+1. Introduction  
+- Motivation for probabilistic modeling: Discuss the limitations of deterministic neural networks and illustrate how probabilistic approaches can capture uncertainty and improve model reliability.  
+- From deterministic weights to probability distributions: Contrast fixed-weight models with parameter distributions and explain why a probabilistic perspective can lead to better generalization.  
+- Scope and structure: Outline the topics covered in this article, including Bayesian foundations, Bayesian neural network architectures, inference methods, practical tips, and advanced applications.  
+- Historical context and frequentist vs. Bayesian views: Briefly describe the evolution of Bayesian methods in machine learning and highlight key differences from frequentist approaches.
+2. Bayesian foundations  
+- Revisiting Bayes' theorem: Present probability definitions, conditional probability, and Bayes' theorem as the core building block of Bayesian inference.  
+- Prior, likelihood, posterior, and posterior predictive: Explain each component in the Bayesian pipeline and how they interact during inference and prediction.  
+- Bayesian networks vs. Bayesian neural networks: Compare graph-based probabilistic models with neural-network-based models that place distributions over weights.  
+- Chain rule factorization and conditional independence: Introduce how probabilities factorize in Bayesian networks and why conditional independence assumptions matter.  
+- Conjugate priors and Bayesian updating: Discuss how conjugate priors simplify posterior calculations and how Bayesian updating proceeds with new data.  
+- Common Bayesian pitfalls: Touch on challenges like improper priors, model misspecification, and computational complexity.
+3. Key concepts of Bayesian neural networks  
+- Representing weights and biases as probability distributions: Show how each weight and bias becomes a random variable, providing a distribution rather than a single point.  
+- Estimating uncertainty and predictive distributions: Explain how to quantify uncertainty at both the parameter level and the predictive level.  
+- Likelihood functions for regression and classification: Cover Gaussian and Bernoulli (or softmax) likelihoods commonly used in Bayesian neural networks.  
+- Explaining away — connection to probabilistic graphical models: Demonstrate how the concept of "explaining away" appears in neural networks when weights are correlated.  
+- Hyperparameter tuning and prior selection: Highlight the importance of choosing appropriate priors for different network sizes and tasks.
+4. Building a Bayesian neural network  
+- Simulating data and problem setup: Describe how to generate toy datasets (regression or classification) for demonstration.  
+- Model architecture: shallow vs. deep BNNs: Compare simpler models with deeper architectures and discuss their respective pros and cons.  
+- Gaussian priors on weights and biases: Cover the standard approach of placing normal distributions on parameters and alternatives like Laplace priors.  
+- Implementation details in PyTorch: Summarize best practices for coding Bayesian layers and handling parameter distributions in a popular deep learning framework.  
+- Introduction to Pyro for Bayesian inference: Introduce probabilistic programming using Pyro, covering guides and sampling approaches.  
+- Practical tips for network initialization: Provide heuristics for initializing random variables and controlling variance explosion.
+5. Posterior estimation methods  
+- Markov chain Monte Carlo (covered before)  
+- Hamiltonian Monte Carlo: Describe how gradient information can be used to explore the posterior more efficiently than basic random-walk proposals.  
+- No-U-Turn sampler (NUTS): Explain an adaptive version of HMC that tunes path lengths automatically.  
+- Diagnosing convergence: Give guidelines for checking sample convergence (e.g., R-hat, effective sample size).  
+- Variational inference (VI): Present VI as an alternative to MCMC, trading off some accuracy for better scalability.  
+- Mean-field variational inference: Outline the simplest VI approach where each weight distribution is approximated independently.  
+- Stochastic gradient and the ELBO: Show how stochastic optimization is used to maximize the Evidence Lower BOund in VI.  
+- AutoDiagonalNormal and other Pyro guides: Introduce flexible approximations beyond mean-field.  
+- Comparing MCMC and VI in practice: Highlight typical scenarios where one method outperforms the other.  
+- Updating the posterior with new observations: Demonstrate how the posterior distribution changes as new data arrives.
+6. Practical uncertainty estimation  
+- Comparing point estimate NNs and BNNs: Summarize benefits and drawbacks of deterministic vs. Bayesian neural networks.  
+- Deep ensembles: approximate multi-modal posteriors: Explain how multiple independently trained networks can mimic a Bayesian posterior.  
+- Monte Carlo dropout as a Bayesian approximation: Describe how dropout can be interpreted as a variational inference technique.  
+- Conformal prediction: theory and usage: Introduce methods to obtain prediction intervals that are distribution-free.  
+- Trade-offs in computational cost and performance: Discuss the resource requirements for Bayesian methods vs. deterministic methods and how to balance them.  
+- Calibration and reliability diagrams: Highlight ways to evaluate whether predictive uncertainties are well-calibrated.
+7. Advanced topics  
+- d-separation and active trails: Provide deeper insight into graphical models and how independence properties can inform neural network structures.  
+- Large-scale Bayesian neural networks: Consider memory and computational challenges when scaling to very large architectures.  
+- Complex prior distributions, e.g., hierarchical priors: Present more sophisticated priors that model parameter dependencies.  
+- Alternative approximate inference: normalizing flows, etc.: Show how more flexible approximations can better capture complex posteriors.  
+- Explaining away and inter-causal reasoning: dive deeper into how BNNs handle correlated factors within complex datasets.  
+- Transfer learning and Bayesian fine-tuning: Explore how pre-trained Bayesian layers can adapt to new tasks efficiently.
+8. Additional implementation frameworks and best practices  
+- JAX, TensorFlow Probability, and others: Survey different libraries for implementing Bayesian neural networks.  
+- Optimization tricks and debugging tips: Suggest solutions for issues like gradient explosions or slow convergence.  
+- Model selection and comparison: Present Bayesian model comparison and metrics like WAIC or Bayes factors.  
+- Reproducibility and experiment tracking: Stress the importance of random seeds, logging, and version control for replicable results.
+9. Applications and case studies  
+- Regression tasks — time series, noisy function approximation: Illustrate how BNNs handle varying degrees of noise and temporal dynamics.  
+- Classification tasks — MNIST, distribution shift detection: Show how Bayesian methods can flag out-of-distribution inputs more reliably.  
+- Medical, financial, and other real-world applications: Present real-life scenarios where uncertainty estimation is critical.  
+- Interpreting and visualizing uncertainty: Demonstrate practical tools for communicating predictive intervals to stakeholders.  
+- Performance metrics in real-world scenarios: Discuss how to evaluate success when uncertainty quantification is essential (e.g., Brier scores).
+10. Conclusion  
+- Key takeaways and lessons learned: Recap fundamental insights from Bayesian neural networks and their role in uncertainty estimation.  
+- Open challenges and future research directions: Highlight areas where Bayesian methods are still computationally or theoretically limited.  
+- References and recommended reading: Provide resources for further study, including textbooks, research papers, and tutorials.  
+- Final thoughts on the Bayesian perspective: Reflect on the importance of probabilistic thinking in modern deep learning and potential breakthroughs to come.
+
+*/}
+
+
+As machine learning systems become more sophisticated and find applications in high-stakes domains — such as healthcare, financial forecasting, and autonomous driving — the need to quantify and manage uncertainty becomes increasingly paramount. Deterministic neural networks, which learn fixed parameters (weights and biases), offer powerful predictive capabilities but rarely provide insight into how confident these predictions are. In many real-world scenarios, risk assessment and reliability are as important as accuracy. For instance, a medical diagnosis model that outputs only a single class label ("benign" vs. "malignant") without a calibrated measure of uncertainty might lead to suboptimal or even dangerous decisions.
+
+This is where probabilistic modeling enters the picture. By incorporating probability distributions directly into our models, we gain the ability to estimate uncertainty: we can learn not just a single best guess, but rather a distribution over plausible hypotheses. This extra information can lead to improved decisions under uncertainty and more robust modeling of complex phenomena. Instead of answering "What is the single most probable outcome?" a probabilistic model tries to capture "Which outcomes are likely, and how certain am I?"
+
+### From deterministic weights to probability distributions
+
+Traditional feed-forward neural networks represent their learnable parameters (weights and biases) as single point values found by optimization — for example, via gradient descent on a loss function. In a Bayesian neural network (BNN), however, each parameter is endowed with a prior distribution. When we observe data, we use Bayesian inference to compute a posterior distribution over the parameters, reflecting the updated state of our knowledge about them. Crucially, this posterior distribution captures our uncertainty about parameters, taking into account the complexity of the model, the amount of data, and the noise inherent in the observations.
+
+When we feed a new input into a BNN, we integrate over all plausible parameter values (weighted by their posterior probability) to produce the so-called predictive distribution. Rather than a single point prediction, we obtain a distribution that can give a measure of how likely each possible outcome is. This distribution also allows us to compute credible intervals, predictive intervals, or other measures of uncertainty.
+
+### Scope and structure
+
+In this article, we will cover:
+
+- **Bayesian foundations**: A thorough revisit of Bayes' theorem, the interplay of prior and likelihood in forming a posterior, and essential concepts like posterior predictive inference.
+- **Distinction between Bayesian networks and Bayesian neural networks**: We will introduce Bayesian networks — directed acyclic graphs that encode conditional dependencies among variables — as well as neural networks that embed uncertainty over parameters.
+- **Building Bayesian neural networks**: Practical aspects of constructing BNNs in frameworks like PyTorch and Pyro, focusing on how to place probability distributions over parameters.
+- **Posterior estimation**: Methods to handle the typically intractable integrals that arise in Bayesian models — covering Markov chain Monte Carlo (MCMC) techniques, Hamiltonian Monte Carlo (HMC), No-U-Turn sampler (NUTS), as well as Variational Inference (VI).
+- **Advanced topics and best practices**: Large-scale Bayesian networks, alternative approximate inference, network structure considerations such as d-separation and explaining away, etc.
+- **Practical uncertainty estimation**: Comparing point-estimate NNs vs. BNNs, deep ensembles, Monte Carlo dropout, conformal prediction, plus calibration metrics and reliability diagrams.
+
+By the end, you should have a solid foundation in how Bayesian networks in general — and Bayesian neural networks in particular — can improve model reliability by capturing uncertainty.
+
+### Historical context and frequentist vs. Bayesian views
+
+While Bayesian methods date back centuries (reviving from the work of Thomas Bayes, Pierre-Simon Laplace, and others), their popularity in modern machine learning has ebbed and flowed. Early AI approaches frequently used Bayesian reasoning to handle uncertainty in expert systems. With the advent of more data, frequentist methods and purely data-driven approaches like deep neural networks gained significant traction. However, as the demand for uncertainty estimation has grown, Bayesian approaches have re-emerged. Key references include the classic works on Bayesian belief networks (Pearl, 1988) and the pioneering Bayesian neural networks research from the early 1990s (Neal, 1996). More recent advances in scalable inference (e.g., variational inference and specialized MCMC variants) have made Bayesian neural networks more tractable for large datasets, spurring renewed research interest.
+
+Frequentist and Bayesian approaches differ fundamentally in how they treat parameters and data: frequentists see parameters as fixed but unknown quantities, whereas Bayesians treat parameters as random variables with prior distributions. When new data is observed, Bayesians update those distributions according to Bayes' theorem. The rise of specialized Bayesian software, along with improved computational power, has lowered the barriers to building Bayesian models on large real-world problems.
+
+
+## Bayesian foundations
+
+### Revisiting Bayes' theorem
+
+At the heart of Bayesian inference lies Bayes' theorem. If we denote <Latex text="\( \theta \)"/> as the parameters of a model and <Latex text="\( D \)"/> as observed data, Bayes' theorem states:
+
+<Latex text="\[
+p(\theta \mid D) = \frac{p(D \mid \theta)\, p(\theta)}{p(D)}.
+\]"/>
+
+- <Latex text="\( p(\theta) \)"/> is the prior distribution, describing our beliefs (or assumptions) about <Latex text="\( \theta \)"/> before observing <Latex text="\( D \)"/>.
+- <Latex text="\( p(D \mid \theta) \)"/> is the likelihood, describing how probable it is to observe <Latex text="\( D \)"/> if the parameters are <Latex text="\( \theta \)"/>.
+- <Latex text="\( p(\theta \mid D) \)"/> is the posterior distribution, encoding our updated belief about the parameters after observing data <Latex text="\( D \)"/>.
+- <Latex text="\( p(D) \)"/> is the evidence or marginal likelihood, which acts as a normalizing constant ensuring that <Latex text="\( p(\theta \mid D) \)"/> is a valid distribution.
+
+In practice, <Latex text="\( p(D) \)"/> is often intractable to compute directly because it involves integrating over all possible parameter values. This difficulty motivates approximate inference methods such as MCMC and Variational Inference.
+
+### Prior, likelihood, posterior, and posterior predictive
+
+Each component in the Bayesian pipeline has a specific role:
+
+- **Prior**: Conveys domain knowledge or assumptions about <Latex text="\( \theta \)"/> before data is observed. For example, if we assume parameters are likely to be small, we might choose a zero-centered Gaussian prior.
+- **Likelihood**: Specifies how the observed data <Latex text="\( D \)"/> is generated conditional on <Latex text="\( \theta \)"/>. In a regression setting, we might assume Gaussian observation noise, whereas in classification we might use a Bernoulli or softmax likelihood.
+- **Posterior**: Combines prior and likelihood to reflect new understanding after seeing data. Bayesian updating means shifting from prior beliefs to posterior beliefs in response to evidence.
+- **Posterior predictive distribution**: To predict a new data point <Latex text="\( x_{\text{new}} \)"/>, or its label <Latex text="\( y_{\text{new}} \)"/>, we integrate over the posterior:
+
+  <Latex text="\[
+  p(y_{\text{new}} \mid x_{\text{new}}, D) 
+  = \int p(y_{\text{new}} \mid x_{\text{new}}, \theta)\, p(\theta \mid D)\, d\theta.
+  \]"/>
+
+This captures all parameter uncertainty when making predictions, unlike point estimates that use a single "best" set of parameters.
+
+### Bayesian networks vs. Bayesian neural networks
+
+**Bayesian networks** (sometimes referred to as Bayesian belief networks or graphical models) are directed acyclic graphs (DAGs) whose nodes represent random variables and whose edges represent conditional dependencies. Formally, a Bayesian network is a graph <Latex text="\( G = \langle V, E \rangle \)"/> with vertices <Latex text="\( v \in V \)"/> and directed edges <Latex text="\( (u, v) \in E \)"/> indicating that <Latex text="\( X_v \)"/> depends on <Latex text="\( X_u \)"/>. Each node has a conditional probability distribution that encodes how it depends on its parents in the graph. The joint distribution over all variables then factorizes according to the graph's structure (the chain rule factorization).
+
+**Bayesian neural networks** share the same conceptual foundation of Bayesian inference — yet they place distributions specifically over the weights (and possibly biases) of a neural network. While a Bayesian network can be seen as a structured representation of conditional dependencies among random variables, a Bayesian neural network looks more like a "usual" neural network architecture for function approximation, but with priors on each weight parameter. 
+
+In short:
+- **Bayesian networks**: explicit graph structure with nodes representing random variables and edges capturing direct dependencies. Commonly used in knowledge representation, causal reasoning, or hierarchical modeling tasks.
+- **Bayesian neural networks**: standard NN architectures where each parameter is considered a random variable with a prior. The "graph" structure in a BNN is essentially the computational graph of the neural network rather than a DAG among observed and latent variables in the classical sense of a Bayesian network.
+
+Despite these differences, both frameworks rely on the fundamental principle of Bayes' theorem to combine prior knowledge with observed data.
+
+### Chain rule factorization and conditional independence
+
+A key property of Bayesian networks is that the joint distribution factorizes over the nodes:
+
+<Latex text="\[
+p(X_1, \ldots, X_n) = \prod_{i=1}^{n} p(X_i \mid \text{parents}(X_i)).
+\]"/>
+
+Here, <Latex text="\( \text{parents}(X_i) \)"/> indicates the parent nodes of <Latex text="\( X_i \)"/> in the DAG. This factorization is sometimes called the "chain rule for Bayesian networks." It significantly reduces the complexity of representing the joint distribution, especially under conditional independence assumptions encoded by the DAG.
+
+Conditional independence is a powerful concept. If a variable <Latex text="\( X \)"/> is conditionally independent of <Latex text="\( Y \)"/> given <Latex text="\( Z \)"/>, we have:
+
+<Latex text="\[
+p(X, Y \mid Z) = p(X \mid Z) \, p(Y \mid Z).
+\]"/>
+
+Bayesian networks exploit these structured independencies to simplify inference. In a well-designed network, the presence or absence of edges strongly constrains the possible factorizations of the joint probability.
+
+In neural networks, there is no explicit notion of a DAG for random variables in the same sense, but the parameter vector can be thought of as a set of random variables that generate predictions. Conditioned on the parameters, the outputs become deterministic (or follow some parametric likelihood). Still, BNNs can exhibit phenomena reminiscent of "explaining away," one of the hallmark behaviors in Bayesian networks.
+
+### Conjugate priors and Bayesian updating
+
+A **conjugate prior** is a prior distribution that, when combined with a certain likelihood function, yields a posterior of the same family. This property greatly simplifies analytical updates. For example, a Beta prior combined with a Bernoulli likelihood yields a Beta posterior, or a Normal prior combined with a Normal likelihood on the mean yields a Normal posterior (with updated parameters). In real-world Bayesian neural networks, the interplay between weights and data is often too complex for neat conjugate forms, leading us to rely on approximate or numerical inference methods.
+
+**Bayesian updating** is the process of taking a prior <Latex text="\( p(\theta) \)"/> and arriving at the posterior <Latex text="\( p(\theta \mid D) \)"/> by multiplying the prior by the likelihood of the data. Each new dataset can be folded in sequentially, refining beliefs as we go. In principle, this is straightforward, but in practice, integrals can be intractable, and posterior distributions can be high-dimensional and multimodal.
+
+### Common Bayesian pitfalls
+
+Despite the conceptual clarity, Bayesian modeling can suffer from practical pitfalls:
+
+- **Improper priors**: Overly vague or unbounded priors can yield posteriors that are not well-defined.
+- **Model misspecification**: If the chosen likelihood or prior fails to capture the true data-generating process, the posterior might be systematically biased.
+- **Computational complexity**: In high-dimensional parameter spaces — such as large neural networks — exact Bayesian inference is generally infeasible. Approximate methods may require significant computational resources.
+
+These challenges underscore why Bayesian networks and Bayesian neural networks require careful design and robust approximations.
+
+
+## Key concepts of Bayesian neural networks
+
+### Representing weights and biases as probability distributions
+
+In a Bayesian neural network, each weight <Latex text="\( w_i \)"/> and bias <Latex text="\( b_j \)"/> is assigned a probability distribution, e.g. a Gaussian with some mean and variance. Rather than storing a single numeric value for each parameter, we store a distribution that evolves as data is processed. Concretely, if <Latex text="\( \theta \)"/> represents the entire parameter set:
+
+<Latex text="\[
+\theta = \{\ldots, w_i, \ldots, b_j, \ldots \},
+\]"/>
+
+we might place a prior <Latex text="\( p(\theta) \)"/> factorized as:
+
+<Latex text="\[
+p(\theta) = \prod_{i} \mathcal{N}(w_i \mid 0, \sigma^2_w)\, \times \prod_{j} \mathcal{N}(b_j \mid 0, \sigma^2_b),
+\]"/>
+
+or a more general distribution that encodes complex dependencies among parameters. The final result is that the BNN no longer has a single feed-forward pass; predictions are integrated over the posterior distribution of parameters. We can sample a set of parameters from the posterior to get a distribution of predictions.
+
+### Estimating uncertainty and predictive distributions
+
+The ultimate reason to go Bayesian is to estimate uncertainty in predictions. Suppose we want the probability <Latex text="\( p(y^* \mid x^*, D) \)"/> of a new output <Latex text="\( y^* \)"/> given a new input <Latex text="\( x^* \)"/> and training data <Latex text="\( D \)"/>. In a BNN:
+
+<Latex text="\[
+p(y^* \mid x^*, D) = \int p(y^* \mid x^*, \theta)\, p(\theta \mid D)\, d\theta.
+\]"/>
+
+Because <Latex text="\( p(\theta \mid D) \)"/> is generally high-dimensional, we approximate the integral by Monte Carlo sampling or by deriving a tractable approximation such as variational inference. Each sample from <Latex text="\( \theta \sim p(\theta \mid D) \)"/> yields a different neural network instance, and averaging predictions over many draws provides an approximation to the predictive distribution. The variance of that distribution is a measure of epistemic uncertainty (i.e., model uncertainty), while any noise in the likelihood (e.g., Gaussian observation noise) reflects aleatoric uncertainty.
+
+### Likelihood functions for regression and classification
+
+In a regression task, it is common to assume that the observed outputs <Latex text="\( y \)"/> are drawn from a Normal distribution whose mean is given by the neural network's output, and whose variance is either fixed or also inferred:
+
+<Latex text="\[
+p(y \mid x, \theta) = \mathcal{N}\bigl(y \mid f_\theta(x), \sigma^2\bigr).
+\]"/>
+
+For classification, a Bernoulli or categorical/softmax likelihood is typical. For example, in binary classification:
+
+<Latex text="\[
+p(y \mid x, \theta) = \text{Bernoulli}\bigl(y \mid \text{sigmoid}[f_\theta(x)]\bigr),
+\]"/>
+
+while in multi-class classification:
+
+<Latex text="\[
+p(y \mid x, \theta) = \text{Categorical}\bigl(y \mid \text{softmax}[f_\theta(x)]\bigr).
+\]"/>
+
+### Explaining away — connection to probabilistic graphical models
+
+"Explaining away" is a phenomenon where the presence of one plausible cause for an observed effect can diminish the posterior probability of other potential causes. In Bayesian networks with multiple parent nodes pointing to a common child node, observing the child can introduce dependencies among parents that were previously independent. For instance, if a patient's fever can be caused by either the flu or food poisoning, once we know the patient definitely has the flu, the probability of food poisoning as a second cause may drop, even if initially they were considered independent causes of fever.
+
+Bayesian neural networks can exhibit related behaviors: if multiple parameters can explain the same patterns in data, inferring a certain configuration might reduce the posterior probability of other configurations. Although the "graph" in a BNN is the architecture of the neural network, correlation structures among weights often lead to inter-causal or explaining-away effects.
+
+### Hyperparameter tuning and prior selection
+
+In Bayesian neural networks, hyperparameters such as the prior variance control how "spread out" the parameter distributions are initially. If the prior is too narrow, the BNN might become overly confident and fail to capture the full range of plausible hypotheses; if too wide, the posterior might underfit the data or become multi-modal in ways that hinder sampling and optimization. Selecting priors often involves domain expertise — knowing whether parameters are likely to be large or small, or if certain layers require different constraints.
+
+Common prior choices include:
+- **Gaussian** (e.g., <Latex text="\( \mathcal{N}(0, \sigma^2 I) \)"/>): The simplest, reflecting an assumption that parameters are near zero but can vary in either direction.
+- **Laplace** (akin to L1-type regularization): Encourages sparsity.
+- **Hierarchical** or **structured** priors: Introduce relationships among parameters, e.g. kernel-based or group-level priors.
+
+
+## Building a Bayesian neural network
+
+### Simulating data and problem setup
+
+To illustrate how Bayesian neural networks work, one often starts with a synthetic regression or classification problem. For instance, generating a wiggly function with added noise in certain intervals, then trying to fit a BNN so that it generalizes well outside the observed region while faithfully expressing high uncertainty there.
+
+You might do something like:
+
+<Code text={`
+import numpy as np
+
+def simulate_data_regression(num_points=200):
+    x = np.linspace(-1, 1, num_points)
+    noise = 0.2 * np.random.randn(num_points)
+    y = np.sin(2 * np.pi * x) + noise
+    return x, y
+`}/>
+  
+In classification tasks, you can sample from known distributions or create toy examples (e.g., circles, spirals) to test how well a BNN captures complex decision boundaries.
+
+### Model architecture: shallow vs. deep BNNs
+
+A shallow BNN may have a single hidden layer with a small number of units, making it easier to demonstrate the inference process (such as MCMC sampling). Deeper models with multiple layers and more hidden units can capture richer function approximations but require more advanced or more computationally expensive inference methods.
+
+- **Shallow BNN**: Often used in introductory tutorials to show how weights become distributions.
+- **Deep BNN**: Potentially more expressive but also more challenging to train. Large-scale BNNs can require specialized approximations.
+
+### Gaussian priors on weights and biases
+
+Arguably the most common prior assumption is the isotropic Gaussian prior:
+
+<Latex text="\( w_i \sim \mathcal{N}(0, \sigma^2) \)"/> and <Latex text="\( b_j \sim \mathcal{N}(0, \sigma^2) \)"/>,
+
+for some <Latex text="\( \sigma \)"/> controlling how wide the distribution is. This implies we expect parameters to be near zero unless the data strongly suggests otherwise. Simpler still, one might use <Latex text="\( \sigma^2 = 1 \)"/> as a default, though in practice you might tune or place a hyperprior on <Latex text="\( \sigma^2 \)"/>.
+
+### Implementation details in PyTorch
+
+Implementing BNNs in vanilla PyTorch can be done by manually specifying priors and performing MCMC or variational inference. However, you would need to write a fair amount of boilerplate code — managing distribution objects for each parameter, sampling them, computing the log probabilities, etc. This is a major reason for using high-level probabilistic programming frameworks such as Pyro or TensorFlow Probability.
+
+If you do attempt it in pure PyTorch, you might:
+
+1. Initialize parameter tensors <Latex text="\( w \)"/> and <Latex text="\( b \)"/> with `requires_grad=True`.
+2. Define a `log_prior(w, b)` function that sums the log densities of the prior for each parameter.
+3. Define a `log_likelihood(x, y, w, b)` function that computes the log of <Latex text="\( p(y \mid x, w, b) \)"/>.
+4. Combine them into `log_posterior(w, b) = log_prior(w,b) + log_likelihood(...)`.
+5. Then run MCMC or VI updates to approximate the posterior.
+
+### Introduction to Pyro for Bayesian inference
+
+Pyro is a probabilistic programming language built on PyTorch that automates much of the above. You specify a **model** function describing how data is generated, typically with calls like:
+
+<Code text={`
+import pyro
+import pyro.distributions as dist
+
+def model(x, y):
+    w = pyro.sample("w", dist.Normal(0., 1.))
+    ...
+    with pyro.plate("data", size_of_dataset):
+        pyro.sample("obs", dist.Normal(...), obs=y)
+`}/>
+
+You also specify a **guide** function if doing variational inference, or choose an MCMC kernel if using sampling approaches. Pyro then orchestrates the parameter updates or sampling procedures. Because it is integrated with PyTorch, it supports GPU-accelerated tensor operations, automatic differentiation, and sophisticated neural network modules.
+
+### Practical tips for network initialization
+
+When placing distributions over weights, initialization can matter. If the prior scale <Latex text="\( \sigma \)"/> is large and the network is deep, forward passes can blow up easily, or gradient-based updates can become unstable. Common heuristics include:
+
+- Setting prior means to zero or small random values.
+- Setting prior variances (e.g., <Latex text="\( \sigma^2 \)"/>) proportionally to the fan-in of each layer.  
+- Using smaller network architectures initially to debug inference procedures.
+
+
+## Posterior estimation methods
+
+### Markov chain Monte Carlo (covered before)
+
+MCMC is a family of algorithms for sampling from complex, high-dimensional distributions — such as the posterior <Latex text="\( p(\theta \mid D) \)"/>. The idea is to construct a Markov chain whose stationary distribution is the desired posterior. Common MCMC approaches used for BNNs include Metropolis-Hastings, Hamiltonian Monte Carlo, and the No-U-Turn Sampler.
+
+While MCMC can provide asymptotically exact samples (given enough time), it can be slow to converge and scale poorly to huge datasets or very deep networks. Techniques like mini-batching are more complicated with MCMC but are possible in some specialized forms of stochastic gradient MCMC.
+
+### Hamiltonian Monte Carlo
+
+Hamiltonian Monte Carlo (HMC) uses gradient information of the log-posterior to guide proposals in parameter space. Think of <Latex text="\( \theta \)"/> as a particle moving in a potential energy landscape defined by the negative log-posterior. By simulating the Hamiltonian dynamics, HMC can perform larger, more informed jumps through parameter space, often reducing the random-walk behavior that plagues vanilla Metropolis-Hastings.
+
+In Pyro or Stan, HMC is implemented through methods that automatically compute gradients with respect to the parameters. However, HMC can still be quite computationally expensive for large networks.
+
+### No-U-Turn sampler (NUTS)
+
+The No-U-Turn sampler is an extension of HMC that eliminates the need to hand-tune the trajectory length (the number of leapfrog steps). NUTS adaptively chooses when to stop the trajectory so that it does not "turn back" on itself, automating a crucial hyperparameter. This makes HMC more efficient, especially in high dimensions.
+
+### Diagnosing convergence
+
+When using MCMC, we must ensure the chain has converged to a stationary distribution. Common diagnostics include:
+
+- **Trace plots**: Visual inspection of parameter samples over iterations.  
+- **Gelman–Rubin statistic** (<Latex text="\( \hat{R} \)"/>): Compares variance between multiple chains to variance within each chain. If <Latex text="\( \hat{R} \approx 1 \)"/>, the chains are likely converged.
+- **Effective sample size**: Measures how many effectively independent samples are obtained, accounting for autocorrelation.
+
+If the chain is not mixing well, we might see poor effective sample sizes and <Latex text="\( \hat{R} \)"/> far from 1.
+
+### Variational inference (VI)
+
+Variational inference offers a deterministic alternative to MCMC by reframing the inference problem as an optimization task. We choose a family of tractable distributions <Latex text="\( q_\phi(\theta) \)"/>, typically factorized, then find the parameters <Latex text="\( \phi \)"/> that minimize the KL divergence <Latex text="\( \mathrm{KL}(q_\phi(\theta) \,\|\, p(\theta \mid D)) \)"/>. Because we cannot compute <Latex text="\( p(\theta \mid D) \)"/> directly, we instead maximize the Evidence Lower BOund (ELBO):
+
+<Latex text="\[
+\text{ELBO}(\phi) = \mathbb{E}_{q_\phi(\theta)}[\log p(D \mid \theta)] - \mathrm{KL}[q_\phi(\theta) \,\|\, p(\theta)].
+\]"/>
+
+This approach can scale to large datasets using stochastic gradient-based optimizers, but the approximation depends on the flexibility of the chosen family <Latex text="\( q_\phi(\theta) \)"/>.  
+
+### Mean-field variational inference
+
+Mean-field VI is the simplest variant, where <Latex text="\( q_\phi(\theta) \)"/> factorizes across parameters. For instance:
+
+<Latex text="\[
+q_\phi(\theta) = \prod_{i} q_{\phi_i}(w_i).
+\]"/>
+
+Each <Latex text="\( w_i \)"/> might have a distinct Gaussian distribution parameterized by a mean and variance. While computationally convenient, mean-field approximations can underrepresent correlations among parameters, possibly leading to an overconfident posterior.
+
+### Stochastic gradient and the ELBO
+
+Variational inference typically relies on gradient-based optimization. We can write:
+
+<Latex text="\[
+\nabla_\phi \text{ELBO} = \nabla_\phi \mathbb{E}_{q_\phi(\theta)}[\log p(D \mid \theta)] 
+  \;-\; \nabla_\phi \mathrm{KL}[q_\phi(\theta) \,\|\, p(\theta)].
+\]"/>
+
+Using the "reparameterization trick" or other gradient estimators, we approximate the expectation by drawing samples <Latex text="\( \theta \sim q_\phi(\theta) \)"/>. Because each iteration is typically <em>much</em> faster than a full MCMC iteration, VI can handle bigger models more easily.
+
+### AutoDiagonalNormal and other Pyro guides
+
+Pyro provides convenient "auto-guide" classes that automatically create a parametric family <Latex text="\( q_\phi(\theta) \)"/>. For instance, `AutoDiagonalNormal` places an independent Gaussian distribution on each parameter dimension. More advanced guides exist, e.g. `AutoMultivariateNormal`, normalizing flows, or hierarchical structures, that can better capture correlations.
+
+### Comparing MCMC and VI in practice
+
+- **MCMC**: Potentially more accurate asymptotically; can approximate multi-modal posteriors. But can be slow, and difficult to scale.
+- **VI**: Typically faster and more scalable, especially for large models and datasets. But can yield biased or too "simple" approximations if the variational family is not expressive enough.
+
+Many researchers use whichever method is more tractable or whichever best matches their computational constraints. Hybrid approaches, or sophisticated flow-based variational distributions, can narrow the gap.
+
+### Updating the posterior with new observations
+
+In principle, we can treat newly arrived data as a second inference step:
+
+<Latex text="\[
+p(\theta \mid D_{\text{old}}, D_{\text{new}}) \;\propto\; p(D_{\text{new}} \mid \theta)\; p(\theta \mid D_{\text{old}}).
+\]"/>
+
+This is straightforward conceptually, but not always easy in practice if the prior or posterior is complex. For MCMC, we could continue sampling with the updated likelihood. For VI, we can initialize a new variational distribution from the old posterior's parameters and continue optimizing with new data. This is sometimes referred to as **Bayesian updating** or **online Bayesian learning**.
+
+
+## Practical uncertainty estimation
+
+### Comparing point estimate NNs and BNNs
+
+A point estimate neural network uses a single set of weights found by (for example) maximum likelihood or maximum a posteriori. If you plot predictions, the model may look extremely certain even in regions where there is little or no data. A Bayesian neural network, by contrast, typically shows high predictive uncertainty in data-scarce regions, reflecting limited information about the correct parameter settings.
+
+### Deep ensembles: approximate multi-modal posteriors
+
+Deep ensembles (Lakshminarayanan and gang, 2017) train multiple independent neural networks from random initializations or different data folds. The ensemble average can mimic a Bayesian posterior by capturing multiple modes in parameter space, though it is not strictly a Bayesian procedure. Nevertheless, deep ensembles often yield impressive uncertainty estimates in practice, can be simpler to implement than BNN-specific methods, and scale well with modern hardware.
+
+### Monte Carlo dropout as a Bayesian approximation
+
+Monte Carlo (MC) dropout (Gal & Ghahramani, 2016) interprets dropout at test time as sampling from an approximate posterior over weights. By leaving dropout layers active, each forward pass yields a different "thinned" network. Repeating multiple forward passes and averaging yields a predictive distribution. This method is easy to implement (simply do not disable dropout at test time) and can produce well-calibrated uncertainties in some cases, though it might not be as powerful as a full Bayesian approach or as stable as a carefully tuned ensemble.
+
+### Conformal prediction: theory and usage
+
+Conformal prediction (Vovk and gang) is a frequentist-driven approach to constructing prediction intervals or sets, guaranteeing certain coverage properties under mild assumptions. Unlike BNNs or ensembles, conformal prediction does not require changing the training procedure itself. Instead, it uses a held-out calibration set to compute a "nonconformity score," thereby building a set or interval for new observations guaranteed to have coverage <Latex text="\( 1 - \alpha \)"/> (marginal coverage). This approach can be combined with any predictive model — Bayesian or not — to produce intervals that are valid in finite samples (assuming exchangeability).
+
+### Trade-offs in computational cost and performance
+
+- **BNNs** can yield rich posteriors but can be expensive to train via MCMC or advanced VI.  
+- **Deep ensembles** can be trivially parallelized by training multiple networks, but require additional memory.  
+- **MC dropout** is easy to incorporate but might degrade raw performance if dropout significantly alters the training dynamics.  
+- **Conformal** approaches are model-agnostic but require separate calibration steps and might produce intervals that fail to capture some structural uncertainties.
+
+### Calibration and reliability diagrams
+
+A well-calibrated model has the property that its predicted probabilities match empirical frequencies. For instance, among all predictions assigned a 70% probability of being correct, roughly 70% should be correct. Reliability diagrams plot predicted probability against empirical accuracy. Many Bayesian methods do not guarantee perfect calibration out-of-the-box, but in practice, they tend to calibrate better than purely deterministic point-estimate networks. Techniques like temperature scaling can further refine calibration of predictive distributions.
+
+
+## Advanced topics
+
+### d-separation and active trails
+
+In classical Bayesian networks (graphical models), **d-separation** is a criterion that tells us whether a set of observed variables "blocks" every path between two unobserved variables, thereby implying conditional independence. If there is no active trail (path) between two variables given the evidence, then those variables are conditionally independent given that evidence. Specifically:
+
+> <Latex text="\( X \)"/> and <Latex text="\( Y \)"/> are said to be <Latex text="\( d \)"/>-separated by <Latex text="\( Z \)"/> if, in the graph <Latex text="\( G \)"/>, every path from <Latex text="\( X \)"/> to <Latex text="\( Y \)"/> is blocked by <Latex text="\( Z \)"/>. 
+
+For example, consider the so-called "V-structure," <Latex text="\( X \rightarrow W \leftarrow Y \)"/>: here, <Latex text="\( X \)"/> and <Latex text="\( Y \)"/> are marginally independent, but they become dependent once <Latex text="\( W \)"/> is observed — this is the classic "explaining away" phenomenon.
+
+While BNNs do not typically frame their dependencies through explicit DAGs of observed variables, the concept of partial correlation among parameters is conceptually related to whether certain sets of parameters "block" or "activate" dependencies within the network's representation of data.
+
+### Large-scale Bayesian neural networks
+
+Scaling BNNs to massive architectures — e.g., modern convolutional or transformer networks — remains an area of active research. Naive MCMC can become infeasible for extremely large networks. Variational inference, especially with structured or flow-based approximate posteriors, is more promising at large scales. Another approach is to adopt a hybrid: use a deterministic backbone for most layers and only treat certain layers or subsets of parameters as Bayesian.
+
+### Complex prior distributions, e.g., hierarchical priors
+
+We are not constrained to isotropic Gaussian priors. We can design structured priors that encourage correlations among parameters — for instance, a hierarchical prior for weight matrices that share patterns across different layers or channels. Such priors can lead to better uncertainty estimates and can incorporate domain knowledge (e.g., images have spatial correlation, wavelet coefficients might have sparse structure, etc.).
+
+### Alternative approximate inference: normalizing flows, etc.
+
+Variational distributions can be made more flexible by using normalizing flows or invertible transformations that map simple base distributions (like Gaussian) into more complicated shapes. This can capture multi-modality or heavy tails in the posterior. Flow-based VI can approximate posteriors more accurately than simple mean-field approaches, albeit at higher computational cost.
+
+### Explaining away and inter-causal reasoning
+
+We have mentioned "explaining away" in the context of Bayesian networks, but it can also manifest in Bayesian neural networks. When multiple sets of parameters can explain the data, observing the data can cause the posterior mass to concentrate more heavily on one set of parameters, decreasing probability assigned to alternative sets. This can be viewed as inter-causal reasoning: the presence of one cause (set of parameters) makes the other less necessary to explain the effect (the observed data).
+
+### Transfer learning and Bayesian fine-tuning
+
+In many deep learning applications, it is common to start with a model pretrained on a large dataset and then fine-tune it on a smaller target dataset. Bayesian approaches can incorporate uncertainty from the pretrained model by using its weights as a prior or by adopting some hierarchical structure that captures how the new data updates the old parameters. Bayesian fine-tuning can lead to robust adaptation, especially when target data is limited.
+
+
+## Additional implementation frameworks and best practices
+
+### JAX, TensorFlow Probability, and others
+
+Beyond PyTorch + Pyro, other frameworks offer probabilistic programming or Bayesian neural network capabilities:
+
+- **TensorFlow Probability (TFP)**: Tools for building Bayesian models and performing VI or MCMC with TensorFlow.  
+- **JAX-based libraries**: Haiku, Flax, NumPyro, and other ecosystems that combine JAX's auto-differentiation with probabilistic tools.  
+- **Stan**: A powerful probabilistic language mostly used for classical Bayesian models, though sometimes used for smaller Bayesian NNs.  
+- **Edward2**: An experimental interface for TFP with higher-level constructs for Bayesian neural networks.
+
+### Optimization tricks and debugging tips
+
+1. **Gradual unfreezing**: Sometimes it helps to fix certain parameters, then unfreeze them as the inference progresses.
+2. **Learning rate schedules**: Because we are optimizing an ELBO or running an MCMC chain, the step size can have a big impact. In HMC, a too-large step size leads to high rejection rates; in VI, it can cause divergence.
+3. **Checking variance**: Keep an eye on the scale of parameter distributions. If they explode, you may need to reduce the prior variance or re-initialize.
+4. **Intercept correlated parameters**: For advanced networks, consider more expressive approximate posteriors that capture correlation among weights.
+
+### Model selection and comparison
+
+Selecting among Bayesian models can be done by comparing marginal likelihoods or approximate model evidence, though this is often computationally difficult. Alternatives include:
+
+- **Widely Applicable Information Criterion (WAIC)**: A generalization of AIC and DIC for Bayesian models.  
+- **Bayes factors**: The ratio of marginal likelihoods for two models.  
+- **Predictive performance**: In practice, many just compare predictive metrics like RMSE, log-likelihood, or calibration error on a validation set.
+
+### Reproducibility and experiment tracking
+
+Due to the inherent stochasticity of sampling-based approaches, it is crucial to:
+
+- Use fixed random seeds (though note that some GPU computations might be nondeterministic).
+- Log MCMC traces and diagnostic statistics.
+- Track hyperparameters of priors and inference algorithms meticulously.
+- Store final posterior samples or fitted variational distributions for later inspection and reproducibility.
+
+
+## Applications and case studies
+
+### Regression tasks — time series, noisy function approximation
+
+Bayesian neural networks are especially useful in regression tasks with limited data or high uncertainty. For time series forecasting, a BNN can produce credible intervals that expand as we forecast further into the future — reflecting the accumulation of uncertainty over time. In noisy function approximation (e.g., modeling physical processes), the BNN can separate measurement noise (aleatoric) from model uncertainty (epistemic).
+
+### Classification tasks — MNIST, distribution shift detection
+
+In classification, BNNs can flag out-of-distribution inputs by showing large predictive uncertainty. For instance, on MNIST digit classification, a BNN can produce high-entropy predictions for images that do not look like typical handwritten digits (e.g., random noise or letters). This is beneficial for real-world applications that must detect anomalies or reject uncertain predictions.
+
+### Medical, financial, and other real-world applications
+
+Clinical diagnosis must often account for the costs of false positives and false negatives. A Bayesian model can incorporate domain knowledge about disease prevalence (the prior) and provide well-calibrated posteriors that reflect how uncertain it is about a diagnosis — imperative for medical decision making. In finance, capturing uncertainty about future market behavior can help risk management. In robotics or self-driving cars, Bayesian methods can help to quantify and reduce collisions or planning errors by incorporating uncertainty in sensor readings.
+
+### Interpreting and visualizing uncertainty
+
+Visualizing the posterior predictive distribution often involves plotting a mean prediction plus credible intervals (e.g., ±2 standard deviations). One can also visualize the distribution of network parameters or the distribution of predictions on a test set. Tools such as reliability diagrams help check calibration, while dimension-reduced embeddings of posterior samples can hint at multi-modal distributions.
+
+### Performance metrics in real-world scenarios
+
+When uncertainty matters, standard metrics like accuracy or MSE are insufficient. We might consider:
+
+- **Brier score**: A proper score that measures the accuracy of probabilistic predictions.
+- **Log-likelihood / Log probability**: Summation or average of <Latex text="\( \log p(y_i \mid x_i, \theta) \)"/>.
+- **Calibration error**: e.g. Expected Calibration Error (ECE) or reliability diagrams.
+- **Coverage**: For intervals or sets, what fraction of true data is covered by the predicted intervals/sets?
+
+
+## Conclusion
+
+### Key takeaways and lessons learned
+
+1. **Uncertainty matters**: Bayesian frameworks provide a systematic way to incorporate and update uncertainties, crucial for risk-sensitive domains.  
+2. **Bayesian networks**: Encode the factorization of a joint distribution in a DAG, capturing conditional independencies and enabling structured reasoning about latent and observed variables.  
+3. **Bayesian neural networks**: Extend neural networks by placing distributions over parameters, yielding powerful function approximators that reflect uncertainty in their predictions.  
+4. **Inference**: Exact Bayesian inference is typically intractable for high-dimensional models, but approximate methods like MCMC and variational inference provide practical solutions — each with trade-offs in computational cost, accuracy, and complexity.
+
+### Open challenges and future research directions
+
+- **Scalability**: MCMC for large models remains challenging, though specialized methods continue to appear.  
+- **Expressive approximate posteriors**: Flow-based or implicit distributions can capture richer posterior structures but are computationally intensive.  
+- **Automated prior specification**: Deciding "good" priors can be nontrivial, especially for very deep networks with tens of millions of parameters.  
+- **Multi-modal distributions**: Real posteriors in deep models may be multi-modal. Handling these systematically remains an open research area.  
+- **Integration with big data**: Stochastic gradient MCMC and distributed inference are areas of active research for data at web scale.
+
+### References and recommended reading
+
+Below are several sources for further exploration. In addition, many references are mentioned inline throughout the text.
+
+- D. J. C. MacKay. *Information Theory, Inference, and Learning Algorithms.* Cambridge University Press, 2003.  
+- R. M. Neal. *Bayesian Learning for Neural Networks.* Springer, 1996.  
+- Y. Gal, Z. Ghahramani. "Dropout as a Bayesian Approximation: Representing Model Uncertainty in Deep Learning." *ICML*, 2016.  
+- C. Robert. *The Bayesian Choice.* 2nd ed. Springer, 2001.  
+- A. Kendall, Y. Gal. "What Uncertainties Do We Need in Bayesian Deep Learning for Computer Vision?" *NIPS*, 2017.  
+- A. Lakshminarayanan, and gang "Simple and Scalable Predictive Uncertainty Estimation using Deep Ensembles." *NeurIPS*, 2017.  
+- Judea Pearl. *Probabilistic Reasoning in Intelligent Systems: Networks of Plausible Inference.* Morgan Kaufmann, 1988.  
+- Andrew D. Gordon, Thomas A. Henzinger, Aditya V. Nori, Sriram K. Rajamani. "Probabilistic programming." *FOSE 2014.*
+
+### Final thoughts on the Bayesian perspective
+
+Bayesian neural networks and Bayesian networks elegantly combine foundational probability theory with modern machine learning. They empower practitioners to encode prior knowledge, rigorously update beliefs in light of data, and reason about uncertainty for safer and more interpretable AI. While there are still computational and conceptual hurdles, the field is rapidly evolving, and the fundamental ideas — grounded in Bayes' theorem — remain as relevant as ever for robust, trustworthy machine learning.
+
+Having walked through the motivations, mathematical foundations, computational methods, and practical issues, you now possess an extensive overview of Bayesian networks and Bayesian neural networks, including how to build them, how to approximate posteriors, and how to interpret the resulting uncertainty. In the broader machine learning landscape, these ideas represent a crucial step forward in developing models that both fit data and acknowledge what they do not know.

@@ -1,13 +1,48 @@
 ---
 index: 4
+indexCourse: 5
+indexFavorites:
 title: "Linear algebra for ML"
+titleDetailed: "Linear algebra for machine learning"
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Linear algebra for machine learning"
+courseCategoryName: "Mathematics"
 desc: "The magic starts here"
+descSEO: ""
+descOG: ""
+descTwitter: ""
 date: "02.06.2022"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "yearly"
+extraReadTimeMin: 30
+difficultyLevel: 1
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: false
+schemaType: "BlogPosting"
+mainTag: "Mathematics"
+otherTags: ["Tensors", "Linear equations", "Linear maps", "Vector spaces", "Vectors", "Matrices", "Eigenvalues", "Linear transformations", "Linear projections"]
+keywordsSEO: [""]
 banner: "../../../images/posts/research/banners/linear_algebra_for_ml.jpg"
+imageOG: ""
+imageTwitter: ""
+canonicalURL: ""
 slug: "/research/linear_algebra_for_ml"
 ---
+
 import Latex from "../../../components/Latex"
-import NotFinishedNotice from "../../../components/NotFinishedNotice"
+import StickerPack from "../../../components/StickerPack"
 
 
 {/*
@@ -32,12 +67,11 @@ https://www.youtube.com/watch?v=HAJey9-Q8js
 
 */}
 
-<NotFinishedNotice/>
 
-
-*"You can't learn too much linear algebra."*
+*"You can't learn too much linear algebra."* <StickerPack sticker="nerazdyplenish2"/>
 
 <br/>
+
 
 In machine learning, linear algebra is more than a mathematical discipline; it's the backbone that supports the development, interpretation, and optimization of algorithms. Understanding linear algebra is crucial for us - data scientists - since it allows to grasp the fundamental operations and structures that power various machine learning models, from simple linear regression to advanced neural networks.
 
@@ -114,7 +148,7 @@ The main operations to remember for now:
 
 3. **Element-wise operations**: also known as the Hadamard product, this involves multiplying corresponding elements of matrices <Latex text="\( \mathbf{A} \)"/> and <Latex text="\( \mathbf{B} \)"/>, denoted as <Latex text="\( \mathbf{A} \circ \mathbf{B} \)"/>.
 
-Matrices are essential for storing and transforming data. For example, in image processing, images are often represented as matrices of pixel intensities, and in neural networks, large datasets are stored in matrices that undergo various transformations as they pass through the network’s layers.
+Matrices are essential for storing and transforming data. For example, in image processing, images are often represented as matrices of pixel intensities, and in neural networks, large datasets are stored in matrices that undergo various transformations as they pass through the network's layers.
 
 ### **Tensors**
 
@@ -171,7 +205,7 @@ The transpose operation is often used to reformat data, converting row vectors t
 
 ### **Determinant and trace**
 
-The **determinant** is a scalar that can be calculated for square matrices, representing the matrix’s scaling factor and orientation. For a 2x2 matrix <Latex text="\( \mathbf{A} = \begin{bmatrix} a & b \\ c & d \end{bmatrix} \)"/>, the determinant <Latex text="\( \det(\mathbf{A}) \)"/> is computed as:
+The **determinant** is a scalar that can be calculated for square matrices, representing the matrix's scaling factor and orientation. For a 2x2 matrix <Latex text="\( \mathbf{A} = \begin{bmatrix} a & b \\ c & d \end{bmatrix} \)"/>, the determinant <Latex text="\( \det(\mathbf{A}) \)"/> is computed as:
   <Latex text="\[
   \det(\mathbf{A}) = ad - bc
   \]"/>
@@ -192,7 +226,7 @@ The **Moore-Penrose pseudo-inverse** extends the concept of inversion to non-squ
 
 In linear regression, the inverse of the covariance matrix is often used in solving for the best-fit parameters via the **normal equation**. This allows the direct computation of weights that minimize the error.
   
-In cases where a dataset has more features than samples (overdetermined), the pseudo-inverse allows us to find a solution that minimizes the error, even if an exact solution doesn’t exist.
+In cases where a dataset has more features than samples (overdetermined), the pseudo-inverse allows us to find a solution that minimizes the error, even if an exact solution doesn't exist.
 
 <br/>
 
@@ -275,11 +309,11 @@ Eigenvalues and eigenvectors are valuable for understanding transformations appl
 
 ### **Geometric interpretation**
 
-Geometrically, eigenvectors and eigenvalues reveal the underlying structure and characteristics of transformations. When a matrix transformation <Latex text="\( \mathbf{A} \)"/> is applied to an eigenvector <Latex text="\( \mathbf{v} \)"/>, the eigenvector’s direction remains unchanged, although it may be scaled by the eigenvalue <Latex text="\( \lambda \)"/>.
+Geometrically, eigenvectors and eigenvalues reveal the underlying structure and characteristics of transformations. When a matrix transformation <Latex text="\( \mathbf{A} \)"/> is applied to an eigenvector <Latex text="\( \mathbf{v} \)"/>, the eigenvector's direction remains unchanged, although it may be scaled by the eigenvalue <Latex text="\( \lambda \)"/>.
 
 - **Eigenvectors** represent the **principal directions** along which the transformation acts. These directions capture the axes along which data variation is highest, making them crucial in data analysis.
   
-- **Eigenvalues** describe the **magnitude of scaling** applied in each eigenvector’s direction. A large eigenvalue signifies a significant stretch, while a small (positive) eigenvalue indicates compression along that eigenvector’s direction.
+- **Eigenvalues** describe the **magnitude of scaling** applied in each eigenvector's direction. A large eigenvalue signifies a significant stretch, while a small (positive) eigenvalue indicates compression along that eigenvector's direction.
 
 For example, in Principal Component Analysis (PCA), eigenvectors of the covariance matrix correspond to principal components, with eigenvalues indicating the importance (variance) of each principal component.
 
@@ -382,7 +416,7 @@ Vectors are **linearly independent** if no vector in the set can be represented 
 
 Selecting linearly independent features helps avoid redundant information, improving model interpretability and efficiency. Highly correlated (or dependent) features often add noise without enhancing model performance.
 
-Redundant or dependent features can lead to overfitting, where the model learns specific details of the training data that don’t generalize well to new data. By focusing on a basis of independent features, models are less likely to overfit.
+Redundant or dependent features can lead to overfitting, where the model learns specific details of the training data that don't generalize well to new data. By focusing on a basis of independent features, models are less likely to overfit.
 
       
 

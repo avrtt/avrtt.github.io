@@ -1,0 +1,503 @@
+---
+index: 99
+indexCourse: 124
+indexFavorites:
+title: "Graph neural networks"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Graph neural networks"
+courseCategoryName: "Graph theory in ML"
+desc: "Why not?"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "26.03.2024"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 2
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/graph_neural_networks.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/graph_neural_networks"
+slug: "/research/graph_neural_networks"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+import Tooltip from "../../../components/Tooltip"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+Графовые нейронные сети
+https://neerc.ifmo.ru/wiki/index.php?title=%D0%93%D1%80%D0%B0%D1%84%D0%BE%D0%B2%D1%8B%D0%B5_%D0%BD%D0%B5%D0%B9%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D0%B5_%D1%81%D0%B5%D1%82%D0%B8
+[Tutorial 7: Graph Neural Networks](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial7/GNN_overview.html)
+
+*/}
+
+
+{/*
+
+1. Introduction  
+1.1. Motivation behind graph neural networks  
+1.2. Brief history and development  
+1.3. Overview of article structure  
+2. Fundamentals of graph theory  
+2.1. Basic graph terminology  
+2.2. Graph representation formats  
+2.3. Common graph datasets  
+3. Graph neural network concepts  
+4.1. Graph convolutions  
+4.2. Message passing and aggregation  
+4.3. Graph pooling and global readout  
+4. Types of graph neural networks  
+5.1. Graph convolutional networks (GCNs)  
+5.2. Graph attention networks (GATs)  
+5.3. Graph recurrent networks  
+5.4. Graph autoencoders  
+5.5. Spectral vs. spatial approaches  
+5. Model training and optimization  
+6.1. Loss functions for graph-based tasks  
+6.2. Gradient-based optimization methods  
+6.3. Regularization and overfitting prevention  
+6.4. Hyperparameter tuning strategies  
+6. Applications of graph neural networks  
+7.1. Social network analysis  
+7.2. Recommender systems  
+7.3. Chemistry and drug discovery  
+7.4. Computer vision and point clouds  
+7.5. Natural language processing (NLP) with graphs  
+7. Advanced techniques and recent developments  
+8.1. Heterogeneous graphs  
+8.2. Dynamic graphs and temporal GNNs  
+8.3. Multi-relational GNNs  
+8.4. Large-scale graph processing  
+8.5. Combination with other deep learning paradigms  
+
+*/}
+
+
+Graph neural networks, often abbreviated as GNNs, have emerged in recent years as a transformative family of architectures designed to consume and interpret graph-structured data. Unlike conventional neural network layers that revolve around grids of pixels (in computer vision) or sequential tokens (in natural language), GNNs target the unique relational structures present in graph data. Graphs arise naturally in a variety of settings, including social networks (where individuals are nodes, and friendships are edges), molecular structures (with atoms as nodes and chemical bonds as edges), recommender systems (connecting users to items), knowledge graphs (facts represented using semantic relationships), and dozens of other domains.
+
+While their greatest appeal lies in the flexibility to encode relationships and interactions between entities, GNNs also come with theoretical and practical hurdles: ambiguous node ordering, varied degrees of node connectivity, potential for large-scale and dynamic topologies, and computational overhead beyond typical feedforward networks. In this article, I intend to provide a thoroughly detailed, yet approachable, deep dive into the realm of GNNs. Whether you're a research scientist or a professional engineer with a strong background in machine learning, this piece aims to expand your theoretical understanding and equip you with the conceptual tools necessary to incorporate graph neural network methodologies into your workflow. Along the way, I will draw on notable research contributions—such as those from NeurIPS, ICML, ICLR, and JMLR—to give you a sense of the field's rapid advancement.
+
+In what follows, I will start by establishing the basic principles of graph representations, followed by a discussion of traditional graph-based machine learning approaches. Then, I'll illustrate the core idea of GNNs and how they unify local neighborhood aggregation, creating an architecture that operates effectively on structured data. We'll dive into different variants—Graph Convolutional Networks (GCNs), Graph Attention Networks (GATs), and GraphSAGE—before tackling fundamental design strategies such as the message-passing framework. Throughout, I'll also devote space to explaining the hidden intricacies of these techniques, including potential pitfalls like over-smoothing, theoretical expressiveness, and the dreaded memory constraints that can arise when dealing with large-scale graphs. After covering advanced architectures, I'll pivot to practical considerations and code examples, referencing open-source libraries such as PyTorch Geometric and DGL. I'll also point out relevant real-world applications (drug discovery, e-commerce, social networks, and knowledge-based systems) to tie everything together.
+
+This article is intended to exceed 60,000 characters in length, reflecting the depth and breadth I plan to cover. Let me begin by surveying the fundamental elements of graphs, then we'll work our way up toward advanced GNN theory and practice, ensuring that you come away with a well-rounded understanding.
+
+
+## Graph fundamentals
+
+### The nature of graph data
+
+At its core, a graph is a data structure composed of nodes (also referred to as vertices) and edges. Let's denote the set of nodes as <Latex text="\(V\)"/> and the set of edges as <Latex text="\(E\)"/>. Each edge <Latex text="\(e \in E\)"/> commonly represents a relationship or connection between nodes in <Latex text="\(V\)"/>. If we have an undirected graph, each edge <Latex text="\( (u, v)\)"/> is bi-directional; if the graph is directed, edges carry directionality <Latex text="\( (u \rightarrow v)\)"/>. Further complexities arise in weighted graphs (where each edge has a numeric weight) and in heterogeneous graphs (where we have multiple node or edge types).
+
+When dealing with a dataset of graphs, we may face tasks such as node classification (assigning labels to individual nodes), link prediction (discovering missing or future edges), or whole-graph classification (labeling an entire graph). Moreover, realistic applications often come with scale or streaming aspects, adding an extra layer of complexity: nodes or edges might be added or removed over time, or entire subgraphs could appear and vanish dynamically.
+
+### Adjacency matrices and feature matrices
+
+To facilitate the processing of graph data, it's useful to represent a graph <Latex text="\(G\)"/> in matrix form. One straightforward technique is to build an adjacency matrix <Latex text="\(A\)"/>, an <Latex text="\(n \times n\)"/> matrix (where <Latex text="\(n\)"/> is the number of nodes). Each entry <Latex text="\(A_{ij}\)"/> is nonzero (often 1) if there is an edge between nodes <Latex text="\(i\)"/> and <Latex text="\(j\)"/>; otherwise, it is zero. In the undirected case, <Latex text="\(A\)"/> is symmetric. For weighted edges, <Latex text="\(A_{ij}\)"/> holds the edge weight. When dealing with multi-graphs or more sophisticated edge properties, adjacency may become a higher-dimensional structure or a collection of adjacency matrices, but the general principle remains the same.
+
+Beyond connectivity, each node often has associated features. If each node <Latex text="\(v_i\)"/> has a feature vector <Latex text="\(x_i\)"/> of dimension <Latex text="\(d\)"/>, we can aggregate these vectors into an <Latex text="\(n \times d\)"/> feature matrix <Latex text="\(X\)"/>. For instance, in a social network, node features might be user profiles. In a molecular graph, each node (atom) might carry an atomic number, electronegativity, or other chemical descriptors.
+
+### Traditional graph-based ML
+
+Before GNNs arrived on the scene, researchers took many approaches to leverage graph structure in machine learning tasks. One basic idea is to use handcrafted features that capture the local connectivity patterns or global positions of nodes. For instance, you might compute degrees, clustering coefficients, or centralities (like PageRank or betweenness centrality), then feed these features into a standard classifier such as a random forest or support vector machine. This approach, while helpful in simpler scenarios, struggles to generalize across diverse graphs or automatically extract deeper relational structures.
+
+Spectral graph theory further contributed numerous advanced techniques, including the graph Laplacian <Latex text="\(L\)"/>, which can represent connectivity in ways conducive to tasks like clustering (e.g., spectral clustering). However, directly applying spectral-based transformations can be computationally expensive, especially for large graphs where computing eigen-decompositions or large matrix inversions is intractable. Graph signal processing similarly tries to define filtering operations on the frequency domain of graph data but requires careful design of the filter and faces scaling difficulties. These limitations paved the way for a more systematic neural-based approach, culminating in GNNs.
+
+
+## The concept of graph neural networks
+
+Graph neural networks aim to learn continuous vector representations for nodes, edges, or entire graphs in a way that respects the underlying structure. Unlike classical convolutional neural networks (for images), where the convolution operation is highly structured by the pixel grid, graph convolutions or neural message passing must handle arbitrary connectivity patterns.
+
+The key notion is that each node's representation ought to be iteratively updated based on the representations of its neighbors. In other words, the network looks at your node's neighbors, aggregates their embeddings (plus possibly the edges that connect them), and then uses a function to update your node's own embedding. This update can happen over multiple "layers" or "hops," thus enabling a node's embedding to incorporate higher-order neighborhood information.
+
+### The message-passing framework
+
+A seminal viewpoint introduced by Gilmer and gang (ICML 2017) is the message-passing neural network (MPNN) framework, which generalizes many GNN variants under one conceptual umbrella. The idea is:
+
+1. Each node <Latex text="\(v\)"/> starts with an initial embedding <Latex text="\(h_v^{(0)}\)"/> (often derived from node features in <Latex text="\(X\)"/>).  
+2. At each "message-passing" step or layer <Latex text="\(k\)"/>, every node <Latex text="\(v\)"/> receives "messages" from its neighbors <Latex text="\(\mathcal{N}(v)\)"/>.  
+3. These messages are combined through an aggregation function, potentially along with the node's current embedding.  
+4. The result is passed to an update function that produces the node's embedding for the next iteration, <Latex text="\(h_v^{(k+1)}\)"/>.  
+
+Formally, for layer <Latex text="\(k\)"/>, we can define:
+
+<Latex text="\[
+m_{v}^{(k+1)} = \mathrm{AGGREGATE}\{ \phi(h_v^{(k)}, h_u^{(k)}, e_{uv}) \colon u \in \mathcal{N}(v)\},
+\]"/>
+
+where <Latex text="\(e_{uv}\)"/> might be edge-specific features between <Latex text="\(u\)"/> and <Latex text="\(v\)"/>, and <Latex text="\(\phi\)"/> is a function that transforms the neighbor's embedding into a message form. The aggregator <Latex text="\(\mathrm{AGGREGATE}\)" /> might be a simple summation, mean, max, or a more complex neural function. Subsequently, an update function helps compute:
+
+<Latex text="\[
+h_v^{(k+1)} = \mathrm{UPDATE}\left(h_v^{(k)}, m_v^{(k+1)}\right).
+\]"/>
+
+For clarity:  
+- <Latex text="\(h_v^{(k)}\)"/> is the embedding of node <Latex text="\(v\)"/> after <Latex text="\(k\)"/> message-passing steps.  
+- <Latex text="\(m_v^{(k+1)}\)"/> is the aggregated message from the neighbors at step <Latex text="\(k+1\)"/>.  
+- <Highlight>AGGREGATE</Highlight> describes how we pool neighbor information (like summation, max, or a learned aggregator).  
+- <Highlight>UPDATE</Highlight> shows how the node's own embedding is combined or replaced with the aggregated messages to form an updated representation.
+
+By stacking multiple such layers, each node eventually encodes multi-hop relational information. For instance, after two layers, a node's embedding includes information from its immediate neighbors as well as neighbors-of-neighbors.
+
+### Strengths and limitations
+
+Because GNNs apply a shared, localized update rule to each node (based on that node's neighbors), the architecture can adapt to graphs of variable size and shape. This intrinsic invariance to node ordering or adjacency permutations is powerful. However, there are challenges, including potential oversmoothing (where repeated neighborhood averaging drives node embeddings toward identical values), computational overhead for large graphs (due to repeated neighbor lookups), and complexities around capturing certain sophisticated global structures. Despite these issues, GNNs have proven immensely successful in various tasks, spurring a race in both academic research and industrial adoption.
+
+
+## Graph convolutional networks
+
+### Spectral-based GCN
+
+A pioneering implementation of the GNN concept is the Graph Convolutional Network (GCN) by Kipf and Welling (ICLR 2017). This early approach was considered "spectral" because it leverages the graph Laplacian's eigenbasis to define a notion of convolution in the frequency domain. However, the most popular "simplified" GCN relies on a propagation rule that can be expressed directly in matrix form without computing expensive eigen-decompositions. Let <Latex text="\(\tilde{A} = A + I\)"/> be the adjacency matrix with self-loops (ensuring each node sees itself as a neighbor as well), and let <Latex text="\(\tilde{D}\)"/> be the diagonal node-degree matrix of <Latex text="\(\tilde{A}\)"/>. Then, the layer-wise update rule for GCN can be written as:
+
+<Latex text="\[
+H^{(k+1)} = \sigma\!\Bigl(\tilde{D}^{-\frac{1}{2}}\tilde{A}\,\tilde{D}^{-\frac{1}{2}}\,H^{(k)}\,W^{(k)}\Bigr),
+\]"/>
+
+where:  
+- <Latex text="\(H^{(k)}\)"/> is the matrix of node embeddings at layer <Latex text="\(k\)"/> (rows correspond to nodes),  
+- <Latex text="\(W^{(k)}\)"/> is a trainable weight matrix at layer <Latex text="\(k\)"/>,  
+- <Latex text="\(\sigma\)"/> is a nonlinear activation, e.g., ReLU,  
+- <Latex text="\(\tilde{D}^{-\frac{1}{2}}\tilde{A}\,\tilde{D}^{-\frac{1}{2}}\)"/> is the normalized adjacency matrix (with added self-loops).  
+
+In words, each node's embedding in the next layer is the normalized sum of its neighbors' embeddings (including itself), multiplied by a weight matrix, and then passed through an activation. By stacking these layers, the network can capture increasingly broad connectivity patterns.
+
+### Over-smoothing and other concerns
+
+While Kipf and Welling's GCN unlocked remarkable success in semi-supervised node classification tasks, it sometimes endures the over-smoothing problem. Intuitively, after multiple layers, the embeddings of nodes that are connected, even distantly, may converge to nearly identical vectors, hampering performance (especially for deeper GCNs). This phenomenon is sometimes attributed to repeated neighbor averaging or indiscriminate mixing across the graph.
+
+Researchers have proposed various remedies, such as residual or "jumping" connections (e.g., the Jumping Knowledge networks), modifying the adjacency normalization strategy, employing gating mechanisms, or adding techniques like DropEdge, where you randomly remove edges during training to mitigate oversmoothing. Another line of research focuses on how deeper GCNs can capture more complex relationships while avoiding undesirable homogeneity, but it remains an area of active exploration.
+
+
+## Graph attention networks
+
+Graph AttentionNetworks (GAT) were introduced by Veličković and gang (ICLR 2018) to address another shortcoming in standard GCNs: the uniform weighting of neighbors. In GCN, a node aggregates its neighbors proportionally to <Latex text="\(1 / \sqrt{d_ud_v}\)"/> (or some variant). In reality, some neighbors might be more relevant for the node's representation than others. GATs incorporate trainable, attention-based weighting to each edge, letting the network learn which connections are crucial for the task at hand.
+
+### GAT layer mechanics
+
+A single GAT layer generally proceeds in two steps. First, each node <Latex text="\(v\)"/> computes a shared "attention coefficient" with every neighbor <Latex text="\(u \in \mathcal{N}(v)\)"/>. For a simplified illustration, let <Latex text="\(h_v\)"/> be the node embedding at the current layer, and <Latex text="\(W\)"/> be a linear transformation. GAT introduces a shared attention function <Latex text="\(a(\cdot,\cdot)\)"/>:
+
+<Latex text="\[
+e_{vu} = a\bigl(W\,h_v,\;W\,h_u\bigr).
+\]"/>
+
+Often, <Latex text="\(a\)"/> is implemented with a small feedforward network that concatenates or otherwise combines <Latex text="\(W\,h_v\)"/> and <Latex text="\(W\,h_u\)"/> into a scalar coefficient. Next, these attention coefficients are normalized—usually via a softmax—across <Latex text="\(u \in \mathcal{N}(v)\)"/>:
+
+<Latex text="\[
+\alpha_{vu} = \mathrm{softmax}\Bigl(e_{vu}\Bigr) = \frac{\exp\bigl(e_{vu}\bigr)}{\sum_{k \in \mathcal{N}(v)} \exp\bigl(e_{vk}\bigr)}.
+\]"/>
+
+Now, node <Latex text="\(v\)"/> can aggregate neighbor embeddings using these normalized attention scores:
+
+<Latex text="\[
+h_{v}^{\mathrm{out}} = \sigma\!\Bigl(\sum_{u\in \mathcal{N}(v)} \alpha_{vu}\,W\,h_u\Bigr).
+\]"/>
+
+Here:  
+- <Latex text="\(e_{vu}\)"/> is an unnormalized "attention score" between nodes <Latex text="\(v\)"/> and <Latex text="\(u\)"/>.  
+- <Latex text="\(\alpha_{vu}\)"/> is the normalized attention coefficient, showing how much focus <Latex text="\(v\)"/> places on <Latex text="\(u\)"/>.  
+- <Latex text="\(W\)"/> is a shared linear transform, and <Latex text="\(\sigma\)"/> could be any nonlinear activation.  
+
+By stacking multiple attention heads in parallel and then combining them (e.g., concatenating or averaging), GAT extends the multi-head attention strategy from Transformers to graph data. This mechanism allows the network to automatically highlight the most relevant neighbors, leading to better performance on tasks where certain edges carry more predictive power than others.
+
+
+## GraphSAGE
+
+Another highly cited approach is GraphSAGE (Hamilton and gang, NeurIPS 2017). GraphSAGE is particularly relevant for inductive learning on large-scale graphs that might introduce new nodes at inference time. Classic GCN methods often rely on the entire adjacency matrix in memory, which can be problematic for dynamic big graphs. GraphSAGE addresses this by defining a node-labeled sampling procedure and aggregator function that can be applied locally.
+
+### Sampling and aggregators
+
+The GraphSAGE approach typically involves sampling a fixed number of neighbors for each node at each layer, thereby controlling the computational complexity. Rather than gathering all neighbors, which might be enormous for high-degree nodes, we might randomly sample, say, 10 neighbors for the first hop and 5 for the second hop. This sampling step ensures that each node's receptive field remains bounded.
+
+Next, an aggregator function aggregates the sampled neighbors' embeddings. GraphSAGE introduced several aggregator variants:
+
+1. **Mean aggregator**:  
+   <Latex text="\[
+   h_v^{(k+1)} = \sigma\Bigl( W^{(k)} \bigl( h_v^{(k)} \;\Vert\; \mathrm{mean}\{h_u^{(k)}: u\in\mathcal{N}_\mathrm{sample}(v)\} \bigr) \Bigr).
+   \]"/>
+   Here, <Latex text="\(\Vert\)"/> indicates concatenation, and <Latex text="\(\mathrm{mean}\{\dots\}\)"/> is the mean of neighbor embeddings.  
+
+2. **LSTM aggregator**:  
+   Instead of a simple mean, you feed the neighbor embeddings into an LSTM module (in some random order) and combine the result with the node's embedding.  
+
+3. **Pooling aggregator**:  
+   Applies an elementwise max-pooling or average-pooling after a small neural transform on each neighbor, giving the aggregator more expressive power.  
+
+These flexible aggregators allow the architecture to adapt to different tasks and data distributions, and the sampling scheme ensures that it can scale to extremely large graphs. GraphSAGE can perform both transductive and inductive tasks, making it particularly valuable for dynamic settings where nodes or edges pop in during deployment.
+
+### Connections to SOTA
+
+GraphSAGE influenced many subsequent large-scale GNN methods, including sampling-based approaches such as PinSAGE for recommendation systems. Its emphasis on local sampling and flexible aggregator design resonates in more recent frameworks that seek to handle extensive streaming graphs efficiently. Moreover, its integration into widely used libraries (e.g., PyTorch Geometric, DGL) has made it a de facto standard for many industrial applications.
+
+
+## Other advanced GNN architectures
+
+Beyond the widely used GCN, GAT, and GraphSAGE, the research community has generated a proliferation of specialized or improved variants. Let's examine a handful of these advanced architectures to understand how the field continuously evolves:
+
+### Jumping knowledge networks
+
+Jumping Knowledge (JK) is a method to tackle over-smoothing. Instead of using the final layer's node embeddings alone, the architecture forms a learned combination of the intermediate layer embeddings. Each node thus "jumps" from any relevant layer representation to produce the final embedding. This effectively preserves lower-layer features for nodes that might get oversmoothed after several layers.
+
+### Graph U-Net
+
+Graph U-Net draws inspiration from the U-Net architecture in computer vision. It includes "downsampling" phases—where unimportant nodes are dropped according to a learned score function—and "upsampling" phases to reconstruct the graph or node signals. This method allows for hierarchical feature extraction akin to image-based segmentation networks, but adapted for graphs.
+
+### Gated graph sequence neural networks
+
+Proposed by Li and gang, these networks incorporate Gated Recurrent Unit (GRU) or LSTM mechanisms into the message passing. The gating notion helps maintain a node's "memory" across many message-passing steps without the typical over-smoothing meltdown. This approach is especially valuable in tasks that require deeper inference or multi-step graph reasoning.
+
+### Heterogeneous, hypergraph, and dynamic GNNs
+
+Real-world data often mixes different node types, edge types, or more sophisticated connectivity (e.g., hyperedges in a hypergraph). Heterogeneous GNNs adapt the aggregator functions to handle multiple edge types or multi-relational graphs, as used in knowledge-graph embeddings or multi-modal networks. Dynamic GNNs incorporate time, adjusting the adjacency structure or node features as the graph evolves, crucial for streaming or real-time applications. And hypergraph GNNs extend the node-pair connectivity concept of edges to sets of nodes grouped by hyperedges, enabling more expressive interactions in data like group chat messages or co-author networks where interactions are inherently multiway.
+
+
+## Theoretical underpinnings of GNNs
+
+The expressive power of GNNs is inherently linked to how they can (or cannot) distinguish different graph structures. One influential lens for analyzing GNNs is the Weisfeiler-Lehman (WL) isomorphism test. The basic WL test iteratively refines labels for each node by hashing the labels of its neighbors. If, after sufficient iterations, two graphs still have identical node label multisets, the WL test considers them isomorphic. Research into GNN expressiveness often examines how the aggregator and update steps mirror (or fail to mirror) the WL test. Many standard GNNs are at most as powerful as the 1-WL test, which can fail to differentiate certain tricky graph pairs.
+
+Subsequent variants, such as Graph Isomorphism Networks (GIN), have attempted to match or exceed the power of the 1-WL test by carefully designing neighbor aggregation (e.g., using a learnable sum combined with injective MLP). Nonetheless, the upper bound on expressiveness for mainstream GNNs remains a topic of debate, and more advanced frameworks sometimes incorporate higher-dimensional WL tests (k-WL) or other structure-aware designs to break the limitations of standard GNN architectures.
+
+Another theoretical consideration involves spectral properties. The normalized adjacency matrix in GCN-based approaches has eigenvalues that can lead to oversmoothing if repeated multiplication by that matrix is performed. There are proofs that show how repeated multiplication by a stochastic matrix can converge to the principal eigenvector, effectively losing node-distinguishing signals. This underlines that while GNNs can elegantly capture local structure, deeper open questions remain about how to preserve global distinctiveness in extensive, multi-hop propagation.
+
+
+## Training and optimization of GNNs
+
+### Loss functions and tasks
+
+GNN training often depends on the specific application:
+
+- **Node classification**: Minimizing a cross-entropy or negative log-likelihood loss across labeled nodes.  
+- **Edge/link prediction**: Using a binary cross-entropy or ranking-based loss over pairs of nodes, predicting whether an edge exists (or will exist).  
+- **Graph classification**: Summarizing node embeddings into a single graph-level representation (via a readout or pooling function) and applying a classification/regression loss.  
+
+In some advanced settings, you might have multi-task objectives or unsupervised tasks, such as graph autoencoding or contrastive objectives (similar to SimCLR, but for graph data). Each use case typically modifies the final layer or readout structure of the GNN while the main aggregator framework remains the same.
+
+### Sampling-based training
+
+Large-scale graphs introduce special complexities. The entire adjacency matrix might be far too large to load into GPU memory, or you might have billions of edges. Sampling-based strategies, such as the one introduced by GraphSAGE, are a necessity. Some approaches use neighbor sampling, random walks, or layer-wise sampling to reduce the minibatch size. Others adopt subgraph sampling methods that extract an induced subgraph from the large graph for each training iteration, ensuring the subgraph remains manageable while hopefully preserving essential context.
+
+### Optimizers and regularization
+
+GNNs are typically trained with variants of stochastic gradient descent (SGD), Adam, or RMSProp, analogous to other deep learning models. However, hyperparameter tuning might require more care due to the lodging of complex adjacency structures. Overfitting can be mitigated by dropout, weight decay, or dropping edges (DropEdge) and nodes (NodeDrop). Data augmentation is more complex on graph data but can involve random subgraph extractions or perturbations of features/edges.
+
+
+## Implementation details in PyTorch Geometric
+
+It's often instructive to see code examples that illustrate how a GNN might be implemented in a popular library. One well-known framework is PyTorch Geometric (PyG), which provides data structures for graph manipulation and layers for GCN, GAT, GraphSAGE, and more. Below is a toy example of building a simple GCN layer with PyTorch Geometric:
+
+<Code text={`
+import torch
+import torch.nn.functional as F
+from torch_geometric.nn import GCNConv
+
+class SimpleGCN(torch.nn.Module):
+    def __init__(self, in_channels, hidden_channels, out_channels):
+        super().__init__()
+        self.conv1 = GCNConv(in_channels, hidden_channels)
+        self.conv2 = GCNConv(hidden_channels, out_channels)
+
+    def forward(self, x, edge_index):
+        # x: node feature matrix of shape [num_nodes, in_channels]
+        # edge_index: adjacency list in COO format of shape [2, num_edges]
+
+        x = self.conv1(x, edge_index)
+        x = F.relu(x)
+        x = self.conv2(x, edge_index)
+        return x
+`}/>
+
+In this snippet:
+
+1. We define a class <Highlight>SimpleGCN</Highlight> that inherits from <Highlight>torch.nn.Module</Highlight>.  
+2. <Highlight>GCNConv</Highlight> layers are used for the message-passing steps.  
+3. In the forward pass, we apply <Highlight>conv1</Highlight>, then a ReLU, and finally <Highlight>conv2</Highlight>. The <Tooltip text="COO stands for Coordinate list representation, a sparse format frequently used in PyTorch Geometric."/>  
+4. The shape of <Latex text="\(x\)"/> is <Latex text="\([n, d]\)"/>, where <Latex text="\(n\)"/> is the number of nodes, and <Latex text="\(d\)"/> is the dimensionality of features.
+
+We might add a softmax layer or other classification logic, depending on the task. This modular approach can be extended to GATConv, SAGEConv, or custom layers.
+
+Below is a short example for GAT using PyTorch Geometric:
+
+<Code text={`
+import torch
+import torch.nn.functional as F
+from torch_geometric.nn import GATConv
+
+class SimpleGAT(torch.nn.Module):
+    def __init__(self, in_channels, hidden_channels, out_channels, heads=8):
+        super().__init__()
+        self.gat1 = GATConv(in_channels, hidden_channels, heads=heads)
+        self.gat2 = GATConv(hidden_channels * heads, out_channels, heads=1)
+
+    def forward(self, x, edge_index):
+        x = self.gat1(x, edge_index)
+        x = F.elu(x)
+        x = self.gat2(x, edge_index)
+        return x
+`}/>
+
+Here:  
+- The first GAT layer uses multiple attention heads (set to 8). The shape of the output is multiplied by the number of heads.  
+- The second GAT layer (with heads=1) collapses the multi-head outputs into a final embedding dimension.  
+- We use the <Highlight>ELU</Highlight> activation function, typically used in the original GAT paper.
+
+
+## Practical considerations
+
+### Memory and scalability
+
+A huge concern arises with large graphs containing millions or billions of edges. GNN libraries often allow you to store the bulk of data in CPU memory (or distributed across machines) while streaming subgraphs or batches to the GPU during training. Sampling-based methods are crucial, as well as systems like DistDGL (the distributed version of DGL) or multi-GPU strategies in PyTorch. Tools built around partitioning and mini-batching help ensure computations remain feasible.
+
+### Handling dynamic graphs
+
+When a graph's structure changes over time (edges appear, nodes leave, attributes morph), a naive GNN that is trained once on a static adjacency matrix becomes outdated. Dynamic GNN methodologies incorporate temporal edges, time-aware aggregators, or a memory module that updates node embeddings on the fly. This is vital in social networks, real-time recommendation, or event forecasting tasks.
+
+### Edge features and multi-relational data
+
+It's not uncommon for edges to carry crucial information. For instance, in a drug–target interaction network, the type of interaction or binding affinity matters. Some GNNs incorporate edge embeddings, passing them along in the message function. For multi-relational data (i.e., knowledge graphs), specialized layers like R-GCN (Relational GCN) or Transformers adapted to graph structure can handle numerous edge types or even typed nodes. In practice, well-structured coding frameworks (e.g., PyTorch Geometric or DGL) will store edge attributes in a convenient data structure so the aggregator can incorporate them seamlessly.
+
+### Graph partitioning
+
+When the graph is extremely large, partitioning can significantly improve efficiency. Partitioning divides the graph into subgraphs, ideally with fewer edges across partitions. Training might proceed within each partition (potentially in parallel), then with occasional synchronization. While partitioning might lead to boundary-cut issues (edges crossing partition boundaries), advanced partitioners aim to minimize such cuts. Some message-passing steps may need ghost or halo nodes that replicate boundary information from neighboring partitions. This approach is frequently employed in large-scale industrial settings—for instance, training GNNs on social networks with billions of users and trillions of edges.
+
+<Image alt="A stylized diagram illustrating how a large graph can be partitioned into smaller subgraphs to facilitate distributed GNN training" path="" caption="Partitioning a large graph for scalable GNN training in a distributed system" zoom="false" />
+
+
+## Applications of GNNs
+
+The broad expressiveness of GNNs makes them a perfect match for any problem that entails relational or interconnected data. Below are a few notable applications:
+
+1. **Social networks**: Node classification (predicting user attributes), link prediction (friends suggestions or recommended connections), community detection, and more.  
+2. **Molecular property prediction**: GNNs can outperform hand-engineered descriptors in tasks such as activity prediction, toxicity evaluation, or synthesizability checking in computational chemistry.  
+3. **Knowledge graphs**: Entities and their relationships form a graph structure. GNNs can be used to perform knowledge base completion, entity classification, or link discovery across knowledge graphs.  
+4. **Recommender systems**: In user–item bipartite graphs, GNNs capture user similarity and item similarity more effectively than matrix factorization approaches, especially when side information or multi-relational edges are present.  
+5. **Computer vision**: Scenes can be represented as graphs of objects, allowing GNNs to reason over relationships between detected objects, or for tasks like human pose estimation (body joints connected by edges).  
+6. **Natural language processing**: Graph-based text representation (e.g., dependency or semantic parse trees) can be fused into a GNN to glean structural language insights.  
+7. **Traffic networks**: Road networks or sensor networks can be modeled as spatio-temporal graphs, enabling GNNs to predict traffic flow or detect anomalies.  
+
+Each domain has nuances such as heterogeneous node types, time-variance, or hierarchical structures. The inherent flexibility of GNN designs fosters specialized solutions for these applications.
+
+
+## Future directions and open research
+
+Despite their success, GNNs are far from a solved problem (if such a thing exists in machine learning). Here are a few directions the community continues exploring:
+
+- **Deeper GNN architectures**: Combining advanced skip-connections, gating, normalization, or even fully graph-aware Transformers to push GNN depth (20+ layers) without performance collapse.  
+- **Transformers for graphs**: Adapting attention across entire graphs has begun with approaches like Graph Transformers that remove the strict adjacency-based aggregator in favor of global attention. While promising for smaller graphs, they must tackle label scarcity and high complexity in large graphs.  
+- **Graph self-supervised learning**: Inspired by the success of unsupervised or self-supervised objectives in vision and NLP, researchers are exploring contrastive, generative, or mutual-information-based learning on graph data.  
+- **Continual and lifelong GNNs**: Some applications require indefinite updates as new data arrives (e.g., social media). The challenge is to incorporate new structure or tasks without catastrophic forgetting.  
+- **Unified frameworks**: As GNN designs converge with various forms of neural network architectures (vision-based, sequence-based, transformer-based), a unified view that can handle images, text, and graphs within a single system is a major topic of interest.  
+- **Theoretical bounds**: Determining how various aggregator/update functions affect the representational power. Investigating the gap between 1-WL-based GNNs and more expressive designs remains an active frontier.  
+
+<Image alt="A conceptual figure illustrating various directions for future GNN research (like deeper GNNs, self-supervised learning, dynamic streaming, etc.)" path="" caption="Selected emerging directions in GNN research" zoom="false" />
+
+
+## Illustrative example: Building a custom GNN layer
+
+To better ground these insights, let's code a small custom GNN layer that implements a message-passing operation. Assume we want a flexible aggregator function that can be mean, sum, or max, and we allow for edge attributes. A minimal PyTorch-based example could look like:
+
+<Code text={`
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+class CustomMessagePassing(nn.Module):
+    def __init__(self, in_channels, out_channels, aggr='mean'):
+        super().__init__()
+        self.aggr = aggr
+        self.lin = nn.Linear(in_channels, out_channels)
+        # Edge embedding transform, if needed
+        self.lin_edge = nn.Linear(in_channels, out_channels)
+
+    def forward(self, x, edge_index, edge_attr=None):
+        # x: [num_nodes, in_channels]
+        # edge_index: [2, num_edges]
+        # edge_attr: [num_edges, in_channels] (optionally)
+
+        # Step 1: Linear transform of node features
+        x_transformed = self.lin(x)
+
+        # Step 2: Build messages
+        row, col = edge_index
+        # Node j is sending message to node i
+        if edge_attr is not None:
+            edge_transformed = self.lin_edge(edge_attr)
+            # Combine node embedding and edge embedding
+            messages = x_transformed[col] + edge_transformed 
+        else:
+            messages = x_transformed[col]
+
+        # Step 3: Aggregate
+        # We have messages for each edge, so for node i at row[i], we aggregate
+        out = torch.zeros_like(x_transformed)
+        if self.aggr == 'mean':
+            count = torch.zeros(x.size(0), device=x.device)
+            for i in range(row.size(0)):
+                out[row[i]] += messages[i] 
+                count[row[i]] += 1
+            # avoid divide by zero
+            mask = (count > 0)
+            out[mask] /= count[mask].unsqueeze(-1)
+        elif self.aggr == 'sum':
+            for i in range(row.size(0)):
+                out[row[i]] += messages[i]
+        elif self.aggr == 'max':
+            # we could do something like scatter_
+            out = torch.full_like(x_transformed, -1e9)
+            for i in range(row.size(0)):
+                out[row[i]] = torch.max(out[row[i]], messages[i])
+        else:
+            raise ValueError("Aggregator not supported")
+
+        return F.relu(out)
+`}/>
+
+Here's a quick breakdown:
+
+- We define a custom module <Highlight>CustomMessagePassing</Highlight> that learns a linear transformation on node features, plus an optional linear transform on edge features.  
+- We loop over the edges (stored in <Highlight>edge_index</Highlight> in COO format, where <Highlight>row</Highlight> are destination nodes and <Highlight>col</Highlight> are source nodes).  
+- The aggregator can be <Highlight>"mean"</Highlight>, <Highlight>"sum"</Highlight>, or <Highlight>"max"</Highlight>.  
+- We then store the aggregated messages back into a node representation <Latex text="\(\mathrm{out}\)"/>.  
+- Finally, we apply <Highlight>ReLU</Highlight> as the activation function.
+
+This code is written more explicitly than libraries like PyTorch Geometric, which often provide efficient <Highlight>message</Highlight> and <Highlight>aggregate</Highlight> abstractions and GPU-accelerated scatter operations. Nevertheless, it demonstrates the essence of message passing and aggregator usage if you needed to implement your own GNN from scratch.
+
+
+## Conclusion
+
+Graph neural networks have come a long way from their initial incarnations, and they continue to be one of the most vigorously expanding areas in artificial intelligence research. Their capacity to handle relational, interconnected data sets them apart from standard feedforward or convolutional architectures tailored to images and sequences. Despite ongoing challenges—such as oversmoothing, limited expressiveness for complex graph topologies, or the sheer scale of real-world graphs—progress is swift, propelled by a vibrant research community.
+
+In practice, GNNs have already proven their worth in fields ranging from drug discovery and e-commerce recommendation to social network analysis and advanced knowledge graph queries. Their underlying principle of iterative local aggregation (message passing) is both conceptually elegant and adaptable, giving model designers a wide scope for customization and extension: different aggregator functions, attention mechanisms, hierarchical structures, dynamic memory for temporal graphs, and beyond. 
+
+The future is equally compelling. As the field grapples with deeper architectures, novel self-supervised losses, and synergy with Transformers or other richly mixing attention architectures, we can anticipate further gains in representational capacity. Whether you pursue fundamental research on theoretical limits of GNN expressivity or engineering solutions to train massive distributed GNNs, you'll be participating in a domain with near-endless possibilities.
+
+I encourage you to experiment with various GNN frameworks—PyTorch Geometric, DGL, Deep Graph Library, or even implement your own from scratch—to get hands-on experience. By iterating over small proof-of-concept prototypes, you'll gain an intuition for the subtleties of aggregator design, neighbor sampling strategies, and the interplay between node/edge features and your chosen tasks. With the insights from this advanced overview, you should have a thorough conceptual foundation to build upon as you continue mastering graph neural networks.

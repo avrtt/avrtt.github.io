@@ -1,0 +1,437 @@
+---
+index: 71
+indexCourse: 82
+indexFavorites:
+title: "Transformer architecture, pt. 1"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Transformer architecture, pt. 1"
+courseCategoryName: "Transformers"
+desc: "There's no God beyond this point"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "11.09.2023"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 2
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/transformer_architecture.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/transformer_architecture"
+slug: "/research/transformer_architecture"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+Трансформер
+https://neerc.ifmo.ru/wiki/index.php?title=%D0%A2%D1%80%D0%B0%D0%BD%D1%81%D1%84%D0%BE%D1%80%D0%BC%D0%B5%D1%80
+
+[https://www.youtube.com/watch?v=UETKUIlYE6g&list=PL4_hYwCyhAvY7k32D65q3xJVo8X8dc3Ye&index=5](https://www.youtube.com/watch?v=UETKUIlYE6g&list=PL4_hYwCyhAvY7k32D65q3xJVo8X8dc3Ye&index=5)  
+[https://www.youtube.com/watch?v=1DygevyV2eA&list=PL4_hYwCyhAvY7k32D65q3xJVo8X8dc3Ye&index=6](https://www.youtube.com/watch?v=1DygevyV2eA&list=PL4_hYwCyhAvY7k32D65q3xJVo8X8dc3Ye&index=6)  
+[https://www.youtube.com/watch?v=uI6XSlmZNEQ&list=PL4_hYwCyhAvZLp0CTIDVQr9FtDR_7DaUr&index=4](https://www.youtube.com/watch?v=uI6XSlmZNEQ&list=PL4_hYwCyhAvZLp0CTIDVQr9FtDR_7DaUr&index=4)  
+[https://www.youtube.com/watch?v=F3jsMAI5EF4&list=PL4_hYwCyhAvZLp0CTIDVQr9FtDR_7DaUr&index=5](https://www.youtube.com/watch?v=F3jsMAI5EF4&list=PL4_hYwCyhAvZLp0CTIDVQr9FtDR_7DaUr&index=5)  
+  
+Попов отправлял две книги про трансформеры на почту
+
+[Tutorial 6: Transformers and Multi-Head Attention](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial6/Transformers_and_MHAttention.html)
+
+- [11. Attention Mechanisms and Transformers](https://d2l.ai/chapter_attention-mechanisms-and-transformers/index.html)
+    - [11.1. Queries, Keys, and Values](https://d2l.ai/chapter_attention-mechanisms-and-transformers/queries-keys-values.html)
+    - [11.2. Attention Pooling by Similarity](https://d2l.ai/chapter_attention-mechanisms-and-transformers/attention-pooling.html)
+    - [11.3. Attention Scoring Functions](https://d2l.ai/chapter_attention-mechanisms-and-transformers/attention-scoring-functions.html)
+    - [11.4. The Bahdanau Attention Mechanism](https://d2l.ai/chapter_attention-mechanisms-and-transformers/bahdanau-attention.html)
+    - [11.5. Multi-Head Attention](https://d2l.ai/chapter_attention-mechanisms-and-transformers/multihead-attention.html)
+    - [11.6. Self-Attention and Positional Encoding](https://d2l.ai/chapter_attention-mechanisms-and-transformers/self-attention-and-positional-encoding.html)
+    - [11.7. The Transformer Architecture](https://d2l.ai/chapter_attention-mechanisms-and-transformers/transformer.html)
+    - [11.8. Transformers for Vision](https://d2l.ai/chapter_attention-mechanisms-and-transformers/vision-transformer.html)
+    - [11.9. Large-Scale Pretraining with Transformers](https://d2l.ai/chapter_attention-mechanisms-and-transformers/large-pretraining-transformers.html)
+
+https://jalammar.github.io/illustrated-transformer/
+
+*/}
+
+
+{/*
+
+1. Introduction
+- Background and motivation: Discuss the evolution from rule-based NLP systems to deep learning methods, highlighting limitations of RNNs and CNNs.
+- Importance in modern machine learning: Emphasize the wide adoption of Transformers in NLP, vision, and speech tasks, showcasing state-of-the-art results.
+- Scope of this article: Outline the main Transformer components, training strategies, and typical use cases.
+- Historical context in NLP: Describe key milestones (e.g., seq2seq, attention) leading up to the Transformer's inception.
+2. Core concepts
+- Sequence modeling vs. Transformer-based modeling: Compare traditional sequential processing to parallelizable attention-based architectures.
+- Attention mechanisms and their role: Highlight how attention redistributes focus across different parts of the input sequence.
+- Key differences from recurrent and convolutional models: Explain how Transformers eliminate recurrence and convolutions, improving parallelization.
+- Parallelization advantages: Detail how the attention approach allows faster training on large datasets.
+3. Transformer architecture overview
+- Encoder-decoder structure: Summarize the two-part design for sequence-to-sequence tasks.
+- Flow of information: Illustrate how data moves from embeddings through attention layers to final outputs.
+- Advantages and limitations: Discuss benefits like reduced training time and potential drawbacks such as high memory usage.
+- Variants of encoder-decoder approaches: Note models using only encoders (BERT), only decoders (GPT), or hybrids.
+4. Encoder module
+- Embedding layer: Convert tokens (words, subwords, or characters) into continuous vector representations.
+- Positional encoding: Introduce sine/cosine or learned embeddings to encode sequence order information.
+- Multi-head self-attention mechanism: Explain how multiple attention heads capture different aspects of the input.
+- Feed-forward network: Transform attention outputs with non-linear projections.
+- Residual connections and layer normalization: Stabilize training, aid gradient flow, and retain original information.
+- Alternative positional encoding methods: Mention rotary or relative position embeddings.
+5. Decoder module
+- Masked multi-head self-attention: Prevent a position from attending to future tokens, enabling autoregressive generation.
+- Encoder-decoder attention: Leverage the encoder's context when generating each token in the decoder.
+- Feed-forward network in the decoder: Discuss the role of feed-forward layers between attention modules.
+- Residual connections and layer normalization: Maintain consistent training mechanisms with the encoder.
+- Generating output tokens: Summarize how argmax sampling, beam search, or other decoding strategies produce final text.
+- Handling long sequences in decoding: Briefly address techniques like memory compression or chunking.
+
+*/}
+
+
+The world of natural language processing has undergone a dramatic revolution in the last decade or so, evolving from the relatively rigid, rule-based systems of previous generations to the flexible deep learning approaches that dominate modern research and industry use cases. Historically, early computational linguistics involved carefully hand-crafted grammar rules and lexicons. These systems, although groundbreaking for their time, often struggled to handle the complexities and nuances of human language. Ambiguities in syntax, polysemy (the phenomenon of words having multiple meanings), and ever-growing linguistic variation meant that rigid rules frequently broke down in real-world situations.
+
+As the field moved forward, the introduction of more data-driven methods — particularly statistical modeling — helped pave the way toward machine learning-based approaches. Recurrent neural networks (RNNs), especially those equipped with gating mechanisms such as LSTM networks (Hochreiter and Schmidhuber, 1997) and GRU networks (Cho and gang, 2014), enabled practitioners to capture contextual dependencies in sequences more effectively than ever before. Soon, these recurrent architectures dominated many NLP tasks, including language modeling, machine translation, speech recognition, and text classification. However, their inherently sequential nature meant that training on long sequences was difficult to parallelize, and capturing extremely long-range dependencies often proved challenging despite gating mechanisms.
+
+In parallel, convolutional neural networks (CNNs) — originally designed for image processing tasks — were adapted by some researchers for NLP. Convolutional architectures promised greater parallelization than RNNs and improved gradient flow due to their hierarchical structure (Gehring and gang, 2017). Yet, they often struggled with capturing global dependencies and required carefully chosen kernel sizes or dilations to expand the receptive field.
+
+The introduction of attention mechanisms (Bahdanau and gang, 2015; Luong and gang, 2015) was a key milestone that changed the game dramatically. Initially introduced to help RNN-based encoder-decoder systems "focus" on the most relevant parts of an input sequence when generating each output token, attention quickly proved useful beyond just alignment in machine translation. By weighting different components of the input sequence according to their relevance to a particular query, attention mechanisms gave models a way to handle long-range dependencies more directly than purely sequential approaches.
+
+From here, the stage was set for the next big leap: the Transformer model. Introduced by Vaswani and gang (2017), the Transformer architecture demonstrated that recurrence and convolution could be replaced entirely with a structure built around attention, thereby unlocking unprecedented levels of parallelization and performance in sequence-to-sequence tasks. The Transformer quickly became the backbone for breakthroughs in language modeling, machine translation, text summarization, and even tasks beyond NLP, including image classification (Dosovitskiy and gang, 2021) and speech processing. Today, the Transformer stands as arguably the most influential architecture in modern machine learning, underpinning large language models such as GPT, BERT, T5, and numerous domain-specific variants.
+
+### Background and motivation
+
+To fully appreciate the motivation behind the Transformer architecture, one must understand the limitations of prior methods:
+
+- **Rule-based systems**: Rigid, hand-crafted logic. Their ability to model language deeply was restricted by the complexity of language itself. Scaling up to new languages, dialects, or domains required extensive human labor.
+- **RNN-based models**: Although effective at capturing sequential patterns, RNNs process tokens one step at a time, creating computational bottlenecks for long sequences. Training can be slow, and capturing very long-range dependencies becomes progressively more difficult.
+- **CNN-based approaches**: More parallelizable than RNNs but still not as straightforward to capture non-local dependencies. Additional complexities arise when deciding kernel sizes or dilation schedules to ensure broad context coverage.
+
+Attention provided a mechanism that addresses these issues by allowing the model to learn where to "look" in the entire input sequence when generating each output element. This idea set the foundation for further exploration that led to the notion of discarding recurrence entirely — and thus emerged the Transformer.
+
+### Importance in modern machine learning
+
+Transformers have proven their worth across a wide array of tasks:
+
+- **Natural language processing**: State-of-the-art in machine translation, text summarization, question answering, sentiment analysis, and text generation.
+- **Computer vision**: The Vision Transformer (ViT) treats image patches like tokens, achieving competitive or superior results on image classification tasks.
+- **Speech processing**: Speech recognition and speech-to-text systems can leverage self-attention for improved context modeling.
+- **Multimodal learning**: Transformers excel in bridging multiple data modalities (text, images, audio) within a single architecture.
+
+By removing the need for strict sequential computation, Transformers can train more efficiently on modern hardware accelerators, taking advantage of large parallelizable matrix multiplications. When combined with massive pretraining datasets, Transformers form the basis for large foundation models that can be adapted or fine-tuned for a wide range of specialized tasks.
+
+### Scope of this article
+
+This article provides a deep yet accessible introduction to the Transformer architecture. I will discuss:
+
+1. The conceptual underpinnings that distinguish Transformers from previous sequence models.
+2. An overview of the architecture's core design, including both the encoder and decoder modules.
+3. Practical considerations such as the strengths and limitations of a fully attention-based system.
+4. Common variants of the Transformer that use only the encoder or only the decoder.
+5. Detailed breakdown of each component (embedding layers, positional encoding, multi-head attention, feed-forward layers, etc.) in both the encoder and decoder.
+
+While I touch on essential concepts such as the parallelization advantage, memory usage, and how models like BERT and GPT relate to the Transformer blueprint, some of the more intricate mathematical details of the attention mechanism, alternative attention forms, scaling strategies, and advanced training setups will be explored in a follow-up article. By the end of this piece, you should have a firm grasp of the motivation, high-level structure, and internal flow of information within Transformer models.
+
+### Historical context in NLP
+
+**Sequence-to-sequence learning**: The notion of mapping an input sequence to an output sequence using neural networks gained momentum around 2014 (Sutskever and gang, 2014). Encoder-decoder structures employing LSTM or GRU layers became the standard approach for tasks like machine translation.
+
+**Introduction of attention**: In 2015, Bahdanau and gang proposed an attention layer that improved sequence-to-sequence models by enabling the model to "attend" to relevant input tokens at each decoding step. This overcame some of the bottlenecks in purely recurrent models that rely on a single context vector.
+
+**Attention everywhere**: Subsequent research integrated attention more deeply into the network architecture itself, culminating in the fully attention-based Transformer (Vaswani and gang, 2017). This design drastically reduced the path length between any two tokens in the input or output, yielding better performance and faster training.
+
+These historical steps underscore how the field arrived at an architecture that dispenses with recurrence, allowing parallel processing of sequence elements via a global attention mechanism. In modern practice, Transformers define the cutting edge of NLP, forming the underlying blueprint for a diverse array of large-scale models.
+
+## Core concepts
+
+### Sequence modeling vs. transformer-based modeling
+
+Traditional sequence modeling techniques (e.g., RNNs) process elements in a strict order: the hidden state at timestep <Latex text="\(t\)"/> depends on the hidden state at timestep <Latex text="\(t-1\)"/> (and so on), creating a chain-like dependency structure. This sequential nature means it can be difficult to parallelize computations across long sequences during training. Although methods like truncated backpropagation through time and specialized architectures (like bidirectional LSTMs) help alleviate some of these issues, the fundamental problem remains.
+
+In contrast, a Transformer-based approach processes an entire sequence in parallel by employing self-attention. Given an input sequence of length <Latex text="\(n\)"/>, each token can directly attend to any other token. The notion of positional encoding (discussed later) is introduced to keep track of the sequence order. This parallelism dramatically speeds up training: rather than waiting for hidden states from previous positions, the model updates all token representations at once.
+
+### Attention mechanisms and their role
+
+Attention mechanisms can be thought of as a strategy to compute weighted averages over a set of "value" vectors, where the weights are determined by how closely a "query" vector matches a set of "key" vectors. Formally, one can define a scaled dot-product attention function as:
+
+<Latex text="\[
+\text{Attention}(Q, K, V) = \text{softmax}\Bigl(\frac{Q K^\top}{\sqrt{d_k}}\Bigr) V,
+\]"/>
+
+where <Latex text="\(Q\)"/> (queries), <Latex text="\(K\)"/> (keys), and <Latex text="\(V\)"/> (values) often come from transformations of the same input sequence (self-attention) or from different sequences (encoder-decoder attention). The factor <Latex text="\(\sqrt{d_k}\)"/> (where <Latex text="\(d_k\)"/> is the dimensionality of the keys) prevents overly large dot-product values that can destabilize gradients.
+
+In the Transformer, the self-attention layer allows each position in the sequence to gather information from every other position, effectively modeling relationships across the entire span without relying on potentially distant hidden states.
+
+### Key differences from recurrent and convolutional models
+
+1. **Elimination of recurrence**: Transformers do not process tokens in a fixed sequential manner. This means the path length between two positions in the sequence is significantly reduced, often resulting in better gradient flow and the ability to capture very long-range dependencies.
+
+2. **No convolutions**: Instead of applying kernels locally (as in CNNs), Transformers attend to tokens across the entire sequence. Convolution-like behaviors can sometimes emerge in certain attention patterns, but it is not a structural requirement.
+
+3. **Reliance on positional information**: Since the Transformer processes all tokens in parallel, it needs an explicit way of encoding token positions. This is handled by positional encoding or learned position embeddings.
+
+4. **Multi-head design**: Each attention layer is split into multiple heads. Each head can "focus" on different parts of the sequence, capturing diverse patterns.
+
+### Parallelization advantages
+
+Because each token can be processed independently (apart from the attention mechanism's matrix multiplications, which themselves are highly parallelizable on GPUs and TPUs), Transformers make much more efficient use of modern hardware. Training times for large datasets can be drastically reduced compared to RNNs, as we are no longer forced to wait on hidden state computations for each position in the input. This is why Transformers have become so central to large-scale language models that require tens or hundreds of billions of parameters.
+
+## Transformer architecture overview
+
+### Encoder-decoder structure
+
+A standard Transformer (Vaswani and gang, 2017) includes two main blocks:
+
+- **Encoder**: Processes the input sequence and produces a sequence of hidden representations (of the same length as the input).
+- **Decoder**: Generates output tokens one by one (for sequence generation tasks), attending to both its own previously generated tokens (through masked self-attention) and the encoder outputs (through encoder-decoder attention).
+
+Conceptually, this mirrors earlier sequence-to-sequence models that used RNN encoders and decoders. The significant difference is that both the encoder and decoder are built entirely around self-attention (plus feed-forward layers), rather than RNN or CNN cells.
+
+### Flow of information
+
+Consider a machine translation task from a source language to a target language:
+
+1. **Encoder**: The input tokens are converted to embeddings and enriched with positional encodings so the model knows the order of words. Then, each encoder layer refines these embeddings by applying self-attention (where every token can attend to every other token in the input) and feed-forward transformations.
+
+2. **Passing to decoder**: The output of the final encoder layer is a set of contextual embeddings representing each position in the source sentence. These embeddings are fed into the decoder.
+
+3. **Decoder**: For each token in the target sequence as it's being generated, the decoder first applies a masked self-attention mechanism (so the model cannot "peek" at future tokens). It then attends to the encoder outputs, finally passing the result through a feed-forward layer and output logits.
+
+This pipeline handles sequence-to-sequence transformations comprehensively. In other tasks, like classification, one might use only the encoder portion (e.g., BERT). In language modeling, one might rely only on the decoder (e.g., GPT).
+
+### Advantages and limitations
+
+**Advantages**:
+- Massively parallelizable computations lead to faster training.
+- Global attention allows the model to learn relationships between distant tokens more easily than RNN-based methods.
+- Excellent performance on a broad range of tasks, from language modeling to speech recognition to computer vision.
+- Modular design (stacking self-attention layers) makes them relatively simple to scale up.
+
+**Limitations**:
+- **Memory usage**: Storing attention scores for very long sequences <Latex text="\((n \times n)\)"/> can be prohibitive in terms of memory. This becomes a limiting factor for extremely long inputs.
+- **Computational overhead**: Although highly parallelizable, the attention mechanism can be expensive for large <Latex text="\(n\)"/>. Researchers have responded with variants like sparse attention or linear attention to mitigate these costs.
+- **Requires large datasets**: Transformers often demonstrate their full potential when trained on massive corpora. Smaller datasets may lead to overfitting unless carefully regularized or fine-tuned from a pretrained model.
+
+### Variants of encoder-decoder approaches
+
+- **Encoder-only**: For tasks like classification or regression on a single sequence (e.g., BERT), you only need an encoder stack. After passing an input sequence through the stack, you might take the final hidden state (or a special token like [CLS]) to perform classification.
+- **Decoder-only**: For language modeling or generative tasks (e.g., GPT), a decoder stack suffices. It produces one token at a time, conditioning on previously generated tokens.
+- **Full encoder-decoder**: For sequence-to-sequence tasks like translation, summarization, or question answering, the original Transformer blueprint with both encoder and decoder modules is commonly used.
+
+## Encoder module
+
+### Embedding layer
+
+When dealing with textual data, one typically starts with a vocabulary of subword tokens. Each token is assigned an index in an embedding matrix of dimension <Latex text="\((\text{vocab_size} \times d_\text{model})\)"/>. The model dimension <Latex text="\(d_\text{model}\)"/> (often 512 or 768, though many higher or lower values are used in practice) determines how large each token's representation is. For example, if you have a vocabulary of 30,000 tokens and <Latex text="\(d_\text{model} = 512\)"/>, your embedding matrix is <Latex text="\(30,000 \times 512\)"/>. When you feed a batch of token indices into the embedding layer, it returns a 3D tensor: <Latex text="\((\text{batch_size}, \text{sequence_length}, d_\text{model})\)"/>.
+
+### Positional encoding
+
+Since Transformers do not inherently track sequence order by processing tokens sequentially, they need a way to inject positional information. The original paper by Vaswani and gang (2017) proposed using sinusoidal position encoding, which can be summarized as follows for each token position <Latex text="\(pos\)"/>:
+
+<Latex text="\[
+PE_{(pos, 2i)} = \sin\Bigl(\frac{pos}{10000^{2i / d_{\text{model}}}}\Bigr),
+\]"/>
+<Latex text="\[
+PE_{(pos, 2i+1)} = \cos\Bigl(\frac{pos}{10000^{2i / d_{\text{model}}}}\Bigr),
+\]"/>
+
+where <Latex text="\(pos\)"/> is the token index in the sequence (0, 1, 2, …), and <Latex text="\(i\)"/> is the dimension index within the embedding. These periodic functions allow the model to extrapolate to positions greater than those in the training data, and they encode positions in a way that preserves relative distance information through linear transformations.
+
+An alternative is to learn positional embeddings. In that scenario, you simply have another trainable embedding matrix for positions — similar to token embeddings. Some newer models employ more sophisticated strategies, such as **relative position embeddings** or **rotary embeddings** (Su and gang, 2021), to better handle long sequences and to model positions in a relative rather than absolute sense.
+
+### Multi-head self-attention mechanism
+
+A hallmark of the Transformer is **multi-head self-attention**. Instead of applying a single attention function, the model splits its representation into multiple heads (each of dimension <Latex text="\(d_\text{model}/h\)"/>, where <Latex text="\(h\)"/> is the number of heads) and applies the attention function in parallel. The outputs of these heads are then concatenated and linearly transformed. For each head <Latex text="\(j\)"/>, the transformations can be expressed as:
+
+<Latex text="\[
+Q_j = X W_j^Q, \quad K_j = X W_j^K, \quad V_j = X W_j^V,
+\]"/>
+
+where <Latex text="\(X\)"/> is the input sequence's representation (dimensions <Latex text="\((\text{batch_size}, \text{sequence_length}, d_\text{model})\)"/>), and <Latex text="\(W_j^Q, W_j^K, W_j^V\)"/> are parameter matrices specific to that head. Each head then computes its own self-attention:
+
+<Latex text="\( \text{head}_j = \text{Attention}(Q_j, K_j, V_j) \)"/>
+
+Finally, the heads are concatenated and transformed by a matrix <Latex text="\(W^O\)"/>:
+
+<Latex text="\( \text{MultiHead}(X) = [\text{head}_1, \ldots, \text{head}_h] W^O. \)"/>
+
+Breaking down the representation into multiple attention heads allows the model to capture a variety of interactions in parallel — perhaps one head focuses on syntactic relationships while another focuses on semantic ones.
+
+### Feed-forward network
+
+Each encoder layer also includes a position-wise feed-forward network that processes each token representation independently. The typical form is:
+
+<Latex text="\[
+\text{FFN}(x) = \max(0, xW_1 + b_1)W_2 + b_2,
+\]"/>
+
+where <Latex text="\(W_1\)"/> and <Latex text="\(W_2\)"/> are learnable parameter matrices (dimensions <Latex text="\((d_\text{model}, d_{ff})\)"/> and <Latex text="\((d_{ff}, d_\text{model})\)"/>, respectively), and <Latex text="\(b_1, b_2\)"/> are biases. The intermediate dimension <Latex text="\(d_{ff}\)"/> (often 2,048 in the original Transformer) is larger than <Latex text="\(d_\text{model}\)"/>, allowing the network to learn more complex transformations. The activation function is typically ReLU or GELU in many modern variants.
+
+### Residual connections and layer normalization
+
+To facilitate signal propagation and stable gradient flow, Transformers use residual connections around both the multi-head attention sub-layer and the feed-forward sub-layer. After each sub-layer, a layer normalization step (Ba and gang, 2016) is applied. Symbolically:
+
+<Latex text="\( y = \text{LayerNorm}(x + \text{Sublayer}(x)), \)"/>
+
+where <Latex text="\(\text{Sublayer}(x)\)"/> could be the self-attention block or the feed-forward block. This structure, repeated <Latex text="\(N\)"/> times, forms the encoder stack. The original Transformer used <Latex text="\(N=6\)"/> layers, though many modern architectures use more.
+
+### Alternative positional encoding methods
+
+While the original sinusoidal approach and learned position embeddings remain popular, a variety of newer approaches exist:
+
+- **Relative position embeddings** (Shaw and gang, 2018): Instead of encoding absolute positions, it encodes the relative distance between tokens, which can be more flexible in certain tasks.
+- **Rotary position embeddings** (Su and gang, 2021): A method that multiplies token embeddings by a rotation matrix to incorporate positional information directly into the attention score. Known to scale well to longer sequences.
+
+## Decoder module
+
+### Masked multi-head self-attention
+
+For tasks like language modeling or machine translation, the decoder must generate the output sequence token-by-token, without peeking at future tokens. A **causal** or **masked** self-attention mechanism ensures that the attention for position <Latex text="\(t\)"/> only depends on positions <Latex text="\(\leq t\)"/>. Concretely, a triangular or future-masking matrix is applied to the attention logits so that no attention weight is computed for positions beyond <Latex text="\(t\)"/>. This is critical for autoregressive text generation, where the model must produce tokens in a left-to-right manner.
+
+### Encoder-decoder attention
+
+In addition to the masked self-attention, the decoder includes a cross-attention sub-layer that attends to the encoder outputs. This is also a multi-head attention mechanism, but here the queries come from the decoder's hidden states, while the keys and values come from the encoder outputs. This structure allows the decoder to reference and distill information from the entire input sequence, which has already been transformed by the encoder.
+
+Formally:
+
+<Latex text="\( Q = H_{\text{decoder}}, \quad K = H_{\text{encoder}}, \quad V = H_{\text{encoder}}. \)"/>
+
+Where <Latex text="\(H_{\text{decoder}}\)"/> and <Latex text="\(H_{\text{encoder}}\)"/> are the hidden representations (or states) coming from the respective modules.
+
+### Feed-forward network in the decoder
+
+Like the encoder, each decoder layer contains its own position-wise feed-forward network. The structure typically mirrors that of the encoder. Each token's representation is passed through a set of linear transformations and non-linearities. The hyperparameters (like <Latex text="\(d_{ff}\)"/>) often match those in the encoder, though one can modify them as needed.
+
+### Residual connections and layer normalization
+
+The decoder also has residual connections around each sub-layer and performs layer normalization in the same manner as the encoder. Specifically:
+
+<Latex text="\( y = \text{LayerNorm}(x + \text{Sublayer}(x)), \)"/>
+
+applies to both the masked self-attention sub-layer, the encoder-decoder attention sub-layer, and the feed-forward sub-layer. This consistency ensures stable training behavior across the entire stack.
+
+### Generating output tokens
+
+Once the decoder has computed its final hidden states, the standard approach is to project those states through a linear transformation that maps each vector of dimension <Latex text="\(d_\text{model}\)"/> to the vocabulary dimension. A softmax is then applied to produce a probability distribution over possible next tokens:
+
+<Latex text="\[
+P(\text{token}_t = w) = \text{softmax}(H_{\text{decoder}} W_{\text{vocab}}^T)_w.
+\]"/>
+
+At inference time, the model can generate text by sampling from this distribution (e.g., greedily taking the most likely token at each step), or using more sophisticated decoding algorithms such as beam search, nucleus sampling, or top-k sampling.
+
+### Handling long sequences in decoding
+
+While Transformers can handle longer sequences than many RNN-based approaches, memory usage can still balloon if the sequence is very long. Several techniques exist to mitigate this during decoding:
+
+- **Chunking or blocking**: Split the input (or the previously generated output) into manageable blocks.
+- **Memory compression**: Summarize past tokens into fewer representations, so the attention context does not grow unbounded.
+- **Sparse or linear attention variants**: Reduce the computational overhead and memory usage of full self-attention, often by restricting which tokens can attend to each other or by approximating the attention mechanism.
+
+Regardless of the method, the essential principle remains that the decoder must not have direct access to future positions, preserving causal consistency.
+
+---
+
+Below, I will embed a brief code snippet that demonstrates a minimal high-level Transformer encoder-decoder forward pass in Python-like pseudocode. This snippet is intended simply as a conceptual illustration of how the data flows, rather than a complete implementation with all details (masking, positional encodings, etc.) spelled out.
+
+<Code text={`
+import torch
+import torch.nn as nn
+import math
+
+class SimpleTransformer(nn.Module):
+    def __init__(self, 
+                 vocab_size, 
+                 d_model=512, 
+                 n_heads=8, 
+                 num_encoder_layers=6,
+                 num_decoder_layers=6):
+        super().__init__()
+        self.embedding_src = nn.Embedding(vocab_size, d_model)
+        self.embedding_tgt = nn.Embedding(vocab_size, d_model)
+
+        # Positional encoding parameters
+        self.pos_encoder = PositionalEncoding(d_model)
+
+        # Transformer module from PyTorch
+        self.transformer = nn.Transformer(d_model=d_model, 
+                                          nhead=n_heads,
+                                          num_encoder_layers=num_encoder_layers,
+                                          num_decoder_layers=num_decoder_layers)
+
+        self.fc_out = nn.Linear(d_model, vocab_size)
+    
+    def forward(self, src_tokens, tgt_tokens):
+        # src_tokens, tgt_tokens: shape (seq_len, batch_size)
+        src_emb = self.embedding_src(src_tokens)  # (seq_len, batch_size, d_model)
+        tgt_emb = self.embedding_tgt(tgt_tokens)  # (seq_len, batch_size, d_model)
+
+        src_emb = self.pos_encoder(src_emb)
+        tgt_emb = self.pos_encoder(tgt_emb)
+
+        # The nn.Transformer in PyTorch expects (seq_len, batch_size, d_model)
+        # By default, it implements both the encoder and decoder
+        memory = self.transformer.encoder(src_emb)  # shape: (src_seq_len, batch_size, d_model)
+        outputs = self.transformer.decoder(tgt_emb, memory)  # shape: (tgt_seq_len, batch_size, d_model)
+
+        logits = self.fc_out(outputs)  # (tgt_seq_len, batch_size, vocab_size)
+        return logits
+
+class PositionalEncoding(nn.Module):
+    def __init__(self, d_model, max_len=5000):
+        super().__init__()
+        pe = torch.zeros(max_len, d_model)
+        position = torch.arange(0, max_len).unsqueeze(1)
+        div_term = torch.exp(torch.arange(0, d_model, 2) * -(math.log(10000.0) / d_model))
+        pe[:, 0::2] = torch.sin(position * div_term)
+        pe[:, 1::2] = torch.cos(position * div_term)
+        pe = pe.unsqueeze(1)  # shape: (max_len, 1, d_model)
+        self.register_buffer('pe', pe)
+
+    def forward(self, x):
+        # x shape: (seq_len, batch_size, d_model)
+        seq_len = x.size(0)
+        x = x + self.pe[:seq_len, :]
+        return x
+`}/>
+
+Even though libraries such as PyTorch provide a high-level `nn.Transformer` module, it can be valuable for advanced practitioners to understand the architectural details behind it, especially when debugging or implementing variants like GPT-style decoder-only models, BERT-style encoder-only models, or specialized attention mechanisms.
+
+---
+
+I have thus outlined the core elements of the Transformer architecture: encoder-decoder design, multi-head self-attention, feed-forward networks, and the usage of residual connections and normalization to stabilize training. The final layers of the decoder generate tokens autoregressively, ensuring that the model can effectively produce sequences for tasks like translation or text generation. You should now have a strong conceptual grounding in how Transformers function at a fundamental level.
+
+In the subsequent article (part 2), I will dive deeper into the mathematical intricacies of the self-attention mechanism, the roles of queries, keys, and values, and advanced topics such as memory-efficient attention variants and common training techniques. However, even at this stage, it should be evident why Transformers have drastically reshaped the modern ML landscape, offering a scalable, parallelizable, and powerful framework for dealing with sequential data across a variety of modalities. 
+
+Depending on your application, you may consider exploring both the encoder-only variants (such as BERT or Vision Transformers) and the decoder-only variants (such as GPT) to determine which best meets your needs. If you're working on tasks where a sequence-to-sequence approach is critical — like machine translation or text summarization — the standard encoder-decoder Transformer structure remains a highly effective choice.
+
+By understanding these components, you're well on your way to building advanced, attention-driven architectures that stand at the forefront of contemporary machine learning.

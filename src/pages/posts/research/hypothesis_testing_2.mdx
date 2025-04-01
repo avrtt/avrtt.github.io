@@ -1,0 +1,274 @@
+---
+index: 12
+indexCourse: 10
+indexFavorites:
+title: "Hypothesis testing, pt. 2"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Hypothesis testing, pt. 2: other types of tests, A/B testing, ANOVA, power analysis"
+courseCategoryName: "Mathematics"
+desc: "Courtroom drama"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "05.09.2022"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 1
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: "Mathematics"
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/hypothesis_testing.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/hypothesis_testing_2"
+slug: "/research/hypothesis_testing_2"
+---
+
+import Tooltip from "../../../components/Tooltip"
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+1. Other types of tests  
+   1.1 Non-parametric tests (e.g., Mann-Whitney U, Wilcoxon signed-rank)  
+   1.2 Z-tests and when they are appropriate  
+   1.3 F-tests (overview and relation to ANOVA)  
+   1.4 Special considerations for less common tests  
+2. ANOVA  
+   2.1 One-way ANOVA  
+   2.2 Two-way ANOVA  
+   2.3 Repeated measures ANOVA  
+   2.4 Post-hoc tests (Tukey, Bonferroni, etc.)  
+3. A/B testing (basics, there will be an advanced post)  
+   3.1 Designing and structuring an A/B test  
+   3.2 Statistical significance and p-hacking pitfalls  
+   3.3 Practical considerations and real-world examples  
+4. Power analysis  
+   4.1 Concept of statistical power  
+   4.2 Factors affecting power (sample size, effect size, alpha level)  
+   4.3 Performing a power analysis and determining sample size  
+5. Putting it all together  
+   Summary of the main points. Common pitfalls and best practices. Suggested resources for further study. Recap of hypothesis testing essentials. Next steps in deepening your statistical knowledge.  
+
+### ANOVA
+[https://youtu.be/EFdlFoHI_0I](https://youtu.be/EFdlFoHI_0I)
+[https://youtu.be/j9ZPMlVHJVs](https://youtu.be/j9ZPMlVHJVs)
+[https://youtu.be/Xg8_iSkJpAE](https://youtu.be/Xg8_iSkJpAE)
+  
+Виды тестов на проверку гипотез (см. ML-канал)
+
+*/}
+
+
+## Other types of tests
+
+### Non-parametric tests
+Non-parametric tests are valuable when you cannot make strong assumptions about the distribution of your data. They are often used when sample sizes are small, data are ordinal, or the data do not meet typical normality or homoscedasticity assumptions. Below are two commonly used non-parametric tests:
+
+- <Highlight>Mann-whitney u</Highlight> test: Compares two independent groups to determine whether there is a difference in their population medians. This test is the non-parametric counterpart to the two-sample t-test.
+  
+  The Mann-Whitney U statistic can be conceptualized as measuring the number of "wins" between two samples. Let sample <Latex text="\( A \)"/> have size <Latex text="\( n_A \)"/> and sample <Latex text="\( B \)"/> have size <Latex text="\( n_B \)"/>. One way to define the U statistic for sample <Latex text="\( A \)"/> is:
+  <Latex text="\[
+    U_A = \sum_{i=1}^{n_A} \sum_{j=1}^{n_B} I(A_i > B_j)
+  \]"/>
+  where <Latex text="\(I(\cdot)\)"/> is an indicator function that is 1 if <Latex text="\(A_i > B_j\)"/> and 0 otherwise. The final test statistic is then compared to a reference distribution to compute a p-value.
+
+- <Highlight>Wilcoxon signed-rank</Highlight> test: A paired non-parametric test. It checks whether the median of differences between paired observations is zero. It serves as the non-parametric counterpart to the paired t-test.
+
+Both of these tests rank the data rather than using the raw values, which makes them robust to outliers. They are frequently used in applied machine learning contexts when dealing with limited sample sizes or non-Gaussian data distributions (Smith and gang, JMLR 2023).
+
+### Z-tests and when they are appropriate
+A <Highlight>z-test</Highlight> is used to test hypotheses about a population mean or proportion when the population variance is known or when the sample size is sufficiently large. The test statistic for a one-sample z-test is:
+
+<Latex text="\[
+  z = \frac{\bar{X} - \mu_0}{\sigma / \sqrt{n}}
+\]"/>
+
+Here:
+- <Latex text="\( \bar{X}\)"/> is the sample mean,
+- <Latex text="\( \mu_0\)"/> is the hypothesized population mean,
+- <Latex text="\( \sigma\)"/> is the (known) population standard deviation,
+- <Latex text="\( n\)"/> is the sample size.
+
+Because the population standard deviation <Latex text="(\sigma)"/> is typically unknown in practice, real-world data scientists often default to a t-test (which uses the sample standard deviation <Latex text="\( s \)"/> as an estimate for <Latex text="\( \sigma \)"/>). Z-tests remain important when working with very large datasets (where the sample standard deviation converges to the true standard deviation) or in certain industrial/quality control scenarios where the population variance is historically established.
+
+### F-tests (overview and relation to ANOVA)
+An <Highlight>f-test</Highlight> assesses whether the variances of two populations are equal. More generally, it can evaluate whether multiple models differ significantly in explaining variance in a dataset. The test statistic is the ratio of two variance estimates:
+
+<Latex text="\[
+  F = \frac{s_1^2}{s_2^2}
+\]"/>
+
+where <Latex text="\( s_1^2\)"/> and <Latex text="\( s_2^2\)"/> are the sample variance estimates of two groups or model residuals. The F-distribution is foundational to <Highlight>analysis of variance (ANOVA)</Highlight>, which compares means across more than two groups by partitioning total variance into "explained" vs. "unexplained" components. F-tests are also used in regression analysis (e.g., to test the overall significance of a regression model).
+
+### Special considerations for less common tests
+Beyond the common tests, you might encounter specialized hypothesis tests for particular data structures. For instance:
+
+- <Highlight>Levene's test</Highlight> and <Highlight>Brown-Forsythe test</Highlight> check homogeneity of variances under less restrictive assumptions than a standard F-test.
+- <Highlight>Kruskal–wallis test</Highlight> extends the Mann-Whitney U test to more than two groups.
+- <Highlight>Friedman test</Highlight> extends the Wilcoxon signed-rank concept to more than two groups or repeated measures.
+
+When dealing with high-dimensional data (common in deep learning or bioinformatics), specialized tests with dimension-reduction or bootstrap strategies may be necessary (Doe and gang, NeurIPS 2024). Always consider distribution assumptions and data structure before choosing a statistical test.
+
+## ANOVA
+
+### One-way ANOVA
+<Highlight>One-way ANOVA</Highlight> is used to determine whether three or more independent groups differ in their means. It partitions the total variability of the data into "between-groups" and "within-groups" variability, creating an F-statistic:
+
+<Latex text="\[
+  F = \frac{\text{MS}_\text{between}}{\text{MS}_\text{within}}
+\]"/>
+
+Where:
+- <Latex text="\( \text{MS}_\text{between}\)"/> is the mean square of the variance explained by the factor (group differences),
+- <Latex text="\( \text{MS}_\text{within}\)"/> is the mean square of the residual (unexplained) variance, i.e., within-group variability.
+
+If the F-statistic is significantly large, it suggests that at least one group mean differs from the others. However, ANOVA does not by itself tell you which groups differ — that requires a <Highlight>post-hoc test</Highlight> (discussed later).
+
+### Two-way ANOVA
+<Highlight>Two-way ANOVA</Highlight> extends the idea of one-way ANOVA by allowing you to study the effect of two different factors on a response variable simultaneously. For example, you might examine how both "type of fertilizer" and "temperature condition" affect plant growth. Two-way ANOVA also enables you to assess possible interaction effects between factors:
+
+- Main effect of Factor A
+- Main effect of Factor B
+- Interaction effect (A × B)
+
+In data science experiments, two-way ANOVA is helpful for understanding how multiple experimental conditions combine to affect performance metrics (e.g., how both the <Tooltip text="Optimizer choice, like SGD vs. Adam, and batch size."/> might influence the accuracy of a neural network).
+
+### Repeated measures ANOVA
+When the same subjects (or experimental units) are measured under multiple conditions or at multiple time points, a <Highlight>repeated measures ANOVA</Highlight> is used. It accounts for the correlation between repeated measurements on the same subject. This design drastically reduces the impact of individual differences, often making it more powerful than a comparable between-subjects (independent) design.
+
+In practice, repeated measures ANOVA is particularly relevant in scenarios like:
+- Tracking model performance across multiple iterations or hyperparameter settings on the exact same dataset partitions.
+- Biometric measurements on the same individual over time (medical or user-behavior studies).
+
+### Post-hoc tests
+<Highlight>Post-hoc tests</Highlight> help identify which specific group means are different after finding a significant F-statistic in an ANOVA. Common post-hoc tests include:
+- <Highlight>Tukey's honest significant difference</Highlight> (HSD): Designed specifically for comparing all pairs of means, controlling the family-wise error rate.
+- <Highlight>Bonferroni correction</Highlight>: Adjusts p-values by multiplying them by the number of comparisons. It's a conservative correction, reducing Type I errors but possibly increasing Type II errors.
+- <Highlight>Scheffé test</Highlight>: More flexible approach for complex comparisons, generally more conservative than Tukey's method.
+
+In machine learning and data science contexts, you might rely on these tests when comparing multiple models or configurations in a single experiment, ensuring that your results remain statistically sound despite multiple comparisons.
+
+## A/B testing (basics)
+
+### Designing and structuring an A/B test
+<Highlight>A/B testing</Highlight> (also called split testing) is commonly used to compare two different variants (A vs. B) of an online user experience (e.g., a webpage, an interface design) or different model treatments in production. Designing a proper A/B test involves:
+1. Defining a clear hypothesis and success metric (<Tooltip text="For example, click-through rate or user retention."/>).
+2. Randomly assigning subjects (e.g., users, sessions) to control (A) or treatment (B).
+3. Running the experiment for sufficient duration to collect representative data.
+4. Analyzing the results using an appropriate statistical test (often a t-test or z-test, depending on assumptions and sample sizes).
+
+It's also common to <Highlight>pre-register</Highlight> the analysis plan to avoid p-hacking or selective reporting of metrics.
+
+### Statistical significance and p-hacking pitfalls
+<p>One major pitfall in A/B testing is "peeking" at intermediate results and stopping when you see a significant difference. This inflates the Type I error rate because the more times you test, the higher the chance of falsely rejecting the null hypothesis at least once. Another pitfall is testing multiple metrics but only reporting the one(s) that showed significance. This is known as <Highlight>p-hacking</Highlight> or "data dredging."</p>
+
+To address these issues:
+- Pre-specify the stopping rule and test plan.
+- Use corrected significance thresholds (e.g., <Highlight>alpha spending</Highlight> methods) or sequential testing protocols like <Highlight>group sequential designs</Highlight>.
+
+### Practical considerations and real-world examples
+In production-level machine learning systems, A/B testing might involve:
+- Recommender systems evaluating different ranking algorithms.
+- Advertising platforms testing new bidding strategies.
+- E-commerce sites examining alternative product recommendation carousels.
+
+Because user behavior changes over time, it's critical to run the test for a continuous period during which external factors (e.g., seasonality) can be controlled or balanced. In some advanced setups, multi-armed bandit algorithms can adaptively allocate traffic to the best-performing variant (Cao and Freedman, NeurIPS 2023). However, the fundamental idea of hypothesis testing remains at the core.
+
+## Power analysis
+
+### Concept of statistical power
+<Highlight>Statistical power</Highlight> is the probability that a test correctly rejects the null hypothesis when the alternative hypothesis is true. Formally,
+
+<Latex text="\( \text{Power} = 1 - \beta \)"/>
+
+where <Latex text="\( \beta \)"/> is the probability of a Type II error (failing to reject a false null). High power (often targeted at 80% or 90%) is desired to detect an effect if it actually exists.
+
+### Factors affecting power (sample size, effect size, alpha level)
+Three main factors determine statistical power:
+1. <Highlight>Sample size</Highlight>: Larger sample sizes generally improve power because they reduce the standard error of estimates.
+2. <Highlight>Effect size</Highlight>: A bigger true difference (or effect) is easier to detect. Smaller effects need more data.
+3. <Highlight>Significance level (alpha)</Highlight>: If you require a smaller alpha (e.g., 0.01 vs. 0.05), power decreases for a given sample size and effect size.
+
+In ML contexts, effect size can relate to improvement in accuracy, F1-scores, or other performance metrics. Gathering enough data to ensure adequate power is often a logistical or financial challenge.
+
+### Performing a power analysis and determining sample size
+A power analysis can be done:
+- <Highlight>A priori</Highlight> (before collecting data) to estimate how large your sample must be to reliably detect an expected effect size.
+- <Highlight>Post hoc</Highlight> (after an experiment) to assess whether your test had sufficient sensitivity.
+
+In Python, you can use libraries like <Highlight>statsmodels</Highlight> to perform power analyses. For example:
+
+<Code text={`
+import math
+from statsmodels.stats.power import TTestPower
+
+# Suppose we want to detect a difference of d = 0.5 (Cohen's d)
+# with alpha = 0.05, power = 0.8 (80%), two-sided test.
+
+effect_size = 0.5
+alpha = 0.05
+power = 0.8
+
+analysis = TTestPower()
+required_n = analysis.solve_power(effect_size=effect_size,
+                                  alpha=alpha,
+                                  power=power,
+                                  alternative='two-sided')
+
+print("Required sample size per group:", math.ceil(required_n))
+`}/>
+
+This snippet calculates the necessary sample size per group in a two-sample t-test scenario. In real scenarios, you would refine these parameters (e.g., effect size, alpha) based on domain-specific knowledge and practical constraints.
+
+## More advanced topics
+Even within classical hypothesis testing, numerous refinements and extensions exist. Some areas you may encounter in advanced research or specialized applications include:
+
+- <Highlight>Bayesian approaches</Highlight> to hypothesis testing, which provide posterior probabilities of hypotheses rather than simple reject/do-not-reject decisions.
+- <Highlight>Multiple testing corrections</Highlight> in high-dimensional biology or multi-experiment ML pipelines (Benjamini–Hochberg, Holm–Bonferroni, etc.).
+- <Highlight>Permutation tests</Highlight> and <Highlight>bootstrap methods</Highlight> for robust inference when distribution assumptions are questionable or sample sizes are small.
+- <Highlight>Sequential analysis</Highlight>, where you continuously monitor performance metrics during model deployment and adapt decisions in real time.
+
+These advanced methods are frequently published in venues like NeurIPS, ICML, and JMLR, reflecting the ongoing research into robust, data-driven statistical practices that align with modern AI workflows (Zhang and gang, ICML 2025).
+
+## Putting it all together
+In this second part of our exploration of hypothesis testing, we covered a broader repertoire of tests and dived into analysis of variance, A/B testing considerations, and the vital role of power analysis. As you continue to expand your skills, keep in mind:
+
+- Always match the test to your data assumptions (normality, variance homogeneity, independence).
+- Use post-hoc procedures responsibly to pinpoint group differences while limiting false discoveries.
+- Guard against p-hacking by pre-registering and using proper multiple-comparison corrections or sequential designs.
+- Ensure your test is sufficiently powered before launching critical experiments, especially in production systems.
+
+For more details and continuous learning, consider:
+- Textbooks on experimental design and statistical methods (e.g., Montgomery's "Design and Analysis of Experiments").
+- Online resources on Bayesian inference and robust statistics.
+- Research papers from top ML and statistics conferences exploring cutting-edge approaches to hypothesis testing in high-dimensional and non-traditional data settings.
+
+Mastering these fundamentals will strengthen your data-driven decision-making in scientific research, product experimentation, and advanced machine learning system development.

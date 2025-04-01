@@ -1,0 +1,621 @@
+---
+index: 142
+indexCourse: 59
+indexFavorites:
+title: "Sampling, in-depth"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Sampling, in-depth"
+courseCategoryName: "Probabilistic models & Bayesian methods"
+desc: "It's like chess"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "16.12.2024"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 2
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/sampling_in_depth.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/sampling_in_depth"
+slug: "/research/sampling_in_depth"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+- [SGA - Sampling Discrete Structures](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/sampling/introduction.html)
+    - [Categorical Sampling with Gumbel-Argmax](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/sampling/introduction.html#Categorical-Sampling-with-Gumbel-Argmax)
+    - [Softmax Relaxation](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/sampling/introduction.html#Softmax-Relaxation)
+    - [Categorical VAE](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/sampling/introduction.html#Categorical-VAE)
+    - [Gumbel Straight-Through](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/sampling/introduction.html#Gumbel-Straight-Through)
+    - [References](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/sampling/introduction.html#References)
+- [SGA - Sampling Subsets with Gumbel-Top k Relaxations](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/sampling/subsets.html)
+    - [Top k Relaxation](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/sampling/subsets.html#Top-k-Relaxation)
+    - [Subset Sampler Class](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/sampling/subsets.html#Subset-Sampler-Class)
+    - [Empirical Sampling Distribution](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/sampling/subsets.html#Empirical-Sampling-Distribution)
+    - [Application: Differentiable k Nearest Neighbors](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/sampling/subsets.html#Application:-Differentiable-k-Nearest-Neighbors)
+    - [References](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/sampling/subsets.html#References)
+- [SGA: Learning Latent Permutations with Gumbel-Sinkhorn Networks](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/sampling/permutations.html)
+    - [**0. Introduction**](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/sampling/permutations.html#0.-Introduction)
+    - [**1. The Gumbel-Sinkhorn operator**](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/sampling/permutations.html#1.-The-Gumbel-Sinkhorn-operator)
+    - [**2. Implementing a Sinkhorn Network for learning latent permutations**](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/sampling/permutations.html#2.-Implementing-a-Sinkhorn-Network-for-learning-latent-permutations)
+- [SGA - Graph Sampling for Neural Relational Inference](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/sampling/graphs.html)
+    - [Graph Network Encoder](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/sampling/graphs.html#Graph-Network-Encoder)
+    - [Graph Network Decoder](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/sampling/graphs.html#Graph-Network-Decoder)
+    - [Neural Relational Inference](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/sampling/graphs.html#Neural-Relational-Inference)
+    - [References](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/sampling/graphs.html#References)
+
+*/}
+
+
+{/*
+
+1. Introduction  
+- Motivation for sampling in deep learning: highlights how reparameterization of discrete variables can enable end-to-end training  
+- Discrete structures in machine learning models: covers unstructured vectors, subsets, permutations, and graph-based latent variables  
+- Continuous relaxations and reparameterization tricks: introduces the Gumbel distribution, the softmax relaxation, and temperature scheduling  
+2. Gumbel-softmax reparameterization  
+- The Gumbel-max trick and categorical distributions: explains sampling from categorical variables using Gumbel noise  
+- The argmax operation vs. a softmax relaxation: covers how the non-differentiable argmax is replaced with a differentiable softmax  
+- Temperature hyperparameter and annealing strategies: discusses balancing discrete-vs.-continuous behavior  
+- Training categorical VAEs with Gumbel-softmax: describes sampling latent variables in variational autoencoders  
+- The straight-through estimator: hard samples with relaxed gradients for discrete training  
+- Comparisons to alternative gradient estimators (REINFORCE, REBAR, RELAX)
+3. Categorical VAE example  
+- Model overview and latent variable structure: outlines a VAE with categorical latent dimensions  
+- Gumbel-softmax sampling within the encoder: details how categorical distributions are reparameterized  
+- KL divergence and reconstruction loss: shows how to incorporate a uniform prior and compute the KL term  
+- Code walk-through and implementation details: discusses the sampling functions and VAE architecture  
+- Practical considerations and tuning the temperature: examines training stability, gradient flow, and temperature choices  
+- Evaluation metrics for generative quality and latent utilization
+4. Gumbel top-k sampling and subset selection  
+- From Gumbel-argmax to Gumbel top-k for subsets: extends the Gumbel-max trick to sample k elements  
+- Sampling without replacement and Top-k relaxation: describes iterative softmax and temperature-based smoothing  
+- SubsetOperator class: iterative softmax and temperature tuning: demonstrates an implementation approach  
+- Differentiable subset selection in k-nearest neighbor classification: applies top-k relaxation to a kNN model  
+- Empirical distribution checks and histogram comparison: compares unrelaxed vs. relaxed sampling outcomes  
+- Extensions to resource-constrained subset selection and combinatorial optimization
+5. Gumbel-sinkhorn networks for permutations  
+- Doubly stochastic matrices and linear assignment: introduces the Sinkhorn normalization concept  
+- Relaxing permutations with the Sinkhorn operator: allows continuous approximation of permutation matrices  
+- Gumbel-matching vs. Gumbel-sinkhorn distributions: distinguishes exact vs. relaxed permutation sampling  
+- Implementation of sinkhorn and the matching function: includes step-by-step creation of the assignment solution  
+- Sampling permutation matrices in a differentiable way: uses Gumbel noise plus Sinkhorn to reparameterize  
+- Applications to sorting, ranking, and structured prediction tasks
+6. Learning latent permutations in practice  
+- Sinkhorn-based convolutional networks: describes a CNN architecture integrated with Gumbel-Sinkhorn  
+- The unscrambling MNIST digits example: splits and reorders image patches to learn a permutation  
+- Network architecture and training procedure: details layers, loss functions, and the training loop  
+- Evaluating permutation accuracy (Kendall-Tau): measures how well the model recovers correct permutations  
+- Sample results and visualization: shows test outputs for unscrambled image patches  
+7. Graph sampling and neural relational inference  
+- Overview of graph-based latent variable models: highlights VAEs that learn unknown graph structures  
+- Encoding and decoding graph structures in VAEs: uses node- and edge-level representations  
+- Using Gumbel-softmax for edge sampling: reparameterizes adjacency with a continuous relaxation  
+- Learning interaction networks (springs example): describes simulating particles connected by unknown edges  
+- Visualizing discovered graphs and analyzing results: compares learned adjacency to ground truth  
+8. Beyond Gumbel: other discrete reparameterization approaches
+- Binary concrete (continuous Bernoulli) distributions for binary latent variables
+- REINFORCE-style estimators with variance reduction (baseline, input-dependent, etc.)
+- RELAX and REBAR: advanced variance-reduced gradient estimators
+- Trade-offs in bias vs. variance and model complexity
+- Practical guidelines on choosing an estimator
+9. Future directions and conclusion  
+- Summary of key takeaways: reiterates the role of continuous relaxations in discrete modeling  
+- Advanced topics: reinforcement learning, policy gradients, and discrete controls: notes how Gumbel-based methods integrate with RL  
+- Potential improvements and research trends: addresses temperature annealing, improved gradient estimators, and large-scale discrete structures  
+- Final remarks and further reading: points to codebases, academic papers
+
+*/}
+
+
+Sampling lies at the heart of countless machine learning and statistical methods, providing a pathway for exploring stochastic latent variables and enabling many key techniques for training large-scale models. Within the realm of deep learning, discrete structures have traditionally presented challenges due to their inherently non-differentiable nature. For example, if I want to sample a discrete random variable (like a categorical variable or a subset) inside a neural network and then backpropagate a gradient signal through that sampling procedure, I immediately run into the dilemma that the argmax or discrete selection steps are non-differentiable. However, this barrier has been partially overcome by new families of continuous relaxations and reparameterization methods, which allow for approximate or exact gradient flow through random sampling steps.  
+
+These methods are particularly relevant when dealing with discrete latent variables in a deep network — for instance, when I use a <Highlight>variational autoencoder (VAE)</Highlight> with a discrete latent space. Sampling from discrete random variables used to involve non-differentiable draws, forcing the use of high-variance gradient estimators like REINFORCE or policy gradients. But with the introduction of the <Highlight>Gumbel-softmax reparameterization trick</Highlight> (Jang and gang, ICLR 2017; Maddison and gang, ICLR 2017), along with other creative continuous approximations of discrete operations, we now have an expanded toolkit that can drastically improve training stability and reduce estimator variance.  
+
+The broader theme of this article is the family of methods that revolve around <Latex text="\( \text{Gumbel noise} \)"/> and its close cousins, which facilitate reparameterizing discrete draws in a continuous fashion. We will explore the fundamental ideas of the Gumbel distribution, the <Highlight>Gumbel-max trick</Highlight>, the <Highlight>Gumbel-softmax distribution</Highlight>, <Highlight>Gumbel top-k sampling</Highlight>, and the <Highlight>Gumbel-Sinkhorn operator</Highlight>. These techniques allow for differentiable approximations of argmax, top-k, subsets, permutations, and even adjacency matrices for graphs. By carefully tuning temperature parameters or employing advanced gradient estimators, we can move seamlessly between discrete and continuous realms.  
+
+### motivation for sampling in deep learning
+
+Deep neural networks have opened new possibilities for generative modeling, reinforcement learning, and structured prediction. In many of these problems, I might want to represent a variable as discrete — for instance, a categorical latent variable indicating which cluster an observation belongs to, a subset of features in a combinatorial selection problem, or the ordering of items in a ranking or matching problem. Such discrete structures bring interpretability and can lead to simpler or more efficient solutions, but they also introduce non-differentiable operations.  
+
+The question then becomes: how can I train large neural networks that contain these discrete components end-to-end with backpropagation? The direct approach, involving discrete sampling, breaks the chain rule of calculus. This leads to gradient estimators like REINFORCE that can exhibit high variance, especially in high-dimensional settings.  
+
+Hence the need for <Highlight>reparameterization tricks</Highlight>. The general principle behind reparameterization is that I express a random variable <Latex text="\( X \)"/> with a distribution parameterized by <Latex text="\( \theta \)"/> as a deterministic function of a parameter-free noise variable <Latex text="\( \epsilon \)"/>. Formally, instead of  
+<Latex text="\( X \sim p_\theta(x) \)"/>  
+I try to write  
+<Latex text="\( X = g(\theta, \epsilon) \)"/>,  
+where <Latex text="\( \epsilon \sim p(\epsilon) \)"/> has a distribution that does not depend on <Latex text="\( \theta \)"/>. This style of reparameterization is easy to implement for continuous distributions like the Gaussian, where <Latex text="\( X = \mu + \sigma \cdot \epsilon \)"/> and <Latex text="\( \epsilon \sim \mathcal{N}(0,1) \)"/>. But for discrete distributions, we can't so simply separate out the random part from the parameters — at least not without some creativity.  
+
+This is where the <Highlight>Gumbel distribution</Highlight> steps in. The Gumbel-max trick shows that if I have a categorical distribution with class probabilities <Latex text="\( \pi_1, \ldots, \pi_k \)"/>, I can sample exactly from that distribution by sampling i.i.d. <Latex text="\( G_i \sim \text{Gumbel}(0,1) \)"/> and taking <Latex text="\( \arg\max_i (\log \pi_i + G_i) \)"/>. That's an exact sampler, but the <Latex text="\( \arg\max \)"/> is not differentiable. So the Gumbel-softmax relaxation replaces the <Latex text="\( \arg\max \)"/> with a <Latex text="\( \text{softmax} \)"/> operation, thereby making the entire process differentiable.  
+
+### discrete structures in machine learning models
+
+Some common examples of discrete structures in ML:
+
+1. **Categorical variables (unstructured vectors).** A straightforward scenario is a K-class latent variable <Latex text="\( z \in \{1, \ldots, K\} \)"/>. This arises in VAEs that impose a discrete latent space or in generative models that must pick from discrete sets of states.  
+
+2. **Subsets.** I might want to pick a subset of items (features, data samples, or other sets). This is a combinatorial selection problem, often associated with the top-k or top-p selection, or used in resource-constrained optimization.  
+
+3. **Permutations.** Another step up in complexity is a scenario where I want to sample permutations, for instance in ranking tasks, matching problems, or route planning. A permutation matrix is discrete and combinatorial, so direct backprop is not feasible.  
+
+4. **Graph-based latent variables.** If the structure of a graph (which edges exist) is unknown, sampling from a distribution over graphs is a discrete selection problem over edges.  
+
+Each of these discrete structures can be tackled with Gumbel-based methods or other advanced gradient estimators.  
+
+### continuous relaxations and reparameterization tricks
+
+The overarching idea is to turn each discrete sample or operation (argmax, top-k, constructing adjacency, etc.) into a smooth approximation so that the forward pass yields values that, at high temperature, approximate continuous distributions, and at low temperature, approach discrete distributions. Then I can backprop through these continuous approximations.  
+
+We'll dig deep into the Gumbel distribution and the softmax relaxation, paying attention to how temperature scheduling can gradually push the model from a continuous representation (easy to train but less discrete) toward a more discrete representation (closer to the final goal but potentially harder to optimize). I'll also highlight alternative methods (like REINFORCE, RELAX, REBAR) that do not require continuous relaxations but come with their own trade-offs in variance and bias.  
+
+This article aims to give you an in-depth look at how these sampling approaches work, how to implement them, and how they can be used in real-world models. Along the way, I'll provide references to relevant papers and highlight recent research trends.  
+
+## gumbel-softmax reparameterization
+
+### the gumbel-max trick and categorical distributions
+
+Suppose I have a categorical distribution over <Latex text="\( K \)"/> classes with probabilities <Latex text="\( \pi = (\pi_1, \ldots, \pi_K) \)"/>, meaning <Latex text="\( \sum_{i=1}^K \pi_i = 1 \)"/>. I want to sample <Latex text="\( z \in \{1, \ldots, K\} \)"/> from that distribution. One way is to do a typical discrete sampling approach: pick class <Latex text="\( i \)"/> with probability <Latex text="\( \pi_i \)"/>. But the Gumbel-max trick redefines the sampling procedure as follows:  
+
+1. Sample <Latex text="\( G_1, \ldots, G_K \)"/> i.i.d. from a <Highlight>Gumbel(0,1)</Highlight> distribution. A Gumbel(0,1) random variable can be sampled as <Latex text="\( -\log(-\log(U)) \)"/> where <Latex text="\( U \sim \text{Uniform}(0, 1) \)"/>.  
+2. Compute <Latex text="\( i^* = \arg\max_i \bigl(\log \pi_i + G_i\bigr) \)"/>.  
+
+The random index <Latex text="\( i^* \)"/> follows the original categorical distribution with probability <Latex text="\( \pi \)"/>. Thus, <Latex text="\( z = i^* \)"/> is a discrete sample from the correct distribution.  
+
+However, <Latex text="\( i^* \)"/> is not differentiable with respect to <Latex text="\( \pi \)"/>, because <Latex text="\( \arg\max(\cdots) \)"/> is not a smooth function.  
+
+### the argmax operation vs. a softmax relaxation
+
+The <Highlight>Gumbel-softmax trick</Highlight>, also called the <Highlight>Concrete distribution</Highlight> by Jang and gang (ICLR 2017) and Maddison and gang (ICLR 2017), replaces <Latex text="\( \arg\max_i \bigl(\log \pi_i + G_i\bigr) \)"/> with a <Latex text="\( \softmax \)"/> operation:  
+
+<Latex text="\[
+y_i = \frac{\exp\bigl((\log \pi_i + G_i)/\tau\bigr)}{\sum_{j=1}^K \exp\bigl((\log \pi_j + G_j)/\tau\bigr)},
+\]"/>  
+
+where <Latex text="\( \tau \)"/> is a temperature parameter. If <Latex text="\( \tau \)"/> is very low, the <Latex text="\( \softmax \)"/> is sharply peaked, closely approximating an <Latex text="\( \arg\max \)"/>. If <Latex text="\( \tau \)"/> is very high, the vector <Latex text="\( y = (y_1, \ldots, y_K) \)"/> spreads out, approaching a uniform distribution.  
+
+Crucially, <Latex text="\( y_i \)"/> is differentiable with respect to the logits <Latex text="\( \log \pi_i \)"/>. Hence if <Latex text="\( \pi \)"/> is produced by some neural network (e.g., the encoder of a VAE), I can backpropagate from <Latex text="\( y_i \)"/> to <Latex text="\( \pi \)"/>.  
+
+I note that the vector <Latex text="\( y \)"/> is still a <em>continuous</em> vector in <Latex text="\( \mathbb{R}^K \)"/>. I can interpret <Latex text="\( y \)"/> as a "soft" one-hot vector, with each component in <Latex text="\( (0, 1) \)"/> but summing to 1.  
+
+### temperature hyperparameter and annealing strategies
+
+A central hyperparameter in Gumbel-softmax is the temperature <Latex text="\( \tau \)"/>. If <Latex text="\( \tau \)"/> is close to 0, the <Latex text="\( \softmax \)"/> becomes extremely peaked, approaching a one-hot vector, but the gradients can become large (or vanish in certain regimes). If <Latex text="\( \tau \)"/> is large, the vector <Latex text="\( y \)"/> is more uniform, and the training signals flow more stably.  
+
+A common trick is to start with a relatively high temperature <Latex text="\( \tau_\text{start} \)"/> and then gradually reduce it during training toward a smaller value <Latex text="\( \tau_\text{end} \)"/>. This is called <Highlight>temperature annealing</Highlight>. It helps the model begin training with smoother approximations, and later it can hone in on more discrete solutions.  
+
+### training categorical vaes with gumbel-softmax
+
+Variational autoencoders with continuous latent variables rely on the reparameterization trick for Gaussians. But if I want to do a <Highlight>categorical VAE</Highlight>, I can't easily reparameterize a discrete distribution. The Gumbel-softmax trick offers a solution.  
+
+In a categorical VAE, the encoder outputs <Latex text="\( \alpha_1, \ldots, \alpha_K \)"/> (logits), from which I derive <Latex text="\( \pi \)"/> by <Latex text="\( \pi_i = \exp(\alpha_i)/\sum_{j}\exp(\alpha_j) \)"/>. Then to sample <Latex text="\( z \)"/>, I do:  
+
+1. Sample <Latex text="\( G_i \sim \text{Gumbel}(0,1) \)"/> for each class <Latex text="\( i \)"/>.  
+2. Compute <Latex text="\( y = \softmax\bigl((\log \pi + G)/\tau\bigr) \)"/>.  
+
+Now <Latex text="\( y \)"/> is the <Highlight>relaxed discrete latent variable</Highlight>. The reconstruction function can condition on <Latex text="\( y \)"/>. At the same time, I can compute a KL divergence term that approximates the difference between the approximate posterior <Latex text="\( q_\phi(z|x) \)"/> and a prior <Latex text="\( p(z) \)"/>, which might be a uniform categorical distribution.  
+
+### the straight-through estimator
+
+Another variant is the <Highlight>straight-through estimator</Highlight>. In this approach, I compute the argmax in the forward pass to get an actual discrete sample <Latex text="\( \hat{z} \)"/>, but in the backward pass, I treat that argmax as if it was a <Latex text="\( \softmax \)"/> of the same logits. This means I get a discrete sample for the forward pass (which is beneficial if I want strict category decisions), but I still propagate useful gradients back.  
+
+Concretely, if <Latex text="\( y_{\text{soft}} \)"/> is the Gumbel-softmax output, I can create <Latex text="\( y_{\text{hard}} \)"/> by taking <Latex text="\( \arg\max \)"/> across the classes, i.e. a true one-hot vector. Then the forward pass uses <Latex text="\( y_{\text{hard}} \)"/> as input to the next layer, but for the backward pass, I manually replace the gradient with the gradient from <Latex text="\( y_{\text{soft}} \)"/>. In code, this is often achieved by adding and subtracting <Latex text="\( y_{\text{soft}} \)"/> from <Latex text="\( y_{\text{hard}} \)"/> inside a <Highlight>stop-gradient</Highlight> operation.  
+
+### comparisons to alternative gradient estimators (reinforce, rebar, relax)
+
+If I do not use a continuous relaxation, I might resort to <Highlight>REINFORCE</Highlight> (Williams, 1992), which treats the discrete sample as a random node in the computation graph and uses the log-derivative trick <Latex text="\( \nabla_\theta E_{z \sim p_\theta} [f(z)] = E_{z \sim p_\theta} [f(z) \nabla_\theta \log p_\theta(z)] \)"/>. But REINFORCE can suffer from high variance, so it's common to incorporate <Highlight>baselines</Highlight> to reduce variance.  
+
+<Highlight>REBAR</Highlight> (Tucker and gang, ICLR 2017) and <Highlight>RELAX</Highlight> (Grathwohl and gang, ICLR 2018) combine a continuous relaxation with a control variate technique to reduce variance further. These methods can provide unbiased (or low-bias) gradient estimates that have lower variance than straightforward REINFORCE. However, they are also more complex to implement, requiring additional neural networks to approximate baseline functions.  
+
+Overall, the Gumbel-softmax approach is conceptually simpler to implement. It does introduce a small bias, because the sample is no longer strictly discrete, but in practice, it can work well and scale to large problems more straightforwardly.  
+
+## categorical vae example
+
+### model overview and latent variable structure
+
+Let's consider an example of a <Highlight>Variational Autoencoder</Highlight> with one or more <Highlight>categorical latent variables</Highlight>. For simplicity, imagine I have a single latent variable <Latex text="\( z \)"/> with <Latex text="\( K \)"/> categories. The generative process is:  
+
+- Sample <Latex text="\( z \in \{1, \ldots, K\} \)"/> from some prior <Latex text="\( p(z) \)"/>.
+- Generate observation <Latex text="\( x \)"/> from a conditional distribution <Latex text="\( p_\theta(x|z) \)"/> (e.g., a neural network that outputs parameters of a Bernoulli or Gaussian distribution over <Latex text="\( x \)"/>, given a one-hot encoding of <Latex text="\( z \)"/>).  
+
+In a normal continuous VAE, <Latex text="\( z \)"/> might be a vector from a Gaussian. Here, it's a single categorical variable. The goal is to learn <Latex text="\( p_\theta(x|z) \)"/> and also an approximate posterior <Latex text="\( q_\phi(z|x) \)"/>.  
+
+### gumbel-softmax sampling within the encoder
+
+In the encoder, I produce logits <Latex text="\( \alpha(x) = (\alpha_1, \ldots, \alpha_K) \)"/>, from which I define <Latex text="\( \pi_i = \exp(\alpha_i) / \sum_{j=1}^K \exp(\alpha_j) \)"/>. To sample <Latex text="\( z \)"/> in a differentiable manner, I do:  
+1. <Latex text="\( G_i \sim \text{Gumbel}(0,1) \)"/>  
+2. <Latex text="\( y_i = \frac{\exp((\log \pi_i + G_i)/\tau)}{\sum_{j=1}^K \exp((\log \pi_j + G_j)/\tau)} \)"/>  
+
+The vector <Latex text="\( y = (y_1, \ldots, y_K) \)"/> is a relaxed discrete sample. Then the decoder takes <Latex text="\( y \)"/> as input, e.g. <Latex text="\( p_\theta(x|z = y) \)"/>.  
+
+### kl divergence and reconstruction loss
+
+The training objective for a VAE is the <Highlight>Evidence Lower BOund (ELBO)</Highlight>:
+
+<Latex text="\[
+\mathcal{L}(\theta, \phi) = E_{q_\phi(z|x)}[\log p_\theta(x|z)] - D_\text{KL}(q_\phi(z|x) \| p(z)).
+\]"/>  
+
+When <Latex text="\( z \)"/> is discrete, <Latex text="\( q_\phi(z|x) \)"/> is a categorical distribution. If the prior <Latex text="\( p(z) \)"/> is uniform, <Latex text="\( D_\text{KL}(q_\phi(z|x) \| p(z)) \)"/> has a closed-form expression:
+
+<Latex text="\( D_\text{KL}(q_\phi(z|x) \| p(z)) = \sum_{i=1}^K \pi_i \log \bigl(\pi_i \cdot K\bigr). \)"/>  
+
+But note, I never directly sample <Latex text="\( z \)"/> from the discrete distribution. Instead, I sample the continuous relaxation <Latex text="\( y \)"/>. The reparameterization with Gumbel-softmax is used for the expectation term <Latex text="\( E_{q_\phi(z|x)}[\log p_\theta(x|z)] \)"/>. The KL term is computed in closed form using the distribution <Latex text="\( \pi \)"/>.  
+
+### code walk-through and implementation details
+
+Below is a simplified code snippet illustrating how to implement a categorical VAE with Gumbel-softmax in Python (PyTorch-like pseudocode). The relevant steps are in the encoder, where I produce logits and sample them with the reparameterization trick.  
+
+<Code text={`
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+class GumbelSoftmaxVAE(nn.Module):
+    def __init__(self, input_dim, hidden_dim, latent_k, temp_init=1.0):
+        super().__init__()
+        self.latent_k = latent_k
+        self.temp = temp_init
+        
+        # Encoder
+        self.encoder_fc = nn.Linear(input_dim, hidden_dim)
+        self.encoder_logits = nn.Linear(hidden_dim, latent_k)
+        
+        # Decoder
+        self.decoder_fc = nn.Linear(latent_k, hidden_dim)
+        self.decoder_out = nn.Linear(hidden_dim, input_dim)
+    
+    def encode(self, x):
+        h = F.relu(self.encoder_fc(x))
+        logits = self.encoder_logits(h)
+        # Return logits for the categorical distribution
+        return logits
+    
+    def gumbel_softmax_sample(self, logits, temperature):
+        # sample gumbel
+        gumbel_noise = -torch.log(-torch.log(torch.rand_like(logits) + 1e-20) + 1e-20)
+        # add to logits and apply softmax
+        y = F.softmax((logits + gumbel_noise) / temperature, dim=-1)
+        return y
+    
+    def decode(self, y):
+        h = F.relu(self.decoder_fc(y))
+        out = torch.sigmoid(self.decoder_out(h))
+        return out
+    
+    def forward(self, x):
+        logits = self.encode(x)
+        y = self.gumbel_softmax_sample(logits, self.temp)
+        reconstruction = self.decode(y)
+        return reconstruction, y, logits
+`}/>  
+
+Here, <Latex text="\( \texttt{gumbel\_softmax\_sample} \)"/> implements the Gumbel-softmax reparameterization. The temperature <Latex text="\( \texttt{self.temp} \)"/> can be annealed over epochs by doing something like:  
+
+<Code text={`
+# Suppose we have an update rule
+def update_temperature(model, epoch, start_temp=1.0, end_temp=0.1, total_epochs=100):
+    # Simple linear or exponential scheduling
+    # For example, exponential
+    ratio = min(float(epoch) / total_epochs, 1.0)
+    new_temp = start_temp * (end_temp / start_temp) ** ratio
+    model.temp = new_temp
+`}/>  
+
+### practical considerations and tuning the temperature
+
+In practice, selecting a starting temperature in <Latex text="\( [1, 2] \)"/> and gradually decaying to <Latex text="\( 0.5 \)"/> or <Latex text="\( 0.1 \)"/> can be a good starting point. If the temperature becomes too low too fast, training can destabilize or get stuck. If it remains too high, the latent variables never become discrete, and the model might not leverage the categorical structure.  
+
+Additionally, watch out for <Highlight>gradient magnitudes</Highlight>. With extremely small <Latex text="\( \tau \)"/>, the softmax can saturate, leading to vanishing or exploding gradients. Some frameworks also provide built-in Gumbel-softmax or <Highlight>straight-through</Highlight> functionalities that can handle these details.  
+
+### evaluation metrics for generative quality and latent utilization
+
+Once trained, we can evaluate the generative quality by sampling from the learned model:  
+1. Sample <Latex text="\( z \sim \text{Cat}(p(z)) \)"/> (or from the approximate posterior if evaluating reconstruction).  
+2. Pass the corresponding one-hot or relaxed vector to the decoder.  
+
+We can measure how well the model reconstructs test data (reconstruction error), how well the latent classes are used (e.g., how many categories remain near zero probability in the prior or encoder distribution), and if the learned categories are semantically meaningful.  
+
+## gumbel top-k sampling and subset selection
+
+### from gumbel-argmax to gumbel top-k for subsets
+
+In many tasks, I don't just want to pick one element with <Latex text="\( \arg\max \)"/>; I might want the top-<Latex text="\( k \)"/> elements out of <Latex text="\( K \)"/>. The Gumbel-max trick extends naturally to the top-k scenario:  
+
+1. Sample <Latex text="\( G_i \sim \text{Gumbel}(0,1) \)"/> for <Latex text="\( i = 1, \ldots, K \)"/>.  
+2. Compute <Latex text="\( i_1, \ldots, i_k \)"/> as the indices of the <Latex text="\( k \)"/> largest values of <Latex text="\( \log \pi_i + G_i \)"/>.  
+
+This yields an exact sample of a <Latex text="\( k \)"/>-subset from the distribution that picks subsets with probabilities proportional to the product of their <Latex text="\( \pi \)"/> parameters (under certain assumptions). But for differentiability, I can do an approximate version.  
+
+### sampling without replacement and top-k relaxation
+
+The top-k version of Gumbel sampling can be relaxed in multiple ways. One approach is to produce a <Latex text="\( K \)"/>-dimensional vector whose largest <Latex text="\( k \)"/> entries are significantly higher than the rest, but in a continuous manner. Another approach is iterative, where I pick the largest logit, remove it, and pick the next largest from the remaining subset, etc.  
+
+A well-known approach is to do something akin to:
+
+<Latex text="\[
+y = \softmax\Bigl( ( \log \pi + G ) / \tau \Bigr),
+\]"/>  
+
+then only keep the top-k entries in <Latex text="\( y \)"/> by zeroing out others or applying some continuous threshold. This approach can be more complex, but the principle is to preserve as much differentiability as possible.  
+
+### subsetoperator class: iterative softmax and temperature tuning
+
+A pseudo-implementation might look like this:
+
+<Code text={`
+import torch
+import torch.nn.functional as F
+
+def sample_topk_gumbel(logits, k, temperature):
+    # logits shape: (batch_size, K)
+    # we want to get a "soft" top-k selection
+    gumbel_noise = -torch.log(-torch.log(torch.rand_like(logits) + 1e-20) + 1e-20)
+    y = (logits + gumbel_noise) / temperature
+    # softmax
+    y_soft = F.softmax(y, dim=-1)
+    # potentially we can approximate top-k via a sharper distribution or partial threshold
+    # for demonstration, let's keep it simple
+    # we can also return the sorted indices or partial top-k distribution
+    return y_soft
+`}/>  
+
+One might refine that to an iterative or thresholding approach that ensures exactly <Latex text="\( k \)"/> items are chosen.  
+
+### differentiable subset selection in k-nearest neighbor classification
+
+An interesting application is making the choice of which neighbors are considered in a k-NN model differentiable. For example, I might embed points in a latent space and then pick the top-<Latex text="\( k \)"/> nearest neighbors as a <Highlight>soft subset</Highlight> based on Gumbel-based distances. Then backpropagation can adjust the embedding to improve classification or regression performance.  
+
+If I do a standard k-NN approach, the selection of neighbors is non-differentiable. But if I approximate it with a Gumbel top-k scheme, the entire pipeline can, in principle, be made end-to-end trainable, though this is still an area of active research.  
+
+### empirical distribution checks and histogram comparison
+
+When implementing Gumbel top-k or other discrete sampling approximations, I should always check that the empirical distribution of the selected subsets matches my intended distribution. For instance, if <Latex text="\( \pi \)"/> is uniform, I want each k-subset to be equally likely on average. In practice, numerical issues, finite sample sizes, or extreme temperature values may skew the distribution.  
+
+To verify correctness, one can:  
+
+1. Sample a large number of subsets.  
+2. Estimate the distribution of subsets.  
+3. Compare it against the theoretically expected distribution.  
+
+For moderate <Latex text="\( K \)"/> and <Latex text="\( k \)"/>, a histogram can confirm that the sampling is unbiased or only mildly biased.  
+
+### extensions to resource-constrained subset selection and combinatorial optimization
+
+Beyond picking neighbors, I might have a large set of items from which I need to pick a subset that optimizes some cost function, subject to resource constraints. Traditional combinatorial optimization algorithms are not easily integrated into deep networks, but with Gumbel-based subset sampling, I can incorporate these constraints as a differentiable approximation and optimize end-to-end with gradient-based methods. Research on <Highlight>differentiable subset selection</Highlight> and <Highlight>deep combinatorial optimization</Highlight> is growing rapidly (see Mena and gang, 2018 and Kool and gang, 2019 for example approaches).  
+
+## gumbel-sinkhorn networks for permutations
+
+### doubly stochastic matrices and linear assignment
+
+A <Highlight>permutation matrix</Highlight> is a binary matrix with exactly one "1" in each row and each column, and zeros elsewhere. If I want to sample a permutation <Latex text="\( P \)"/> from some distribution, that is effectively a discrete structure. But I can approximate permutations with <Highlight>doubly stochastic matrices</Highlight>, which have nonnegative entries and each row and column sums to 1.  
+
+The <Highlight>Sinkhorn operator</Highlight> is a function that projects or normalizes any positive matrix into a doubly stochastic matrix via iterative row and column normalization.  
+
+### relaxing permutations with the sinkhorn operator
+
+The <Highlight>Gumbel-Sinkhorn trick</Highlight> (Mena and gang, ICLR 2018) extends the Gumbel-max trick to permutations. Instead of sampling <Latex text="\( \arg\max \)"/> across rows, I inject Gumbel noise into a matrix and then apply the Sinkhorn normalization repeatedly:
+
+<Latex text="\[
+S = \text{Sinkhorn}\Bigl(\frac{Z}{\tau}\Bigr),
+\]"/>  
+
+where <Latex text="\( Z \)"/> is a <Latex text="\( n \times n \)"/> matrix built as <Latex text="\( Z_{ij} = \log \Pi_{ij} + G_{ij} \)"/> (for a distribution <Latex text="\( \Pi \)"/> over permutations). The result <Latex text="\( S \)"/> is close to a permutation matrix but is differentiable with respect to <Latex text="\( Z \)"/>.  
+
+### gumbel-matching vs. gumbel-sinkhorn distributions
+
+The original <Highlight>Gumbel-matching</Highlight> approach picks the single best matching with <Latex text="\( \arg\max \)"/> operations. Gumbel-Sinkhorn relaxes that to produce a <Highlight>doubly stochastic matrix</Highlight>. As <Latex text="\( \tau \rightarrow 0 \)"/>, <Latex text="\( S \)"/> becomes closer to a true permutation matrix. For moderate or high temperatures, <Latex text="\( S \)"/> is a fuzzy or partial assignment.  
+
+### implementation of sinkhorn and the matching function
+
+The <Highlight>Sinkhorn operator</Highlight> can be implemented as:
+
+<Code text={`
+import torch
+
+def sinkhorn(log_alpha, n_iters=10):
+    # log_alpha: (batch_size, n, n)
+    # returns a (batch_size, n, n) doubly stochastic matrix
+    # exponentiate
+    alpha = torch.exp(log_alpha)
+    for _ in range(n_iters):
+        # row normalization
+        alpha = alpha / (torch.sum(alpha, dim=2, keepdim=True) + 1e-9)
+        # column normalization
+        alpha = alpha / (torch.sum(alpha, dim=1, keepdim=True) + 1e-9)
+    return alpha
+`}/>  
+
+Then, if I want to incorporate Gumbel noise, I can do:  
+
+<Code text={`
+def gumbel_sinkhorn_sample(logits, tau, n_iters=10):
+    # logits: (batch_size, n, n)
+    gumbel_noise = -torch.log(-torch.log(torch.rand_like(logits) + 1e-20) + 1e-20)
+    log_alpha = (logits + gumbel_noise) / tau
+    # apply Sinkhorn
+    S = sinkhorn(log_alpha, n_iters=n_iters)
+    return S
+`}/>  
+
+The matrix <Latex text="\( S \)"/> is a relaxed permutation. If I want to get a hard permutation, I can apply an <Latex text="\( \arg\max \)"/> row/column selection on <Latex text="\( S \)"/>.  
+
+### sampling permutation matrices in a differentiable way
+
+Since <Latex text="\( S \)"/> is continuous in the forward pass, I can backpropagate through it. As <Latex text="\( \tau \)"/> decreases, <Latex text="\( S \)"/> approaches a permutation matrix, but might cause sharper gradients. One must tune or anneal <Latex text="\( \tau \)"/>.  
+
+### applications to sorting, ranking, and structured prediction tasks
+
+The Gumbel-Sinkhorn approach has been used in tasks like:  
+
+- **Neural sorting and ranking**. Approximating the top positions in a ranking as a continuous operation.  
+- **Linear assignment problems**. If I want to solve a matching problem in a deep learning context, the Gumbel-Sinkhorn approach can embed that optimization in the network.  
+- **Structured prediction**. Many structured outputs (like permutations of tokens) can be handled with differentiable approximation methods.  
+
+## learning latent permutations in practice
+
+### sinkhorn-based convolutional networks
+
+Imagine a scenario where I have a convolutional neural network that's supposed to reorder or unscramble an input. For instance, I might take an image, split it into patches, shuffle the patches, and feed that scrambled image into a network that must unscramble it by predicting the correct permutation of patches.  
+
+### the unscrambling mnist digits example
+
+A canonical example is unscrambling an MNIST digit that has been cut into <Latex text="\( n \times n \)"/> patches and permuted randomly. The network attempts to find the correct permutation so that the patches line up to reconstruct the original digit.  
+
+1. **Data**: For each MNIST digit, generate random permutations of the <Latex text="\( n^2 \)"/> patches.  
+2. **Model**: Takes the scrambled patches as input, produces <Latex text="\( \log \Pi \)"/> of shape <Latex text="\( n^2 \times n^2 \)"/>.  
+3. **Apply Gumbel-Sinkhorn**: Yields a doubly stochastic matrix <Latex text="\( S \)"/>.  
+4. **Reconstruct** the unscrambled image using <Latex text="\( S \)"/>.  
+
+### network architecture and training procedure
+
+- **Feature extractor**: A small CNN or MLP that processes each patch or the entire scrambled image.  
+- **Permutation predictor**: Outputs a matrix of shape <Latex text="\( n^2 \times n^2 \)"/> representing the cost/logits for assigning patch <Latex text="\( i \)"/> to location <Latex text="\( j \)"/>.  
+- **Gumbel-Sinkhorn**: Produces the continuous approximation <Latex text="\( S \)"/>.  
+- **Reconstruction loss**: After applying the (relaxed) permutation to the patches, measure the reconstruction error against the original unscrambled image.  
+
+In practice, you might do an MSE or cross-entropy reconstruction loss on the unscrambled image.  
+
+### evaluating permutation accuracy (kendall-tau)
+
+A typical metric for permutations is <Highlight>Kendall-Tau</Highlight>, which measures how many pairwise inversions differ from the ground truth permutation. Alternatively, we can measure the fraction of patches correctly placed.  
+
+During inference, if needed, we can take <Latex text="\( \arg\max \)"/> row-wise or column-wise on <Latex text="\( S \)"/> to obtain a discrete permutation. Then we measure how many patches match their correct positions.  
+
+### sample results and visualization
+
+One might visualize the scrambled images and their unscrambled counterparts to see if the model is truly learning a good ordering. This can be done by generating plots of the input, the predicted unscrambled output, and a difference overlay.  
+
+<Image alt="Example of unscrambled MNIST digits" path="" caption="An illustration of applying Gumbel-Sinkhorn to unscramble image patches." zoom="false" />
+
+## graph sampling and neural relational inference
+
+### overview of graph-based latent variable models
+
+Many systems, from social networks to physical systems, revolve around interactions among entities represented as graphs. In some settings, the graph is not known a priori; we want to learn the connectivity structure. For instance, in <Highlight>Neural Relational Inference</Highlight> (Kipf and gang, ICML 2018), we observe the motions of particles that might be connected by unseen springs, and we want to discover the underlying interaction graph.  
+
+### encoding and decoding graph structures in vaes
+
+One approach is to treat the adjacency matrix <Latex text="\( A \)"/> of the graph as a latent variable. If there are <Latex text="\( n \)"/> nodes, <Latex text="\( A \)"/> is an <Latex text="\( n \times n \)"/> matrix of 0/1 entries. We can place a Bernoulli distribution on each edge, or a categorical distribution if there are multiple edge types.  
+
+We'd then define:
+
+<Latex text="\( p_\theta(\text{observations} | A) \)"/>  
+
+which might be a physics simulation or a message-passing network that uses the adjacency to define interactions. Then the posterior <Latex text="\( q_\phi(A|\text{observations}) \)"/> can be approximated by a neural network. But sampling discrete adjacency leads to the same differentiability issue.  
+
+### using gumbel-softmax for edge sampling
+
+By applying a Gumbel-softmax approach to each pair of nodes, we can produce a <Highlight>continuous relaxation</Highlight> of the adjacency matrix. For an <Latex text="\( n \times n \)"/> adjacency, each entry is a Bernoulli or multi-class variable. Then the Gumbel-softmax reparameterization can be used to generate a smoothed adjacency matrix.  
+
+### learning interaction networks (springs example)
+
+In the <Highlight>springs example</Highlight>, we have <Latex text="\( n \)"/> particles connected by unknown springs. We see their positions over time. The adjacency matrix tells us which pairs of particles are connected. By using the Gumbel-softmax adjacency, the neural network can infer which pairs are connected (or strongly interacting) in a fully differentiable manner. This forms the basis of a <Highlight>Neural Relational Inference</Highlight> VAE-like system.  
+
+Kipf and gang (ICML 2018) show that this approach can learn the correct adjacency in many synthetic physics simulations and also generalize to unseen conditions.  
+
+### visualizing discovered graphs and analyzing results
+
+A valuable step is to visualize the learned adjacency matrix, especially in a small example with a handful of particles. You can compare it to the ground truth adjacency to see if the model picks out the correct structure. Sometimes the model might produce soft adjacency values that reflect partial confidence in certain edges.  
+
+## beyond gumbel: other discrete reparameterization approaches
+
+### binary concrete (continuous bernoulli) distributions for binary latent variables
+
+If the discrete variable is binary (<Latex text="\( 0 \)"/> or <Latex text="\( 1 \)"/>), the <Highlight>binary concrete</Highlight> distribution is a specialized version of Gumbel-softmax for <Latex text="\( K = 2 \)"/>. Another option is <Highlight>sigmoid-based relaxations</Highlight>, which can also work but might have different gradient properties.  
+
+### reinforce-style estimators with variance reduction (baseline, input-dependent, etc.)
+
+<Highlight>REINFORCE</Highlight> is a classic alternative that does not rely on relaxing the distribution. Instead, we compute <Latex text="\( \nabla \log p_\theta(z) \)"/> for discrete <Latex text="\( z \)"/>. It's an unbiased estimator but can have large variance. Adding a baseline or a learned value function can help.  
+
+### relax and rebar: advanced variance-reduced gradient estimators
+
+<Highlight>REBAR</Highlight> (Tucker and gang, ICLR 2017) and <Highlight>RELAX</Highlight> (Grathwohl and gang, ICLR 2018) attempt to combine the best of both worlds: they use the continuous Gumbel-softmax variable as a control variate and an additional function to correct for bias, yielding a gradient estimator with lower variance than pure REINFORCE while still being theoretically grounded.  
+
+### trade-offs in bias vs. variance and model complexity
+
+When choosing among Gumbel-softmax, REINFORCE, RELAX, or other gradient estimators, you weigh:  
+1. **Bias**: Gumbel-softmax introduces a bias since the sample is never truly discrete. But in the limit of <Latex text="\( \tau \to 0 \)"/>, the bias becomes negligible.  
+2. **Variance**: REINFORCE can be high-variance, but sophisticated control variates can reduce it. Gumbel-softmax typically has moderate variance.  
+3. **Implementation complexity**: Gumbel-softmax is straightforward to implement. RELAX or REBAR are more advanced.  
+
+### practical guidelines on choosing an estimator
+
+- **Scale of the problem**: Gumbel-softmax can handle moderate or large-scale discrete problems easily, but might degrade in extremely large combinatorial spaces.  
+- **Exactness vs. efficiency**: If a small bias is acceptable, Gumbel-based relaxations are often simpler. If you need unbiased estimates, consider REINFORCE or REBAR/RELAX with advanced variance-reduction.  
+- **Computational cost**: Some methods require additional neural networks to approximate baselines or local expectations.  
+
+## future directions and conclusion
+
+### summary of key takeaways
+
+Throughout this article, I've dived into how <Highlight>Gumbel-based reparameterization</Highlight> can open the door to end-to-end differentiable training for discrete random variables. The fundamental pipeline is:  
+
+1. Express a discrete draw as <Latex text="\( \log \pi_i + G_i \)"/> with <Latex text="\( G_i \sim \text{Gumbel}(0,1) \)"/>.  
+2. Replace <Latex text="\( \arg\max \)"/> or <Latex text="\( \text{top-k} \)"/> or <Latex text="\( \text{permutation} \)"/> with a <Highlight>continuous relaxation</Highlight> that can be backpropagated through.  
+3. Use temperature <Latex text="\( \tau \)"/> to balance the trade-off between discreteness and smoothness.  
+
+This approach generalizes to:  
+
+- **Categorical variables** (Gumbel-softmax).  
+- **Subsets** (top-k Gumbel).  
+- **Permutations** (Gumbel-Sinkhorn).  
+- **Graphs** (edge sampling with Gumbel-softmax).  
+
+### advanced topics: reinforcement learning, policy gradients, and discrete controls
+
+Discrete sampling arises in reinforcement learning for selecting actions. Although Gumbel-based methods can be used to approximate policy gradients, the standard approach in RL is to use policy gradient estimators or Q-learning-based methods. However, there is ongoing work that merges Gumbel reparameterization with policy optimization to reduce variance or to incorporate discrete structures in more complex environments.  
+
+### potential improvements and research trends
+
+1. **Better temperature schedules**: Learning or adapting the temperature automatically is a hot research direction, so that the model can choose the right level of discreteness.  
+2. **Hybrid methods**: Combining Gumbel-softmax with a baseline network (as in RELAX) might yield lower variance.  
+3. **Structured compositional tasks**: New research addresses hierarchical subsets or permutations, e.g. building trees with Gumbel-based sampling.  
+4. **Larger combinatorial spaces**: Ongoing research explores parallelization and specialized approximations for extremely large discrete sets (like sequences).  
+
+### final remarks and further reading
+
+In sum, sampling in deep learning must often address the question of how to deal with discrete variables in a differentiable way. The Gumbel approach, along with related reparameterization techniques, has become a foundational tool for training discrete latent variable models. While no single solution works best in all scenarios, Gumbel-based methods are widely used due to their relative simplicity, efficiency, and flexibility.  
+
+Those interested in further details may consult:  
+- Jang and gang, "Categorical Reparameterization with Gumbel-Softmax" (ICLR 2017).  
+- Maddison and gang, "The Concrete Distribution" (ICLR 2017).  
+- Mena and gang, "Learning Latent Permutations with Gumbel-Sinkhorn" (ICLR 2018).  
+- Tucker and gang, "REBAR: Low-variance, unbiased gradient estimates for discrete latent variable models" (ICLR 2017).  
+- Grathwohl and gang, "Backpropagation through the void: Optimizing control variates for black-box gradient estimation" (ICLR 2018).  
+
+<Image alt="Generic schematic of Gumbel-based sampling" path="" caption="Illustration of Gumbel noise being added to logits, then passed through a continuous function (like a softmax or sinkhorn normalization)." zoom="false" />
+
+The ability to incorporate discrete structures while still retaining end-to-end trainability unlocks many new directions in generative modeling, combinatorial optimization, and structured prediction. With these methods in hand, you can design neural architectures that tackle discrete decisions at scale without sacrificing the advantages of gradient-based learning.

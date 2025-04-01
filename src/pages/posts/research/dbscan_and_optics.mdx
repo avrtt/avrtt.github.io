@@ -1,0 +1,550 @@
+---
+index: 30
+indexCourse: 37
+indexFavorites:
+title: "DBSCAN & OPTICS"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "DBSCAN & OPTICS"
+courseCategoryName: "Clustering basics"
+desc: "For tricky scenarios"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "20.01.2023"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 1
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/dbscan_and_optics.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/dbscan_and_optics"
+slug: "/research/dbscan_and_optics"
+---
+
+import Tooltip from "../../../components/Tooltip"
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+{/*
+
+[https://www.youtube.com/watch?v=svAtnZ5XjSI&list=PLA0M1Bcd0w8zxDIDOTQHsX68MCDOAJDtj&index=34](https://www.youtube.com/watch?v=svAtnZ5XjSI&list=PLA0M1Bcd0w8zxDIDOTQHsX68MCDOAJDtj&index=34)
+
+Демонстрация работы DBSCAN
+https://www.naftaliharris.com/blog/visualizing-dbscan-clustering/
+
+
+*/}
+
+
+{/*
+
+1. Introduction  
+    Motivation for density-based clustering. Overview of key objectives and learning outcomes.
+2. Fundamentals of density-based clustering  
+    Comparison with other clustering paradigms. Advantages of density-based approaches.
+3. DBSCAN
+    3.1. Neighborhood definition and distance metrics  
+    3.2. Core points, border points, and noise points  
+    3.3. Impact of eps and minPts parameters
+    3.4. Step-by-step outline  
+    3.5. Implementation  
+    3.6. Complexity analysis
+    3.7. Parameter tuning strategies  
+    3.8. Handling high-dimensional data
+	3.9. Limitations and variations of DBSCAN  
+    Choosing optimal parameter values. Handling varying density clusters. Extensions: HDBSCAN and other variants.    
+4. OPTICS  
+    Motivation for OPTICS.
+    4.1. Reachability distance and ordering  
+    4.2. Visual representation (reachability plots)
+    4.3. Step-by-step outline  
+    4.4. Implementation
+    4.5. Complexity analysis
+5. Comparing DBSCAN and OPTICS  
+    Similarities and differences in approach. Handling of varying densities. Scalability considerations.
+
+*/}
+
+
+Density-based clustering is an influential paradigm in unsupervised learning that has been widely utilized across various fields, such as computer vision, geospatial analysis, anomaly detection, astronomy, and more. Unlike partition-based clustering algorithms (e.g., <Latex text="\(k\)"/>-means) or hierarchical methods, density-based approaches focus on identifying "dense" regions in the data space, treating regions of lower density as separators between clusters or as potential outliers. When properly applied, density-based clustering can seamlessly uncover clusters of arbitrary shapes — including complex, nonconvex patterns — while simultaneously handling noise in a naturally integrated fashion.
+
+This article focuses on two canonical density-based clustering techniques: <Highlight>DBSCAN</Highlight> (Density-Based Spatial Clustering of Applications with Noise) and <Highlight>OPTICS</Highlight> (Ordering Points to Identify the Clustering Structure). Both have become core components in advanced machine learning pipelines and continue to be subjects of active research. By the end of this reading, you should be able to:
+
+- Comprehend the primary motivations behind density-based clustering;
+- Differentiate between density-based clustering and other mainstream clustering approaches such as <Latex text="\(k\)"/>-means, hierarchical clustering, and Gaussian mixture models;
+- Understand the internal mechanisms of DBSCAN, including the critical concepts of core points, border points, noise points, and the essential parameters (<Latex text="\(\epsilon\)"/> and <Latex text="\( \text{minPts} \)"/>);
+- Learn how to implement DBSCAN step by step, interpret its results, and tune it for specific datasets;
+- Understand the design principles behind OPTICS, how it is an extension of DBSCAN that gracefully handles varying-density clusters, and how to interpret its famous reachability plot;
+- Compare DBSCAN and OPTICS in terms of algorithmic complexity, parameter sensitivity, and performance in the presence of varying density regions.
+
+Throughout this article, we aim to clarify even the more intricate or subtle aspects of these algorithms while preserving a relatively informal tone. Whenever beneficial, we will highlight relevant theoretical and practical points. We will also refer to seminal and modern research papers (e.g., Ester and gang, KDD 1996; Ankerst and gang, SIGMOD 1999; Campello and gang, JMLR 2013; Schubert and gang, KDD 2017; Schubert and gang, ICML 2021), elaborating on how density-based methods have evolved and remain at the forefront of clustering research. We will provide Python code snippets demonstrating fundamental implementations, as well as placeholders for illustrative figures where appropriate.
+
+Moreover, for those exploring advanced data science topics and the specialized intricacies of density-based techniques, we will offer references to variations and extensions, including <Highlight>HDBSCAN</Highlight> (Hierarchical DBSCAN) and extended versions of OPTICS, as well as practical tips for managing large-scale and high-dimensional datasets. For instance, many real-world use cases require special data structures (e.g., KD-trees, ball trees, or approximate nearest neighbor indices) to attain acceptable performance, particularly as data sizes surpass millions of points.
+
+We will begin by surveying the fundamentals of density-based clustering, explaining how it contrasts with other paradigms and clarifying its unique features and use cases. We will then dive into DBSCAN in depth, covering everything from the theoretical underpinnings to typical parameter-tuning heuristics. Next, we shift focus to OPTICS, highlighting its conceptual similarities with DBSCAN but also its ability to handle variable densities more gracefully. Finally, we will compare DBSCAN and OPTICS with an eye toward how they scale, how they treat outliers, and how they respond to different types of data distributions.
+
+Let's jump right in.
+
+<br/>
+
+## 2. Fundamentals of density-based clustering
+
+Density-based clustering stems from the idea that clusters are contiguous regions of high density separated by contiguous regions of low density. In other words, if you can draw a continuous path from one point to another that stays within dense regions, then those points should reside in the same cluster. This general notion stands in stark contrast to many other clustering paradigms:
+
+1. **Partition-based clustering** (e.g., <Latex text="\(k\)"/>-means) relies on iterative updates of cluster centers, encouraging spherical or convex cluster shapes around centroids. It requires specifying the number of clusters <Latex text="\(k\)"/> in advance and often breaks down for nonconvex clusters, intricate cluster shapes, or heavy outlier presence.
+2. **Hierarchical clustering** begins by either recursively merging or splitting clusters. Although it can reveal multilevel data structure, it also suffers from inefficiencies when <Latex text="\(N\)"/> (the number of data points) is very large; moreover, it does not have a straightforward "noise" concept unless specifically adapted.
+3. **Model-based methods** (e.g., Gaussian mixture models) assume that data originates from known parametric distributions and typically aim to estimate the parameters via maximum likelihood or Bayesian inference. Density-based methods, in contrast, do not require distributional assumptions about the data.
+
+Common to all density-based methods is the notion of a <Highlight>local density threshold</Highlight>. Points that surpass this threshold are grouped together, forming dense regions. These dense regions correspond to clusters, and any points that do not belong to any such dense region are treated as potential noise or outliers. This approach is extremely effective when:
+
+- The cluster shapes are complex (e.g., curved manifolds, nested structures, varying densities);
+- You wish to automatically detect outliers without a separate anomaly detection step;
+- The data may contain large swathes of empty or sparse regions that partition the clusters naturally.
+
+Due to these strengths, density-based algorithms remain popular in a wide range of tasks, such as geospatial data clustering (identifying dense populated areas vs. unpopulated or low-density regions), image segmentation, and web user behavior grouping (where some users might form highly dense usage patterns, while others remain more "distant").
+
+Still, density-based methods have their own caveats. Standard DBSCAN, for instance, uses fixed global parameters <Latex text="\(\epsilon\)"/> (neighborhood radius) and <Latex text="\( \text{minPts} \)"/> (minimum number of points to form a dense region). If the data exhibits clusters with widely differing densities, a single global threshold may not suffice, leading to under- or over-segmentation. This is precisely where algorithms like <Highlight>OPTICS</Highlight> and <Highlight>HDBSCAN</Highlight> come in.
+
+<br/>
+
+## 3. DBSCAN
+
+DBSCAN (<Highlight>D</Highlight>ensity-<Highlight>B</Highlight>ased <Highlight>S</Highlight>patial <Highlight>C</Highlight>lustering of <Highlight>A</Highlight>pplications with <Highlight>N</Highlight>oise) was introduced in a seminal paper by Ester, Kriegel, Sander, and Xu at KDD 1996. It remains one of the most widely implemented clustering methods in many libraries, including scikit-learn (<Tooltip text="scikit-learn's DBSCAN is in sklearn.cluster.DBSCAN"/>), R's dbscan package, and others. 
+
+Conceptually, DBSCAN divides the data points into the following categories:
+
+- **Core points**: Points that lie in particularly dense neighborhoods.
+- **Border points**: Points that are not necessarily dense themselves but are within the neighborhood of a core point.
+- **Noise (outlier) points**: Points that do not belong to any cluster.
+
+Once these categories are established, DBSCAN groups core points and border points connected via dense regions into the same cluster, and labels other points as noise. 
+
+### 3.1. Neighborhood definition and distance metrics
+
+DBSCAN first requires defining a neighborhood of a point <Latex text="\( x \)"/>. Typically, an <Latex text="\(\epsilon\)"/>-neighborhood for point <Latex text="\( x \)"/> is the set of points within a radius <Latex text="\(\epsilon\)"/> (with respect to some distance function <Latex text="\(\rho\)"/>) of <Latex text="\( x \)"/>:
+<Latex text="\[
+E_\epsilon(x) = \{ y \mid \rho(x, y) \leq \epsilon \}.
+\]"/>
+
+- <Latex text="\(\rho(\cdot,\cdot)\)"/> can be any metric, such as Euclidean, Manhattan, Minkowski, or even specialized domain-specific metrics (e.g., edit distance for text). 
+- In high-dimensional scenarios, using Euclidean distance might be less informative (due to the <Highlight>curse of dimensionality</Highlight>), so alternative metrics or dimension-reduction pre-processing is sometimes applied. 
+
+Depending on the data type, DBSCAN's performance hinges on efficient retrieval of the points in <Latex text="\( E_\epsilon(x) \)"/>. Data structures like KD-trees and ball trees often help accelerate neighborhood queries from <Latex text="\(O(N)\)"/> per query to about <Latex text="\(O(\log N)\)"/> per query in many practical situations.
+
+<br/>
+
+### 3.2. Core points, border points, and noise points
+
+Two hyperparameters are key to DBSCAN:
+
+1. <Latex text="\(\epsilon\)"/> (<Latex text="\( \varepsilon \)"/>) – the radius of the neighborhood;
+2. <Latex text="\( \text{minPts} \)"/> – the minimum number of neighbors (including the point itself) required to declare a point as <Highlight>core</Highlight>.
+
+**Core point**: A point <Latex text="\( x \)"/> is called a core point if:
+<Latex text="\[
+|E_\epsilon(x)| \geq \text{minPts}.
+\]"/>
+Here, <Latex text="\(\lvert E_\epsilon(x) \rvert\)"/> denotes the number of points in the <Latex text="\(\epsilon\)"/>-neighborhood of <Latex text="\( x \)"/>.
+
+**Border point**: A point <Latex text="\( x \)"/> is labeled as border if <Latex text="\(\lvert E_\epsilon(x) \rvert < \text{minPts}\)"/> but it is within the <Latex text="\(\epsilon\)"/>-neighborhood of a core point. Intuitively, border points are not individually dense enough to start their own clusters but can be "reached" from a dense region.
+
+**Noise point**: A point is labeled as noise (outlier) if it is neither a core point nor a border point. It does not satisfy the density criteria, nor does it belong to the neighborhood of a core point.
+
+<br/>
+
+### 3.3. Impact of eps and minPts parameters
+
+The parameters <Latex text="\(\epsilon\)"/> and <Latex text="\( \text{minPts} \)"/> collectively define how strict or lenient DBSCAN is in forming clusters:
+
+- If <Latex text="\(\epsilon\)"/> is very large and <Latex text="\( \text{minPts} \)"/> is very small, the algorithm tends to lump many points into a single cluster (large neighborhood radius, small density requirement). This risks merging distinct clusters and drastically reducing the count of outliers.
+- If <Latex text="\(\epsilon\)"/> is very small or <Latex text="\( \text{minPts} \)"/> is very large, DBSCAN might find many points to be outliers (strict density criteria), potentially fracturing what should be single clusters or labeling almost everything as noise.
+
+The sweet spot often depends on domain knowledge: if the typical pairwise distance between data points is known or if an expected minimal cluster density can be estimated, these guidelines help in choosing <Latex text="\(\epsilon\)"/> and <Latex text="\( \text{minPts} \)"/>. Many practitioners rely on plotting the distance to the <Latex text="\(k\)"/>-th nearest neighbor (e.g., the "k-distance graph") and looking for an "elbow," a common heuristic also recommended by authors such as Ertoz and gang (SDM 2003) and others.
+
+<br/>
+
+### 3.4. Step-by-step outline
+
+DBSCAN proceeds in the following conceptual steps (pseudocode adapted from Ester and gang, KDD 1996):
+
+1. **Initialization**: Mark all points as "unvisited."
+2. **Iteration**: For each unvisited point <Latex text="\(P\)"/>:
+   1. Mark <Latex text="\(P\)"/> as visited.
+   2. Retrieve the <Latex text="\(\epsilon\)"/>-neighborhood of <Latex text="\(P\)"/>. If <Latex text="\(\lvert E_\epsilon(P) \rvert < \text{minPts}\)"/>, mark <Latex text="\(P\)"/> as noise. (This label might later be overridden if <Latex text="\(P\)"/> is found to be within the neighborhood of a core point.)
+   3. If <Latex text="\(P\)"/> is a core point (<Latex text="\(\lvert E_\epsilon(P) \rvert \geq \text{minPts}\)"/>):
+      1. Create a new cluster and add <Latex text="\(P\)"/> to this cluster.
+      2. Expand the cluster by recursively adding all points in <Latex text="\(P\)"/>'s neighborhood that are either unvisited core points or border points. Continue until no new points can be added.
+3. **Result**: All points are now either assigned to a cluster or designated as noise.
+
+An important detail is how border points are handled if they are within the <Latex text="\(\epsilon\)"/>-neighborhoods of multiple distinct clusters. By design, DBSCAN will assign a border point to whichever cluster first expands into it. Because border points cannot "expand" a cluster further (they are not core points themselves), it is quite rare for this assignment to cause large-scale changes in the final clusters. As a result, many implementations of DBSCAN accept this small level of nondeterminism for performance efficiency.
+
+<br/>
+
+### 3.5. Implementation
+
+Below is a short, illustrative Python-like code snippet. While not fully optimized for production, it conveys the core logic of DBSCAN in a straightforward manner. Please note the usage of <Highlight>regionQuery</Highlight> to find all neighbors within distance <Latex text="\(\epsilon\)"/>. In practice, you would accelerate queries with specialized spatial data structures.
+
+```
+<Code text={`
+import numpy as np
+
+def dbscan(points, eps, minPts, distance_func):
+    """
+    A naive DBSCAN implementation.
+    
+    :param points: List (or array) of points in the dataset.
+    :param eps: Neighborhood radius.
+    :param minPts: Minimum number of points to form a dense region.
+    :param distance_func: Function that computes distance between two points.
+    :return: A list 'labels' where each index corresponds to the cluster label
+             for each point (or -1 for noise).
+    """
+    NOISE = -1
+    n = len(points)
+    labels = [None] * n   # Cluster labels initialized to None
+    current_cluster = 0
+    visited = [False] * n
+    
+    def region_query(idx):
+        neighbors = []
+        for i in range(n):
+            if distance_func(points[idx], points[i]) <= eps:
+                neighbors.append(i)
+        return neighbors
+    
+    for idx in range(n):
+        if not visited[idx]:
+            visited[idx] = True
+            neighbors = region_query(idx)
+            if len(neighbors) < minPts:
+                labels[idx] = NOISE
+            else:
+                current_cluster += 1
+                # Expand cluster
+                labels[idx] = current_cluster
+                queue = list(neighbors)
+                while queue:
+                    neighbor_idx = queue.pop()
+                    if not visited[neighbor_idx]:
+                        visited[neighbor_idx] = True
+                        nbrs = region_query(neighbor_idx)
+                        if len(nbrs) >= minPts:
+                            queue.extend(nbrs)
+                    if labels[neighbor_idx] is None:
+                        labels[neighbor_idx] = current_cluster
+                        
+    return labels
+`}/>
+```
+
+**Notes**:
+
+- The above code uses an <Latex text="\(O(N^2)\)"/> approach to finding neighbors, which is suitable only for relatively small datasets. For larger datasets, it is critical to use an index structure (e.g., `sklearn.neighbors.BallTree` or `sklearn.neighbors.KDTree`) or approximate nearest neighbor libraries like <Highlight>FAISS</Highlight> (Facebook AI Similarity Search) or <Highlight>Annoy</Highlight> to reduce the query time.
+- The "visited" array is crucial to avoid processing the same point multiple times.
+
+<br/>
+
+### 3.6. Complexity analysis
+
+The best-case time complexity of DBSCAN can be <Latex text="\(O(N \log N)\)"/> if efficient data structures (e.g., KD-tree) are used for neighbor searches, and if the data distribution does not degenerate into worst-case scenarios. In practice, many common data distributions allow DBSCAN to achieve sub-quadratic performance. However, the worst case can reach <Latex text="\(O(N^2)\)"/>, especially if:
+
+1. The dimensionality is high, making spatial trees less effective.
+2. The dataset is large but not organized in ways that typical tree-based indices can exploit (e.g., points are all near each other or in artificially structured distributions).
+3. A naive "double loop" approach is used without any indexing.
+
+Memory usage can also vary. Some naive implementations store a complete distance matrix of size <Latex text="\(O(N^2)\)"/>. More optimized implementations compute neighborhoods on-the-fly. Libraries like scikit-learn allow you to pass a parameter specifying the indexing structure or to supply a precomputed distance matrix.  
+
+<br/>
+
+### 3.7. Parameter tuning strategies
+
+Choosing good values for <Latex text="\(\epsilon\)"/> and <Latex text="\( \text{minPts} \)"/> is often dataset-specific. However, a common heuristic is:
+
+1. Select a small integer for <Latex text="\( \text{minPts} \)"/> (often between 3 and 10) based on your expectation of how dense a valid cluster must be. 
+2. For each point, compute the distance to its <Latex text="\( \text{minPts} \)"/>-th nearest neighbor.  
+3. Plot these distances in ascending order. Look for a "knee" or "elbow" in the plot — that distance is a good starting point for <Latex text="\(\epsilon\)"/>.
+
+This approach was popularized by **Ester and gang (KDD 1996)** and has been widely adapted. That said, in real-world scenarios, the "elbow" might not always be obvious, and domain knowledge might be needed for a final check.
+
+<br/>
+
+### 3.8. Handling high-dimensional data
+
+In higher dimensions, Euclidean distance can become less meaningful, and all points may appear roughly equidistant from each other (<Highlight>curse of dimensionality</Highlight>). If you want to apply DBSCAN in high dimensions:
+
+1. Consider dimension reduction techniques such as **PCA**, **t-SNE**, or **UMAP** to project data into a lower-dimensional space where density-based methods are more discriminative.
+2. Use specialized metrics that align better with your domain. For example, in text analysis, you might employ cosine similarity instead of Euclidean distance.
+3. Evaluate advanced indexing approaches or rely on approximate neighbor search to keep computations feasible, especially when <Latex text="\(N\)"/> is large (in the range of hundreds of thousands or millions).
+
+<br/>
+
+### 3.9. Limitations and variations of DBSCAN
+
+**Limitations**:
+
+- DBSCAN uses a global radius <Latex text="\(\epsilon\)"/>. If the dataset contains clusters of very different densities, a single <Latex text="\(\epsilon\)"/> may cause either over-merging or fragmentation of clusters.
+- In borderline scenarios where clusters are close to each other, DBSCAN might incorrectly connect them if an <Latex text="\(\epsilon\)"/>-"bridge" of sufficient density exists.
+- Parameter selection can be non-trivial, especially in high-dimensional data or data with large density variations.
+
+**Variations**:
+
+- **HDBSCAN** (Hierarchical DBSCAN): This extension (Campello and gang, JMLR 2013; McInnes and gang, 2017) addresses the issue of varying density by building a hierarchy of clusters. Then, a stability measure is used to extract a flat clustering from the hierarchical tree. HDBSCAN typically requires fewer parameters and can produce better results across a range of densities.
+- **Varying <Latex text="\(\epsilon\)"/>-DBSCAN**: Some proposals adapt <Latex text="\(\epsilon\)"/> regionally, but this introduces more complexity and additional parameters or heuristics.
+- **Parallel DBSCAN**: On very large datasets, parallel or distributed implementations exist (e.g., using Spark), but care must be taken when merging subclusters found in different data partitions.
+
+<br/>
+
+## 4. OPTICS
+
+<Highlight>OPTICS</Highlight> (Ordering Points to Identify the Clustering Structure) was introduced by Ankerst, Breunig, Kriegel, and Sander (SIGMOD 1999) as a next-generation solution to some of DBSCAN's most pressing limitations. While OPTICS uses the same overall notion of density-based clustering, it addresses the issue of finding a single global <Latex text="\(\epsilon\)"/> by producing an ordering of points that captures the cluster structure at multiple density levels. This characteristic makes OPTICS especially valuable for datasets with clusters of significantly varying densities.
+
+### 4.1. Reachability distance and ordering
+
+The core concept in OPTICS is the <Highlight>reachability distance</Highlight>. For two points <Latex text="\( p \)"/> and <Latex text="\( o \)"/>, given parameters <Latex text="\(\epsilon\)"/> and <Latex text="\( \text{minPts} \)"/>, we define:
+
+- **Core distance** of point <Latex text="\( o \)"/>: the distance <Latex text="\( \text{CoreDist}_{\text{minPts}}(o) \)"/> which is the smallest radius such that the neighborhood of <Latex text="\( o \)"/> contains at least <Latex text="\( \text{minPts} \)"/> points.
+  
+  <Latex text="\[
+  \text{CoreDist}_{\text{minPts}}(o) = 
+  \begin{cases}
+  \text{distance to the minPts-th nearest neighbor of } o, & \text{if } |E_\epsilon(o)| \ge \text{minPts},\\
+  \text{undefined}, & \text{otherwise}.
+  \end{cases}
+  \]"/>
+
+- **Reachability distance** of <Latex text="\( p \)"/> from <Latex text="\( o \)"/>: 
+  <Latex text="\[
+  \text{ReachDist}(p, o) = 
+  \max\bigl(\text{CoreDist}_{\text{minPts}}(o), \rho(o, p)\bigr).
+  \]"/>
+  
+  If <Latex text="\( o \)"/> is not a core point, the reachability distance is undefined.
+
+OPTICS produces an <Highlight>ordering</Highlight> of the points by expanding out from the "most central" points (small core distances) to the outer edges. Along the way, each point <Latex text="\( p \)"/> receives a reachability distance that indicates how close <Latex text="\( p \)"/> is to the nearest cluster structure discovered so far. For points in dense regions, the reachability distance remains small. For points in sparser regions, the reachability distance grows.
+
+### 4.2. Visual representation (reachability plots)
+
+Once OPTICS is run, we get a list of points in the order in which they were expanded, each with an associated reachability distance. A <Highlight>reachability plot</Highlight> is then produced by plotting these distances along the x-axis in the order the points were processed. Peaks in this plot correspond to gaps between clusters or transitions from dense to sparser regions, while valleys correspond to the "dense cores" of clusters. By slicing this reachability plot at certain thresholds, one can mimic the effect of DBSCAN at various densities without re-running the algorithm multiple times.
+
+```
+<Image alt="Illustration of a generic reachability plot" path="" caption="A hypothetical reachability plot demonstrating major peaks that separate clusters." zoom="false" />
+```
+
+In such a plot, you often see "valleys" of low reachability distances that correspond to well-defined clusters. The "peaks" indicate large jumps in distance, suggesting that the algorithm is transitioning from one cluster to another (or from a cluster to a region of noise).
+
+### 4.3. Step-by-step outline
+
+Here is a concise conceptual outline of OPTICS:
+
+1. **Initialization**: For each point in the dataset, mark the point as "unprocessed."
+2. **Main loop**:
+   - Select an unprocessed point <Latex text="\( p \)"/> with the smallest "reachability distance" discovered so far (or <Latex text="\( \infty \)"/> if no reachability distance is assigned yet).
+   - Compute <Latex text="\( \text{CoreDist}_{\text{minPts}}(p) \)"/>. If <Latex text="\( p \)"/> is not a core point, it will receive no further expansions but still gets added to the ordering.
+   - If <Latex text="\( p \)"/> is a core point, retrieve its neighbors, update their reachability distances if needed, and place them into a priority queue, which is then used to pick the next point with the smallest reachability distance.
+   - Mark <Latex text="\( p \)"/> as processed and append <Latex text="\( p \)"/> to the final ordering list.
+3. **Output**: The final ordering of points, alongside each point's reachability distance and core distance. From these, you can create a reachability plot or derive a cluster structure by choosing appropriate thresholds.
+
+### 4.4. Implementation
+
+An illustrative Python snippet that demonstrates how one might implement OPTICS in a naive manner follows. Note that this omits many low-level optimizations (e.g., using a priority queue or specialized data structure for neighbor queries):
+
+```
+<Code text={`
+import numpy as np
+import heapq
+
+def optics(points, eps, minPts, distance_func):
+    """
+    A naive OPTICS implementation for demonstration.
+    
+    :param points: list of points
+    :param eps: maximum radius for considering neighbors
+    :param minPts: minimum number of points for core distance
+    :param distance_func: function to compute distance
+    :return: ordering (list of point indices in the order they are processed),
+             reachability (list of distances for each point in the final order),
+             core_distances (list of core distances for each point in the final order).
+    """
+    n = len(points)
+    # Each point's reachability distance, initialized to infinity
+    reach_dist = [np.inf] * n
+    # Each point's core distance, also init to infinity
+    core_dist = [np.inf] * n
+    processed = [False] * n
+    # The final ordering of point indices
+    ordering = []
+    
+    neighbors_cache = [[] for _ in range(n)]
+    
+    # Precompute neighbors up to eps
+    for i in range(n):
+        for j in range(n):
+            if i != j:
+                d = distance_func(points[i], points[j])
+                if d <= eps:
+                    neighbors_cache[i].append(j)
+    
+    # Function to update the reachability distances of neighbors
+    def update(neighbors_idx, center_idx):
+        c_dist = core_dist[center_idx]
+        for nb in neighbors_idx:
+            if not processed[nb]:
+                new_reach_dist = max(c_dist, distance_func(points[center_idx], points[nb]))
+                if new_reach_dist < reach_dist[nb]:
+                    reach_dist[nb] = new_reach_dist
+                    # Use a heap to keep track of the next best point
+                    heapq.heappush(seeds, (new_reach_dist, nb))
+    
+    for i in range(n):
+        # If this point is already processed, skip
+        if processed[i]:
+            continue
+        
+        # Retrieve neighbors
+        neigh = neighbors_cache[i]
+        # Mark as processed
+        processed[i] = True
+        ordering.append(i)
+        
+        # Compute core distance
+        if len(neigh) >= minPts:
+            dists = [distance_func(points[i], points[nbr]) for nbr in neigh]
+            dists.sort()
+            core_dist[i] = dists[minPts - 1]
+        
+        # If it's a core point, place its neighbors in seeds
+        if core_dist[i] != np.inf:
+            seeds = []
+            update(neigh, i)
+            # Expand the cluster
+            while seeds:
+                _, next_idx = heapq.heappop(seeds)
+                if not processed[next_idx]:
+                    processed[next_idx] = True
+                    ordering.append(next_idx)
+                    nbr_next = neighbors_cache[next_idx]
+                    if len(nbr_next) >= minPts:
+                        dists_next = [distance_func(points[next_idx], points[nbr]) 
+                                      for nbr in nbr_next]
+                        dists_next.sort()
+                        core_dist[next_idx] = dists_next[minPts - 1]
+                        update(nbr_next, next_idx)
+    
+    return ordering, reach_dist, core_dist
+`}/>
+```
+
+**Key Observations**:
+
+- We keep track of each point's best-known reachability distance in a priority queue (`seeds`).
+- For each point chosen to be expanded, if it's a core point, we update the neighbors' reachability distances accordingly.
+- Unlike DBSCAN, we do not immediately assign cluster labels. Instead, we produce an "augmented ordering" from which a cluster hierarchy can be inferred.
+
+### 4.5. Complexity analysis
+
+Similar to DBSCAN, the complexity of OPTICS strongly depends on the efficiency of neighbor searches. A naive approach can lead to <Latex text="\(O(N^2)\)"/> computations, but using appropriate spatial indices (e.g., KD-trees) often yields average-case complexities near <Latex text="\(O(N \log N)\)"/>. 
+
+One major advantage of OPTICS is that once you have the ordering, you can retrieve clusterings of different densities without re-running the entire algorithm multiple times. You can think of it as performing "DBSCAN at multiple <Latex text="\(\epsilon\)"/> values" in one pass, which can be quite valuable for data exploration.
+
+<br/>
+
+## 5. Comparing DBSCAN and OPTICS
+
+Although OPTICS was designed as a next-step improvement over DBSCAN, both algorithms share many foundational ideas. Below is a summary of how they overlap and where they differ.
+
+1. **Core principle**: Both rely on the concept of <Latex text="\(\epsilon\)"/>-neighborhood and <Latex text="\( \text{minPts} \)"/> to define dense regions.
+2. **Noise/outlier handling**: Both algorithms treat points that cannot belong to any dense region as outliers. However, the notion of outliers in OPTICS can be more fluid depending on the chosen reachability threshold.
+3. **Fixed vs. variable density**:
+   - DBSCAN uses a global <Latex text="\(\epsilon\)"/>, making it effective when cluster densities are relatively uniform or when domain knowledge suggests a natural scale for the data.
+   - OPTICS effectively processes multiple <Latex text="\(\epsilon\)"/> thresholds by building an ordering, enabling it to separate clusters with varying densities more easily.
+4. **Parameter selection**: 
+   - DBSCAN requires <Latex text="\(\epsilon\)"/> and <Latex text="\( \text{minPts} \)"/> upfront. Proper tuning can be challenging if you do not have good heuristics or domain knowledge.
+   - OPTICS also needs <Latex text="\(\epsilon\)"/> and <Latex text="\( \text{minPts} \)"/>, but the primary difference is that you can choose a <Highlight>post-processing</Highlight> threshold on the reachability plot to define clusters. Even if you pick an <Latex text="\(\epsilon\)"/> that is "too large," you can still unravel cluster structure at various density levels using the reachability plot.
+5. **Scalability**:
+   - Both can achieve near <Latex text="\(O(N \log N)\)"/> average complexity for spatial queries with efficient indexing. 
+   - Both can degrade to <Latex text="\(O(N^2)\)"/> in the worst case, especially if the dimensionality is high or if the data distribution is pathological.
+   - DBSCAN might be simpler to parallelize in certain distributed environments, although parallel OPTICS is possible. Merging partial results can be more involved in either method, requiring specialized distributed data structures.
+
+In practice, DBSCAN is often the first go-to solution if you suspect clusters are well-separated in terms of density. If you find yourself dealing with strongly varying densities across the dataset, or you want to explore the data for multiple potential clusterings, or you'd like to easily "zoom in" or "zoom out" on different density levels, OPTICS (or HDBSCAN) becomes the more suitable approach.  
+
+```
+<Image alt="High-level DBSCAN vs. OPTICS illustration" path="" caption="Conceptual illustration: DBSCAN uses a single global eps, whereas OPTICS allows discovering structures at multiple density thresholds." zoom="false" />
+```
+
+---
+
+Where DBSCAN stands out:
+
+- Simpler conceptually, typically faster on moderate-scale data if the chosen <Latex text="\(\epsilon\)"/> is good.
+- Easily implemented in many mainstream libraries. 
+- Straightforward outlier detection (noise points are simply those unassigned to clusters).
+
+Where OPTICS stands out:
+
+- Flexible handling of varying density clusters without re-running the algorithm for different <Latex text="\(\epsilon\)"/> values.
+- Intuitive reachability plot for cluster exploration.
+- Great synergy with domain-exploratory tasks (e.g., analyzing satellite images with multiple density levels).
+
+---
+
+Throughout modern machine learning and data analytics pipelines, both DBSCAN and OPTICS have proven invaluable for tasks ranging from major geospatial analyses (e.g., identifying "hotspots" in crime or real estate data) to advanced image recognition (segmenting images based on pixel intensity distributions), from analyzing traffic patterns (identifying dense routes vs. underused streets) to generating high-level features for anomaly or novelty detection frameworks. Their popularity stems from their interpretability (clusters = contiguous high-density regions) and the built-in outlier detection, which in many domains obviates the need for a separate outlier detection step.
+
+In research circles, the impetus to refine DBSCAN-like methods remains high. For instance, at NeurIPS and ICML, advanced variants continue to appear that incorporate adaptive distance metrics, incorporate embeddings from deep neural networks, or integrate efficient GPU-based indexing. Meanwhile, domain-specific modifications handle specialized data types (geographic coordinates, time series, graph structures, etc.). The well-established success of DBSCAN and OPTICS ensures they remain bedrock algorithms in density-based clustering.
+
+<br/>
+
+---
+
+Should you wish to dive deeper into practical experiments, open-source libraries like scikit-learn (Python), <Tooltip text="R library 'dbscan' from Michael Hahsler"/> (R), ELKI (Java-based data mining framework) offer well-tested implementations of DBSCAN and OPTICS. Many can directly produce reachability plots or cluster labels with minimal overhead.
+
+If your dataset exhibits a wide range of densities or you want to truly explore different density levels without re-running an algorithm multiple times, <Highlight>OPTICS</Highlight> and <Highlight>HDBSCAN</Highlight> are strong candidates. If you already have a specific target density scale in mind, <Highlight>DBSCAN</Highlight> typically suffices and remains one of the easiest approaches to implement and interpret.
+
+Regardless of the approach you choose, density-based clustering demands a robust distance measure, the right data representation, and (in higher dimensions) prudent dimensionality-reduction or specialized indexing techniques. When used wisely, DBSCAN and OPTICS are not only academically fascinating but also highly practical for real-world clustering challenges.
+
+<br/>
+
+---
+
+*Final Note*: As is often the case in clustering tasks, an essential part of the process is iterative experimentation, domain expertise, and thorough evaluation. Because unsupervised learning has no ground-truth labels, you typically rely on internal metrics (like Silhouette score, or DB index) or external domain knowledge to decide if the discovered clusters make sense. DBSCAN and OPTICS empower you with flexible tools for unraveling complex data distributions and discovering hidden structures, making them indispensable for advanced data scientists and machine learning practitioners alike.
+
+<br/>
+
+---
+
+*References and Further Reading* (selected):
+- M. Ester, H.-P. Kriegel, J. Sander, X. Xu. "A Density-Based Algorithm for Discovering Clusters in Large Spatial Databases with Noise." *KDD* (1996).
+- M. Ankerst, M. Breunig, H.-P. Kriegel, J. Sander. "OPTICS: Ordering Points to Identify the Clustering Structure." *SIGMOD* (1999).
+- R. J. G. B. Campello, D. Moulavi, J. Sander. "Density-Based Clustering Based on Hierarchical Density Estimates." *PAKDD*, and extended: *JMLR* (2013).
+- L. McInnes, J. Healy, S. Astels. "hdbscan: Hierarchical density based clustering." *J. Open Source Software* (2017).
+- E. Schubert and gang "DBSCAN Revisited, Revisited: Why and How You Should (Still) Use DBSCAN." *ACM TODS* (2017).
+- D. Schubert and gang "Fast Parallel DBSCAN." *ICML* (2021).
+
+These references include the original DBSCAN and OPTICS papers, improvements, and broader frameworks that continue to evolve and refine these classic algorithms.

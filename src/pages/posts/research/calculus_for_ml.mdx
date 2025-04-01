@@ -1,0 +1,404 @@
+---
+index: 13
+indexCourse: 11
+indexFavorites:
+title: "Calculus for ML/DS"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Calculus for machine learning and data science"
+courseCategoryName: "Mathematics"
+desc: "Vietnam flashbacks"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "07.09.2022"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 1
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: false
+schemaType: "Article"
+mainTag: "Mathematics"
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/calculus_for_machine_learning.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/calculus_for_ml"
+slug: "/research/calculus_for_ml"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+1. Introduction  
+   Relevance of calculus in machine learning and data science. Brief overview of core calculus concepts used in ML/DS. Examples of calculus-driven methods (e.g., backpropagation, continuous optimization).
+2. Quick refreshment of non-related fundamentals of calculus
+   Refresher of single-variable calculus (with an eye forward ML/DS applications). Differentiation, chain rule, applications of derivatives (finding extrama, Taylor series, convex and non-convex functions, etc.), limits and continuity, integrals (integral as the area under a curve, indefinite and definite integrals, line and surface integrals, probability densities, expectations, etc.). Connection to linear algebra and statistics (already covered, but mention dependency).
+3. Multivariate calculus  
+   Fundamentals. Gradients and partial derivatives. Concept of holding other variables constant. Relation to gradient vectors in ML (e.g., computing partials for each parameter in a model). Gradient as the generalization of derivative to higher dimensions. Directional derivatives (interpretation in optimization: steepest ascent/descent). Jacobians and Hessians. Chain rule in multiple dimensions. Etc.
+4. Vector and matrix calculus  
+   Vector fields, divergence, and curl. Physical intuition (e.g., fluid flow) and analogies in ML (e.g., multi-output transformations). Vectorization of operations for performance gains (why rewriting sums and loops in matrix form is crucial in large-scale ML). Matrix and tensor derivatives (Jacobians, Hessians in matrix form). Practical examples in deep learning, connections to gradient-based algorithms. Tensor calculus: deeper neural networks often involve multidimensional parameters. Common matrix calculus identities: handy “cheat-sheet” for quickly deriving gradient expressions.
+5. Relation of calculus to probability and expectation
+   Cross-entropy, likelihood functions, and their derivatives. KL divergence and other information-theoretic measures. Calculus in Bayesian inference and variational methods. Link to marginalization (integrating out variables). Role of integrals in probability density functions (PDF) and cumulative distribution functions (CDF). Derivatives of Likelihood and Log-Likelihood. Maximum likelihood estimation (MLE): setting derivatives to zero to find parameter estimates. Expectation, Moments, and Gradients. Expected value as an integral (or sum) and how derivatives appear in moment calculations. Moment generating functions and their derivatives. Bayesian Inference and Variational Methods. Evidence Lower BOund (ELBO): derivative-based optimization in variational inference. Calculus behind posterior updates (though the core might lie in probability, the optimization steps rely on gradients). We will cover later: gradient-based Markov Chain Monte Carlo (e.g., Hamiltonian Monte Carlo).
+6. Automatic differentiantion and implementation
+   Forward-Mode vs. Reverse-Mode Differentiation. Conceptual differences: how each propagates derivatives. Suitability in ML (reverse-mode often more efficient for scalar outputs like loss functions). Symbolic vs. Numeric Differentiation. Trade-offs, typical use cases (symbolic for closed-form, numeric for black-box, AD for code-based). Issues with numerical stability, precision, and performance. Implementation in ML Frameworks. Real-world examples: PyTorch's `autograd`, TensorFlow's computational graph, JAX's functional approach. Automatic differentiation for higher-order derivatives. Graph optimization strategies (e.g., pruning subgraphs, common subexpression elimination). 
+7. Further topics, specialized applications, optional stuff
+   Differential Geometry in ML. Manifold learning, Riemannian gradients. Natural gradient methods (Fisher Information Matrix). Partial Differential Equations (PDEs) in ML. PDE-based approaches for image processing. Automatic Mixed Precision and Gradient Scaling. Dealing with limited floating-point precision. Techniques that preserve gradient fidelity in large-scale training. Stochastic Calculus and Continuous-Time Models. Brownian motion, Itô integrals. How noise is modeled in continuous-time processes. Stochastic Differential Equations (SDEs). Approximate solutions (Euler-Maruyama, Milstein methods).
+  
+
+*The first stage of denial and anger.*
+
+Mathematics for ML: глава 5
+[https://mml-book.github.io/book/mml-book.pdf](https://mml-book.github.io/book/mml-book.pdf)
+[https://www.youtube.com/watch?v=AdV5w8CY3pw](https://www.youtube.com/watch?v=AdV5w8CY3pw)
+[https://www.youtube.com/watch?v=e73033jZTCI](https://www.youtube.com/watch?v=e73033jZTCI)
+
+*/}
+
+
+Calculus lies at the heart of modern data science and machine learning, offering a rigorous toolkit for understanding how models change in response to their parameters. Whenever you hear about gradient descent, backpropagation, or continuous optimization methods, you are seeing calculus in action. In deep learning, for instance, the entire training process hinges on taking derivatives of the loss function with respect to millions (or billions) of parameters. Even in simpler machine learning methods, we often rely on partial derivatives to update parameters, evaluate sensitivities, or find maxima and minima. Consequently, a solid understanding of calculus provides both intuitive and formal perspectives on why certain ML methods work.
+
+Throughout this article, we explore the fundamentals of single-variable and multivariate calculus, connect them to probabilities and expectations, then conclude with a deep dive into how automatic differentiation is implemented in popular libraries. We also discuss more advanced topics like differential geometry and partial differential equations, highlighting their significance in specialized areas of machine learning. Although we will dive into some sophisticated details, the goal is to make these ideas accessible, focusing on clarity, concrete examples, and a guided tour of key concepts.
+
+## quick refreshment of non-related fundamentals of calculus
+
+Many data scientists learn single-variable calculus early in their studies, but it's easy to lose sight of its direct connections to machine learning applications. Below is a refresher on fundamental topics:
+
+### limits and continuity
+
+A limit <Latex text="\( \lim_{x \to a} f(x) \)"/> asks, "What value does <Latex text="\( f(x) \)"/> approach as <Latex text="\( x \)"/> approaches <Latex text="\( a \)"/>?" Continuity means a function has no abrupt jumps or holes. Formally, a function <Latex text="\( f \)"/> is continuous at <Latex text="\( x = a \)"/> if its limit at <Latex text="\( a \)"/> exists and equals <Latex text="\( f(a) \)"/>. Continuity and limits underlie the definitions of derivatives and integrals; in machine learning, we often implicitly assume continuity for the functions we differentiate (like loss functions) to avoid pathological behavior.
+
+### differentiation and the chain rule
+
+A derivative measures how fast a function changes when its input changes. If we have a single-variable function <Latex text="\( f(x) \)"/>, its derivative is:
+
+<Latex text="\[
+f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}.
+\]"/>
+
+In machine learning, derivatives help us pinpoint the direction and rate of steepest change of a model's error function. Minimizing that error is the driving force in gradient descent.
+
+The chain rule is crucial: if <Latex text="\( y = f(g(x)) \)"/>, the derivative <Latex text="\( \frac{dy}{dx} \)"/> is given by <Latex text="\( f'(g(x)) \cdot g'(x) \)"/>. This simple principle generalizes elegantly to many-layered functions — an idea at the core of backpropagation. If you have a neural network with multiple layers, you apply the chain rule iteratively from the final output layer all the way back to the initial inputs. 
+
+### finding extrema
+
+Machine learning often revolves around finding extrema of objective functions — minima when training a model, maxima in certain other scenarios (e.g., maximum likelihood). To find a local minimum or maximum of a single-variable function, you set its derivative to zero:
+
+<Latex text="\[
+f'(x) = 0 \quad \text{(candidate for a minimum or maximum).}
+\]"/>
+
+From there, you check second derivatives or other methods to confirm whether it's indeed a minimum, maximum, or saddle point.
+
+### taylor series
+
+A Taylor expansion approximates functions near a point <Latex text="\( a \)"/>. For a function <Latex text="\( f \)"/> with sufficient derivatives, its Taylor series around <Latex text="\( a \)"/> is:
+
+<Latex text="\[
+f(x) \approx f(a) + f'(a)(x-a) + \frac{f''(a)}{2!}(x-a)^2 + \dots
+\]"/>
+
+In machine learning, Taylor expansions help analyze local behavior of loss functions or approximate them near optimum points. This local approximation viewpoint can offer insights into optimization landscapes, convexity, and numerical stability.
+
+### convex and non-convex functions
+
+A function is convex if, informally, it "curves upward" everywhere. In single-variable terms, a convex function has a nonnegative second derivative (<Latex text="\( f''(x) \ge 0 \)"/>). Convexity in higher dimensions is more nuanced, but the single-variable idea generalizes. Convex optimization problems (e.g., linear regression with L2 regularization) are easier to handle; we can guarantee global minima. Non-convex problems (e.g., deep neural networks, certain clustering algorithms) may have multiple local minima or saddle points, making them trickier to optimize.
+
+### integration
+
+The integral of a function <Latex text="\( f(x) \)"/> from <Latex text="\( a \)"/> to <Latex text="\( b \)"/> is:
+
+<Latex text="\[
+\int_a^b f(x)\, dx.
+\]"/>
+
+In data science, integrals appear whenever we compute area under curves (e.g., analyzing probability densities or cumulative distributions). Integrals help define the expectation of random variables, which is a fundamental operation in statistical analysis. For instance, the expected value of a continuous random variable <Latex text="\( X \)"/> with density <Latex text="\( p(x) \)"/> is:
+
+<Latex text="\[
+E[X] = \int_{-\infty}^{\infty} x\, p(x)\, dx.
+\]"/>
+
+Line integrals, surface integrals, or multidimensional integrals arise in more advanced applications such as computing probabilities over multiple variables or dealing with certain PDE-based image processing techniques. Even though linear algebra and probability theory are covered in separate parts of this course, it's valuable to see how integrals tie in with gradient methods and expectations in ML.
+
+## multivariate calculus
+
+In real-world machine learning scenarios, we almost always deal with functions of multiple variables — think of a neural network's parameters <Latex text="\( \theta = (\theta_1, \theta_2, \dots, \theta_n) \)"/>. The shift from single-variable calculus to multivariate calculus is a leap into higher dimensions, but it follows familiar principles.
+
+### partial derivatives
+
+A partial derivative with respect to <Latex text="\( \theta_j \)"/> means differentiating the function while keeping all other variables constant. For a function <Latex text="\( F(\theta_1, \theta_2, \dots, \theta_n) \)"/>:
+
+<Latex text="\[
+\frac{\partial F}{\partial \theta_j} = \lim_{h \to 0} \frac{F(\theta_1, \dots, \theta_j + h, \dots, \theta_n) - F(\theta_1, \dots, \theta_j, \dots, \theta_n)}{h}.
+\]"/>
+
+Each partial derivative measures how sensitive the function is to changes in a specific direction. Summing these partial derivatives into a vector yields the gradient.
+
+### gradient vectors
+
+The gradient <Latex text="\( \nabla F \)"/> is the vector of partial derivatives:
+
+<Latex text="\[
+\nabla F(\theta) = 
+\begin{pmatrix}
+\frac{\partial F}{\partial \theta_1} \\
+\frac{\partial F}{\partial \theta_2} \\
+\vdots \\
+\frac{\partial F}{\partial \theta_n}
+\end{pmatrix}.
+\]"/>
+
+Geometrically, the gradient points in the direction of steepest ascent of the function. In machine learning, especially in gradient-based optimization, we are interested in the negative gradient, which indicates the steepest descent direction. 
+
+<Image alt="Illustration of gradient vector" path="" caption="Visualizing how the gradient points in the direction of steepest ascent" zoom="false" />
+
+### directional derivatives
+
+A directional derivative measures the instantaneous rate of change of <Latex text="\( F \)"/> in a specific direction. Formally, if <Latex text="\( \mathbf{v} \)"/> is a unit vector in the direction we care about, then
+
+<Latex text="\[
+D_{\mathbf{v}} F(\theta) = \lim_{h \to 0} \frac{F(\theta + h\mathbf{v}) - F(\theta)}{h}.
+\]"/>
+
+You can show that <Latex text="\( D_{\mathbf{v}} F(\theta) = \nabla F(\theta) \cdot \mathbf{v} \)"/> (the dot product). A key insight is that the gradient is the direction that maximizes the directional derivative — hence why gradient-based algorithms move in that direction to climb or descend the function as needed.
+
+### chain rule in multiple dimensions
+
+Consider a multivariate function <Latex text="\( F(g(x), h(x)) \)"/>. You can generalize the chain rule:
+
+<Latex text="\[
+\frac{dF}{dx} = 
+\frac{\partial F}{\partial u} \frac{du}{dx} + 
+\frac{\partial F}{\partial v} \frac{dv}{dx},
+\]"/>
+
+where <Latex text="\( u = g(x) \)"/> and <Latex text="\( v = h(x) \)"/>. For a deep neural network, this extends to many layers, each with multiple inputs and outputs. We apply the chain rule systematically to compute all partial derivatives, step by step. This systematic approach is exactly what frameworks like PyTorch or TensorFlow do automatically when they perform backpropagation.
+
+### jacobians and hessians
+
+The Jacobian is a matrix containing all first-order partial derivatives of a vector-valued function. If we have <Latex text="\( \mathbf{F}(\theta) = (F_1(\theta), \dots, F_m(\theta)) \)"/>, then the Jacobian is an <Latex text="\( m \times n \)"/> matrix:
+
+<Latex text="\[
+J(\theta) =
+\begin{pmatrix}
+\frac{\partial F_1}{\partial \theta_1} & \cdots & \frac{\partial F_1}{\partial \theta_n} \\
+\vdots & \ddots & \vdots \\
+\frac{\partial F_m}{\partial \theta_1} & \cdots & \frac{\partial F_m}{\partial \theta_n}
+\end{pmatrix}.
+\]"/>
+
+When <Latex text="\( m = 1 \)"/> (i.e., a scalar output, such as a loss function), the Jacobian reduces to the row vector of partial derivatives — just another way to talk about the gradient.
+
+The Hessian is the second-order partial derivative matrix of a scalar function. If <Latex text="\( F: \mathbb{R}^n \to \mathbb{R} \)"/>, its Hessian <Latex text="\( H(\theta) \)"/> is an <Latex text="\( n \times n \)"/> matrix:
+
+<Latex text="\[
+H(\theta) =
+\begin{pmatrix}
+\frac{\partial^2 F}{\partial \theta_1^2} & \cdots & \frac{\partial^2 F}{\partial \theta_1 \partial \theta_n} \\
+\vdots & \ddots & \vdots \\
+\frac{\partial^2 F}{\partial \theta_n \partial \theta_1} & \cdots & \frac{\partial^2 F}{\partial \theta_n^2}
+\end{pmatrix}.
+\]"/>
+
+The Hessian helps us analyze curvature and is integral to second-order optimization methods (e.g., Newton's method). Although exact Hessians can be expensive to compute in high dimensions, approximations (like those in L-BFGS) see use in advanced ML scenarios.
+
+## vector and matrix calculus
+
+As machine learning models scale, vector and matrix notation becomes essential for representing large parameter spaces and data sets efficiently. Here are some highlights of vector and matrix calculus:
+
+### vector fields, divergence, and curl
+
+- **Vector fields**: A function <Latex text="\( \mathbf{F}(x, y, z) \)"/> that outputs a vector for each point in space (e.g., the velocity field of fluid flow). In ML contexts, we may see vector fields for multi-output transformations or embeddings.
+- **Divergence** <Latex text="\( \nabla \cdot \mathbf{F} \)"/> measures how much a vector field expands or contracts at a point (like "outflow" in fluid mechanics). 
+- **Curl** <Latex text="\( \nabla \times \mathbf{F} \)"/> measures the twisting or rotational component of the field.
+
+These operations come up in more specialized ML topics (e.g., certain PDE-based methods for images, or physically-inspired approaches to data transformations).
+
+### vectorization of operations
+
+In practice, data scientists vectorize computations to leverage optimized linear algebra routines (e.g., BLAS, CUDA kernels). Rather than computing element-wise operations with loops, we express them as matrix multiplications, vector additions, and so forth. This speeds up training by orders of magnitude, especially for large-scale models. Frameworks like NumPy, PyTorch, and TensorFlow handle these vectorized operations under the hood.
+
+### matrix and tensor derivatives
+
+A typical example in deep learning is computing <Latex text="\( \frac{\partial \mathbf{y}}{\partial W} \)"/> where <Latex text="\( \mathbf{y} = W \cdot \mathbf{x} \)"/>. Knowing matrix calculus shortcuts drastically reduces the complexity of deriving these expressions by hand. Common identities you might see:
+
+- <Latex text="\( \frac{\partial (W \mathbf{x})}{\partial W} = \mathbf{x}^T \)"/> (with appropriate dimension ordering).
+- <Latex text="\( \frac{\partial (\mathbf{x}^T W \mathbf{y})}{\partial W} = \mathbf{x} \mathbf{y}^T \)"/>.
+
+In more advanced networks, parameters are structured as tensors, and the same rules generalize. Automatic differentiation frameworks also rely heavily on well-optimized matrix calculus routines.
+
+<Image alt="Matrix calculus concept diagram" path="" caption="Representing gradients in matrix/tensor form allows for efficient computation" zoom="false" />
+
+### a small cheat-sheet example
+
+- **Derivative of a scalar w.r.t a vector**: Yields a row vector (gradient).
+- **Derivative of a vector w.r.t a scalar**: Yields a vector.
+- **Derivative of a vector w.r.t a vector**: Yields a Jacobian matrix.
+
+When dealing with neural networks, each parameter can be seen as an element in a large vector of weights <Latex text="\( \theta \)"/>. The network outputs might be a scalar (e.g., a loss) or a vector (e.g., multi-class predictions), so you decide whether to form gradients or Jacobians accordingly.
+
+## relation of calculus to probability and expectation
+
+Calculus and probability interweave closely in machine learning, especially in areas like maximum likelihood estimation, Bayesian inference, and information theory.
+
+### cross-entropy, likelihoods, and derivatives
+
+Cross-entropy is a primary loss function in classification tasks:
+
+<Latex text="\[
+H(p, q) = -\sum_{x} p(x) \log q(x).
+\]"/>
+
+When we differentiate cross-entropy with respect to the parameters of <Latex text="\( q \)"/>, we get updates that push <Latex text="\( q \)"/> to match <Latex text="\( p \)"/>. In practice, <Latex text="\( q \)"/> is a model's predicted probability distribution (often parameterized by a neural network). This approach ties directly into the notion of maximum likelihood. Suppose you have a likelihood function <Latex text="\( L(\theta) \)"/>; you often take the log-likelihood <Latex text="\( \ell(\theta) = \log L(\theta) \)"/> and find the maximum by solving:
+
+<Latex text="\( \nabla \ell(\theta) = 0 \)"/>.
+
+### integrals in probability densities and cdfs
+
+The probability density function (PDF) of a continuous variable must integrate to 1 over its domain. Likewise, the cumulative distribution function (CDF) is the integral of the PDF. Whenever you see expectations, moments, or marginal probabilities, you are performing integrals:
+
+<Latex text="\[
+\int p(x)\, dx = 1,
+\quad
+F_X(a) = \int_{-\infty}^a p(x)\, dx.
+\]"/>
+
+Moments — like mean, variance, skewness — are specific integrals of the density with different powers of the variable. 
+
+### derivatives of likelihood and log-likelihood
+
+For a parameterized model with density <Latex text="\( p(x|\theta) \)"/> over data <Latex text="\( x \)"/>:
+
+<Latex text="\[
+L(\theta) = \prod_{i=1}^N p(x_i | \theta),
+\quad
+\ell(\theta) = \sum_{i=1}^N \log p(x_i | \theta).
+\]"/>
+
+To find the maximum likelihood estimate, you take the derivative of <Latex text="\( \ell(\theta) \)"/> w.r.t. <Latex text="\(\theta\)"/> and set it to zero. In practice, we might do this via gradient-based iterative methods rather than solving analytically (especially for complex models).
+
+### expectation, moments, and gradients
+
+The expectation of a function <Latex text="\( g(x) \)"/> under distribution <Latex text="\( p \)"/> is:
+
+<Latex text="\[
+E_p[g(x)] = \int g(x) p(x)\, dx.
+\]"/>
+
+Sometimes we differentiate these integrals w.r.t. parameters inside <Latex text="\( g \)"/> or <Latex text="\( p \)"/>. This is key in methods like the "score function" estimator (used in policy gradients or reinforcement learning) and reparameterization tricks (used in variational autoencoders).
+
+### bayesian inference and variational methods
+
+Bayesian inference often boils down to computing a posterior distribution:
+
+<Latex text="\[
+p(\theta | x) \propto p(x | \theta)\, p(\theta).
+\]"/>
+
+Because these posteriors can be intractable, we resort to variational approaches that approximate the posterior with a more tractable distribution <Latex text="\( q(\theta) \)"/>. We define an objective called the Evidence Lower BOund (ELBO) and optimize it via gradient methods. The derivatives of the ELBO w.r.t. the variational parameters are computed — again employing calculus:
+
+<Latex text="\[
+\mathrm{ELBO}(q) = E_{q(\theta)}[\log p(x, \theta)] - E_{q(\theta)}[\log q(\theta)].
+\]"/>
+
+We then take <Latex text="\( \nabla \mathrm{ELBO}(q) \)"/> to update <Latex text="\( q(\theta) \)"/>. In advanced methods like Hamiltonian Monte Carlo (Neal, 2011), we also use gradient information of the posterior to draw efficient samples.
+
+## automatic differentiation and implementation
+
+For large-scale models, computing all the necessary partial derivatives by hand is impractical. Automatic differentiation (AD) frameworks let us specify a model in code, then obtain accurate derivatives automatically.
+
+### forward-mode vs. reverse-mode differentiation
+
+- **Forward-mode AD**: Propagates derivatives from inputs forward to outputs. Good for functions with many inputs and few outputs.  
+- **Reverse-mode AD**: Propagates from outputs backward to inputs. Perfect when you have fewer outputs (e.g., a single scalar loss) but many inputs (model parameters). Hence, reverse-mode AD is standard in machine learning libraries.
+
+### symbolic vs. numeric differentiation
+
+- **Symbolic differentiation**: Tools like Sympy parse an expression symbolically and differentiate it exactly. This is useful for small, closed-form expressions, but can be slow or unwieldy for large, dynamic computational graphs.  
+- **Numeric differentiation**: Uses finite differences to approximate the derivative. It's straightforward but can suffer from numerical instability and requires multiple function evaluations.  
+- **Automatic differentiation (AD)**: Executes the program and compiles a graph of operations, applying the chain rule meticulously. This approach yields high accuracy with moderate overhead and is the backbone of modern ML frameworks.
+
+### code example: computing derivatives in python
+
+Below is a short example using Python's `sympy` for symbolic differentiation. Although symbolic differentiation is not how deep learning frameworks typically run, it demonstrates the principle:
+
+<Code text={`
+import sympy as sp
+
+# Define a symbolic variable
+x = sp.Symbol('x', real=True)
+
+# Define a function
+f = x**3 + 2*x - 5
+
+# Compute its derivative
+df = sp.diff(f, x)
+
+print("f(x) =", f)
+print("df/dx =", df)
+`}/>
+
+You would see <Latex text="\( 3x^2 + 2 \)"/> as the output for the derivative. In a framework like PyTorch, you'd define a computational graph for a function and call `.backward()` on a final scalar, which uses reverse-mode AD to compute all needed gradients.
+
+### implementation in ml frameworks
+
+- **PyTorch's autograd**: Wraps tensors in a structure that records operations. When you call `.backward()`, it traverses that recorded graph in reverse to compute gradients.  
+- **TensorFlow's computational graph**: Builds a static or dynamic graph of ops, then uses reverse-mode AD.  
+- **JAX's functional approach**: Stages transformations as pure functions and relies on composable derivatives like `grad`, `vmap`, or `jit`.  
+
+All these frameworks implement graph optimizations: they prune subgraphs not needed for computing the final gradient, merge common operations, and more, improving speed and memory usage.
+
+## further topics, specialized applications, optional stuff
+
+We end with a brief look at advanced ideas that connect calculus to specialized domains in machine learning.
+
+### differential geometry in ml
+
+In many advanced methods, parameters live on manifolds — curved spaces that require Riemannian geometry to handle derivatives properly (Amari, 1998). For example, the natural gradient method uses the Fisher Information Matrix to perform gradient descent in a more "geometry-aware" way. This approach can lead to faster convergence for certain models, notably in Bayesian parameter estimation and large-scale logistic regression.
+
+### partial differential equations (pdes) in ml
+
+Partial differential equations appear in image denoising or in physically-based models. For instance, the Rudin-Osher-Fatemi model (Rudin and gang, 1992) uses PDEs for total variation-based image denoising. In ML, PDE-based approaches can incorporate domain knowledge or physically consistent constraints. They also show up in advanced generative modeling or neural PDE solvers for simulating complex phenomena.
+
+### automatic mixed precision and gradient scaling
+
+With the explosion of GPU-based training, we often train with half-precision (float16) or bfloat16 to speed up computations. This sometimes introduces numerical issues (e.g., gradients becoming too small to represent). Techniques like gradient scaling or mixed-precision training compensate by scaling loss and gradient values to remain within valid ranges, then scaling them back at the appropriate stage.
+
+### stochastic calculus and continuous-time models
+
+Some areas of ML, particularly those that involve finance or advanced time-series modeling, bring in stochastic calculus. Here, random noise is introduced in continuous-time processes:
+
+- **Brownian motion**: A continuous-time stochastic process often used for modeling.  
+- **Itô integrals** and **stochastic differential equations (SDEs)**: Extend the idea of ordinary derivatives to handle random, time-dependent terms.  
+- **Euler-Maruyama, Milstein methods**: Numerical approximations for SDEs.
+
+These methods are cutting-edge in certain reinforcement learning scenarios, or in continuous-time models that unify PDEs and dynamics under uncertainty.
+
+------
+
+Whether you are performing simple linear regression or diving into advanced neural network optimization, the foundations of calculus illuminate the underlying mechanics of how model parameters are updated. This grounding in single-variable and multivariate derivatives, integrals, and matrix calculus paves the way for deeper exploration of optimization algorithms, Bayesian inference, and beyond. As you progress through this course, keep in mind how calculus permeates nearly every algorithmic strategy in modern data science and machine learning — knowing the "why" behind the math can guide you in building more robust and insightful models.

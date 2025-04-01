@@ -1,0 +1,457 @@
+---
+index: 137
+indexCourse: 12
+indexFavorites:
+title: "Group theory for ML, pt. 1"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Group theory for ML, pt. 1"
+courseCategoryName: "Mathematics"
+desc: "The department of brain fucking"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "11.11.2024"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 3
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: false
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/group_theory_for_machine_learning.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/group_theory_for_ml"
+slug: "/research/group_theory_for_ml"
+---
+
+import Tooltip from "../../../components/Tooltip"
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+- [GDL - Regular Group Convolutions](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Geometric_deep_learning/tutorial1_regular_group_convolutions.html)
+    - [0. Introduction](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Geometric_deep_learning/tutorial1_regular_group_convolutions.html#0.-Introduction)
+    - [1. Group theory](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Geometric_deep_learning/tutorial1_regular_group_convolutions.html#1.-Group-theory)
+    - [2. Group Equivariant Convolutional Networks](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Geometric_deep_learning/tutorial1_regular_group_convolutions.html#2.-Group-Equivariant-Convolutional-Networks)
+    - [3. Experimenting with our implementation](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Geometric_deep_learning/tutorial1_regular_group_convolutions.html#3.-Experimenting-with-our-implementation)
+    - [4. Concluding remarks](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Geometric_deep_learning/tutorial1_regular_group_convolutions.html#4.-Concluding-remarks)
+- [GDL - Steerable CNNs](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Geometric_deep_learning/tutorial2_steerable_cnns.html)
+    - [Prerequisite Knowledge](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Geometric_deep_learning/tutorial2_steerable_cnns.html#Prerequisite-Knowledge)
+    - [1. Representation Theory and Harmonic Analysis of Compact Groups](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Geometric_deep_learning/tutorial2_steerable_cnns.html#1.-Representation-Theory-and-Harmonic-Analysis-of-Compact-Groups)
+    - [2. From Group CNNs to Steerable CNNs](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Geometric_deep_learning/tutorial2_steerable_cnns.html#2.-From-Group-CNNs-to-Steerable-CNNs)
+    - [3. Build and Train Steerable CNNs](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Geometric_deep_learning/tutorial2_steerable_cnns.html#3.-Build-and-Train-Steerable-CNNs)
+    - [Conclusion](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Geometric_deep_learning/tutorial2_steerable_cnns.html#Conclusion)
+
+*/}
+
+
+{/*
+
+1. Introduction  
+   - Motivation for group theory in machine learning  
+     - Why symmetries and transformations are central in modern ML  
+     - Examples of rotation/reflection invariance in image tasks  
+2. Fundamentals of Group Theory  
+   - Basic Definitions  
+     - Sets, operations, and closure  
+     - Identity and inverse elements  
+     - Associativity, the group axioms  
+     - Subgroups and cosets (brief mention for completeness)  
+   - Examples of Groups  
+     - Cyclic groups (e.g., <Latex text="\(C_n\)"/>)  
+       - Rotations by multiples of a fundamental angle  
+     - Dihedral groups (<Latex text="\(D_n\)"/>)  
+       - Rotations + reflections in the plane  
+     - Special orthogonal groups SO(2) / SO(3)  
+       - Continuous rotations in 2D/3D  
+     - Orthogonal group O(2) (including reflections)  
+3. Representation Theory Basics  
+   - What is a Representation?  
+     - Homomorphisms from a group <Latex text="\(G\)"/> to <Latex text="\(GL(V)\)"/>  
+     - Dimension, matrix representations, and change of basis  
+   - Key Types of Representations  
+     - Trivial representation  
+       - Mapping all group elements to the identity  
+     - Regular representation  
+       - Action on functions defined on the group, or on vectors indexed by group elements  
+     - Irreducible representations (irreps)  
+       - Direct sum decomposition; every representation breaks into irreps  
+   - Equivalence of Representations  
+     - Role of change-of-basis matrices  
+     - Isomorphic vs. non-isomorphic irreps  
+4. Group Actions on Functions  
+   - Left-regular action  
+     - Action of <Latex text="\(g \in G\)"/> on a function <Latex text="\(f\)"/> by domain transformation  
+   - Functions as Vectors  
+     - Interpreting <Latex text="\(\mathbb{R}^{|G|}\)"/> for finite groups  
+     - The concept of "group acting by permutation" in finite settings  
+   - Extension to Continuous Groups  
+     - Overview of SO(2), O(2), etc.  
+     - The need for integrals (instead of sums) for infinite groups  
+5. Fourier Theory on Groups (Peter–Weyl Theorem)  
+   - Motivation and Intuition  
+     - Analogy to classical Fourier series but on group manifolds  
+   - Finite Groups  
+     - Discrete sums, orthogonality of irreps  
+     - Inverse and Forward Fourier Transforms over finite <Latex text="\(G\)"/>  
+   - Continuous (Compact) Groups  
+     - Idea of band-limited representations  
+     - Basic introduction to non-commutative harmonic analysis  
+   - Examples  
+     - Parameterizing functions on SO(2) with sines/cosines (Fourier modes)  
+     - Distinction between <Latex text="\(\mathrm{SO}(2)\)"/> and <Latex text="\(\mathrm{O}(2)\)"/>  
+6. Connecting to Machine Learning (Theoretical Preview)  
+   - Symmetries and Data  
+     - Rationale for capturing invariances and equivariances  
+     - Data augmentation vs. group-based model design  
+   - Preview of Equivariance and Invariance  
+     - Definitions: <Latex text="\(\phi(g \cdot x) = g \cdot \phi(x)\)"/> vs. <Latex text="\(\phi(g \cdot x) = \phi(x)\)"/>  
+     - Why group theory provides a unifying view  
+   - Foundations for Part 2  
+     - How representation theory underpins group convolutions  
+     - Intro to the notion of steerability ("steerable filters")  
+7. Summary and Transition  
+   - Key points from group theory for ML  
+   - How these principles lead into group convolutional networks, steerable CNNs, and advanced architectures  
+
+*/}
+
+
+Machine learning has seen tremendous growth over the last decade, in part because researchers have steadily incorporated an ever-expanding set of mathematical tools designed to capture the underlying structures and symmetries present in real-world data. One of the most powerful and elegant among these mathematical tools is <Highlight>group theory</Highlight>. Group theory plays a critical role in modeling the ways that data can be transformed, rotated, reflected, permuted, or otherwise manipulated, while preserving essential structure or meaning. The capacity to handle symmetries effectively is central to many of the leading-edge machine learning architectures — especially in computer vision, robotics, molecular modeling, and other areas where transformations of the data (including rotations, translations, or permutations of elements) need to be taken into account in a mathematically principled way.
+
+### Motivation for group theory in machine learning
+
+Group theory is sometimes seen as an esoteric branch of abstract algebra, but it has deep relevance to machine learning, especially in situations where one might expect or require certain invariances or equivariances of a model's output with respect to transformations of the input data. A typical example is in computer vision, where we want a classification system for images to be robust to certain transformations such as rotations or flips. If a system is trained to detect objects in images, we usually want it to classify an object the same way whether the image is rotated by 90 degrees or mirrored along some axis — unless there is a meaningful semantic distinction introduced by such a transformation (e.g., the difference between left-facing and right-facing text in optical character recognition could matter). The existence of these symmetries often means that we can reduce the effective complexity of a model, or that we can incorporate more knowledge about the data into the architecture of the network itself, thereby improving sample efficiency and generalization.
+
+The reason that group theory lies at the heart of such approaches is that <Tooltip text="a group is a set equipped with an operation that satisfies certain axioms (closure, associativity, identity, inverse)"/>. In simpler terms, a group formalizes the notion of a "transformation set" that can be performed on an object, such that combining transformations in succession is still a valid transformation, there is a notion of doing "nothing" (the identity transformation), and each transformation has a corresponding inverse. This precisely corresponds to how we usually think about transformations like "rotate by 20° then rotate back by —20°", or "flip about a horizontal axis, then flip again about that same axis to recover the original". By modeling the transformations as elements of a group, we can exploit the rich theory of group actions, group representations, and related concepts from representation theory and harmonic analysis. These frameworks unify how transformations behave when applied to data, and how that behavior can be reflected in neural architectures or other machine learning models.
+
+#### Why symmetries and transformations are central in modern ML
+
+In many tasks, especially in vision and signal processing, data has inherent symmetries: an image of a cat remains an image of the same cat when the camera is slightly rotated or moved, a speech signal might be shifted in time without fundamentally changing the content, a 3D protein structure might be rotated in space, and so on. A hallmark of many successful ML architectures is leveraging such domain-specific symmetries:
+
+- <Highlight>Convolutional neural networks (CNNs)</Highlight> inherently incorporate translational symmetry by applying convolution filters across spatial or temporal dimensions.
+- <Highlight>Group-equivariant neural networks (G-CNNs)</Highlight> extend this idea to additional transformations such as rotations and reflections (Cohen and Welling, ICML 2016).
+- <Highlight>Steerable filters</Highlight> (Freeman and Adelson, 1991) let a filter change orientation in a predictable way, which is closely related to group theory since the transformations of orientations can be modeled by certain subgroups of the continuous rotation group.
+
+When the architecture aligns with the transformations that a dataset may undergo, the model can learn more efficiently, require fewer samples, and generalize in a more robust manner. From this perspective, group theory is the natural mathematical language to describe these transformations and to systematically exploit them.
+
+#### Examples of rotation/reflection invariance in image tasks
+
+Computer vision applications often showcase how invariance to rotations or reflections can be vital. In digit classification on the MNIST dataset, a digit rotated by 30° or 90° is still the same digit. If we train a classifier from scratch on every possible rotation, we might need far more training examples, whereas a carefully crafted architecture that encodes rotational symmetry from the outset can generalize to those rotations right away.
+
+Even more complex tasks, like detecting tumors in medical images that might be oriented in arbitrary ways, benefit from the same principle. In such contexts, reflection invariance can also matter (e.g., flipping a scan left-to-right, which might not change the clinical significance of a tumor). These real-world examples underscore why machine learning researchers frequently turn to group theory: it offers a unified theoretical framework to encode the notion of symmetry, invariance, and related properties that can be exploited to reduce complexity and improve performance.
+
+
+## Fundamentals of group theory
+
+To properly appreciate how group theory helps in ML contexts, it is helpful to have a thorough grounding in the basic concepts. Because many advanced and specialized results (like group representations and group convolutions) hinge on definitions of groups, subgroups, and group actions, I want to outline the core elements that define group theory and highlight the specific forms of groups commonly used in machine learning (ML) applications.
+
+### Basic definitions
+
+A <Highlight>group</Highlight> is a set <Latex text="\(G\)"/> together with a binary operation, often denoted <Latex text="\(\cdot\)"/>, that combines any two elements <Latex text="\(g_1, g_2 \in G\)"/> to form another element of <Latex text="\(G\)"/>. The operation might also be expressed with juxtaposition (<Latex text="\(g_1 g_2\)"/>) or with some symbol (like <Latex text="\(+\)"/> in the case of an additive group). For instance, in a rotation group, the operation is composition of rotations — rotating by 30° followed by 45° is the same as a single rotation by 75°.
+
+Formally, a structure <Latex text="\((G, \star)\)"/> is a group if it satisfies the following axioms:
+
+1. **Closure**: For all <Latex text="\(g_1, g_2 \in G\)"/>, <Latex text="\(g_1 \star g_2\)"/> is also in <Latex text="\(G\)"/>.
+2. **Associativity**: For all <Latex text="\(g_1, g_2, g_3 \in G\)"/>, <Latex text="\((g_1 \star g_2) \star g_3 = g_1 \star (g_2 \star g_3)\)"/>.
+3. **Identity element**: There exists an identity element <Latex text="\(e \in G\)"/> such that for all <Latex text="\(g \in G\)"/>, <Latex text="\(e \star g = g \star e = g\)"/>.
+4. **Inverse elements**: For every <Latex text="\(g \in G\)"/>, there exists an inverse <Latex text="\(g^{-1} \in G\)"/> such that <Latex text="\(g \star g^{-1} = g^{-1} \star g = e\)"/>.
+
+Conceptually, one can think of a group as the mathematical encapsulation of the idea of "transformations" or "symmetries" that can be composed in a consistent manner, with a do-nothing transformation (<Latex text="\(e\)"/>) as identity, and the ability to undo every transformation (<Latex text="\(g^{-1}\)"/>).
+
+#### Subgroups and cosets (brief mention)
+
+A <Highlight>subgroup</Highlight> <Latex text="\(H\)"/> of a group <Latex text="\(G\)"/> is a subset of <Latex text="\(G\)"/> that itself forms a group under the inherited operation. For example, in the group of all integer additions <Latex text="\((\mathbb{Z}, +)\)"/>, the set of even integers <Latex text="\(2\mathbb{Z}\)"/> is a subgroup. Subgroups are important because they often represent restricted sets of transformations that still maintain closure under the operation.
+
+A related concept is the notion of a <Highlight>coset</Highlight>. Given <Latex text="\(H\subseteq G\)"/> a subgroup of <Latex text="\(G\)"/> and an element <Latex text="\(g \in G\)"/>, the left coset of <Latex text="\(H\)"/> with respect to <Latex text="\(g\)"/> is <Latex text="\(gH = \{ g h : h \in H \}\)"/>. Cosets arise often in group theory when analyzing factor groups, but here, it suffices to keep in mind that cosets let you partition a group into distinct equivalence classes under the subgroup <Latex text="\(H\)"/>. While subgroups and cosets are not the focus of typical ML-based group theory applications, they do play a role in certain advanced constructions (e.g., factor-group-based representations).
+
+### Examples of groups
+
+There are many classes of groups, but a few show up constantly in ML. One can categorize them by whether they are finite or infinite, abelian (commutative) or non-abelian (non-commutative), discrete or continuous (Lie groups), etc. Let me highlight some representative examples.
+
+#### Cyclic groups (e.g., <Latex text="\(C_n\)"/>)
+
+A <Highlight>cyclic group</Highlight> is generated by a single element. A popular instance is <Latex text="\(C_n\)"/>, the group of <Tooltip text="rotations mod n"/>. If we imagine rotating a 2D object by <Latex text="\(\frac{360^\circ}{n}\)"/> increments, the group <Latex text="\(C_n\)"/> has exactly <Latex text="\(n\)"/> elements: 0°, <Latex text="\( \frac{360^\circ}{n}\)"/>, <Latex text="\(2\frac{360^\circ}{n}\)"/>, …, <Latex text="\( (n-1)\frac{360^\circ}{n} \)"/>. The group operation is composition of these rotations; closure follows from how angles add up mod <Latex text="\(360^\circ\)"/> (or mod <Latex text="\(2\pi\)"/> in radians). This is a finite, abelian group.
+
+Cyclic groups are conceptually among the easiest to understand. In ML contexts, one might consider <Latex text="\(C_4\)"/> to represent 90°-rotation symmetries of an image. If a network is designed to be invariant or equivariant under these transformations, it might be effectively encoding or learning a representation of the group <Latex text="\(C_4\)"/>.
+
+#### Dihedral groups (<Latex text="\(D_n\)"/>)
+
+<Highlight>Dihedral groups</Highlight> can be viewed as the symmetry groups of a regular n-gon, consisting of both rotations and reflections. <Latex text="\(D_n\)"/> has <Latex text="\(2n\)"/> elements: <Latex text="\(n\)"/> rotations and <Latex text="\(n\)"/> reflections. If you imagine a square, <Latex text="\(D_4\)"/> includes the identity (do nothing), rotate by 90°, rotate by 180°, rotate by 270°, and then reflections about axes (vertical, horizontal, main diagonal, secondary diagonal in the square case). This group is finite but not abelian (a reflection followed by a rotation does not produce the same transformation as the same rotation followed by that reflection).
+
+In ML, dihedral group symmetries appear when both rotations and flips matter for a system (like an image classification model that needs to treat a shape or pattern the same under certain reflections). Depending on the domain, dihedral transformations can significantly reduce the effective variability in the data.
+
+#### Special orthogonal groups SO(2), SO(3)
+
+A <Highlight>special orthogonal group</Highlight>, <Latex text="\(\mathrm{SO}(n)\)"/>, consists of <Tooltip text="all n x n orthogonal matrices with determinant +1"/>. For instance, <Latex text="\(\mathrm{SO}(2)\)"/> is the group of all 2D rotation matrices
+<Latex text="\[
+R(\theta) = \begin{pmatrix}
+\cos(\theta) & -\sin(\theta) \\
+\sin(\theta) & \cos(\theta)
+\end{pmatrix},
+\]"/>
+where <Latex text="\(\theta\)"/> ranges over all real values (usually taken mod <Latex text="\(2\pi\)"/>, but it is effectively a continuous parameter). <Latex text="\(\mathrm{SO}(3)\)"/> is the group of all 3D rotation matrices with determinant 1. These groups are <Highlight>compact Lie groups</Highlight> and are extremely important in 2D and 3D geometry, robotics, and computer vision (where orientation and rotation in space is crucial).
+
+Machine learning systems that involve rotational invariance in images or point clouds often revolve around <Latex text="\(\mathrm{SO}(2)\)"/> or <Latex text="\(\mathrm{SO}(3)\)"/>. These are infinite (and uncountable) groups, so the representation theory and analysis is necessarily more advanced than for finite groups.
+
+#### Orthogonal group O(2)
+
+<Latex text="\(\mathrm{O}(2)\)"/> is the group of all 2D orthogonal transformations, which include both rotations and reflections. Formally, <Latex text="\(\mathrm{O}(2)\)"/> is the set of all matrices <Latex text="\(M\)"/> such that <Latex text="\(M^\top M = I\)"/>, with determinant ±1. The subset with determinant +1 is <Latex text="\(\mathrm{SO}(2)\)"/>, so <Latex text="\(\mathrm{O}(2)\)"/> is effectively <Latex text="\(\mathrm{SO}(2)\cup\)"/> reflection transformations. The presence of reflections means <Latex text="\(\mathrm{O}(2)\)"/> is also non-abelian, while <Latex text="\(\mathrm{SO}(2)\)"/> is abelian (rotations commute in 2D).
+
+In computer vision, 2D reflection might correspond to flipping an image about an axis. If a problem demands invariance or equivariance to flips and rotations of the plane, <Latex text="\(\mathrm{O}(2)\)"/> captures that entire continuous set of transformations.
+
+
+## Representation theory basics
+
+One of the crowning achievements of modern algebra is <Highlight>representation theory</Highlight>, which lets one encode abstract groups as linear transformations on vector spaces. Representation theory provides a powerful handle on how to exploit symmetries and group structures in practical scenarios — especially relevant when building neural networks that need to respect certain invariances.
+
+### What is a representation?
+
+A <Highlight>representation</Highlight> of a group <Latex text="\(G\)"/> on a vector space <Latex text="\(V\)"/> (over the real or complex field, though complex fields are more standard in representation theory) is a group homomorphism
+<Latex text="\[
+\rho: G \to GL(V),
+\]"/>
+where <Latex text="\(GL(V)\)"/> is the group of all invertible linear transformations on <Latex text="\(V\)"/>. Intuitively, each element of <Latex text="\(G\)"/> is mapped to an invertible linear operator on <Latex text="\(V\)"/>. The group homomorphism condition requires
+<Latex text="\[
+\rho(g_1 g_2) = \rho(g_1) \rho(g_2),
+\]"/>
+meaning that composing two group transformations corresponds to composing the linear transformations on the vector space.
+
+If <Latex text="\(V\)"/> is finite-dimensional, these linear transformations can be represented by invertible matrices, so we can think of a representation as a map from group elements to invertible matrices that respect the group operation. For infinite-dimensional scenarios (e.g., function spaces), the idea is analogous but the mathematics become more intricate.
+
+#### Dimension, matrix representations, and change of basis
+
+If <Latex text="\(V\)"/> has dimension <Latex text="\(d\)"/>, then <Latex text="\(\rho(g)\)"/> is a <Latex text="\(d \times d\)"/> invertible matrix for each <Latex text="\(g\)"/>. One must note that if we pick a different basis for <Latex text="\(V\)"/>, the matrices describing the same representation will look different, but they still represent the same homomorphism. In representation theory, a key concept is that two representations <Latex text="\(\rho_1\)"/> and <Latex text="\(\rho_2\)"/> are <Highlight>equivalent</Highlight> (or isomorphic) if there is a change of basis in <Latex text="\(V\)"/> that transforms one into the other. 
+
+### Key types of representations
+
+Several fundamental types of representations appear throughout mathematics and have direct analogies in ML contexts as well.
+
+#### Trivial representation
+
+The <Highlight>trivial representation</Highlight> maps every group element <Latex text="\(g\)"/> to the identity transformation on <Latex text="\(V\)"/>. In matrix form, that means <Latex text="\(\rho(g) = I\)"/> for all <Latex text="\(g\)"/>. This representation effectively "ignores" the group structure, but it is often a building block for more interesting representations or used as a baseline reference.
+
+#### Regular representation
+
+The <Highlight>regular representation</Highlight> is especially important for finite groups. Suppose <Latex text="\(G\)"/> is finite with <Latex text="\(|G|\)"/> elements, and we consider <Latex text="\(\mathbb{R}^{|G|}\)"/> (or <Latex text="\(\mathbb{C}^{|G|}\)"/>). Label the coordinates of a vector in this space by the elements of <Latex text="\(G\)"/>. Then the regular representation <Latex text="\(\rho\)"/> is defined by letting <Latex text="\(g\)"/> permute the coordinates according to left multiplication (or right multiplication) on the set <Latex text="\(G\)"/>. In other words, if <Latex text="\(\delta_h\)"/> is the basis vector that is 1 in position <Latex text="\(h\)"/> and 0 elsewhere, then
+<Latex text="\[
+\rho(g)(\delta_h) = \delta_{g h}.
+\]"/>
+This representation is typically high-dimensional, but crucially it contains every possible irreducible representation of <Latex text="\(G\)"/> as a sub-representation. In ML, the regular representation can appear when we think of feature vectors indexed by group elements or data transformations.
+
+#### Irreducible representations (irreps)
+
+A representation is <Highlight>irreducible</Highlight> (or <Highlight>simple</Highlight>) if it contains no nontrivial sub-representations. By Maschke's theorem (for finite groups over <Latex text="\(\mathbb{C}\)"/> and a broad class of other settings), every finite-dimensional representation of a finite group can be decomposed as a direct sum of irreducible representations (often abbreviated as irreps). This implies that understanding all irreps is paramount to understanding every possible representation of a group. 
+
+From a machine learning vantage point, irreps are sometimes viewed as the fundamental "building blocks" of any representation. For continuous groups (like <Latex text="\(\mathrm{SO}(2)\)"/>, <Latex text="\(\mathrm{SO}(3)\)"/>), the classification of irreps can be more complicated but still follows a systematic theory (e.g., spherical harmonics as irreps for <Latex text="\(\mathrm{SO}(3)\)"/>).
+
+### Equivalence of representations
+
+As mentioned, two representations <Latex text="\(\rho_1, \rho_2\)"/> are called <Highlight>equivalent</Highlight> if there is an invertible linear map <Latex text="\(T\)"/> such that
+<Latex text="\[
+\rho_2(g) = T \rho_1(g) T^{-1}
+\]"/>
+for all <Latex text="\(g \in G\)"/>. This <Latex text="\(T\)"/> is effectively a change-of-basis transformation. If two representations are equivalent, they are essentially the "same" from the standpoint of group theory, just expressed in different coordinate systems.
+
+#### Isomorphic vs. non-isomorphic irreps
+
+If two irreps are equivalent, we say they are <Highlight>isomorphic</Highlight>. If they are not, we say they are <Highlight>non-isomorphic</Highlight>. Identifying all non-isomorphic irreps of a group <Latex text="\(G\)"/> is a major goal in classical representation theory and also emerges in advanced ML frameworks that utilize group-based transformations. Indeed, implementing group-equivariant architectures can involve selecting appropriate irreps for the group at hand so that one's network operations transform in a consistent manner.
+
+
+## Group actions on functions
+
+The most ubiquitous way that a group can "show up" in a functional or ML context is by <Highlight>acting</Highlight> on functions. In classical analysis, we often think of functions as living in a vector space (like <Latex text="\(L^2(\text{some domain})\)"/>) and letting the group elements <Latex text="\(g\)"/> transform the input of these functions, thus yielding a new function. This perspective eventually ties into the concept of group convolution, group Fourier transforms, and more.
+
+### Left-regular action
+
+For a finite group <Latex text="\(G\)"/>, define a space of real-valued (or complex-valued) functions on <Latex text="\(G\)"/> by
+<Latex text="\[
+V = \{ f \mid f : G \to \mathbb{R} \}.
+\]"/>
+An element <Latex text="\(g \in G\)"/> can act on a function <Latex text="\(f\)"/> by 
+<Latex text="\[
+(g \cdot f)(x) = f(g^{-1} x).
+\]"/>
+This is known as the <Highlight>left-regular action</Highlight>. In effect, we have a representation <Latex text="\(\rho\)"/> of <Latex text="\(G\)"/> on <Latex text="\(V\)"/> given by 
+<Latex text="\[
+\rho(g): V \to V, \quad [\rho(g)(f)](x) = f(g^{-1} x).
+\]"/>
+One can check that <Latex text="\(\rho(g_1 g_2) = \rho(g_1)\rho(g_2)\)"/> holds. This is the function-space version of the regular representation described earlier.
+
+### Functions as vectors
+
+When <Latex text="\(G\)"/> is finite, <Latex text="\(\mathbb{R}^{|G|}\)"/> is isomorphic to the vector space of functions on <Latex text="\(G\)"/> (since a function <Latex text="\(f\)"/> on <Latex text="\(G\)"/> can be identified with a vector of length <Latex text="\(|G|\)"/> whose entries are <Latex text="\(f(g)\)"/> for each <Latex text="\(g\in G\)"/>). The left-regular action then becomes a permutation of coordinates, precisely the same as the regular representation in matrix form. This viewpoint is extremely helpful when building group-equivariant layers in neural networks, where each channel or index might correspond to a group element.
+
+### Extension to continuous groups
+
+For <Latex text="\(\mathrm{SO}(2)\)"/>, <Latex text="\(\mathrm{SO}(3)\)"/>, <Latex text="\(\mathrm{O}(2)\)"/>, and other continuous (Lie) groups, the same idea holds conceptually:
+<Latex text="\[
+(g \cdot f)(x) = f(g^{-1} \cdot x),
+\]"/>
+except now <Latex text="\(f\)"/> is usually defined on a continuous domain and <Latex text="\(x\)"/> might be a point in <Latex text="\(\mathbb{R}^n\)"/> or on a manifold. Summations are replaced by integrals, and one has to deal with measure theory, completeness, or other functional-analytic details (which can become very rich). Nonetheless, the overarching concept — a group transforming the argument of a function — remains consistent. From the perspective of ML, if an image is a function <Latex text="\(\mathbb{R}^2 \to \mathbb{R}\)"/> (or <Latex text="\(\mathbb{R}^2 \to \mathbb{R}^3\)"/> for an RGB image), then a rotation <Latex text="\(\theta\)"/> in <Latex text="\(\mathrm{SO}(2)\)"/> produces a new image <Latex text="\(I'\)"/> such that <Latex text="\(I'(x) = I(R(\theta)^{-1} x)\)"/>.
+
+
+## Fourier theory on groups (Peter–Weyl theorem)
+
+### Motivation and intuition
+
+The classical Fourier transform decomposes periodic functions on the circle (<Latex text="\(\mathrm{SO}(2)\)"/> or the unit circle in the complex plane) into sums of sines and cosines. Likewise, the discrete Fourier transform decomposes functions on a finite cyclic group <Latex text="\(C_n\)"/>. But these ideas generalize dramatically: <Highlight>Fourier theory on groups</Highlight> is the framework by which one can decompose functions into "harmonic components" that correspond to irreducible representations of the group. This is often called <Tooltip text="Non-commutative harmonic analysis"/> when dealing with non-abelian groups.
+
+In machine learning, especially in architectures that strive to be <Highlight>equivariant</Highlight> under group transformations, one frequently uses the fact that <Latex text="\(G\)"/>-equivariant operations can be expressed in the "Fourier domain" on <Latex text="\(G\)"/>. For finite abelian groups, this is straightforward. For more complex or continuous groups, it can be more challenging but also quite powerful. The <Highlight>Peter–Weyl theorem</Highlight> states that for compact groups, one obtains an orthonormal basis of <Latex text="\(L^2(G)\)"/> from the matrix entries of irreps of <Latex text="\(G\)"/>. This is a continuous analog of the idea that sums of exponentials (sines and cosines) can be used to expand periodic functions.
+
+### Finite groups
+
+For a finite group <Latex text="\(G\)"/>, the group algebra <Latex text="\(\mathbb{C}[G]\)"/> is finite-dimensional, and the decomposition of <Latex text="\(\mathbb{C}[G]\)"/> into irreps is effectively a direct sum of sub-representations. The <Highlight>Fourier transform</Highlight> on <Latex text="\(G\)"/> is, in that sense, mapping a function <Latex text="\(f\)"/> on <Latex text="\(G\)"/> to its coefficients in each irreducible representation's coordinate system. Formally, for a function
+<Latex text="\[
+f : G \to \mathbb{C},
+\]"/>
+its group Fourier transform is a collection of matrices (one per each irreducible representation) capturing how <Latex text="\(f\)"/> projects onto that irrep.
+
+An <Highlight>inverse Fourier transform</Highlight> then reconstructs <Latex text="\(f\)"/> from these matrix coefficients. Orthogonality relations of characters (the trace of irreps) and other representation-theoretic facts supply the explicit formula. The net result is that for a function on a finite group <Latex text="\(G\)"/>, one can shift from the "time domain" (or direct domain) into the "frequency domain" given by irreps — exactly paralleling classical discrete Fourier analysis on <Latex text="\(C_n\)"/>.
+
+### Continuous (compact) groups
+
+For compact Lie groups like <Latex text="\(\mathrm{SO}(2)\)"/>, <Latex text="\(\mathrm{SO}(3)\)"/>, or more general <Latex text="\(\mathrm{SU}(n)\)"/>, the <Highlight>Peter–Weyl theorem</Highlight> states that the matrix coefficients of irreps span an orthonormal basis for <Latex text="\(L^2(G)\)"/>. Concretely, consider <Latex text="\(\mathrm{SO}(2)\)"/>: it is isomorphic to the unit circle, so the irreps are the standard one-dimensional representations <Latex text="\(e^{ik\theta}\)"/> (with <Latex text="\(k \in \mathbb{Z}\)"/>). Then the expansions become familiar Fourier series in sines and cosines. For <Latex text="\(\mathrm{SO}(3)\)"/>, the irreps are described by spherical harmonics on the 2-sphere in a certain manner, giving expansions in terms of spherical harmonics. All these expansions can be employed to handle integrals, convolutions, or define group-equivariant layers in neural networks.
+
+#### Idea of band-limited representations
+
+One intriguing notion in continuous groups is that of <Highlight>band limitation</Highlight>: practically speaking, one never expands a function into all irreps up to infinite dimension but instead truncates at some finite set of frequencies or representation degrees. This approach is parallel to standard Fourier series where one only keeps frequencies <Latex text="\(|k| \leq K\)"/>. In some ML contexts, especially in steerable CNNs for <Latex text="\(\mathrm{SO}(2)\)"/> or spherical CNNs for <Latex text="\(\mathrm{SO}(3)\)"/>, only a finite set of irreps is used, effectively applying a band-limited approach that often suffices for many tasks.
+
+### Examples
+
+A canonical example is the <Highlight>Fourier series</Highlight> expansion on <Latex text="\(\mathrm{SO}(2)\)"/>. If <Latex text="\(f(\theta)\)"/> is a function on the circle, it can be expanded as:
+<Latex text="\[
+f(\theta) = \sum_{k \in \mathbb{Z}} a_k e^{i k \theta},
+\]"/>
+where <Latex text="\(a_k\)"/> are Fourier coefficients. This is precisely the decomposition into 1D irreps of <Latex text="\(\mathrm{SO}(2)\)"/> (which is abelian), and these irreps are the exponentials <Latex text="\(e^{i k \theta}\)"/>. For the <Latex text="\(\mathrm{O}(2)\)"/> group (which includes reflections), the expansions become more complicated because it is non-abelian and reflection changes orientation, but the underlying principle remains that the irreps or certain sub-representations can be used to expand <Latex text="\(f\)"/>.
+
+#### Distinction between <Latex text="\(\mathrm{SO}(2)\)"/> and <Latex text="\(\mathrm{O}(2)\)"/>
+
+<Latex text="\(\mathrm{SO}(2)\)"/> is isomorphic to the circle group, so it is abelian. <Latex text="\(\mathrm{O}(2)\)"/> has a reflection component, making it non-abelian. For abelian groups, all irreps are 1-dimensional. For non-abelian groups, irreps have dimension > 1 (except for some special cases), so the group Fourier transform leads to matrix-valued coefficients rather than purely scalar exponentials. This difference has profound implications in how one builds group-equivariant neural networks, because the feature spaces can become multidimensional subspaces that transform according to these non-abelian irreps.
+
+
+## Connecting to machine learning (theoretical preview)
+
+### Symmetries and data
+
+In a typical supervised learning problem, we might collect a training set <Latex text="\(\{(x_i, y_i)\}_{i=1}^N\)"/>. If there is a group <Latex text="\(G\)"/> of transformations such that <Latex text="\(g \cdot x_i\)"/> has the same label as <Latex text="\(x_i\)"/> (invariance) or at least transforms in a predictable manner (equivariance), then the learning algorithm can exploit this knowledge. For instance, if <Latex text="\(G\)"/> is a group of rotations of the plane and <Latex text="\(\phi\)"/> is a classifier, then:
+
+- <Highlight>Invariance</Highlight> would mean <Latex text="\(\phi(g \cdot x) = \phi(x)\)"/> for all <Latex text="\(g\)"/>.
+- <Highlight>Equivariance</Highlight> would mean <Latex text="\(\phi(g \cdot x) = g' \cdot \phi(x)\)"/> for some action of <Latex text="\(G\)"/> on the output space as well.
+
+These properties reflect the notion that the group transformations do not fundamentally alter or do alter in a known manner the underlying semantic content or structure. In simpler terms, if a dog remains a dog upon rotation, then a dog classifier can be made rotation-invariant. Or if rotating a vector field in the input domain also rotates some vector features in the output domain, that is an equivariance property.
+
+### Data augmentation vs. group-based model design
+
+One might achieve a certain invariance or robustness to transformations in a more brute-force way: <Highlight>data augmentation</Highlight>. This is where one artificially enlarges the training set by including transformations of the data. While this approach often works well in practice, it can be data-intensive and might not fully leverage the underlying group structure in a theoretically optimal way.
+
+In contrast, <Highlight>group-based model design</Highlight> tries to encode the transformations directly into the structure of the model. Convolutional neural networks, for instance, are automatically equivariant to translations. Similarly, <Latex text="G\)"/>-CNNs (Cohen and Welling, 2016) build in equivariance to a broader group <Latex text="\(G\)"/> (like rotations + flips, or more exotic transformations). Such an approach can lead to more parameter-efficient architectures, less reliance on extensive augmentation, and potentially better generalization to transformations unseen in the training set. This is a major reason why group theory has gained prominence in advanced ML research.
+
+### Preview of equivariance and invariance
+
+- <Highlight>Invariance</Highlight>: A function <Latex text="\(\phi : X \to Y\)"/> is invariant to <Latex text="\(G\)"/> if <Latex text="\(\phi(g \cdot x) = \phi(x)\)"/> for all <Latex text="\(g\)"/> in <Latex text="\(G\)"/> and for all <Latex text="\(x\)"/> in <Latex text="\(X\)"/>. In classification tasks, the model output is the same no matter how the input is transformed, which is often desired for transformations that do not alter semantic class identity.
+
+- <Highlight>Equivariance</Highlight>: A function <Latex text="\(\phi : X \to Y\)"/> is equivariant if there is a compatible group action on the output such that <Latex text="\(\phi(g \cdot x) = g \cdot \phi(x)\)"/>. This means transformations in input space map to corresponding transformations in the feature or output space. In certain tasks (e.g., segmentation or keypoint detection), it can be crucial for the model to maintain alignment under transformations of the input.
+
+In the upcoming part of this course (pt. 2), these notions are made operational in neural networks using the language of representation theory. One typically picks an appropriate set of irreps or representation spaces in which convolutional kernels or filters are defined, ensuring the entire network is <Latex text="\(G\)"/>-equivariant by design.
+
+### Foundations for part 2
+
+The second part will dive deeper into how representation theory underpins group convolutions, as well as the concept of <Highlight>steerable CNNs</Highlight>. Steerability is a property wherein filters can be "steered" to arbitrary orientations or transformations by applying a small set of basis filters and combining their responses appropriately. This approach is deeply connected to the idea that a filter might transform according to some (usually low-dimensional) representation of the group. The subspace spanned by those basis filters forms an irrep or direct sum of irreps. Then, to get a rotated version of the filter, one applies a matrix from the representation. This is a practical manifestation of advanced group theoretic ideas.
+
+Hence, everything from building group equivariant layers to analyzing how data transforms in these spaces relies on the fundamental knowledge covered in the present article: the concept of groups, their representations, and how they act on functions. Understanding these building blocks will make advanced group-based architectures more intuitive and reveal how they can drastically reduce the demands on data augmentation or brute-force enumerations of transformations.
+
+
+## Summary and transition
+
+This article has explored the basic building blocks of group theory and representation theory, setting the stage for their application in modern machine learning contexts. By reviewing core definitions — closure, identity, inverses, associativity — and examining canonical examples like cyclic groups, dihedral groups, special orthogonal groups, and orthogonal groups, I have illustrated how symmetries and transformations naturally map onto group-theoretic structures. Representation theory then shows how to translate these symmetries into linear algebra operations, which is precisely the language of neural network layers and transformations in vector spaces. The discussion of group actions on functions further underscores how one passes from an abstract group definition to an actual operation on data.
+
+Finally, a brief tour of Fourier theory on groups (both finite and continuous) demonstrates how these transformations can be analyzed in a "frequency domain", analogously to classical Fourier analysis but generalized to non-abelian, higher-dimensional irreps. This perspective is central to certain advanced techniques in ML, such as building group-equivariant convolutional networks with a direct tie-in to irreps and non-commutative harmonic analysis.
+
+Moving forward, the next steps (part 2) will expand these concepts to show how they concretely translate into group-based neural architectures, including group convolutional networks, steerable CNNs, and group equivariant autoencoders. The underlying theme remains that if the problem domain has known symmetries, harnessing group theory can fundamentally reshape how a model learns and generalizes, often leading to elegant, highly structured solutions that require fewer data and exhibit greater stability against transformations. This is one of the most exciting frontiers in theoretical and applied machine learning research, as recognized by many leading publications (e.g., Cohen and Welling, ICML 2016; Weiler and Cesa, NeurIPS 2019; Kondor and Trivedi, ICML 2018; Esteves, CVPR 2018) focusing on group equivariant network design.
+
+I recommend reflecting carefully on these theoretical underpinnings, because a deeper appreciation for the group-theoretic viewpoint unlocks a range of advanced architectural insights and fosters the creativity needed to design novel ML models aligned to domain symmetries.
+
+<Image alt="visual depiction of a dihedral group acting on a square" path="" caption="Illustration of the elements of D4 acting on a square, showing rotations and reflections." zoom="false" />
+
+<Image alt="diagram showing group representation as matrices" path="" caption="Representations map group elements to matrices that act on a vector space." zoom="false" />
+
+<Code text={`
+import numpy as np
+
+def rotate_point_2d(x, y, theta):
+    """
+    Rotate a point (x, y) by angle theta (in radians) about the origin.
+    Returns the new coordinates (x', y').
+    """
+    cos_t = np.cos(theta)
+    sin_t = np.sin(theta)
+    x_new = x*cos_t - y*sin_t
+    y_new = x*sin_t + y*cos_t
+    return x_new, y_new
+
+def dihedral_group_actions(square_points):
+    """
+    Given four points of a square (in CCW order),
+    return all the transformations from the dihedral group D4
+    (the symmetry group of a square).
+    Each transformation is represented as a list of points after transformation.
+    """
+    transformations = []
+    # Rotations: 0, 90, 180, 270
+    for r in [0, np.pi/2, np.pi, 3*np.pi/2]:
+        rot_points = [rotate_point_2d(px, py, r) for (px, py) in square_points]
+        transformations.append(rot_points)
+    # Reflections: reflect over x-axis, y-axis, y=x, y=-x (for example)
+    # x-axis reflection
+    refl_x = [(px, -py) for (px, py) in square_points]
+    transformations.append(refl_x)
+    # y-axis reflection
+    refl_y = [(-px, py) for (px, py) in square_points]
+    transformations.append(refl_y)
+    # reflection over y=x
+    refl_diag1 = [(py, px) for (px, py) in square_points]
+    transformations.append(refl_diag1)
+    # reflection over y=-x
+    refl_diag2 = [(-py, -px) for (px, py) in square_points]
+    transformations.append(refl_diag2)
+    
+    return transformations
+
+# Example usage:
+square = [(1,1), (1,-1), (-1,-1), (-1,1)]  # corners of a square
+d4_actions = dihedral_group_actions(square)
+
+print("All D4 transformations of the square (each element is a list of points):")
+for i, t in enumerate(d4_actions):
+    print(f"Transformation {i}: {t}")
+`}/>
+
+In the snippet above, I provide a quick demonstration of how one might generate all transformations in the dihedral group <Latex text="\(D_4\)"/> (symmetries of a square) in a simple Python setting. Although this example is purely geometric, it reflects the fundamental operations that more advanced group-aware ML models will rely upon — but often in a more algebraic or representation-theoretic guise. By bridging geometry and algebra, group theory remains a unifying theme in the modern machine learning toolbox.

@@ -1,0 +1,513 @@
+---
+index: 61
+indexCourse: 38
+indexFavorites:
+title: "Hierarchical clustering"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Hierarchical clustering"
+courseCategoryName: "Clustering basics"
+desc: "The genealogy of clusters"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "06.07.2023"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 1
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/hierarchical_clustering.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/hierarchical_clustering"
+slug: "/research/hierarchical_clustering"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+import Tooltip from "../../../components/Tooltip"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+Иерархическая кластеризация
+https://neerc.ifmo.ru/wiki/index.php?title=%D0%98%D0%B5%D1%80%D0%B0%D1%80%D1%85%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B0%D1%8F_%D0%BA%D0%BB%D0%B0%D1%81%D1%82%D0%B5%D1%80%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D1%8F 
+[https://youtu.be/7xHsRkOdVwo](https://youtu.be/7xHsRkOdVwo)  
+[https://en.wikipedia.org/wiki/BIRCH](https://en.wikipedia.org/wiki/BIRCH)
+[https://en.wikipedia.org/wiki/Hierarchical_clustering](https://en.wikipedia.org/wiki/Hierarchical_clustering)
+[https://www.youtube.com/watch?v=JcniBqle4kw&list=PLA0M1Bcd0w8zxDIDOTQHsX68MCDOAJDtj&index=35](https://www.youtube.com/watch?v=JcniBqle4kw&list=PLA0M1Bcd0w8zxDIDOTQHsX68MCDOAJDtj&index=35)
+
+*/}
+
+
+{/*
+
+1. Introduction to hierarchical clustering  
+   1.1. Definition and key ideas  
+   1.2. Differences from other clustering techniques  
+   1.3. Advantages and disadvantages  
+2. Foundational concepts  
+   2.1. Distance metrics (Euclidean, Manhattan, etc.)  
+   2.2. Similarity and dissimilarity matrices  
+   2.3. Overview of linkage criteria (single, complete, average, Ward's)  
+3. Approaches to hierarchical clustering  
+   3.1. Agglomerative clustering  
+   3.2. Divisive clustering  
+   3.3. Comparing agglomerative and divisive methods  
+4. Building the hierarchy  
+   4.1. Step-by-step agglomerative process  
+   4.2. Step-by-step divisive process  
+   4.3. Visualizing clusters with dendrograms  
+5. Understanding dendrograms  
+   5.1. How to read a dendrogram  
+   5.2. Choosing the cut height for clusters  
+   5.3. Interpreting branching structures  
+6. BIRCH algorithm (balanced iterative reducing and clustering using hierarchies)  
+   6.1. Core concepts behind BIRCH  
+   6.2. CF tree structure and operations  
+   6.3. Advantages and limitations of BIRCH  
+   6.4. Example use cases  
+7. Implementation details and practical tips  
+   7.1. Data preprocessing (scaling, dimensionality reduction)  
+   7.2. Handling large datasets  
+   7.3. Computational complexity considerations  
+   7.4. Software packages and libraries (Python, R, etc.)  
+8. Applications and real-world scenarios  
+   8.1. Market segmentation  
+   8.2. Image segmentation  
+   8.3. Genomic data analysis  
+   8.4. Other domain-specific applications  
+9. Advanced topics  
+   9.1. Hybrid clustering methods  
+   9.2. Clustering validity indices and internal measures  
+   9.3. Combining hierarchical clustering with other techniques  
+
+1. Introduction to Hierarchical Clustering  
+- Definition and Key Ideas: Hierarchical clustering is a method of cluster analysis that seeks to build a hierarchy of clusters. Unlike partition-based methods (e.g., k-means), hierarchical clustering does not require specifying the number of clusters in advance. Instead, it systematically merges or splits clusters based on similarity measures, creating a tree-like structure (dendrogram).  
+- Differences from Other Clustering Techniques: Compared to partition-based algorithms, hierarchical clustering offers more flexibility in exploring various cluster solutions at different levels of granularity. Unlike density-based methods (e.g., DBSCAN), hierarchical algorithms don't rely on density parameters but instead use distance or similarity measures to form clusters.  
+- Advantages and Disadvantages:  
+  - Advantages: Easy to interpret results via dendrograms; no need to pre-specify the number of clusters; useful for exploratory data analysis.  
+  - Disadvantages: Computationally expensive for large datasets; sensitive to noise and outliers; results can vary depending on the choice of distance metric and linkage criterion.  
+- Historical Background and Motivations: Hierarchical clustering has roots in numerical taxonomy, where it was originally used to classify organisms. The approach is popular in bioinformatics, social sciences, and other areas requiring interpretable hierarchical structures.  
+2. Foundational Concepts  
+- Distance Metrics: Distance functions quantify dissimilarity between data points. Common choices include Euclidean distance (straight-line distance), Manhattan distance (sum of absolute differences), and others (Minkowski, Chebyshev, etc.). The choice of distance metric can significantly impact cluster formation.  
+- Similarity and Dissimilarity Matrices: Often data is transformed into a matrix capturing pairwise distances or similarities between points. This matrix is the starting point for many hierarchical clustering algorithms, which merge or split clusters based on these values.  
+- Linkage Criteria: Several strategies define how distance between clusters is computed. Examples include:  
+  - Single Linkage (minimum distance between any two points)  
+  - Complete Linkage (maximum distance between any two points)  
+  - Average Linkage (mean distance between points in different clusters)  
+  - Ward's Method (minimizes the within-cluster variance, often more robust to noise)  
+- Role of Data Dimensionality: In high-dimensional spaces, distance metrics can become less meaningful (the “curse of dimensionality”). Often, dimensionality reduction (e.g., PCA) is performed beforehand.  
+3. Agglomerative Clustering  
+- Basic Principle: Agglomerative algorithms start with each data point in its own cluster and iteratively merge the most similar (or closest) pair of clusters until only one cluster remains.  
+- Step-by-Step Process:  
+  1. Compute distance/similarity matrix between individual data points.  
+  2. Merge the two closest clusters into a single cluster.  
+  3. Update the distance matrix to reflect the new cluster structure (using the chosen linkage criterion).  
+  4. Repeat until all data points are grouped into one final cluster.  
+- Common Use Cases: Often used in small to medium-sized datasets where interpretability is crucial. Common in bioinformatics for gene-expression data, text clustering, and customer segmentation.  
+4. Divisive Clustering  
+- Basic Principle: Divisive (top-down) algorithms start with all data points in one cluster and iteratively split clusters into smaller ones until each data point forms its own cluster (or until a stopping criterion is met).  
+- Step-by-Step Process:  
+  1. Treat the entire dataset as a single cluster.  
+  2. Select a cluster to split using some heuristic (e.g., cluster with the largest diameter).  
+  3. Partition the chosen cluster into two subclusters, often using another clustering method (e.g., k-means) or a distance-based criterion.  
+  4. Repeat until each point is in its own cluster or another stopping criterion is reached.  
+- Comparing Agglomerative and Divisive Methods:  
+  - Agglomerative methods are more commonly used due to simpler implementations.  
+  - Divisive methods can be more computationally intensive but may yield different insights, especially with large datasets or when certain global structure considerations are important.  
+5. Building and Visualizing the Hierarchy  
+- Constructing the Dendrogram: In hierarchical clustering, the history of merges or splits is represented by a dendrogram. The vertical axis typically shows the distance or dissimilarity level at which clusters are merged.  
+- How to Read a Dendrogram: Each leaf represents a data point, and merges indicate cluster formations at increasing distances. Horizontal lines show the points (or clusters) being combined, while the height of the merge indicates dissimilarity.  
+- Choosing the Cut Height for Clusters: By drawing a horizontal cut at a certain distance level, one can decide how many clusters to extract. The choice of cut can be guided by heuristic “elbow” methods, domain knowledge, or cluster validity indices.  
+6. BIRCH Algorithm (Balanced Iterative Reducing and Clustering using Hierarchies)  
+- Core Concepts Behind BIRCH: BIRCH is designed for very large datasets, incrementally building a hierarchy of clusters using a specialized in-memory data structure (CF tree). This structure reduces data representations on the fly, allowing for efficient processing.  
+- CF Tree Structure and Operations: The CF (Clustering Feature) tree maintains summary statistics (e.g., the number of points, linear sums, and squared sums) for subclusters. This allows fast updating and merging of subclusters while using limited memory.  
+- Advantages and Limitations:  
+  - Advantages: Handles large datasets efficiently; performs incremental updating; can adapt to dynamic data streams.  
+  - Limitations: May produce suboptimal results if parameters (e.g., branching factor, threshold) are poorly chosen; sensitive to the order in which data points are processed.  
+- Example Use Cases:  
+  - Online data stream clustering (e.g., network traffic monitoring).  
+  - Applications requiring fast, memory-constrained iterative updates (e.g., real-time anomaly detection).  
+7. Implementation Details and Practical Tips  
+- Data Preprocessing (Scaling, Dimensionality Reduction): Feature scaling (e.g., standardization or min-max normalization) can prevent attributes with large numerical ranges from dominating the distance. Dimensionality reduction (e.g., PCA, t-SNE) can help mitigate the curse of dimensionality.  
+- Handling Large Datasets: Sampling or mini-batch methods can reduce computation when performing standard hierarchical clustering. BIRCH or other streaming algorithms are specifically designed to manage large-scale data.  
+- Computational Complexity Considerations: Vanilla agglomerative clustering often has <Latex text="\(O(n^2 \log n)\)"/> or <Latex text="\(O(n^2)\)"/> complexity, depending on the implementation. Divisive approaches can be even more expensive if each split is a complex operation. Optimized libraries often use clever data structures to reduce this overhead.  
+- Software Packages and Libraries:  
+  - Python: `scipy.cluster.hierarchy`, `scikit-learn` (provides agglomerative and BIRCH implementations).  
+  - R: `hclust`, `dendextend` for visualization.  
+  - MATLAB: Functions like `linkage` and `cluster`.  
+  - Other Tools: Specialized libraries for big data (Spark MLLib) offer approximate or scalable hierarchical clustering.  
+8. Applications and Real-World Scenarios  
+- Market Segmentation: Businesses cluster customers based on purchase behavior, demographics, or browsing histories. Hierarchical methods allow exploring segmentation at different detail levels.  
+- Image Segmentation: In computer vision, pixels or superpixels can be grouped hierarchically for tasks like object detection or scene understanding.  
+- Genomic Data Analysis: Researchers cluster gene expression profiles or genetic sequences to discover relationships among genes and organisms. The dendrogram structure mirrors phylogenetic relationships.  
+- Customer Behavior Analysis: An extended form of market segmentation, focusing on how customers evolve over time, capturing behavioral changes and loyalty patterns.  
+- Document Clustering: Grouping text documents based on similarity can help in topic modeling, search optimization, and recommendation systems.  
+9. Advanced Topics  
+- Hybrid Clustering Methods: Some approaches combine hierarchical and partition-based methods, such as using hierarchical clustering to initialize centroids for k-means or performing hierarchical refinement after partitioning.  
+- Clustering Validity Indices and Internal Measures: Metrics like the Silhouette Coefficient, Calinski-Harabasz Index, or Davies-Bouldin Index can help evaluate how well the clusters reflect underlying data structure.  
+- Combining Hierarchical Clustering with Other Techniques:  
+  - Dimensionality Reduction: Coupling PCA or manifold learning methods with hierarchical clustering for more meaningful clusters in high-dimensional spaces.  
+  - Outlier Detection: Identifying noise or anomalies within a dendrogram to isolate outliers or remove them before final clustering.  
+  - Ensemble Clustering: Using multiple clustering algorithms (including hierarchical) and combining the results for more robust cluster structures.  
+10. Conclusion and Future Directions  
+- Revisiting Key Concepts: Hierarchical clustering provides a flexible, interpretable way to reveal multilevel structures in data.  
+- Emerging Trends: Scalable hierarchical algorithms, GPU-accelerated implementations, and integration with deep learning frameworks.  
+- Best Practices: Choose distance metrics and linkage criteria based on domain knowledge; employ dimensionality reduction for high-dimensional datasets; validate clusters using multiple indices for robust results.
+
+*/}
+
+
+Hierarchical clustering is a technique of cluster analysis that seeks to create a multilevel, tree-like structure of nested clusters, usually represented by a dendrogram. Rather than predetermining the number of clusters, the method explores the data at multiple levels of granularity. When using hierarchical clustering, you can either start with each data point in its own cluster and iteratively merge clusters (agglomerative approach), or place all data points in one cluster and successively divide it (divisive approach). This branching process gives hierarchical clustering a flexible and interpretable nature, as you can "cut" the resulting dendrogram at different heights to obtain a variety of cluster solutions. For many data analysis tasks, especially those requiring intuitive graphical representations, hierarchical clustering serves as a powerful tool for discovering structure.
+
+### Definition and key ideas
+
+Hierarchical clustering groups data into a hierarchy of clusters. In the agglomerative process, data points are initially viewed as individual clusters (<Tooltip text="clusters containing just one point"/>) and are successively merged if they are close or similar according to some distance or similarity measure. In the divisive process, the entire dataset is treated as one single cluster and is subsequently split step by step. The result of either process is a <Highlight>dendrogram</Highlight> — a tree structure depicting merges (in agglomerative) or splits (in divisive) at increasing levels of dissimilarity.
+
+Hierarchical clustering differs from other clustering algorithms, such as <Highlight>k-means</Highlight> (which requires predefining a number of clusters) or <Highlight>DBSCAN</Highlight> (which depends on density parameters). Instead, it relies directly on distance or similarity metrics to systematically form or break clusters. Therefore, it is well-suited to exploratory data analysis scenarios in which you may want to see clustering solutions at different levels of granularity.
+
+### Differences from other clustering techniques
+
+Unlike partition-based algorithms (e.g., k-means or k-medoids), hierarchical clustering frees you from specifying the number of clusters in advance. Instead of compressing the data into a fixed set of partitions, you gain a hierarchical perspective from which any slice of the hierarchy can represent a potential clustering solution. This tree-like organization is often more interpretable — for instance, in bioinformatics or taxonomy, you can easily interpret branching in the dendrogram as evolutionary or functional relationships.
+
+Furthermore, unlike density-based approaches (e.g., DBSCAN, OPTICS), hierarchical clustering does not depend on density thresholds to form clusters. Instead, it uses distance or similarity measures and linkage criteria, though it can be more susceptible to noise and outliers because even a single distant pair of points can influence merges or splits if the linkage criterion is sensitive.
+
+### Advantages and disadvantages
+
+- **Advantages**  
+  - <Highlight>Interpretability</Highlight>: The dendrogram is easy to visualize and reason about, providing insights into how data groups together at multiple levels.  
+  - <Highlight>No fixed number of clusters</Highlight>: You do not need to guess or specify a target number of clusters ahead of time.  
+  - <Highlight>Flexibility in exploring solutions</Highlight>: You can "cut" the dendrogram at various distances, obtaining cluster solutions that range from very fine-grained to very coarse.
+
+- **Disadvantages**  
+  - <Highlight>Computational cost</Highlight>: For large datasets, constructing the full distance matrix and performing repeated merges can be expensive in terms of both time and memory.  
+  - <Highlight>Sensitivity to noise and outliers</Highlight>: Certain linkage criteria (like single linkage) can form undesirable chaining effects if there is even a single noisy point between clusters.  
+  - <Highlight>Dependence on distance and linkage criteria</Highlight>: Different choices of distance metrics and linkage methods can lead to drastically different dendrogram shapes and cluster outcomes.
+
+### Historical background and motivations
+
+Hierarchical clustering has a long tradition in fields such as <Tooltip text="the scientific classification of organisms"/>taxonomy, <Tooltip text="the study of biological sequences and expression patterns"/>bioinformatics, and social sciences. Early biological applications involved grouping species based on phenotypic or genetic similarity, producing taxonomies that mirrored evolutionary relationships. Over the decades, hierarchical clustering has found use in text analysis, recommendation systems, marketing, image analysis, and many other applications where interpretability and multi-level structure are essential.
+
+Classic works on clustering (e.g., Jain and Dubes, 1988; Rokach and Maimon, 2005) describe hierarchical clustering as one of the fundamental approaches to unsupervised learning. Subsequent research advanced computational aspects (e.g., <Tooltip text="SLINK algorithm for single linkage clustering"/>Sibson, 1973) and theoretical properties, ensuring that hierarchical clustering remains a staple in modern data science.
+
+## Foundational concepts
+
+Hierarchical clustering typically relies on a dissimilarity or distance matrix that represents all pairwise distances between points in a dataset. This matrix is essential, as each step of the clustering algorithm (whether merging or splitting clusters) often depends on how close clusters are to each other. Let me introduce some foundational concepts that underpin the method.
+
+### Distance metrics
+
+A distance metric defines "how far apart" two data points are. Each metric imposes different geometric properties on the data space, which can substantially affect the shape and number of clusters discovered. Common distance metrics include:
+
+- **Euclidean distance**: <Latex text="\( d(\mathbf{x}, \mathbf{y}) = \sqrt{\sum_{i=1}^D (x_i - y_i)^2} \)"/>  
+  Often interpreted as the straight-line distance in <Latex text="\(D\)"/>-dimensional space. It is sensitive to outliers because large deviations in any dimension can significantly increase the distance.
+
+- **Manhattan distance** (L1 norm): <Latex text="\( d(\mathbf{x}, \mathbf{y}) = \sum_{i=1}^D |x_i - y_i| \)"/>  
+  Also called city block distance. Especially suitable when you want robust behavior against outliers or want to measure distances along axes.
+
+- **Minkowski distance**: <Latex text="\( d(\mathbf{x}, \mathbf{y}) = \Big(\sum_{i=1}^D |x_i - y_i|^p\Big)^{1/p} \)"/>  
+  A generalization of Euclidean (when <Latex text="\(p=2\)"/>) and Manhattan (when <Latex text="\(p=1\)"/>) distances.
+
+- **Chebyshev distance**: <Latex text="\( d(\mathbf{x}, \mathbf{y}) = \max_{i}|x_i - y_i| \)"/>  
+  This metric emphasizes the largest difference among dimensions, often used in chessboard-like movements.
+
+- **Cosine distance** (especially in text mining or high-dimensional vector spaces where magnitude differences matter less): <Latex text="\( d(\mathbf{x}, \mathbf{y}) = 1 - \frac{\mathbf{x}\cdot \mathbf{y}}{\|\mathbf{x}\|\|\mathbf{y}\|} \)"/>  
+  Measures dissimilarity based on the angle between vectors.
+
+Each choice can yield a different configuration of clusters, so domain knowledge is often used to select a suitable metric. For example, in gene expression data, correlation-based distances might be more relevant than Euclidean distances, since consistent up/down trends may be more important than absolute expression levels.
+
+### Similarity and dissimilarity matrices
+
+Instead of a distance metric, some problems naturally have a similarity score (e.g., the number of matching attributes between two data points). One can convert similarity to distance and vice versa by transformations like <Latex text="\(d = 1 - s\)"/> (if <Latex text="\(s\)"/> is bounded in <Latex text="\([0,1]\)"/>), or use other transformations that preserve meaningful relationships. The goal is to summarize data in a <Highlight>pairwise matrix</Highlight> that can drive the hierarchical clustering process.
+
+For a dataset of size <Latex text="\(n\)"/>, a distance matrix has dimensions <Latex text="\(n\times n\)"/>. For large <Latex text="\(n\)"/>, storing and manipulating this matrix becomes costly — this is one reason why hierarchical clustering can be computationally prohibitive at scale, and specialized algorithms or approximations become necessary.
+
+### Linkage criteria
+
+In hierarchical clustering, once you define how to measure pairwise distances between points, you need a criterion for measuring the distance between clusters. Several linkage methods are common:
+
+1. **Single linkage**: The distance between two clusters is the minimum distance between any pair of points from each cluster. Formally, if clusters <Latex text="\(A\)"/> and <Latex text="\(B\)"/> have points <Latex text="\(a\in A\)"/> and <Latex text="\(b\in B\)"/>, then  
+   <Latex text="\( d_{\text{single}}(A,B) = \min_{a\in A,b\in B} d(a,b)\)"/>  
+   Single linkage can create "chaining effects", where clusters that have one pair of relatively close points keep getting merged, even if other points in the clusters are far apart.
+
+2. **Complete linkage**: The distance between two clusters is the maximum distance between any pair of points from each cluster:  
+   <Latex text="\( d_{\text{complete}}(A,B) = \max_{a\in A,b\in B} d(a,b)\)"/>  
+   Complete linkage tends to produce compact clusters, but is sensitive to outliers. One distant point in a cluster can inflate the distance dramatically.
+
+3. **Average linkage**: The distance between clusters <Latex text="\(A\)"/> and <Latex text="\(B\)"/> is the average distance between all pairs of points, one from each cluster:  
+   <Latex text="\[
+   d_{\text{average}}(A,B) = \frac{1}{|A|\cdot|B|}\sum_{a\in A}\sum_{b\in B} d(a,b)
+   \]"/>  
+   This approach attempts to balance extremes, often generating moderate-sized clusters.
+
+4. **Ward's method**: Instead of directly measuring distance between clusters, Ward's method merges clusters in a way that minimizes the increase in the total within-cluster variance (error sum of squares). Formally, if you denote the sum of squares within each cluster, merging two clusters with Ward's linkage is the merge that yields the smallest increase in the total sum of squares. This method often produces clusters of relatively uniform size and has shown resilience to noise in many contexts.
+
+### Role of data dimensionality
+
+Hierarchical clustering in very high-dimensional spaces becomes tricky due to the "curse of dimensionality", where distances between points start to lose discriminative power. Often, you might:
+
+- **Perform dimensionality reduction** with <Highlight>PCA</Highlight>, <Highlight>t-SNE</Highlight>, or <Highlight>UMAP</Highlight> before hierarchical clustering to obtain more meaningful distances.  
+- **Select or engineer features** carefully to avoid cluttering the clustering process with irrelevant or noisy dimensions.
+
+Although hierarchical clustering can work in moderately high dimensions, the computational complexity and interpretability both degrade if you do not manage dimensionality effectively.
+
+## Agglomerative clustering
+
+Agglomerative clustering is the most widely used form of hierarchical clustering. It follows a bottom-up approach: each data point starts in its own cluster, and then iteratively merges clusters that are closest according to the chosen distance metric and linkage method. Eventually, the entire dataset aggregates into a single cluster.
+
+### Basic principle
+
+1. **Initialization**: Treat every data point as an individual cluster. Hence, you start with <Latex text="\(n\)"/> clusters if there are <Latex text="\(n\)"/> data points.  
+2. **Iterative merges**: At each step, locate the pair of clusters with the smallest distance (according to the linkage criterion) and merge them into a new cluster.  
+3. **Distance matrix update**: Once two clusters <Latex text="\(A\)"/> and <Latex text="\(B\)"/> are merged, they form a new cluster <Latex text="\(C\)"/>. You then update the distance matrix by removing the rows/columns for <Latex text="\(A\)"/> and <Latex text="\(B\)"/> and adding a new row/column for <Latex text="\(C\)"/>. The distance of <Latex text="\(C\)"/> to any other cluster depends on the linkage method.  
+4. **Termination**: Repeat merging until one cluster remains (or until a stopping criterion is reached).
+
+### Step-by-step process
+
+Let me illustrate the agglomerative procedure with a short example. Suppose you have 4 data points: <Latex text="\(\{x_1, x_2, x_3, x_4\}\)"/>. The steps might be:
+
+1. Compute the pairwise distance matrix <Latex text="\(D\)"/> of size <Latex text="\(4\times 4\)"/>.  
+2. Find the smallest distance in <Latex text="\(D\)"/>. Assume <Latex text="\(d(x_1, x_2)\)"/> is smallest, so merge <Latex text="\(x_1\)"/> and <Latex text="\(x_2\)"/> into cluster <Latex text="\(C_{12}\)"/>.  
+3. Update <Latex text="\(D\)"/> by removing rows/columns for <Latex text="\(x_1\)"/> and <Latex text="\(x_2\)"/>, and adding a row/column for <Latex text="\(C_{12}\)"/>. The distance between <Latex text="\(C_{12}\)"/> and other points or clusters depends on your linkage choice.  
+4. Repeat: find the next smallest distance and merge the corresponding clusters.  
+5. Stop once you have the desired number of clusters or a single final cluster.
+
+A dendrogram can easily depict these merges visually: the height of each merge on the y-axis indicates the distance (or dissimilarity) at which the merge occurred. This bottom-up merging approach yields <Highlight>a hierarchical representation</Highlight> of how clusters are built, which can be sliced at different heights to form final clusters.
+
+### Common use cases
+
+Agglomerative hierarchical clustering is frequently applied in:
+
+- **Bioinformatics**: For gene expression data, where each gene is initially in its own cluster. You can see how genes merge based on similarity of expression profiles.  
+- **Natural language processing**: In text clustering, especially if you want a hierarchy of topics or documents.  
+- **Customer segmentation**: When interpretability is paramount, and you want a dendrogram for marketing insights.  
+- **Small to medium datasets**: If you have up to a few thousand data points, you can handle a full distance matrix. Beyond that, specialized methods or approximate solutions may be needed.
+
+## Divisive clustering
+
+Divisive clustering, also known as top-down hierarchical clustering, starts with a single cluster containing all the data points. It then splits clusters iteratively until every point lies in its own cluster (or until a specific criterion is met).
+
+### Basic principle
+
+1. **Initialization**: Consider the entire dataset as a single cluster.  
+2. **Identify a split**: Choose a cluster to split — for example, the cluster that is the largest or that has the highest internal dissimilarity.  
+3. **Partition the chosen cluster**: You can use a "flat" clustering method like <Highlight>k-means</Highlight> (with <Latex text="\(k=2\)"/>) to split the cluster into two subclusters, or you can apply other heuristics (e.g., searching for a pair of subclusters that minimize within-cluster distance).  
+4. **Repeat**: Continue subdividing until you reach a stopping criterion, such as a maximum number of clusters or a threshold for cluster quality.
+
+### Comparing agglomerative and divisive methods
+
+- **Complexity**: Divisive clustering can be more computationally intensive because repeated splitting might rely on multiple runs of a partition-based method that is itself <Latex text="\(O(n \times \text{iterations} \times \text{dimensionality})\)"/>. Agglomerative clustering, although often <Latex text="\(O(n^2 \log n)\)"/> or <Latex text="\(O(n^2)\)"/> in naive implementations, can be simpler to implement.  
+- **Global structure vs. local merges**: Divisive clustering may capture global structure first, then refine clusters, which can sometimes discover meaningful top-level splits. Agglomerative clustering focuses on local merges, which might cause small groups or outliers to merge prematurely if not carefully controlled by the linkage criterion.  
+- **Popularity**: Agglomerative clustering is much more widely used in practice, partly because it is direct to implement and interpret, and because many statistical software libraries provide well-optimized routines for it.
+
+## Building and visualizing the hierarchy
+
+A key advantage of hierarchical clustering is that it yields a dendrogram, providing a bird's-eye view of merges (agglomerative) or splits (divisive) across the data. Let's look at how to interpret and use these dendrograms effectively.
+
+### Constructing the dendrogram
+
+The dendrogram is constructed by tracking the merges (or splits) at each step of the hierarchical clustering algorithm. In agglomerative clustering:
+
+1. When two clusters merge, you draw a horizontal line connecting their branches in the dendrogram.  
+2. The height of this horizontal line indicates the distance at which the merge occurred.  
+
+This yields a bottom-up tree representation, with individual data points as leaves at the bottom, and merges ascending toward a single cluster that contains all points at the top.
+
+<Image alt="Example of a dendrogram illustrating hierarchical clustering merges" path="" caption="Dendrogram of a small dataset, showing how clusters merge at increasing distances" zoom="false" />
+
+### How to read a dendrogram
+
+Reading a dendrogram effectively requires following the merges from the bottom to the top (for agglomerative) or from top to bottom (for divisive). Each leaf node corresponds to an original data point, and each internal node (where branches combine) indicates a merge operation.
+
+- **Branch distance**: The y-axis typically shows the distance or dissimilarity. A higher branch means the clusters only merge at a larger dissimilarity threshold.  
+- **Slicing the dendrogram**: If you draw a horizontal line (a "cut") at a certain distance, every cluster whose internal merges are below that line forms one group in your final solution. This is how you extract clusters from the hierarchy.
+
+### Choosing the cut height for clusters
+
+Deciding where to cut the dendrogram can drastically change the number and composition of clusters. Strategies include:
+
+- **Elbow or silhouette heuristic**: Scan different cut heights and measure how well the resulting partitions separate data.  
+- **Maximum distance threshold**: Select a distance threshold beyond which clusters should not be merged (useful if domain knowledge suggests that any pair of points beyond a certain distance are not related).  
+- **Domain-driven selection**: Use real-world knowledge. For instance, if you know your data should be grouped into up to 5 categories, you choose a cut that yields 5 clusters.
+
+## BIRCH algorithm
+
+Hierarchical clustering is often expensive for large datasets because it requires building and updating a large distance matrix. One solution for scaling hierarchical clustering to massive data is the <Highlight>BIRCH</Highlight> algorithm (Zhang and gang, SIGMOD 1996). The name stands for "Balanced Iterative Reducing and Clustering using Hierarchies."
+
+### Core concepts behind BIRCH
+
+The BIRCH algorithm is designed to cluster large datasets (possibly containing millions of points) without requiring all pairwise distances to be stored in memory. It incrementally processes data points and builds a tree structure (CF Tree) that summarizes cluster representations at different levels of granularity:
+
+- **Online/incremental**: Data points arrive in a stream and are inserted into the CF Tree, which organizes them into subclusters.  
+- **Refinement**: BIRCH can condense the dataset into a more compact representation and then apply a clustering method (like hierarchical or partition-based) on these subclusters to get final clusters.
+
+### CF tree structure and operations
+
+A **CF Tree** consists of nodes that store **Clustering Features (CFs)** — typically, these are statistics like the number of points <Latex text="\(N\)"/>, the linear sum of points <Latex text="(\sum \mathbf{x}_i)"/>, and the sum of squares <Latex text="(\sum \mathbf{x}_i^2)"/> for points in that subcluster. Each node can have multiple entries (child subclusters), up to a branching factor <Latex text="\(B\)"/>. A threshold parameter <Latex text="\(T\)"/> controls how large the subclusters within a node can grow.
+
+- **Insertion**: When a new data point arrives, BIRCH navigates the tree to find the closest subcluster, checking if adding the point would exceed the threshold <Latex text="\(T\)"/>. If it does, BIRCH splits or creates a new subcluster.  
+- **Merging**: Subclusters that are very close can be merged, keeping the tree balanced and within the specified threshold.  
+- **Condensation**: By adjusting thresholds or rebalancing, BIRCH can refine the CF Tree to produce a more general or more detailed set of subclusters.
+
+Once the dataset is summarized by the CF Tree, a more standard clustering method can be run on these final subclusters, dramatically reducing the computational burden compared to dealing with all data points explicitly.
+
+### Advantages and limitations
+
+- **Advantages**  
+  - Efficient for large datasets, potentially in streaming contexts.  
+  - Incremental updates allow continuous refinement.  
+  - Memory usage is controlled by the CF Tree structure, avoiding a full distance matrix.
+
+- **Limitations**  
+  - Sensitive to the order of data insertion — early points can shape the tree structure in ways that might not be globally optimal.  
+  - Requires careful tuning of parameters like threshold <Latex text="\(T\)"/> and branching factor <Latex text="\(B\)"/>.  
+  - Results can be suboptimal if the final set of subclusters does not capture the global structure well.
+
+### Example use cases
+
+- **Online data stream clustering**: In network traffic monitoring or real-time sensor data, BIRCH can handle incoming points efficiently.  
+- **Data compression**: Even if the data is not streaming, BIRCH can compress large datasets into a manageable number of subclusters before applying a more computationally expensive method.  
+- **Real-time anomaly detection**: If new points do not fit well into existing subclusters, they might be flagged as potential outliers.
+
+## Implementation details and practical tips
+
+In real-world machine learning pipelines, it is crucial to adapt hierarchical clustering methods to your computational resources, data characteristics, and desired interpretability.
+
+### Data preprocessing (scaling, dimensionality reduction)
+
+- **Feature scaling**: If your dataset has attributes with vastly different scales, consider standardizing or normalizing them. For instance, standardization transforms each feature so that it has zero mean and unit variance:  
+  <Latex text="\( x_i' = \frac{x_i - \mu_x}{\sigma_x}\)"/>  
+  This prevents attributes with larger numerical ranges from dominating distance computations.  
+- **Dimensionality reduction**: Techniques such as <Highlight>PCA</Highlight>, <Highlight>t-SNE</Highlight>, or <Highlight>UMAP</Highlight> can make hierarchical clustering more tractable for high-dimensional data. Reducing dimensions not only speeds computation but can also enhance interpretability if the essential structure is preserved.
+
+### Handling large datasets
+
+- **Sampling**: For extremely large datasets, you might sample a subset of data points to build a dendrogram. If carefully done, sampling can reveal the overall structure with far less computational expense.  
+- **Mini-batch approaches**: Mini-batch schemes can approximate hierarchical clustering by merging micro-clusters incrementally, somewhat similar to BIRCH's philosophy.  
+- **External libraries**: Some frameworks, such as Spark's MLlib, provide approximate hierarchical clustering or allow distributed computations to handle big data effectively.
+
+### Computational complexity considerations
+
+- **Naive agglomerative clustering**: Typically <Latex text="\(O(n^2 \log n)\)"/> or <Latex text="\(O(n^2)\)"/> in time, requiring <Latex text="\(O(n^2)\)"/> memory for the distance matrix.  
+- **Divisive clustering**: Potentially even more expensive if you use repeated runs of partition-based methods at each split.  
+- **Optimized implementations**: Some libraries use efficient data structures or specialized algorithms (e.g., SLINK for single linkage) to reduce complexity.  
+- **BIRCH**: Has lower complexity in practice for massive datasets, but results can depend on input order and parameter tuning.
+
+### Software packages and libraries
+
+- **Python**  
+  - `scipy.cluster.hierarchy`: Offers linkage functions (single, complete, average, Ward's) and dendrogram plotting.  
+  - `sklearn.cluster`: Includes `AgglomerativeClustering` and `Birch` classes.  
+- **R**  
+  - `hclust`: Classic hierarchical clustering method; pairs well with the `dendextend` package for advanced visualization.  
+- **MATLAB**  
+  - `linkage` and `cluster` functions, similar to those in SciPy.  
+- **Spark MLlib**  
+  - For large-scale data, though the library primarily focuses on approximate or distributed approaches.  
+
+Here is a simple Python snippet showing agglomerative clustering using scikit-learn:
+
+<Code text={`
+import numpy as np
+from sklearn.cluster import AgglomerativeClustering
+from sklearn.metrics import silhouette_score
+
+# Example data: 2D points
+X = np.array([
+    [1, 2],
+    [1.5, 1.8],
+    [5, 8],
+    [8, 8],
+    [1, 0.6],
+    [9, 11]
+])
+
+# Perform agglomerative clustering
+# n_clusters=None means you might use distance_threshold to decide merges
+agg = AgglomerativeClustering(n_clusters=2, linkage='ward')
+labels = agg.fit_predict(X)
+
+print("Cluster labels:", labels)
+
+# Evaluate with silhouette score (just as an example)
+score = silhouette_score(X, labels)
+print("Silhouette score:", score)
+`}/>
+
+In this code, `AgglomerativeClustering` merges clusters using Ward's linkage until it forms the specified number of clusters (2 in this example). If you want to see the hierarchical structure, you can manually compute the linkage using `scipy.linkage` and plot a dendrogram with `scipy.dendrogram`.
+
+## Applications and real-world scenarios
+
+Hierarchical clustering's interpretability makes it a strong candidate in exploratory data analysis. Some typical applications include:
+
+- **Market segmentation**: Grouping customers based on behaviors, demographics, or purchasing patterns. A dendrogram can suggest how customer subgroups naturally form at different levels of specificity.  
+- **Image segmentation**: In computer vision, you can cluster pixel intensities or feature representations. Although other specialized methods are common, hierarchical clustering can reveal multi-level structures.  
+- **Genomic data analysis**: Clustering of gene expression patterns. The dendrogram can reflect how genes group by function, regulation, or organism classification.  
+- **Customer behavior analysis**: Extending beyond basic segmentation, you could track how clusters evolve over time, highlighting changes in customer preferences or loyalty.  
+- **Document clustering**: Grouping text documents by similarity for topic discovery, search optimization, or recommendation. Hierarchical clustering can expose finer or coarser topical divisions depending on the dendrogram cut.
+
+## Advanced topics
+
+While the foundational concepts cover much of typical usage, there are several advanced extensions and integrations that can enhance or complement hierarchical clustering.
+
+### Hybrid clustering methods
+
+Sometimes you can combine hierarchical and partition-based methods for better performance or more robust results:
+
+- **Hierarchical initialization of k-means**: First cluster the data hierarchically and pick cluster centroids (or representative points) as initial seeds for k-means, which helps avoid random initialization pitfalls.  
+- **Refinement via hierarchical clustering**: You could run a quick partition-based method (e.g., k-means) to obtain an initial grouping, then apply a small-scale hierarchical clustering on cluster centroids or medoids for a more nuanced final structure.
+
+### Clustering validity indices and internal measures
+
+To decide how many clusters to extract from a dendrogram, or to compare different linkage methods, you can use:
+
+- **Silhouette coefficient**: Measures how similar each point is to its own cluster compared to other clusters.  
+- **Calinski-Harabasz index**: Based on the ratio of between-cluster dispersion to within-cluster dispersion. Higher values indicate better separation.  
+- **Davies-Bouldin index**: Evaluates the average "similarity" between each cluster and its most similar cluster. Lower is better.
+
+### Combining hierarchical clustering with other techniques
+
+- **Dimensionality reduction**: Hierarchical clustering can be more effective after PCA or manifold learning. This is especially valuable in fields like text analysis, where thousands of features can degrade distance metrics.  
+- **Outlier detection**: By inspecting the dendrogram, you can spot outliers that merge at a very high distance. You might exclude or separately analyze those points.  
+- **Ensemble clustering**: Combine results of multiple clustering methods (including hierarchical) to obtain a consensus that may be more robust to noise or parameter choices.
+
+## Conclusion and future directions
+
+Hierarchical clustering provides a flexible and intuitive framework for exploring multilevel structures in data. You can start with an agglomerative or divisive approach, choose an appropriate distance metric and linkage method, and visualize the resulting dendrogram to uncover how your data might naturally group together. This approach is particularly attractive in settings where interpretability is essential, as you can pinpoint not only the final clusters but also the order in which points or clusters merge.
+
+In modern machine learning practice, hierarchical clustering remains popular in smaller or medium-scale scenarios, or in specialized large-scale situations tackled by algorithms like BIRCH. Researchers have developed GPU-accelerated implementations and approximate strategies (e.g., hierarchical mini-batch clustering) to cope with the computational demands of massive datasets. Additionally, the rise of deep learning and representation learning means that you can combine hierarchical clustering with learned embeddings to extract even richer insights, especially in fields like image, text, and speech analysis.
+
+When applying hierarchical clustering, I recommend you:
+
+1. Carefully choose distance metrics and linkage methods in line with domain requirements.  
+2. Consider dimensionality reduction if the feature space is large.  
+3. Use cluster validity indices (e.g., silhouette coefficient) to guide the choice of cut height in the dendrogram.  
+4. For large datasets, investigate specialized or approximate algorithms like BIRCH, or rely on distributed frameworks that scale hierarchical methods.  
+
+The future of hierarchical clustering likely includes further optimizations for big data, deeper integration with representation learning, and new ways of merging or splitting clusters that incorporate domain knowledge or advanced probabilistic approaches. Even as new clustering algorithms emerge, the interpretability and conceptual simplicity of hierarchical clustering make it an enduring, powerful tool in data science.

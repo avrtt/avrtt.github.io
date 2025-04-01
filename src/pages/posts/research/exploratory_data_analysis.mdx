@@ -1,0 +1,486 @@
+---
+index: 16
+indexCourse: 39
+indexFavorites:
+title: "Exploratory data analysis"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Exploratory data analysis"
+courseCategoryName: "Working with data"
+desc: "The most enjoyable part of the job"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "28.09.2022"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 1
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/exploratory_data_analysis.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/exploratory_data_analysis"
+slug: "/research/exploratory_data_analysis"
+---
+
+import Tooltip from "../../../components/Tooltip"
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+1. Introduction  
+   Definition of exploratory data analysis. Importance and objectives of EDA. Overview of common EDA tools and libraries.  
+2. Data loading and cleaning with pandas  
+   2.1 Importing data from various sources (CSV, Excel, SQL, etc.)  
+   2.2 Handling missing values and outliers  
+   2.3 Data transformations and feature engineering  
+   2.4 Summarizing data using descriptive statistics  
+3. Visualizing data with matplotlib  
+   3.1 Creating basic plots (line, bar, scatter)  
+   3.2 Customizing plots (titles, labels, legends)  
+   3.3 Handling multiple plots and subplots  
+   3.4 Saving and exporting visualizations  
+4. Statistical plots with seaborn  
+   4.1 Distribution plots (histogram, KDE, boxplot)  
+   4.2 Relational plots (scatter, line)  
+   4.3 Categorical plots (countplot, barplot, violinplot)  
+   4.4 Advanced customization and styling  
+5. Interactive visualizations with plotly  
+   5.1 Setting up and using plotly in Python  
+   5.2 Creating interactive charts and dashboards  
+   5.3 Plotly express vs. plotly graph_objects  
+   5.4 Exporting interactive plots for sharing  
+6. Combining multiple libraries for EDA  
+   Integrating pandas, matplotlib, seaborn, and plotly. Comparing the strengths of each library. Developing a comprehensive EDA workflow.  
+  
+Pandas, Matplotlib, Seaborn, Plotly, Sketch
+  
+[pandas_complete_tutorial_for_data_analysis_in_python.ipynb]
+[data_visualization_in_python.ipynb]
+[https://github.com/lenferdetroud/jupyter-notebooks/blob/master/linear_regression_and_plotting.ipynb](https://github.com/lenferdetroud/jupyter-notebooks/blob/master/linear_regression_and_plotting.ipynb)
+  
+Вам дают новый датасет. Что нужно сделать, прежде чем вы примените алгоритмы машинного обучения? Показать, что вы владеете разведочным анализом данных. Всё, что нужно — это [pandas](https://ru.wikipedia.org/wiki/Pandas). При правильном использовании это лучший инструмент в руках специалиста по данным. Для практики советую скачать как можно больше датасетов и отрабатывать задачи по анализу.
+На одном из моих собеседований по Data Science в эти задачи входил поиск датасета, его очистка, визуализация, [отбор признаков](https://tproger.ru/translations/feature-engineering-in-machine-learning/), построение и оценка модели. Всё это нужно было сделать в течение одного часа. Было сложно, но тренировки на протяжение нескольких недель даром не прошли.
+### Организация данных
+Невозможно избежать трёх вещей: смерти, налогов и задач по объединению, группированию и применению функций к датасетам. С такими задачами pandas тоже хорошо справляется.
+### Профайлинг данных
+Здесь нужно прочувствовать особенности датасета, форму числовых значений и дат, описание признаков. Всегда нужно обращать внимание на размер выборки, распределение признаков и какие по ним можно сделать выводы. Благодаря такому профайлингу быстро отсекаются незначительные категории, и уменьшается объём работы для вас и вашего алгоритма в дальнейшем.
+### Визуализация данных
+Тут нас интересует внешний вид распределения. Для этого пригодится библиотека seaborn. Если [диаграмма размаха](https://ru.wikipedia.org/wiki/%D0%AF%D1%89%D0%B8%D0%BA_%D1%81_%D1%83%D1%81%D0%B0%D0%BC%D0%B8) из прикладной статистики прошла мимо вас — самое время изучить её, поскольку вам нужно научиться видеть погрешности. Позже поговорим о том, что с ними делать. Гистограммы и графики [ядерной оценки плотности](https://ru.wikipedia.org/wiki/%D0%AF%D0%B4%D0%B5%D1%80%D0%BD%D0%B0%D1%8F_%D0%BE%D1%86%D0%B5%D0%BD%D0%BA%D0%B0_%D0%BF%D0%BB%D0%BE%D1%82%D0%BD%D0%BE%D1%81%D1%82%D0%B8) тоже помогают оценить характеристики распределения, после чего мы можем определить взаимосвязи между ними.
+### Обработка null-значений, синтаксических ошибок, дубликатов столбцов и строк
+От незаполненных полей в датасете никуда не деться. Каждое влияет на погрешность по-своему. Существует целая область, изучающая [методы](https://towardsdatascience.com/6-different-ways-to-compensate-for-missing-values-data-imputation-with-examples-6022d9ca0779) работы с null-полями. Однажды на собеседовании меня просили в деталях рассказать о каждом из них.
+Синтаксические ошибки возникают, когда данные в датасет добавлялись вручную, например через форму. Из-за этого можно получить ненужные уровни категорий, как "Горячий", "ГоРяЧий" и "горячий/n" и т. д.
+Напоследок о дубликатах. Повторяющиеся столбцы бесполезны, а вот повторение строк искажает баланс данных в сторону одного класса.
+Базовые приёмы подготовки данных: dummy переменные, one-hot encoding, tf-idf
+Техники препроцессинга данных можно вынести из этого поста в отдельный. Здесь рассказать про основы именно разведывательного анализа.
+
+*/}
+
+
+Exploratory data analysis (<Highlight>EDA</Highlight>) is a crucial step in any data-driven project, as it helps you develop an intuitive understanding of the dataset before diving into modeling or sophisticated algorithms. The term was popularized by John Tukey in the 1970s, who emphasized the importance of "letting the data speak for itself" rather than imposing strict statistical hypotheses too early. In modern machine learning and data science workflows, EDA remains equally essential, because it provides insights into a dataset's structure, highlights possible anomalies, and guides the choice of subsequent techniques.
+
+Common objectives of EDA include:
+- Identifying potential data quality issues such as missing values, outliers, duplicates, and incorrect data types.
+- Uncovering patterns, trends, and relationships between variables that can inform feature engineering and modeling strategies.
+- Gaining a broad statistical overview (e.g., means, medians, standard deviations, correlation coefficients) to assess distribution properties.
+- Visualizing the data to detect clusters or groupings, anomalies, or interesting structures that might not be obvious from summary statistics alone.
+
+Several powerful tools exist for EDA in the Python ecosystem. Most workflows begin with <Highlight>pandas</Highlight> for data loading and cleaning, then utilize plotting libraries such as <Highlight>matplotlib</Highlight> for fundamental charting and <Highlight>seaborn</Highlight> for statistical visualizations. Finally, for interactive and shareable dashboards, <Highlight>plotly</Highlight> is an increasingly popular choice. This article walks through a typical EDA workflow, exploring the practical uses of these libraries, the theory behind the techniques, and helpful tips for ensuring your analysis remains robust and insightful.
+
+<Image alt="An overview of the EDA workflow" path="" caption="Exploratory Data Analysis often begins with data loading and cleaning, followed by descriptive statistics and various forms of visualization." zoom="false" />
+
+
+## Data loading and cleaning with pandas
+
+Perhaps the most fundamental step in your EDA journey involves importing, merging, and cleaning datasets. Before generating any plots or running statistical tests, it is vital to ensure your data is properly formatted, consistent, and free of major errors. This step is often the most time-consuming but is indispensable for a trustworthy analysis.
+
+### Importing data from various sources (CSV, Excel, SQL, etc.)
+
+The <Highlight>pandas</Highlight> library simplifies data ingestion from multiple formats and sources:
+
+<Code text={`
+import pandas as pd
+
+# Load data from a CSV file
+df_csv = pd.read_csv("data.csv")
+
+# Load data from an Excel file
+df_excel = pd.read_excel("data.xlsx", sheet_name="Sheet1")
+
+# Load data from a SQL database
+import sqlite3
+conn = sqlite3.connect("database.db")
+df_sql = pd.read_sql_query("SELECT * FROM table_name", conn)
+`}/>
+
+Most real-world projects require combining multiple files or tables into a single unified dataset. <Highlight>pandas.merge()</Highlight> and <Highlight>pandas.concat()</Highlight> are frequently used for table joins or vertical concatenations, respectively. These operations help create a consolidated dataframe suitable for analysis.
+
+### Handling missing values and outliers
+
+Missing data appears in almost every dataset and can significantly impact the results of an analysis. Common causes of missing values include incomplete data collection, user input errors, and merges that introduce mismatched records. Handling these is context-dependent but often involves one of the following:
+
+- **Dropping missing rows**: Useful when only a small percentage of entries are missing, or when the missingness appears random and does not bias the dataset.
+- **Imputing missing values**: Replacing <Highlight>NaN</Highlight> entries with some approximation, such as the mean, median, mode, or a prediction model specifically trained for imputation (<Tooltip text="Imputation models might include kNN, regression, or MICE (Multiple Imputation by Chained Equations)."/>).
+- **Leaving them as is**: Sometimes missing values carry semantic meaning, e.g., "no response" for certain types of survey data.
+
+An example of applying simple imputation with the mean:
+
+<Code text={`
+# Mean imputation for a specific column
+df_csv["column_of_interest"].fillna(
+    df_csv["column_of_interest"].mean(), 
+    inplace=True
+)
+`}/>
+
+Outliers — extreme or inconsistent points — can skew your distributions and lead to incorrect conclusions. One way to detect outliers is via the <Highlight>Interquartile Range (IQR)</Highlight> method:
+
+<Latex text="\( Q1 = \text{the first quartile} \)"/>
+<Latex text="\( Q3 = \text{the third quartile} \)"/>
+<Latex text="\( IQR = Q3 - Q1 \)"/>
+
+Any data point <Latex text="\( x \)"/> that satisfies:
+<Latex text="\[ x < Q1 - 1.5 \times IQR \quad\text{or}\quad x > Q3 + 1.5 \times IQR \]"/>
+
+is often treated as a potential outlier (though domain knowledge should guide any decisions to remove or cap these values). Modern robust techniques like DBSCAN (for outlier detection) or robust scalers (that reduce the influence of outliers) might also be used depending on the context (Wu and gang, NeurIPS 2023 introduced a semi-supervised approach for automatic outlier detection in high-dimensional data, illustrating advanced strategies to handle complex scenarios).
+
+### Data transformations and feature engineering
+
+Transforming variables into more suitable representations can illuminate hidden patterns and make modeling more effective. These transformations might include:
+- **Log transformations** for highly skewed distributions.
+- **Scaling** (standardization or min-max normalization) for variables on vastly different numeric ranges.
+- **Combining categories** to reduce dimensionality or group rare classes.
+- **Feature extraction** (e.g., extracting day of week from a timestamp or text-based features from string fields).
+
+In practice, a thorough EDA might reveal that certain features have a power-law distribution, prompting a log or Box-Cox transformation. Or you might discover unexpected category duplications (like "Hot," "HOT," "Hot/n") caused by inconsistent data entry. Resolving these issues ensures more consistent and accurate downstream analysis.
+
+### Summarizing data using descriptive statistics
+
+Pandas offers convenient methods for generating quick summaries:
+
+<Code text={`
+# Displays basic descriptive statistics for each column
+df_csv.describe()
+
+# Lists column names, data types, and memory usage
+df_csv.info()
+`}/>
+
+These commands highlight the most common data types, shape, range of values, and central tendencies (mean, median, etc.), which usually serve as the first indicators of potential data anomalies or relationships worth exploring further. You might also consider data profiling libraries (e.g., pandas-profiling or ydata-profiling) for automated generation of summary reports, histograms, correlation matrices, and more.  
+
+
+## Visualizing data with matplotlib
+
+<Highlight>matplotlib</Highlight> is the most widely used base library for creating static plots in Python. While other tools (like seaborn and plotly) build upon matplotlib's functionalities, understanding its core principles gives you granular control over plot aesthetics and layout.
+
+### Creating basic plots (line, bar, scatter)
+
+A handful of basic plot types can cover a surprising range of scenarios. For instance:
+
+<Code text={`
+import matplotlib.pyplot as plt
+
+# Line plot
+plt.plot(df_csv["time"], df_csv["sensor_reading"])
+plt.title("Sensor Reading Over Time")
+plt.xlabel("Time")
+plt.ylabel("Reading")
+plt.show()
+
+# Bar plot
+categories = df_csv["category_col"].value_counts()
+plt.bar(categories.index, categories.values)
+plt.title("Category Distribution")
+plt.xlabel("Category")
+plt.ylabel("Count")
+plt.show()
+
+# Scatter plot
+plt.scatter(df_csv["feature1"], df_csv["feature2"])
+plt.title("Relationship between Feature1 and Feature2")
+plt.xlabel("Feature1")
+plt.ylabel("Feature2")
+plt.show()
+`}/>
+
+The line plot is useful for time-series analysis or continuous signals, the bar plot is common for categorical data counts, and the scatter plot reveals pairwise relationships or clusters in the data.
+
+### Customizing plots (titles, labels, legends)
+
+Beyond these basic operations, matplotlib provides a highly flexible architecture for customizing every element, including plot titles, axes labels, legends, and annotations. For example:
+
+<Code text={`
+plt.figure(figsize=(8, 6))
+plt.scatter(df_csv["x"], df_csv["y"], color="green", marker="x", alpha=0.7)
+plt.title("Customized Scatter Plot")
+plt.xlabel("X Values")
+plt.ylabel("Y Values")
+plt.legend(["Data Points"], loc="upper left")
+plt.grid(True)
+plt.show()
+`}/>
+
+This snippet demonstrates how to configure figure size, marker style, transparency (<Highlight>alpha</Highlight>), and a legend. These tweaks often increase the clarity of your plots and emphasize the key insight you want to convey.
+
+### Handling multiple plots and subplots
+
+When comparing variables side-by-side or illustrating multiple features at once, you can employ subplots:
+
+<Code text={`
+fig, axs = plt.subplots(1, 2, figsize=(12, 5))
+axs[0].hist(df_csv["featureA"], bins=20, color="blue")
+axs[0].set_title("Distribution of Feature A")
+axs[1].boxplot(df_csv["featureB"].dropna())
+axs[1].set_title("Boxplot of Feature B")
+plt.tight_layout()
+plt.show()
+`}/>
+
+Subplots help present different distributions or relationships together, which is especially valuable in EDA where you often compare multiple aspects of a dataset at a glance.
+
+### Saving and exporting visualizations
+
+In a collaborative environment, you typically share plots as images or embed them into reports:
+
+<Code text={`
+# Save current figure as a PNG image
+plt.savefig("my_plot.png", dpi=300)
+plt.close()
+`}/>
+
+This approach is quite helpful for versioning your visualizations or including them in notebooks and presentations.  
+
+
+## Statistical plots with seaborn
+
+<Highlight>seaborn</Highlight> is a Python data visualization library built on top of matplotlib. It offers a high-level interface for drawing attractive and informative statistical plots, making it well-suited for quickly exploring relationships in your data.
+
+### Distribution plots (histogram, KDE, boxplot)
+
+Seaborn's hallmark is simplifying the creation of distribution-oriented visualizations that reveal the underlying statistical patterns. For instance:
+
+<Code text={`
+import seaborn as sns
+
+# Histogram
+sns.histplot(data=df_csv, x="featureC", bins=30, kde=False)
+plt.title("Histogram of Feature C")
+plt.show()
+
+# Kernel density estimate (KDE)
+sns.kdeplot(data=df_csv, x="featureC", shade=True)
+plt.title("KDE of Feature C")
+plt.show()
+
+# Boxplot
+sns.boxplot(data=df_csv, x="category_col", y="numerical_col")
+plt.title("Boxplot grouped by Category")
+plt.show()
+`}/>
+
+- **Histogram**: Displays frequency distribution by dividing the data into bins.  
+- **KDE**: Provides a smooth curve representing the continuous probability density function of a variable.  
+- **Boxplot**: Emphasizes medians, quartiles, and potential outliers. It is a staple of EDA for quickly spotting distribution asymmetry or extreme values.
+
+### Relational plots (scatter, line)
+
+Seaborn enhances basic relational plots with built-in regression lines, confidence intervals, or additional grouping:
+
+<Code text={`
+# Scatter plot with regression line
+sns.regplot(data=df_csv, x="feature1", y="feature2", scatter_kws={"alpha":0.5})
+plt.title("Scatter + Regression Line")
+plt.show()
+
+# Line plot with grouping
+sns.lineplot(data=df_csv, x="time", y="value", hue="group_col")
+plt.title("Line Plot by Group")
+plt.show()
+`}/>
+
+Here, <Highlight>regplot</Highlight> automatically fits a simple linear regression line to help you see the correlation between two variables. Similarly, <Highlight>lineplot</Highlight> can group lines by a categorical variable, making it effortless to compare multiple subgroups.
+
+### Categorical plots (countplot, barplot, violinplot)
+
+When analyzing categorical variables, seaborn offers specialized plots:
+
+<Code text={`
+# Countplot
+sns.countplot(data=df_csv, x="category_col")
+plt.title("Count of Each Category")
+plt.show()
+
+# Barplot (aggregates a numerical value by category)
+sns.barplot(data=df_csv, x="category_col", y="numerical_col", estimator=np.mean, ci="sd")
+plt.title("Average Value per Category with Std. Deviation")
+plt.show()
+
+# Violinplot (combines boxplot + KDE)
+sns.violinplot(data=df_csv, x="category_col", y="numerical_col")
+plt.title("Violin Plot")
+plt.show()
+`}/>
+
+A <Highlight>violinplot</Highlight> merges the concept of a boxplot with a KDE, showing both the quartiles and the probability distribution shape of the data, which can be more informative than a simple boxplot alone.
+
+### Advanced customization and styling
+
+You can style all seaborn plots globally using <Highlight>sns.set_theme()</Highlight> or switch among different built-in themes:
+
+<Code text={`
+sns.set_theme(style="whitegrid", palette="muted")
+sns.boxplot(data=df_csv, x="category_col", y="value_col")
+plt.title("Styled Boxplot")
+plt.show()
+`}/>
+
+Additionally, advanced developers often mix seaborn's high-level syntax with the fine-tuned capabilities of matplotlib for more specialized customizations.
+
+
+## Interactive visualizations with plotly
+
+<Highlight>plotly</Highlight> is another powerful visualization library that generates interactive charts. It is particularly helpful for dashboards or web-based demos, enabling users to hover, zoom, and filter data in real-time. 
+
+### Setting up and using plotly in Python
+
+To begin:
+
+<Code text={`
+import plotly.express as px
+
+# Quick example with plotly.express
+fig = px.scatter(df_csv, x="feature1", y="feature2", color="category_col")
+fig.show()
+`}/>
+
+This snippet creates an interactive scatter plot with color encoding for categories. By default, you can hover over points to see underlying values, and you can pan or zoom within the chart area.
+
+### Creating interactive charts and dashboards
+
+Plotly supports many chart types (line, scatter, bar, pie, choropleth, 3D scatter, etc.) and can integrate with <Highlight>Dash</Highlight> for building full-featured web apps and dashboards. For example, a quick interactive bar chart:
+
+<Code text={`
+fig = px.bar(df_csv, x="category_col", y="numerical_col", title="Interactive Bar Chart")
+fig.update_layout(barmode='group')
+fig.show()
+`}/>
+
+You can further customize each plot's layout, color scheme, and interactive tooltips.
+
+### Plotly express vs. plotly graph_objects
+
+<Highlight>plotly.express</Highlight> offers a simple, concise syntax for generating many standard figures quickly. If you require more granular control, the <Highlight>graph_objects</Highlight> API gives full control over each plot element:
+
+<Code text={`
+import plotly.graph_objects as go
+
+trace = go.Scatter(
+    x=df_csv["feature1"], 
+    y=df_csv["feature2"],
+    mode="markers",
+    marker=dict(size=8, color="blue", opacity=0.6),
+    name="Data Points"
+)
+
+layout = go.Layout(
+    title="Customized Scatter Plot",
+    xaxis=dict(title="Feature 1"),
+    yaxis=dict(title="Feature 2")
+)
+
+fig = go.Figure(data=[trace], layout=layout)
+fig.show()
+`}/>
+
+The trade-off is that <Highlight>graph_objects</Highlight> requires more verbose code but grants greater flexibility in customizing each chart.
+
+### Exporting interactive plots for sharing
+
+Plotly figures can be exported as static images (PNG, SVG) or HTML files:
+
+<Code text={`
+# Export to an HTML file
+fig.write_html("my_interactive_plot.html")
+`}/>
+
+This approach preserves the interactivity, making it easy to distribute or embed the plot in internal documentation, wikis, or Jupyter notebooks.
+
+<Image alt="Plotly interactive histogram example" path="" caption="Interactive plots allow panning, zooming, and tooltips for deeper insights." zoom="false" />
+
+
+## Combining multiple libraries for EDA
+
+Each library — pandas, matplotlib, seaborn, and plotly — has its unique strengths, but a robust EDA typically integrates them in a complementary manner. For instance:
+
+1. **Data loading and cleaning with pandas**: Quickly load various data sources, merge them, handle missing values, and create derived features.  
+2. **Preliminary investigations and basic plotting with matplotlib**: Acquire a first impression of distributions and relationships.  
+3. **In-depth statistical visualization with seaborn**: Uncover deeper insights into the data's structure and relationships, e.g., correlation heatmaps, advanced boxplots, or regression lines.  
+4. **Interactive dashboards with plotly**: Allow colleagues, stakeholders, or your future self to interact with the data and discover patterns beyond static visuals.  
+
+A comprehensive EDA workflow might look like this:
+
+<Code text={`
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import plotly.express as px
+
+# 1. Load and clean data
+df = pd.read_csv("combined_data.csv")
+df.dropna(subset=["critical_column"], inplace=True)
+df["log_feature"] = df["skewed_feature"].apply(lambda x: np.log1p(x))
+
+# 2. Preliminary summary
+print(df.describe())
+print(df.info())
+
+# 3. Quick histograms/boxplots (matplotlib)
+plt.hist(df["log_feature"], bins=30)
+plt.title("Distribution of Log-Transformed Feature")
+plt.show()
+
+# 4. Statistical scatter plot (seaborn)
+sns.scatterplot(data=df, x="feature1", y="feature2", hue="category_col")
+plt.title("Seaborn Scatter Plot with Category Hue")
+plt.show()
+
+# 5. Interactive analysis (plotly)
+fig = px.scatter(df, x="feature1", y="feature2", color="category_col")
+fig.update_layout(title="Interactive Scatter Plot")
+fig.show()
+`}/>
+
+By taking advantage of each library's unique capabilities, you create a more holistic picture of your dataset. This synergy not only reveals interesting aspects of the data but also helps build trust in your eventual models, providing confidence that no critical pattern or anomaly was overlooked in the exploratory phase.
+
+
+<br/>
+
+EDA sets the stage for all subsequent analytical or modeling steps. From verifying data integrity to highlighting subtle relationships, it empowers you to confidently decide on feature engineering, model selection, and hyperparameter tuning. By combining efficient data handling with powerful visualizations and statistical methods, your EDA workflow can become a natural extension of the scientific process — continually testing hypotheses, refining insights, and surfacing new questions. The techniques and tools discussed here form a foundation that you will repeatedly refine and adapt as you tackle increasingly complex datasets in your data science and machine learning journey.

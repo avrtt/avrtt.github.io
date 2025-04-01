@@ -1,0 +1,604 @@
+---
+index: 69
+indexCourse: 78
+indexFavorites:
+title: "Diffusion models"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Diffusion models"
+courseCategoryName: "Generative models"
+desc: "Harnessing entropy to create art"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "05.09.2023"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 2
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/diffusion_models.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/diffusion_models"
+slug: "/research/diffusion_models"
+---
+
+import Tooltip from "../../../components/Tooltip"
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+https://huggingface.co/learn/diffusion-course/unit0/1
+[Introduction to Diffusion Models](https://huggingface.co/learn/computer-vision-course/en/unit5/generative-models/diffusion-models/introduction)
+[Introduction to Stable Diffusion](https://huggingface.co/learn/computer-vision-course/en/unit5/generative-models/diffusion-models/stable-diffusion)
+[Control over Diffusion Models](https://huggingface.co/learn/computer-vision-course/en/unit5/generative-models/diffusion-models/simple-explanation)
+
+*/}
+
+
+{/*
+
+1. Introduction and Motivation  
+- Historical context and early research on generative modeling  
+- Need for stable and diverse sample generation in high-dimensional spaces  
+- Comparison with other generative approaches (GANs, VAEs)  
+2. Applications (brief mention)  
+3. Math behind  
+- Relevance of stochastic processes and connections to Brownian motion  
+- Revisiting Markov processes and stochastic differential equations  
+- Score matching and denoising objectives  
+- Energy-based interpretations and connections to gradient-based generative models  
+- ...  
+4. The Diffusion Process  
+- Forward diffusion: adding noise progressively over multiple timesteps  
+- Reverse diffusion: iterative denoising to recover the clean signal  
+- Intuition behind the forward–reverse mapping and the time-reversal concept  
+- Continuous vs. discrete-time diffusion formulations  
+- Influence of different noise schedules (linear, cosine, etc.)  
+5. Architecture and Training  
+- Common backbone architectures (e.g., U-Net, Transformers, ResNets)  
+- Use of attention mechanisms and other advanced layers  
+- Parameterizing the noise level or score function  
+- Key loss functions (e.g., mean-squared error in noise space, KL divergence)  
+- Optimization strategies and practical training considerations (batch size, learning rate)  
+- Role of variance scheduling and hyperparameter choices  
+- Model convergence and evaluation metrics  
+6. Conditional diffusion models for controlled generation  
+7. Multimodal diffusion models (text-to-image, image-to-audio, etc.)  
+8. Improved sampling strategies and accelerated inference methods  
+9. Hybrid models combining diffusion and autoregressive components  
+10. Latent diffusion approaches for efficient high-resolution synthesis  
+11. Memory and computational considerations for large-scale training  
+
+*/}
+
+
+The field of generative modeling — centered on teaching machines to produce novel, high-quality samples that mimic the distribution of real-world data — has burgeoned over the last decade. Though traditional generative processes often traced their theoretical lineage to classical probability distributions and Bayesian inference, more contemporary advances, particularly in deep learning, have seen the emergence of remarkable frameworks such as Generative Adversarial Networks (GANs), Variational Autoencoders (VAEs), normalizing flows, and more. These models have enjoyed extraordinary success in generating highly detailed images, textual content, and even audio waveforms that are strikingly close to authentic data. 
+
+However, each category of generative models comes with its inherent set of challenges and quirks. GANs, while capable of producing astonishingly realistic images, can suffer from training instabilities, mode collapse, and the need for a delicate balance (or "minimax" game) between generator and discriminator. VAEs, for their part, often generate more "blurry" outputs, grappling with the tension between reconstruction fidelity and the regularization imposed by the latent space. Normalizing flows often require carefully engineered transformations that preserve invertibility and can be challenging to scale or to apply effectively for high-dimensional data.
+
+Beginning around 2015, a distinct line of research took root, seeking to re-express generative modeling in a manner that more explicitly aligns with principles of stochastic processes. Early works like those by Sohl-Dickstein and gang (2015) introduced the notion that data could be progressively corrupted into noise, and then learned to be inverted back to its clean form, effectively bridging principles of forward and reverse processes in Markov chains. Later, a series of influential papers by Song and gang (2020, 2021) and Ho and gang (2020) refined this idea into a powerful class of methods that are now broadly called <Highlight>diffusion models</Highlight>. 
+
+Diffusion models solve the generative challenge by constructing a carefully designed diffusion (or noise) process that incrementally perturbs data into pure noise over multiple timesteps, and then learns a reverse process that iteratively denoises — or "diffuses backward" — into a coherent sample. In comparison to the adversarial interplay found in GANs, diffusion-based generative modeling often follows a more stable and interpretable training paradigm, underpinned by well-defined likelihood principles and strong connections to classical ideas in statistical physics, Brownian motion, and score matching.
+
+In broad strokes, the reason diffusion models have generated so much excitement is twofold. First, they have proven capable of producing samples that rival, and sometimes surpass, the fidelity and diversity of GAN-based approaches. Second, their training procedure is often more stable, making them amenable to systematic improvements and expansions to higher-dimensional tasks. Moreover, because diffusion models can be related to denoising and score matching objectives, they stand on a robust theoretical foundation that lends itself to extension, analysis, and synergy with other generative frameworks.
+
+### Historical context and early research on generative modeling
+
+Generative modeling has a long and storied history, with early approaches such as Gaussian mixture models and Hidden Markov Models. As computational power grew and neural networks came to the fore, techniques like the Boltzmann machine and its variants introduced the notion of learning distributions in high-dimensional spaces through energy-based approaches. The real renaissance in modern generative modeling, however, was spurred by the introduction of the VAE (Kingma and Welling, 2014) and GAN (Goodfellow and gang, 2014) frameworks, which led to an avalanche of research exploring how to better optimize, scale, and interpret these methods.
+
+In 2015, Sohl-Dickstein and gang published "Deep Unsupervised Learning using Nonequilibrium Thermodynamics," a paper that laid the groundwork for thinking about generation in terms of forward (corruption) and reverse (generation) processes. Around 2020, Ho and gang (2020) popularized <Tooltip text="Denoising Diffusion Probabilistic Models"/> (DDPM) by showing that such a procedure could yield new state-of-the-art sample quality in image generation tasks, while also offering conceptual clarity and stable training dynamics. This was quickly followed by work from Song and gang, who developed closely related methods often referred to under the broader banner of "score-based generative modeling". 
+
+### Need for stable and diverse sample generation in high-dimensional spaces
+
+High-dimensional datasets, especially images, video frames, audio signals, or molecular configurations, are notoriously challenging for generative modeling. Data in such spaces can be extremely diverse, with complex, multi-modal distributions that are easy for naive algorithms to either collapse (producing repetitive samples) or fail to model entirely. Since diffusion models decouple the generative process into incremental transitions — starting from pure noise and carefully denoising step-by-step — this approach can often capture a wider spread of modes in the data distribution. It also has a more straightforward training objective, which typically corresponds to a simple mean-squared error (MSE) or Kullback–Leibler (KL) divergence loss in noise space, drastically reducing issues related to adversarial training loops, mode collapse, or high variance gradients.
+
+Moreover, the progressive addition of noise in the forward direction ensures that by the time the data is fully diffused, it is nearly indistinguishable from a sample drawn from a known prior (commonly an isotropic Gaussian). The model then effectively "learns how to denoise" at each step, giving a robust theoretical handle on the sample generation process. 
+
+### Comparison with other generative approaches (GANs, VAEs)
+
+While diffusion models share some similarities with VAEs in how the generative process can be seen as a form of latent variable modeling, the differences are substantial:
+
+- <Highlight>VAEs</Highlight> typically learn an encoder and decoder that compress data into a latent space, with a corresponding prior distribution imposed on that latent space. Diffusion models, on the other hand, do not necessarily rely on a single latent space that has to be learned. Instead, they operate in an expanded space of timesteps and noise levels, effectively providing a schedule of local, short-step transformations.
+
+- <Highlight>GANs</Highlight> rely on a discriminator and generator that must co-evolve through adversarial training. If training is successful, they can yield extremely sharp, realistic images. However, achieving that success can be non-trivial. Diffusion models skip the adversarial min-max confrontation, focusing on a single loss that tries to predict or approximate the noise at each step, which usually translates into more stable training and less hyperparameter fiddling.
+
+In many domains, diffusion models can achieve or exceed state-of-the-art quality, particularly in unconditional image generation tasks, with the added advantage of improved log-likelihood estimates. More recent lines of work focus on bridging these approaches — for instance, combining a latent space approach (akin to VAEs) with diffusion-like iterative refinement steps to allow for higher-resolution images generated at a fraction of the computational cost. These hybrid solutions will be discussed in more detail in later sections. 
+
+## Applications (brief mention)
+
+Even though I will not dwell extensively on applications here, it is worth highlighting the broad set of tasks that diffusion models have already influenced:
+
+- **Image generation and editing**: From unconditional image synthesis to inpainting, super-resolution, and style transfer, diffusion-based models can produce strikingly realistic images, as well as enable fine-grained editing of images by conditioning on partial data or textual prompts.
+
+- **Text-to-image generation**: When combined with text encoders (e.g., Transformers), diffusion models can produce images based on textual descriptions or prompts, which is a crucial component of various large-scale generative platforms.
+
+- **Audio and speech processing**: Diffusion models have been adapted for generating raw audio waveforms, enabling tasks like neural vocoding, text-to-speech synthesis, and music generation. 
+   
+- **Molecule and protein structure design**: Stochastic generation of molecular structures has become feasible with diffusion approaches, since they can learn physically plausible patterns that obey chemical constraints.
+
+- **Point-cloud and 3D shape generation**: Similarly, for 3D data, diffusion-based approaches can stably handle the incremental noise corruption of 3D coordinates, leading to new shapes or reconstructions in computational geometry or robotics.
+
+Such applications are growing daily as the technique is extended into new modalities and research domains, serving to underline the versatility and power of diffusion frameworks.
+
+## Math behind
+
+Diffusion models are intimately connected to foundational concepts in probability theory and stochastic calculus. At their core, these models revolve around a <Highlight>forward diffusion process</Highlight> that systematically corrupts data into noise, and a corresponding <Highlight>reverse diffusion process</Highlight> that reconstructs data from noise. The theoretical underpinnings hinge on Markov chains, stochastic differential equations (SDEs), and the principle of score matching — the notion of approximating the gradient of a log-probability distribution.
+
+### Relevance of stochastic processes and connections to Brownian motion
+
+Consider a classic one-dimensional Brownian motion (or Wiener process). Over time, a sample path in Brownian motion executes a random walk where each increment is drawn from a Gaussian distribution with mean zero and variance proportional to the time step. In higher dimensions, Brownian motion likewise spreads out from the origin in a spherically symmetric fashion.
+
+To adapt this idea for generative modeling, we interpret data points as initial conditions that, over multiple timesteps, get gradually diffused with noise. Formally, one might define a forward process 
+<Latex text="\(q(\mathbf{x}_t \mid \mathbf{x}_{t-1})\)"/>
+such that 
+<Latex text="\(\mathbf{x}_t\)"/>
+is a noisy version of 
+<Latex text="\(\mathbf{x}_{t-1}\)"/>
+. By choosing an appropriately small noise variance at each step, we can ensure that 
+<Latex text="\(\mathbf{x}_t\)"/>
+remains close to 
+<Latex text="\(\mathbf{x}_{t-1}\)"/>
+while still gradually losing the specific data characteristics. After a sufficient number of steps 
+<Latex text="\(T\)"/>, <Latex text="\(\mathbf{x}_T\)"/>
+should be nearly indistinguishable from a standard Gaussian noise vector, facilitating an easy-to-sample prior distribution.
+
+### Revisiting Markov processes and stochastic differential equations
+
+A diffusion model can be represented in discrete time via a Markov chain, or in continuous time via an SDE. In a discrete-time Markov chain representation, we define:
+
+<Latex text="\[
+q(\mathbf{x}_1, \ldots, \mathbf{x}_T \mid \mathbf{x}_0) = \prod_{t=1}^T q(\mathbf{x}_t \mid \mathbf{x}_{t-1}),
+\]"/>
+
+where 
+<Latex text="\(\mathbf{x}_0\)"/>
+is a real datapoint (e.g., an image), and 
+<Latex text="\(\mathbf{x}_T\)"/>
+is the fully noised version. For instance, one might choose:
+
+<Latex text="\[
+q(\mathbf{x}_t \mid \mathbf{x}_{t-1}) = \mathcal{N}\bigl(\mathbf{x}_t; \sqrt{1 - \beta_t}\,\mathbf{x}_{t-1}, \beta_t \mathbf{I}\bigr),
+\]"/>
+
+where 
+<Latex text="\(\beta_t\)"/>
+is a noise schedule hyperparameter. This ensures that the magnitude of noise added depends on the step 
+<Latex text="\(t\)"/> and is typically chosen to vary from small values at early steps (to preserve data structure) to larger values at later steps (to encourage randomization).
+
+In the continuous-time perspective, one might instead define an SDE of the form:
+
+<Latex text="\[
+d\mathbf{x} = f(t, \mathbf{x})\,dt + g(t)\,d\mathbf{w},
+\]"/>
+
+where 
+<Latex text="\(\mathbf{w}\)"/>
+represents a Wiener process (i.e., standard Brownian motion). For generative modeling, special forms of <Latex text="\(f\)"/> and <Latex text="\(g\)"/> are chosen so that the distribution of <Latex text="\(\mathbf{x}_t\)"/> transitions smoothly from data-like distributions to near-Gaussian. One then trains a neural network to approximate the reverse SDE that would map from the noisy distribution back to clean data.
+
+### Score matching and denoising objectives
+
+One of the key breakthroughs in diffusion models is the connection to <Highlight>score matching</Highlight>. Suppose we have a data distribution 
+<Latex text="\(p_{data}(\mathbf{x})\)"/>
+. The <Highlight>score</Highlight> of this distribution is defined as:
+
+<Latex text="\[
+\nabla_{\mathbf{x}} \log p_{data}(\mathbf{x}).
+\]"/>
+
+Learning this score function directly is often challenging. However, if we add small Gaussian noise to 
+<Latex text="\(\mathbf{x}\)"/>
+and call the resulting sample 
+<Latex text="\(\mathbf{y}\)"/>, we can relate <Latex text="\(\nabla_{\mathbf{y}} \log p(\mathbf{y})\)"/> to the original score <Latex text="\(\nabla_{\mathbf{x}} \log p_{data}(\mathbf{x})\)"/> under certain conditions. This leads to the concept of <Highlight>denoising score matching</Highlight>, introduced by Vincent (2011), where a neural network is trained to predict the original sample <Latex text="\(\mathbf{x}\)"/> from the noisy version <Latex text="\(\mathbf{y}\)"/>. 
+
+In diffusion models, at each timestep 
+<Latex text="\(t\)"/>, the training objective typically asks the model to predict either the noise added at that step or the clean sample itself (both formulations exist). For example, a frequent objective is:
+
+<Latex text="\[
+\mathcal{L}(\theta) = \mathbb{E}_{t,\,\mathbf{x}_0,\,\boldsymbol{\epsilon}} \bigl[ \|\boldsymbol{\epsilon} - \boldsymbol{\epsilon}_\theta(\mathbf{x}_t, t)\|^2 \bigr],
+\]"/>
+
+where 
+<Latex text="\(\mathbf{x}_t\)"/>
+is the noisy sample at time 
+<Latex text="\(t\)"/>, <Latex text="\(\boldsymbol{\epsilon}\)"/> is the actual Gaussian noise used in the forward process, and <Latex text="\(\boldsymbol{\epsilon}_\theta\)"/> is the prediction from the network parameterized by <Latex text="\(\theta\)"/>. Minimizing this objective effectively trains the network to denoise <Latex text="\(\mathbf{x}_t\)"/> by subtracting out the predicted noise.
+
+### Energy-based interpretations and connections to gradient-based generative models
+
+Diffusion models can also be viewed as a type of energy-based model (EBM). If one considers the reverse diffusion steps to be gradients of a log-likelihood function, then learning the backward transitions amounts to modeling the gradient of the log density of the data. Indeed, part of the reason for the stable performance of diffusion models is that training the denoiser at each step can be interpreted as performing local maximum-likelihood estimation, akin to learning local energies. 
+
+This viewpoint illuminates similarities with older ideas like score matching with Langevin dynamics. In fact, if you approximate the score of the distribution at each step, you can run a gradient-based sampler (like Langevin sampling) to eventually produce a sample from the learned distribution. Diffusion models formalize this idea by discretizing it across a chain of timesteps, carefully calibrating how noise is added and removed at each step.
+
+## The diffusion process
+
+Having laid out the overarching motivations and mathematical background, let me describe the forward–reverse pair central to diffusion modeling in more detail.
+
+### Forward diffusion: adding noise progressively over multiple timesteps
+
+In a discrete-time formulation, one typically defines a sequence of noisy latents 
+<Latex text="\(\mathbf{x}_1, \mathbf{x}_2, ..., \mathbf{x}_T\)"/>
+where 
+<Latex text="\(\mathbf{x}_0\)"/>
+is the original data point (for example, a real image). The forward diffusion process is:
+
+<Latex text="\[
+q(\mathbf{x}_t \mid \mathbf{x}_{t-1}) = \mathcal{N}\!\Bigl(\mathbf{x}_t; \sqrt{1 - \beta_t}\,\mathbf{x}_{t-1}, \beta_t \mathbf{I}\Bigr).
+\]"/>
+
+Here, each 
+<Latex text="\(\beta_t\)"/>
+parameter in 
+<Latex text="\(0< t \le T\)"/>
+is a small constant or function that controls the noise variance at step 
+<Latex text="\(t\)"/>. Intuitively, this means that each intermediate state is a noisy version of the previous one. After enough steps, 
+<Latex text="\(\mathbf{x}_T\)"/>
+becomes effectively a random sample from an isotropic Gaussian, provided the noise schedule is designed well (for instance, linearly increasing <Latex text="\(\beta_t\)"/> or using a more sophisticated schedule like a cosine function).
+
+By design, the forward process is easy to sample from. You do not need a learned network for it; it is just a Markov chain that adds noise. More interesting is that for any <Latex text="\(t\)"/>, one can derive a closed-form expression for 
+<Latex text="\(\mathbf{x}_t\)"/>
+in terms of 
+<Latex text="\(\mathbf{x}_0\)"/>
+and independent noise, which is often exploited to sample <Latex text="\(\mathbf{x}_t\)"/> at any arbitrary step without enumerating all the intermediate steps. For instance:
+
+<Latex text="\[
+q(\mathbf{x}_t \mid \mathbf{x}_0) = \mathcal{N}\!\bigl(\mathbf{x}_t; \sqrt{\bar{\alpha}_t}\,\mathbf{x}_0,\,(1-\bar{\alpha}_t)\mathbf{I}\bigr),
+\]"/>
+
+where 
+<Latex text="\(\alpha_t = 1-\beta_t\)"/>
+and 
+<Latex text="\(\bar{\alpha}_t = \prod_{s=1}^t \alpha_s\)"/>.
+This capability simplifies training, since you can directly sample the pair <Latex text="\(\mathbf{x}_t, t\)"/> from <Latex text="\(\mathbf{x}_0\)"/> without iterating through all intermediate states.
+
+### Reverse diffusion: iterative denoising to recover the clean signal
+
+The more challenging part is inverting this forward process to go from noise back to a realistic sample. Because the forward diffusion chain is a known Markov chain, one can theoretically write:
+
+<Latex text="\[
+p_\theta(\mathbf{x}_{t-1}\mid \mathbf{x}_t) = \mathcal{N}\bigl(\mathbf{x}_{t-1}; \boldsymbol{\mu}_\theta(\mathbf{x}_t,t), \boldsymbol{\Sigma}_\theta(\mathbf{x}_t, t)\bigr),
+\]"/>
+
+where 
+<Latex text="\(\boldsymbol{\mu}_\theta\)"/>
+and 
+<Latex text="\(\boldsymbol{\Sigma}_\theta\)"/>
+are predicted by a neural network that you train. The diffusion model is thus the chain:
+
+<Latex text="\[
+p_\theta(\mathbf{x}_0, \ldots, \mathbf{x}_{T-1} \mid \mathbf{x}_T) = \prod_{t=1}^T p_\theta(\mathbf{x}_{t-1}\mid \mathbf{x}_t).
+\]"/>
+
+During training, we match this reverse transition distribution to the true posterior of the forward diffusion 
+<Latex text="\(q(\mathbf{x}_{t-1} \mid \mathbf{x}_t, \mathbf{x}_0)\)"/>
+by optimizing a variational bound or a simplified denoising objective. The model basically learns how to perform one step of denoising at a time. 
+
+At inference, we start from a pure Gaussian noise sample at <Latex text="\(\mathbf{x}_T\)"/> (where <Latex text="\(T\)"/> is the final diffusion step). We then sample <Latex text="\(\mathbf{x}_{T-1}\)"/> from <Latex text="\(\mathbf{x}_T\)"/> using the learned reverse transitions, then <Latex text="\(\mathbf{x}_{T-2}\)"/> from <Latex text="\(\mathbf{x}_{T-1}\)"/> , and so forth, until eventually we arrive at <Latex text="\(\mathbf{x}_0\)"/>, a fully denoised sample presumably drawn from the data distribution. This step-by-step procedure can be computationally intensive if <Latex text="\(T\)"/> is large, so a significant line of recent research focuses on accelerating or approximating the reverse process to reduce the number of denoising steps. 
+
+### Intuition behind the forward–reverse mapping and the time-reversal concept
+
+One intuitive way to see what is happening is to imagine that each forward step is easy to define — just add some Gaussian noise proportionate to the current state. In principle, reversing Gaussian noise is more complicated. But given that the forward process is carefully structured, one can show the reverse process must itself be a Gaussian transition whose mean and variance can be approximated by a well-trained network. The entire chain effectively learns the gradient of the log-likelihood at each step, an idea reminiscent of continuous-time diffusion in physics, where reversing a diffusion in the context of thermodynamic processes can be seen as time-reversal with an added drift.
+
+### Continuous vs. discrete-time diffusion formulations
+
+While many practical implementations rely on discrete timesteps, there is an elegant unification in the continuous-time perspective. Some works, e.g. Song and gang (2021), define a stochastic differential equation that continuously transforms data into noise, parameterized by a time variable <Latex text="\(t\in[0,1]\)"/>. The model is then trained to approximate the reverse SDE. This approach can yield flexible sampling procedures where one can adjust the number of sampling steps at test-time, a concept known as <Highlight>"plug-and-play" sampling</Highlight>. 
+
+Whether one chooses discrete or continuous formulations in practice often depends on computational constraints, the ease of implementation, and preference for interpretability. The essential underlying principle remains consistent: introducing noise in a controlled manner and then learning how to remove it.
+
+### Influence of different noise schedules (linear, cosine, etc.)
+
+A crucial design choice in diffusion models is the noise schedule 
+<Latex text="\(\{\beta_t\}\)"/> (discrete) or <Latex text="\(g(t)\)"/> (continuous). Early works used a simple linear schedule for <Latex text="\(\beta_t\)"/>. Subsequent research found that better noise schedules, such as the <Highlight>cosine schedule</Highlight> from Nichol and Dhariwal (2021), or other heuristics, can improve training stability and sample quality. 
+
+In a broad sense, you want a schedule that:
+
+- Does not add too much noise too quickly, preserving data structure in early steps so the network learns meaningful denoising.
+- Ensures that by the final steps, the sample is almost pure noise, giving a robust prior from which to draw. 
+- Balances the signal-to-noise ratio across timesteps.
+
+By carefully tuning the schedule, you can achieve better likelihood estimates, improved sample fidelity, and in some cases, a reduced number of inference steps.
+
+## Architecture and training
+
+While the forward and reverse processes define a high-level approach to how noise is added and removed, much of the success of diffusion models in practice stems from how we choose to implement the neural network in the reverse process. In many top-performing diffusion models, the <Highlight>U-Net architecture</Highlight> from the image segmentation literature is used as the main backbone. Some advanced architectures incorporate Transformers, attention modules, or specialized residual blocks. 
+
+### Common backbone architectures (e.g. U-Net, Transformers, ResNets)
+
+The U-Net architecture is especially popular for diffusion models in the image domain. A U-Net typically consists of an encoder pathway that gradually downsamples the image — capturing coarse-level features — and a decoder pathway that upsamples the representation back to the original resolution, with skip connections that bring back intermediate features from the encoder side. These skip connections are very helpful for denoising tasks, as they allow the network to fuse fine-grained details (from early, high-resolution layers) with more abstract representations (from deeper, lower-resolution layers).
+
+<Highlight>ResNets</Highlight> are also used as building blocks in many U-Net variants, particularly because residual connections facilitate the training of very deep networks. Some diffusion implementations combine Residual Blocks with self-attention layers, allowing the model to capture global dependencies in the image. More recently, in some text-to-image or other multimodal tasks, <Highlight>Transformers</Highlight> are inserted into the bottleneck or used as entire alternative architectures, especially if we want to incorporate large amounts of textual or other non-visual conditioning.
+
+### Use of attention mechanisms and other advanced layers
+
+Attention mechanisms often improve generative fidelity by allowing the model to attend over all positions in an image, or over relevant textual tokens in a conditional scenario. For instance, in a text-to-image diffusion system, cross-attention modules are typically integrated to fuse the text embedding into the visual feature maps. These modules can be placed in the middle (bottleneck) of the U-Net, or distributed across multiple scale levels, so the network can learn fine-grained alignment between textual descriptions and local image regions.
+
+<Highlight>Group normalization</Highlight> and <Highlight>layer normalization</Highlight> are frequently used throughout these architectures to stabilize training. Additional architectural details, like positional encodings, can also be included to help the model keep track of the time or noise level <Latex text="\(t\)"/> being processed.
+
+### Parameterizing the noise level or score function
+
+In classical denoising autoencoders, we feed the noisy sample into the network and ask it to reconstruct the clean sample. In diffusion models, we typically need to tell the network how much noise was added so far, i.e. the current timestep. This can be accomplished through two main strategies:
+
+1. **Timestep embedding**: We treat the time index <Latex text="\(t\)"/> (or a continuous value in <Latex text="\([0,1]\)"/>) as a feature input, embed it using a sinusoidal or learned embedding, and then inject it into the network layers via addition or concatenation. This approach is reminiscent of positional embeddings in Transformers.
+
+2. **Score network**: In the score-based perspective, we can define the network as <Latex text="\(\mathbf{s}_\theta(\mathbf{x}, t)\)"/> which directly outputs the predicted gradient of the log probability at time <Latex text="\(t\)"/>. Here, <Latex text="\(\mathbf{x}\)"/> is the noisy sample, and <Latex text="\(t\)"/> is the noise scale or diffusion time. 
+
+In either approach, letting the model know how far along the corruption process we are is critical to denoising effectively. Without it, the network would not know whether to perform small or large corrections to the sample.
+
+### Key loss functions (e.g., mean-squared error in noise space, KL divergence)
+
+As alluded to earlier, the standard training objective in many popular diffusion models is the mean-squared error (MSE) between the true noise <Latex text="\(\boldsymbol{\epsilon}\)"/> used in the forward process and the noise predicted by the network 
+<Latex text="\(\boldsymbol{\epsilon}_\theta(\mathbf{x}_t, t)\)"/>:
+
+<Latex text="\[
+\mathcal{L}_{simple}(\theta) = \mathbb{E}_{t \sim \text{Uniform}\{1,\ldots,T\},\, \mathbf{x}_0\sim p_{data},\, \boldsymbol{\epsilon}\sim \mathcal{N}(0,\mathbf{I})} \bigl[\|\boldsymbol{\epsilon} - \boldsymbol{\epsilon}_\theta(\sqrt{\bar{\alpha}_t}\,\mathbf{x}_0 + \sqrt{1-\bar{\alpha}_t}\,\boldsymbol{\epsilon},\,t)\|^2\bigr].
+\]"/>
+
+Ho and gang (2020) found that optimizing this simplified loss often yielded sample quality comparable to or better than more complex variational bounds. Another version of the training objective focuses on the Kullback–Leibler divergence or on directly denoising <Latex text="\(\mathbf{x}_0\)"/>. However, the MSE in noise space remains the most commonly used approach due to its simplicity and effectiveness.
+
+### Optimization strategies and practical training considerations (batch size, learning rate)
+
+From a practical standpoint, training a diffusion model can be demanding in terms of both memory and compute. Some guidelines include:
+
+- **Batch size**: Larger batch sizes can help stabilize training and ensure a better estimate of the gradient. When hardware is limited, gradient accumulation or distributed training across multiple GPUs (or TPUs) can be employed. 
+- **Learning rate schedules**: Cosine or linear decays of the learning rate can be used, or more dynamic strategies like Adam with carefully tuned betas. 
+- **Precision**: Training can be performed in half-precision (e.g., Float16) to reduce memory usage, especially if the framework supports automatic loss scaling to maintain stable gradients.
+
+### Role of variance scheduling and hyperparameter choices
+
+Choosing the betas <Latex text="(\beta_1,\ldots,\beta_T)"/> (or a continuous function for <Latex text="\(g(t)\)"/>) is a pivotal part of the design. A wide range of heuristics exist, and many modern frameworks provide out-of-the-box defaults (e.g., a linear schedule from <Latex text="10^{-4}"/> to <Latex text="2\times 10^{-2}"/>). The total number of diffusion steps <Latex text="\(T\)"/> can also vary widely — some early approaches used up to 1000 steps, whereas improved sampling techniques allow for fewer steps (e.g., 50–200). 
+
+In short, the model's performance can hinge on a well-chosen schedule, so many researchers run ablation studies to see which schedule yields the best results for a given domain. 
+
+### Model convergence and evaluation metrics
+
+Because diffusion models produce samples that can be compared to real data, standard generative metrics like <Highlight>FID (Fréchet Inception Distance)</Highlight>, Inception Score, and precision–recall curves for generative models are commonly used to evaluate their quality. Perceptual measures, user studies, or domain-specific metrics (e.g., in drug discovery, the validity of generated molecules) can also be used. 
+
+Empirically, a model that thoroughly converges is one that can consistently generate visually diverse, high-fidelity outputs across multiple seeds. Monitoring these metrics during training helps determine an appropriate stopping point.
+
+## Conditional diffusion models for controlled generation
+
+Building on the unconditional generation framework, diffusion models can be conditioned on external inputs to produce data aligned with specific conditions. For instance, in <Highlight>class-conditional</Highlight> models, you can feed a class label into the network along with the noisy sample to direct the generation process. The noise-prediction network effectively learns to produce different styles or attributes depending on the condition.
+
+More advanced conditional variants incorporate complex conditions such as textual descriptions, partial image inputs, or audio clips. This conditioning can be achieved through cross-attention, concatenation of embeddings, or adaptive normalization layers that incorporate condition-dependent parameters. The goal is to harness the stable generative power of diffusion while adding user control or guidance.
+
+## Multimodal diffusion models (text-to-image, image-to-audio, etc.)
+
+One of the most impactful areas of diffusion research is in <Highlight>multimodal</Highlight> tasks, especially text-to-image generation. Systems like DALL·E 2, Stable Diffusion, and Imagen have harnessed diffusion-based backbones to generate high-resolution images from textual prompts. These systems combine:
+
+- A text encoder (e.g., CLIP text encoder, BERT, or a Transformer) that converts prompts into latent embeddings.
+- A diffusion-based image generator (often a U-Net with cross-attention).
+- A strategy to fuse text embeddings into the intermediate feature maps of the U-Net, enabling the network to generate images matching the description. 
+
+Similarly, one can condition an image generator on audio features to produce a visual representation corresponding to a sound, or vice versa. The success of these models demonstrates diffusion's versatility and synergy with other deep architectures. 
+
+## Improved sampling strategies and accelerated inference methods
+
+A noted drawback of diffusion models is that they can require many steps of iterative denoising, making sample generation slow compared to a single forward pass in a GAN. To remedy this, a range of techniques have been proposed:
+
+- **DDIM (Denoising Diffusion Implicit Models)**: Introduced by Song and gang (2021), this modifies the reverse sampling process to achieve faster sampling with fewer steps, sometimes referred to as a non-Markovian process that preserves the ability to generate high-quality samples.
+
+- **Ancestral sampling**: Involves carefully reintroducing noise at each sampling step, often improving diversity but increasing the number of steps needed.
+
+- **Stochastic sampler fine-tuning**: Some approaches fine-tune the model specifically for efficient sampling or use specialized schedules (e.g., skip steps) to reduce overhead. 
+
+In general, the research trend is to drastically cut down on the number of required steps while maintaining sample quality. A variety of partial differential equation solvers or advanced integration techniques have been adopted to effectively approximate the continuous reverse SDE in fewer steps. Some solutions use specialized networks for faster sampling or adopt progressive distillation, where a teacher–student arrangement is used to train a network that requires fewer iterations to produce good samples.
+
+## Hybrid models combining diffusion and autoregressive components
+
+In certain domains, especially for discrete data like text sequences or tokenized content, purely diffusion-based generation can be less straightforward. Hybrid solutions pair an autoregressive backbone (such as a Transformer generating tokens) with a diffusion-based refinement stage. For instance, one might first produce a rough layout or skeleton of an image via an autoregressive approach, then refine the details using a diffusion-based denoising pass. 
+
+In other directions, some propose to treat local patches or features in an autoregressive fashion, while a diffusion process shapes the global coherence of the sample. These composite strategies highlight how diffusion can be integrated with other successful generative frameworks to yield improved performance or handle more complex data structures.
+
+## Latent diffusion approaches for efficient high-resolution synthesis
+
+A key challenge in applying diffusion directly to high-resolution images — think 512×512 or 1024×1024 pixels — is that the iterative denoising steps become computationally expensive. <Highlight>Latent diffusion models</Highlight> (LDMs) mitigate this by performing diffusion in a lower-dimensional latent space rather than pixel space. Specifically:
+
+1. A pretrained encoder (often a VQ-VAE or a Variational Autoencoder with a perceptual loss) compresses images into a smaller latent representation.
+2. The diffusion process is performed on this latent, significantly reducing the computational overhead of each denoising step.
+3. After sampling in latent space, the decoder (or generator) transforms the latent representation back into the pixel space.
+
+This approach drastically cuts down on the memory footprint and the number of FLOPs needed at each step, enabling higher resolutions and bigger batch sizes without intractable resource demands. Models like Stable Diffusion have employed this strategy to great effect, showing that you can still preserve excellent quality while reaping the benefits of diffusion in a compressed latent domain.
+
+## Memory and computational considerations for large-scale training
+
+Training diffusion models, particularly on large and diverse datasets, can be resource-intensive. Important considerations include:
+
+- **Mixed precision**: Training in Float16 or bfloat16 can halve memory usage. 
+- **Gradient checkpointing**: Allows one to trade time for memory by recomputing certain layers on the fly rather than storing their activations.
+- **Distributed training**: Large batch sizes and memory footprints often necessitate multi-GPU or multi-TPU training, with frameworks like PyTorch's <Tooltip text="DistributedDataParallel"/> or DeepSpeed providing solutions.
+
+Furthermore, once trained, deploying these models can still pose challenges if tens to hundreds of denoising steps are required. Model distillation, or specialized inference libraries that run optimized GPU kernels for the reversed diffusion loop, can help in production settings.
+
+---
+
+Below, I provide a short illustrative Python code snippet that demonstrates, in a highly simplified manner, how one might implement the training loop for a discrete-time diffusion model using PyTorch. This code is not optimized for real-world large-scale training, but it sketches the structure of forward corruption and reverse denoising steps.
+
+<Code text={`
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import math
+
+# A small U-Net-like block for demonstration
+class SimpleResBlock(nn.Module):
+    def __init__(self, dim):
+        super().__init__()
+        self.conv1 = nn.Conv2d(dim, dim, 3, padding=1)
+        self.conv2 = nn.Conv2d(dim, dim, 3, padding=1)
+        self.norm1 = nn.GroupNorm(num_groups=8, num_channels=dim)
+        self.norm2 = nn.GroupNorm(num_groups=8, num_channels=dim)
+        
+    def forward(self, x):
+        residual = x
+        x = self.norm1(x)
+        x = F.silu(x)
+        x = self.conv1(x)
+        x = self.norm2(x)
+        x = F.silu(x)
+        x = self.conv2(x)
+        return x + residual
+
+class DiffusionModel(nn.Module):
+    def __init__(self, input_channels=3, base_dim=64, T=1000):
+        super().__init__()
+        self.T = T
+        # A minimal encoder/decoder style
+        self.conv_in = nn.Conv2d(input_channels, base_dim, 3, padding=1)
+        self.res1 = SimpleResBlock(base_dim)
+        self.res2 = SimpleResBlock(base_dim)
+        self.conv_out = nn.Conv2d(base_dim, input_channels, 3, padding=1)
+        
+        # Timestep embedding
+        self.time_embed = nn.Sequential(
+            nn.Linear(1, base_dim),
+            nn.SiLU(),
+            nn.Linear(base_dim, base_dim)
+        )
+        
+    def forward(self, x_t, t):
+        # x_t: noised image at time t
+        # t: time step (batch dimension must match x_t)
+        
+        # Create a simple embedding for the time
+        # Here we shape t as (batch_size, 1) for linear embedding
+        t = t.view(-1, 1).float() / self.T  # normalize time
+        temb = self.time_embed(t).unsqueeze(-1).unsqueeze(-1) # shape (B, base_dim, 1, 1)
+        
+        h = self.conv_in(x_t)
+        h = h + temb
+        h = self.res1(h)
+        h = self.res2(h)
+        out = self.conv_out(h)
+        return out  # predict noise or x0 depending on training objective
+
+
+def linear_beta_schedule(timesteps, start=1e-4, end=0.02):
+    return torch.linspace(start, end, timesteps)
+
+def forward_diffusion_sample(x_0, t, betas, sqrt_alphas_cumprod, sqrt_one_minus_alphas_cumprod):
+    """
+    Directly sample x_t from x_0.
+    x_0: original image
+    t: time step to sample
+    """
+    sqrt_alphas_t = sqrt_alphas_cumprod[t].view(-1,1,1,1)
+    sqrt_one_minus_alphas_t = sqrt_one_minus_alphas_cumprod[t].view(-1,1,1,1)
+    
+    noise = torch.randn_like(x_0)
+    x_t = sqrt_alphas_t * x_0 + sqrt_one_minus_alphas_t * noise
+    return x_t, noise
+
+# Hyperparams
+T = 1000
+betas = linear_beta_schedule(T)
+alphas = 1. - betas
+alphas_cumprod = torch.cumprod(alphas, dim=0)
+sqrt_alphas_cumprod = torch.sqrt(alphas_cumprod)
+sqrt_one_minus_alphas_cumprod = torch.sqrt(1.-alphas_cumprod)
+
+# Example training loop (highly simplified)
+model = DiffusionModel(input_channels=3, base_dim=64, T=T)
+optimizer = torch.optim.Adam(model.parameters(), lr=1e-4)
+
+# dummy images (batch_size=8, 3 channels, 32x32)
+dummy_data = torch.randn(8, 3, 32, 32)
+
+n_epochs = 2
+for epoch in range(n_epochs):
+    # Sample random time steps for each image
+    t = torch.randint(1, T, (dummy_data.shape[0],), device=dummy_data.device)
+    
+    # x_t and the actual noise
+    x_t, actual_noise = forward_diffusion_sample(
+        dummy_data, t, betas, sqrt_alphas_cumprod, sqrt_one_minus_alphas_cumprod
+    )
+    
+    # Model predicts noise
+    predicted_noise = model(x_t, t)
+    
+    loss = F.mse_loss(predicted_noise, actual_noise)
+    optimizer.zero_grad()
+    loss.backward()
+    optimizer.step()
+    
+    if epoch % 1 == 0:
+        print(f"Epoch {epoch}, Loss: {loss.item():.4f}")
+`}/>
+
+In this toy example:
+
+1. We define a simple <Highlight>DiffusionModel</Highlight> with a minimal U-Net style architecture.
+2. We create a linear schedule for <Latex text="\(\beta_t\)"/> and calculate cumulative products for <Latex text="\(\alpha_t\)"/>.
+3. We sample a random <Latex text="\(t\)"/> for each image, produce <Latex text="\(\mathbf{x}_t\)"/> and the corresponding noise, and then train the model to predict that noise.
+
+In a more complete system, we would have multiple resolution levels, attention blocks, advanced skip connections, etc.
+
+---
+
+Above, I have focused on the general structure and theory of diffusion models. The next sections outline more specialized or modern additions, which can further refine or expand the capabilities of diffusion-based generation.
+
+## Conclusion (optional remarks)
+
+Diffusion models stand out in the generative modeling landscape for their conceptual clarity, stability of training, and capacity to produce samples of impressive fidelity. By framing generation as an iterative denoising of a Gaussian-distributed latent, these models elegantly sidestep many pitfalls of earlier approaches. Moreover, they draw from deep wellsprings of theory — stochastic processes, score matching, energy-based models — making them amenable to robust theoretical scrutiny and improvement.
+
+In practice, diffusion models have quickly become a mainstay in state-of-the-art image synthesis, overshadowing older methods in many competitive benchmarks. Their flexibility extends to text, audio, multimodal, and 3D tasks, while continuing to inspire novel hybrids and faster sampling procedures. Many researchers view diffusion models as part of a broader shift in generative AI, emphasizing iterative refinement, explicit probabilistic interpretation, and synergy with cross-attention or conditional modules.
+
+Given this strong foundation, I expect that diffusion-based techniques will continue to grow in popularity in the near future, particularly as new architectural or algorithmic insights reduce their computational overhead. These models will likely continue to shape the frontier of generative capabilities across domains, from hyper-realistic image generation to advanced scientific and industrial design tasks.
+
+## Additional chapters for further exploration
+
+### Advanced theoretical perspectives
+
+There is a rich line of research connecting diffusion models to <Highlight>nonequilibrium thermodynamics</Highlight> and <Highlight>the Fokker–Planck equation</Highlight>. Exploring these connections can yield deeper insights into the stability and expressiveness of diffusion-based generation. Some key ideas include:
+
+- **Fokker–Planck approach**: Viewing the evolution of probability densities under the forward diffusion as a PDE for <Latex text="\(q(\mathbf{x}, t)\)"/>. 
+- **Time-reversal derivations**: Relating the backward PDE to the reverse SDE that the network approximates.
+
+Some advanced references: Sohl-Dickstein and gang (2015) examine the process as a nonequilibrium thermodynamics system, while Song and gang (2021) dive into continuous-time score-based modeling and the connections to advanced PDE solvers.
+
+### Systematic ablations and practical heuristics
+
+Because training can be long and resource-intensive, many heuristics have emerged:
+
+- **Training with fewer timesteps**: Start with a small <Latex text="\(T\)"/> to debug or test hyperparameters quickly, then scale up once the pipeline is stable.
+- **Gradient clipping**: Large gradients in early training can hamper stability.
+- **EMA (Exponential Moving Average)** of network weights: Helps produce more stable samples during training.
+
+### Community toolkits and frameworks
+
+In practice, the diffusion modeling community has embraced open-source. Frameworks like Hugging Face's Diffusers library, OpenAI's guided diffusion code, and community-driven implementations in PyTorch or JAX facilitate experimentation. They provide reference implementations for Denoising Diffusion Probabilistic Models (DDPM), Denoising Diffusion Implicit Models (DDIM), Score-based Generative Modeling (SGM), and more.
+
+<Image alt="overview_of_diffusion_models" path="" caption="A schematic overview illustrating forward noise corruption and reverse denoising." zoom="false" />
+
+(This image would illustrate the forward–reverse diffusion chain, possibly including a simple depiction of a U-Net that predicts noise for each timestep.)
+
+---
+
+I hope this extensive discussion helps clarify the theoretical backbone, practical training details, and rich potential of diffusion models as a key generative approach. While they can be computationally demanding, the stability and quality of the results often justify the investment — placing diffusion front and center in many cutting-edge research and industrial applications of generative AI.

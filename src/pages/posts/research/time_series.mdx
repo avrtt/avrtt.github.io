@@ -1,0 +1,732 @@
+---
+index: 35
+indexCourse: 122
+indexFavorites:
+title: "Time series"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Time series"
+courseCategoryName: "Time series & applications"
+desc: "Time is money"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "27.02.2023"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 1
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/time_series.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/time_series"
+slug: "/research/time_series"
+---
+
+import Tooltip from "../../../components/Tooltip"
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+{/*
+
+https://neerc.ifmo.ru/wiki/index.php?title=%D0%90%D0%BD%D0%B0%D0%BB%D0%B8%D0%B7_%D0%B2%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%BD%D1%8B%D1%85_%D1%80%D1%8F%D0%B4%D0%BE%D0%B2
+https://habr.com/ru/post/334220/
+[https://machinelearningmastery.com/time-series-forecasting-python-mini-course/](https://machinelearningmastery.com/time-series-forecasting-python-mini-course/)
+[https://machinelearningmastery.com/how-to-get-started-with-deep-learning-for-time-series-forecasting-7-day-mini-course/](https://machinelearningmastery.com/how-to-get-started-with-deep-learning-for-time-series-forecasting-7-day-mini-course/)
+Какой ряд называется стационарным? (см. ML-канал)
+Опишите процесс валидации в случае с временными рядами (см. ML-канал)
+Как бы Вы провели декомпозицию временного ряда? (с нуля)
+https://otexts.com/fpp2/decomposition.html
+
+*/}
+
+
+{/*
+
+1. Introduction to time series   
+2. Key concepts and components  
+   Stationarity, trend, seasonality, cyclical patterns, noise, etc.  
+3. Exploratory data analysis  
+   3.1. Visualizing time series (line plots, seasonal plots, autocorrelation plots)  
+   3.2. Statistical metrics (mean, variance, autocorrelation function, partial autocorrelation function)  
+   3.3. Handling missing data and outliers  
+4. Classical forecasting methods  
+   Moving average and exponential smoothing, simple regression-based approaches, decomposition-based forecasting, etc.
+5. ARIMA models  
+   5.1. Autoregressive (AR)  
+   5.2. Moving average (MA)  
+   5.3. Combined ARMA and ARIMA  
+   5.4. Parameter selection and model diagnostics  
+6. SARIMA and seasonal extensions  
+   6.1. SARIMA structure  
+   6.2. Identifying seasonality parameters (P, D, Q)  
+   6.3. Model selection criteria (AIC, BIC)  
+   6.4. Residual analysis  
+7. Advanced time series approaches  
+   7.1. Vector autoregression (VAR)  
+   7.2. State space models and Kalman filters  
+   7.3. Long short-term memory networks: motivation before the dedicated article
+   7.4. Prophet and other modern libraries  
+8. Time series clustering  
+   8.1. Similarity measures (DTW, Euclidean distance)  
+   8.2. Clustering algorithms (k-means, hierarchical clustering, spectral clustering) applied to time series  
+   8.3. Applications and interpretation of clustered time series  
+9. Time series cross-validation  
+   9.1. Rolling window (sliding) validation  
+   9.2. Expanding window validation  
+   9.3. TimeSeriesSplit in practice  
+   9.4. Evaluating model performance over time  
+10. Practical considerations and best practices  
+	10.1. Data preprocessing and feature engineering  
+    10.2. Dealing with non-stationarity and transformations  
+    10.3. Handling large-scale datasets  
+    10.4. Model deployment and maintenance  
+
+*/}
+
+
+Time series analysis is one of the cornerstones of data science and machine learning, particularly useful in fields such as finance (stock price forecasting), supply chain management (inventory prediction), economics (macroeconomic indicators), climate science, and various engineering domains. A <Highlight>time series</Highlight> can be defined as a sequence of data points measured at consistent time intervals. The objective of time series analysis is often to understand patterns such as trends or seasonality and, ultimately, to generate forecasts into the future.
+
+In modern data science, time series problems have grown in significance due to the abundance of chronological data from sensors, transactions, logs, and so on. The discipline involves a broad range of methods — from classical statistical techniques such as <Highlight>ARIMA</Highlight>, <Highlight>SARIMA</Highlight>, or <Highlight>Exponential Smoothing</Highlight> to advanced approaches, including <Tooltip text="Recurrent Neural Networks (RNN), LSTM, Transformers, etc."/>. Recent cutting-edge research has also explored combining time series with MLOps, deep learning, or advanced probabilistic modeling (Gaussian processes, deep state-space models, advanced generative models, etc.).
+
+This article will guide you through core concepts, advanced techniques, pitfalls, and best practices in time series forecasting. We assume you have a substantial background in ML, so we will dive deep into theoretical underpinnings, references to relevant research, and code snippets illustrating the concepts in Python. Where possible, we use <Highlight>LaTeX</Highlight> notation for clarity of formulas and math.
+
+---
+
+## 2. Key concepts and components
+
+When working with time series, it is helpful to decompose or conceptualize the data in terms of underlying structures. The main elements typically considered are:
+
+- **Stationarity**: A process is (weakly or covariance) stationary if its mean and autocovariance remain the same over time. Nonstationarity is common in real-life data due to trends, seasonal fluctuations, and other effects.
+- **Trend**: A relatively long-term increase or decrease in the data. A trend may be linear or nonlinear.
+- **Seasonality**: Regular and periodic fluctuations that occur at a known frequency (e.g., monthly, weekly, daily). Seasonality is especially prominent in data related to climate, retail sales cycles, or daily website traffic.
+- **Cyclical patterns**: Recurrent behavior, but not strictly tied to a fixed calendar-based frequency (unlike true seasonality). An economic cycle (e.g., expansions and recessions) might be cyclical.
+- **Noise**: The random component, or remainder term, capturing fluctuations not explained by the main structure (trend, seasonality, cycles) or by known exogenous variables.
+
+### 2.1. Formalizing a time series
+
+Mathematically, we can treat a univariate time series as an ordered set of data <Latex text="\(\{y_t\}_{t=1}^T\)"/>, where <Latex text="\(y_t\)"/> is the observation at time <Latex text="\(t\)"/>. Often, we incorporate exogenous variables, forming a multivariate time series. Let <Latex text="\( \mathbf{x}_t \)"/> be the vector of exogenous covariates at time <Latex text="\( t \)"/>. Then a typical time series model might be:
+
+<Latex text="\[
+  y_t = f(\mathbf{x}_t, \theta) + \varepsilon_t
+\]"/>
+
+Here, <Latex text="\(f\)"/> is some function (linear or nonlinear) with parameters <Latex text="\(\theta\)"/>, and <Latex text="\(\varepsilon_t\)"/> is a noise or error term (often assumed to be white noise or having certain autocorrelation properties).
+
+### 2.2. Notions of stationarity
+
+A process <Latex text="\(\{y_t\}\)"/> is **strictly stationary** if the joint distribution of <Latex text="\((y_{t_1}, y_{t_2}, \ldots, y_{t_k})\)"/> does not depend on time <Latex text="\(t\)"/>. In practice, we often adopt **weak stationarity** (covariance stationarity) which requires:
+
+1. <Latex text="\( \mathbb{E}[y_t] = \mu \)"/> (constant mean),
+2. <Latex text="\( \mathrm{Var}(y_t) = \sigma^2 \)"/> (constant variance),
+3. <Latex text="\( \mathrm{Cov}(y_t, y_{t+h})\)"/> depends only on <Latex text="\(h\)"/>, not on <Latex text="\(t\)"/>.
+
+Classical time series approaches (like ARIMA) often rely on stationarity assumptions. Common transformations to achieve stationarity include differencing or applying a Box-Cox transformation (e.g., log transform).
+
+### 2.3. Role of trend, seasonality, and cycles
+
+A common decomposition of time series is:
+
+#### Additive decomposition
+
+<Latex text="\( y_t = T_t + S_t + R_t \)"/>
+
+where <Latex text="\(T_t\)"/> denotes trend, <Latex text="\(S_t\)"/> denotes seasonality, and <Latex text="\(R_t\)"/> is the remainder component.
+
+#### Multiplicative decomposition
+
+<Latex text="\( y_t = T_t \times S_t \times R_t \)"/>
+
+used when the amplitude of seasonal fluctuations grows with the level of the series. One might also do partial transformations (e.g., log) if the multiplicative form is more appropriate.
+
+### 2.4. Example: Stock price time series
+
+Consider daily stock price data <Latex text="\(\{p_t\}\)"/> for a particular company. We might observe cyclical patterns associated with economic expansions, short-term trends triggered by earnings announcements, weekly seasonality due to Monday vs. Friday trading volumes, or daily changes from news events (noise). Stationarity rarely holds in raw price data. Often, we take daily returns:
+
+<Latex text="\( r_t = p_t - p_{t-1} \)"/>
+
+(or <Latex text="\(\log(p_t/p_{t-1})\)"/>) to attempt stationarity.
+
+---
+
+## 3. Exploratory data analysis
+
+Exploratory analysis of a time series is crucial. We want to examine patterns, outliers, missing data, and other features that might influence model selection or preprocessing steps.
+
+### 3.1. Visualizing time series
+
+A well-chosen set of plots can reveal important structure. Some popular approaches:
+
+- **Line plot** over time (the standard approach).
+- **Seasonal plot**: For instance, group data by month to see seasonal fluctuations or produce a "seasonal subseries plot." 
+- **Autocorrelation plot (ACF)**: Correlation of a series with its own past values. Helps detect seasonality or correlation structure. 
+- **Partial autocorrelation plot (PACF)**: Helps identify autoregressive terms. 
+- **Lag scatter plots**: Plot <Latex text="\(y_t\)"/> vs. <Latex text="\(y_{t-1}\)"/>, <Latex text="\(y_t\)"/> vs. <Latex text="\(y_{t-2}\)"/>, etc. 
+- **Box plot by season**: e.g., separate box plots for each month to show distribution and outliers.
+
+<Image alt="Example of a time series line plot" path="" caption="Line plot of a monthly data series highlighting seasonal peaks" zoom="false" />
+
+Below is an example code snippet in Python (using pandas and matplotlib) to visualize a univariate time series and its autocorrelation:
+
+```
+<Code text={`
+import pandas as pd
+import matplotlib.pyplot as plt
+from pandas.plotting import lag_plot
+from statsmodels.graphics.tsaplots import plot_acf
+
+# Suppose we have a CSV file with a Date column and a Value column
+df = pd.read_csv('time_series_data.csv', parse_dates=['Date'], index_col='Date')
+series = df['Value']
+
+# 1) Basic line plot
+plt.figure(figsize=(10,4))
+plt.plot(series, label='Time series')
+plt.title('Line plot of time series')
+plt.legend()
+plt.show()
+
+# 2) Lag scatter plot
+plt.figure()
+lag_plot(series)
+plt.title('Lag plot at lag=1')
+plt.show()
+
+# 3) Autocorrelation plot
+plt.figure()
+plot_acf(series, lags=30)
+plt.show()
+`} />
+```
+
+### 3.2. Statistical metrics (mean, variance, autocorrelation, partial autocorrelation)
+
+Basic descriptive statistics such as mean, median, variance, minimum, and maximum across the time dimension can yield valuable insight, especially to check if the data is stationary or if it has noticeable trends. The **autocorrelation function (ACF)** is a key concept. For a lag <Latex text="\(k\)"/>, the sample autocorrelation is approximately:
+
+<Latex text="\( \rho(k) = \frac{\sum_{t=k+1}^{T} (y_t - \bar{y})(y_{t-k} - \bar{y})}{\sum_{t=1}^{T} (y_t - \bar{y})^2} \)"/>" />
+
+The **partial autocorrelation function (PACF)** measures correlation between <Latex text="\(y_t\)"/> and <Latex text="\(y_{t-k}\)"/> once we remove the influence of other lags in-between.
+
+### 3.3. Handling missing data and outliers
+
+Time series often have missing timestamps. Strategies include:
+
+- Imputation with forward fill or backward fill.
+- Interpolation (linear, spline) if that suits the domain.
+- More sophisticated approaches using domain knowledge.
+
+Outliers may result from sensor failures, data entry errors, or actual anomalies. Some practitioners prefer robust models or robust decomposition (like STL with a robust setting) to mitigate outlier influence. Alternatively, certain advanced methods (e.g., LOF-based anomaly detection, or isolation forests) can be used to systematically identify and handle outliers.
+
+---
+
+## 4. Classical forecasting methods
+
+Classical forecasting methods remain widely used, especially where interpretability and transparency are paramount. They often serve as strong baselines that are easily explainable to stakeholders.
+
+Common "classical" approaches:
+
+- **Moving average and exponential smoothing**: Techniques that produce smoothed versions of past data and extrapolate.
+- **Simple regression-based methods**: Linear or polynomial regression on time index or other factors.
+- **Decomposition-based forecasting**: Separate out trend and seasonality from data, then forecast the remainder.
+
+### 4.1. Moving average (MA) and exponential smoothing (ES)
+
+#### 4.1.1. Moving average
+
+A simple moving average of order <Latex text="\(m\)"/> for time step <Latex text="\(t\)"/> is:
+
+<Latex text="\[
+  \hat{y}_t = \frac{1}{m}\sum_{i=t-m+1}^{t} y_i
+\]"/>
+
+The forecast for time <Latex text="\(t+1\)"/> is simply <Latex text="\(\hat{y}_{t+1} = \hat{y}_t\)"/>. This is a naive smoothing approach, ignoring seasonality or other complexities.
+
+#### 4.1.2. Exponential smoothing
+
+Exponential smoothing assigns exponentially decreasing weights over time. The simplest form, *simple exponential smoothing*, is:
+
+<Latex text="\[
+  \hat{y}_{t+1} = \alpha y_t + (1 - \alpha)\hat{y}_t
+\]"/>
+
+where <Latex text="\(0 < \alpha < 1\)"/>. More advanced versions (Holt's linear trend method, Holt-Winters method) incorporate trend and seasonality. For example, the Holt-Winters additive model can be written as:
+
+<Latex text="\[
+\begin{aligned}
+  & l_{t} = \alpha (y_{t} - s_{t-m}) + (1-\alpha)(l_{t-1}+b_{t-1}), \\
+  & b_{t} = \beta (l_{t} - l_{t-1}) + (1-\beta) b_{t-1}, \\
+  & s_{t} = \gamma (y_{t} - l_{t}) + (1-\gamma)s_{t-m}.
+\end{aligned}
+\]"/>
+
+Here, <Latex text="\(l_t\)"/> is the level at time <Latex text="\(t\)"/>, <Latex text="\(b_t\)"/> is the slope or trend, <Latex text="\(s_t\)"/> is the seasonal component, and <Latex text="\(m\)"/> is the seasonal period. The parameters <Latex text="\(\alpha, \beta, \gamma\)"/> are smoothing coefficients.
+
+### 4.2. Simple regression-based approaches
+
+One might regress <Latex text="\(y_t\)"/> on:
+
+- The time index <Latex text="\(t\)"/> (for a global trend).
+- Categorical dummy variables for each season (e.g., months).
+- Additional exogenous variables (like <Latex text="\(\mathbf{x}_t\)"/>).
+
+For example, a simple additive model:
+
+<Latex text="\[
+  y_t = \beta_0 + \beta_1 t + \sum_{j=1}^{m-1} \beta_{2+j} D_{j,t} + \varepsilon_t
+\]"/>
+
+where <Latex text="\(D_{j,t}\)"/> are seasonal dummy variables (1 for season j at time t, 0 otherwise). This might be extended with polynomial terms or splines for the trend.
+
+### 4.3. Decomposition-based forecasting
+
+If we have an additive decomposition <Latex text="\( y_t = T_t + S_t + R_t \)"/>, a naive approach is:
+
+1. Estimate <Latex text="\(T_t\)"/> and <Latex text="\(S_t\)"/> from historical data (e.g., by a decomposition such as STL).
+2. Forecast the trend part with a method for non-seasonal data (like an AR(1) or simple exponential smoothing).
+3. Forecast the seasonal part by reusing the last observed season or by some smoothing across years.
+4. Combine them to get the final forecast: <Latex text="\(\hat{y}_{t+h} = \hat{T}_{t+h} + \hat{S}_{t+h}\)"/>.
+
+This approach can perform well in many practical settings but might underfit abrupt changes or more complex relationships.
+
+---
+
+## 5. ARIMA models
+
+### 5.1. Autoregressive (AR) process
+
+An **AR(p)** model uses <Latex text="\(p\)"/> lags of the time series as predictors:
+
+<Latex text="\[
+  y_t = c + \phi_1 y_{t-1} + \phi_2 y_{t-2} + \dots + \phi_p y_{t-p} + \varepsilon_t
+\]"/>
+
+Here, <Latex text="\(\phi_1, \phi_2, \dots, \phi_p\)"/> are parameters, <Latex text="\(c\)"/> is a constant, and <Latex text="\(\varepsilon_t \sim \mathrm{N}(0, \sigma^2)\)"/>.
+
+### 5.2. Moving average (MA) process
+
+An **MA(q)** model uses <Latex text="\(q\)"/> lags of the noise or error:
+
+<Latex text="\[
+  y_t = c + \varepsilon_t + \theta_1 \varepsilon_{t-1} + \dots + \theta_q \varepsilon_{t-q}.
+\]"/>
+
+In essence, the new observation is a linear combination of white noise terms.
+
+### 5.3. Combined ARMA and ARIMA
+
+By combining AR(p) and MA(q), we get ARMA(p, q):
+
+<Latex text="\[
+  y_t = c + \phi_1 y_{t-1} + \dots + \phi_p y_{t-p} + \theta_1 \varepsilon_{t-1} + \dots + \theta_q \varepsilon_{t-q} + \varepsilon_t.
+\]"/>
+
+However, real data often exhibit nonstationary behaviors (trend or random walk). By differencing the series <Latex text="\( d \)"/> times, we can (hopefully) achieve stationarity. This leads to **ARIMA(p, d, q)**, meaning an ARMA model on the differenced data:
+
+1. Let <Latex text="\(\nabla^d y_t\)"/> denote differencing <Latex text="\(d\)"/> times (with <Latex text="\(\nabla y_t = y_t - y_{t-1}\)"/>).
+2. Then an ARIMA(p, d, q) model satisfies:
+   <Latex text="\( \nabla^d y_t = \text{ARMA}(p,q) \)"/>."/>
+
+### 5.4. Parameter selection and model diagnostics
+
+Selecting <Latex text="\((p, d, q)\)"/> can be done via:
+
+- Looking at ACF/PACF plots.
+- Minimizing information criteria (AIC, BIC).
+- Using auto.arima-type procedures in software packages (e.g., `pmdarima` in Python or `forecast` in R).
+
+After fitting, one checks diagnostics:
+
+- Residuals should be white noise (check ACF of residuals).
+- Model should not be overfit or underfit (use AIC/BIC or cross-validation for out-of-sample performance).
+
+---
+
+## 6. SARIMA and seasonal extensions
+
+Seasonality means a repeated pattern every <Latex text="\(m\)"/> observations. For monthly data, <Latex text="\(m=12\)"/>; for quarterly data, <Latex text="\(m=4\)"/>; for daily data with weekly patterns, <Latex text="\(m=7\)"/>.
+
+### 6.1. SARIMA structure
+
+**Seasonal ARIMA** is typically written as: <Latex text="\(\mathrm{ARIMA}(p,d,q)\times(P,D,Q)_m\)"/>. For seasonal data, we do both regular differencing <Latex text="\(d\)"/> and seasonal differencing <Latex text="\(D\)"/>. The model integrates the idea of ARIMA at two levels: the standard "non-seasonal" part plus a "seasonal" part.
+
+The general form is:
+
+<Latex text="\[
+  \Phi_P(L^m) \phi_p(L) (1 - L)^d (1 - L^m)^D y_t = \Theta_Q(L^m) \theta_q(L) \varepsilon_t
+\]"/>
+
+where <Latex text="\(L\)"/> is the lag operator (<Latex text="\(Ly_t = y_{t-1}\)"/>), <Latex text="\(\phi_p(L)\)"/> is the non-seasonal AR polynomial, <Latex text="\(\Phi_P(L^m)\)"/> is the seasonal AR polynomial, <Latex text="\(\theta_q(L)\)"/> and <Latex text="\(\Theta_Q(L^m)\)"/> are the non-seasonal and seasonal MA polynomials, respectively.
+
+### 6.2. Identifying seasonality parameters <Latex text="\((P, D, Q)\)"/>
+
+Similar to identifying <Latex text="\((p, d, q)\)"/>, we use:
+
+- Seasonal differencing if there is an apparent seasonal pattern that is not stable in level.
+- Seasonal ACF/PACF for initial guesses of <Latex text="\(P\)"/> and <Latex text="\(Q\)"/>.
+- Automated selection by AIC/BIC or heuristics in packages.
+
+### 6.3. Model selection criteria (AIC, BIC)
+
+**AIC**: Akaike Information Criterion,
+
+<Latex text="\( \mathrm{AIC} = 2k - 2\ln(\hat{L}) \)"/>
+
+where <Latex text="\(k\)"/> is the number of estimated parameters and <Latex text="\(\hat{L}\)"/> is the maximum value of the likelihood function.
+
+**BIC**: Bayesian Information Criterion,
+
+<Latex text="\( \mathrm{BIC} = k \ln(n) - 2\ln(\hat{L}) \)"/>
+
+A lower AIC/BIC indicates a better trade-off between model fit and complexity.
+
+### 6.4. Residual analysis
+
+Once the model is fit, we check the **residuals**:
+
+- Ideally, residuals are uncorrelated and exhibit constant variance.
+- Plot ACF of residuals. No significant spikes at any lag implies good fit.
+- Perform Ljung-Box test to see if significant autocorrelations remain.
+
+---
+
+## 7. Advanced time series approaches
+
+While ARIMA and SARIMA remain mainstays, more advanced or specialized approaches can outperform them in certain contexts.
+
+### 7.1. Vector autoregression (VAR)
+
+When dealing with **multivariate** time series with potential interdependencies, **Vector Autoregression** extends AR by modeling multiple time series simultaneously:
+
+<Latex text="\[
+  \mathbf{y}_t = \mathbf{c} + \Phi_1 \mathbf{y}_{t-1} + \dots + \Phi_p \mathbf{y}_{t-p} + \boldsymbol\varepsilon_t
+\]"/>
+
+Here, <Latex text="\(\mathbf{y}_t\)"/> is a vector of multiple variables, and <Latex text="\(\Phi_i\)"/> are coefficient matrices.
+
+### 7.2. State space models and Kalman filters
+
+**State space** formulations represent time series via latent (unobserved) states that evolve over time, plus an observation model:
+
+<Latex text="\[
+\begin{aligned}
+  \mathbf{x}_{t+1} &= F_t \mathbf{x}_t + \mathbf{w}_t, \quad \mathbf{w}_t \sim \mathcal{N}(0, Q_t), \\
+  \mathbf{y}_t &= H_t \mathbf{x}_t + \mathbf{v}_t, \quad \mathbf{v}_t \sim \mathcal{N}(0, R_t),
+\end{aligned}
+\]"/>
+
+where <Latex text="\(\mathbf{x}_t\)"/> is the hidden state. The **Kalman filter** is a recursive procedure for linear Gaussian state space models, extended to nonlinear cases as the Extended or Unscented Kalman Filter. State space models can incorporate time-varying parameters, handle missing data elegantly, and capture complex behaviors.
+
+### 7.3. Long Short-Term Memory networks (LSTM): motivation
+
+In deep learning, **LSTM** networks (Hochreiter & Schmidhuber, 1997) overcame the vanishing gradient problem of standard RNNs, making it possible to capture long-range dependencies in sequences. Although we have a dedicated article on LSTMs, the fundamental motivation is that many time series tasks require memory of events far in the past (like multi-step seasonal or cyclical phenomena). LSTMs handle that by gating mechanisms.
+
+In practice, LSTMs (and GRUs) are widely used for forecasting tasks, especially for complex real-world data with multiple related series. Extensions, such as **Seq2Seq** or **Encoder-Decoder** architectures, further empower multi-step or variable-length forecasting.
+
+### 7.4. Prophet and other modern libraries
+
+**Prophet**, developed by Meta (Facebook) researchers, is a library focusing on a parametric approach:
+
+<Latex text="\[
+y(t) = g(t) + s(t) + h(t) + \epsilon_t
+\]"/>
+
+where <Latex text="\(g(t)\)"/> is a piecewise linear or logistic growth curve, <Latex text="\(s(t)\)"/> is a sum of Fourier series modeling seasonality, and <Latex text="\(h(t)\)"/> is special holiday effects. Prophet automates hyperparameter selection, handles missing data, and can be quite robust to outliers or sudden changes.
+
+Meanwhile, modern open-source frameworks like **GluonTS** (by Amazon) or **Orbit** (by Uber) also incorporate advanced Bayesian or deep learning methods.
+
+---
+
+## 8. Time series clustering
+
+Time series clustering is an unsupervised task to group similar time series. The challenge is the definition of "similarity." Approaches include:
+
+- Using <Highlight>Dynamic Time Warping (DTW)</Highlight> as a distance metric, allowing for warping along the time dimension. Then apply standard clustering (k-means with a custom distance, hierarchical clustering, DBSCAN, etc.).
+- Feature-based methods: engineer features (mean, standard deviation, number of peaks, etc.) to embed each series in a fixed dimension, then apply standard clustering. Or use shapelets or wavelet-based features.
+
+For instance, <Tooltip text="Parkinson's disease data or speech data clustering are popular use-cases for DTW-based clustering."/>. Also, advanced methods use neural embeddings (like an autoencoder) to represent each series in a latent space, then cluster in that space.
+
+### 8.1. Similarity measures (DTW, Euclidean distance)
+
+- **Euclidean**: Quick, but sensitive to phase shifts or varying lengths.
+- **DTW**: Allows time distortions. Very popular, albeit more computationally expensive.  
+- **Correlation-based**: If the shape is relevant more than amplitude, correlation-based distance can be used.
+
+### 8.2. Clustering algorithms (k-means, hierarchical, spectral) applied to time series
+
+- **k-means**: Minimizes within-cluster variance, but must handle custom distance carefully (like DTW barycenter averaging (DBA)).
+- **Hierarchical**: Builds a dendrogram, merges or splits clusters. Flexible but can be slow for large datasets.
+- **Spectral**: Uses graph-based representation from pairwise similarity. Potentially captures complex cluster shapes.
+
+### 8.3. Applications and interpretation
+
+Time series clustering is used in marketing (grouping customer usage patterns), anomaly detection (clustering normal vs. abnormal time series), medical signals, IoT sensor groupings, etc. 
+
+---
+
+## 9. Time series cross-validation
+
+Time series cross-validation differs from standard cross-validation because data is time-ordered. We generally avoid random splits that mix future data into the training set.
+
+### 9.1. Rolling window (sliding) validation
+
+Split the time series into training and validation sets in a rolling fashion:
+
+1. Fit on <Latex text="\(\{1, \dots, t\}\)"/>, validate on <Latex text="\(t+1\)"/>.
+2. Move forward, fit on <Latex text="\(\{1, \dots, t+1\}\)"/>, validate on <Latex text="\(t+2\)"/>.
+3. Repeat until we run out of data.
+
+This allows each test set to be strictly after the training set in time.
+
+### 9.2. Expanding window validation
+
+Similar to rolling, but each step expands the training window forward (never dropping early data). For example:
+
+- Fit on <Latex text="\(\{1, \dots, t\}\)"/>, predict <Latex text="\(t+1\)"/>.
+- Fit on <Latex text="\(\{1, \dots, t+1\}\)"/>, predict <Latex text="\(t+2\)"/>.
+- etc.
+
+### 9.3. TimeSeriesSplit in practice
+
+In scikit-learn, `TimeSeriesSplit` splits the data according to time order. Alternatively, specialized frameworks like <Highlight>statsmodels</Highlight> or <Highlight>pmdarima</Highlight> have built-in time-series cross-validation tools.
+
+### 9.4. Evaluating model performance over time
+
+Often we compute metrics like RMSE or MAPE across multiple forecast horizons. We might also examine how errors change over time, or for different sub-seasons. 
+
+One must also note the difference between 1-step vs. multi-step ahead forecasting. For multi-step, repeated rolling or expanding windows are typical to measure performance thoroughly.
+
+---
+
+## 10. Practical considerations and best practices
+
+### 10.1. Data preprocessing and feature engineering
+
+- **Normalization** or scaling can help models converge, especially neural networks.
+- **Fourier or wavelet transforms** to capture cyclical or seasonal patterns, if relevant.
+- **Date/time features**: For instance, day of week, month of year, holiday indicators. These features can be very informative.
+
+### 10.2. Dealing with non-stationarity and transformations
+
+Many forecasting models (ARIMA, etc.) require or prefer stationarity. Techniques:
+
+- **Differencing**: Subtract or integrate. 
+- **Detrending**: Fit a trend, subtract it out.
+- **Box-Cox or log transform**: Stabilizes variance or turns multiplicative relationships into additive.
+
+### 10.3. Handling large-scale datasets
+
+For big time series or many parallel series, we might need distributed computing (Spark, Dask) or online algorithms that update incrementally. Modern cloud-based pipelines can handle partial fitting or streaming data in real time.
+
+### 10.4. Model deployment and maintenance
+
+Time series models degrade over time due to concept drift. Best practices:
+
+- Implement an automated monitoring system to track forecast errors.
+- Retrain periodically with recent data or use online learning approaches.
+- Archive old models for reproducibility and potential ensemble methods.
+
+---
+
+## Extra chapters and deeper expansions
+
+Although not explicitly required, let's add more content to fill out theoretical and state-of-the-art aspects beyond the main outline. These expansions will help achieve a deeper, advanced-level discussion and ensure coherence with the rest of the course.
+
+### 11. Hierarchical time series forecasting
+
+In business contexts, we often have data aggregated at multiple levels (e.g., total sales vs. product-level sales). Hierarchical forecasting reconciles predictions across these groupings. A widely cited approach is the hierarchical reconciliation method by Hyndman and gang (2008, JASA), where bottom-up or top-down or middle-out techniques are used, or the well-known MinT approach.
+
+### 12. Transfer learning for time series
+
+A cutting-edge area: large, pre-trained neural networks for time series. Research at NeurIPS and ICML has explored how to train a big model on diverse time series from multiple domains, then fine-tune on a new dataset. This is reminiscent of large language models in NLP, though the domain constraints differ.
+
+### 13. Interpretable time series modeling
+
+Various methods strive to preserve interpretability:
+
+- **Additive models** (like Prophet) are relatively interpretable because each component is isolated.
+- **Shapelet-based** methods in classification tasks. 
+- **Attention-based** neural networks (like Transformers) can highlight parts of the input that contributed strongly to the forecast, though interpretability is partial.
+
+### 14. Causality vs. correlation in time series
+
+Forecasting does not necessarily require causal relationships. However, advanced approaches like **Granger causality** testing or **structural time series** can glean causal insights. Bayesian networks or do-calculus methods are sometimes used for causal modeling in time series, though it remains a complex topic.
+
+### 15. ESG-based forecasting or sustainability contexts
+
+Another emergent domain is environment, social, governance (ESG) analytics. For example, forecasting carbon emissions or measuring ESG metrics for companies often requires advanced time series and exogenous regressors. Some specialized transformations or domain-specific constraints might be relevant.
+
+---
+
+## Illustrative Python code examples
+
+To clarify various steps, here is an integrated example that uses `statsmodels` for ARIMA and `pmdarima` for auto-ARIMA, plus an example of an LSTM-based model using Keras, all applied to a sample dataset. These code snippets are simplified; in practice, you might structure your code differently or incorporate more robust data preparation.
+
+### 15.1. ARIMA with cross-validation
+
+```
+<Code text={`
+import numpy as np
+import pandas as pd
+from statsmodels.tsa.arima.model import ARIMA
+from sklearn.metrics import mean_squared_error
+import math
+
+# Example: monthly data
+df = pd.read_csv('monthly_data.csv', parse_dates=['Month'], index_col='Month')
+series = df['value']
+
+# Train/test split
+train_size = int(len(series) * 0.8)
+train, test = series.iloc[:train_size], series.iloc[train_size:]
+
+history = train.tolist()
+predictions = []
+
+for t in range(len(test)):
+    model = ARIMA(history, order=(2,1,2))
+    model_fit = model.fit()
+    yhat = model_fit.forecast(steps=1)
+    predictions.append(yhat[0])
+    obs = test.iloc[t]
+    history.append(obs)
+
+rmse = math.sqrt(mean_squared_error(test, predictions))
+print("Test RMSE:", rmse)
+`} />
+```
+
+### 15.2. Automated SARIMA
+
+```
+<Code text={`
+import pmdarima as pm
+import pandas as pd
+
+df = pd.read_csv('monthly_data.csv', parse_dates=['Month'], index_col='Month')
+series = df['value']
+
+# auto_arima can figure out p, d, q, P, D, Q, m, etc. based on AIC
+model = pm.auto_arima(series, seasonal=True, m=12,
+                      start_p=1, start_q=1, max_p=5, max_q=5,
+                      start_P=0, start_Q=0, max_P=5, max_Q=5,
+                      d=None, D=None,
+                      trace=True, 
+                      error_action='ignore', 
+                      suppress_warnings=True,
+                      stepwise=True)
+
+print(model.summary())
+
+# Forecast the next 12 months
+forecast, conf_int = model.predict(n_periods=12, return_conf_int=True)
+`} />
+```
+
+### 15.3. LSTM example for univariate series
+
+```
+<Code text={`
+import numpy as np
+import pandas as pd
+from keras.models import Sequential
+from keras.layers import LSTM, Dense
+from sklearn.preprocessing import MinMaxScaler
+
+df = pd.read_csv('daily_data.csv', parse_dates=['Date'], index_col='Date')
+values = df['value'].values.reshape(-1,1)
+
+# Scale data
+scaler = MinMaxScaler(feature_range=(0,1))
+scaled = scaler.fit_transform(values)
+
+# Transform to supervised problem
+def series_to_supervised(data, n_in=1, n_out=1):
+    X, y = [], []
+    for i in range(len(data) - n_in - n_out + 1):
+        X.append(data[i:(i+n_in), 0])
+        y.append(data[(i+n_in):(i+n_in+n_out), 0])
+    return np.array(X), np.array(y)
+
+n_lag = 3
+n_out = 1
+X, y = series_to_supervised(scaled, n_lag, n_out)
+train_size = int(len(X)*0.8)
+X_train, X_test = X[:train_size], X[train_size:]
+y_train, y_test = y[:train_size], y[train_size:]
+
+# Reshape for LSTM [samples, timesteps, features]
+X_train = X_train.reshape((X_train.shape[0], X_train.shape[1], 1))
+X_test  = X_test.reshape((X_test.shape[0], X_test.shape[1], 1))
+
+model = Sequential()
+model.add(LSTM(50, input_shape=(n_lag, 1), activation='relu'))
+model.add(Dense(n_out))
+model.compile(optimizer='adam', loss='mse')
+
+model.fit(X_train, y_train, epochs=20, batch_size=32, verbose=1)
+
+# Make predictions
+preds = model.predict(X_test)
+preds_rescaled = scaler.inverse_transform(preds)
+
+# Evaluate
+y_test_rescaled = scaler.inverse_transform(y_test)
+`} />
+```
+
+One can expand upon this to do multi-step forecasts, incorporate more features, or build more sophisticated neural network architectures like CNN-LSTMs, Transformers, or advanced "N-BEATS" approaches (Oreshkin and gang, 2020, ICLR) for time series forecasting.
+
+---
+
+## References
+
+Below is a partial list of references and further reading:
+
+1. Cleveland, R. B., Cleveland, W. S., McRae, J. E., & Terpenning, I. (1990). "STL: A Seasonal-Trend Decomposition Procedure Based on Loess." *Journal of Official Statistics*, 6, 3–73.
+2. Hyndman, R. J., & Athanasopoulos, G. (2021). *Forecasting: principles and practice* (3rd ed). OTexts.
+3. Box, G. E. P., Jenkins, G. M., & Reinsel, G. C. (2015). *Time Series Analysis: Forecasting and Control*. John Wiley & Sons.
+4. Hochreiter, S., & Schmidhuber, J. (1997). "Long Short-Term Memory." *Neural Computation*, 9(8), 1735–1780.
+5. Oreshkin, B. N., Carpov, D., Chapados, N., & Bengio, Y. (2020). "N-BEATS: Neural basis expansion analysis for interpretable time series forecasting." *International Conference on Learning Representations* (ICLR).
+6. Taylor, S. J., & Letham, B. (2018). "Forecasting at Scale." *The American Statistician*, 72(1), 37–45.  
+7. Durbin, J., & Koopman, S. J. (2012). *Time Series Analysis by State Space Methods*. Oxford University Press.
+8. Athanasopoulos, G., Hyndman, R. J., Song, H., & Wu, D. C. (2011). "The tourism forecasting competition data." *International Journal of Forecasting*, 27(3), 822–832.
+9. Seeger, M., Salinas, D., & Flunkert, V. (2017). "Bayesian Intermittent Demand Forecasting for Large Inventories." *NeurIPS*.
+10. Salinas, D., Flunkert, V., Gasthaus, J., & Januschowski, T. (2020). "DeepAR: Probabilistic forecasting with autoregressive recurrent networks." *International Journal of Forecasting*, 36(3), 1181–1191.
+
+---
+
+## Conclusion
+
+Time series analysis and forecasting is a rich field with broad applications and a large toolbox of methods. Classical approaches like ARIMA or exponential smoothing remain widely used and are important references for interpretability and reliability. However, data scientists now also have access to advanced approaches (state space models, vector autoregression for multivariate, deep learning architectures such as LSTM, CNN-LSTM, Transformers, etc.). 
+
+No single method universally outperforms all others; success depends heavily on domain knowledge, data characteristics (trend, seasonality, outliers, missing values), the forecast horizon, and evaluation criteria. Cross-validation designed specifically for time series is crucial for robust performance estimation. Always start with an understanding of your data and domain context, build baseline models for reference (like naive or basic exponential smoothing), then iterate with more sophisticated approaches, carefully validating and monitoring your forecasts over time.
+
+In professional settings, consider the full lifecycle of time series solutions: data ingestion, cleaning, model building, validation, deployment, monitoring, and retraining. With thorough exploratory data analysis, well-chosen methods, and a systematic approach to validation, you can produce accurate and trustworthy time series forecasts that drive valuable decisions and insights.
+
+---

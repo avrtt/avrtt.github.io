@@ -1,0 +1,399 @@
+---
+index: 64
+indexCourse: 99
+indexFavorites:
+title: "Img-to-img translation"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Img-to-img translation"
+courseCategoryName: "Computer vision"
+desc: "Be patient, I'm a CV engineer"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "03.08.2023"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 2
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/img_to_img_translation.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/img_to_img_translation"
+slug: "/research/img_to_img_translation"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+Задача трансляции изображений
+https://neerc.ifmo.ru/wiki/index.php?title=%D0%97%D0%B0%D0%B4%D0%B0%D1%87%D0%B0_%D1%82%D1%80%D0%B0%D0%BD%D1%81%D0%BB%D1%8F%D1%86%D0%B8%D0%B8_%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D0%B9
+
+*/}
+
+
+{/*
+
+Chapter 1. Motivation  
+Chapter 2. Key concepts  
+    Domain adaptation  
+    Style transfer  
+    Conditional image synthesis  
+    Multi-domain translation  
+    Revisiting GAN architecture for futher explanation  
+Chapter 3. Prominent architectures  
+    Pix2pix  
+    CycleGAN  
+    StarGAN  
+    Other notable frameworks  
+Chapter 4. Data  
+Chapter 5. Implementation, training, loss function, metrics (FID, IS, PSNR, SSIM)  
+Chapter 6. Real-world applications  
+Chapter 7. Misc  
+    Challenges and limitations  
+    Training instability and sensitivity to hyperparameters  
+    Mode collapse and how to mitigate it  
+    Emerging trends (multi-modal translation, large-scale models)  
+    Potential research directions (unsupervised and semi-supervised methods)  
+    Concluding remarks and summary  
+
+*/}
+
+
+Image-to-image translation, in the broadest sense, is a framework that seeks to transform an image from one domain into a corresponding representation in another domain while preserving key content and structure. Some people define image-to-image translation as any mapping function that takes an input image <Latex text="\(x\)"/> from domain <Latex text="\(X\)"/> and generates an image <Latex text="\(y\)"/> in domain <Latex text="\(Y\)"/> such that the semantic or structural features within <Latex text="\(x\)"/> remain coherent in <Latex text="\(y\)"/>, even if the domains differ in style, modality, or various visual attributes. This notion has been fundamental to many sub-fields in computer vision, enabling tasks that range from changing the color or style of an image (often guided by a reference style) to more complex multi-domain transformations such as turning sketches into photorealistic images, or converting daytime scenes into nighttime ones.
+
+One of the primary motivations behind image-to-image (often abbreviated as img-to-img) translation is that many data-driven applications rely on consistent transformations across visual domains. For example, in autonomous driving, one might wish to translate synthetic images from a game engine into realistic road scenes to bootstrap training data for a self-driving car model. In medical imaging, it might be necessary to translate CT scans into MR scans or vice versa in order to combine the strengths of multiple imaging modalities for better disease diagnosis. In artistic settings, an artist might like to translate a pencil drawing into an oil-painting style or transform a photograph into a watercolor painting. The universal motive is that if we can learn a robust and reliable mapping <Latex text="\(X \rightarrow Y\)"/>, we enable a variety of creative and practical applications.
+
+Historically, direct application of classical machine learning or older computer vision algorithms to tasks like style conversion, domain adaptation, or colorization was quite challenging. Early solutions relied heavily on feature-engineering or heuristic-driven approaches that lacked robustness when faced with the subtleties of real-world complexity. However, with the advent of convolutional neural networks (CNNs) and especially the success of generative adversarial networks (GANs), researchers found powerful methods to construct flexible parametric mappings that can learn from large corpora of training images.
+
+By looking at the progress in top-tier AI conferences such as NeurIPS, ICML, and CVPR, we observe many breakthroughs in conditional image synthesis, style transfer, and domain adaptation, all under the umbrella of image-to-image translation. These approaches introduced ways to tackle both paired and unpaired datasets, significantly broadening the scope of the field. Pix2pix (Isola and gang, 2017) demonstrated a conditional GAN approach for learning a mapping when paired data is available (for instance, ground truth label maps paired with images). CycleGAN (Zhu and gang, 2017) addressed unpaired datasets, learning to close the loop by mapping domain <Latex text="\(X\)"/> to domain <Latex text="\(Y\)"/>, then back to <Latex text="\(X\)"/>, thus requiring no direct pixel-level correspondences. With such approaches, advanced tasks became possible — like turning a horse into a zebra, or a summer photo into a winter scene — simply by letting the network discover domain-level correspondences during training.
+
+In later sections, I will explain how these classic and cutting-edge architectures work, why certain loss functions and architectures have become standard practice, what performance metrics are relevant (and their limitations), and how the field has been evolving toward multimodal translations involving textual or other forms of input. Furthermore, I will dive into the inherent training challenges such as mode collapse and hyperparameter sensitivity, as well as advanced research directions exploring unsupervised or semi-supervised methods for building robust, large-scale models. By the end, you should walk away with not only a conceptual understanding but also a solid technical foundation for building your own image-to-image translation models in practice.
+
+## Chapter 2. Key concepts
+
+Image-to-image translation touches upon a few critical concepts in modern machine learning and computer vision. Although these concepts are introduced in other parts of this larger course in varying detail, I will summarize the essential notions here to ensure clarity. The major themes are: domain adaptation, style transfer, conditional image synthesis, multi-domain translation, and the importance of understanding (or revisiting) GAN architectures for advanced image generation tasks.
+
+### Domain adaptation
+
+<Highlight>Domain adaptation</Highlight> aims to address the gap or shift between different data distributions or domains. For example, if you train a model on synthetic images (domain <Latex text="\(X\)"/>), it might not generalize perfectly to real images (domain <Latex text="\(Y\)"/>) because the latter can differ significantly in texture, lighting, noise characteristics, or other aspects. Image-to-image translation can provide a mechanism for translating synthetic images into a domain visually closer to real images, effectively bridging the domain gap. By making the synthetic images more realistic, one can then train a downstream model (such as an object detector or semantic segmenter) on images that are more representative of what the model will see in practice.
+
+Technically, domain adaptation goes beyond mere pixel-level transformation. It can also incorporate feature-level adaptation, but in the context of image-to-image translation, pixel-level alignment or stylization often proves extremely valuable. In modern research, adversarial training frameworks frequently appear as a tool for domain adaptation, ensuring that the translated images become indistinguishable from real images in the target domain, as judged by a learned discriminator.
+
+### Style transfer
+
+<Highlight>Style transfer</Highlight> is a fascinating and highly visible application of image-to-image translation. In classical neural style transfer, you have a content image <Latex text="\(x_c\)"/> and a style image <Latex text="\(x_s\)"/>. The goal is to produce a new image <Latex text="\(x_{cs}\)"/> that preserves the content (spatial arrangement, objects, scene composition) of <Latex text="\(x_c\)"/> while adopting the style (colors, textures, brush strokes) of <Latex text="\(x_s\)"/>. The earliest mainstream approach by Gatys and gang (2015) used feature correlations captured by convolutional neural networks to separate and recombine style and content. Subsequent works introduced real-time style transfer networks, generative methods, and more recently, even multi-style or universal style transfer networks.
+
+In a narrower sense, if style transfer is restricted to a single target style domain (say, turning all images into Van Gogh-like paintings), it can be considered a specialized instance of image-to-image translation. Some frameworks like CycleGAN or StarGAN can also be leveraged for style transfer with or without paired data, by modeling different artistic styles or domain labels as the target domain(s). One of the biggest challenges in style transfer is balancing the creative freedom of generating new textures and strokes with retaining enough of the content details so that the original subject remains recognizable.
+
+### Conditional image synthesis
+
+<Highlight>Conditional image synthesis</Highlight> is a broad term describing the generation of images conditioned on some input — this could be a semantic label map, a text description, a class label, or an image from another domain. The context we are dealing with is typically image-conditioned generation: we feed an image from domain <Latex text="\(X\)"/> and generate a new image in domain <Latex text="\(Y\)"/>. Conditional GANs (cGANs) have become the prevailing technique here, where the discriminator sees both the input image and the generated output to ensure consistency and fidelity. For example, pix2pix is a canonical example of conditional image synthesis: if the input is an edge map, the output might be a photorealistic building facade consistent with those edges.
+
+One reason conditional image synthesis is attractive is that it can leverage the structure inherent in the input. Instead of generating images from scratch, the model has a strong prior from the input domain. This not only makes training more stable but also leads to more controlled outputs. For instance, if the input is a segmentation mask, the model knows exactly where the objects in the scene should appear, enabling direct manipulation of scene layout without manually painting the final image.
+
+### Multi-domain translation
+
+In many practical scenarios, we do not just have two domains, but a multitude of them. For instance, a face dataset might include images labeled for attributes such as gender, hair color, or age group. Or we might have an art dataset with multiple artistic styles: Monet, Van Gogh, Cezanne, etc. <Highlight>Multi-domain translation</Highlight> addresses the question: how do we build a single network that can translate images across all these possible domains without having to train a separate model for each pair?
+
+Approaches such as StarGAN (Choi and gang, 2018) and StarGAN v2 incorporate domain labels or style vectors to direct the translation. Instead of training a single generator for a single domain pair (e.g., day <Latex text="\(\leftrightarrow\)"/> night), these models incorporate an embedding or code that identifies the target domain. This allows the system to handle many different translations simultaneously, and in some cases, to interpolate between styles or produce new styles not strictly present in the dataset. This is more parameter-efficient and often reveals interesting emergent behaviors.
+
+### Revisiting GAN architecture for further explanation
+
+Although you have likely encountered <Highlight>GANs</Highlight> in other sections of this course, it is crucial to restate the gist of what they bring to image-to-image translation. At a high level, a GAN consists of two components: a generator <Latex text="\(G\)"/> and a discriminator <Latex text="\(D\)"/>. The generator tries to produce realistic images that fool the discriminator, while the discriminator tries to distinguish real images from generated (fake) ones. Mathematically, the classic minimax objective from Goodfellow and gang (2014) can be written as:
+
+<Latex text="\[
+\min_G \max_D \; \mathcal{L}_{GAN}(G, D) = 
+\mathbb{E}_{x \sim p_{data}(x)}[\log D(x)]
+\;+\;
+\mathbb{E}_{z \sim p_z(z)}[\log(1 - D(G(z)))].
+\]"/>
+
+In image-to-image translation, the generator typically has an encoder-decoder structure that takes a source image (and possibly a noise vector <Latex text="\(z\)"/> or domain label) as input and outputs an image in the target domain. The discriminator sees pairs of images <Latex text="\((x, y)\)"/> or just the generated image <Latex text="\(y'\)"/> to decide whether <Latex text="\(y'\)"/> is real or fake. The objective might be modified with additional terms, such as reconstruction or cycle-consistency losses, depending on whether we have paired or unpaired data.
+
+Over time, researchers have proposed many improvements over the original GAN objective to address training difficulties — among them Wasserstein GAN, Least Squares GAN, Hinge-loss GAN, Spectral Normalization, gradient penalty techniques, etc. In image-to-image translation, these improvements often reduce artifacts, stabilize training, and offer better control over the generator's outputs.
+
+## Chapter 3. Prominent architectures
+
+Several landmark architectures stand out for their influence, performance, and demonstration of core ideas in the img-to-img space. The ones below — pix2pix, CycleGAN, and StarGAN — are typically the first that come to mind when discussing image translation. However, there exist many other notable frameworks that improve in various ways, such as dealing with multi-modal outputs, requiring fewer data, or achieving better fidelity. Let me dive into the classical models first, then comment on some additional frameworks.
+
+### Pix2pix
+
+<Highlight>Pix2pix</Highlight> (Isola and gang, 2017) is arguably the most well-known baseline for paired image-to-image translation. The model requires a dataset of pairs <Latex text="\((x, y)\)"/>, where <Latex text="\(x \in X\)"/> is the input domain (e.g., a map, a sketch, or a segmentation mask), and <Latex text="\(y \in Y\)"/> is the corresponding output image. The primary mechanism is a conditional GAN: the generator <Latex text="\(G\)"/> learns to produce an image <Latex text="\(G(x)\)"/> that is consistent with <Latex text="\(x\)"/> and looks like it belongs to domain <Latex text="\(Y\)"/>. The discriminator <Latex text="\(D\)"/> sees pairs <Latex text="\((x, y)\)"/> or <Latex text="\((x, G(x))\)"/> to ensure that generated images are realistic and match the input condition.
+
+For the generator, pix2pix commonly uses a U-Net-like architecture, which allows low-level features in the encoder to be directly connected to the corresponding layers in the decoder via skip connections:
+
+<Image alt="pix2pix_architecture_diagram" path="" caption="Illustration of the pix2pix generator architecture with encoder-decoder and skip connections (U-Net design)." zoom="false" />
+
+The objective function typically includes both an adversarial component and an L1 reconstruction component:
+
+<Latex text="\[
+\mathcal{L}_{pix2pix}(G, D) = \mathcal{L}_{cGAN}(G, D) + \lambda \mathcal{L}_{L1}(G)
+\]"/>
+
+- <Latex text="\( \mathcal{L}_{cGAN}(G, D) \)"/>: The conditional GAN loss, encouraging generated images to appear similar to real ones and consistent with <Latex text="\(x\)"/>.  
+- <Latex text="\( \mathcal{L}_{L1}(G) \)"/>: A pixel-level reconstruction penalty that enforces the output to be close to the ground-truth in terms of L1 distance, which helps retain overall structure and color consistency.  
+- <Latex text="\( \lambda \)"/>: A hyperparameter controlling the trade-off between adversarial realism and direct pixel-level fidelity.
+
+Since pix2pix relies on paired data, it works extremely well whenever those pairs are available. One typical use case is turning a semantic label map into a photorealistic street scene. Another is colorizing black-and-white images where ground truth color images exist. If you do not have paired data, however, you must look to unpaired methods like CycleGAN.
+
+### CycleGAN
+
+<Highlight>CycleGAN</Highlight> (Zhu and gang, 2017) addressed one of the biggest practical bottlenecks of pix2pix: the need for paired datasets. Generating pixel-aligned pairs, especially at scale, can be expensive or outright impossible (imagine collecting pairs of horse and zebra images that match exactly in pose and background). To bypass this limitation, CycleGAN introduced the concept of cycle consistency. This means if you translate an image <Latex text="\(x\)"/> from domain <Latex text="\(X\)"/> into domain <Latex text="\(Y\)"/>, getting <Latex text="\(G(x)\)"/>, and then translate it back to <Latex text="\(X\)"/> with a reverse generator <Latex text="\(F\)"/>, you should recover your original image <Latex text="\(x\)"/>. Mathematically:
+
+<Latex text="\[
+\mathcal{L}_{cyc}(G, F) = \mathbb{E}_{x\sim X}[ \| F(G(x)) - x \|_1] + \mathbb{E}_{y \sim Y}[ \| G(F(y)) - y \|_1].
+\]"/>
+
+Here:
+- <Latex text="\(G\)"/> is the generator mapping <Latex text="\(X \rightarrow Y\)"/>.  
+- <Latex text="\(F\)"/> is the generator mapping <Latex text="\(Y \rightarrow X\)"/>.  
+- <Latex text="\(\|\cdot\|_1\)"/> is the L1 norm, ensuring that when you go <Latex text="\(x \rightarrow G(x) \rightarrow F(G(x))\)"/>, you end up close to <Latex text="\(x\)"/>.  
+- Similarly, going <Latex text="\(y \rightarrow F(y) \rightarrow G(F(y))\)"/> brings you back to <Latex text="\(y\)"/>.
+
+CycleGAN also incorporates two discriminators: <Latex text="\(D_X\)"/> for distinguishing between real and generated images in domain <Latex text="\(X\)"/>, and <Latex text="\(D_Y\)"/> for distinguishing in domain <Latex text="\(Y\)"/>. Hence the overall loss combines the adversarial losses in both domains with the cycle-consistency loss. This elegantly allows unpaired datasets — one only needs a set of images from domain <Latex text="\(X\)"/> and a set from domain <Latex text="\(Y\)"/>. In practice, this method can produce remarkable results in tasks such as turning horses into zebras or Monet paintings into real photos, all without requiring one-to-one correspondences.
+
+### StarGAN
+
+<Highlight>StarGAN</Highlight> (Choi and gang, 2018) introduced the concept of multi-domain translation into a single, unified framework. Instead of learning a separate pair of generators and discriminators for each domain pairing, StarGAN is built to handle multiple domains with a single generator <Latex text="\(G\)"/>. The generator conditions on both the input image and a domain label (or style code) <Latex text="\(c\)"/> that specifies the target domain. For example, if we had face images labeled by hair color, gender, or even facial expression, we could specify any combination of these attributes as the domain label <Latex text="\(c\)"/>, and the generator would produce a face image that modifies the input accordingly.
+
+One key idea is the reconstruction loss, which ensures that if you generate an image from domain <Latex text="\(A\)"/> to domain <Latex text="\(B\)"/> and then try to reconvert it back to <Latex text="\(A\)"/> with the domain label for <Latex text="\(A\)"/>, you recover the original image. This is similar in spirit to cycle consistency, but generalized to multiple domains. StarGAN also uses an auxiliary classifier in the discriminator to classify domain labels. This acts as a guiding signal, letting the discriminator judge if the generated image belongs to the intended domain.
+
+StarGAN v2 later introduced more sophisticated ways of modeling style or domain codes, letting the generator produce diverse images even within the same domain, thus addressing the multi-modality issue.
+
+### Other notable frameworks
+
+After pix2pix, CycleGAN, and StarGAN, the literature has seen many variations and improvements:
+
+- **Pix2pixHD** (Wang and gang, 2018) improved the quality of generated images for high-resolution tasks by using a multi-scale generator and discriminator structure.  
+- **CUT (Contrastive Unpaired Translation)** (Park and gang, 2020) replaced cycle-consistency with a patch-wise contrastive learning objective, drastically simplifying the architecture while sometimes improving quality.  
+- **MUNIT** (Huang and gang, 2018) and **DRIT** (Lee and gang, 2018) introduced multi-modal unsupervised image translation. They factorized the latent space into a content representation and a style representation, allowing multiple style outputs given a single input.  
+- **AttnGAN** or models that incorporate attention mechanisms for image generation, although primarily used in text-to-image tasks, share underlying ideas relevant to domain adaptation and localized style transfer.  
+
+These frameworks highlight the creative ways researchers attempt to address limitations such as limited data, single-mode generation, or the complexities of high-resolution images. They also illustrate how new constraints and domain knowledge can be encoded into the generator or discriminator architectures and objectives to push the boundaries of what is possible in image-to-image translation.
+
+## Chapter 4. Data
+
+Data for image-to-image translation can come in many forms, but we can break it down into a few broad categories:
+
+1. **Paired Data:** In paired datasets, each image in domain <Latex text="\(X\)"/> has a corresponding image in domain <Latex text="\(Y\)"/>, typically with perfect pixel-level alignment or near-perfect alignment. Common examples include pairs of edges and real photos, segmentation masks and real images, or daytime and nighttime shots from cameras on the same vantage point. Building such a dataset typically requires a controlled environment (like scanning the same scene in two modalities) or manual annotation (like a human tracing edges). Paired data is extremely convenient if your translation pipeline can take advantage of it, as it reduces ambiguities in training.
+
+2. **Unpaired Data:** Often, it is far easier to collect images in domain <Latex text="\(X\)"/> and domain <Latex text="\(Y\)"/> separately without any sort of alignment. This might mean you have a folder of horse images and another folder of zebra images, with no guarantee that any single horse image corresponds to a specific zebra image. Unpaired data typically calls for algorithms like CycleGAN, which rely on cycle-consistency or other constraints to align the distributions implicitly.
+
+3. **Multi-domain or Multi-attribute Data:** In multi-domain scenarios, you might have images labeled with attributes or domain labels — e.g., face images labeled with hair color, gender, accessories, etc. This type of data can be more complex to collect, but it is also quite powerful, as it allows for multi-way translations or even combinations of attributes. StarGAN-like approaches excel here.
+
+4. **Partially Paired or Weakly Labeled Data:** Some datasets might have partial annotation (e.g., some images have pairings, some do not), or the labeling might be noisy or incomplete. Advanced methods can handle a spectrum of conditions from fully supervised to fully unsupervised, bridging the gap with semi-supervised learning.
+
+Regardless of data type, quality and diversity are paramount. If the dataset does not sufficiently represent the variety of scenes, objects, lighting conditions, or styles in each domain, the learned translation might not generalize well. Data preprocessing might also involve consistent resizing, cropping, normalization, and color-space transformations. In domain adaptation tasks, it might also be useful to carefully consider how to align or unify color distributions, or remove domain-specific artifacts if they do not convey meaningful information.
+
+## Chapter 5. Implementation, training, loss function, metrics (FID, IS, PSNR, SSIM)
+
+Building and training an image-to-image translation model can be broken down into several steps: network architecture, loss specification, hyperparameter selection, and evaluation metrics. Each step has intricacies and pitfalls, so let me outline the typical flow and highlight the important metrics.
+
+1. **Define generator and discriminator architectures:**  
+   - The generator often follows an encoder-decoder pattern. U-Net skip connections are common in paired settings, while ResNet blocks are quite standard in unpaired settings (CycleGAN).  
+   - The discriminator is typically a patch-based discriminator (PatchGAN), which classifies individual patches of the image as real or fake. This helps enforce local realism and reduces the number of parameters.
+
+2. **Choose relevant losses:**  
+   - **Adversarial loss:** The standard minmax or a variant like LSGAN, WGAN-GP, or hinge loss is used.  
+   - **Conditional or reconstruction losses:** L1 or L2 if you have pairs; cycle-consistency if unpaired.  
+   - **Style or identity losses:** Sometimes used to preserve color or identity of objects.  
+
+3. **Training process:**  
+   - **Alternating updates:** Typically you update the discriminator once or more for each generator update.  
+   - **Learning rate schedules:** Some setups use a fixed learning rate for a period, then linearly decay. Others rely on adaptive optimizers like Adam with carefully chosen parameters (<Latex text="\(\beta_1\)"/>, <Latex text="\(\beta_2\)"/>).  
+   - **Batch size and hardware considerations:** High-resolution tasks may require large GPU memory, so some practitioners use gradient accumulation or reduced batch sizes.  
+
+4. **Common pitfalls and heuristics:**  
+   - **Mode collapse:** The generator outputs a narrow set of images, ignoring parts of the distribution.  
+   - **Discriminator overpowering the generator:** If the discriminator trains too fast, the generator never receives reliable gradients.  
+   - **Normalization strategies:** Instance normalization or batch normalization can drastically affect the style or color consistency.  
+
+### A sample PyTorch skeleton
+
+Below is a simplified snippet to illustrate how one might set up the training loop for a pix2pix-like image-to-image model in PyTorch. Note that this is a condensed outline, omitting many practical considerations like logging, checkpointing, or advanced hyperparameter scheduling.
+
+<Code text={`
+import torch
+import torch.nn as nn
+import torch.optim as optim
+
+# Assume we have:
+#  - generator: G(x)
+#  - discriminator: D(x, y)
+#  - paired dataset or dataloader providing (x, y)
+#  - adversarial loss function adv_loss
+#  - L1 loss function l1_loss
+
+num_epochs = 100
+lambda_l1 = 10.0  # Weight for L1 loss
+lr = 0.0002
+
+optimizer_G = optim.Adam(generator.parameters(), lr=lr, betas=(0.5, 0.999))
+optimizer_D = optim.Adam(discriminator.parameters(), lr=lr, betas=(0.5, 0.999))
+
+for epoch in range(num_epochs):
+    for i, (x, y) in enumerate(dataloader):
+        x, y = x.cuda(), y.cuda()
+
+        # ------------------
+        #  Train Discriminator
+        # ------------------
+        optimizer_D.zero_grad()
+        
+        # Real samples
+        pred_real = discriminator(x, y)
+        loss_D_real = adv_loss(pred_real, torch.ones_like(pred_real))
+        
+        # Fake samples
+        y_fake = generator(x)
+        pred_fake = discriminator(x, y_fake.detach())
+        loss_D_fake = adv_loss(pred_fake, torch.zeros_like(pred_fake))
+        
+        loss_D = (loss_D_real + loss_D_fake) * 0.5
+        loss_D.backward()
+        optimizer_D.step()
+        
+        # ------------------
+        #  Train Generator
+        # ------------------
+        optimizer_G.zero_grad()
+        
+        # Adversarial loss
+        pred_fake = discriminator(x, y_fake)
+        loss_G_adv = adv_loss(pred_fake, torch.ones_like(pred_fake))
+        
+        # L1 loss
+        loss_L1 = l1_loss(y_fake, y) * lambda_l1
+        
+        # Total generator loss
+        loss_G = loss_G_adv + loss_L1
+        loss_G.backward()
+        optimizer_G.step()
+        
+        if i % 50 == 0:
+            print(f"Epoch [{epoch}/{num_epochs}], Step [{i}], "
+                  f"D Loss: {loss_D.item():.4f}, G Loss: {loss_G.item():.4f}")
+`}/>
+
+### Evaluation metrics
+
+Evaluation in image-to-image translation is notoriously tricky, as we often care about perceptual quality, faithfulness to input domain constraints, and overall diversity. Key metrics include:
+
+- **Fréchet Inception Distance (FID):** Measures the distance between feature distributions of generated images and real images. A lower FID is better. FID uses an Inception network to compute feature embeddings and then models these embeddings as multivariate Gaussians. Formally:
+
+  <Latex text="\( \mathrm{FID}(p, q) = \| \mu_p - \mu_q \|^2 + \mathrm{Tr}(\Sigma_p + \Sigma_q - 2(\Sigma_p \Sigma_q)^{1/2}) \)"/>
+
+  where <Latex text="\(\mu_p, \Sigma_p\)"/> are the mean and covariance of the feature embeddings for real images, and <Latex text="\(\mu_q, \Sigma_q\)"/> are those for generated images. This metric is popular for generative models, though it can be sensitive to the representation capacity of the Inception network and the size of the evaluation set.
+
+- **Inception Score (IS):** Encourages both diversity and recognizability of generated images. However, it is more commonly used for unconditional generative models; for image-to-image translation, it may not always be the best reflection of performance.
+
+- **Peak Signal-to-Noise Ratio (PSNR):** Measures the pixel-level fidelity between generated images and ground-truth images if you do have a reference (for example, in paired settings). A higher PSNR indicates closer alignment to the ground truth in terms of raw pixel intensity, but it might not always capture perceptual aspects.
+
+- **Structural Similarity Index Measure (SSIM):** Another reference-based measure that tries to capture the perceptual similarity between two images by comparing luminance, contrast, and structure. A higher SSIM indicates that the generated image is structurally more similar to the ground truth. SSIM can be more meaningful than purely per-pixel distances like L1 or L2.
+
+In practice, a combination of quantitative measures (FID, SSIM) and human qualitative assessment (through user studies or side-by-side comparisons) is often used. For domain adaptation tasks, one might also measure the performance of a downstream model (e.g., classification accuracy) to see if the translated images help the target model generalize better.
+
+## Chapter 6. Real-world applications
+
+The impetus behind image-to-image translation stems from a wide array of practical and creative applications. Here are some of the major areas where these techniques have had a tangible impact:
+
+1. **Photo enhancement and retouching:** One might design a model that translates low-light or noisy images into bright, noise-free photos. Alternatively, an application might colorize old black-and-white images or even sharpen them to some extent by learning a domain mapping from low-resolution (or grayscale) to higher-resolution (or color) images.
+
+2. **Artistic style transfer and content creation:** The phenomenon of turning real photos into impressionistic paintings or transforming doodles into professional-looking artwork is extremely popular. Tools like Adobe Photoshop now integrate neural filters or style transfer technology for on-the-fly editing. CycleGAN or other domain-transfer models can underlie these creative effects.
+
+3. **Medical imaging:** In the healthcare context, translating between different scan modalities (CT, MRI, PET, etc.) or generating synthetic data for augmentation can significantly aid in building robust diagnostic models. For instance, generating pseudo-CT images from MRI data can help reduce patient exposure to radiation by avoiding repeated CT scans.
+
+4. **Domain adaptation for robotics and autonomous vehicles:** Self-driving cars rely heavily on camera-based sensors. If we can generate realistic images from simulated or controlled environments, we can train models cheaply and safely. Domain adaptation techniques reduce the gap between synthetic and real data, allowing for robust performance once the model is deployed in real driving scenarios.
+
+5. **Satellite and aerial imagery:** Converting images from one spectral band to another, or super-resolving low-resolution satellite photos, can help analysts detect changes in forest cover, urban development, or even track the health of crops.
+
+6. **Fashion and e-commerce:** Retailers use image translation techniques to generate product images in different styles, or to visualize how clothing might look in a variety of colors and patterns without manually photographing each variant.
+
+7. **Film and video editing:** In post-production, it might be useful to recolor or stylize entire scenes automatically. For instance, day-to-night translation or applying a certain cinematic color grading can be streamlined by these methods.
+
+8. **Virtual and augmented reality (VR/AR):** Image-to-image translation can generate realistic overlays, transform the style of a user's environment in real time, or adapt the user's viewpoint to varying conditions.
+
+These applications illustrate the versatility of img-to-img translation techniques. In each case, domain knowledge guides how to structure the input-output domains, select training data, and define success criteria.
+
+## Chapter 7. Misc
+
+In this final chapter, I will combine some miscellaneous but important aspects: challenges and limitations, training instability, hyperparameter sensitivity, mode collapse, emerging trends (including multi-modal translation and large-scale models), and directions for future research.
+
+### Challenges and limitations
+
+- **Data availability and quality:** If your data is insufficient or lacks variety, your model might overfit or fail to generalize. Furthermore, obtaining paired data can be expensive, which is why unpaired or unsupervised strategies are essential.
+- **Computational resources:** High-resolution translations are compute-intensive. Models like pix2pixHD or progressive-growing approaches can handle larger images but require powerful GPUs and a lot of training time.
+- **Evaluation difficulties:** While FID, SSIM, and IS can be helpful, they do not always capture the nuances of image realism or the alignment between the generated output and the input domain constraints. Different tasks might require domain-specific evaluation criteria.
+- **Generalization to out-of-distribution examples:** Even if the model performs well on the training distribution, it might not handle unusual or extreme images. The domain shift problem remains relevant here.
+
+### Training instability and sensitivity to hyperparameters
+
+GAN-based methods are notorious for their fragility during training. Commonly encountered issues:
+
+- **Divergent training:** The discriminator or generator loss might explode if the learning rate is too high or if the discriminator becomes too strong relative to the generator.  
+- **Oscillations:** The model's performance or generated outputs might fluctuate as the generator and discriminator chase each other's weaknesses.  
+- **Hyperparameter tuning:** The choice of learning rates, batch sizes, types of normalization, the weighting of different losses (e.g., <Latex text="\(\lambda\)"/> for L1 or cycle consistency), and the ratio of discriminator to generator updates can drastically affect the final results.
+
+Researchers often rely on heuristics and best practices gleaned from earlier literature. For instance, using Adam with <Latex text="\(\beta_1 = 0.5\)"/> can help smooth out training. Spectral normalization, introduced by Miyato and gang, can stabilize the discriminator. Techniques like one-sided label smoothing or historical averaging might mitigate some training pathologies. Nonetheless, a fair amount of trial-and-error is still standard practice.
+
+### Mode collapse and how to mitigate it
+
+<Highlight>Mode collapse</Highlight> occurs when the generator produces a narrow subset of images (or sometimes even a single repeated image) across different inputs, effectively ignoring the richness of the target domain. In image-to-image translation, partial mode collapse might manifest as repeatedly generating the same background or color palette regardless of the input. This is particularly problematic if you expect diverse or multi-modal outputs.
+
+**Potential strategies for mitigation:**
+- **Cycle-consistency or reconstruction losses**: Encourage the model not to collapse to a single output by requiring that it recovers the original input under a reverse mapping.  
+- **Multi-modal frameworks**: Approaches like MUNIT or DRIT explicitly model style as a separate latent variable, thus enforcing multi-modality.  
+- **Using different adversarial losses**: For instance, WGAN-GP can provide more stable gradients, reducing the incentive for the generator to settle on a trivial mode.  
+- **Regularization and diversity-sensitive losses**: Some advanced frameworks incorporate a diversity-sensitive loss that tries to ensure that different noise or style inputs yield distinct outputs.
+
+### Emerging trends (multi-modal translation, large-scale models)
+
+In the last couple of years, researchers have begun extending image-to-image translation to more generalized or multi-modal tasks. Rather than just mapping from images in domain <Latex text="\(X\)"/> to images in domain <Latex text="\(Y\)"/>, we can incorporate textual prompts or other modalities to guide the translation. This is partially inspired by text-to-image generation models like DALLE (Ramesh and gang, 2021) or diffusion-based models that accept text prompts and an initial image, performing what is effectively a style or content transformation. The phenomenon of <Highlight>img2img in diffusion models</Highlight> has garnered substantial attention, where you feed a reference image plus a text prompt and get out a new image that is partly guided by the reference but also adheres to the prompt's textual constraints.
+
+<Highlight>Large-scale models</Highlight> — those trained on massive, broad datasets — have also proven that pretraining can enable zero-shot or few-shot translation capabilities. By building a foundation model that sees billions of image-text pairs, one can then specialize it to narrower tasks or specific style transformations with minimal fine-tuning.
+
+### Potential research directions (unsupervised and semi-supervised methods)
+
+While many strategies exist for unpaired training, the field is ripe for further exploration into:
+- **Self-supervised pretraining**: Using large, unlabeled image corpora to learn robust representations that can be quickly adapted to translation tasks.  
+- **Mixing partial supervision**: Combining a small subset of paired data with a larger pool of unpaired data to achieve high-fidelity translation at scale.  
+- **Domain generalization**: Going beyond adaptation between two domains, focusing on building a single model that can handle multiple unknown domains or domain shifts not seen in training.  
+- **3D or volumetric translation**: Extending these ideas into volumetric imaging (e.g., 3D CT scans) or neural radiance fields for more advanced tasks in AR/VR or medical imaging.
+
+### Concluding remarks and summary
+
+Image-to-image translation stands at the intersection of generative modeling, domain adaptation, and creative content manipulation. With frameworks such as pix2pix, CycleGAN, StarGAN, and beyond, the field has witnessed impressive leaps in both performance and conceptual understanding. However, many challenges remain, from data collection and evaluation to training stability and capturing the inherent multi-modality of the target domain. Current trends hint at an increasingly multimodal future, where text, images, and other data sources blend seamlessly in large-scale generative models.
+
+In day-to-day practice, an image-to-image pipeline can be set up by following a fairly consistent pattern: choose a suitable architecture (conditional or unpaired), specify your losses (adversarial, reconstruction, style), carefully balance hyperparameters, and keep a close eye on training stability. Evaluating your model might require multiple metrics — FID, SSIM, or custom domain-specific tests — and direct visual inspection will always remain a critical final check.
+
+By mastering these foundations and staying updated on the latest architectures and training techniques, you can unlock a vast array of possibilities: from photorealistic translations and domain adaptation for specialized tasks to explorations of new aesthetic styles and creative content generation.

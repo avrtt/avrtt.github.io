@@ -1,0 +1,300 @@
+---
+index: 15
+indexCourse: 16
+indexFavorites:
+title: "ML isn't for kids"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Introduction to machine learning"
+courseCategoryName: "Basic ML theory & techniques"
+desc: "You will suffer"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "20.09.2022"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 1
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: false
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/introduction_to_machine_learning.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/introduction_to_machine_learning"
+slug: "/research/introduction_to_machine_learning"
+---
+
+import Tooltip from "../../../components/Tooltip"
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+Для этого поста разобрать Obsidian-заметку (см. папку "🚧 Unfinished").
+
+*/}
+
+
+Machine learning is a subfield of artificial intelligence that focuses on creating algorithms capable of extracting patterns and insights from data — often with minimal explicit human instruction on how to solve a particular task. It is frequently described as being at the intersection of statistics, optimization, and computer science. Because ML models often discover complex, subtle relationships in large datasets, machine learning feels simultaneously daunting (<Highlight>it can be tough to "get right"</Highlight>) and magical (<Highlight>it powers many impressive applications</Highlight>).
+
+At its core, ML is all about building models that generalize from past experience (training data) to new, unseen data. This is exciting because it opens the door to solving problems that are difficult or even impossible to tackle with traditional rule-based programming. However, the very flexibility that makes machine learning so powerful also makes it tricky: ML requires substantial care in choosing data, preparing features, selecting model architectures, and applying rigorous validation practices. Even accomplished practitioners acknowledge that learning how to do machine learning well can be quite challenging. Yet this difficulty also makes ML incredibly cool — there's a thrill in watching a model evolve from raw data to robust, near-human-level performance.
+
+Below, we'll introduce some key ML concepts that will form the basis for future chapters in this course. We'll discuss what data is in the ML context, how to evaluate models, why we use loss functions, and how to approach different paradigms of machine learning. We'll also give a brief overview of deep learning, widely regarded as one of the most powerful subsets of ML in recent years.
+
+
+## Fundamentals
+
+### General ml concepts & basics
+
+At a high level, a <Highlight>machine learning algorithm</Highlight> can be viewed as a procedure that "learns" a relationship or rule mapping an input space <Latex text="\(X\)"/> to an output space <Latex text="\(Y\)"/>. For example, if you are predicting housing prices, your input space might be a set of features describing houses (like square footage, number of bedrooms, etc.), and your output space could be a continuous variable representing the price.
+
+Key ideas in machine learning:
+
+1. **Data**: ML algorithms rely on data to discover patterns, rather than using hard-coded rules.
+2. **Parameters**: These are the variables an ML algorithm tunes automatically in order to improve its performance on the given data.
+3. **Generalization**: The ability to apply insights learned from past data to new, unseen data.
+4. **Validation**: Techniques for estimating how well a model is likely to perform on unseen data.
+
+### The importance of data
+
+Data is the fuel powering nearly all machine learning. The more comprehensive and relevant your data, the better your model can be at capturing patterns and performing reliably on new inputs. In some sense, <Highlight>data is everything</Highlight>: if you feed poor quality data — even the world's best ML algorithm might fail to generalize. Choosing, curating, and cleaning data are therefore among the most time-consuming yet essential parts of building real-world ML systems.
+
+From a theoretical standpoint, the statistical learning approach (Vapnik, 2000) often assumes that data points are drawn from an <Highlight>i.i.d.</Highlight> (<Tooltip text="Independently and Identically Distributed"/> ) distribution. In practice, data may not always follow these assumptions: real datasets often come from multiple sources and can contain biases or correlations. Nonetheless, striving for well-collected, representative data remains crucial.
+
+### What is a sample
+
+A <Highlight>sample</Highlight> in the context of ML is just a single data point (or observation). This data point often appears as a row in a dataset, with columns representing different features of that point. For instance, a single sample of meteorological data might include temperature, humidity, and wind speed at a certain location and time.
+
+Because each sample is part of a broader population of interest, it's important that our sample distribution is somewhat reflective of the real-world conditions we expect. If the samples are unrepresentative — say all collected from only one region or date range — then the resulting model might fail to generalize elsewhere.
+
+### Train, test, and validation sets
+
+A cornerstone practice in ML is dividing available data into different sets:
+
+- **Training set**: The set on which we directly train (fit) our model. The model sees these samples and adjusts its internal parameters accordingly.
+- **Validation set**: A set used to fine-tune choices like <Highlight>hyperparameters</Highlight>, model selection, or even feature choices. The model does not update its parameters on this set, but we use it to evaluate performance across different configurations.
+- **Test set**: A final set used to measure the performance of the chosen model once all decisions have been made. The test set should be used <Highlight>only once</Highlight> to get an unbiased estimate of how well the model generalizes.
+
+When data is limited, practitioners often adopt specialized <Highlight>cross-validation</Highlight> or other splitting schemes (discussed in more detail in Chapter 6) to more efficiently use all available data.
+
+### Features, design matrix, and feature space
+
+A <Highlight>feature</Highlight> refers to an individual measurable property or characteristic of a phenomenon being observed. Features typically populate the columns in a dataset. For example, if you have a dataset of houses, one feature might be the number of bedrooms; another might be the year the house was built.
+
+When these features are gathered into a matrix form (with rows representing samples and columns representing features), we call this the <Highlight>design matrix</Highlight>. In mathematical terms, if we have <Latex text="\(m\)"/> samples and <Latex text="\(n\)"/> features, the design matrix <Latex text="\(X\)"/> is typically of shape <Latex text="\((m \times n)\)"/>. Each row <Latex text="\(x_i\)"/> (for <Latex text="\(i = 1, \dots, m\)"/>) corresponds to a single sample in an <Highlight>n-dimensional feature space</Highlight>.
+
+### Data outliers
+
+<Highlight>Outliers</Highlight> are data points that deviate markedly from the rest of your dataset. They can arise due to measurement errors, rare events, or even just natural variation. Outliers can heavily distort training, causing models to overemphasize these unusual points. Common strategies include removing or down-weighting outliers, transforming them, or using robust loss functions that are less sensitive to large errors. The decision of how to handle outliers depends on domain knowledge and the specific ML task at hand.
+
+
+## The model
+
+### What is a model
+
+In machine learning, a <Highlight>model</Highlight> is a function or process that maps input data (features) to an output (such as a label or numerical value). This function is chosen from a set of possible functions known as the hypothesis space. Concretely, if we denote the feature vector for the <Latex text="\(i\)"/>-th sample as <Latex text="\(x_i\)"/>, then a model might produce an output <Latex text="\(a(x_i)\)"/>.
+
+Examples of ML models include:
+- Linear or polynomial regression,
+- Decision trees,
+- Support vector machines,
+- Neural networks,
+- Random forests,
+- and many others.
+
+### Model as a decision function a(xᵢ)
+
+We often talk about a model <Latex text="\(a(x)\)"/> as a <Highlight>decision function</Highlight> because it decides (or predicts) a value or category for a given input <Latex text="\(x\)"/>. For classification tasks (e.g., "Is this email spam?"), the model outputs discrete classes (e.g., spam or not spam). For regression tasks (e.g., "What is the future stock price?"), the model outputs a continuous value (e.g., \$150.00).
+
+The relationship is typically parameterized. That is, if <Latex text="\( \theta \)"/> is a set of parameters (weights, biases, etc.), the model can be written as:
+<Latex text="\[
+a_\theta(x) = g(x, \theta),
+\]"/>
+where <Latex text="\( g(\cdot) \)"/> is the form of the function (e.g., a linear combination of features or a deep neural network).
+
+### Model validation
+
+Once a model is trained, we need to ask: <Highlight>"Is the model good?"</Highlight> We assess this through model validation. The main idea is to evaluate how well the model performs on held-out data that was not used during training. This helps us gauge if the model's decisions generalize beyond the training set. Common practices for validation include:
+
+- Using a simple train/validation/test split.
+- Cross-validation with multiple folds.
+- Other specialized methods (for example, time-series splits).
+
+### Overfitting
+
+<Highlight>Overfitting</Highlight> occurs when a model learns not only the underlying signal but also the random noise present in the training data. In effect, the model "memorizes" the training set rather than capturing generalizable patterns. Overfit models perform extremely well on training data but often fail dismally on unseen data.
+
+Formally, overfitting can be seen as reducing training loss without a corresponding reduction in <Highlight>expected error</Highlight>. Modern datasets, especially large high-dimensional ones, can be prone to overfitting, so techniques like regularization (see my [post called "Regularization"](/research/regularization)), proper validation, or simplifying the model can mitigate it (Blum, NeurIPS 2021).
+
+### Hyperparameters
+
+Unlike parameters (which a model learns during training), <Highlight>hyperparameters</Highlight> are configuration settings selected prior to the learning process. Examples include:
+- Learning rate in gradient-based optimization,
+- The number of layers or hidden units in a neural network,
+- Regularization strength,
+- The maximum depth of a decision tree.
+
+One crucial step in building an ML model is <Highlight>hyperparameter tuning</Highlight>: systematically searching for hyperparameters that yield strong validation performance.
+
+
+## Loss function and empirical risk
+
+### Understanding the loss function
+
+A <Highlight>loss function</Highlight> measures how far a model's predictions deviate from the actual target values. For a single data point <Latex text="\( (x_i, y_i) \)"/>, we might define a loss function <Latex text="\(L(a(x_i), y_i)\)"/>. A common example in regression is the squared error loss:
+<Latex text="\[
+L(a(x_i), y_i) = \left(a(x_i) - y_i\right)^2.
+\]"/>
+
+Here, <Latex text="\(y_i\)"/> is the true label and <Latex text="\(a(x_i)\)"/> is the model's prediction. The larger the difference, the bigger the loss. For classification, a typical loss function is cross-entropy, which penalizes deviations in predicted probabilities of classes.
+
+### Empirical risk minimization
+
+For a dataset of <Latex text="\(m\)"/> samples, the average of the loss over all training examples is called the <Highlight>empirical risk</Highlight>:
+<Latex text="\[
+R_{\text{emp}}(\theta) = \frac{1}{m} \sum_{i=1}^m L(a_\theta(x_i), y_i).
+\]"/>
+
+- <Latex text="\( \theta \)"/>: Model parameters (the quantity we optimize).
+- <Latex text="\( L(\cdot) \)"/>: The per-sample loss function.
+- <Latex text="\( m \)"/>: Number of training samples.
+
+In <Highlight>empirical risk minimization</Highlight>, we choose the parameters <Latex text="\( \theta \)"/> that minimize <Latex text="\(R_{\text{emp}}(\theta)\)"/>. This principle underlies many standard ML training algorithms, from linear regression to deep neural networks. For deeper theoretical treatments, see *Statistical Learning Theory* (Vapnik, 2000) or *Mathematics for ML, Chapter 8* (mml-book, 2019).
+
+
+## Steps of any ml problem
+
+### Define the loss function (defining the problem)
+
+The first step in tackling an ML problem is to <Highlight>frame the problem</Highlight>. We must decide what we are trying to predict or classify, and how mistakes are measured. This is typically embodied by the choice of a loss function. For instance, if you are predicting stock prices, you might care about the mean squared error (MSE). If you are classifying spam vs. non-spam emails, you might use cross-entropy to penalize incorrect probability estimates.
+
+### Get data
+
+Next, we gather and prepare data. This can involve:
+- Collecting data from various sources (databases, public datasets, APIs).
+- Cleaning data (fixing missing values, removing duplicates).
+- Engineer additional features, if needed.
+- Split into train, validation, and test sets (or use cross-validation strategies).
+
+Practitioners often say they spend 80% of the time <Highlight>cleaning and wrangling data</Highlight>, illustrating that real-world data is rarely neat or fully representative.
+
+### Build the model (find parameters minimizing empirical risk)
+
+After the loss function is determined and data is prepared, we choose a model form, initialize the parameters, and train it by minimizing the empirical risk. Various optimization algorithms (like stochastic gradient descent) can be employed. After training multiple candidate models — each with possibly different hyperparameters — we select the best performer based on validation scores.
+
+
+## Validation techniques
+
+### Why validation matters
+
+Without an unbiased estimate of how a model will perform on unseen data, we can easily fool ourselves into believing the model is better than it actually is. Overfitting is a prime risk here. <Highlight>Validation</Highlight> helps us:
+- Compare different models or hyperparameter choices.
+- Detect overfitting or data leakage.
+- Guide further iterations of feature engineering.
+
+### Cross-validation basics
+
+<Highlight>Cross-validation</Highlight> is a strategy for making better use of limited data and getting more reliable estimates of model performance. The fundamental idea is to systematically partition the data into multiple splits, train on some partitions, and validate on the remaining ones.
+
+### K-fold cross-validation
+
+In <Highlight>K-fold cross-validation</Highlight>, we split the dataset into <Latex text="\(K\)"/> roughly equal "folds":
+- For each fold <Latex text="\(k\)"/>, use fold <Latex text="\(k\)"/> as the validation set and train on all other folds.
+- Evaluate the performance metric for that fold.
+- Average the performance metrics across all <Latex text="\(K\)"/> folds.
+
+This method is widely used in research and practice because it provides stable performance estimates, especially for smaller datasets.
+
+<Image alt="Illustration of K-fold cross-validation" path="" caption="K-fold cross-validation partitions the dataset into multiple folds, systematically training and validating on distinct portions of the data." zoom="false" />
+
+### Shufflesplit
+
+<Highlight>ShuffleSplit</Highlight> repeatedly randomly partitions the dataset into train and validation sets. Unlike K-fold, which partitions the dataset into sequential folds, ShuffleSplit relies on random sampling for each iteration, giving multiple random splits. This can be helpful when data is large or when you suspect that simple partitioning might not thoroughly capture variability.
+
+### Stratified approaches
+
+When dealing with classification tasks where classes are imbalanced, stratification ensures that each split has approximately the same class proportions as the original dataset. <Highlight>Stratified K-fold</Highlight> is a popular technique in this category: each fold maintains the overall class distribution, preventing folds from inadvertently containing only majority or only minority classes.
+
+### Group-based splits
+
+Sometimes, data is grouped in ways that must be respected. For example, if you have multiple images or measurements from the same person, you want to keep all data from that person together in either the training set or the validation set (to avoid overestimating real-world performance). <Highlight>Group-based cross-validation</Highlight> handles this by ensuring that no group appears in both training and validation partitions.
+
+
+## Types of machine learning
+
+### Supervised learning
+
+<Highlight>Supervised learning</Highlight> focuses on learning from labeled examples. Each training sample has an associated ground truth label. Typical tasks:
+
+- **Classification**: Predict a discrete category (spam or not spam).
+- **Regression**: Predict a continuous quantity (house prices).
+
+Supervised learning is popular for many real-world applications, such as image recognition, fraud detection, and language translation.
+
+### Unsupervised learning
+
+<Highlight>Unsupervised learning</Highlight> has no labeled data. It focuses on discovering structure in the data itself. Common tasks:
+
+- **Clustering** (e.g., K-means, DBSCAN): Group samples into meaningful clusters.
+- **Dimensionality reduction** (e.g., PCA): Compress data while preserving its principal structures.
+
+Unsupervised techniques can reveal hidden patterns that might otherwise remain undetected.
+
+### Other paradigms (reinforcement, semi-supervised, etc.)
+
+- <Highlight>Reinforcement Learning</Highlight> (RL): An agent interacts with an environment and learns behaviors that maximize cumulative rewards. RL is behind recent breakthroughs in robotics and game-playing AI (e.g., AlphaGo).
+- <Highlight>Semi-supervised learning</Highlight>: Some data is labeled, most is unlabeled. The algorithm exploits both labeled and unlabeled data.
+- <Highlight>Self-supervised learning</Highlight>: Generates labels from the data itself (e.g., next-word prediction tasks in large language models).
+
+In industry, semi-supervised or self-supervised methods are especially appealing when acquiring labeled data is expensive or time-consuming, but unlabeled data is abundant.
+
+
+## Deep learning in brief
+
+### What is deep learning
+
+<Highlight>Deep learning</Highlight> refers to ML methods — primarily neural networks — that use multiple layers of transformations (often dozens or even hundreds of layers). These stacked layers of neurons can learn more abstract features at higher layers, which has proven extremely effective in tasks like image recognition, natural language processing, and speech recognition (LeCun, Bengio, and Hinton, 2015). Modern success stories include GPT-based language models, large-scale vision models, and real-time generative models.
+
+### Relationship between ml and deep learning
+
+Deep learning is not the entirety of machine learning, but rather a powerful subset. Traditional ML often relies on <Highlight>hand-crafted feature engineering</Highlight>, while deep learning attempts to discover useful features automatically through layered representations. Despite deep networks' impressive performance and popularity, they are not always the best solution — particularly when data is limited or interpretability is paramount.
+
+
+## Conclusion and next steps
+
+This introduction is meant to set the stage for deeper dives into the technical aspects of machine learning throughout the rest of the course. We have covered:
+
+- The fundamentals of ML and why data underpins everything.
+- The notion of a model, how we measure its performance using loss functions, and how we validate it to ensure generalization.
+- The standard taxonomy of supervised vs. unsupervised (plus hybrid paradigms like semi-supervised and reinforcement learning).
+- An overview of deep learning's place within the broader ML landscape.
+
+From here, we will progress into more focused areas: linear and logistic regression, advanced regularization strategies, decision trees, and beyond. We will explore how the mathematics of linear algebra, calculus, and probability tie into the design, training, and evaluation of these models. Over time, we'll build a complete toolkit for constructing state-of-the-art predictive models and understanding their performance in depth.
+
+Stay motivated: machine learning can be difficult, but learning it thoroughly is one of the most exciting — and rewarding — skills in modern data science!

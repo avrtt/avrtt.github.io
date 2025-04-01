@@ -1,0 +1,663 @@
+---
+index: 75
+indexCourse: 90
+indexFavorites:
+title: "Intro to LLMs, pt. 1"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Intro to LLMs, pt. 1"
+courseCategoryName: "LLM engineering"
+desc: "And it's not just tweaking parameters"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "01.10.2023"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 2
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/introduction_to_llms.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/intro_to_llms"
+slug: "/research/intro_to_llms"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+Генерация текста
+https://neerc.ifmo.ru/wiki/index.php?title=%D0%93%D0%B5%D0%BD%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D1%8F_%D1%82%D0%B5%D0%BA%D1%81%D1%82%D0%B0
+[Let's build GPT: from scratch, in code, spelled out.](https://www.youtube.com/watch?v=kCc8FmEb1nY)
+[Let's build the GPT Tokenizer](https://youtu.be/zduSFxRajkE)
+
+https://github.com/mlabonne/llm-course
+The LLM course is divided into three parts:
+1. ~~🧩 **LLM Fundamentals** is optional and covers fundamental knowledge about mathematics, Python, and neural networks.~~
+2. 🧑‍🔬 **The LLM Scientist** focuses on building the best possible LLMs using the latest techniques.
+3. ~~👷 **The LLM Engineer** focuses on creating LLM-based applications and deploying them.~~
+
+**LLM engineer roadmap перенесён в посты про AI engineering**
+
+# LLMs for scientists
+
+Здесь и в следующих нескольких постах мы будем говорить про LLM с точки зрения исследователя. Более практические моменты для LLM-инженеров будут разобраны в будущих постах, поскольку для них требует освоить множество других тем.
+
+### 1. The LLM architecture
+
+An in-depth knowledge of the Transformer architecture is not required, but it's important to understand the main steps of modern LLMs: converting text into numbers through tokenization, processing these tokens through layers including attention mechanisms, and finally generating new text through various sampling strategies.
+
+- **Architectural Overview**: Understand the evolution from encoder-decoder Transformers to decoder-only architectures like GPT, which form the basis of modern LLMs. Focus on how these models process and generate text at a high level.
+- **Tokenization**: Learn the principles of tokenization - how text is converted into numerical representations that LLMs can process. Explore different tokenization strategies and their impact on model performance and output quality.
+- **Attention mechanisms**: Master the core concepts of attention mechanisms, particularly self-attention and its variants. Understand how these mechanisms enable LLMs to process long-range dependencies and maintain context throughout sequences.
+- **Sampling techniques**: Explore various text generation approaches and their tradeoffs. Compare deterministic methods like greedy search and beam search with probabilistic approaches like temperature sampling and nucleus sampling.
+
+### 2. Pre-training models
+
+Pre-training is a computationally intensive and expensive process. While it's not the focus of this course, it's important to have a solid understanding of how models are pre-trained, especially in terms of data and parameters. Pre-training can also be performed by hobbyists at a small scale with <1B models.
+
+- **Data preparation**: Pre-training requires massive datasets (e.g., [Llama 3.1](https://arxiv.org/abs/2307.09288) was trained on 15 trillion tokens) that need careful curation, cleaning, deduplication, and tokenization. Modern pre-training pipelines implement sophisticated filtering to remove low-quality or problematic content.
+- **Distributed training**: Combine different parallelization strategies: data parallel (batch distribution), pipeline parallel (layer distribution), and tensor parallel (operation splitting). These strategies require optimized network communication and memory management across GPU clusters.
+- **Training optimization**: Use adaptive learning rates with warm-up, gradient clipping and normalization to prevent explosions, mixed-precision training for memory efficiency, and modern optimizers (AdamW, Lion) with tuned hyperparameters.
+- **Monitoring**: Track key metrics (loss, gradients, GPU stats) using dashboards, implement targeted logging for distributed training issues, and set up performance profiling to identify bottlenecks in computation and communication across devices.
+
+### 6. Evaluation
+
+Reliably evaluating LLMs is a complex but essential task guiding data generation and training. It provides invaluable feedback about areas of improvement, which can be leveraged to modify the data mixture, quality, and training parameters. However, it's always good to remember Goodhart's law: "When a measure becomes a target, it ceases to be a good measure."
+
+- **Automated benchmarks**: Evaluate models on specific tasks using curated datasets and metrics, like MMLU. It works well for concrete tasks but struggles with abstract and creative capabilities. It is also prone to data contamination.
+- **Human evaluation**: It involves humans prompting models and grading responses. Methods range from vibe checks to systematic annotations with specific guidelines and large-scale community voting (arena). It is more suited for subjective tasks and less reliable for factual accuracy.
+- **Model-based evaluation**: Use judge and reward models to evaluate model outputs. It highly correlates with human preferences but suffers from bias toward their own outputs and inconsistent scoring.
+- **Feedback signal**: Analyze error patterns to identify specific weaknesses, such as limitations in following complex instructions, lack of specific knowledge, or susceptibility to adversarial prompts. This can be improved with better data generation and training parameters.
+
+### 7. Quantization
+
+Quantization is the process of converting the parameters and activations of a model using a lower precision. For example, weights stored using 16 bits can be converted into a 4-bit representation. This technique has become increasingly important to reduce the computational and memory costs associated with LLMs.
+
+- **Base techniques**: Learn the different levels of precision (FP32, FP16, INT8, etc.) and how to perform naïve quantization with absmax and zero-point techniques.
+- **GGUF & llama.cpp**: Originally designed to run on CPUs, [llama.cpp](https://github.com/ggerganov/llama.cpp) and the GGUF format have become the most popular tools to run LLMs on consumer-grade hardware. It supports storing special tokens, vocabulary, and metadata in a single file.
+- **GPTQ & AWQ**: Techniques like [GPTQ](https://arxiv.org/abs/2210.17323)/[EXL2](https://github.com/turboderp/exllamav2) and [AWQ](https://arxiv.org/abs/2306.00978) introduce layer-by-layer calibration that retains performance at extremely low bitwidths. They reduce catastrophic outliers using dynamic scaling, selectively skipping or re-centering the heaviest parameters.
+- **SmoothQuant & ZeroQuant**: New quantization-friendly transformations (SmoothQuant) and compiler-based optimizations (ZeroQuant) help mitigate outliers before quantization. They also reduce hardware overhead by fusing certain ops and optimizing dataflow.
+
+### 8. New Trends
+
+Here are notable topics that didn't fit into other categories. Some are established (model merging, multimodal) techniques, but others are more experimental (interpretability, test-time compute scaling) and the focus of numerous research papers.
+
+- **Model merging**: Merging trained models has become a popular way of creating performant models without any fine-tuning. The popular [mergekit](https://github.com/cg123/mergekit) library implements the most popular merging methods, like SLERP, [DARE](https://arxiv.org/abs/2311.03099), and [TIES](https://arxiv.org/abs/2311.03099).
+- **Multimodal models**: These models (like [CLIP](https://openai.com/research/clip), [Stable Diffusion](https://stability.ai/stable-image), or [LLaVA](https://llava-vl.github.io/)) process multiple types of inputs (text, images, audio, etc.) with a unified embedding space, which unlocks powerful applications like text-to-image.
+- **Interpretability**: Mechanistic interpretability techniques like Sparse Autoencoders (SAEs) made remarkable progress to provide insights about the inner workings of LLMs. This has also been applied with techniques such as abliteration, which allow you to modify the behavior of models without training.
+- **Test-time compute**: Scaling the compute budget during test time requires numerous calls and involves specialized models like a Process Reward Model (PRM). Iterative steps with precise scoring significantly improve performance for complex reasoning tasks.
+
+*/}
+
+
+{/*
+
+1. Revisiting foundations of Natural Language Processing  
+- NLP objectives: from understanding to generation  
+- Key historical milestones in NLP research in context of LLMs  
+- Why focusing on text generation is vital in modern AI applications  
+2. Introduction to Language Modeling  
+- Probability-based view of language models  
+- Classical text generation approaches (N-gram, Markov chains)  
+- Practical limitations of classical approaches and their impact on text coherence  
+3. Neural Networks and Text  
+- Role of feedforward neural networks in NLP  
+- RNN-based models (Elman, Jordan networks) as a stepping stone  
+- Transition to gated architectures (LSTM, GRU) and their improvements  
+4. Transition to the Transformer Paradigm  
+- Fundamental limits of sequential architectures (RNN, LSTM)  
+- Self-attention mechanism: high-level reasoning without recurrence  
+- Encoder-decoder architecture vs. decoder-only models  
+5. BERT, GPT, and their Contrasts  
+- Masked language modeling vs. autoregressive language modeling  
+- Encoder-focused approach (BERT) vs. decoder-focused approach (GPT)  
+- How these differences influence downstream tasks (understanding vs. generation)  
+6. Core LLM Components  
+- Tokenization strategies (byte-pair encoding, WordPiece, sentencepiece)  
+- Positional embeddings and their role in sequence handling  
+- Multi-head attention: capturing different relational aspects of tokens  
+7. Text Generation Fundamentals  
+- Greedy search: merits and pitfalls of one-token-at-a-time selection  
+- Beam search: trading off between exploration and search efficiency  
+- Probabilistic sampling: temperature, top-k, and nucleus (top-p) approaches  
+8. Sampling Strategies and Creativity  
+- How temperature controls “randomness” in generation  
+- Nucleus sampling to refine or expand the creative space  
+- When to prefer deterministic vs. probabilistic strategies  
+9. Coherence and Context Management  
+- Importance of context windows in maintaining narrative continuity  
+- Strategies for handling context overflow (truncation, sliding windows)  
+- Techniques to reduce repetition and enhance thematic consistency  
+10. Handling Stylistic Variation  
+- Prompt engineering basics for tone and style control  
+- Prefix tuning and its applicability in style adaptation  
+- Balancing user constraints with model creativity  
+11. Mitigating Biases in Generation  
+- Sources of bias in training data (demographic, cultural, linguistic)  
+- Unintended consequences of biased outputs in real-world applications  
+- Approaches for bias detection and mitigation (filtering, debiasing)  
+12. Core Use Cases of Text Generation  
+- Summarization: key challenges and current solutions  
+- Chatbots and dialogue systems: user engagement vs. factual correctness  
+- Creative writing: short stories, poetry, and idea generation  
+13. Foundational Evaluation Metrics  
+- Traditional metrics (BLEU, ROUGE) for text coherence and fidelity  
+- Factual correctness checks and the limits of automated metrics  
+- Early insights into human-based evaluations for nuanced tasks  
+14. Guidance for Researchers vs. Engineers  
+- Why theoretical understanding of LLMs is crucial before practical tasks  
+- Key reading list and foundational papers on text generation  
+- Preparing for the deeper dive into training and advanced techniques  
+
+*/}
+
+
+Natural language processing has evolved dramatically over the past few decades, transitioning from rule-based methods to statistical approaches, and ultimately to modern deep learning–driven paradigms that have propelled large language models (LLMs) into the spotlight. When I talk about LLMs, I am referring to expansive neural networks trained on massive text corpora and structured in a way that they can generate coherent and contextually relevant language. The concept behind these models is rooted in decades of research attempting to reconcile how machines interpret human language and how they might ultimately respond or generate text in ways that mimic our own linguistic abilities.
+
+### Nlp objectives: from understanding to generation
+
+Classically, one might imagine that the purpose of NLP is primarily to understand language: to parse sentences, extract semantic meaning, and perform tasks like sentiment analysis or named entity recognition. However, in recent years, text generation has grown equally critical. Indeed, tasks such as machine translation, dialogue systems, code generation, writing assistance, summarization, and more all revolve around generating text that is not only coherent but also context-aware and semantically accurate.
+
+From the earliest approaches to language modeling, the objective has been to estimate the likelihood of a sequence of words or tokens. If a model can accurately predict the next token (word, subword, or character) given a historical context, it can theoretically generate text in a manner that approximates human language patterns. This is the fundamental idea behind "language understanding" tasks as well — if you can predict what comes next, you have in some sense captured significant statistical and semantic aspects of language.
+
+### Key historical milestones in nlp research in context of llms
+
+The evolution from rule-based systems to large-scale neural networks is rich with milestones:
+
+- **Rule-based systems (1960s–1980s)**: Early attempts at machine translation or question answering relied on carefully constructed grammars. These systems were often brittle, failing whenever language structure deviated from the handcrafted rules.
+
+- **Statistical era (1990s–2000s)**: Methods using Hidden Markov Models (HMMs) and various dynamic programming–driven approaches reigned supreme for tasks like part-of-speech tagging, named entity recognition, and speech recognition. Language models in this period were typically n-gram-based, capturing local co-occurrence statistics of words.
+
+- **Neural renaissance (2010s–early 2020s)**: Deep learning changed everything. With the advent of more advanced hardware (GPUs, TPUs) and large datasets, it became feasible to train neural networks on text at scale. Recurrent neural networks (RNNs), LSTMs, and GRUs paved the way for more context-aware representations. Eventually, Transformers (Vaswani and gang, NeurIPS 2017) superseded earlier sequential models, enabling more parallelizable and context-rich architectures that form the basis of today's LLMs.
+
+- **Foundation models & LLMs (late 2010s–present)**: BERT (Devlin and gang, 2018), GPT (Radford and gang, 2018; 2019; Brown and gang, 2020), T5 (Raffel and gang, 2020), PaLM (Chowdhery and gang, 2022), and others introduced the concept of extremely large models — often with billions or hundreds of billions of parameters — trained on vast text corpora. These models can be fine-tuned for downstream tasks or used in zero/few-shot modes, heralding a new era of state-of-the-art performance in NLP.
+
+These historical perspectives underscore the significance of text generation. By better understanding how language is modeled and generated, practitioners can refine applications spanning chatbots, summarizers, code generation, question-answering systems, and creative writing support.
+
+### Why focusing on text generation is vital in modern ai applications
+
+Text generation is central to numerous contemporary AI applications. Beyond the well-known use cases like chatbots, advanced generative text models enable automating code (GitHub Copilot is a prime example), drafting emails, producing marketing copy, generating technical documentation, or even assisting in creative endeavors like writing novels or composing poetry. The rapid adoption of LLM-based services for day-to-day tasks (such as drafting messages, summarizing documents, or explaining code snippets) highlights how vital text generation has become. Understanding the principles behind LLM-based text generation is crucial for building robust, reliable, and ethical systems that can manage or mitigate issues like misinformation, hallucination, or biased outputs.
+
+## Introduction to language modeling
+
+A language model (LM) assigns a probability distribution over sequences of tokens (e.g., words or subwords). By extension, a language model that can generate text operates by drawing from that learned distribution, one token at a time. Formally, if we have a sequence of tokens <Latex text="\(w = (w_1, w_2, \dots, w_T)\)"/>, then a language model aims to estimate <Latex text="\(P(w)\)"/>. A fundamental way to decompose <Latex text="\(P(w)\)"/> is:
+
+<Latex text="\[
+P(w) = \prod_{t=1}^{T} P(w_t \mid w_{1}, w_{2}, \dots, w_{t-1}).
+\]"/>
+
+Here, <Latex text="\(w_t\)"/> represents the <Latex text="\(t\)"/>-th token in the sequence, and the probability of each next token depends on all the previous tokens in the sequence. In practice, large language models attempt to learn these conditional distributions from extremely large corpora, capturing nuanced patterns of grammar, semantics, and even world knowledge.
+
+### Probability-based view of language models
+
+From a probabilistic perspective, the better a model is at capturing natural language regularities, the higher the likelihood it assigns to real sentences and the lower the perplexity. In more intuitive terms, perplexity can be viewed as a measure of "surprise" the model experiences when encountering text. A lower perplexity indicates the model is less "surprised" by typical sequences, implying it has internalized the relevant language patterns.
+
+### Classical text generation approaches (n-gram, markov chains)
+
+Early approaches to language modeling used n-gram statistics. That is, each token is predicted based on the previous <Latex text="\(n-1\)"/> tokens:
+
+<Latex text="\[
+P(w_t \mid w_{t-1}, \dots, w_{t-n+1}).
+\]"/>
+
+A Markov chain model is effectively an n-gram approach where the "state" is the last <Latex text="\(n-1\)"/> tokens. These methods were simple, but their memory of context was extremely limited. Even though they worked reasonably well for tasks like speech recognition or smaller-scale text generation, n-gram models tended to generate unnatural sequences for longer contexts because they did not capture deeper structural and semantic relationships.
+
+### Practical limitations of classical approaches and their impact on text coherence
+
+The shortcoming of classical approaches is especially visible in tasks requiring long-range dependency modeling, such as generating entire paragraphs or pages of fluent text. Markov chain–style methods can stochastically produce locally coherent text but often break down with repeated phrases, contradictory statements, or jarring transitions. This lack of a global sense of context or structure signaled a pressing need for more sophisticated architectures that could retain a memory of longer sequences. This realization served as the impetus for the widespread adoption of neural approaches.
+
+## Neural networks and text
+
+Neural networks have played a transformative role in language modeling by addressing limitations in context retention and representation learning. By using learned embeddings and hidden states, neural approaches can capture subtler linguistic features that go beyond immediate local context.
+
+### Role of feedforward neural networks in nlp
+
+Before the dominance of recurrent networks, researchers experimented with straightforward feedforward networks for language modeling. For example, a feedforward neural language model might take the last few tokens as input (converted into embeddings), combine them in a hidden layer, and then predict the next token. Although these methods outperformed some pure n-gram models by virtue of learned embeddings, they were still limited in capturing sequences of variable length. As a result, feedforward networks rarely replaced n-gram language models in practical applications.
+
+### Rnn-based models (elman, jordan networks) as a stepping stone
+
+Recurrent neural networks (RNNs) marked a watershed moment. Introduced in earlier decades by Elman and Jordan, RNNs allow hidden states to be updated over sequences, effectively capturing an unbounded history — at least in theory. An RNN's hidden state at time step <Latex text="\(t\)"/> is typically defined as:
+
+<Latex text="\[
+h_t = f(W_{hh} \, h_{t-1} + W_{xh}\, x_t + b_h),
+\]"/>
+
+where <Latex text="\(h_t\)"/> is the hidden state at time <Latex text="\(t\)"/>, <Latex text="\(x_t\)"/> is the input at time <Latex text="\(t\)"/> (often an embedding of token <Latex text="\(w_t\)"/>), <Latex text="\(W_{hh}\)"/> and <Latex text="\(W_{xh}\)"/> are weight matrices, <Latex text="\(b_h\)"/> is a bias term, and <Latex text="\(f\)"/> is typically a non-linear function such as <Latex text="\( \tanh \)"/>. This recurrence allows the model to pass information along as the sequence unfolds.
+
+In practice, however, classic RNNs struggled with vanishing or exploding gradients, which made learning long-range dependencies exceedingly difficult. They could handle short contexts better than purely statistical methods but still fell short when it came to very long texts.
+
+### Transition to gated architectures (lstm, gru) and their improvements
+
+Long Short-Term Memory (LSTM) networks (Hochreiter and Schmidhuber, 1997) and Gated Recurrent Units (GRUs, Cho and gang, 2014) introduced gating mechanisms that regulate the flow of information, addressing the vanishing/exploding gradient issues. By incorporating an "input gate", "forget gate" and "output gate", LSTMs can selectively update or reset information in their cell state, thus preserving information over longer stretches of text. GRUs simplified the LSTM structure into two gates but retained many of the benefits. These gated architectures improved language modeling performance significantly, enabling more coherent text generation than older RNNs.
+
+Despite these innovations, RNNs (and LSTM/GRU variants) still process tokens sequentially, which implies less parallelization potential and can make capturing extremely long dependencies more difficult in practice. Eventually, attention mechanisms emerged, culminating in the transformer architecture, which overcame many of the limitations of sequential processing.
+
+## Transition to the transformer paradigm
+
+The transformer architecture (Vaswani and gang, NeurIPS 2017) changed the game. It introduced a self-attention mechanism that discards explicit recurrence, allowing the model to attend to any part of the sequence at once. This dramatically improved parallelism during training and opened new possibilities for capturing global context more efficiently.
+
+### Fundamental limits of sequential architectures (rnn, lstm)
+
+RNN-based models, even gated ones, exhibit inherent bottlenecks:
+
+1. **Sequential processing**: Tokens must be processed in order, making training and inference less efficient on modern hardware.
+2. **Long-range dependency**: While LSTMs and GRUs mitigate the vanishing gradient problem, they do not entirely solve the difficulty of learning truly long-range dependencies.
+3. **Complex hierarchical patterns**: RNN states tend to accumulate or lose information in a somewhat opaque manner, complicating the modeling of complex hierarchical relationships inherent in natural language.
+
+These issues motivated the design of attention-based architectures, which allow every token to "see" every other token via attention weights, bypassing the constraints of explicit recurrence.
+
+### Self-attention mechanism: high-level reasoning without recurrence
+
+At the core of the transformer is the multi-head self-attention module. If we denote the sequence of token embeddings as <Latex text="\(X \in \mathbb{R}^{T \times d}\)"/>, we project them into three subspaces: keys <Latex text="(K)"/>, queries <Latex text="(Q)"/>, and values <Latex text="(V)"/>. Then the attention operation for a single head is computed as:
+
+<Latex text="\[
+\text{Attention}(Q, K, V) = \text{softmax}\!\Bigl(\frac{QK^\mathsf{T}}{\sqrt{d_k}}\Bigr)V,
+\]"/>
+
+where <Latex text="\(d_k\)"/> is the dimensionality of the keys (and queries). By computing a weighted sum of values for each token, based on how similar a query is to the corresponding keys, self-attention allows each position in the sequence to attend to all others. This fosters more direct modeling of global context.
+
+In practice, multiple attention heads (e.g., 8, 12, or even 64 in large LLMs) are computed in parallel, and their outputs are concatenated. This multi-head scheme helps the model learn different types of relationships or features from the same sequence. Subsequently, feed-forward layers apply further transformations to each position independently, preserving the sequence length.
+
+### Encoder-decoder architecture vs. decoder-only models
+
+Originally, the transformer was introduced with an encoder-decoder structure:
+
+- **Encoder**: Processes the input sequence into a set of contextual representations using self-attention layers.
+- **Decoder**: Generates the output sequence by attending to the encoder outputs and to itself (masked self-attention to avoid "looking ahead").
+
+For purely text generation tasks (e.g., GPT models), a decoder-only architecture is often used. Here, the model focuses solely on autoregressive generation, where each token is generated conditioned on previous tokens in the same sequence. Masked self-attention ensures the decoder cannot attend to future tokens, preserving the causal structure required for language modeling.
+
+## Bert, gpt, and their contrasts
+
+Two foundational paradigms in LLM research are BERT-like models (Devlin and gang, 2018) and GPT-like models (Radford and gang, 2018 onward). While both rely on the transformer, they differ fundamentally in how they learn to predict text.
+
+### Masked language modeling vs. autoregressive language modeling
+
+- **BERT (encoder-focused approach)**: Trains with a masked language modeling objective, randomly masking some tokens in the sequence and then asking the model to predict them. It learns bidirectional representations, making it powerful for understanding tasks (e.g., classification, QA, token labeling). However, it's not optimized directly for left-to-right text generation because it sees context from both directions.
+
+- **GPT (decoder-focused approach)**: GPT employs a strictly left-to-right autoregressive objective, predicting the next token based on all previous tokens. This is more natural for generating text, but the model lacks the ability to see future tokens while training (as it must preserve causal direction).
+
+### Encoder-focused approach (bert) vs. decoder-focused approach (gpt)
+
+Because BERT sees a bidirectional context, it is strong at tasks requiring full-sentence understanding, such as question answering or text classification. GPT, on the other hand, is built to generate text cohesively, token by token, making it a prime candidate for text generation tasks like story writing, conversation, and summarization. In practice, the GPT architecture is sometimes described as a "decoder stack" of the original transformer, while BERT is an "encoder stack."
+
+### How these differences influence downstream tasks (understanding vs. generation)
+
+For tasks that require advanced text generation capabilities, GPT-style models often shine. BERT, while powerful, is less naturally suited for generation tasks unless it is adapted (as in some forms of seq2seq leveraging the BERT encoder with a separate decoder or "BART"-style hybrids). In usage:
+
+- **BERT** is typically used for classification, entity extraction, or tasks where global context of entire sentences/paragraphs is crucial.
+- **GPT** is typically used for generative tasks, creative writing, or any scenario demanding an output text sequence conditioned on preceding context. It's also easy to do zero-shot or few-shot prompting with a GPT model by providing relevant examples in the prompt.
+
+## Core llm components
+
+A large language model typically incorporates a few critical components and design choices that deeply affect its behavior.
+
+### Tokenization strategies (byte-pair encoding, wordpiece, sentencepiece)
+
+Tokenization translates raw text into a sequence of discrete tokens (integers). Without good tokenization, the model may handle out-of-vocabulary words or morphological variations poorly. Popular schemes include:
+
+- **Byte-Pair Encoding (BPE)**: Iteratively merges frequent symbol pairs, eventually forming a vocabulary of subwords. GPT-2 and GPT-3 use variations of BPE.
+- **WordPiece**: Similar subword segmentation approach used by BERT.
+- **SentencePiece**: A library that can implement BPE or other subword methods in a language-agnostic way.
+
+These subword tokenizers help manage rare or unknown words by breaking them into smaller, more common units, thus handling morphological variations better than naive word-level tokenization.
+
+### Positional embeddings and their role in sequence handling
+
+Because the transformer dispenses with recurrence, it must encode positional information in some manner so the model knows the order of tokens. This is often done via **positional embeddings**:
+
+<Latex text="\[
+\text{PE}_{(pos,2i)} = \sin(pos / 10000^{2i/d_{\text{model}}}), \quad
+\text{PE}_{(pos,2i+1)} = \cos(pos / 10000^{2i/d_{\text{model}}}).
+\]"/>
+
+Alternatively, learnable positional embeddings can be used. Either way, the idea is to inject a notion of sequence position so attention heads can exploit the order of tokens. Some advanced LLMs adopt "rotary" positional embeddings (Su and gang, 2021) or other variants to handle extended context lengths more gracefully.
+
+### Multi-head attention: capturing different relational aspects of tokens
+
+Multi-head attention is a vital aspect of modern LLMs. Each "head" can learn specialized roles, focusing on a particular relationship: subject-object, synonyms, co-references, or more abstract patterns. By combining these heads, the model can integrate multiple perspectives on how tokens relate to each other in context.
+
+## Text generation fundamentals
+
+At inference time, an autoregressive language model produces text one token at a time, sampling from <Latex text="\(P(w_t \mid w_{<t})\)"/>. Several decoding strategies can be used to control aspects of fluency, diversity, and efficiency.
+
+### Greedy search: merits and pitfalls of one-token-at-a-time selection
+
+A straightforward approach is to pick the token with the highest probability at each time step. This is:
+
+1. **Simple**: Only one candidate sequence is generated, and it's trivial to implement.
+2. **Fast**: Minimizes decoding overhead.
+
+However, greedy search often yields suboptimal text. It can get stuck in local maxima, generating repetitive or bland outputs. Because language generation is a combinatorial process, local greediness can lead to suboptimal final sequences.
+
+### Beam search: trading off between exploration and search efficiency
+
+Beam search keeps multiple candidate sequences (beams) at each step. This enhances the chance of finding a more globally optimal sequence, but it can be more computationally expensive. Beam search is popular in machine translation because it tends to yield more fluent results than greedy approaches. However, for open-ended generation tasks, large beam sizes can lead to overly generic or repeated phrases.
+
+### Probabilistic sampling: temperature, top-k, and nucleus (top-p) approaches
+
+For creative or open-ended text generation, random sampling techniques can yield more diverse outputs:
+
+- **Temperature**: Scales the logits by a factor <Latex text="\( \tau \)"/> before applying softmax. If <Latex text="\( \tau \lt 1 \)"/>, the distribution is "sharpened," favoring the most likely tokens. If <Latex text="\( \tau \gt 1 \)"/>, it's "flattened," encouraging exploratory sampling from less probable tokens.
+
+- **Top-k**: Restricts sampling to the top <Latex text="\(k\)"/> most probable tokens at each step, normalizing their probabilities. This prevents extremely unlikely tokens from being sampled, enhancing coherence while retaining some variability.
+
+- **Nucleus (top-p) sampling**: Instead of picking a fixed <Latex text="\(k\)"/>, it sums token probabilities in descending order until reaching a threshold <Latex text="\(p\)"/> (e.g., 0.9). Then it samples from only that "nucleus" of tokens. This can dynamically adjust the size of the candidate pool based on the distribution's shape.
+
+## Sampling strategies and creativity
+
+### How temperature controls "randomness" in generation
+
+Temperature is among the simplest ways to influence a model's "creativity" or "risk-taking." A lower temperature can produce more deterministic, often safer text, while a higher temperature can produce more surprising and varied outputs — but at the risk of occasional nonsensical tangents. Selecting a temperature is a context-dependent choice. For a support chatbot, a smaller temperature may ensure coherent answers, while for a creative writing assistant, a higher temperature might yield more original or unexpected ideas.
+
+### Nucleus sampling to refine or expand the creative space
+
+Nucleus sampling (Holtzman and gang, 2020) is often favored over top-k sampling for more dynamic balancing of creativity and coherence. If the distribution over tokens is very peaky, the "nucleus" might be just a few tokens, yielding near-deterministic outputs. If the distribution is flatter, the model has a broader range of plausible tokens, enabling more varied completions. This adaptivity can be especially appealing in open-ended tasks like story generation or brainstorming.
+
+### When to prefer deterministic vs. probabilistic strategies
+
+- **Deterministic**: Useful for tasks requiring a specific, reproducible response, such as certain code generation or well-defined factual tasks. However, deterministic approaches risk repetitive or formulaic outputs.
+- **Probabilistic**: Ideal for creative tasks, extended narratives, or user-facing applications where slight variability can be engaging and natural. The trade-off is an element of unpredictability, which might not be desirable in certain enterprise or regulated environments.
+
+## Coherence and context management
+
+One of the hallmarks of high-quality text generation is coherence — maintaining consistency across a narrative arc, referencing earlier points accurately, and avoiding contradictory statements.
+
+### Importance of context windows in maintaining narrative continuity
+
+Transformers have a fixed context window (e.g., 1,024 tokens, 2,048 tokens, or even more in some advanced architectures). The model "attends" to all tokens within this window to decide the next token. Longer context windows improve the model's ability to handle extended narratives, keep track of entities, or recall information mentioned far earlier in the text. When text extends beyond the context window, older tokens eventually get truncated, potentially causing coherence loss or "forgetting" earlier details.
+
+### Strategies for handling context overflow (truncation, sliding windows)
+
+When the text to be processed exceeds the model's maximum context length, one must adopt techniques such as:
+
+- **Truncation**: Keeping only the most recent tokens. This can degrade long-range coherence if older context is crucial.  
+- **Sliding window**: Break the text into overlapping segments. This approach ensures partial continuity but can cause repeated references or missing context if not managed carefully.  
+- **Context distillation or summarization**: Summarize older content to reduce its size while retaining key information, then insert the summary into the context window.
+
+### Techniques to reduce repetition and enhance thematic consistency
+
+LLMs sometimes exhibit repetitive loops or "runaway" phrases when they overconfidently keep selecting the same token patterns. Methods to mitigate repetition include:
+
+1. **Penalty terms** (e.g., repetition penalty): Dynamically adjusting logits to penalize tokens that have been used frequently.  
+2. **Disallowed n-grams**: Preventing the model from reproducing an n-gram that was already generated.  
+3. **Additional context signals**: Incorporating user prompts that emphasize variety or instruct the model to avoid repeating certain phrases.
+
+## Handling stylistic variation
+
+In many scenarios, controlling the style, tone, or register of the generated text is desirable. For instance, an academic style differs from a conversational style; marketing copy might sound different from a technical email.
+
+### Prompt engineering basics for tone and style control
+
+One straightforward way to influence style is by carefully designing the prompt. The prompt can include explicit instructions or a short demonstration of the desired style:
+
+"Write a short story in the style of a comedic detective novel..."
+
+LLMs are highly sensitive to prompt wording — small changes can lead to surprisingly different outputs. Providing in-context examples of text with the style you want can help nudge the model in the right direction.
+
+### Prefix tuning and its applicability in style adaptation
+
+**Prefix tuning** is a technique for adapting large models without modifying their core parameters. It involves learning a small set of "prefix" tokens or embeddings that steer the model's generation. By training these embeddings on data from a particular style or domain, we can guide the large language model to produce text with specific stylistic features. This is more parameter-efficient than full model fine-tuning and is often used for domain adaptation or style control.
+
+### Balancing user constraints with model creativity
+
+Striking a balance is essential. Overly constrained prompts might hamper creativity, while overly loose prompts might produce text that drifts off-topic or fails to meet user requirements. Sometimes an iterative approach works best: a user provides an initial prompt, the model generates a draft, and the user refines the constraints or instructions in subsequent prompts.
+
+## Mitigating biases in generation
+
+Large language models inherit biases from the data they are trained on. If the training corpus has skewed or offensive representations, the model may reproduce them. Addressing bias is a critical aspect of deploying LLMs responsibly.
+
+### Sources of bias in training data (demographic, cultural, linguistic)
+
+Because LLMs train on vast text corpora, they inevitably encounter stereotypes, hate speech, or biased representations. These might be historical artifacts (e.g., older texts containing outmoded perspectives) or reflect current societal biases (e.g., skew in media coverage). The model might absorb these patterns and generate text perpetuating them — unintentionally reinforcing harmful stereotypes or using offensive language.
+
+### Unintended consequences of biased outputs in real-world applications
+
+Bias in text generation can lead to serious ethical, legal, and reputational consequences, such as:
+
+1. **Alienating users**: Offensive or prejudiced language can alienate or harm certain user groups.  
+2. **Spreading misinformation**: If the model consistently associates certain demographics with negative traits, it reinforces harmful narratives.  
+3. **Regulatory scrutiny**: In some jurisdictions, discriminatory outputs can expose organizations to legal action.
+
+### Approaches for bias detection and mitigation (filtering, debiasing)
+
+Several strategies can reduce or mitigate bias:
+
+- **Data curation**: Carefully vet or balance training data to reduce skew.  
+- **Algorithmic debiasing**: Post-process or fine-tune the model's outputs to remove harmful language or reduce biased associations.  
+- **Human-in-the-loop**: Integrate human review or reinforcement learning from human feedback (RLHF) to penalize biased or harmful outputs.  
+- **Bias detection modules**: Use specialized classifiers that detect potential biases or harmful content in the generation pipeline, filtering or adjusting text before final output.
+
+## Core use cases of text generation
+
+Text generation is at the heart of many widely used applications. Understanding these helps contextualize design choices for LLMs.
+
+### Summarization: key challenges and current solutions
+
+Summarization aims to condense a lengthy text into a shorter version while preserving its essential meaning:
+
+- **Extractive** summarization: Selecting key sentences or phrases from the source text.  
+- **Abstractive** summarization: Generating new sentences that capture the core ideas of the source text.
+
+Modern LLMs excel at abstractive summarization, though they sometimes produce hallucinated details or omit essential points. Research continues to focus on ensuring factual consistency and capturing important nuances without distorting the source content.
+
+### Chatbots and dialogue systems: user engagement vs. factual correctness
+
+Generative models power many chatbots. The tension lies between creativity and factual correctness. A model that is too "creative" might fabricate answers or drift off-topic. On the other hand, an overly cautious model might produce dull or overly tentative responses. Ongoing work in retrieval-augmented generation (e.g., "RAG") tries to improve factual correctness by grounding responses in external knowledge bases or documents.
+
+### Creative writing: short stories, poetry, and idea generation
+
+Large language models can help authors or enthusiasts brainstorm plot ideas, write entire short stories, or experiment with new poetic forms. While some might lament the intrusion of AI into creative domains, others find it an exciting avenue for sparking human creativity. Nevertheless, controlling "style" and "quality" remains a challenge, and advanced control signals or iterative editing are often needed for high-end creative work.
+
+## Foundational evaluation metrics
+
+Evaluating generated text is a nuanced challenge. Automated metrics can only partially capture human notions of quality or correctness.
+
+### Traditional metrics (bleu, rouge) for text coherence and fidelity
+
+- **BLEU (Papineni and gang)** compares generated text against reference translations by measuring n-gram overlaps.  
+- **ROUGE (Lin)** is popular for summarization tasks, focusing on recall-oriented overlap of n-grams or subsequences between generated and reference summaries.
+
+While these metrics work reasonably well for certain tasks like machine translation or summarization with fixed references, they may fail to capture the quality of open-ended text where no single "correct" answer exists.
+
+### Factual correctness checks and the limits of automated metrics
+
+Hallucination — generating plausible-sounding but incorrect information — is a known phenomenon with LLMs. Automated metrics like BLEU do not measure factual correctness. Some specialized metrics attempt to evaluate factual alignment or consistency, but the gold standard for tasks requiring factual accuracy remains human evaluation or retrieval-based checks (e.g., verifying the model's statements against trusted data sources).
+
+### Early insights into human-based evaluations for nuanced tasks
+
+Human assessment remains critical, especially for open-ended generation, creative writing, or dialogue tasks. Judges might look at dimensions like:
+
+1. **Fluency**: Is the text grammatically correct and natural-sounding?
+2. **Coherence**: Does the text maintain logical flow and consistency?
+3. **Relevance**: Does the text stay on topic or answer the user's query?
+4. **Factual correctness**: Are the statements true, and is the information accurate?
+5. **Style/ Tone**: Does the text match the requested style or register?
+
+These subjective criteria can vary across tasks, making the evaluation of text generation a complex and often context-dependent challenge.
+
+## Guidance for researchers vs. engineers
+
+The distinction between theoretical research into LLMs and practical engineering is often blurred. However, there are some general considerations.
+
+### Why theoretical understanding of llms is crucial before practical tasks
+
+Building large language models requires a solid grasp of the underlying mathematics, optimization, and architecture choices. Without these theoretical underpinnings, engineers might misunderstand phenomena like catastrophic forgetting, overfitting to training data, or the complexities of large-scale distributed training. Thorough theoretical knowledge also informs choices about model size, data selection, sampling strategies, and interpretability tools.
+
+### Key reading list and foundational papers on text generation
+
+I recommend starting with:
+
+- **"Attention Is All You Need"** (Vaswani and gang, NeurIPS 2017): The original transformer paper.  
+- **"Language Models are Unsupervised Multitask Learners"** (Radford and gang, 2019): The GPT-2 paper describing autoregressive pretraining.  
+- **"BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding"** (Devlin and gang, 2018): The seminal masked language modeling approach.  
+- **"CTRL: A Conditional Transformer Language Model for Controllable Generation"** (Keskar and gang, 2019): Illustrates controlling aspects of the generated text via control codes.  
+- **"Neural Text Generation: A Practical Guide"** by Zhang and gang: A thorough overview of decoding strategies, sampling methods, and associated pitfalls.
+
+These and many others provide a rich foundation for advanced text generation. Conferences like NeurIPS, ICML, ICLR, and ACL frequently showcase cutting-edge research in language modeling and generation.
+
+### Preparing for the deeper dive into training and advanced techniques
+
+Anyone looking to build or train their own LLM or large-scale text generation system should be ready to explore:
+
+1. **Distributed training paradigms**: Data parallelism, model parallelism, pipeline parallelism.  
+2. **Memory optimization**: Gradient checkpointing, mixed-precision training, advanced optimizer variants (AdamW, LAMB).  
+3. **Data curation and cleaning**: Ensuring high-quality and diverse training corpora.  
+4. **Efficient inference**: Techniques like quantization, knowledge distillation, or even approximate search structures for retrieval augmentation.  
+
+With these advanced topics in mind, an engineer can scale from the fundamentals of the transformer architecture to building state-of-the-art generative text systems.
+
+---
+
+<Highlight>Below is an expanded overview of the GPT architecture and a short example of how to implement a text generation pipeline using a well-known library.</Highlight> I've added this extra section because GPT is central to the discussion, and a practical code snippet often helps bridge theory and application.
+
+## Gpt architecture deep dive
+
+While the outline already touched upon GPT's decoder-only focus, it's helpful to articulate its structural details more explicitly.
+
+### Gpt's stacked decoder blocks
+
+GPT is a stack of transformer decoder blocks, each block containing:
+
+1. **Masked multi-head self-attention**: Ensures causality by preventing the model from attending to future positions.  
+2. **Feed-forward layer**: Typically a two-layer MLP with a non-linear activation (e.g., GELU).  
+3. **Residual connections & layer normalization**: Used around each sub-layer to improve gradient flow and stable training.
+
+<Latex text="\[
+\text{DecoderBlock}(x) = \text{LayerNorm}\Bigl(x + \text{MHA}\bigl(x, x, x\bigr)\Bigr) 
+\rightarrow \text{LayerNorm}\Bigl(\tilde{x} + \text{FeedForward}\bigl(\tilde{x}\bigr)\Bigr)
+\]"/>
+
+where <Latex text="\( \tilde{x} \)"/> is the output of the first residual block.
+
+### Autoregressive learning objective
+
+GPT is trained to minimize the negative log-likelihood of the next token:
+
+<Latex text="\[
+\mathcal{L} = - \sum_{t=1}^{T} \log P_{\theta}(w_t \mid w_1, \ldots, w_{t-1})
+\]"/>
+
+where <Latex text="\(\theta\)"/> represents all learnable parameters in the model. This direct left-to-right approach fosters excellent generation capabilities, as each token is predicted solely based on the preceding ones.
+
+### Scaling laws and advanced gpt variants
+
+Works like "Scaling Laws for Neural Language Models" (Kaplan and gang, 2020) demonstrate that model performance improves predictably with larger model sizes, more training data, and more compute. This motivated GPT-3 (with 175B parameters), GPT-3.5, GPT-4, and other ultra-large models. These models not only produce more fluent text but also show emergent capabilities such as basic arithmetic, coding, or domain reasoning that smaller models struggle with.
+
+### Example gpt-based text generation code
+
+Below is a short Python example using the Hugging Face Transformers library to load a GPT-like model and generate text with a sampling strategy:
+
+```
+<Code text={`
+import torch
+from transformers import GPT2LMHeadModel, GPT2Tokenizer
+
+# Load a pretrained GPT-2 model and tokenizer
+model_name = "gpt2"
+tokenizer = GPT2Tokenizer.from_pretrained(model_name)
+model = GPT2LMHeadModel.from_pretrained(model_name)
+model.eval()
+
+prompt_text = "Once upon a time in a land far away,"
+input_ids = tokenizer.encode(prompt_text, return_tensors="pt")
+
+# Set some generation parameters
+max_length = 100  # total length of output (prompt + generation)
+temperature = 0.8  # controlling randomness
+top_p = 0.9       # nucleus sampling
+do_sample = True  # we want sampling (not greedy search)
+
+with torch.no_grad():
+    outputs = model.generate(
+        input_ids=input_ids,
+        max_length=max_length,
+        temperature=temperature,
+        top_p=top_p,
+        do_sample=do_sample
+    )
+
+generated_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
+print(generated_text)
+`}/>
+```
+
+Here:
+
+- I'm using a basic GPT-2 model to illustrate.  
+- You can tweak `temperature` and `top_p` to adjust creativity.  
+- For production systems, one might want to move the model to GPU, handle batch generation, or implement more advanced filtering steps.
+
+## Illustrations of architecture components
+
+<Image alt="transformer-decoder-architecture-schematic" path="" caption="A conceptual schematic of a transformer decoder block, highlighting masked self-attention, residual connections, and feedforward network." zoom="false" />
+
+(Image placeholder: This could depict a simplified GPT block, with tokens entering the block, passing through self-attention, feed-forward layers, and residual + layer normalization paths.)
+
+<Image alt="attention-heads-visualization" path="" caption="Visualization of multiple attention heads focusing on different relationships among words in a sentence." zoom="false" />
+
+(Image placeholder: This might illustrate how each head tends to track different grammar or semantic relationships, e.g. subject-verb, pronoun references, synonyms, etc.)
+
+---
+
+## Additional advanced considerations
+
+Because the course might encourage further expansions, I want to highlight some extra angles that connect to LLM-based text generation:
+
+### Reinforcement learning from human feedback
+
+To make text generation align better with user preferences or desired behaviors, models are often fine-tuned using RLHF (Ouyang and gang, 2022). Human annotators rank model outputs, and a reward model is trained to replicate these rankings. The language model is then optimized (often via a policy gradient method) to produce outputs that maximize the reward. This approach can refine the model's style, correctness, or avoidance of harmful content.
+
+### Handling extremely large context windows
+
+LLMs are trending toward longer context windows (8K, 16K, 32K tokens, or more). Achieving stable training and efficient inference with such context sizes is a subject of active research. Methods like sparse attention, memory compression, or retrieval-based approaches attempt to circumvent the direct <Latex text="\(O(n^2)\)"/> complexity in self-attention for very large sequences.
+
+### Chain-of-thought prompting
+
+Recent experiments show that prompting LLMs with chain-of-thought instructions (e.g., "Explain your reasoning step by step before giving the final answer.") can yield more robust or interpretable outputs. By encouraging the model to generate intermediate steps, we can glean insights into how it "arrived" at a conclusion, although it can also produce illusions of reasoning if the model simply hallucinates plausible-sounding steps.
+
+### Efficient fine-tuning techniques
+
+- **LoRA (Low-Rank Adaptation)**: Injects low-rank matrices into pretrained weights to adapt the model to new tasks with fewer parameters.  
+- **Adapter modules**: Insert small bottleneck layers between transformer blocks to condition the model on new tasks or domains.  
+- **Prompt tuning**: Directly learn or craft token-level prompts appended to the input to guide generation.
+
+All these allow domain-specific specialization without the overhead of full model retraining.
+
+---
+
+## (Optional) concluding remarks
+
+By integrating the theoretical underpinnings and practical strategies discussed here, one can develop a robust intuition about how large language models operate for text generation. From n-gram models to GPT-based behemoths, the field of language modeling has come a long way, propelled by breakthroughs in representation learning, attention mechanisms, and scaling laws. At the same time, challenges like bias, hallucination, factual correctness, and interpretability underscore the importance of responsible development and careful deployment of these models in real-world applications.
+
+LLMs are not magical oracles but powerful statistical tools that reflect the data and objectives we set. The next steps often involve deepening an understanding of specialized architectures (like T5 for text-to-text tasks, or multimodal models that incorporate images and text), exploring advanced training recipes (distributed training, curriculum learning, etc.), and applying them responsibly across a multitude of industries and user-facing products. Achieving success in building or utilizing LLMs for text generation requires balancing the art of prompt design, sampling strategies, and the science of deep learning engineering — a balance that continues to evolve as new research emerges.

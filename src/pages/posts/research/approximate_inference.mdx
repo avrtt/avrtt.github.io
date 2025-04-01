@@ -1,0 +1,476 @@
+---
+index: 157
+indexCourse: 166
+indexFavorites:
+title: "Approximate inference"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Approximate inference"
+courseCategoryName: "Scaling & distributed learning"
+desc: "Navigating complexity with clever shortcuts"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "26.03.2025"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 2
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/approximate_inference.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/approximate_inference"
+slug: "/research/approximate_inference"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+Approximate inference methods make it possible to learn realistic models from [big data](https://en.wikipedia.org/wiki/Big_data "Big data") by trading off computation time for accuracy, when exact learning and [inference](https://en.wikipedia.org/wiki/Inference) are [computationally intractable](https://en.wikipedia.org/wiki/Computationally_intractable).
+
+Несколько методов approximate inference мы уже затрагивали, а именно: markov chain monte carlo, markov random fields и bayesian networks.
+
+## Major methods classes
+- [Laplace's approximation](https://en.wikipedia.org/wiki/Laplace%27s_approximation "Laplace's approximation")
+- [Variational Bayesian methods](https://en.wikipedia.org/wiki/Variational_Bayesian_method "Variational Bayesian method")
+- [Markov chain Monte Carlo](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo "Markov chain Monte Carlo")
+- [Expectation propagation](https://en.wikipedia.org/wiki/Expectation_propagation "Expectation propagation")
+- [Markov random fields](https://en.wikipedia.org/wiki/Markov_random_field "Markov random field")
+- [Bayesian networks](https://en.wikipedia.org/wiki/Bayesian_network "Bayesian network")
+    - [Variational message passing](https://en.wikipedia.org/wiki/Variational_message_passing "Variational message passing")
+- Loopy and generalized [belief propagation](https://en.wikipedia.org/wiki/Belief_propagation "Belief propagation")
+
+Variational inference
+- factorized distributions
+- properties of factorized approximations
+- example: the unvariate gaussian
+- model comparison
+Illustration: variational mixture of gaussians
+- variational distribution
+- variational lower bound
+- predictive density
+- determining the number of components
+- induced factorizations
+Variational linear regression
+- variatinal distribution
+- predictive distribution
+- lower bound
+Exponential family
+- variational message passing
+Local variational methods
+Variational logistic regression
+- variational posterior distribution
+- optimizing the variational parameters
+- inference of hyperparameters
+Expectation propagation
+- example: the clutter problem
+- expectation propagation on graphs
+
+Inference as optimization
+Expectation maximization
+MAP inference and sparse coding
+Variational inference and learning
+Learned approximate inference
+
+https://www.geeksforgeeks.org/approximate-inference-in-bayesian-networks/
+
+*/}
+
+
+Approximate inference is one of the most pivotal topics in data science and machine learning, enabling practitioners and researchers to handle complex probabilistic models in scenarios where exact computations are computationally prohibitive. In plain terms, approximate inference is the art of trading off a certain degree of accuracy for a gain in efficiency, allowing us to tackle real-world problems that would otherwise be utterly intractable. The concept arises most notably when dealing with high-dimensional data and sophisticated models that require evaluating integrals or summations over a large or infinite space. In many such instances, computing these integrals exactly has been shown to be <Highlight>NP-hard</Highlight> or at least extremely costly. By embracing approximate methods, advanced practitioners manage to glean meaningful insights and make robust predictions under constraints of time and computational power.
+
+We can see direct evidence of the necessity of approximate inference when we examine how modern machine learning has progressed in tandem with the growth of datasets. As data has surged in volume and variety, the complexity of models has also escalated. Exact inference in models like fully Bayesian neural networks, Markov random fields, graphical models, or hierarchical Bayesian structures quickly becomes intractable. Researchers have therefore invented a spectrum of approaches to approximate these complex posteriors or marginal likelihoods in a manner that remains feasible and tractable at scale. 
+
+Broadly speaking, these families of methods include <Highlight>Laplace's approximation</Highlight>, <Highlight>Variational Bayesian methods</Highlight>, <Highlight>Markov chain Monte Carlo (MCMC)</Highlight>, <Highlight>Expectation Propagation (EP)</Highlight>, and methods rooted in <Highlight>Bayesian networks</Highlight> and <Highlight>Markov random fields</Highlight>, among others. Each of these techniques exhibits different performance trade-offs and theoretical foundations, yet all revolve around one unifying goal: shaping a simpler approximate distribution or simplified inference mechanism that remains faithful to the actual distribution in practice, while dramatically reducing the required computational overhead.
+
+### 1.1 The concept of approximate inference
+The foundational idea behind approximate inference is straightforward on the surface: we want to find or represent properties of a <Latex text="\(p(\theta \mid \mathcal{D})\)"/> — for instance, the posterior distribution of latent parameters <Latex text="\(\theta\)"/> given observed data <Latex text="\(\mathcal{D}\)"/> — without computing the integrals that define <Latex text="\(p(\theta \mid \mathcal{D})\)"/> in an exact manner. This typically involves some form of approximation. In a Bayesian setup, if we have a prior distribution <Latex text="\(p(\theta)\)"/> and a likelihood <Latex text="\(p(\mathcal{D} \mid \theta)\)"/>, the posterior is:
+<Latex text="\[
+p(\theta \mid \mathcal{D}) = \frac{p(\theta)\, p(\mathcal{D}\mid \theta)}{p(\mathcal{D})}.
+\]"/>
+However, the evidence <Latex text="\(p(\mathcal{D})\)"/> (the normalizing constant) is itself an integral (or sum, if discrete) over all possible latent configurations:
+<Latex text="\[
+p(\mathcal{D}) = \int p(\theta)\, p(\mathcal{D}\mid \theta) \, d\theta.
+\]"/>
+Such integrals can be extremely high-dimensional and prohibitively expensive to compute exactly when <Latex text="\(\theta\)"/> is in a large parameter space, or when the model is nonlinearly structured.
+
+Approximate inference addresses this by either sampling from <Latex text="\(p(\theta \mid \mathcal{D})\)"/> using Monte Carlo techniques, or by positing a simpler class of distributions — such as a factorized Gaussian — and optimizing the parameters of that simpler class in order to approximate the true posterior. Another approach is to iteratively refine local approximations to each factor or node in a graphical model, as in expectation propagation or loopy belief propagation. In all cases, the overarching concept is: we can't do it exactly, so we approximate.
+
+### 1.2 The need for approximation in large-scale models
+The main driver for approximate methods is scale. When dealing with big data or extremely expressive models (e.g., deep neural networks with hierarchical Bayesian structure or very large random fields in computer vision), exact approaches to inference become infeasible. Even in moderate-scale problems, the integrals or summations required by exact inference often grow exponentially with dimension or complexity. This growth is sometimes referred to as the "curse of dimensionality".
+
+Approximate inference solutions, by design, allow for different trade-offs: some approximate methods give faster but less accurate results, while others require more computation but achieve closer approximations. For example, Markov chain Monte Carlo can deliver highly accurate results if we allow enough time for the chain to mix, but it may be slower for extremely large datasets. Variational inference, on the other hand, can be faster but may introduce biases depending on how we factorize the approximate distribution. The ultimate choice depends on the problem setting, the structure of the model, the computational resources at hand, and the precision needed.
+
+### 1.3 Organization of this article
+In this expansive piece, I will guide you through the main theoretical setups and computational strategies used in approximate inference. We'll start by reviewing the computational burden that motivates approximate inference. Then, we'll dive into the principal families of approximate inference approaches, including Laplace's approximation, Markov chain Monte Carlo, variational methods, and expectation propagation. Next, we'll take a deeper look at variational inference — a particularly popular and general-purpose technique — and see its specialization to logistic regression, linear regression, and mixture models. We'll also devote space to expectation propagation and discuss how inference can be viewed as a form of optimization. We'll close with an overview of learned approximate inference techniques and some advanced references. Throughout, I'll highlight the interplay between these methods and mention relevant advanced frameworks, from Hamiltonian Monte Carlo to black-box variational inference.
+
+As we progress, I encourage you to keep in mind that the choice between these different approximate inference methods usually involves a delicate balance between computational efficiency, ease of implementation, theoretical guarantees, and empirical performance. Each method has strengths and shortcomings; the path forward often lies in your specific domain constraints and objectives.
+
+<br/>
+
+## 2. The computational challenge
+
+### 2.1 NP-hardness in inference
+Many exact inference problems in graphical models, random fields, and Bayesian networks have been proven to be NP-hard. This is pivotal to understanding the necessity for approximations: if, for instance, you have a complex Markov random field with a large number of interdependent nodes, the partition function <Latex text="\(Z\)"/> of that field can be extremely challenging to compute:
+<Latex text="\[
+Z = \sum_{\mathbf{x}} \exp\bigl(-E(\mathbf{x})\bigr),
+\]"/>
+where <Latex text="\(E(\mathbf{x})\)"/> is an energy function. In continuous analogs, we have integrals in place of sums. The sheer number of terms or the complexity of the integrand can become unmanageable quickly. In fact, studies in the late 20th century (e.g., Cooper, 1990) established that exact inference in general Bayesian networks is NP-hard, and follow-up research (e.g., Dagum & Luby) has added to this notion. Even small increases in model dimension can lead to an exponential blow-up in computational costs.
+
+### 2.2 The curse of dimensionality
+The curse of dimensionality references how the volume of space grows so quickly with dimension that data become "sparse" relative to the space. For probabilistic inference, it implies that integrals over high-dimensional parameter spaces or latent variable spaces become more difficult to evaluate. Monte Carlo methods can help by exploring this space stochastically, but they can also suffer from slow mixing times if the posterior distribution is very complicated. Variational methods attempt to circumvent the curse of dimensionality by employing factorized approximations that reduce computational demands — though at the cost of possibly introducing systematic errors.
+
+<br/>
+
+## 3. Main families of approximate inference
+
+In broad terms, we can classify approximate inference approaches into a few major families. While these groups undoubtedly overlap, they serve as useful conceptual signposts.
+
+### 3.1 Laplace's approximation
+Laplace's approximation is one of the earliest approaches to approximate integrals of the form:
+<Latex text="\[
+\int f(\theta)\exp\bigl( -E(\theta)\bigr)\, d\theta.
+\]"/>
+Intuitively, Laplace's approximation finds the mode (i.e., maximum a posteriori, or a maximum of <Latex text="\(-E(\theta)\)"/>) and locally approximates the posterior as Gaussian around that mode. Significantly, the performance of Laplace's approximation depends on how well a local Gaussian can capture your posterior distribution. If the posterior is unimodal and somewhat "peaked" around a single maximum, Laplace's approximation can be quite a powerful method. However, for distributions with multiple modes, heavy tails, or non-Gaussian shapes, it might fail to capture critical aspects of the distribution. This method often appears in simpler Bayesian logistic regression or neural network classifiers, though nowadays it is overshadowed in many large-scale contexts by more flexible approaches like variational methods or MCMC.
+
+### 3.2 Markov chain Monte Carlo (MCMC)
+MCMC-based techniques like Metropolis-Hastings and Gibbs sampling have been a mainstay of approximate inference for decades (Gelfand & Smith, 1990). The core idea is to construct a Markov chain that asymptotically converges to the distribution of interest. We generate samples from this chain, and those samples approximate either the posterior distribution or other quantities of interest (e.g., marginal likelihoods). MCMC can be very accurate given sufficient time (burn-in and adequate sampling steps), but it can be slow if the state space is large, complex, or if the chain suffers from poor mixing. Specializations and enhancements like Hamiltonian Monte Carlo (Neal, 2011; Betancourt, 2017) and slice sampling can improve performance by using gradient information or adaptive sampling strategies.
+
+### 3.3 Variational methods
+Variational inference recasts inference as an optimization problem: we propose a restricted family of distributions <Latex text="\(q(\theta)\)"/> and find the member of that family that minimizes the Kullback-Leibler divergence <Latex text="\(\mathrm{KL}[q(\theta)\,\|\, p(\theta \mid \mathcal{D})]\)"/> or equivalently maximizes the evidence lower bound (<Highlight>ELBO</Highlight>). The approach can be much faster than MCMC for large datasets and also lends itself well to modern automatic differentiation frameworks. Its main drawback is that the factorization assumptions or chosen family might be too restrictive, introducing a bias. Over the years, more flexible forms of variational distributions (normalizing flows, mixture distributions, etc.) and advanced parameterization techniques have improved the expressiveness of variational methods (Rezende & Mohamed, 2015).
+
+### 3.4 Expectation propagation (EP)
+EP, proposed by Minka (2001), is another iterative approach that refines local approximate factors while aiming to match exact moments in a global sense. EP can be more accurate than simpler variational mean-field methods in cases where the posterior has complicated correlations, but it can also be more delicate to implement. EP is particularly appealing for certain classes of graphical models or integrated likelihood problems.
+
+### 3.5 Markov random fields and Bayesian networks
+Markov random fields (MRFs) and Bayesian networks often require approximate inference in practice. Both rely on the factorization properties of probability distributions to simplify computation, but once the graphs become large or contain loops, exact inference is typically unworkable for real-world problems. Methods like belief propagation (and its variant, loopy belief propagation) are widely used, but they frequently require approximations to handle loops or high-dimensional node states. MRFs are common in computer vision, natural language processing, and other domains where local interactions create a high number of dependencies.
+
+### 3.6 Belief propagation (loopy and generalized)
+Belief propagation is an algorithm that passes "messages" along the edges of a graphical model to iteratively update local beliefs about each node. The algorithm is exact on certain acyclic structures (like trees), but in graphs with loops (e.g., grids in image processing), it becomes approximate and is then called "loopy belief propagation". Generalized belief propagation extends the approach further, partitioning the graph into regions, each of which can have more complex interactions. While not guaranteed to converge in every instance, it often provides surprisingly good approximations in practice.
+
+### 3.7 Factor graphs perspective
+A factor graph is yet another way of representing how a global function factors into smaller parts. For an inference problem with a joint distribution <Latex text="\(p(\mathbf{x})\)"/> factored into multiple components, each factor is associated with a set of variables. Message passing on a factor graph unifies many of the ideas behind belief propagation. Various approximate inference algorithms are readily interpretable in this factor graph setting, including expectation propagation (EP) and variational message passing (VMP).
+
+<br/>
+
+## 4. Variational inference fundamentals
+
+Variational inference is a cornerstone method in modern approximate inference, used extensively when dealing with high-dimensional data or large hierarchical models. The approach rests on the principle of turning an integral or summation-based inference problem into an optimization problem, typically leveraging gradient-based methods. One can see this approach widely employed in large-scale Bayesian neural network training, topic modeling, and even in certain reinforcement learning contexts.
+
+### 4.1 Factorized distributions and mean-field approximation
+A defining assumption in many variational inference methods is known as the <Highlight>mean-field approximation</Highlight>. The idea is to assume the posterior factorizes over latent variables, for instance:
+<Latex text="\[
+q(\theta_1, \ldots, \theta_K) = \prod_{k=1}^K q(\theta_k),
+\]"/>
+where each <Latex text="\(q(\theta_k)\)"/> is (in the simplest version) an independent factor. Although this drastically simplifies the problem, it often introduces significant bias if the true posterior has strong correlations among these parameters. Nonetheless, the mean-field approach allows us to derive closed-form update rules in certain exponential family models, leading to the classic coordinate ascent variational inference algorithm.
+
+### 4.2 Variational lower bound and objective
+The fundamental objective in variational inference is the <Highlight>Evidence Lower BOund (ELBO)</Highlight>, defined as:
+<Latex text="\[
+\mathcal{L}(q) = \mathbb{E}_{q(\theta)}[\log p(\mathcal{D}\mid \theta)] - \mathrm{KL}[\,q(\theta)\,\|\,p(\theta)\,].
+\]"/>
+This is called a lower bound because it bounds the log-evidence <Latex text="\(\log p(\mathcal{D})\)"/>, meaning:
+<Latex text="\[
+\log p(\mathcal{D}) \ge \mathcal{L}(q).
+\]"/>
+Optimizing <Latex text="\(\mathcal{L}(q)\)"/> with respect to the parameters of <Latex text="\(q(\theta)\)"/> will produce a <Latex text="\(q\)"/> that approximates the true posterior. The <Latex text="\(\mathrm{KL}\)"/> term penalizes deviation from the prior, while the expected log likelihood term tries to fit the observed data. 
+
+In many typical scenarios, we break down <Latex text="\(q(\theta)\)"/> or assume certain parametric forms that facilitate differentiation or closed-form updates. This approach is now widely used in combination with stochastic gradient optimization, known as <Highlight>Stochastic Variational Inference (SVI)</Highlight> (Hoffman and gang, 2013), which partitions the dataset into mini-batches.
+
+### 4.3 Example: univariate Gaussian
+Let's consider a simple scenario to build intuition, where our posterior in a univariate Gaussian setting might be something of the form:
+<Latex text="\[
+p(\mu \mid X) \propto \mathcal{N}(\mu \mid \mu_0, \sigma_0^2) \prod_{i=1}^N \mathcal{N}(x_i \mid \mu, \sigma^2).
+\]"/>
+We might pick <Latex text="\(q(\mu) = \mathcal{N}(\mu \mid m, s^2)\)"/> as our approximate distribution. We want to find <Latex text="\(m\)"/> and <Latex text="\(s^2\)"/> that maximize the ELBO. In many simpler cases, we can derive closed-form solutions for these variational parameters. However, in more complicated models, we resort to gradient-based optimization. 
+
+### 4.4 Variational mixture of Gaussians
+Another illustrative case is a mixture of Gaussians. Suppose we have a mixture model with <Latex text="\(K\)"/> components, each with unknown mean and variance (and unknown mixture weights). Variational inference will place a <Latex text="\(q\)"/> distribution on each latent component assignment as well as on the continuous parameters. In effect, the entire distribution is factorized, for instance:
+<Latex text="\[
+q(\mathbf{Z}, \boldsymbol{\theta}) = \Bigl(\prod_{n} q(z_n)\Bigr)\, \Bigl(\prod_{k} q(\theta_k)\Bigr),
+\]"/>
+where <Latex text="\(z_n\)"/> is the latent cluster assignment for data point <Latex text="\(n\)"/>, and <Latex text="\(\theta_k\)"/> includes the parameters of cluster <Latex text="\(k\)"/>. We can then derive update equations for <Latex text="\(z_n\)"/> and <Latex text="\(\theta_k\)"/> in alternation. This is reminiscent of the <Highlight>Expectation-Maximization (EM)</Highlight> algorithm, though from a variational perspective, each step is a coordinate ascent in the space of distributions, rather than maximizing with respect to single point estimates.
+
+### 4.5 Predictive density
+In a variational setting, once we have <Latex text="\(q(\theta)\)"/>, we can compute the predictive distribution for a new observation <Latex text="\(x_{new}\)"/> as:
+<Latex text="\[
+p(x_{new}\mid \mathcal{D}) \approx \int p(x_{new}\mid \theta) \, q(\theta) \, d\theta.
+\]"/>
+This integral might be simpler to approximate than the original exact version, especially if <Latex text="\(q(\theta)\)"/> has a tractable form. The predictive distribution helps us evaluate the performance and generalization ability of our approximate inference approach.
+
+### 4.6 Determining the number of components
+In mixture models, the question of how many mixture components <Latex text="\(K\)"/> to use arises frequently. A fully Bayesian approach might introduce a prior over <Latex text="\(K\)"/> (like a Dirichlet Process prior). Within a variational framework, we can also incorporate model comparison or monitor the ELBO for varying <Latex text="\(K\)"/>. Typically, a higher <Latex text="\(K\)"/> might lead to a better fit (higher ELBO), but at the cost of complexity and potential overfitting if we are not using a nonparametric prior.
+
+### 4.7 Induced factorizations
+When we assume or impose factorizations in <Latex text="\(q(\theta)\)"/>, those assumptions can propagate constraints throughout the model. The factorized nature might, for example, ignore correlated structure in the true posterior. This trade-off is one of the reasons that more advanced forms of variational inference have been explored, such as structured variational approximations, hierarchical factorization schemes, or normalizing flows. Each approach tries to break away from the naive independence assumptions that hamper standard mean-field approaches.
+
+<br/>
+
+## 5. Variational linear regression
+
+### 5.1 Setting up the linear model
+In variational linear regression, we assume a likelihood of the form:
+<Latex text="\[
+p(\mathbf{y} \mid \mathbf{X}, \beta, \sigma^2) = \prod_{n=1}^N \mathcal{N}(y_n \mid \mathbf{x}_n^\top \beta, \sigma^2),
+\]"/>
+where <Latex text="\(\mathbf{x}_n\)"/> is the <Latex text="\(n\)"/>th row of the design matrix <Latex text="\(\mathbf{X}\)"/>, <Latex text="\(\beta\)"/> is the vector of regression coefficients, and <Latex text="\(\sigma^2\)"/> is the noise variance. A Bayesian treatment places priors on <Latex text="\(\beta\)"/> (e.g., a Gaussian with mean 0 and covariance <Latex text="\(\alpha^{-1}\mathbf{I}\)"/>) and possibly on <Latex text="\(\sigma^2\)"/> (like an inverse-Gamma prior).
+
+### 5.2 Variational distribution
+We can propose a variational distribution such as:
+<Latex text="\[
+q(\beta, \alpha, \sigma^2) = q(\beta \mid \alpha, \sigma^2)\, q(\alpha)\, q(\sigma^2),
+\]"/>
+or potentially a simpler factorization. We then write down the ELBO for the linear model, deriving update equations for <Latex text="\(q(\beta \mid \alpha, \sigma^2)\)"/> or whichever factor we are optimizing at each step. 
+
+### 5.3 Predictive distribution
+The predictive distribution for a new data point <Latex text="\(\mathbf{x}_{\text{new}}\)"/> is:
+<Latex text="\[
+p(y_{\text{new}} \mid \mathbf{x}_{\text{new}}, \mathbf{X}, \mathbf{y}) \approx \int p(y_{\text{new}} \mid \mathbf{x}_{\text{new}}, \beta, \sigma^2)\, q(\beta, \sigma^2)\, d\beta\, d\sigma^2.
+\]"/>
+If <Latex text="\(q\)"/> is factorized Gaussian, this integral can often be performed analytically, though in some cases we rely on numerical approximations or further assumptions. This yields a sense of uncertainty in predictions that purely frequentist linear regression does not directly provide.
+
+### 5.4 Lower bound interpretation
+The variational lower bound in linear regression captures how well the approximate posterior of <Latex text="\(\beta\)"/> and <Latex text="\(\sigma^2\)"/> explains the observed data, minus the KL divergence to the prior distributions. Interpreting the <Latex text="\(\mathrm{KL}\)"/> term as a complexity penalty helps connect these Bayesian methods to regularization ideas from classical statistics. 
+
+<br/>
+
+## 6. The exponential family and local variational methods
+
+### 6.1 Recap of the exponential family
+Many common distributions belong to the exponential family, e.g., the Gaussian, Bernoulli, Beta, Gamma, Poisson, and so on. A distribution in the exponential family can be written as:
+<Latex text="\[
+p(x \mid \eta) = h(x)\exp\bigl(\eta^\top T(x) - A(\eta)\bigr),
+\]"/>
+where <Latex text="\(\eta\)"/> is the natural parameter, <Latex text="\(T(x)\)"/> is the sufficient statistic, <Latex text="\(A(\eta)\)"/> is the log-partition function, and <Latex text="\(h(x)\)"/> is the base measure. The factorization properties of the exponential family greatly simplify learning and inference in many Bayesian models, especially if the prior is conjugate to the likelihood.
+
+### 6.2 Variational message passing
+Variational message passing (VMP) is a technique that generalizes the mean-field updates in factorized approximations by systematically passing messages in a graphical model. Each factor in the model is updated based on local computations that rely on the current estimates of the other factors, typically using the exponential family conjugacy to keep updates in closed form. Some advanced frameworks (e.g., Infer.NET from Microsoft Research) implement VMP as a general-purpose engine for approximate inference in factor graphs. VMP can be seen as a specialized instance of the larger concept of message passing in approximate inference, with a particular emphasis on factorization and conjugacy.
+
+<br/>
+
+## 7. Variational logistic regression
+
+### 7.1 Variational posterior distribution
+In logistic regression, the likelihood for a binary target <Latex text="\(y_i \in \{0,1\}\)"/> given covariates <Latex text="\(\mathbf{x}_i\)"/> is:
+<Latex text="\[
+p(y_i = 1 \mid \mathbf{x}_i, \beta) = \sigma(\mathbf{x}_i^\top \beta),
+\]"/>
+where <Latex text="\(\sigma(\cdot)\)"/> is the logistic sigmoid function. A Bayesian approach places a prior on <Latex text="\(\beta\)"/>, typically a Gaussian. Because the logistic function is non-conjugate to the Gaussian prior, the posterior distribution <Latex text="\(p(\beta \mid \mathbf{X}, \mathbf{y})\)"/> is not available in closed form. Variational methods remedy this by introducing a simpler <Latex text="\(q(\beta)\)"/> distribution, often Gaussian with a diagonal covariance (in the simplest mean-field approach).
+
+### 7.2 Optimizing the variational parameters
+We define the ELBO for logistic regression similarly, involving the expected log-likelihood under our <Latex text="\(q(\beta)\)"/> and the KL divergence from the prior. We then apply gradient-based optimization to refine the variational parameters (the mean and variance of <Latex text="\(q(\beta)\)"/>, for instance). Modern libraries facilitate this procedure by automatically computing gradients via backpropagation. However, the logistic function's presence typically means we resort to either numerical approximations or analytically tractable bounds to handle the logistic link within the ELBO.
+
+### 7.3 Inference of hyperparameters
+In some cases, we may not only treat <Latex text="\(\beta\)"/> as unknown but also treat the noise variance or regularization hyperparameters as latent variables. The complexity rises if we place hierarchical priors on those hyperparameters. Variational inference extends naturally to these hierarchical setups by augmenting <Latex text="\(q\)"/> to also approximate the distribution over that additional set of hyperparameters, albeit with further assumptions to keep computations manageable.
+
+<br/>
+
+## 8. Expectation propagation
+
+### 8.1 Intro to EP
+Expectation propagation (EP), introduced by Minka (2001), is another message-passing algorithm for approximate inference. It retains site approximations of each factor of the posterior, then iteratively refines these local approximations to match moments (usually means and variances) of certain cavity distributions. Unlike the typical mean-field approach, which can systematically underestimate variances, EP can sometimes better preserve correlations among parameters. 
+
+### 8.2 Example: The clutter problem
+One commonly-cited example is the "clutter problem," in which we have data that might correspond to a real signal plus many noise outliers, requiring a robust inference method. EP can handle these outliers by refining approximate factors that capture heavier tails or certain robust likelihood properties. EP iterates through each data point or factor, removing its approximate contribution from the global posterior (resulting in a cavity distribution), recomputing the refined factor, and then "inserting" it back into the approximate posterior. This cyclical scheme continues until convergence.
+
+### 8.3 EP in graphs, local updates
+For graphical models, EP generalizes well: each factor node in the graph has an approximate factor that gets updated based on the current approximation of all other factors. The local updates can be viewed as corrections to second-order moments that ensure the approximate distribution remains close to the exact posterior in a moment-matching sense. However, EP may fail to converge in some loopy graphs, and when it does converge, it doesn't always guarantee a global optimum. Nonetheless, in many applications like Bayesian neural networks or Gaussian process classification, EP demonstrates strong empirical performance.
+
+<br/>
+
+## 9. Inference as optimization
+
+### 9.1 The link between inference and parameter optimization
+Variational methods illustrate a profound link: we can interpret inference as an optimization problem over distributions, quite akin to parameter estimation in classical machine learning. This viewpoint has been expanded by advanced frameworks that treat the posterior distribution's parameters as hyperparameters in a neural network used to approximate the posterior. More concretely, one might define a neural network that outputs the mean and variance for a factor <Latex text="\(q(\theta)\)"/> given certain conditions, in which case training that neural network is effectively approximate Bayesian inference.
+
+### 9.2 Stochastic optimization in inference
+Stochastic optimization, widespread in deep learning, is readily applied to approximate inference. For instance, <Highlight>stochastic gradient variational Bayes</Highlight> breaks the data into mini-batches, computes unbiased gradient estimates of the ELBO, and increments the variational parameters. Similarly, advanced MCMC methods can harness mini-batches to approximate likelihood gradients (so-called Stochastic Gradient MCMC). These developments make approximate inference feasible and scalable on large, streaming datasets.
+
+### 9.3 The role of gradient-based methods
+One of the biggest leaps in approximate inference in the past decade has been the synergy with gradient-based deep learning libraries. Tools like PyTorch, TensorFlow, and JAX allow for automatic differentiation of complex log-likelihood expressions, making it far easier to implement black-box approximate inference. The <Highlight>reparameterization trick</Highlight> introduced by Kingma and Welling (2014) in the context of variational autoencoders (VAEs) is precisely about enabling unbiased gradient estimators of the ELBO. The entire field of deep generative models (e.g. VAEs, normalizing flows, and certain types of diffusion models) rests heavily on the premise of approximate inference as gradient-based optimization.
+
+<br/>
+
+## 10. Expectation Maximization (EM)
+
+### 10.1 Revisiting the EM algorithm
+The classic EM algorithm, widely known from mixture models, can also be viewed through the lens of approximate inference. EM alternates between the E-step (computing posterior distributions of latent variables, given parameters) and the M-step (maximizing with respect to parameters, given the distribution of latent variables). In a fully Bayesian approach, we consider the distributions over parameters as well, but EM can be reinterpreted as coordinate ascent on the joint log-likelihood. The schema is reminiscent of the coordinate ascent used in mean-field variational inference, though EM typically yields a single parameter point estimate rather than a distribution over parameters.
+
+### 10.2 EM in mixture models
+An iconic example is the Gaussian mixture model. In the E-step, we compute the posterior responsibility that each mixture component has for each data point, while the M-step updates the component means, variances, and mixture weights. This is akin to a variational approach that factorizes the distribution of latent cluster assignments. Thus, EM can be seen as a limiting special case of variational inference when <Latex text="\(q(\theta)\)"/> is restricted to be a delta function over parameters (i.e., no uncertainty about the parameters themselves).
+
+### 10.3 Link to approximate inference methods
+While EM remains algorithmically simpler in certain classical setups, it does not typically provide full posterior distributions over parameters. That's the difference between a maximum-likelihood or MAP approach and a fully Bayesian method. However, variations like <Highlight>variational EM</Highlight> exist, bridging these ideas by updating an approximate posterior in the E-step and maximizing hyperparameters or other global parameters in the M-step.
+
+<br/>
+
+## 11. MAP inference and sparse coding
+
+### 11.1 MAP fundamentals
+Maximum a posteriori (MAP) inference is slightly different from the broader problem of computing a full posterior distribution. Instead, MAP focuses on finding the mode of the posterior:
+<Latex text="\[
+\hat{\theta}_{\text{MAP}} = \arg\max_\theta \; p(\theta \mid \mathcal{D}).
+\]"/>
+When the posterior is unimodal and well-behaved, MAP can be close to the mean of the posterior, but if the posterior is skewed or multimodal, MAP can be an incomplete representation.
+
+### 11.2 Connections to L1 and L2 regularization
+When we place a Gaussian prior on parameters <Latex text="\(\theta\)"/>, performing MAP estimation is equivalent to adding an <Latex text="\(L_2\)"/> (ridge) regularization term during maximum likelihood estimation. Similarly, a Laplace prior leads to <Latex text="\(L_1\)"/> (lasso) regularization. Hence, these popular forms of regularization in classical machine learning can be interpreted as approximate Bayesian inference under specific prior assumptions, albeit focusing only on the mode.
+
+### 11.3 Sparse coding as approximate inference
+Sparse coding, used extensively in signal processing and image recognition, posits that data can be represented by a sparse combination of basis vectors. Often, this is shown mathematically through a cost function that includes an <Latex text="\(L_1\)"/> penalty, reflecting a Laplacian prior on the sparse codes. Minimizing that cost is effectively performing MAP inference for the latent codes. Thus, many popular techniques in compressed sensing and dictionary learning can be tied back to approximate inference ideals.
+
+<br/>
+
+## 12. Learned approximate inference
+
+### 12.1 Neural network-based inference
+A striking development in recent years is the use of neural networks to learn an inference mechanism. Instead of deriving a closed-form or an iterative coordinate ascent scheme, we train a neural network to directly output approximate posterior parameters for every input data point. This approach is part of the broader concept of <Highlight>amortized inference</Highlight>: the cost of learning the inference mapping is amortized over many data points or tasks (Gershman & Goodman, 2014).
+
+### 12.2 Amortized inference
+Amortized inference shows up in the <Highlight>variational autoencoder (VAE)</Highlight> architecture (Kingma & Welling, 2014). The encoder network learns to predict the distribution of latent variables <Latex text="\(z\)"/> given data <Latex text="\(x\)"/> — effectively a <Latex text="\(q(z \mid x)\)"/>. This is in contrast to classical variational inference, which might do separate iterative procedures for each data point. By training the encoder to perform this inference for all data points simultaneously, the method reuses computations and can scale extremely well.
+
+### 12.3 Black-box variational inference
+Black-box variational inference (Ranganath, Gerrish & Blei, 2014) grew out of a desire to unify variational inference with automatic differentiation and sample-based gradient estimates. In black-box inference, we only need to specify a log-likelihood function (and sometimes its gradient), while a general-purpose algorithm performs the necessary steps to update the variational distribution. This method significantly broadens the class of models to which variational inference can be applied, including ones that do not fit neatly into conjugate-exponential family frameworks.
+
+<br/>
+
+## 13. Advanced references & expansions
+
+Approximate inference remains a highly active research area, as evidenced by recent contributions in top-tier conferences like NeurIPS, ICML, ICLR, AISTATS, and leading journals such as JMLR. Much of the cutting-edge work aims to handle non-conjugate models, large-scale streaming data, or complex, high-dimensional latent variable models.
+
+### 13.1 Hamiltonian Monte Carlo
+A notable extension in the MCMC realm is <Highlight>Hamiltonian Monte Carlo (HMC)</Highlight>, which leverages gradients of the log-posterior to "simulate" a physical system. HMC can traverse parameter space in larger, more efficient jumps, reducing random walk behavior. This typically leads to better mixing and fewer correlation issues between samples. Packages like Stan (Carpenter and gang, 2017) and PyMC embrace HMC as a default sampler for many models.
+
+### 13.2 Variational flows
+Normalizing flows (Rezende & Mohamed, 2015) allow flexible transformations from a simple distribution (e.g., a Gaussian) into a more complex distribution by applying a sequence of invertible transformations. By incorporating such flows into <Latex text="\(q(\theta)\)"/>, we can drastically increase the expressive power of the variational family, thereby lowering variational gap. Flow-based approximations facilitate capturing multimodality, skewness, and strong correlations — aspects typically missed by standard mean-field methods.
+
+### 13.3 Adaptive importance sampling
+Importance sampling is a classical technique to approximate expected values by weighting samples from a proposal distribution. Modern twists like <Highlight>adaptive importance sampling</Highlight> keep adjusting the proposal distribution so as to reduce variance in the importance weights. Variations exist that incorporate normalizing flows or Gaussian mixtures as proposals, bridging the gap between classical sampling methods and advanced variational techniques.
+
+<br/>
+
+## 14. A brief demonstration in code
+
+To illustrate how one might practically implement a simple approximate inference procedure in Python (using a minimal pseudocode approach), consider a Bayesian logistic regression scenario. We'll outline a straightforward variational approach using gradient-based REINFORCE or reparameterization:
+
+<Code text={`
+import torch
+import torch.nn as nn
+import torch.optim as optim
+
+# Suppose we have data: X (features), y (binary labels)
+
+class VariationalLogisticRegression(nn.Module):
+    def __init__(self, dim):
+        super().__init__()
+        # For simplicity, let's maintain a mean and log-variance for each parameter
+        self.mean = nn.Parameter(torch.zeros(dim))
+        self.log_var = nn.Parameter(torch.zeros(dim))
+        
+    def forward(self, X):
+        # Sample parameters using the reparameterization trick
+        eps = torch.randn_like(self.mean)
+        w = self.mean + torch.exp(0.5 * self.log_var) * eps
+        
+        # Compute logits
+        logits = X.mm(w.unsqueeze(1)).squeeze()
+        return logits, w
+    
+def elbo(logits, y, model, prior_mean=0.0, prior_log_var=0.0):
+    # Negative log-likelihood (binary cross-entropy)
+    # Here we combine the logistic loss
+    log_likelihood = -nn.functional.binary_cross_entropy_with_logits(logits, y.float(), reduction='sum')
+    
+    # KL term between q(w) and p(w) ~ N(prior_mean, prior_var), 
+    # average over all parameters
+    var_q = torch.exp(model.log_var)
+    var_p = torch.exp(torch.tensor(prior_log_var))
+    
+    # KL(q||p) for factorized Gaussians
+    # = 0.5 * sum( var_q/var_p + (mean_q - mean_p)^2/var_p - len(mean_q) + log(var_p) - log(var_q) )
+    kld = 0.5 * torch.sum(var_q/var_p
+                          + (model.mean - prior_mean).pow(2)/var_p
+                          - 1.0 
+                          + prior_log_var 
+                          - model.log_var)
+    
+    # We want to maximize the ELBO, so return negative
+    return log_likelihood - kld
+
+# Example usage (toy):
+dim = 5
+model = VariationalLogisticRegression(dim)
+optimizer = optim.Adam(model.parameters(), lr=0.01)
+
+X_torch = torch.randn(100, dim)  # dummy data
+y_torch = (torch.randn(100) > 0).float()  # random labels
+
+for step in range(1000):
+    optimizer.zero_grad()
+    logits, w_samp = model(X_torch)
+    loss = -elbo(logits, y_torch, model)  # negative ELBO
+    loss.backward()
+    optimizer.step()
+
+# After training, we can examine model.mean, model.log_var as the approximate posterior
+print("Inferred mean:", model.mean.detach().numpy())
+print("Inferred log_var:", model.log_var.detach().numpy())
+`}/>
+
+This snippet illustrates, in a simplified manner, how one might implement variational logistic regression in a modern machine learning framework. We keep track of the approximate posterior's mean and variance (through <Highlight>log_var</Highlight>), and each forward pass samples parameters from that approximate posterior. We then compute the negative ELBO and backpropagate to update the variational parameters.
+
+<br/>
+
+## 15. Conclusion-like reflections and further directions
+
+Approximate inference is essential for enabling modern data science and machine learning to manage complex models under real-world constraints. Ranging from classical approaches like Laplace's approximation and MCMC to sophisticated, gradient-based variational methods and moment-matching algorithms like expectation propagation, these techniques form the backbone of probabilistic modeling at scale. The trade-offs among these methods influence contemporary model design, from hierarchical Bayesian frameworks to deep latent variable models.
+
+Furthermore, the synergy with neural networks has sparked a new era of <Highlight>amortized inference</Highlight>, significantly accelerating Bayesian workflows that used to be burdensome or even infeasible. Research into normalizing flows, stochastic gradient MCMC, and advanced factorization schemes continues to refine these techniques.
+
+We can anticipate that the ongoing proliferation of big data, streaming applications, and deep probabilistic architectures will strengthen and diversify the role of approximate inference even further. Its ability to glean meaningful structure and quantify uncertainty in otherwise "impossible" integrals stands as a testament to the power and elegance of this field. Whether one is working with Markov random fields in image processing, hierarchical mixture models in genetics, or massive-scale latent variable models in natural language processing, approximate inference stands ready to strike the balance between feasible computation and robust, trustworthy insight.
+
+<br/>
+
+## References & further reading
+
+- Carpenter and gang, 2017. "Stan: A probabilistic programming language." Journal of Statistical Software.  
+- Gershman & Goodman, 2014. "Amortized inference in probabilistic reasoning."  
+- Gelfand & Smith, 1990. "Sampling-based approaches to calculating marginal densities." Journal of the American Statistical Association.  
+- Hoffman, Blei, Wang, & Paisley, 2013. "Stochastic variational inference." Journal of Machine Learning Research.  
+- Kingma & Welling, 2014. "Auto-encoding variational Bayes." ICLR.  
+- Minka, 2001. "Expectation propagation for approximate Bayesian inference." UAI.  
+- Neal, 2011. "MCMC using Hamiltonian dynamics." Handbook of Markov Chain Monte Carlo.  
+- Ranganath, Gerrish, & Blei, 2014. "Black box variational inference." AISTATS.  
+- Rezende & Mohamed, 2015. "Variational inference with normalizing flows." ICML.  
+- Cooper, 1990. "The computational complexity of probabilistic inference using Bayesian belief networks." Artificial Intelligence.  
+
+<Image alt="Graphical model for approximate inference illustration" path="" caption="In many real-world graphical models, approximate inference is the lifeline that makes them tractable." zoom="false" />

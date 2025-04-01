@@ -1,0 +1,431 @@
+---
+index: 77
+indexCourse: 93
+indexFavorites:
+title: "Tuning LLMs"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Tuning LLMs"
+courseCategoryName: "LLM engineering"
+desc: "Something from alchemy idk"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "04.10.2023"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 2
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/tuning_llms.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/tuning_llms"
+slug: "/research/tuning_llms"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+### 3. Post-training datasets
+Post-training datasets have a precise structure with instructions and answers (supervised fine-tuning) or instructions and chosen/rejected answers (preference alignment). Conversational structures are a lot rarer than the raw text used for pre-training, which is why we often need to process seed data and refine it to improve the accuracy, diversity, and complexity of the samples. More information and examples are available in my repo [💾 LLM Datasets](https://github.com/mlabonne/llm-datasets).
+- **Storage & chat templates**: Because of the conversational structure, post-training datasets are stored in a specific format like ShareGPT or OpenAI/HF. Then, these formats are mapped to a chat template like ChatML or Alpaca to produce the final samples the model is trained on.
+- **Synthetic data generation**: Create instruction-response pairs based on seed data using frontier models like GPT-4o. This approach allows for flexible and scalable dataset creation with high-quality answers. Key considerations include designing diverse seed tasks and effective system prompts.
+- **Data enhancement**: Enhance existing samples using techniques like verified outputs (using unit tests or solvers), multiple answers with rejection sampling, [Auto-Evol](https://arxiv.org/abs/2406.00770), Chain-of-Thought, Branch-Solve-Merge, personas, etc.
+- **Quality filtering**: Traditional techniques involve rule-based filtering, removing duplicates or near-duplicates (with MinHash or embeddings), and n-gram decontamination. Reward models and judge LLMs complement this step with fine-grained and customizable quality control.
+### 4. Supervised Fine-Tuning
+SFT turns base models into helpful assistants, capable of answering questions and following instructions. During this process, they learn how to structure answers and reactivate a subset of knowledge learned during pre-training. Instilling new knowledge is possible but superficial: it cannot be used to learn a completely new language. Always prioritize data quality over parameter optimization.
+- **Training techniques**: Full fine-tuning updates all model parameters but requires significant compute. Parameter-efficient fine-tuning techniques like LoRA and QLoRA reduce memory requirements by training a small number of adapter parameters while keeping base weights frozen. QLoRA combines 4-bit quantization with LoRA to reduce VRAM usage.
+- **Training parameters**: Key parameters include learning rate with schedulers, batch size, gradient accumulation, number of epochs, optimizer (like 8-bit AdamW), weight decay for regularization, and warmup steps for training stability. LoRA also adds three parameters: rank (typically 16-128), alpha (1-2x rank), and target modules.
+- **Distributed training**: Scale training across multiple GPUs using DeepSpeed or FSDP. DeepSpeed provides three ZeRO optimization stages with increasing levels of memory efficiency through state partitioning. Both methods support gradient checkpointing for memory efficiency.
+- **Monitoring**: Track training metrics including loss curves, learning rate schedules, and gradient norms. Monitor for common issues like loss spikes, gradient explosions, or performance degradation.
+### 5. Preference Alignment
+Preference alignment is a second stage in the post-training pipeline, focused on aligning generated answers with human preferences. This stage was designed to tune the tone of LLMs and reduce toxicity and hallucinations. However, it has become increasingly important to also boost their performance and improve usefulness. Unlike SFT, there are many preference alignment algorithms. Here, we'll focus on the two most important ones: DPO and PPO.
+- **Rejection sampling**: For each prompt, use the trained model to generate multiple responses, and score them to infer chosen/rejected answers. This creates on-policy data, where both responses come from the model being trained, improving alignment stability.
+- **[Direct Preference Optimization](https://arxiv.org/abs/2305.18290)** Directly optimizes the policy to maximize the likelihood of chosen responses over rejected ones. It doesn't require reward modeling, which makes it more computationally efficient than PPO but slightly worse in terms of quality.
+- [**Proximal Policy Optimization**](https://arxiv.org/abs/1707.06347): Iteratively updates policy to maximize reward while staying close to initial behavior. It uses a reward model to score responses and requires careful tuning of hyperparameters including learning rate, batch size, and PPO clip range.
+- **Monitoring**: In addition to SFT metrics, you want to maximize the margin between chosen and preferred answers. The accuracy should also gradually increase until it plateaus.
+
+*/}
+
+
+{/*
+
+1. Introduction to LLM Tuning  
+- Overview of the tuning pipeline: Explains how LLMs transition from general pre-training to specialized post-training.  
+- Goals of tuning: Summarizes objectives such as improving usefulness, reducing toxicity, and personalizing to specific tasks or domains.  
+- Distinctions from pre-training: Highlights differences in data structure, scale, and methods compared to the original pre-training phase.  
+2. Pre-training vs. Post-training Data  
+- Nature of pre-training corpora: Discusses large-scale, unstructured text sources used for initial language modeling.  
+- Importance of structured instructions: Explains why post-training datasets must have well-defined prompts and responses for instruction-following.  
+- Challenges in collecting high-quality examples: Addresses scarcity of structured, conversation-like data compared to general text.  
+3. Post-training Datasets  
+- Storage & chat templates: Shows how conversation data is stored (e.g., ShareGPT, OpenAI/HF format) and mapped to chat templates (e.g., ChatML, Alpaca).  
+- Synthetic data generation: Describes creating instruction–response pairs from smaller "seed" tasks using advanced models (e.g., GPT-4) and system prompts.  
+- Data enhancement: Mentions verified outputs (e.g., unit tests or solvers), multiple answers with rejection sampling, Auto-Evol, Chain-of-Thought, Branch-Solve-Merge, personas, etc.  
+- Quality filtering: Outlines rule-based filtering, deduplication (MinHash, embeddings), n-gram decontamination, and advanced filtering with reward models or judge LLMs.  
+4. Supervised Fine-Tuning (SFT)  
+- Training techniques: Compares full fine-tuning of all parameters with parameter-efficient methods like LoRA and QLoRA for reduced memory usage.  
+- Training parameters: Covers learning rates, schedulers, batch sizes, gradient accumulation, epochs, optimizers (8-bit AdamW), weight decay, warmup steps, plus LoRA-specific parameters (rank, alpha, target modules).  
+- Distributed training: Explains using DeepSpeed or FSDP for scaling, ZeRO optimization stages, and gradient checkpointing for memory efficiency.  
+- Monitoring: Emphasizes tracking loss curves, learning rate schedules, gradient norms, spotting loss spikes or gradient explosions, and ensuring performance consistency.  
+5. Preference Alignment  
+- Rejection sampling: Explains generating multiple responses per prompt with the current model and labeling chosen vs. rejected answers for on-policy data.  
+- Direct Preference Optimization (DPO): Describes maximizing likelihood of chosen responses over rejected ones without a reward model, noting its computational efficiency.  
+- Proximal Policy Optimization (PPO): Reviews iterative policy updates to maximize rewards from a trained reward model while limiting policy drift with a clip range.  
+- Monitoring: Highlights the importance of tracking the margin between chosen and rejected answers, improvements in accuracy, and stability over training steps.
+
+*/}
+
+
+Large language models (LLMs) have rapidly emerged as powerful tools for a variety of language-based tasks — including summarization, code generation, question answering, and creative text production — due to their ability to learn complex patterns from massive unlabeled text corpora. However, these foundational models are not necessarily tailored to specific user goals or organizational needs out of the box. That gap is precisely where tuning comes into play. By "tuning", I am referring to the phase after the model's general pre-training — a period of specialized training that takes the broad capabilities learned during pre-training and steers them toward more concrete objectives, often guided by curated datasets, user preferences, or task-specific data.
+
+Tuning an LLM is rarely a trivial process: it must balance making the model more aligned with user goals against the risk of significantly reducing its generalization power, or even inadvertently introducing undesirable behaviors. In many ways, this tension shapes the essence of LLM tuning. On the one hand, you want the model to behave helpfully, safely, and consistently when confronted with user prompts. On the other hand, you do not want to overly restrict or degrade its capacity for creative problem-solving or its ability to handle edge cases.
+
+In this chapter, I will present a broad overview of the LLM tuning pipeline, starting with how models generally transition from a purely self-supervised pre-training on unstructured text to more specialized forms of post-training. I will highlight the main goals we often seek during tuning, such as improved utility, reduced toxicity, domain adaptation, or task specialization. Finally, I will explain how the post-training stage differs from pre-training in terms of scale and data structure, focusing on the unique challenges and typical methods for these targeted improvements.
+
+### 1.1 overview of the tuning pipeline
+
+For most modern large language models (such as GPT-type models, PaLM variants, and many others), the pipeline typically looks something like this:
+
+1. **Pre-training**: The model is trained on a massive collection of unstructured text, relying on language modeling objectives — for instance, predicting the next token given the context (<Latex text="\(p(x_{t} \mid x_{1}, \ldots, x_{t-1})\)"/>). This is often done on multi-terabyte text corpora. The goal is to develop broad linguistic and world knowledge. This phase can be extremely computationally expensive, frequently employing hundreds or thousands of GPUs over extended periods of time.  
+2. **Post-training**: After pre-training, the model has learned the basic structure of language plus a wide range of facts and patterns. However, it has not been specifically tuned to follow instructions, adhere to certain constraints, or produce responses that align with particular guidelines. Post-training steps aim to address these gaps. Within post-training, there are usually two notable sub-phases:
+   - **Supervised Fine-Tuning (SFT)**: The model is further trained on carefully curated examples of input–output pairs (or prompt–response pairs). This data can be instructions paired with the appropriate response that we desire the model to give.  
+   - **Preference Alignment**: After or in conjunction with SFT, the model can be made to produce multiple candidate responses and then receive signals about which candidate is better or worse. This can be done via direct preference data (where human annotators explicitly rank or choose the best response) or via a reward model that scores responses. Algorithms like Proximal Policy Optimization (PPO) are often used to optimize these preferences, a process sometimes referred to as Reinforcement Learning from Human Feedback (RLHF). Newer approaches like Direct Preference Optimization (DPO) or rejection sampling can also serve similar functions.  
+
+Because post-training is typically performed on a fraction of the data size used during pre-training, it is relatively more resource-friendly. Nonetheless, it remains non-trivial because the model's massive size can still make straightforward fine-tuning memory-intensive and slow — leading to widespread interest in parameter-efficient techniques like Low-Rank Adaptation (LoRA) or QLoRA.
+
+### 1.2 goals of tuning
+
+During the tuning phase, developers and researchers usually pursue one or more of the following goals:
+
+- **Improving task usefulness**: Models can become better at following instructions, providing more direct answers to prompts, and generating relevant and coherent content. This is often referred to as instruction tuning (such as the approach introduced by "Ouyang and gang, 2022" for InstructGPT) or domain tuning (if the focus is on a specific domain like legal or medical text).  
+- **Reducing toxicity or harmful outputs**: LLMs can inadvertently produce offensive, biased, or harmful outputs, partly because their pre-training data may contain such content. Tuning data might include explicit examples of inappropriate outputs labeled as disallowed or undesirable, or special objective functions that penalize hateful or toxic language.  
+- **Personalizing or customizing**: In enterprise settings, it may be desirable for the model's style, domain knowledge, or brand voice to be shaped according to the organization's needs. Personalized fine-tuning can also occur when the goal is to adapt to an individual user or a small user group's preferences.  
+- **Controllability**: Tuning often includes strategies to ensure that the model's output is easily steerable via prompt engineering and that it consistently follows system-level instructions.  
+
+These broad objectives are not mutually exclusive. In many practical workflows, you might want to achieve improvements on multiple fronts: better instruction-following, fewer policy violations, and strong performance in a specialized domain.
+
+### 1.3 distinctions from pre-training
+
+Though the term "training" is used in both phases, pre-training and post-training differ in several key ways:
+
+1. **Data scale**: Pre-training typically involves hundreds of billions or even trillions of tokens of diverse unstructured text. By contrast, post-training might only utilize hundreds of thousands or a few million tokens, often hand-picked or hand-annotated for quality.  
+2. **Data structure**: Pre-training data is mostly next-token prediction on continuous stretches of text (e.g., web pages, e-books). Post-training data often includes well-defined instructions, question–answer pairs, or conversation logs. This can introduce new complexities, such as multi-turn dialogue modeling, explicit user–assistant role labeling, or specialized tokens indicating how the conversation or instruction is structured.  
+3. **Learning objectives**: In pre-training, the objective is typically maximum likelihood estimation of the next token (<Latex text="\(p(x_{t} \mid x_{1}, \ldots, x_{t-1})\)"/>). Post-training can involve partially or entirely different losses, e.g., supervised cross-entropy on ground truth instructions/responses, or a reinforcement learning objective where a reward model or human annotator feedback shapes the gradient.  
+4. **Computational requirements**: Large-scale pre-training demands extreme computational resources. Post-training, while still expensive, typically consumes fewer resources (though still significant for very large models). Techniques like LoRA, QLoRA, or offloading some training components to specialized hardware reduce the resource burden even further.  
+
+By understanding these distinctions, practitioners can better plan their data collection efforts, select suitable hardware configurations, and design more efficient fine-tuning routines.
+
+## 2. pre-training vs. post-training data
+
+The second major piece of the puzzle is understanding how the nature of data changes between pre-training and post-training. The success of large language models in recent years is largely attributed to the availability of vast and diverse textual data. However, that same approach is not fully suitable for post-training, where structured instructions and high-quality user–assistant dialogues are essential.
+
+### 2.1 nature of pre-training corpora
+
+Pre-training corpora are typically broad, diverse, and relatively unstructured. Models might be exposed to news articles, scientific papers, books, web pages, code repositories, forum conversations, social media texts, and countless other text sources. The key is simply to have enormous volumes of text so that the model can learn statistical patterns of language at scale.
+
+- **Advantages**: 
+  - The diversity of textual sources fosters generality: the model absorbs knowledge about different domains (e.g., biology, physics, pop culture) and language styles (e.g., formal academic writing, casual social media).  
+  - The approach is largely unsupervised: you only need raw text, which is easy to scrape at large scale.  
+
+- **Disadvantages**:
+  - No direct instruction-following signal is embedded in the data; the model just learns how to predict tokens in context, not necessarily how to follow user instructions or refrain from harmful behaviors.  
+  - Potential presence of biases, toxicity, or misleading text from the raw web, which then becomes learned model behavior or knowledge.  
+
+### 2.2 importance of structured instructions
+
+By contrast, post-training data typically includes explicit instructions or conversation prompts and corresponding desired responses. This structure teaches the model how to parse user questions, interpret instructions, and produce coherent and helpful replies rather than simply continuing text as in next-token prediction.
+
+One critical insight from numerous studies (including "Ouyang and gang, 2022" and "Zhou and gang, 2023") is that a well-structured, instruction-based dataset can drastically improve the usability and safety of an LLM. For instance, if you have a list of specific tasks (translating text, summarizing documents, solving math problems, writing code snippets, extracting information from text, etc.) accompanied by examples of correct solutions, the model begins to learn how to follow instructions in a targeted way.
+
+### 2.3 challenges in collecting high-quality examples
+
+While instructions and labeled responses are invaluable for post-training, collecting these data can be non-trivial and expensive:
+
+- **Scalability**: Manually annotating instruction–response pairs for many tasks can be time-consuming. Large-scale annotation campaigns or specialized annotation teams might be required.  
+- **Quality control**: Even if you can gather human-labeled data, ensuring consistent guidelines and a uniformly high standard is challenging. Different annotators may label data inconsistently or interpret instructions differently.  
+- **Coverage**: For a general-purpose chatbot, you need a very broad range of tasks, from factual Q&A to creative writing. For specialized tasks (legal, financial, medical), the data must reflect those domains accurately.  
+
+Due to these challenges, many organizations opt for synthetic or semi-synthetic approaches to expand smaller high-quality seed datasets, which I will detail in the following chapter.
+
+## 3. post-training datasets
+
+After acknowledging the need for structured instructions and the complexities of collecting them, we arrive at the specifics of building and refining post-training datasets. These specialized datasets are the linchpins for ensuring the model will respond accurately, follow instructions reliably, and remain helpful across different scenarios.
+
+### 3.1 storage & chat templates
+
+LLMs tuned for interactive modes (e.g., chatbots) often store conversation data in a structured manner that preserves the flow of back-and-forth exchanges. A common approach is to store each conversation as a JSON object with fields like "system prompt", "user prompt", and "assistant response", sometimes accompanied by references to the conversation's entire previous context.
+
+- **ShareGPT format**: This is a JSON-based format storing entire chat sessions, often used for open-source fine-tuning of chat-like models. Each entry might include a conversation array, with each turn labeled by role (system, user, or assistant).  
+- **OpenAI/Hugging Face format**: Conversational data or instruction–response pairs are frequently stored as JSON Lines (.jsonl), with each line containing something like \{ "prompt": "...", "response": "...", "metadata": \{...\} \}.  
+- **Chat templates (ChatML, Alpaca, etc.)**: Some frameworks adopt specialized templates. For instance, ChatML introduces special tokens or delimiters (like "\<\|system\|\>" or "\<\|user\|\>") to guide the model in attributing context to the right speaker. Alpaca format uses an instruction–input–output triple, where "input" is typically empty if not needed.  
+
+These templates ensure the model can learn to differentiate between the user's question and the assistant's answer, as well as system-level instructions that define global behavior or constraints.
+
+### 3.2 synthetic data generation
+
+Because manually creating huge amounts of instruction–response data is daunting, many projects leverage synthetic data generation. The basic idea is to use a very capable LLM (e.g., GPT-4) to generate pairs of instruction and response. Alternatively, you might only generate the instructions or prompts, then ask humans or another model to provide responses. Another approach is to let the advanced model generate both prompt and response, occasionally injecting complexity or random transformations.
+
+1. **Seed tasks**: Start with a smaller set of carefully curated tasks or instructions that you know are high-quality.  
+2. **System prompts**: Instruct a powerful model (like GPT-4) with system prompts that detail the desired style, difficulty, or domain of the generated tasks.  
+3. **Expansion**: Generate thousands or millions of new instructions based on the seed tasks. This might involve paraphrasing existing tasks, adding more complexity, or combining tasks from multiple domains.  
+4. **Response generation**: Either the same advanced model or a different model (or humans) produce the solution or response to each generated instruction.  
+
+Although synthetic data can significantly expand coverage, it carries the risk of copying or amplifying weaknesses of the generative model. Quality control steps and filtering become essential.
+
+### 3.3 data enhancement
+
+To push post-training data quality further, practitioners use several enhancement strategies:
+
+- **Verified outputs (unit tests, solvers)**: For tasks that involve code or math, the generated solution can be validated by running unit tests or using symbolic/math solvers, discarding any instruction–response pairs that fail.  
+- **Multiple answers with rejection sampling**: Generate multiple responses per instruction from a strong model. Then keep only the best response(s) according to certain criteria, possibly judged by a separate reward model or by humans.  
+- **Auto-Evol**: A technique where the conversation is iteratively refined. For instance, if the model's response is partially incorrect, the system prompt (or a second model) can propose modifications to the question or solution, leading to improved pairs over time.  
+- **Chain-of-Thought (CoT)**: Encouraging the model to produce not just the final answer but also the reasoning steps. These intermediate reasoning steps can themselves be used to refine or verify correctness and can serve as valuable training data to teach the model systematic problem-solving.  
+- **Branch-Solve-Merge**: Involves generating multiple distinct solution paths for the same prompt, then merging or voting on the final answer to reduce mistakes.  
+- **Personas**: Customizing the output style by injecting persona-based instructions or examples. This is especially useful if you want your model to maintain a consistent style or speak as a specific character or brand voice.
+
+### 3.4 quality filtering
+
+Given the complex generation and enhancement stages, it is critical to filter the data rigorously:
+
+- **Rule-based filtering**: Implement heuristics or scripts that remove prompts or responses containing disallowed content (e.g., hateful language, personally identifiable information, extraneous text).  
+- **Deduplication**: Use methods like MinHash or embeddings-based similarity to detect and remove near-duplicate or identical pairs. This helps keep the dataset from becoming bloated with repetitive instructions.  
+- **N-gram decontamination**: Remove or mask sequences of tokens that appear in the original pre-training set to avoid data leakage or undesired duplication. For instance, if you want to ensure that your post-training data does not trivially contain test set solutions for tasks the model may later be evaluated on.  
+- **Advanced filtering with reward models or judge LLMs**: A separate model (often called a "reward model") or a dedicated judge LLM can score each (prompt, response) pair. Pairs falling below a certain threshold can be discarded.  
+
+The final result of these processes is a structured, curated, and high-quality dataset that the model can learn from during fine-tuning. This dataset is typically orders of magnitude smaller than the original pre-training corpus but is far more relevant to the desired usage scenario.
+
+## 4. supervised fine-tuning (sft)
+
+Supervised Fine-Tuning (SFT) is a crucial phase that often immediately follows dataset curation. In SFT, you explicitly train the language model on a set of (prompt, response) pairs, adjusting the model weights so that it is more likely to produce the given "gold" response when it sees the corresponding prompt. This approach might be used standalone or as a precursor to preference alignment via reinforcement learning.
+
+### 4.1 training techniques
+
+#### 4.1.1 full fine-tuning
+
+The traditional approach is to fine-tune all of the model's parameters using labeled data. This can be computationally expensive and memory-intensive, especially for LLMs with billions of parameters. Despite these costs, full fine-tuning has some advantages:
+
+- The model's entire capacity can adapt to the new instructions or tasks.  
+- Potentially higher final performance when there is sufficient data and the domain shift is large.  
+
+However, for extremely large models (tens or hundreds of billions of parameters), even a single fine-tuning pass might require GPU clusters with large amounts of memory and distributed training infrastructure.
+
+#### 4.1.2 parameter-efficient methods (lora, qlora)
+
+To address these challenges, parameter-efficient fine-tuning has gained popularity. Two notable methods are Low-Rank Adaptation (LoRA) and QLoRA:
+
+- **LoRA**: Instead of updating all of the model parameters, LoRA injects trainable rank-decomposition matrices into each layer. That is, for a weight matrix <Latex text="\(W \in \mathbb{R}^{d \times k}\)"/>, you represent its update as a low-rank product <Latex text="\(A B^T\)"/> with <Latex text="\(\text{rank}(A, B) \ll \min(d, k)\)"/>. LoRA significantly reduces the number of parameters that need to be updated, allowing cheaper fine-tuning and facilitating quick domain or instruction shifts.  
+- **QLoRA**: This approach extends LoRA but also quantizes the model weights to 4-bit or 8-bit for memory efficiency. One approach uses 4-bit quantized base weights, plus LoRA's trainable low-rank updates in higher-precision. This method, introduced in part by research from Microsoft and Hugging Face in 2023, can drastically reduce GPU memory usage while retaining model performance close to full fine-tuning.  
+
+The parameter-efficient approach is often sufficient to achieve near state-of-the-art performance on many tasks without incurring the massive computational cost of updating the entire model. Additionally, these methods allow you to maintain multiple "adapters" for different tasks or domains, enabling quick switching of the model's specialization.
+
+### 4.2 training parameters
+
+When fine-tuning an LLM in a supervised manner, you must choose the following hyperparameters carefully:
+
+- **Learning rate**: Common values might range from <Latex text="\(1e-5\)"/> to <Latex text="\(1e-7\)"/> for large models, though smaller or larger values are occasionally used. The ideal value depends on the number of model parameters, the size of the fine-tuning dataset, and whether you are using parameter-efficient methods.  
+- **Schedulers**: Cosine decay, linear warmup, or other scheduling strategies can be used to gradually adjust the learning rate. A typical pattern is some steps of linear warmup (often 1–5% of the total training steps) followed by a decay to zero or a lower baseline.  
+- **Batch size & gradient accumulation**: Large effective batch sizes (thousands of tokens) help with stable training but might not fit entirely into GPU memory. Gradient accumulation across multiple forward passes is often used to emulate a larger batch size.  
+- **Number of epochs**: Post-training datasets are often smaller, so training for multiple epochs can be beneficial. Some projects run anywhere from 1 to 10 epochs, although overfitting can become a concern with extremely small datasets.  
+- **Optimizers**: AdamW remains popular. In the post-training context, 8-bit AdamW (which reduces memory usage for optimizer states) is widely adopted.  
+- **Weight decay**: Usually kept relatively small (e.g., <Latex text="\(1e-2\)"/> or <Latex text="\(1e-3\)"/>) or even zero, depending on empirical results.  
+- **Warmup steps**: A short period of warmup is standard, especially for large models, to avoid large gradient steps at the beginning of training.  
+- **LoRA-specific parameters**: If using LoRA, you also choose the rank (the dimension of the low-rank matrices, e.g., 4, 8, 16) and <Latex text="\(\alpha\)"/> (the initial scaling factor). If applying LoRA to a subset of modules (e.g., only key/query projection matrices in the attention blocks), you must specify which modules to adapt.  
+
+### 4.3 distributed training
+
+Because even post-training can be quite computationally demanding, distributed training techniques are often employed:
+
+- **DeepSpeed**: Microsoft's DeepSpeed library provides easy scaling across many GPUs and implements memory-optimization features such as ZeRO (Zero Redundancy Optimizer) stages, enabling large model training with lower GPU memory footprints.  
+- **Fully Sharded Data Parallel (FSDP)**: A PyTorch-native approach that shards model parameters and optimizer states across data-parallel workers, reducing memory usage.  
+- **Gradient checkpointing**: Saves memory by recomputing certain intermediate activations during the backward pass. This trades additional compute time for a reduction in GPU memory usage.
+
+The choice of distributed strategy depends on hardware availability and the complexity of the model. Many teams experiment with different setups to find an optimal balance between cost, training speed, and memory efficiency.
+
+### 4.4 monitoring
+
+Monitoring is essential in SFT because it allows you to spot issues early — such as overfitting, learning rate misconfiguration, or catastrophic forgetting of the model's previously acquired knowledge. Practitioners often track:
+
+- **Training & validation loss curves**: Monitoring the cross-entropy (CE) loss or perplexity on both the training set and a held-out validation set.  
+- **Learning rate schedules**: Visualizing the learning rate over time to ensure it is decaying or ramping up as expected.  
+- **Gradient norms**: Detecting gradient explosions or vanishing gradients.  
+- **Loss spikes**: If you see sudden spikes in the loss, it might indicate a bad batch of data or an excessively high learning rate.  
+- **Performance consistency**: Evaluating the model's performance on a separate set of tasks or prompts, ensuring you are not inadvertently harming general capabilities while you fine-tune for instruction compliance.
+
+A variety of tools (TensorBoard, Weights & Biases, Neptune, Comet) can visualize these metrics in real time, making it easier to iterate on hyperparameters and detect anomalies.
+
+## 5. preference alignment
+
+Beyond purely supervised fine-tuning — where the model is taught to produce a reference answer for a single correct response — there is a strong interest in aligning the model's behaviors with explicit preferences about what constitutes a "good" or "bad" answer. This more advanced phase of post-training can improve the model's output quality in subtle but impactful ways, often referred to as alignment with human values, policies, or domain-specific rules.
+
+### 5.1 rejection sampling
+
+One relatively straightforward way to incorporate preference signals is through rejection sampling. In this approach:
+
+1. **Generate multiple responses**: For each user prompt, you let the current model produce several candidate answers.  
+2. **Human or model selection**: A human annotator (or a specialized "judge" model) chooses the best response and labels the others as rejected.  
+3. **Reinforcement through supervised data**: You then create new training examples, labeling the chosen response as correct and the others as incorrect or suboptimal.  
+
+Rejection sampling works particularly well if your data collection pipeline includes humans in the loop. Over time, the model shifts toward producing answers that more frequently meet the acceptance criteria. However, the approach can be time-consuming if extensive human labeling is required.
+
+### 5.2 direct preference optimization (dpo)
+
+Direct Preference Optimization (DPO) emerged as an alternative that bypasses training a separate reward model. Instead, it uses pairs of chosen vs. rejected responses directly in a custom loss function that encourages the model to prefer the chosen response while penalizing the rejected ones.
+
+In a simplified sense, suppose you have for each prompt <Latex text="\(x\)"/> two candidate responses: the chosen response <Latex text="\(y^{+}\)"/> and the rejected response <Latex text="\(y^{-}\)"/>. DPO sets up an objective that maximizes the likelihood of <Latex text="\(y^{+}\)"/> while minimizing the likelihood of <Latex text="\(y^{-}\)"/>. Concretely, one can formulate a ratio:
+
+<Latex text="\[
+\mathcal{L}_{\text{DPO}} = - \log\frac{p_\theta(y^{+}\mid x)}{p_\theta(y^{-}\mid x)}
+\]"/>
+
+where <Latex text="\(p_\theta\)"/> is the model's distribution. By learning to increase <Latex text="\(p_\theta(y^{+}\mid x)\)"/> relative to <Latex text="\(p_\theta(y^{-}\mid x)\)"/> for the same prompt <Latex text="\(x\)"/>, the model is effectively aligning with the better response. DPO is often attractive because it avoids some complexities of reward modeling and direct policy gradient approaches. It still requires preference data (i.e., pairs of chosen vs. rejected responses), but it can be simpler to implement and stable to train. 
+
+### 5.3 proximal policy optimization (ppo)
+
+Proximal Policy Optimization (PPO) is the backbone of many RLHF systems, drawing on ideas from reinforcement learning to fine-tune policy networks (i.e., the language model). The typical pipeline (adapted from "Ziegler and gang, 2019") is:
+
+1. **Supervised baseline**: Start from a supervised fine-tuned policy or from the original pretrained language model.  
+2. **Reward model**: Have a separate reward model (<Latex text="\(R_\phi\)"/>) that was trained to predict human preferences or to output a scalar score for how good a given response is.  
+3. **Rollouts**: For each prompt, the policy (i.e., the LLM) generates a response. The reward model then scores that response, producing a scalar reward <Latex text="\(r\)"/>.  
+4. **Policy gradient update**: Update the policy parameters <Latex text="\(\theta\)"/> with PPO, which modifies the log probabilities <Latex text="\(\log p_\theta\)"/> of the generated tokens, aiming to maximize the expected reward while avoiding drastic changes to the policy. The latter is enforced via a clipped objective that prevents large policy updates:
+   <Latex text="\[
+   \mathcal{L}_{\text{PPO}}(\theta) = \mathbb{E}\left[\min\left(r_t(\theta) \hat{A_t}, \text{clip}(r_t(\theta), 1-\epsilon, 1+\epsilon)\hat{A_t}\right)\right]
+   \]"/>
+   where <Latex text="\(r_t(\theta)\)"/> is the ratio between the new and old policy probabilities for an action (token), and <Latex text="\(\hat{A_t}\)"/> is an advantage estimate. <Latex text="\(\epsilon\)"/> is a hyperparameter (clip range), typically around 0.1–0.2.  
+
+This iterative process eventually converges on a policy that better matches human preferences (as encoded by the reward model), while the clipping mechanism ensures training stability and discourages overfitting to the reward model.
+
+### 5.4 monitoring
+
+Preference alignment processes need careful monitoring to ensure that:
+
+1. **The margin between chosen and rejected answers** is growing: The final policy should consistently produce better answers than the rejected ones.  
+2. **Accuracy or helpfulness** on external tasks is improving: A well-aligned model should remain accurate or even gain accuracy by focusing on user-relevant answers.  
+3. **Stability**: Drastic updates can cause mode collapse or degenerate behaviors. Clipping in PPO or other techniques in DPO and rejection sampling aim to prevent big shifts that degrade performance.  
+
+It is also essential to track whether the reward model is inadvertently reinforcing undesirable behaviors, or if the model is gaming the reward function by producing superficially pleasing but incorrect answers.
+
+```
+<Code text={`
+import torch
+from transformers import AutoTokenizer, AutoModelForCausalLM
+# This is a toy snippet showing the structure for preference data.
+
+# Suppose we have "pairs" of (prompt, chosen_response, rejected_response)
+# We'll do a simplified direct preference optimization update
+
+tokenizer = AutoTokenizer.from_pretrained("some-llm-checkpoint")
+model = AutoModelForCausalLM.from_pretrained("some-llm-checkpoint")
+model.train()
+
+optimizer = torch.optim.AdamW(model.parameters(), lr=1e-5)
+
+# Example data
+samples = [
+    {
+        "prompt": "How to bake a chocolate cake?",
+        "chosen": "You can start by preheating the oven to 350F, mixing dry ingredients...",
+        "rejected": "Here's a random set of words not relevant to your question..."
+    },
+    # ...
+]
+
+for epoch in range(num_epochs):
+    for sample in samples:
+        input_prompt = sample["prompt"]
+        chosen = sample["chosen"]
+        rejected = sample["rejected"]
+
+        # Tokenize
+        input_ids_prompt = tokenizer.encode(input_prompt, return_tensors="pt")
+        input_ids_chosen = tokenizer.encode(chosen, return_tensors="pt")
+        input_ids_rejected = tokenizer.encode(rejected, return_tensors="pt")
+
+        # Compute log probabilities
+        with torch.no_grad():
+            # Teacher forcing: model sees [prompt + chosen]
+            chosen_outputs = model(
+                torch.cat([input_ids_prompt, input_ids_chosen], dim=1),
+                labels=torch.cat([input_ids_prompt, input_ids_chosen], dim=1)
+            )
+            chosen_log_probs = chosen_outputs.loss * input_ids_chosen.size(1)
+
+            # Similarly for [prompt + rejected]
+            rejected_outputs = model(
+                torch.cat([input_ids_prompt, input_ids_rejected], dim=1),
+                labels=torch.cat([input_ids_prompt, input_ids_rejected], dim=1)
+            )
+            rejected_log_probs = rejected_outputs.loss * input_ids_rejected.size(1)
+
+        # Suppose a simplified DPO-like objective: 
+        # L = -log( exp(-chosen_log_probs) / (exp(-chosen_log_probs) + exp(-rejected_log_probs)) )
+        #     = chosen_log_probs + log(1 + exp(-(rejected_log_probs - chosen_log_probs)))
+        # We'll do a gradient-based approach, so we need to re-run forward for grads:
+
+        # Re-run forward pass with requires_grad
+        chosen_outputs = model(
+            torch.cat([input_ids_prompt, input_ids_chosen], dim=1),
+            labels=torch.cat([input_ids_prompt, input_ids_chosen], dim=1)
+        )
+        rejected_outputs = model(
+            torch.cat([input_ids_prompt, input_ids_rejected], dim=1),
+            labels=torch.cat([input_ids_prompt, input_ids_rejected], dim=1)
+        )
+        chosen_log_probs = chosen_outputs.loss * input_ids_chosen.size(1)
+        rejected_log_probs = rejected_outputs.loss * input_ids_rejected.size(1)
+
+        # Compute the approximate DPO loss
+        loss = chosen_log_probs + torch.log1p(
+            torch.exp(-(rejected_log_probs - chosen_log_probs))
+        )
+
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+
+print("Finished simplified preference alignment training.")
+`}/>
+```
+
+Above, I've included a simplified pseudo-code snippet to show how one might implement a rough version of Direct Preference Optimization (DPO). The snippet is *not* production-ready, but it conveys the idea of using pairs of (chosen, rejected) responses for the same prompt to shape the model's preferences. In reality, more sophisticated data loading, batching, and distributed training strategies would be used.
+
+---
+
+The end goal of these preference alignment strategies is to fine-tune the model so that it consistently produces high-quality, policy-compliant, and user-friendly outputs. By integrating SFT with preference alignment (in the form of rejection sampling, DPO, PPO, or other RL-based frameworks), developers can build large language models that provide practical and aligned responses across a wide range of tasks.
+
+These techniques are part of a rapidly evolving field of research, with new methods regularly introduced at top-tier conferences (e.g., NeurIPS, ICML). Continued experimentation with new data curation pipelines, advanced filtering strategies, and novel preference optimization objectives will likely remain an essential aspect of LLM development. For practitioners, it is important to stay up to date on these techniques, choosing the right combination of data, fine-tuning approach, and preference alignment strategy that best suits their use case and computational constraints.
+
+<Image alt="diagram of llm tuning pipeline from pre-training to supervised fine-tuning and preference alignment" path="" caption="A conceptual overview of how large language models transition from pre-training to specialized post-training steps." zoom="false" />
+
+---
+
+In practice, tuning large language models for real-world applications involves iterative experimentation, high-quality dataset curation, and a careful balancing act among improvements in safety, helpfulness, and factual correctness. By following best practices in data collection, supervised training, preference modeling, and monitoring, one can gradually mold a powerful but general LLM into a sophisticated assistant or domain expert that meets organizational needs — while still preserving the vast knowledge and linguistic fluency that made large language models so impactful in the first place.

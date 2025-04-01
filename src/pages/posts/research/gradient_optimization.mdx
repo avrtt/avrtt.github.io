@@ -1,0 +1,628 @@
+---
+index: 31
+indexCourse: 22
+indexFavorites:
+title: "Gradient optimization"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Gradient optimization"
+courseCategoryName: "Mathematical optimization"
+desc: "Everybody gangsta until the real data"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "02.02.2023"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 1
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/gradient_optimization.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/gradient_optimization"
+slug: "/research/gradient_optimization"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+{/*
+
+[https://youtu.be/sDv4f4s2SB8](https://youtu.be/sDv4f4s2SB8)  
+[https://www.youtube.com/watch?v=xOB10eTjoQ8](https://www.youtube.com/watch?v=xOB10eTjoQ8)
+[https://github.com/lenferdetroud/jupyter-notebooks/blob/master/sgd.ipynb](https://github.com/lenferdetroud/jupyter-notebooks/blob/master/sgd.ipynb)
+[https://www.youtube.com/watch?v=wPk8Z3aOBsg&list=PLA0M1Bcd0w8zxDIDOTQHsX68MCDOAJDtj&index=8](https://www.youtube.com/watch?v=wPk8Z3aOBsg&list=PLA0M1Bcd0w8zxDIDOTQHsX68MCDOAJDtj&index=8)
+[https://www.youtube.com/watch?v=gPC2B--Sza4&list=PLA0M1Bcd0w8zxDIDOTQHsX68MCDOAJDtj&index=9](https://www.youtube.com/watch?v=gPC2B--Sza4&list=PLA0M1Bcd0w8zxDIDOTQHsX68MCDOAJDtj&index=9)
+Mathematics for ML: глава 7 (7.1)
+[https://mml-book.github.io/book/mml-book.pdf](https://mml-book.github.io/book/mml-book.pdf)
+[https://ml-handbook.ru/chapters/optimization/intro](https://ml-handbook.ru/chapters/optimization/intro)
+[https://ml-handbook.ru/chapters/optimization/sgd_convergence](https://ml-handbook.ru/chapters/optimization/sgd_convergence)
+[https://youtu.be/YovTqTY-PYY](https://youtu.be/YovTqTY-PYY)
+[https://youtu.be/GtSf2T6Co80](https://youtu.be/GtSf2T6Co80)
+Вариации градиентного спуска:
+[https://youtu.be/W9iWNJNFzQI](https://youtu.be/W9iWNJNFzQI)
+[https://youtu.be/l4lSUAcvHFs](https://youtu.be/l4lSUAcvHFs)
+[https://youtu.be/G97ZtT8mKXk](https://youtu.be/G97ZtT8mKXk)
+Видимо, это ссылки из удалённого плейлиста старого курса Andrew Ng. Замена ссылки:
+https://www.youtube.com/watch?v=ed4whd9B-xw
+[https://youtu.be/vMh0zPT0tLI](https://youtu.be/vMh0zPT0tLI)  
+Стохастический градиентный спуск
+https://neerc.ifmo.ru/wiki/index.php?title=%D0%A1%D1%82%D0%BE%D1%85%D0%B0%D1%81%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9_%D0%B3%D1%80%D0%B0%D0%B4%D0%B8%D0%B5%D0%BD%D1%82%D0%BD%D1%8B%D0%B9_%D1%81%D0%BF%D1%83%D1%81%D0%BA 
+
+*/}
+
+
+{/*
+
+# Batch Gradient Descent
+В заметке про линейную регрессию мы вывели аналитическое решение, но из-за обращения матрицы оно слишком затратно: вычислительная сложность обращения - O(k^3-n*k^3), где k - количество признаков, n - размер выборки. Это ведет нас к итеративным оптимизационным методам, которые используются повсеместно в машинном обучении.
+Gradient descent is one of the most popular optimization methods. It is a generic optimization algorithm capable of finding optimal solutions to a wide range of problems. The general idea is to tweak parameters iteratively in order to minimize a cost function.
+Для начала выбираем случайные начальные параметры и вычисляем градиент. Далее будет произведен градиентый шаг, размер которого мы задаём сами. Минимизация теперь заключается в том, чтобы делать шаги против градиента.
+Допустим, у нас есть линейная регрессия от нескольких переменных и cost-функция:
+Тогда алгоритм выглядит следующим образом:
+...
+Alpha is the step size or learning rate. Он умножается на градиент J.
+В матричной форме градиент для MSE считается так:
+deltaJ(thetta) = -2*X^T*Y + 2*X^T*X*thetta = 2*X^T*(X*thetta-Y) 
+In this case the complexity is only O(nk).
+Повторяя шаги, мы получим дорогу, по которой наш алгоритм спускается к минимуму. В случае функции двух переменных это могло бы выглядеть так:
+![[img/Untitled 3 23.png|Untitled 3 23.png]]
+Алгоритм делает cost function всё меньше и меньше, пока не подберет лучшие параметры, то есть не найдет минимум. Так выглядит ситауция, когда алгоритм сходится к минимуму:
+![[img/Untitled 4 21.png|Untitled 4 21.png]]
+It's important to choose the right step size because if it's too small, the algorithm will work slowly, and if it's too big - the risk of overshooting the minimum increases:
+![[img/Untitled 5 19.png|Untitled 5 19.png]]
+It would be a good idea to find this parameter with a grid search.
+Finally, not all cost functions look like nice, regular bowls. There may be holes, ridges, plateaus, and all sorts of irregular terrains, making convergence to the minimum difficult. There is also the problem that the algorithm can converge to a local minimum.
+Также важно, чтобы features были одного масштаба. Иначе алгоритм будет сходиться по вытянутой плоской поверхности, что займет много времени или, наоборот, перескочит минимум.
+![[img/Untitled 6 17.png|Untitled 6 17.png]]
+Контурный график в случае сильного несоответствия масштабов будет слишком тонким, а значит градиентый спуск будет проходить сильными рывками.
+This algorithm involves calculations over the full training set X, at each step. This is why it's called batch gradient descent: it uses the whole batch of training data at every step. As a result it's terribly slow on very large training sets - вспомним сложность O(nk). However, gradient descent scales well with the number of features; training a linear regression model when there are hundreds of thousands of features is much faster using gradient descent than using the normal equation or SVD decomposition.
+# Stochastic Gradient Descent
+
+Batch gradient descent uses the whole training set to compute the gradients at every step, which makes it very slow when the training set is large.
+At the opposite extreme, Stochastic Gradient Descent picks a random instance in the training set at every step and computes the gradients based only on that single instance. Obviously, working on a single instance at a time makes the algorithm much faster because it has very little data to manipulate at every iteration. It also makes it possible to train on huge training sets, since only one instance needs to be in memory at each iteration.
+On the other hand, due to its stochastic (i.e., random) nature, this algorithm is much less regular than Batch Gradient Descent: instead of gently decreasing until it reaches the minimum, the cost function will bounce up and down, decreasing only on average. Over time it will end up very close to the minimum, but once it gets there it will continue to bounce around, never settling down.
+![[img/Untitled 7 16.png|Untitled 7 16.png]]
+This can actually help the algorithm jump out of local minima, so stochastic gradient descent has a better chance of finding the global minimum.
+Therefore, randomness is good to escape from local optima, but bad because it means that the algorithm can never settle at the minimum.
+One solution to this dilemma is to gradually reduce the learning rate. The steps start out large (which helps make quick progress and escape local minima), then get smaller and  
+smaller, allowing the algorithm to settle at the global minimum. This process is akin to simulated annealing, an algorithm inspired from the process in metallurgy of annealing, where molten metal is slowly cooled down. The function that determines the learning rate at each iteration is called the learning schedule. If the learning rate is reduced too quickly, you may get stuck in a local  
+minimum, or even end up frozen halfway to the minimum. If the learning rate is reduced too slowly, you may jump around the minimum for a long time and end up with a suboptimal solution if you halt training too early.  
+
+By convention we iterate by rounds of m iterations; each round is called an epoch. While the Batch Gradient Descent code iterated 1,000 times through the whole training set, this code goes through the training set only 50 times and reaches a pretty good solution.
+
+Warning: when using Stochastic gradient descent, the training instances must be i.i.d. to ensure that the parameters get pulled toward the global optimum, on average.
+
+# Mini-batch Gradient Descent
+A mixture of both algorithms. Иногда его называют просто стохастическим градиентным спуском, вместо предыдущего алгоритма. Если вы слышите SGD, то скорее всего это именно mini-batch вариация. Эту разновидность применяют в большинстве случаев, т.к. датасеты на практике большие.
+At each step, instead of computing the gradients based on the full training set (as in Batch GD) or based on just one instance (as in Stochastic GD), Mini-batch GD computes the gradients on small random sets of instances called mini-batches.
+The algorithm's progress in parameter space is less erratic than with Stochastic  
+GD, especially with fairly large mini-batches. As a result, Mini-batch GD will  
+end up walking around a bit closer to the minimum than Stochastic GD — but it  
+may be harder for it to escape from local minima (in the case of problems that  
+suffer from local minima, unlike Linear Regression).  
+![[img/Untitled 10 12.png|Untitled 10 12.png]]
+  
+Одна итерация обрабатывает один мини-батч, например 10% датасета. Затем алгоритм переходит к другой части датасета и так обрабатывает весь. Перебор всего датасета мини-батчами называется epoch.
+Размер батча задается исследователем и зависит от задачи и доступных CPU/GPU. Нужна точность и скорость сходимости - увеличиваем батчи (на одном батче нужно минимальное число итераций для сходимости), нужны ресурсы оперативной памяти - уменьшаем.
+  
+Как связаны размер батча и learning rate? Что нужно сделать с learning rate при уменьшении размера батча? (см. ML-канал)
+  
+Опишите суть градиентного спуска, особенности SGD, Mini-batch GD и в каких ситуациях следует использовать каждый (см. ML-канал)
+
+*/}
+
+
+{/*
+
+1. Introduction  
+   Importance of gradient optimization in machine learning.
+2. Revisiting the basics of ML optimization  
+   The objective function and cost/loss functions. Parameter space and searching for minima. Significance of gradients in optimization.  
+3. Gradient descent  
+   Definition and core idea of gradient descent. The iterative update rule and parameter adjustments. Common terms: cost function, gradient, and convergence. Role of gradient descent in broader ML pipelines.  
+4. Math behind gradient descent  
+   With examples: gradient calculations for common cost functions.
+   4.1 Deriving the gradient descent formula  
+   4.2 Calculating partial derivatives and their importance  
+   4.3 Convergence criteria
+   When to stop updating.
+   4.4. Learning rate and its impact  
+   Definition of the learning rate. Consequences of large vs. small learning rates. Learning rate decay and scheduling (excluding advanced adaptive methods).
+5. Main types of gradient descent  
+   5.1 Batch gradient descent  
+   5.2 Stochastic gradient descent  
+   5.3 Mini-batch gradient descent  
+6. Practical implementation considerations  
+   Data preprocessing and shuffling strategies. Monitoring convergence and validation performance. Tuning the learning rate and other hyperparameters. Common pitfalls (e.g., exploding/vanishing gradients). Practical tips for efficient computation. 
+7. Implementations 
+
+*/}
+
+
+Gradient optimization lies at the heart of nearly all modern machine learning (ML) methods, powering everything from classical linear regression models to massive deep neural networks. When we train a model — be it a simple regression model or a state-of-the-art Transformer — our objective is to adjust the model's internal parameters in a way that minimizes some loss or cost function. This minimization is rarely performed analytically, as exact solutions often do not exist for complex models or might be computationally intractable. Instead, we rely on iterative optimization procedures that exploit the gradient of the loss with respect to the model parameters. 
+
+A major reason gradient optimization has become so ubiquitous is that it scales relatively well to high-dimensional parameter spaces and large datasets. This is particularly crucial in today's world of deep learning, where models may consist of hundreds of millions (or even billions) of parameters. As a result, expertise in gradient-based optimization is essential for designing, training, and understanding a broad range of machine learning algorithms.
+
+In this article, we will dive into the fundamentals of gradient optimization, revisit the basics of loss minimization in ML, explore gradient descent (the most widely used gradient optimization algorithm), and then examine its three main variants: batch gradient descent, stochastic gradient descent, and mini-batch gradient descent. Along the way, we will study both theoretical underpinnings and practical considerations. Our focus here is on the "classical" versions of gradient-based optimization. In a subsequent article, we will discuss advanced modifications, including adaptive learning rate methods (e.g., Adam, RMSProp, Adagrad) and second-order approaches (e.g., Newton's method, quasi-Newton methods).
+
+Whether you come from a background in machine learning, data science, or a related field, understanding the core mechanics and nuances of gradient optimization is foundational. By the end of this piece, you should have a deeper grasp of how gradient-based optimizers work, why they are used, and how to implement and tune them in practice.
+
+
+## 2. Revisiting the basics of ml optimization
+
+In machine learning, a model is typically defined by a set of parameters (weights, biases, coefficients, or any other internal variables) that we wish to learn from data. For a supervised learning problem, we often have a labeled dataset <Latex text="\( \{(x_1, y_1), (x_2, y_2), \ldots, (x_m, y_m)\} \)"/>. Each <Latex text="\(x_i\)"/> denotes the features for the <Latex text="\(i\)"/>-th instance, and <Latex text="\(y_i\)"/> denotes the corresponding target (e.g., a class label or a continuous value).
+
+### The objective function (loss or cost function)
+A core piece of machine learning is defining how we measure the performance of a model's parameters on the given data. This is typically done via a loss (or cost) function. For example, in linear regression with mean squared error (MSE) as the loss, our goal is to minimize:
+
+<Latex text="\[
+L(\mathbf{w}) = \frac{1}{m} \sum_{i=1}^{m} \bigl(y_i - \hat{y}_i(\mathbf{w})\bigr)^2,
+\]"/>
+
+where <Latex text="\( \hat{y}_i(\mathbf{w}) \)"/> is the model's prediction for the <Latex text="\(i\)"/>-th data point, and <Latex text="\(\mathbf{w}\)"/> represents the model parameters (weights). In classification tasks, one might use a cross-entropy loss, hinge loss, or another appropriate objective.
+
+### Parameter space and searching for minima
+For many models, the parameter space can be extremely large (sometimes millions of dimensions). Directly solving for the global optimum can be very difficult or impossible in closed form. Instead, we rely on numerical optimization methods that iteratively refine an initial guess.
+
+### Significance of gradients in optimization
+The gradient of the loss function with respect to the parameters tells us the local direction of steepest ascent in the loss landscape. To minimize the loss, we want to step in the opposite direction of that gradient. This insight underpins gradient descent: if the gradient of <Latex text="\(L(\mathbf{w})\)"/> at step <Latex text="\(t\)"/> is <Latex text="\(\nabla L(\mathbf{w}^{(t)})\)"/>, we update our parameters as:
+
+<Latex text="\( \mathbf{w}^{(t+1)} = \mathbf{w}^{(t)} - \eta \,\nabla L(\mathbf{w}^{(t)}) \)"/>
+
+where <Latex text="\(\eta\)"/> is the learning rate. While conceptually simple, properly tuning the gradient descent procedure can be an art in itself. Learning rate choice, initialization strategies, and iteration scheduling all factor into the final performance of our model.
+
+
+## 3. Gradient descent
+
+Gradient descent (GD) is one of the most fundamental and well-known optimization algorithms in machine learning. Its basic premise is:
+
+1. Start with an initial guess for the parameters (e.g., random initialization).
+2. Compute the gradient of the objective function (the cost or loss) with respect to the parameters.
+3. Update the parameters by moving a small step against the gradient (the direction of steepest descent).
+4. Repeat steps 2 and 3 until convergence or until a stopping criterion is met.
+
+<Highlight>Key Terms</Highlight> to keep in mind:
+
+- **Cost function (Loss function)**: The function you want to minimize (e.g., MSE, cross-entropy).
+- **Gradient**: The vector of partial derivatives of the cost function with respect to all parameters.
+- **Convergence**: A state where the parameters are no longer changing meaningfully, or a defined stopping criterion is met.
+- **Learning rate**: A hyperparameter (<Latex text="\(\eta\)"/>) that controls the size of the step in the direction of the negative gradient.
+
+Gradient descent's concept is straightforward, yet the practical details — especially regarding convergence speed and numerical stability — are crucial to making it work effectively. For example, setting the learning rate too high can cause the parameters to oscillate wildly or diverge, while a too-small learning rate can lead to painfully slow training.
+
+
+## 4. Math behind gradient descent
+
+The mathematics of gradient descent can be understood by looking at how we compute partial derivatives of a chosen loss function and update the model parameters accordingly. In machine learning, these partial derivatives often correspond to how each weight in a neural network or a linear model influences the overall cost.
+
+### 4.1 deriving the gradient descent formula
+
+Suppose we have a cost function <Latex text="\(L(\mathbf{w})\)"/>. The gradient <Latex text="\(\nabla L(\mathbf{w})\)"/> is the vector of partial derivatives:
+
+<Latex text="\[
+\nabla L(\mathbf{w}) =
+\begin{bmatrix}
+\frac{\partial L(\mathbf{w})}{\partial w_1} \\
+\frac{\partial L(\mathbf{w})}{\partial w_2} \\
+\vdots \\
+\frac{\partial L(\mathbf{w})}{\partial w_n}
+\end{bmatrix}.
+\]"/>
+
+Intuitively, each component of <Latex text="\(\nabla L(\mathbf{w})\)"/> measures how sensitive the loss is to changes in a particular parameter <Latex text="\(w_j\)"/>. Moving against the gradient — i.e., subtracting a small multiple of the gradient from the current parameter vector — lowers the value of the cost function, at least in a local sense.
+
+Mathematically, the update rule for gradient descent can be written as:
+
+<Latex text="\[
+\mathbf{w}^{(t+1)} = \mathbf{w}^{(t)} - \eta \,\nabla L(\mathbf{w}^{(t)}),
+\]"/>
+
+where <Latex text="\(\mathbf{w}^{(t)}\)"/> is the parameter vector at iteration <Latex text="\(t\)"/>, and <Latex text="\(\eta\)"/> is the learning rate.
+
+### 4.2 calculating partial derivatives and their importance
+
+For many ML models — like linear or logistic regression — the partial derivatives of the loss function can be computed analytically. For instance, in linear regression with mean squared error, one can derive a closed-form gradient expression:
+
+<Latex text="\[
+\nabla L(\mathbf{w}) = \frac{2}{m} \mathbf{X}^T (\mathbf{X} \mathbf{w} - \mathbf{y}),
+\]"/>
+
+where <Latex text="\(\mathbf{X}\)"/> is the design matrix of input features, <Latex text="\(\mathbf{y}\)"/> is the vector of target values, and <Latex text="\(m\)"/> is the number of training samples.
+
+In other models, especially neural networks, we often use backpropagation (the chain rule) to compute partial derivatives. Regardless of the model, calculating partial derivatives accurately and efficiently is essential to applying gradient descent.
+
+### 4.3 convergence criteria
+
+Determining when gradient descent "converges" can be somewhat subjective or dependent on application-specific needs. Common criteria include:
+
+- **Parameter change**: Stop when the difference <Latex text="\( \|\mathbf{w}^{(t+1)} - \mathbf{w}^{(t)}\|\)"/> is below a certain threshold.
+- **Gradient magnitude**: Stop when <Latex text="\(\|\nabla L(\mathbf{w}^{(t)})\|\)"/> becomes very small.
+- **Maximum iterations**: Stop after a fixed number of iterations or epochs.
+- **Validation metric**: In practice, we often monitor a validation set's performance. If it stops improving (or worsens), we may reduce the learning rate or halt entirely (early stopping).
+
+In many real-world ML applications, early stopping based on validation performance is especially common, since it helps prevent overfitting.
+
+### 4.4 learning rate and its impact
+
+The learning rate <Latex text="\(\eta\)"/> is arguably the single most important hyperparameter in gradient descent. Its role is to determine how big a step we take in the negative gradient direction each time we update the parameters.
+
+- **Too large <Latex text="\(\eta\)"/>**: The parameter updates might overshoot the minimum. Loss values can explode or fluctuate drastically, resulting in divergence or chaotic behavior.
+- **Too small <Latex text="\(\eta\)"/>**: Convergence becomes very slow, potentially requiring an impractically large number of updates.
+- **Variable learning rate**: Many training regimens feature learning rate "decay" or scheduling, in which <Latex text="\(\eta\)"/> is reduced over time to refine the convergence process. A common schedule might be a simple decay: <Latex text="\(\eta^{(t)} = \frac{\eta_0}{1 + kt}\)"/>, or an exponential decay like <Latex text="\(\eta^{(t)} = \eta_0 \cdot \alpha^t\)"/>, where <Latex text="\(k\)"/> or <Latex text="\(\alpha\)"/> is some constant chosen by the researcher.
+
+In practice, the learning rate can be tuned by trial and error, grid search, random search, or more sophisticated automated hyperparameter optimization. The perfect setting is highly model- and dataset-dependent, making this a critical point of experimentation in real-world ML pipelines.
+
+
+## 5. main types of gradient descent
+
+While the classical idea of gradient descent updates is straightforward, the exact mechanism by which we compute the gradient (and the portion of the dataset used) can vary significantly. This gives rise to three main variants:
+
+1. **Batch gradient descent (BGD)**: Uses the entire training set to compute the gradient at each step.
+2. **Stochastic gradient descent (SGD)**: Uses one training example (or sometimes a very small subset) per gradient update.
+3. **Mini-batch gradient descent (MBGD)**: Uses a small batch of training examples (e.g., 32, 64, or 256 samples) at each iteration.
+
+Each approach has advantages and drawbacks, influencing how it handles large datasets, converges to minima, and generalizes to new data.
+
+### 5.1 batch gradient descent
+
+**Batch gradient descent** computes the gradient of the cost function by summing or averaging over all training examples before performing a single update. That is:
+
+<Latex text="\[
+\nabla L(\mathbf{w}) = \frac{1}{m} \sum_{i=1}^{m} \nabla L_i(\mathbf{w}),
+\]"/>
+
+where <Latex text="\(L_i(\mathbf{w})\)"/> is the loss contribution from the <Latex text="\(i\)"/>-th example, and <Latex text="\(m\)"/> is the total number of training examples.
+
+**Pros**:
+- The gradient computation is exact for the current set of parameters (assuming no sampling, the entire dataset is used).
+- Often yields stable and predictable updates.
+
+**Cons**:
+- Very slow for large datasets, as each update requires a pass over all the training data.
+- Consumes significant memory if the dataset does not fit comfortably in RAM or GPU memory.
+
+**Use cases**:
+- Datasets that are moderately sized (where computing the gradient over the entire set is not prohibitively expensive).
+- Problems where stable, more deterministic updates are preferable.
+
+### 5.2 stochastic gradient descent
+
+**Stochastic gradient descent (SGD)** picks one training example (or sometimes a single random subset) at each iteration to compute an approximate gradient. Formally, if <Latex text="\(i\)"/> is chosen randomly from <Latex text="\(\{1, 2, \ldots, m\}\)"/>, then:
+
+<Latex text="\[
+\nabla L(\mathbf{w}) \approx \nabla L_i(\mathbf{w}).
+\]"/>
+
+**Pros**:
+- Can be extremely fast and memory efficient, as it processes one example at a time (in the purest form).
+- Potentially escapes local minima more easily, because the gradient is "noisy."
+- Scales well to massive datasets (common in online learning scenarios).
+
+**Cons**:
+- High variance in updates can result in an erratic convergence path.
+- Requires more careful tuning of the learning rate, often with a decay schedule.
+- The objective function does not necessarily decrease at every iteration (due to the sampling noise).
+
+**Use cases**:
+- Very large datasets or streaming data.
+- Online or real-time machine learning applications where data arrives continuously.
+- Situations where memory resources are limited.
+
+### 5.3 mini-batch gradient descent
+
+**Mini-batch gradient descent** is in many ways a middle ground between batch and stochastic methods. It processes a small batch of training data (say <Latex text="\(b\)"/> examples) at each iteration:
+
+<Latex text="\[
+\nabla L(\mathbf{w}) \approx \frac{1}{b} \sum_{i \in \text{batch}} \nabla L_i(\mathbf{w}),
+\]"/>
+
+where "batch" is a small random subset of the training set. For instance, if <Latex text="\(m = 60,000\)"/> and the chosen mini-batch size is 64, each update uses 64 examples out of the 60,000.
+
+**Pros**:
+- Less computationally heavy than full batch descent, since it only processes a small subset at a time.
+- Reduces variance compared to pure SGD, since multiple examples smooth out the gradient estimate.
+- Efficiently vectorizable on modern hardware (GPUs often favor certain batch sizes).
+
+**Cons**:
+- Slightly more memory-intensive than pure SGD if the mini-batch is large, but typically not as large as full batch.
+- Still introduces some noise in the gradient, although less than SGD.
+
+**Use cases**:
+- The most common approach in modern deep learning, as it balances computational efficiency with convergence stability.
+- Works well with GPU-based acceleration.
+- Generally recommended for medium to large datasets in practical ML scenarios.
+
+Most deep learning frameworks default to mini-batch training. Researchers often tune the mini-batch size based on hardware constraints (e.g., GPU VRAM) and find that certain batch sizes can lead to better (or faster) convergence, depending on the problem and architecture.
+
+
+## 6. practical implementation considerations
+
+The success of gradient-based methods depends on several practical details that go beyond the core update rule. Here are a few key considerations:
+
+1. **Data preprocessing**:  
+   - **Normalization or standardization**: Bringing all features to a similar scale speeds up convergence by avoiding extremely elongated or skewed loss landscapes.
+   - **Shuffling**: It is typically beneficial to shuffle the training data (or shuffle it in mini-batches) to avoid unwanted ordering effects.
+
+2. **Monitoring convergence and validation performance**:  
+   - Track the training loss and validation loss over iterations or epochs.
+   - Consider using early stopping when the validation performance stops improving.
+
+3. **Hyperparameter tuning**:  
+   - **Learning rate**: Often the single most important parameter; must be chosen carefully.
+   - **Batch size**: For mini-batch methods, the size of each batch can significantly affect both speed and performance.
+   - **Regularization**: Methods like <Latex text="\(L_2\)"/> (ridge) or <Latex text="\(L_1\)"/> (lasso) can be integrated with gradient descent simply by adjusting the loss function to include regularization terms.
+
+4. **Exploding/vanishing gradients**:  
+   - In deep neural networks, the gradient can sometimes become extremely large or extremely small, causing numerical issues and hampering learning. Various techniques (e.g., gradient clipping, careful initialization, batch normalization, or sophisticated architectures) are used to mitigate these issues.
+
+5. **Efficient computation**:  
+   - Tools like vectorization (in NumPy, PyTorch, TensorFlow) can dramatically speed up gradient computations.
+   - GPUs or TPUs excel at mini-batch gradient computations for deep learning tasks.
+
+6. **Heuristic improvements**:  
+   - Using momentum-based methods (to be discussed in detail in subsequent articles) can smooth out noisy updates.
+   - Advanced learning rate schedules (e.g., warm restarts, cyclical learning rates) can sometimes yield better results than static schedules.
+
+
+## 7. implementations
+
+Below are two sample implementations that demonstrate how gradient descent might be coded from scratch in Python, focusing on a simple linear regression scenario. Following that, we'll briefly illustrate how one might use scikit-learn's <Highlight>SGDClassifier</Highlight> for classification tasks.
+
+---
+
+### 7.1 example: batch gradient descent for linear regression (numpy)
+
+Here, we demonstrate how to implement **batch gradient descent** to learn the parameters of a simple linear regression model. Suppose we have a design matrix <Latex text="\(\mathbf{X}\)"/> (dimension <Latex text="\(m \times n\)"/>) and a target vector <Latex text="\(\mathbf{y}\)"/> of dimension <Latex text="\(m\)"/>.
+
+```
+<Code text={`
+import numpy as np
+
+def batch_gradient_descent(X, y, learning_rate=0.01, n_iterations=1000):
+    """
+    Perform batch gradient descent for a linear regression model.
+    X is an m x n matrix of features.
+    y is an m-dimensional vector of targets.
+    """
+    m, n = X.shape
+    # Initialize parameters (weights) randomly or with zeros
+    w = np.zeros(n)
+    
+    # Optionally, you can add a column of 1s to X externally for the intercept
+    # or manage it separately. We'll assume X is already preprocessed.
+    
+    for iteration in range(n_iterations):
+        # Predictions
+        y_pred = X.dot(w)
+        
+        # Compute the gradient of the MSE cost function
+        # L(w) = (1/m) * sum((y_pred - y)^2)
+        # Gradient: (2/m) * X.T.dot(y_pred - y)
+        
+        gradient = (2.0 / m) * X.T.dot(y_pred - y)
+        
+        # Update rule
+        w = w - learning_rate * gradient
+        
+        # (Optional) Monitor the loss
+        if iteration % 100 == 0:
+            loss = np.mean((y_pred - y) ** 2)
+            print(f"Iteration {iteration}, Loss: {loss:.5f}")
+    
+    return w
+`}/>
+```
+
+- **Initialization**: We set the initial parameter vector <Latex text="\(w\)"/> to zeros (or random small values).
+- **Learning rate**: Default is <Latex text="\(0.01\)"/>. 
+- **Gradient computation**: Uses the entire dataset on each update (batch GD).
+- **Update step**: <Latex text="\( w \leftarrow w - \eta \, \nabla L(w)\)"/>.
+- **Output**: Returns the final learned weights.
+
+In practice, you might add advanced features like dynamic learning rate schedules or early stopping. You would also preprocess the input data (e.g., normalization, mean-centering) before calling this function.
+
+
+### 7.2 example: stochastic gradient descent for linear regression (numpy)
+
+Below is a simplistic code snippet for **stochastic gradient descent**. Each iteration uses exactly one randomly chosen data point to update the weights. This can converge quickly in practice but is often noisy.
+
+```
+<Code text={`
+import numpy as np
+
+def stochastic_gradient_descent(X, y, learning_rate=0.01, n_epochs=5):
+    """
+    Perform stochastic gradient descent for a linear regression model.
+    X is an m x n matrix of features.
+    y is an m-dimensional vector of targets.
+    """
+    m, n = X.shape
+    w = np.zeros(n)
+    
+    for epoch in range(n_epochs):
+        # Shuffle the data to avoid cycles
+        indices = np.random.permutation(m)
+        X_shuffled = X[indices]
+        y_shuffled = y[indices]
+        
+        for i in range(m):
+            # Pick one example
+            xi = X_shuffled[i, :].reshape(1, -1)
+            yi = y_shuffled[i]
+            
+            # Predict
+            y_pred = xi.dot(w)
+            
+            # Compute the gradient for this single example
+            gradient = 2.0 * xi.T.dot(y_pred - yi)
+            
+            # Update
+            w = w - learning_rate * gradient.flatten()
+        
+        # (Optional) Monitoring the overall loss at the end of each epoch
+        total_loss = np.mean((X.dot(w) - y) ** 2)
+        print(f"Epoch {epoch+1}, Loss: {total_loss:.5f}")
+    
+    return w
+`}/>
+```
+
+- **Epoch**: A single pass through all <Latex text="\(m\)"/> training samples.
+- **Shuffle**: We shuffle <Latex text="\(X\)"/> and <Latex text="\(y\)"/> each epoch for better convergence properties.
+- **One-sample update**: The gradient is computed using just one sample (<Latex text="\(i\)"/>).
+
+Here, the parameters get updated <Latex text="\(m\)"/> times per epoch, one per training sample. This often allows faster initial progress but can be quite noisy, necessitating learning rate schedules or other smoothing techniques.
+
+
+### 7.3 mini-batch gradient descent
+
+A **mini-batch approach** is usually more efficient on modern hardware (particularly GPUs), especially for deep learning tasks. Conceptually, it is halfway between the above two approaches, so the implementation is similar; the main difference is that we pick (say) 32 or 64 samples at a time rather than 1 or <Latex text="\(m\)"/>.
+
+```
+<Code text={`
+import numpy as np
+
+def mini_batch_gradient_descent(X, y, learning_rate=0.01, n_epochs=5, batch_size=32):
+    """
+    Perform mini-batch gradient descent for a linear regression model.
+    X is an m x n matrix of features.
+    y is an m-dimensional vector of targets.
+    """
+    m, n = X.shape
+    w = np.zeros(n)
+    n_batches_per_epoch = m // batch_size
+    
+    for epoch in range(n_epochs):
+        # Shuffle the data
+        indices = np.random.permutation(m)
+        X_shuffled = X[indices]
+        y_shuffled = y[indices]
+        
+        for b in range(n_batches_per_epoch):
+            start = b * batch_size
+            end = start + batch_size
+            
+            X_batch = X_shuffled[start:end, :]
+            y_batch = y_shuffled[start:end]
+            
+            # Predictions
+            y_pred = X_batch.dot(w)
+            
+            # Compute gradient on the mini-batch
+            gradient = (2.0 / batch_size) * X_batch.T.dot(y_pred - y_batch)
+            
+            # Update
+            w = w - learning_rate * gradient
+        
+        # At the end of each epoch, you could measure the global training loss
+        total_loss = np.mean((X.dot(w) - y) ** 2)
+        print(f"Epoch {epoch+1}, Loss: {total_loss:.5f}")
+    
+    return w
+`}/>
+```
+
+This approach typically converges more smoothly than pure stochastic gradient descent and more quickly than batch gradient descent (especially for large <Latex text="\(m\)"/>).
+
+
+### 7.4 example: using scikit-learn's sgdclassifier
+
+Many frameworks provide ready-made SGD-based estimators. Below is a short example using **scikit-learn**'s <Highlight>SGDClassifier</Highlight> on the classic Iris dataset:
+
+```
+<Code text={`
+from sklearn.linear_model import SGDClassifier
+from sklearn import datasets
+from sklearn.model_selection import train_test_split
+
+# Load the iris dataset
+iris = datasets.load_iris()
+X = iris.data  # shape (150, 4)
+y = iris.target  # shape (150,)
+
+# Split into train/test sets
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.3, random_state=42
+)
+
+# Create and fit an SGD classifier
+clf = SGDClassifier(
+    loss='hinge',      # The 'hinge' loss gives a linear SVM
+    penalty='l2',      # L2 regularization
+    alpha=0.0001,      # Regularization parameter
+    learning_rate='optimal',
+    max_iter=1000,
+    shuffle=True,
+    random_state=42
+)
+
+clf.fit(X_train, y_train)
+
+# Evaluate
+accuracy = clf.score(X_test, y_test)
+print(f"Test set accuracy with SGDClassifier: {accuracy * 100:.2f}%")
+`}/>
+```
+
+- **loss**: By default, `'hinge'` is used, which corresponds to a linear SVM approach.
+- **penalty**: Regularization method (`'l2'`, `'l1'`, or `'elasticnet'`).
+- **alpha**: The coefficient of regularization.
+- **learning_rate**: `'optimal'` is an adaptive method that scikit-learn uses to help with convergence.
+- **shuffle**: We usually shuffle data each epoch to improve performance.
+- **random_state**: Ensures reproducible results.
+
+Because <Highlight>SGDClassifier</Highlight> is integrated into scikit-learn, it can handle the details of iteration, convergence detection, and even partial fitting on streaming data if necessary.
+
+
+## (optional) additional illustrations
+
+Below are a few conceptual image placeholders that can be very helpful for visualizing gradient descent, especially for those who are more visually inclined:
+
+<Image alt="Illustration of gradient descent on a contour plot" path="" caption="A contour plot of a cost function in 2D parameter space, showing iterative steps moving downhill toward the minimum." zoom="false" />
+
+<Image alt="Effect of different learning rates" path="" caption="Depiction of how a small vs. large learning rate can either converge slowly or overshoot the minimum, respectively." zoom="false" />
+
+<Image alt="Batch vs. Stochastic vs. Mini-batch updates" path="" caption="Comparison of the three approaches: batch (large stable updates), stochastic (small noisy updates), and mini-batch (balanced approach)." zoom="false" />
+
+
+## putting it all together
+
+Gradient descent in its many forms is an indispensable tool in the modern machine learning toolbox. While simple on the surface, mastering the intricacies of gradient-based optimization can elevate the performance and stability of your models in real-world contexts. Key points to remember:
+
+- **Choice of variant**: Decide which gradient descent approach best suits your dataset size, memory constraints, and hardware. Mini-batch is the de facto standard in deep learning, whereas batch or even pure stochastic gradient descent might be more fitting in smaller-scale or streaming applications.
+- **Learning rate**: Tune it carefully. Experiment with different schedules and watch for signs of divergence or overly slow convergence.
+- **Implementation details**: Proper data preprocessing, random shuffling, regularization, and gradient checks can drastically improve training outcomes.
+- **Further enhancements**: Momentum, adaptive gradient methods (e.g., Adam, RMSProp), and second-order approaches can lead to faster or more robust convergence. We will discuss these methods in a subsequent article.
+
+Modern ML practitioners often take these fundamentals for granted, but understanding precisely how gradients are computed and used for parameter updates gives you deeper insight into why certain methods and heuristics work as they do. It also opens the door to creative experimentation and innovation, whether you're tackling a standard classification task or pushing the boundaries of deep learning research.
+
+Gradient optimization is a cornerstone — once you grasp it, you're better positioned to tackle everything from logistic regression to large-scale deep networks, from simple academic examples to real-time streaming data scenarios. Moreover, the same principles carry over when you move into advanced concepts: adaptive optimizers, large-batch training for supercomputing clusters, distributed gradient computations, and more.
+
+Finally, keep in mind that while gradient descent is ubiquitous, it isn't always a panacea. Certain classes of problems may be amenable to specialized solvers or alternative optimization strategies. Nonetheless, for the vast majority of machine learning tasks, gradient-based optimization (in one form or another) is the proven workhorse driving model training from start to finish.

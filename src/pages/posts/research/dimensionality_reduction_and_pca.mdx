@@ -1,0 +1,406 @@
+---
+index: 43
+indexCourse: 132
+indexFavorites:
+title: "Dimensionality reduction & PCA"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Dimensionality reduction & PCA"
+courseCategoryName: "Other ML problems & advanced methods"
+desc: "The art of losing features"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "21.04.2023"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 1
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/dimensionality_reduction_and_pca.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/dimensionality_reduction_and_pca"
+slug: "/research/dimensionality_reduction_and_pca"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+Для этого поста разобрать Obsidian-заметку (см. папку "🚧 Unfinished").
+
+*/}
+
+
+Dimensionality reduction stands as one of the foundational pillars of modern data analysis, serving myriad purposes that range from improved visualization of high-dimensional datasets to facilitating faster and more robust machine learning models. When one is confronted with datasets that have an overwhelming number of features — potentially in the hundreds, thousands, or even millions — performing certain types of computations or building effective predictive models can quickly become unwieldy. This phenomenon, often referred to as the "curse of dimensionality", motivates the creation of methods and algorithms to meaningfully reduce the dimension of the data space, preserving as much relevant information as possible.
+
+Principal Component Analysis (PCA) is historically and practically one of the most widely used linear dimensionality reduction methods. Dating back to the work of Karl Pearson (Pearson, Philosophical Magazine, 1901) and further formalized by Harold Hotelling (Hotelling, 1933), PCA transforms the original features into new, uncorrelated features known as principal components, each of which captures a certain portion of the variance present in the data. These principal components, ordered by descending variance, provide a powerful way to discard noise and redundancy while capturing the main trends in the data.
+
+While PCA is linear in nature, it remains highly relevant in contemporary machine learning practices, not least because it is relatively straightforward to implement, computationally tractable (with the help of singular value decomposition implementations), and conceptually intuitive. In combination with more advanced or nonlinear dimensionality reduction algorithms, PCA continues to serve as a baseline technique, a pre-processing method, and a benchmark for comparing new approaches. In this article, I dive into the theoretical underpinnings of PCA, detail its uses, and chart a path through the broader landscape of dimensionality reduction. Along the way, I highlight practical implementation details, advanced modifications, and meaningful real-world applications.
+
+### 1.1 The curse of dimensionality
+
+The phrase "curse of dimensionality" appears frequently in discussions about high-dimensional datasets. At an intuitive level, when the dimensionality of data grows, the volume of the space grows so fast that the available data become sparse, making many density- or distance-based methods lose their effectiveness. Points that seemed close in a couple of dimensions suddenly appear far apart, and classification boundaries might become more complex to discern. Neighborhood-based algorithms such as k-nearest neighbors tend to suffer severely from the curse of dimensionality, because every point is far from every other point in a very high-dimensional space.
+
+Furthermore, a large number of features significantly increases the risk of overfitting. If you feed a machine learning model a massive number of features with limited data, the model can latch onto spurious correlations that do not generalize. Consequently, the need for methods to systematically reduce or select features, typically followed by robust forms of validation, becomes paramount.
+
+### 1.2 Motivations for dimensionality reduction in machine learning
+
+Dimensionality reduction greatly simplifies downstream modeling tasks. By paring down the dataset into fewer and more expressive features, one can:
+
+• Improve interpretability: Instead of analyzing hundreds or thousands of correlated features, a handful of principal components or factors may be easier to interpret or visualize.  
+• Reduce computational complexity: Many algorithms can have run times that scale poorly with the number of features.  
+• Mitigate overfitting: Fewer features often mean fewer parameters to learn, thus reducing the likelihood of memorizing noise.  
+• Aid in data visualization: Projecting the data into two- or three-dimensional space is one of the most straightforward ways to get a visual sense of structure, outliers, or regional clusters.  
+
+With PCA specifically, the user obtains new axes — principal components — that are linear combinations of the original variables, orthogonal to each other and explaining progressively smaller portions of the total variance. PCA can be considered a stepping stone for many advanced methods in machine learning and data science, and it continues to influence subsequent techniques such as kernel PCA for nonlinear embeddings, manifold learning approaches, and even autoencoder structures in neural networks.
+
+## 2. The conceptual landscape of dimensionality reduction
+
+Before diving into PCA's minute details, it is instructive to situate PCA within the broader context of dimensionality reduction methods. Although PCA is arguably the most popular technique, there exist many other approaches. Some focus on linear transformations and rely on matrix factorization, while others attempt to preserve local neighborhoods or manifold structures by means of sophisticated nonlinear embeddings.
+
+### 2.1 Linear vs. non-linear approaches
+
+Dimensionality reduction can be roughly categorized into linear and nonlinear methods:
+
+• Linear techniques: These include PCA, Factor Analysis (FA), Linear Discriminant Analysis (LDA), and standard random projection methods. They transform the data using linear maps, typically manifested as matrix transformations.  
+• Nonlinear techniques: Algorithms such as kernel PCA, t-SNE (Maaten & Hinton, JMLR, 2008), UMAP, isomap, and locally linear embedding attempt to preserve manifold structures or distances in a more intricate fashion. By incorporating kernels or specialized distance metrics, these methods can capture more complex relationships that do not align with linear subspaces.
+
+### 2.2 Feature selection vs. feature extraction
+
+It also helps to distinguish between feature selection and feature extraction:  
+
+• Feature selection: The technique of identifying and retaining a subset of the original features that hold the highest predictive or explanatory power, leaving them otherwise unchanged.  
+• Feature extraction: The practice of creating new features by combining existing ones, usually through a mathematically informed transformation such as PCA or autoencoders.
+
+This article focuses on feature extraction, specifically linear transformations based on covariance structure — i.e., PCA.
+
+### 2.3 Manifold learning perspective
+
+Modern viewpoints often treat high-dimensional data as lying (approximately) on or near low-dimensional manifolds. The idea is that, even if we have thousands of coordinates describing a single sample, the "intrinsic dimension" of that sample might actually be quite small. Manifold learning algorithms such as isomap or t-SNE attempt to uncover this lower-dimensional structure. PCA, as a linear method, can be seen as finding the best linear manifold — a plane, or hyperplane, spanning a subspace — that approximates the data under the assumption that linear relationships are a main driver of covariance.
+
+## 3. The theoretical foundation of PCA
+
+Principal Component Analysis can be introduced via at least three related perspectives:
+
+1. **Maximize variance**: Find directions (vectors) in the feature space that possess maximal variance.  
+2. **Minimize reconstruction error**: Find the best rank-<Latex text="\(k\)"/> linear subspace that allows you to reconstruct the original data.  
+3. **Orthogonal transformation of the covariance matrix**: Diagonalize the data's covariance matrix to obtain uncorrelated variables ordered by their variance.
+
+These three interpretations all converge to the same mathematical machinery — the covariance matrix and its eigen-decomposition (or equivalently, the singular value decomposition of the data matrix).
+
+### 3.1 Covariance matrix
+
+Consider a dataset of <Latex text="\(N\)"/> samples, each sample represented as a <Latex text="\(d\)"/>-dimensional vector <Latex text="\(x_i \in \mathbb{R}^d\)"/>. Let <Latex text="\(X\)"/> be the <Latex text="\(N \times d\)"/> data matrix, where each row corresponds to a sample. For simplicity, we assume the data matrix is mean-centered, such that each column has mean zero. Let <Latex text="\(\bar{x}\)"/> be the sample mean.
+
+The covariance matrix <Latex text="\( \Sigma \)"/> of the data is given by:
+
+<Latex text="\[
+\Sigma = \frac{1}{N - 1}\sum_{i=1}^{N} (x_i - \bar{x})(x_i - \bar{x})^\top
+\]"/>
+
+In practice, if <Latex text="\(X\)"/> is already mean-centered, <Latex text="\(\Sigma\)"/> can be estimated by the matrix multiplication:
+
+<Latex text="\[
+\Sigma = \frac{1}{N - 1} X^\top X.
+\]"/>
+
+Here, <Latex text="\(N\)"/> denotes the number of samples, <Latex text="\(d\)"/> the number of original features, <Latex text="\(x_i\)"/> the <Latex text="\(i\)"/>-th sample vector, and <Latex text="\(\bar{x}\)"/> the sample mean. The matrix <Latex text="\(X\)"/> has dimensions <Latex text="\(N \times d\)"/>; thus, <Latex text="\(X^\top\)"/> is <Latex text="\(d \times N\)"/>. Multiplying <Latex text="\(X^\top X\)"/> yields a <Latex text="\(d \times d\)"/> matrix.
+
+### 3.2 Eigenvalues and eigenvectors
+
+Once <Latex text="\(\Sigma\)"/> is computed, PCA seeks to find its eigenvalues and eigenvectors. We denote the eigenvalue–eigenvector pairs by <Latex text="\((\lambda_k, v_k)\)"/> for <Latex text="\(k = 1, 2, \ldots, d\)"/>. That is:
+
+<Latex text="\[
+\Sigma \, v_k = \lambda_k \, v_k,
+\]"/>
+
+where <Latex text="\(\lambda_k\)"/> is the <Latex text="\(k\)"/>-th eigenvalue and <Latex text="\(v_k\)"/> is the corresponding eigenvector. The eigenvalues, which are non-negative because <Latex text="\(\Sigma\)"/> is positive semi-definite, quantitatively indicate how much variance is captured in each principal component direction. We commonly rank the eigenvalues in descending order:
+
+<Latex text="\( \lambda_1 \ge \lambda_2 \ge \cdots \ge \lambda_d \ge 0. \)"/>
+
+The eigenvector <Latex text="\(v_1\)"/> corresponding to the largest eigenvalue <Latex text="\(\lambda_1\)"/> is the first principal component, and it aligns with the direction of greatest variance. The second principal component <Latex text="\(v_2\)"/> is then orthogonal to <Latex text="\(v_1\)"/> and aligns with the direction of the second greatest variance, and so on.
+
+### 3.3 SVD perspective
+
+An alternative but equivalent approach uses Singular Value Decomposition (SVD) of <Latex text="\(X\)"/>. If <Latex text="\(X\)"/> is an <Latex text="\(N \times d\)"/> mean-centered matrix, the SVD states:
+
+<Latex text="\[
+X = U \, S \, V^\top,
+\]"/>
+
+where  
+• <Latex text="\(U\)"/> is an <Latex text="\(N \times N\)"/> orthonormal matrix,  
+• <Latex text="\(S\)"/> is an <Latex text="\(N \times d\)"/> rectangular diagonal matrix (its diagonal entries are the singular values),  
+• <Latex text="\(V\)"/> is a <Latex text="\(d \times d\)"/> orthonormal matrix.
+
+The columns of <Latex text="\(V\)"/> (or equivalently the rows of <Latex text="\(V^\top\)"/>) correspond to the eigenvectors of <Latex text="\(\Sigma\)"/>. For each singular value <Latex text="\(\sigma_k\)"/>, we have:
+
+<Latex text="\( \sigma_k^2 = \lambda_k. \)"/>
+
+Hence, the left singular vectors in <Latex text="\(U\)"/> form an orthonormal basis for the row space of <Latex text="\(X\)"/>, and the columns of <Latex text="\(V\)"/> form an orthonormal basis for the column space — precisely the directions corresponding to principal components. SVD-based implementations of PCA tend to be numerically stable and often favored in practice.
+
+### 3.4 Geometric interpretation of PCA
+
+In geometric terms, PCA can be seen as fitting a low-dimensional plane (a linear subspace) that best represents the data in terms of squared Euclidean distance. If one projects the data onto the first <Latex text="\(k\)"/> principal components, the resulting reconstruction error is minimized (in a least-squares sense) among all possible rank-<Latex text="\(k\)"/> linear subspaces. This ties into another classic interpretation: PCA seeks the directions that capture the maximum variance, which also correspond to the singular vectors with the largest singular values.
+
+## 4. PCA algorithmic steps
+
+### 4.1 Data centering
+
+A key preparatory step for PCA is data centering, sometimes combined with feature scaling. Data centering subtracts the mean <Latex text="\(\bar{x}\)"/> from each sample so that the resulting dataset has zero mean. Without this step, the covariance matrix does not accurately reflect directions of maximum variability around the origin. Additionally, some practitioners standardize each feature to have unit variance before PCA, depending on whether features are measured in different scales and the immediate goals of the analysis.
+
+### 4.2 Computing the covariance matrix
+
+After centering, an easy route is to form the covariance matrix <Latex text="\(\Sigma\)"/> by <Latex text="\( (1/(N-1)) X^\top X \)"/>. For large <Latex text="\(d\)"/>, forming the full matrix might be expensive, but it remains conceptually straightforward. The cost of forming <Latex text="\(\Sigma\)"/> is on the order of <Latex text="\(O(N d^2)\)"/> if done naively, because one must multiply a <Latex text="\(d \times N\)"/> matrix with an <Latex text="\(N \times d\)"/> matrix.
+
+### 4.3 Eigen decomposition approach
+
+One can then compute the eigenvalues and eigenvectors of the covariance matrix:
+
+<Latex text="\[
+\Sigma v_k = \lambda_k v_k, \quad k = 1,\dots,d.
+\]"/>
+
+The <Latex text="\(k\)"/>-th principal component is the eigenvector <Latex text="\(v_k\)"/> corresponding to the <Latex text="\(k\)"/>-th largest eigenvalue <Latex text="\(\lambda_k\)"/>. If the objective is to retain only <Latex text="\(k\)"/> components, one extracts <Latex text="\(\{v_1, \ldots, v_k\}\)"/> and the corresponding eigenvalues. This approach is direct but might be computationally prohibitive if <Latex text="\(d\)"/> is extremely large.
+
+### 4.4 SVD method
+
+In practice, many PCA implementations revolve around performing an SVD on <Latex text="\(X\)"/> directly:
+
+<Latex text="\[
+X = U \, S \, V^\top.
+\]"/>
+
+Then the principal components are the columns of <Latex text="\(V\)"/>. The product <Latex text="\(X \, V\)"/> yields a matrix whose columns are the projections of <Latex text="\(X\)"/> onto the principal components. The SVD approach can be more numerically stable and can be more efficient when <Latex text="\(N < d\)"/>.
+
+### 4.5 Completeness conditions
+
+Because <Latex text="\(\Sigma\)"/> is positive semi-definite, all its eigenvalues <Latex text="\(\lambda_k\)"/> are <Latex text="\(\ge 0\)"/>, meaning the total variance in the dataset is:
+
+<Latex text="\[
+\text{Var}_{\text{total}} = \sum_{k=1}^{d} \lambda_k.
+\]"/>
+
+Thus, when one chooses to project onto the top <Latex text="\(k\)"/> components, the fraction of explained variance is:
+
+<Latex text="\[
+\frac{\lambda_1 + \cdots + \lambda_k}{\lambda_1 + \cdots + \lambda_d}.
+\]"/>
+
+These concepts form the bedrock of how one interprets PCA results in both theoretical and practical contexts.
+
+### 4.6 Numerical stability and computational complexity
+
+For moderate sizes (<Latex text="\(d\)"/> in the thousands or less, <Latex text="\(N\)"/> in the thousands or tens of thousands), PCA via standard SVD or eigen decomposition is typically tractable using optimized linear algebra libraries (e.g., LAPACK, BLAS, or vendor-optimized routines). However, for truly massive datasets — for instance, when <Latex text="\(d\)"/> can be in the tens or hundreds of thousands — specialized algorithms or approximations like randomized SVD (Halko and gang, SIAM Review, 2011) or incremental PCA become necessary to keep the computations feasible.
+
+## 5. Implementation considerations in practice
+
+### 5.1 PCA using scikit-learn
+
+A highly popular approach in Python's data science stack is:
+
+<Code text={`
+import numpy as np
+from sklearn.decomposition import PCA
+
+# Suppose X is an (N x d) NumPy array of training data
+# and we want top k components
+k = 2
+pca = PCA(n_components=k)
+X_reduced = pca.fit_transform(X)
+
+print("Explained variance ratio:", pca.explained_variance_ratio_)
+print("Principal components shape:", X_reduced.shape)
+`}/>
+
+Here, <Highlight>explained_variance_ratio_</Highlight> indicates, for each principal component, the fraction of the total variance captured. The result <Latex text="\(X_{\text{reduced}}\)"/> is an <Latex text="\(N \times k\)"/> matrix containing the coordinates of each sample in the reduced <Latex text="\(k\)"/>-dimensional space.
+
+### 5.2 Incremental PCA
+
+When <Latex text="\(X\)"/> is too large to fit in memory, or when data arrives in streams, incremental PCA processes the data in mini-batches. Each batch updates estimates of the principal components without requiring repeated decomposition of the full dataset. This approach, used frequently in big data contexts, is an important stepping stone toward streaming or online dimensionality reduction.
+
+### 5.3 Randomized PCA
+
+Randomized PCA (Halko and gang, SIAM Review, 2011) is a technique that constructs a random projection of the data into a lower dimensional space. Then it refines this projection iteratively. In many high-dimensional situations, randomized PCA can yield approximate principal components at a fraction of the cost of a full SVD, with surprisingly small errors for many practical datasets. This technique can be crucial in large-scale natural language processing tasks where one might have enormous term-document matrices.
+
+### 5.4 GPU-accelerated approaches
+
+Libraries such as RAPIDS (NVIDIA) in Python or specialized HPC solutions implement GPU-accelerated PCA. By performing matrix multiplications on massively parallel architectures, one can handle very large <Latex text="\(N\)"/> or <Latex text="\(d\)"/> more quickly. The speedup can be significant, especially when synergy with other GPU-based data loading and preprocessing steps is realized.
+
+### 5.5 Typical pitfalls and data preprocessing
+
+In real-world projects, one must keep in mind the effect of outliers and the necessity of consistent preprocessing. Outliers can produce disproportionately large effects on covariance estimates. Hence, it may be beneficial to use robust PCA variants or transform the data (e.g., using logarithms when dealing with positive-only values). Additionally, if the features have different scales, standardizing columns to have standard deviation 1 (or to some robust scale measure) can prevent certain features from dominating the variance.
+
+## 6. Interpreting results from PCA
+
+### 6.1 Variance explained
+
+The primary quantity of interest from PCA is how much variance each principal component explains. That fraction of the variance, often graphed as a bar chart or line plot, helps the analyst decide how many components to retain. For instance, if the first two components explain 90% of the variance, that might be sufficiently high to use them alone for many tasks such as visualization or clustering.
+
+### 6.2 Scree plot
+
+A frequently used visual is the "scree plot", which plots <Latex text="\(\lambda_k\)"/> — or the proportion of variance explained <Latex text="\(\lambda_k / \sum_j \lambda_j\)"/> — as a function of the component index <Latex text="\(k\)"/>. One typically looks for an "elbow" in the curve, a point beyond which additional components do not yield a marked improvement in explained variance.  
+
+<Image alt="Scree plot example" path="" caption="An example scree plot showing how consecutive principal components contribute to total variance." zoom="false" />
+
+### 6.3 Choosing the number of components
+
+There is no universal formula for picking the correct number of principal components. Some heuristics:
+
+• Retain all components needed to explain a certain threshold (e.g., 95%) of the variance.  
+• Identify the elbow in the scree plot.  
+• Cross-validate performance in downstream tasks (classification, regression) with subsets of components.  
+
+In practice, the choice can be somewhat subjective, governed by domain knowledge and the sensitivity of the problem to small differences in explained variance.
+
+### 6.4 Reconstructing data from principal components
+
+It is also possible to approximately reconstruct the original data from a reduced set of principal components. Suppose you keep the top <Latex text="\(k\)"/> principal components <Latex text="\(v_1, v_2, ..., v_k\)"/>. The projected representation of a data vector <Latex text="\(x\)"/> is:
+
+<Latex text="\[
+z = \begin{bmatrix}
+v_1^\top x \\
+v_2^\top x \\
+\vdots \\
+v_k^\top x
+\end{bmatrix}.
+\]"/>
+
+To reconstruct <Latex text="\(x\)"/> (approximately), one uses:
+
+<Latex text="\[
+\hat{x} = \sum_{m=1}^k (v_m^\top x)\, v_m.
+\]"/>
+
+This reveals that by truncating to <Latex text="\(k\)"/> components, we are effectively discarding contributions from the remaining <Latex text="\(d-k\)"/> eigenvectors and hence losing some information (variance).
+
+### 6.5 Partial interpretability
+
+Each principal component is a linear combination of the original features, so it is possible to interpret which original variables have the most weight in each principal component's direction. However, these combinations can be somewhat tricky to parse if many features have moderate loadings. Domain knowledge can aid in naming or describing principal components. For instance, in certain biological datasets, one might see that the first component corresponds to cell size or cell cycle effect, whereas subsequent ones might capture specific gene pathways.
+
+## 7. Kernel PCA
+
+While PCA is purely linear, kernel PCA extends the basic approach by applying a "kernel trick", a concept widely used in support vector machines. One replaces the explicit features <Latex text="\(x_i\)"/> with implicit feature mappings <Latex text="\(\phi(x_i)\)"/> in a high (or infinite) dimensional RKHS. Then, PCA is performed in that transformed (kernel) space.
+
+### 7.1 The kernel trick
+
+For a given kernel function <Latex text="\(k(x_i, x_j) = \langle \phi(x_i), \phi(x_j)\rangle\)"/>, we only need the kernel matrix <Latex text="\(K\)"/>, whose <Latex text="\((i,j)\)"/>-entry is <Latex text="\(k(x_i, x_j)\)"/>. The entire machinery — covariance, eigen decomposition, and so forth — can then be carried out in that kernel space, albeit with additional constraints regarding centering the kernel matrix.
+
+### 7.2 RBF kernel, polynomial kernel, etc.
+
+Common kernels used in kernel PCA include the RBF (Gaussian) kernel <Latex text="\( \exp(-\|x_i - x_j\|^2 / (2\sigma^2))\)"/>, polynomial kernels <Latex text="\((\alpha \, x_i^\top x_j + c)^p\)"/>, and others. By choosing different kernels, one can extract nonlinear structure that is not captured by standard linear PCA.
+
+### 7.3 Computational aspects
+
+Kernel PCA requires storing and decomposing an <Latex text="\(N \times N\)"/> kernel matrix, which becomes expensive for large <Latex text="\(N\)"/>. This is in sharp contrast to linear PCA, where one might only deal with a <Latex text="\(d \times d\)"/> matrix. Research in approximate kernel methods has led to approaches such as the Nyström method to reduce the computational burden.
+
+### 7.4 Limitations of kernel PCA
+
+Although kernel PCA can reveal nonlinear structures, it lacks some of the interpretability of linear PCA, since the resulting components exist in a high-dimensional feature space defined implicitly by the kernel. Also, out-of-sample extension (projecting new data points onto the learned components) becomes more complex and typically requires storing or recalculating kernel values with training points.
+
+## 8. Advanced transformations and related methods
+
+Though PCA is a powerful technique, it is by no means the only method. Depending on the structure of the data and the goals of the analysis, other algorithms may be more appropriate.
+
+### 8.1 LDA (Linear Discriminant Analysis)
+
+Linear Discriminant Analysis (LDA) is sometimes viewed in the same category as PCA, but it optimizes a fundamentally different criterion: LDA seeks to maximize class separation for labeled data. If the dataset is supervised and the objective is classification, LDA can provide a subspace that makes classes more linearly separable, whereas PCA is purely unsupervised and does not consider class labels.
+
+### 8.2 Factor analysis
+
+In factor analysis, the data are modeled as a linear combination of hidden factors plus noise. Parameters are estimated to capture covariances in a way that might be more interpretable in certain social sciences or psychological contexts, although in practice there is some conceptual overlap with PCA.
+
+### 8.3 ICA (Independent Component Analysis)
+
+Independent Component Analysis (ICA) is designed to separate mixed signals into statistically independent components. It is especially effective in blind source separation. For example, in the "cocktail party problem" scenario, ICA can separate multiple voices recorded by multiple microphones. Unlike PCA, which focuses on maximizing variance in orthogonal directions, ICA focuses on maximizing non-Gaussianity or measures of statistical independence.
+
+### 8.4 Manifold learning approaches
+
+Algorithms such as isomap, locally linear embedding (LLE), and Laplacian eigenmaps attempt to learn low-dimensional manifolds while preserving local geometry. If data truly lie near a complex manifold, these methods can succeed where linear PCA fails to capture curved structures. However, they can be more fragile, sensitive to hyperparameters (like neighborhood sizes), and challenging to scale.
+
+### 8.5 t-SNE
+
+Developed by Maaten & Hinton (JMLR, 2008), t-Distributed Stochastic Neighbor Embedding (t-SNE) is a nonlinear dimensionality reduction method especially popular for visualizing high-dimensional data in 2D or 3D. t-SNE places a strong emphasis on preserving local neighborhoods, often producing visually meaningful clusters. Its main drawback is that distances in the low-dimensional projection can be somewhat distorted between clusters, and the method can be quite computationally heavy for large datasets. Nonetheless, t-SNE remains widely used in biology, NLP, and other fields for producing intuitive scatter plot visualizations.
+
+### 8.6 UMAP
+
+UMAP (Uniform Manifold Approximation and Projection) is conceptually related to t-SNE but claims certain theoretical guarantees grounded in Riemannian geometry and fuzzy simplicial sets. It tends to be faster than t-SNE and can sometimes better preserve global structure.
+
+### 8.7 Autoencoders for dimensionality reduction
+
+Neural network-based autoencoders can perform nonlinear dimensionality reduction. An encoder network compresses data to a latent representation with reduced dimension, while a decoder network reconstructs the original data from that latent space. Techniques like variational autoencoders (VAEs) extend this approach into a probabilistic realm. Autoencoders can produce embeddings that capture complex variance not easily captured in standard PCA.
+
+## 9. Data visualization with PCA
+
+PCA provides a convenient tool for visualization if we limit ourselves to two or three principal components.
+
+### 9.1 2D and 3D scatter plots
+
+By projecting each <Latex text="\(x_i\)"/> onto the first two principal components, we obtain a 2D scatter plot that frequently reveals clusters or patterns in the data. If the data do not separate clearly in the first two components, exploring combinations like <Latex text="\((v_1, v_3)\)"/> or <Latex text="\((v_2, v_3)\)"/> might bring additional structures to light.
+
+### 9.2 Color-coded PCA
+
+When the dataset comes with categorical labels, one can color the scatter plot points according to class membership. This approach provides a quick check of whether classes are separable in the first few components. Similarly, continuous variables (e.g., a measured response) can be shown through color gradients on the PCA plane to visualize correlation with principal component directions.
+
+### 9.3 Synergy with cluster analysis
+
+Sometimes, applying PCA as a pre-processing step followed by clustering (e.g., k-means) can yield simpler cluster boundaries or more intuitive groupings in fewer dimensions. Because PCA can remove noise and reduce complexity, clustering in a lower-dimensional subspace is often more stable.  
+
+<Image alt="Cluster example" path="" caption="Clustering on PCA-reduced data can unveil simplified separation of points." zoom="false" />
+
+### 9.4 Advanced EDA with PCA
+
+In complex datasets, especially in fields like genomics, financial time series, or image-based data, plotting the first few principal components can yield significant insights. For instance, outliers often stand out immediately, or subpopulations might form distinct clusters. In these fields, PCA is frequently used for quick exploratory data analysis before diving into more specialized or nonlinear dimension reduction strategies.
+
+## 10. Real-world applications and concluding remarks
+
+### 10.1 High-throughput genomics data
+
+PCA remains indispensable in modern computational biology. When dealing with thousands or even hundreds of thousands of measured variables (e.g., gene expression, single-cell RNA-seq data), PCA helps compress the data, remove noise, and highlight major sources of variation, such as different cell types or technical confounders like batch effects.
+
+### 10.2 Image compression
+
+When images are vectorized into high-dimensional pixel spaces, PCA can reduce redundancy by discovering principal components that describe major patterns (edges, color gradients, etc.). One can store an image using fewer components and then reconstruct an approximation with acceptable fidelity. Although more specialized methods like JPEG or wavelets are used in practice, PCA-based compression is valuable for teaching the fundamentals of transform-based data compression.
+
+### 10.3 Noise reduction
+
+Applying PCA to noisy signals often allows one to discard components corresponding to small eigenvalues (which often align with noise) and preserve the main structure. This principle can apply in signal processing, image denoising, or sensor fusion tasks, leading to a simpler, denoised version of the data.
+
+### 10.4 Finance time series
+
+In finance, large covariance matrices are common when analyzing the co-movements of hundreds of assets. PCA can be used to identify market factors: the first principal component often corresponds to an overall "market" movement, while subsequent components might capture sector-specific trends or other structural factors. This can guide portfolio construction or risk management by highlighting systematic vs. idiosyncratic risk components.
+
+### 10.5 Concluding remarks
+
+Despite the proliferation of sophisticated manifold learning techniques and deep-learning-based compressions, PCA endures as the go-to reference method for dimensionality reduction. Its geometric clarity, ease of calculation, and interpretability in terms of variance explained make it a firmly entrenched staple of data science educational curricula and real-world pipelines. It also forms the basis for many expansions such as kernel PCA, incremental methods for large-scale problems, and preprocessing for advanced algorithms. Understanding PCA thoroughly — from its linear algebraic underpinnings to practical tips for usage — remains indispensable for any machine learning practitioner or researcher aiming to master data representation and compression.
+
+Such justification underscores why, more than a century after its progenitor's earliest insights, PCA remains an essential technique in the data science toolkit. When carefully deployed, it reveals hidden structure in high-dimensional datasets, aids in creating more efficient and robust models, and facilitates domain-specific insights that might otherwise remain obscured in a cloud of raw features.

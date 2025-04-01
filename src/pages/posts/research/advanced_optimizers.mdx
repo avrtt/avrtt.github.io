@@ -1,0 +1,547 @@
+---
+index: 32
+indexCourse: 23
+indexFavorites:
+title: "Advanced optimizers"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Advanced optimizers"
+courseCategoryName: "Mathematical optimization"
+desc: "Tricky spaces, tricky methods"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "05.02.2023"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 1
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/advanced_optimizers.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/advanced_optimizers"
+slug: "/research/advanced_optimizers"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+{/*
+
+[https://www.youtube.com/watch?v=TudQZtgpoHk](https://www.youtube.com/watch?v=TudQZtgpoHk)
+[https://ml-handbook.ru/chapters/optimization/proximal](https://ml-handbook.ru/chapters/optimization/proximal)
+[https://ml-handbook.ru/chapters/optimization/second_order](https://ml-handbook.ru/chapters/optimization/second_order)
+[https://keras.io/api/optimizers/](https://keras.io/api/optimizers/)
+[https://www.youtube.com/watch?v=CI7_ZlR6rtU&list=PLA0M1Bcd0w8zxDIDOTQHsX68MCDOAJDtj&index=10](https://www.youtube.com/watch?v=lRWiWwS11Yo&list=PLA0M1Bcd0w8zxDIDOTQHsX68MCDOAJDtj&index=10)
+[https://www.youtube.com/watch?v=d_WZOngsTO0&list=PLA0M1Bcd0w8yv0XGiF1wjerjSZVSrYbjh&index=12](https://www.youtube.com/watch?v=d_WZOngsTO0&list=PLA0M1Bcd0w8yv0XGiF1wjerjSZVSrYbjh&index=12)
+Курс МО пригодится
+Mathematics for ML: глава 7 (7.2 - 7.4)
+[https://mml-book.github.io/book/mml-book.pdf](https://mml-book.github.io/book/mml-book.pdf)
+[12. Optimization Algorithms](https://d2l.ai/chapter_optimization/index.html)
+- [12.1. Optimization and Deep Learning](https://d2l.ai/chapter_optimization/optimization-intro.html)
+- [12.2. Convexity](https://d2l.ai/chapter_optimization/convexity.html)
+- [12.3. Gradient Descent](https://d2l.ai/chapter_optimization/gd.html)
+- [12.4. Stochastic Gradient Descent](https://d2l.ai/chapter_optimization/sgd.html)
+- [12.5. Minibatch Stochastic Gradient Descent](https://d2l.ai/chapter_optimization/minibatch-sgd.html)
+- [12.6. Momentum](https://d2l.ai/chapter_optimization/momentum.html)
+- [12.7. Adagrad](https://d2l.ai/chapter_optimization/adagrad.html)
+- [12.8. RMSProp](https://d2l.ai/chapter_optimization/rmsprop.html)
+- [12.9. Adadelta](https://d2l.ai/chapter_optimization/adadelta.html)
+- [12.10. Adam](https://d2l.ai/chapter_optimization/adam.html)
+- [12.11. Learning Rate Scheduling](https://d2l.ai/chapter_optimization/lr-scheduler.html)
+How to change the learning rate dynamically during training? (см. ML-канал)
+
+*/}
+
+
+{/*
+
+1. Introduction  
+   Importance of going beyond basic optimization techniques.  
+2. Motivations for advanced optimization approaches  
+   Dealing with complex loss landscapes. Overcoming slow convergence and saddle points. Handling large-scale datasets and high-dimensional problems.
+3. Gradient descent modifications  
+   3.1 Momentum-based methods  
+   Classical momentum. Nesterov accelerated gradient.  
+   3.2 Adaptive gradient methods  
+   Adagrad and its drawbacks. Rmsprop for adapting learning rates. Adam and AdamW for improved convergence.  
+   3.3 Second-order methods  
+   Newton's method and quasi-Newton techniques. Practical considerations and computational costs.
+4. Different classes and types of optimization algorithms  
+   4.1 Stochastic vs. batch optimization  
+   Trade-offs in convergence and stability. Practical tips for mini-batch sizing.
+   4.2 Gradient-based vs. gradient-free approaches  
+   Derivative-free optimizers (e.g., evolutionary strategies). When and why to use gradient-free methods.
+   4.3 Proximal and coordinate-based optimization  
+   Applications in regularized models. Handling sparse and structured constraints.
+5. Learning rate scheduler  
+   5.1 Fixed vs. adaptive schedules  
+   Step-based decay. Exponential decay.  
+   5.2 Cyclical and warm restarts  
+   Cyclical learning rates. Stochastic gradient descent with restarts.  
+   5.3 Advanced scheduling techniques  
+   Cosine annealing. Hyperparameter tuning for scheduling.  
+6. Implementations
+
+*/}
+
+
+In the area of machine learning, model performance and training efficiency often hinge critically on the choice of optimization techniques used to update model parameters. While classical methods like (batch) <Highlight>gradient descent</Highlight> remain foundational, more advanced strategies have become indispensable for tackling the demands of modern data science and deep learning, especially as model architectures grow in size, datasets grow in scale, and loss landscapes become more intricate. This article embarks on a comprehensive journey through a wide spectrum of "advanced optimizers," diving far beyond the plain-vanilla gradient descent. We will explore how and why these methods help in overcoming slow convergence, circumventing problematic saddle points, taming high-dimensional problems, and contending with large-scale datasets.
+
+Our overall aim is not solely to provide a catalog of advanced optimizers. We also plan to discuss how these methods connect to fundamental mathematical concepts — from momentum-based acceleration that draws on physics analogies, to coordinate-based optimization that shares themes with modern distributed computing, and second-order methods reminiscent of classical Newton-like updates. Where relevant, we will highlight the interplay between these methods and the loss-landscape geometry that arises in deep learning.
+
+We assume readers are well-versed in basic linear algebra, calculus, probability, and have hands-on experience training machine learning models. Hence, we will jump quickly into advanced technical details, referencing both older classical approaches (e.g., quasi-Newton methods) and the newest research directions (e.g., more refined Adam variants, advanced scheduling, and gradient-free strategies for specialized tasks).
+
+## 1. Introduction
+
+Contemporary machine learning systems, especially deep neural networks, rely heavily on iterative algorithms to approximate the minimization of a chosen loss function. Traditional batch gradient descent, though conceptually straightforward, can become prohibitively expensive on large datasets. Moreover, naive updates can fail to adapt to the nuanced geometry of nonconvex, high-dimensional loss surfaces typical of modern architectures (e.g., Transformers with billions of parameters). These limitations catalyzed the development of more advanced techniques:
+
+- **Momentum-based approaches** accelerate convergence by incorporating velocity terms in updates, effectively smoothing out noisy gradient directions.
+- **Adaptive methods** adjust learning rates on a per-parameter basis, greatly improving stability and speed in practice.
+- **Second-order methods** consider curvature information, yielding more direct steps but often at a significant computational or memory cost.
+- **Gradient-free optimization** can be vital when gradients are unavailable, unstable, or extremely noisy, focusing instead on direct function evaluations.
+
+All these techniques can be combined with sophisticated **learning rate scheduling** strategies, ensuring that the step sizes remain neither too large nor too small, but carefully modulated through training.
+
+Understanding these advanced methods is critical for practitioners who aim to train large-scale deep models effectively. This knowledge also provides a gateway to reading state-of-the-art research — many of the newest results in conferences like NeurIPS or ICML revolve around nuanced improvements to existing optimizers or specialized variants for specific tasks.
+
+
+## 2. Motivations for advanced optimization approaches
+
+While basic gradient descent remains a simple and instructive foundation, it rarely suffices in practice. Here are some key motivations for going beyond that:
+
+### 2.1 Dealing with complex loss landscapes
+
+Deep neural networks often exhibit highly nonconvex landscapes, studded with:
+- **Local minima** and **saddle points**, though many local minima can be surprisingly acceptable for large models.
+- **Flat regions** or plateau-like structures that slow naive gradient updates to a crawl.
+- **Sharp and narrow ravines** that make naive gradient descent bounce across the ravine walls.
+
+Advanced optimizers combat these structural challenges by smoothing the update trajectory (momentum) or re-scaling coordinate directions adaptively (Adagrad, RMSProp, Adam), thereby forging more stable and effective paths toward regions of low training error.
+
+### 2.2 Overcoming slow convergence and saddle points
+
+In classical gradient descent, updates can stall near saddle points (where partial derivatives vanish but the point is not a local minimum). Momentum-based methods, for instance, can generate sufficient "inertia" to escape these plateaus or saddles more reliably. Furthermore, advanced methods can mitigate the zigzagging phenomenon in narrow valleys, speeding up training.
+
+### 2.3 Handling large-scale datasets and high-dimensional problems
+
+In high-dimensional parameter spaces, coordinate-wise scaling of updates often becomes critical. For instance, certain neurons, filters, or layers might receive systematically larger or smaller gradients. Adaptive gradient methods like RMSProp or Adam help by normalizing the effective step sizes across these distinct directions. This coordinate-wise adaptivity proves especially beneficial in very deep networks, where gradients in some layers can vanish or explode without careful control.
+
+Likewise, **stochastic** or **mini-batch** approaches reduce the computational burden per update from <Latex text=" \( \mathcal{O}(n) \)"/> (full dataset) to <Latex text=" \( \mathcal{O}(1) \)"/> or <Latex text=" \( \mathcal{O}(b) \)"/>. The noisy gradient estimates can also help escape certain local minima, though noise management (by controlling batch size or using momentum) is essential for stable training.
+
+
+## 3. Gradient descent modifications
+
+Since deep learning's standard approach remains some variant of gradient-based optimization, researchers have expended much effort in refining gradient descent to make it more stable, faster, or more adaptive. Here, we discuss three main categories of modifications:
+
+### 3.1 Momentum-based methods
+
+The story of momentum-based methods starts with the observation that naive stochastic gradient descent (SGD) can produce a noisy, slow trajectory in certain directions. Momentum methods incorporate a history of past gradients into the current update, akin to a "velocity" term from physics.
+
+#### 3.1.1 Classical momentum
+
+The classical momentum approach modifies the gradient-based update:
+
+<Latex text="\[
+\mathbf{v}_t = \beta \mathbf{v}_{t-1} + \nabla f(\mathbf{x}_t),
+\]"/>
+
+<Latex text="\[
+\mathbf{x}_{t+1} = \mathbf{x}_t - \eta \mathbf{v}_t,
+\]"/>
+
+Here,
+- <Latex text="\( \mathbf{v}_t \)"/> is the velocity (the exponentially averaged past gradients),
+- <Latex text="\( \beta \)"/> is the momentum parameter (often around 0.9),
+- <Latex text="\( \eta \)"/> is the base learning rate.
+
+Over multiple steps, the updates accumulate in the velocity vector, enabling the optimizer to keep moving in consistent gradient directions but dampening oscillations in directions with conflicting gradient signs. This approach can dramatically reduce convergence time in ravine-like regions.
+
+#### 3.1.2 Nesterov accelerated gradient
+
+Originally proposed by Yurii Nesterov, this variant attempts to refine momentum by using a "lookahead" gradient:
+
+<Latex text="\[
+\mathbf{v}_{t+1} = \beta \mathbf{v}_t + \nabla f(\mathbf{x}_t - \eta \beta \mathbf{v}_t),
+\]"/>
+
+<Latex text="\[
+\mathbf{x}_{t+1} = \mathbf{x}_t - \eta \mathbf{v}_{t+1}.
+\]"/>
+
+This means the momentum is applied to a point slightly ahead in the direction of velocity, which can yield more accurate gradient corrections, leading in theory to improved convergence rates. In practice, Nesterov momentum often outperforms classical momentum, though the differences can be subtle.
+
+##### Code snippet for momentum-based methods
+
+Below is a minimal example in Python illustrating classical momentum in a training loop context:
+
+<Code text={`
+import numpy as np
+
+def sgd_momentum(params, grads, velocity, lr=0.01, momentum=0.9):
+    # params, grads, velocity are lists of same length
+    # param[i], grad[i], velocity[i] are np arrays
+    for i in range(len(params)):
+        velocity[i] = momentum * velocity[i] + grads[i]
+        params[i] -= lr * velocity[i]
+
+# Example usage in a training step:
+# velocity = [np.zeros_like(p) for p in params]
+# sgd_momentum(params, grads, velocity, lr=0.01, momentum=0.9)
+`}/>
+
+Users can adapt it to frameworks like PyTorch, TensorFlow, or JAX by substituting the arrays with tensors. Most modern frameworks, though, already have momentum built into their SGD implementations.
+
+
+### 3.2 Adaptive gradient methods
+
+Adaptive gradient algorithms aim to moderate or amplify learning rates on a **per-parameter** basis, guided by estimates of historical gradient magnitudes. This approach is indispensable for dealing with coordinates of widely varying scales or frequently occurring vs. infrequently occurring features.
+
+#### 3.2.1 Adagrad and its drawbacks
+
+**Adagrad** was among the earliest popular adaptively scaled methods. It accumulates the squares of partial derivatives in each dimension:
+
+<Latex text="\[
+\mathbf{s}_t \leftarrow \mathbf{s}_{t-1} + \nabla f(\mathbf{x}_t)^2,
+\]"/>
+
+<Latex text="\[
+\mathbf{x}_{t+1} = \mathbf{x}_t - \eta \frac{\nabla f(\mathbf{x}_t)}{\sqrt{\mathbf{s}_t} + \epsilon},
+\]"/>
+
+with <Latex text="\( \epsilon \)"/> a small constant to avoid division by zero. By dividing by <Latex text="\( \sqrt{\mathbf{s}_t} \)"/>, features or parameters that have historically had large gradients automatically get smaller steps, while coordinates that rarely get updates have larger relative steps.
+
+Drawbacks:
+- **Monotonically decreasing** effective learning rates can become extremely small, stalling further progress.
+- For nonconvex, complicated tasks like deep learning, the quick decay in step sizes can be detrimental once near an optimum region.
+
+#### 3.2.2 RMSProp for decaying averages
+
+To mitigate Adagrad's unbounded accumulation, **RMSProp** uses an exponential moving average of squared gradients:
+
+<Latex text="\[
+\mathbf{s}_t = \gamma \mathbf{s}_{t-1} + (1 - \gamma) \nabla f(\mathbf{x}_t)^2,
+\]"/>
+
+<Latex text="\[
+\mathbf{x}_{t+1} = \mathbf{x}_t - \eta \frac{\nabla f(\mathbf{x}_t)}{\sqrt{\mathbf{s}_t} + \epsilon}.
+\]"/>
+
+Here, <Latex text="\( \gamma \)"/> (often around 0.9) dictates how quickly the historical gradients fade. RMSProp remains a go-to optimizer for many architectures, though it is often overshadowed by Adam in mainstream deep learning practice.
+
+#### 3.2.3 Adam and AdamW for efficient momentum + RMSProp
+
+**Adam** ("Adaptive Moment Estimation") consolidates the ideas of RMSProp with momentum:
+
+<Latex text="\[
+\mathbf{v}_t = \beta_1 \mathbf{v}_{t-1} + (1 - \beta_1) \nabla f(\mathbf{x}_t),
+\]"/>
+
+<Latex text="\[
+\mathbf{s}_t = \beta_2 \mathbf{s}_{t-1} + (1 - \beta_2) \nabla f(\mathbf{x}_t)^2,
+\]"/>
+
+with bias corrections:
+
+<Latex text="\[
+\hat{\mathbf{v}}_t = \frac{\mathbf{v}_t}{1 - \beta_1^t}, \quad \hat{\mathbf{s}}_t = \frac{\mathbf{s}_t}{1 - \beta_2^t},
+\]"/>
+
+and updates:
+
+<Latex text="\[
+\mathbf{x}_{t+1} = \mathbf{x}_t - \eta \frac{\hat{\mathbf{v}}_t}{\sqrt{\hat{\mathbf{s}}_t} + \epsilon}.
+\]"/>
+
+Adam's popularity in deep learning stems from:
+1. **Low memory footprint**: only requires storing the first and second moment estimates.
+2. **Good empirical default**: typically <Latex text="\( \beta_1=0.9, \beta_2=0.999, \epsilon=10^{-8} \)"/> provide robust results.
+3. **Momentum-based smoothing** plus **adaptive scaling** unify the benefits of RMSProp and momentum.
+
+**AdamW** modifies Adam's approach to weight decay by decoupling the L2 penalty from the gradient-based scaling:
+
+<Latex text="\[
+\mathbf{x}_{t+1} = \mathbf{x}_t - \eta \left( \frac{\hat{\mathbf{v}}_t}{\sqrt{\hat{\mathbf{s}}_t} + \epsilon} + \lambda \mathbf{x}_t \right),
+\]"/>
+
+which can slightly improve generalization. Many large-scale state-of-the-art models now adopt AdamW as the default.
+
+##### Example code for Adam in PyTorch
+
+<Code text={`
+import torch
+
+# Suppose we have a model and a loss function
+model = ...
+loss_fn = ...
+
+optimizer = torch.optim.Adam(model.parameters(), lr=1e-3, betas=(0.9, 0.999), eps=1e-8)
+
+for epoch in range(num_epochs):
+    for X, y in data_loader:  # data_loader yields mini-batches
+        optimizer.zero_grad()
+        predictions = model(X)
+        loss = loss_fn(predictions, y)
+        loss.backward()
+        optimizer.step()
+`}/>
+
+Because of Adam's reliability, it is frequently recommended as a starting point for training new models. The main hyperparameters (<Latex text="\( \beta_1, \beta_2 \)"/>, and the learning rate) can be tuned, but often the defaults suffice as a strong baseline for many tasks.
+
+
+### 3.3 Second-order methods
+
+Unlike first-order methods that rely only on gradients, second-order approaches incorporate information from the Hessian (the matrix of second derivatives). This can yield more direct updates, effectively "preconditioning" the local geometry. However, for large problems (millions or billions of parameters), computing or storing the full Hessian is impractical. Hence, second-order methods in deep learning are less commonly used.
+
+#### 3.3.1 Newton's method
+
+Newton's method updates parameters with:
+
+<Latex text="\[
+\mathbf{x}_{t+1} = \mathbf{x}_t - \left(\nabla^2 f(\mathbf{x}_t)\right)^{-1} \nabla f(\mathbf{x}_t).
+\]"/>
+
+While it can converge extremely quickly near local minima (exhibiting quadratic convergence in convex problems), it suffers from:
+1. **Prohibitively large Hessian**: in dimension <Latex text="\( d \)"/> (where <Latex text="\( d \)"/> can be up to billions in deep nets), <Latex text="\( \nabla^2 f(\mathbf{x}_t) \)"/> is a <Latex text="\( d \times d \)"/> matrix.
+2. **Costly matrix inversion**: even storing and inverting a <Latex text="\( 10^4 \times 10^4 \)"/> Hessian is enormous.
+
+Hence, pure Newton's method is rarely feasible for deep learning.
+
+#### 3.3.2 Quasi-Newton techniques
+
+Quasi-Newton methods approximate the Hessian or its inverse on the fly (e.g., BFGS or L-BFGS). They reduce memory usage significantly by storing only a limited set of vectors representing curvature information. L-BFGS (Limited-memory BFGS) can be used for moderate-scale tasks, but still rarely competes with simpler first-order methods in real-world deep learning, owing to complicated, nonconvex surfaces and large parameter counts. Nonetheless, in smaller specialized tasks (e.g., moderate-scale logistic regression, some reinforcement learning setups), L-BFGS can converge faster than naive first-order updates.
+
+
+## 4. Different classes and types of optimization algorithms
+
+Beyond mainstream gradient-based techniques, it pays to categorize optimizers more broadly. This helps us see how certain advanced methods can combine seemingly disparate elements (e.g., coordinate-based searching with momentum, or gradient-based searching with evolutionary heuristics).
+
+### 4.1 Stochastic vs. batch optimization
+
+- **Batch** (or full) gradient descent:
+  - Uses the entire dataset to compute the exact gradient at each step.
+  - The cost per update is <Latex text="\( \mathcal{O}(n) \)"/>, where <Latex text="\( n \)"/> is dataset size.
+  - Converges smoothly in convex settings, but can be prohibitively expensive for large <Latex text="\( n \)"/>.
+- **Stochastic** gradient descent (SGD):
+  - Uses a single or a small batch <Latex text="\( b \)"/> of samples to compute a noisy gradient.
+  - The cost per update is <Latex text="\( \mathcal{O}(b) \)"/>, with <Latex text="\( b=1 \)"/> in pure SGD.
+  - Typically <Latex text="\( b \)"/> is chosen between 32 and a few thousands in practice (mini-batch).
+- **Trade-offs**:
+  - Larger batches reduce gradient variance but increase computational cost per step.
+  - Smaller batches are more "noisy" but can handle huge data.
+
+### 4.2 Gradient-based vs. gradient-free approaches
+
+Despite being the mainstream workhorse, gradient-based optimization can fail in certain specialized scenarios:
+
+- **Model-based policy optimization** in reinforcement learning: the environment might provide reward signals but no direct gradient.
+- **Hyperparameter optimization** or neural architecture search: discrete or structured hyperparameter spaces not amenable to direct gradients.
+- **Black-box optimization**: only function values (or approximate metrics) are available, not partial derivatives.
+
+In such cases, **gradient-free** or **derivative-free** methods are used:
+- **Evolutionary algorithms** (genetic algorithms, CMA-ES)
+- **Bayesian optimization** (Gaussian process or TPE-based)
+- **Finite-difference approximations** to approximate gradients, but potentially expensive.
+
+Although often outclassed by gradient-based methods in standard supervised learning, gradient-free methods remain relevant for meta-learning or architecture search, bridging the gap where derivatives are hard to define or too noisy to be reliable.
+
+### 4.3 Proximal and coordinate-based optimization
+
+Another interesting class of methods revolves around regularization or "priors" on parameters and efficient ways to handle them:
+
+- **Proximal methods**: "Proximal operators" generalize gradient steps to handle possibly non-differentiable terms like <Latex text="\( \ell_1 \)"/> norms. The proximal step effectively solves a small subproblem involving a penalty or constraint.
+  
+  <Latex text="\[
+  \mathbf{x}_{t+1} = \mathrm{argmin}_\mathbf{z} \; \left\{ \langle \nabla f(\mathbf{x}_t), \mathbf{z}-\mathbf{x}_t \rangle
+  + \frac{1}{2\eta} \|\mathbf{z} - \mathbf{x}_t\|^2 + \lambda \, g(\mathbf{z}) \right\}.
+  \]"/>
+
+  For many penalties <Latex text="\( g(\mathbf{x}) \)"/> (like <Latex text="\( \|\mathbf{x}\|_1 \)"/>, group-lasso norms, etc.), the solution can be computed in closed form (soft-thresholding for <Latex text="\( \ell_1 \)"/>).
+
+- **Coordinate-based methods**: Instead of updating all coordinates at once, these methods update subsets or individual coordinates in a round-robin or random fashion. They can exploit sparse or structured constraints effectively (e.g., large-scale linear models with <Latex text="\( \ell_1 \)"/> penalty). Examples include coordinate descent or block coordinate descent.
+
+These methods can be combined with advanced momentum or scheduling. However, for most large-scale deep learning tasks, classical implementations of coordinate descent are overshadowed by better parallelizable mini-batch SGD. That said, proximal gradient and similar concepts still appear in research contexts, e.g., handling structured sparsity or specialized constraints.
+
+
+## 5. Learning rate scheduler
+
+A crucial but sometimes overlooked ingredient for effective optimization is **learning rate scheduling** (a.k.a. step size scheduling). The learning rate controls how large of an update is made at each iteration. If it's too high, training can diverge or bounce chaotically. If it's too low, training can stagnate. Various scheduling strategies systematically reduce (or modulate) the learning rate over time.
+
+### 5.1 Fixed vs. adaptive schedules
+
+A **fixed** learning rate <Latex text="\( \eta \)"/> is rarely used in large-scale training, except for early or experimental tries. Instead, we can define a function <Latex text="\( \eta(t) \)"/> that reduces <Latex text="\( \eta \)"/> after certain epochs or steps:
+
+- **Step-based decay**:  
+  <Latex text="\( \eta(t) = \eta_0 \times \gamma^{\lfloor t / \tau \rfloor} \)"/>  
+  Every <Latex text="\( \tau \)"/> steps, the rate decays by factor <Latex text="\( \gamma < 1 \)"/>.  
+- **Exponential decay**:  
+  <Latex text="\( \eta(t) = \eta_0 \exp(-\lambda t) \)"/>.
+- **Polynomial or inverse-square-root decay**:  
+  <Latex text="\( \eta(t) = \frac{\eta_0}{(1 + \alpha t)^\beta} \)"/>. Often <Latex text="\( \beta = 0.5 \)"/> works well in practice.
+
+Each strategy can be coded easily, for instance in PyTorch or TensorFlow, with built-in schedulers:
+
+<Code text={`
+import torch
+
+optimizer = torch.optim.SGD(model.parameters(), lr=0.1)
+scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=30, gamma=0.1)
+
+for epoch in range(num_epochs):
+    train_one_epoch(...)
+    scheduler.step()
+`}/>
+
+### 5.2 Cyclical and warm restarts
+
+Despite general practice that the learning rate should gently decrease, some advanced heuristics let it occasionally increase or "restart." This can help the model traverse local minima or saddle points more efficiently.
+
+- **Cyclical learning rates**: <Latex text="\( \eta(t) \)"/> cycles up and down (usually within a range <Latex text=" \([ \eta_{\min}, \eta_{\max}]\)"/>) in a periodic manner. Proposed by Leslie Smith, it can yield faster convergence or help escape local minima.
+- **Stochastic gradient descent with restarts (SGDR)**: at specified intervals, the learning rate "resets" to a higher value. The model effectively restarts training from a new vantage, often improving final accuracy or generalization.
+
+### 5.3 Advanced scheduling techniques
+
+- **Cosine annealing**: smoothly decays <Latex text="\( \eta \)"/> following a half-cosine schedule, repeated in restarts. Gains popularity in many computer vision training pipelines.
+  
+  <Latex text="\[
+  \eta(t) = \eta_{\min} + \frac{\eta_{\max} - \eta_{\min}}{2}\left[1 + \cos\left(\frac{\pi t}{T}\right)\right].
+  \]"/>
+
+- **Hyperparameter search for scheduling**: automatically searching or learning the best schedule, e.g., using Bayesian optimization or random search. Some sophisticated approaches treat the schedule itself as a policy to be optimized.
+
+In practice, users often experiment with step-based or piecewise schedules, or adopt well-tested defaults (e.g., a piecewise schedule that decays by 10 every 30 epochs in classical ResNet training). Meanwhile, advanced cyclical or warm-restart methods can yield small gains or improved final accuracy, especially in large-scale tasks where precise fine-tuning of hyperparameters is feasible.
+
+
+## 6. Implementations
+
+Having explored theoretical and conceptual details of advanced optimizers, let's illustrate some straightforward code examples. We focus on a typical PyTorch-like pseudocode (though the logic is easily replicated in other frameworks). We assume a model, a data loader, and a standard training loop. The difference lies in how we instantiate and step through the optimizer.
+
+### 6.1 Momentum-based SGD
+
+<Code text={`
+import torch
+
+model = ...
+loss_fn = ...
+
+optimizer = torch.optim.SGD(model.parameters(), lr=0.01, momentum=0.9)
+
+for epoch in range(num_epochs):
+    for X, y in data_loader:
+        optimizer.zero_grad()
+        y_hat = model(X)
+        loss = loss_fn(y_hat, y)
+        loss.backward()
+        optimizer.step()
+`}/>
+
+Here, the "momentum=0.9" argument implements classical momentum updates behind the scenes. If we replace it with "nesterov=True," it performs Nesterov accelerated gradient.
+
+### 6.2 Adam with weight decay (AdamW)
+
+<Code text={`
+import torch
+
+model = ...
+loss_fn = ...
+
+optimizer = torch.optim.AdamW(model.parameters(), lr=1e-3, weight_decay=1e-4)
+
+for epoch in range(num_epochs):
+    for X, y in data_loader:
+        optimizer.zero_grad()
+        loss = loss_fn(model(X), y)
+        loss.backward()
+        optimizer.step()
+`}/>
+
+This snippet shows AdamW in action, with both an initial learning rate and a weight decay parameter. Weight decay is a commonly used technique to mitigate overfitting (especially beneficial for large neural nets).
+
+### 6.3 Learning rate scheduler usage
+
+Here is a minimal snippet combining an SGD optimizer with a step-based scheduler in PyTorch:
+
+<Code text={`
+import torch
+
+model = ...
+loss_fn = ...
+
+optimizer = torch.optim.SGD(model.parameters(), lr=0.1)
+scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.1)
+
+for epoch in range(num_epochs):
+    for X, y in data_loader:
+        optimizer.zero_grad()
+        out = model(X)
+        loss = loss_fn(out, y)
+        loss.backward()
+        optimizer.step()
+    # After each epoch
+    scheduler.step()
+`}/>
+
+The learning rate will be decayed by a factor of 0.1 every 10 epochs. Alternatively, for cyclical schedules or cosine annealing, one can use other built-in classes in `torch.optim.lr_scheduler`.
+
+### 6.4 Gradient-free example (simplified)
+
+Though not as common in daily deep learning workflows, the following minimal snippet exemplifies a simple *random search* gradient-free approach for parameter tuning:
+
+<Code text={`
+import numpy as np
+
+def random_search(objective_fn, param_dim, num_iter=1000):
+    best_params = np.random.randn(param_dim)
+    best_score = objective_fn(best_params)
+    for i in range(num_iter):
+        candidate = np.random.randn(param_dim)
+        score = objective_fn(candidate)
+        if score < best_score:
+            best_params, best_score = candidate, score
+    return best_params, best_score
+`}/>
+
+Of course, advanced gradient-free optimizers (e.g., CMA-ES, Bayesian optimization) are more sophisticated, employing clever strategies to sample candidate solutions and model the search space.
+
+---
+
+<Image alt="Visualization of optimization in a 2D non-convex landscape" path="" caption="Conceptual representation of an advanced optimizer navigating a 2D non-convex surface." zoom="false" />
+
+In practice, as networks and tasks scale up, advanced optimizers with well-chosen schedules are crucial for stable, efficient training. A single procedure might combine mini-batch momentum-based updates, adaptive scaling, and cyclical LR schedules. The synergy among these methods consistently yields improved training times and final model performance.
+
+
+## Conclusion
+
+Advanced optimization methods are indispensable for training modern, large-scale machine learning and deep neural network models. Starting with early momentum-based modifications to gradient descent, the field has evolved to incorporate powerful adaptive algorithms like Adagrad, RMSProp, Adam, and AdamW. These methods effectively handle various challenges in high-dimensional, nonconvex landscapes, significantly reducing training times compared to naive implementations of (stochastic) gradient descent.
+
+Moreover, research in second-order or approximate second-order methods continues to refine possibilities for accelerating convergence, albeit at significant computational cost in typical deep learning contexts. In situations without reliable gradients, gradient-free methods remain essential, albeit often overshadowed by first-order methods in mainstream deep learning tasks.
+
+Crucially, all these optimizers benefit from suitable learning rate scheduling. Whether via step-based decays, cyclical schedules, or advanced annealing techniques, controlling the step size through training can mean the difference between failing to converge and efficiently reaching near-optimal solutions.
+
+In summary, advanced optimizers serve as the backbone of successful deep learning practice, bridging fundamental algorithmic ideas (momentum, second-order approximations, adaptivity) with the realities of massive data and high-dimensional parameter spaces. Armed with these tools, machine learning practitioners can better navigate the often rugged terrain of neural network loss surfaces, ultimately unlocking higher performance with less computational cost.

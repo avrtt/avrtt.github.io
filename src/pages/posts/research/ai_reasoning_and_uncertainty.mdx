@@ -1,0 +1,792 @@
+---
+index: 130
+indexCourse: 150
+indexFavorites:
+title: "AI reasoning & uncertainty, pt. 1"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "AI reasoning & uncertainty, pt. 1"
+courseCategoryName: "AI theory"
+desc: "Theoretical foundations of thinking"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "10.10.2024"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 2
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/artificial_intelligence_reasoning_and_uncertainty.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/ai_reasoning_and_uncertainty"
+slug: "/research/ai_reasoning_and_uncertainty"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+Artificial Intelligence: A Modern Approach, Global Edition, 4ed: chapters 12 + 13 + 14+ 15 + 16 + 17 + 18
+
+Quantifying unceratinty
+Acting under uncertainty
+Inference using full joint distributions
+Independence
+The role of Bayes' rule
+Naive bayes models
+The wampus world revisited
+Probabilistic reasoning
+Representationg knowledge in an uncertain domain
+The semantics of bayesian networks
+Exact inference in bayesian networks
+Approximate inference for bayesian networks
+Causal networks
+Probabilistic reasoning over time
+Time and uncertainty
+Inference in temporal models
+Kalman filters
+Dynamic bayesian networks
+Making simple decisions
+Combining beliefs and desires under uncertainty
+The basis of utility theory
+Utility functions
+Multiattribute utility functions
+Decision networks
+The values of information
+Unknown preferences
+Making comples decisions
+Sequential decision problems
+Algorithms for MDPs
+Bandit problems
+Partially observable MDPs
+Algorithms for solving POMDPs
+Multiagent decision making
+Properties of multiagent environments
+Non-cooperative game theory
+Cooperative game theory
+Making collective decisions
+Probabilistic programming 
+Relational probability models
+Open-universe probability models
+Keeping track of a complex world
+Programs as probability models
+
+*/}
+
+
+{/*
+
+1. Foundations of Uncertain Reasoning  
+   - Philosophical underpinnings of uncertainty in AI (aleatoric vs. epistemic)  
+   - Real-world examples illustrating the inevitability of incomplete information  
+   - Distinguishing "model uncertainty" (limitations in the model) from "external uncertainty" (stochastic environments)  
+   - Fuzzy logic vs. probabilistic logic: when each approach is used  
+   - Historical perspective: from early Bayesian ideas to modern AI applications  
+2. Probability Theory Refresher  
+   - Core axioms (Kolmogorov) and common pitfalls in using probabilities  
+   - Conditional probability and law of total probability in reasoning chains  
+   - Joint and marginal distributions as foundations for Bayesian methods  
+   - Key probability inequalities (Markov's, Chebyshev's) and how they inform bounds  
+   - Recap of relevant discrete and continuous distributions commonly used in AI reasoning (only at a conceptual level to avoid repetition)  
+3. Quantifying Uncertainty  
+   - Confidence intervals vs. Bayesian credible intervals: conceptual distinctions  
+   - Entropy and related information measures (high-level overview)  
+   - Maximum entropy principle and why it's useful for modeling uncertainty  
+   - Error bounds in estimations and decision-making  
+   - Role of prior knowledge vs. data-driven approaches in quantifying uncertainty  
+4. Acting Under Uncertainty  
+   - Balancing risk and reward: risk-neutral vs. risk-averse strategies  
+   - Explore-exploit dilemma in uncertain environments (high-level view, e.g., multi-armed bandit analogy)  
+   - Cost of mistakes vs. cost of caution in real-world scenarios (medical, finance, etc.)  
+   - Human factors in decision-making under uncertainty (heuristics and biases)  
+5. Inference Using Full Joint Distributions  
+   - Enumerating outcomes in a joint distribution and why it becomes intractable  
+   - Relationship between full-joint models and complete knowledge representation  
+   - Real-world cases where small-scale joint models are still feasible  
+   - Motivation for factorized or approximate models in larger problems  
+   - High-dimensional challenges: combinatorial explosion and "curse of dimensionality"  
+6. Independence and Conditional Independence  
+   - Importance of conditional independence in simplifying large models  
+   - The Markov blanket concept and how it reduces complexity in Bayesian networks  
+   - D-separation as a graphical tool for understanding dependencies  
+   - Impact of independence assumptions on model interpretability and performance  
+   - Practical examples: naive Bayes, hidden Markov models, and other factorized models  
+7. Bayes' Rule and Posterior Updates  
+   - Conjugate priors: how they simplify Bayesian updating  
+   - MAP (Maximum A Posteriori) estimation and when it's used instead of full posterior analysis  
+   - Sequential updating with new evidence (online Bayesian learning)  
+   - Handling continuous vs. discrete cases in posterior updates  
+   - Practical challenges: computational costs and approximation shortcuts  
+8. Naive Bayes Models  
+   - Different variants: Gaussian, Multinomial, Bernoulli naive Bayes  
+   - Parameter estimation (MLE, MAP) and smoothing techniques (Laplace smoothing)  
+   - Common real-world applications (text classification, spam detection, sentiment analysis)  
+   - Strengths: scalability, simplicity, surprisingly good performance in many domains  
+   - Weaknesses: strong independence assumption and ways to mitigate it  
+9. Probabilistic Reasoning: Core Concepts  
+   - How probabilistic methods differ from purely logical (rule-based) AI  
+   - Markov logic networks (high-level mention) for bridging logical and probabilistic reasoning  
+   - Belief propagation: updating beliefs as new data arrives  
+   - Handling uncertainty in knowledge bases and knowledge graphs  
+   - Trade-offs between interpretability (logical rules) and flexibility (probabilistic models)  
+10. The Wampus World Revisited (AI Classic)  
+   - How partial observability drives the need for uncertain reasoning  
+   - Bayesian update of the agent's "belief state" in the environment  
+   - Balancing exploration and safety in an uncertain environment  
+   - Lessons from the classic example for modern robotics and game AI  
+   - Incremental vs. global approaches to uncertain reasoning in Wampus World  
+11. Bayesian Networks: Structure and Semantics  
+   - DAG construction fundamentals and interpretation of edges  
+   - Parameter learning vs. structure learning: data-driven vs. expert-driven approaches  
+   - Typical applications: medical diagnosis, machine fault detection, user modeling  
+   - Practical considerations: from small networks to large, complex graphs  
+   - Handling missing data and incomplete domain knowledge in BN design  
+12. Exact Inference in Bayesian Networks  
+   - Variable elimination: step-by-step illustration  
+   - Clique/junction tree methods for more efficient inference  
+   - Complexity constraints: when exact methods become infeasible  
+   - Best practices for implementing exact inference in small to medium networks  
+   - Comparisons among exact methods (which approach works best under different structures)  
+13. Approximate Inference for Bayesian Networks  
+   - Sampling-based approaches (rejection sampling, importance sampling, Gibbs sampling)  
+   - Variational inference concepts (mean-field, structured variational inference)  
+   - Trade-offs between sampling speed, accuracy, and ease of implementation  
+   - When to choose MCMC vs. variational approaches in large-scale problems  
+   - Practical case studies: large BN in marketing analytics, topic modeling, etc.  
+14. Causal Networks  
+   - How causal graphs differ from purely probabilistic graphs (Pearl's do-calculus idea)  
+   - Identifying and handling confounders in real-world data  
+   - Counterfactual reasoning: "what if" analysis for interventions and policy decisions  
+   - Applications in epidemiology, social sciences, and reinforcement learning  
+   - Ethical and interpretability implications of causal inference in AI  
+15. Introduction to Probabilistic Programming  
+   - High-level motivations for writing programs that directly encode uncertainty  
+   - Overview of popular frameworks (Stan, Pyro, Turing.jl) and typical workflow  
+   - Hierarchical and relational models with minimal extra code  
+   - Automatic differentiation and gradient-based inference in probabilistic programming  
+   - Emerging trends: universal probabilistic programming, automated model discovery  
+
+*/}
+
+
+In the vast realm of artificial intelligence, the concept of uncertainty is central to how machines (or computational agents) perceive and reason about the world. Unlike rigid logical systems that assume complete knowledge, real-world applications of AI must grapple with data that is noisy, incomplete, or even contradictory. As soon as we attempt to model any realistic scenario — whether it's detecting anomalies in financial transactions, deciding on the best course of action for a self-driving car, or predicting protein structures — uncertainty becomes inescapable. 
+
+There is a common distinction between two primary forms of uncertainty:
+
+- <Highlight>Aleatoric uncertainty</Highlight>: Also called statistical or irreducible uncertainty, this arises from inherent randomness or variability in the environment or the data-generation process. For example, the outcome of rolling a fair die is fundamentally unpredictable due to the random nature of the event, and no additional data can fully remove that randomness.
+
+- <Highlight>Epistemic uncertainty</Highlight>: Often described as knowledge-based or reducible uncertainty, it stems from a lack of knowledge or information about the system. In principle, if you gather more data, reduce noise in measurements, or refine your model, you can decrease epistemic uncertainty. For instance, if a model is unclear about how a robot's sensor was calibrated, collecting more calibration points or refining sensor data might reduce this uncertainty.
+
+Recognizing these two perspectives helps AI practitioners decide whether improvements to data collection or modeling might reduce uncertainty (epistemic) or whether certain aspects of the system are intrinsically unpredictable (aleatoric).
+
+### Real-world examples illustrating the inevitability of incomplete information
+
+In practice, incomplete information manifests across domains:
+
+- **Medical diagnoses**: A doctor does not have a perfectly complete view of a patient's internal state. Lab results might be delayed or noisy, and some underlying conditions remain partially hidden. AI-assisted diagnostics must balance uncertain lab findings, family history, and observational data to produce a probabilistic judgment of possible ailments.
+
+- **Stock market forecasting**: Stock prices fluctuate due to countless interacting factors — some known (company fundamentals, interest rates) and some unknown (market sentiment, insider decisions). Even advanced ML models cannot fully account for all relevant variables, thus introducing irreducible uncertainty.
+
+- **Autonomous vehicles**: Sensor fusion systems rely on LIDAR, radar, and cameras, each of which has noise and blind spots. The vehicle's AI must make decisions under partial observability: a pedestrian might be obscured behind another car, or lighting conditions might degrade camera clarity. 
+
+These situations illustrate that uncertainty is not merely a theoretical artifact but a pervasive quality of real data and real decision-making processes.
+
+### Distinguishing "model uncertainty" (limitations in the model) from "external uncertainty" (stochastic environments)
+
+We often see confusion between the uncertainty arising from the environment itself and the uncertainty arising from an imperfect model:
+
+- **Model uncertainty**: A direct consequence of the mismatch between reality and our chosen representation. For instance, if you choose a linear classifier to separate highly nonlinear data, your model may reflect high predictive uncertainty simply because the functional form does not align with the true patterns.
+
+- **External (environmental) uncertainty**: Represents the inherent stochasticity in the problem domain, such as sensor noise or genuinely random processes in nature. No matter how perfect the model is, there will be irreducible variability when events themselves are random.
+
+Both types of uncertainty can coexist, and in practical AI systems, it's vital to identify which type dominates, so that you know whether to improve your model's capacity or accept that some phenomena are truly random.
+
+### Fuzzy logic vs. probabilistic logic: when each approach is used
+
+Although probability theory is now the predominant mathematical framework for dealing with uncertainty in AI, fuzzy logic still appears in certain control systems and specialized applications. <Highlight>Fuzzy logic</Highlight> offers degrees of membership to sets (e.g., partially hot, partially cold) rather than crisp true/false or binary membership decisions. It's particularly attractive in control systems (like thermostats or washing machines) that incorporate heuristics. 
+
+On the other hand, <Highlight>probabilistic logic</Highlight> rests on the axioms of probability to quantify the uncertainty of events. It is often better suited for reasoning tasks that require quantifiable likelihoods, such as diagnosing a disease with a certain probability of being present. While fuzzy logic addresses the concept of partial truth, probabilistic approaches address uncertain truth. Both can handle ambiguity, but their underlying interpretations are different — fuzzy logic is about degree of truth, while probability is about likelihood of truth. The choice depends on the domain's needs, though for most modern AI reasoning with incomplete data, probabilistic methods are the go-to option.
+
+### Historical perspective: from early Bayesian ideas to modern AI applications
+
+The roots of uncertain reasoning in AI trace back to the early works of the Reverend Thomas Bayes in the 18th century. Bayes' theorem itself long predates modern computing but remained a largely philosophical or theoretical curiosity until the second half of the 20th century, when computational power and data availability turned Bayesian methods into practical inference engines. In the late 1980s and early 1990s, Bayesian networks (championed by Judea Pearl and others) proved that structured probabilistic reasoning could handle complex real-world tasks. 
+
+From there, we have progressed to:
+
+- <Highlight>Probabilistic expert systems</Highlight> (e.g., MYCIN for medical diagnosis)
+- <Highlight>Machine learning frameworks</Highlight> that leverage Bayesian inference for parameter estimation
+- <Highlight>Probabilistic programming</Highlight> languages (Stan, Pyro, Turing.jl) that allow flexible, expressive definition of model structures
+- <Highlight>Neural Bayesian hybrids</Highlight> that combine deep learning with uncertainty quantification (e.g., Bayesian neural networks, dropout-based uncertainty measures).
+
+In modern AI, uncertain reasoning is no longer an afterthought; it is fundamental. Many state-of-the-art systems incorporate it to better represent partial observability, incomplete data, and the limitations of predictive models.
+
+## Probability theory refresher
+
+### Core axioms (Kolmogorov) and common pitfalls in using probabilities
+
+Kolmogorov's axioms ground mathematical probability:
+
+1. <Latex text="\( P(A) \ge 0 \)"/> for any event <Latex text="\(A\)"/>.
+2. <Latex text="\( P(\Omega) = 1 \)"/> for the sample space <Latex text="\(\Omega\)"/>.
+3. For disjoint events <Latex text="\(A_1, A_2, ...\)"/>, <Latex text="\( P\left(\bigcup_i A_i\right) = \sum_i P(A_i)\)"/>.
+
+In AI, these axioms remain the foundation for modeling belief in uncertain events. Despite their simplicity, practical application often reveals pitfalls:
+
+- **Misinterpreting conditional vs. unconditional probabilities**: For instance, mixing up <Latex text="\( P(A \mid B) \)"/> with <Latex text="\( P(A) \)"/> or ignoring base rates (the well-known base rate fallacy).
+- **Neglecting prior probabilities**: This leads to overfitting or underfitting and often arises in naive applications of likelihood-based methods.
+- **Violations of probability axioms**: Mistakes can occur if someone tries to assign probabilities in a way that sums to more than 1 or less than 0, typically from double counting or ignoring overlap in events.
+
+### Conditional probability and law of total probability in reasoning chains
+
+The heart of Bayesian reasoning is conditional probability. The <Highlight>law of total probability</Highlight> reminds us how to break down complex events into partitions. For example, if events <Latex text="\(B_1, B_2, \dots, B_k\)"/> form a complete partition of the sample space, then:
+
+<Latex text="\[
+P(A) = \sum_{i=1}^k P(A \mid B_i) P(B_i).
+\]"/>
+
+This is an essential tool when dealing with incomplete observations or missing data. It guides how we incorporate different hypotheses (the <Latex text="\(B_i\)"/> events), weighting them by their probabilities and adding up the results to obtain <Latex text="\(P(A)\)"/>.
+
+### Joint and marginal distributions as foundations for Bayesian methods
+
+Full Bayesian treatment of inference problems typically requires specifying the <Highlight>joint probability distribution</Highlight> of all relevant variables. For instance, in a simple scenario with random variables <Latex text="\(X\)"/> and <Latex text="\(Y\)"/>, the joint distribution <Latex text="\(P(X, Y)\)"/> completely characterizes all possible outcomes and their probabilities. The marginal distribution <Latex text="\(P(X)\)"/> can be derived by summing or integrating out <Latex text="\(Y\)"/>:
+
+<Latex text="\[
+P(X) = \sum_{y \in Y} P(X, y)
+\]"/>
+
+if <Latex text="\(Y\)"/> is discrete, or
+
+<Latex text="\[
+P(X) = \int P(X, y)\, dy
+\]"/>
+
+if <Latex text="\(Y\)"/> is continuous. Bayesian inference leverages these relationships to update beliefs about unknown variables (for instance, parameters in a model) in light of observed data.
+
+### Key probability inequalities (markov's, chebyshev's) and how they inform bounds
+
+**Markov's inequality** provides an upper bound for the probability that a nonnegative random variable exceeds some positive threshold. For a random variable <Latex text="\(X \ge 0\)"/> and a constant <Latex text="\(a > 0\)"/>:
+
+<Latex text="\[
+P(X \ge a) \le \frac{E[X]}{a}.
+\]"/>
+
+**Chebyshev's inequality** improves upon Markov's for bounding the deviation of a random variable <Latex text="\(X\)"/> from its mean:
+
+<Latex text="\[
+P(|X - \mu| \ge k \sigma) \le \frac{1}{k^2}.
+\]"/>
+
+Though these bounds can be loose, they're crucial in AI to establish worst-case scenarios or theoretical guarantees. For instance, in analyzing algorithms that rely on concentration of measure (like many sampling-based inference techniques), these inequalities help us ensure that the probability of extreme deviations is controlled.
+
+### Recap of relevant discrete and continuous distributions commonly used in ai reasoning (only at a conceptual level)
+
+A few distributions show up often when modeling uncertainty in AI systems. Here's a quick conceptual list:
+
+- **Bernoulli / Binomial**: Used for binary outcomes and counts of successes in a fixed number of trials.
+- **Multinomial**: Generalization of binomial to multiple categories; common in naive Bayes text classification.
+- **Gaussian (Normal)**: The workhorse continuous distribution with mean <Latex text="\( \mu \)"/> and variance <Latex text="\( \sigma^2 \)"/>. Ubiquitous in noise modeling and many Bayesian prior assumptions.
+- **Poisson**: Discrete distribution for counts over a fixed interval (time or space).
+- **Beta** and **Dirichlet**: Commonly used as conjugate priors for Bernoulli/Binomial and Multinomial distributions, respectively.
+- **Exponential and Gamma**: For modeling waiting times or event arrival rates.
+
+These distributions will appear repeatedly as building blocks of Bayesian networks, probabilistic programming, and other AI uncertain reasoning paradigms.
+
+## Quantifying uncertainty
+
+### Confidence intervals vs. bayesian credible intervals: conceptual distinctions
+
+One of the earliest encounters with uncertainty quantification is the idea of <Highlight>interval estimation</Highlight>. In frequentist statistics, a <Highlight>confidence interval</Highlight> for a parameter (like a mean) is built so that, across many repeated samples, the interval will contain the true parameter value a certain percentage of the time (e.g., 95% of the time). However, it does not strictly mean that the probability the true value lies in that specific observed interval is 0.95. That interpretation is a common misconception.
+
+In contrast, a <Highlight>Bayesian credible interval</Highlight> directly reflects the posterior probability of the parameter lying within a given range. For example, a 95% credible interval means that, based on the posterior distribution and the observed data, there is a 0.95 probability (in the Bayesian sense) that the parameter value is in that specific interval. This difference arises from the underlying interpretations: frequentist intervals talk about long-run frequencies over repeated sampling, while Bayesian intervals are statements of belief about the parameter itself, given the data.
+
+### Entropy and related information measures (high-level overview)
+
+**Entropy**, originally introduced by Shannon, quantifies the average uncertainty (or information content) in a distribution. For a discrete random variable <Latex text="\(X\)"/> with possible values <Latex text="\(x_1, \dots, x_n\)"/> and probabilities <Latex text="\(p_1, \dots, p_n\)"/>,
+
+<Latex text="\[
+H(X) = - \sum_{i=1}^n p_i \log p_i.
+\]"/>
+
+Higher entropy signifies more uncertainty in <Latex text="\(X\)"/>. Many subsequent measures build on this concept:
+
+- **Kullback–Leibler divergence**: Measures how one probability distribution differs from a second, reference distribution.
+- **Cross-entropy**: Commonly used as a loss function in classification tasks, measuring the dissimilarity between the predicted probability distribution and the true distribution.
+
+From an AI perspective, <Highlight>entropy</Highlight> can guide exploration in reinforcement learning, measure the purity of clusters, or set up regularization strategies in classification tasks.
+
+### Maximum entropy principle and why it's useful for modeling uncertainty
+
+The **principle of maximum entropy** states that when one seeks the least biased distribution given certain known constraints (like known means or known correlations), the probability distribution that should be chosen is the one with the largest entropy possible under those constraints. 
+
+Intuitively, this means, "Don't assume anything beyond the constraints you know." The principle ensures the model remains as uncommitted as possible regarding unknown factors. This is foundational in some statistical mechanics approaches, in certain Bayesian prior constructions, and in fields like language modeling, where maximum entropy methods are used to find distributions that best match partial or incomplete observations.
+
+### Error bounds in estimations and decision-making
+
+In the realm of statistical estimation, error bounds like confidence intervals or Chernoff bounds inform how far off an estimate might be from the true parameter. In decision-making, these bounds can be used to weigh the potential cost of inaccurate or overconfident predictions. For instance, in a medical AI system diagnosing diseases, the system might need to incorporate error bounds in its probability estimates to avoid potentially fatal misdiagnoses. 
+
+### Role of prior knowledge vs. data-driven approaches in quantifying uncertainty
+
+One of the reasons Bayesian approaches are popular is because they incorporate <Highlight>prior knowledge</Highlight> about the system. If you have robust domain knowledge — say, a strong understanding that a certain disease is extremely rare — you can set a heavily skewed prior. As new data arrives, the posterior distribution updates, but remains grounded in that initial knowledge. By contrast, purely data-driven methods might ignore domain knowledge and rely on whatever the dataset suggests, which can be risky in cases of small sample sizes or biased data. Striking a balance between prior-based and data-driven approaches is often key to robust uncertainty quantification.
+
+## Acting under uncertainty
+
+### Balancing risk and reward: risk-neutral vs. risk-averse strategies
+
+When it comes to making decisions in uncertain environments, the question arises: Do you optimize for the highest expected return (risk-neutral), or do you account more conservatively for bad outcomes (risk-averse)? A risk-neutral agent will choose the action that maximizes expected value, regardless of variance or worst-case scenario. A risk-averse strategy, on the other hand, might sacrifice some expected return in favor of reducing the chance of catastrophic failures. 
+
+For instance, in autonomous driving, a risk-averse agent may prefer routes with fewer uncertain hazards, while a purely risk-neutral agent might attempt a potentially shorter but more dangerous route. The real world seldom tolerates extreme risk-neutral attitudes, especially in critical systems like healthcare or finance, where heavy losses or severe adverse outcomes can be catastrophic.
+
+### Explore-exploit dilemma in uncertain environments (high-level view, e.g., multi-armed bandit analogy)
+
+In a typical <Highlight>multi-armed bandit</Highlight> setting, an agent faces multiple slot machines (bandits), each with an unknown probability of payout. The agent must decide which machine to pull to maximize total reward over time. This situation represents the general <Highlight>explore-exploit dilemma</Highlight>: the agent wants to exploit the machine it currently believes has the highest payout probability, but it also needs to explore other machines in case their payout is actually higher than initially believed. 
+
+Balancing exploration and exploitation under uncertainty is one of the core challenges in reinforcement learning. Techniques such as <Highlight>Upper Confidence Bound (UCB)</Highlight> or <Highlight>Thompson Sampling</Highlight> quantify uncertainty in the machine's reward distribution to guide an intelligent exploration strategy.
+
+### Cost of mistakes vs. cost of caution in real-world scenarios (medical, finance, etc.)
+
+Sometimes, being overly cautious also has a cost. In finance, holding too much capital in safe bonds might limit potential returns, but it also lowers the risk of capital loss. In a medical diagnosis scenario, not diagnosing a severe but rare condition early might cost a patient's life, whereas ordering too many expensive or invasive tests can be burdensome or harmful. 
+
+AI systems need to be designed with these trade-offs in mind, often making them domain-specific. The design of cost functions or utility functions in uncertain reasoning becomes very important — it sets how the system weighs false positives versus false negatives or how it penalizes risk-taking behaviors.
+
+### Human factors in decision-making under uncertainty (heuristics and biases)
+
+Even though machines can, in principle, manage large amounts of data systematically, human oversight frequently imposes biases such as <Highlight>anchoring</Highlight> (relying too heavily on the first piece of information encountered), <Highlight>availability bias</Highlight> (overestimating the likelihood of events that come easily to mind), and <Highlight>overconfidence bias</Highlight> (overestimating our accuracy in predictions). Models that incorporate or interface with human decision-makers must recognize these cognitive biases and design methods to mitigate them. This is relevant in human-in-the-loop AI systems, where final decisions are left to humans but informed by AI recommendations.
+
+## Inference using full joint distributions
+
+### Enumerating outcomes in a joint distribution and why it becomes intractable
+
+A full joint distribution over <Latex text="\(n\)"/> random variables enumerates all combinations of values for those variables. The number of possible outcomes grows exponentially. If each variable takes <Latex text="\(k\)"/> possible values, the total number of entries is <Latex text="\(k^n\)"/>. This <Highlight>combinatorial explosion</Highlight> quickly becomes intractable for moderate <Latex text="\(n\)"/>. While in small-scale systems we can directly store a probability table for every possible state, real-world problems typically involve thousands or millions of interdependent variables. 
+
+### Relationship between full-joint models and complete knowledge representation
+
+In principle, a full-joint probability distribution encodes all knowledge about a domain: if you wanted to answer any query about any set of variables, you could just read off the relevant entries (or sum/integrate them). But it's rarely feasible to specify or store such a distribution. Thus, advanced representation schemes, such as <Highlight>Bayesian networks</Highlight> or <Highlight>Markov networks</Highlight>, aim to capture only the essential dependencies among variables, factorizing the joint distribution in ways that become computationally tractable (to some extent).
+
+### Real-world cases where small-scale joint models are still feasible
+
+While massive joint distributions are usually infeasible, some specialized domains are small enough to allow an explicit full-joint approach. For instance:
+
+- In a simple board game with well-defined states (like tic-tac-toe), enumerating state probabilities is trivial.
+- In certain controlled manufacturing processes with few monitored variables, you can store a joint distribution of sensor readings and defect states for real-time anomaly detection.
+
+Such cases remain the exception, but they demonstrate how a full-joint representation is conceptually straightforward, even if rarely practical at scale.
+
+### Motivation for factorized or approximate models in larger problems
+
+Because of the exponential blow-up in state space, **factorized** representations that exploit independence and conditional independence among variables become essential. For instance, a Bayesian network factorizes a joint distribution into local conditional distributions. Alternatively, approximate methods (Monte Carlo sampling, variational inference, etc.) can sidestep the need to store or compute the entire distribution explicitly. In modern AI, these methods are crucial to bridging the gap between theoretical completeness and computational feasibility.
+
+### High-dimensional challenges: combinatorial explosion and "curse of dimensionality"
+
+The <Highlight>curse of dimensionality</Highlight> highlights how distance metrics, volumes, and densities behave counterintuitively as dimensionality grows. In high-dimensional spaces, data points tend to be equidistant from each other, and local approximations lose meaning. This complicates tasks like density estimation, nearest-neighbor queries, or sampling-based methods. Factorized representations and dimensionality reduction techniques (e.g., PCA, autoencoders) help mitigate these issues by capturing lower-dimensional manifolds in which the data actually resides.
+
+## Independence and conditional independence
+
+### Importance of conditional independence in simplifying large models
+
+Conditional independence is the backbone of structured probabilistic modeling. If <Latex text="\(X\)"/> and <Latex text="\(Y\)"/> are conditionally independent given <Latex text="\(Z\)"/>, we can write:
+
+<Latex text="\[
+P(X, Y \mid Z) = P(X \mid Z) \, P(Y \mid Z).
+\]"/>
+
+This factorization dramatically reduces the complexity of storing or computing probabilities, as you no longer need a separate parameter for every combination of <Latex text="\(X\)"/> and <Latex text="\(Y\)"/> given <Latex text="\(Z\)"/>. Instead, you store two simpler distributions. Many graphical models exploit such factorizations to remain computationally tractable in large-scale problems.
+
+### The markov blanket concept and how it reduces complexity in bayesian networks
+
+A variable's <Highlight>Markov blanket</Highlight> in a Bayesian network is the set of its parents, children, and the other parents of its children. Conditionally on that set, the variable is independent of all other variables in the network. Operationally, this means you only need to consider those nodes in the Markov blanket to reason about the variable's probability distribution — a local approach that circumvents enumerating the entire network.
+
+### D-separation as a graphical tool for understanding dependencies
+
+In Bayesian networks, <Highlight>d-separation</Highlight> is a criterion to decide whether two sets of variables are conditionally independent, given evidence in the network. By analyzing the graph's structure (looking at paths, collider nodes, etc.), you can determine if information can "flow" from one variable to another. This is a powerful way to read off independencies from a directed acyclic graph (DAG) without manually computing large probability tables.
+
+### Impact of independence assumptions on model interpretability and performance
+
+While these independence assumptions drastically simplify computations, they can also oversimplify reality. For example, <Highlight>naive Bayes</Highlight> assumes that features are conditionally independent given the class label, which is obviously not true in many domains. Yet, naive Bayes often works surprisingly well because it captures enough of the essential structure. On the other hand, if critical dependencies are overlooked, the model might misrepresent the joint distribution and fail in nuanced tasks.
+
+### Practical examples: naive Bayes, hidden Markov models, and other factorized models
+
+- **Naive Bayes**: Each feature is modeled as conditionally independent given the class. Despite the strong assumption, it's used widely for text classification, spam detection, etc.
+- **Hidden Markov Models (HMMs)**: A sequence of hidden states is assumed to form a Markov chain, with each observable output depending only on the current hidden state. This factorization makes inference tractable in sequential data tasks like speech recognition.
+- **Factorized machine learning models**: In collaborative filtering (recommendation systems), matrix factorization implicitly assumes that user preferences and item features factor in simpler, lower-dimensional spaces.
+
+## Bayes' rule and posterior updates
+
+### Conjugate priors: how they simplify bayesian updating
+
+Bayes' rule states:
+
+<Latex text="\[
+P(\theta \mid D) = \frac{P(D \mid \theta) \, P(\theta)}{P(D)},
+\]"/>
+
+where <Latex text="\( \theta \)"/> is a parameter of interest and <Latex text="\(D\)"/> is observed data. In many models, choosing <Highlight>conjugate priors</Highlight> for <Latex text="\( \theta \)"/> greatly simplifies calculations because the posterior distribution remains in the same family as the prior. For instance:
+
+- The Beta distribution is a conjugate prior for the Bernoulli likelihood.
+- The Dirichlet distribution is a conjugate prior for the Multinomial likelihood.
+- The Normal distribution (with known variance) is conjugate to a Normal likelihood for the mean.
+
+This property spares you from more complex sampling or approximation methods when updating your beliefs.
+
+### MAP (maximum a posteriori) estimation and when it's used instead of full posterior analysis
+
+In practice, fully characterizing the posterior distribution can be computationally expensive. One shortcut is <Highlight>maximum a posteriori (MAP)</Highlight> estimation. MAP seeks the parameter value <Latex text="\( \theta_{\text{MAP}} \)"/> that maximizes <Latex text="\( P(\theta \mid D) \)"/>. This is akin to the typical frequentist maximum likelihood estimation, except it includes a prior:
+
+<Latex text="\[
+\theta_{\text{MAP}} = \arg \max_\theta \, P(D \mid \theta) P(\theta).
+\]"/>
+
+Sometimes, MAP estimation is used as a regularized optimization approach, especially in high-dimensional parameter spaces. While MAP does not retain the full distribution, it is often more tractable than integrating over all parameter values.
+
+### Sequential updating with new evidence (online Bayesian learning)
+
+One of the major advantages of Bayesian methods is that they handle new data sequentially without restarting inference from scratch. If <Latex text="\( P(\theta \mid D_{\text{old}}) \)"/> is the posterior after seeing some data <Latex text="\( D_{\text{old}} \)"/>, then upon observing new data <Latex text="\( d_{\text{new}} \)"/>, the posterior updates to <Latex text="\( P(\theta \mid D_{\text{old}}, d_{\text{new}}) \)"/> by applying Bayes' rule again:
+
+<Latex text="\[
+P(\theta \mid D_{\text{old}}, d_{\text{new}}) = \frac{P(d_{\text{new}} \mid \theta) \, P(\theta \mid D_{\text{old}})}{P(d_{\text{new}} \mid D_{\text{old}})}.
+\]"/>
+
+This cumulative approach works naturally for streaming data (online settings), where you can incorporate evidence as it arrives, updating your model continually.
+
+### Handling continuous vs. discrete cases in posterior updates
+
+The same Bayesian formula works for discrete or continuous variables, but you'll typically sum over discrete states or integrate over continuous parameters. For discrete parameters, the posterior is updated by normalizing a finite set of probabilities; for continuous parameters, you'll often rely on integrals or approximate methods. Different conjugate pairs exist for discrete and continuous likelihoods.
+
+### Practical challenges: computational costs and approximation shortcuts
+
+With large, complex models (like hierarchical Bayesian networks or deep Bayesian neural networks), exact Bayesian updating can be prohibitively expensive. Approximate methods such as Markov Chain Monte Carlo (MCMC) sampling or variational inference are popular. They trade off some precision for huge gains in scalability. Techniques like <Highlight>stochastic variational inference</Highlight> (Hoffman and gang, JMLR 2013) scale Bayesian methods to massive datasets by combining variational methods with minibatch-based gradient updates.
+
+## Naive bayes models
+
+### Different variants: Gaussian, multinomial, bernoulli naive Bayes
+
+Naive Bayes classification is a classic example of how strong simplifying assumptions can still produce effective models. Common variants include:
+
+- **Gaussian Naive Bayes**: Assumes continuous features follow a normal distribution, parameterized by a mean and variance per class.
+- **Multinomial Naive Bayes**: Often used in text classification, counting how often certain words appear. Each feature (word count) is assumed to follow a multinomial distribution given the class.
+- **Bernoulli Naive Bayes**: Also popular in text tasks, where each feature indicates whether a particular word appears or not.
+
+Despite the naive assumption of independence between features given the class label, these methods can be surprisingly robust and efficient.
+
+### Parameter estimation (MLE, MAP) and smoothing techniques (Laplace smoothing)
+
+For <Highlight>multinomial naive Bayes</Highlight> in text classification, the maximum likelihood estimates for word probabilities often lead to zero probabilities if a word doesn't appear in the training set for a class. <Highlight>Laplace smoothing</Highlight> (or additive smoothing) is used to avoid these zeros. For instance, if <Latex text="\(n_i\)"/> is the count of word <Latex text="\(i\)"/> in documents of class <Latex text="\(c\)"/>, and <Latex text="\( \alpha \)"/> is a small positive constant (the smoothing parameter), then:
+
+<Latex text="\[
+\hat{p}_{i \mid c} = \frac{n_i + \alpha}{\sum_j n_j + \alpha V},
+\]"/>
+
+where <Latex text="\(V\)"/> is the vocabulary size (number of distinct words). This ensures that no probability is zero, improving model generalization.
+
+### Common real-world applications (text classification, spam detection, sentiment analysis)
+
+Naive Bayes is well suited for tasks where interpretability and simplicity matter, and the class-conditional independence assumption isn't too far off or can be tolerated:
+
+- **Spam detection**: Words like "Viagra" or "Free!!!" have strong associations with spam, and naive Bayes picks up these correlations effectively.
+- **Sentiment analysis**: Features (words or bigrams) can indicate positive or negative sentiments.
+- **Document classification**: Such as classifying news articles by topic, or user queries by intent category.
+
+Because naive Bayes is fast to train, it excels in resource-limited settings or as a baseline classifier in text processing.
+
+### Strengths: scalability, simplicity, surprisingly good performance in many domains
+
+Naive Bayes is linear in the number of features and data points, making it extremely scalable. Training is straightforward, often involving only counting frequencies. Despite the oversimplification of independence assumptions, in many cases it competes favorably with more sophisticated classifiers, especially when data is relatively sparse and high-dimensional (typical in text data).
+
+### Weaknesses: strong independence assumption and ways to mitigate it
+
+The biggest criticism is the strong independence assumption. Where features are obviously correlated (e.g., in images where adjacent pixels are highly related), naive Bayes might be suboptimal. Some ways to mitigate this:
+
+- **Feature selection**: Choose features that are mostly independent given the class, reducing the correlation problem.
+- **Feature transformation**: Possibly transform correlated features into less correlated representations (e.g., PCA).
+- **Structured variants**: More elaborate Bayesian network structures that relax naive conditional independence can capture real dependencies.
+
+Below is a short Python snippet illustrating a basic usage of Multinomial Naive Bayes in scikit-learn for text classification:
+
+<Code text={`
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.feature_extraction.text import CountVectorizer
+
+# Example corpus
+documents = [
+    "I love AI and machine learning",
+    "Free entry in lottery! Earn money easily",
+    "Deep neural networks are powerful",
+    "Claim your free prize now!"
+]
+labels = [0, 1, 0, 1]  # 0 = normal text, 1 = spam
+
+# Convert text to count features
+vectorizer = CountVectorizer()
+X = vectorizer.fit_transform(documents)
+
+# Train the model
+model = MultinomialNB(alpha=1.0)  # Laplace smoothing
+model.fit(X, labels)
+
+# Predict on new text
+new_texts = ["Get your free machine learning course", "Neural networks are amazing"]
+X_test = vectorizer.transform(new_texts)
+predictions = model.predict(X_test)
+print("Predictions:", predictions)
+`}/>
+
+## Probabilistic reasoning: core concepts
+
+### How probabilistic methods differ from purely logical (rule-based) ai
+
+Traditional rule-based AI attempts to encode knowledge as deterministic rules (<Highlight>if-then</Highlight> statements, for instance). This approach lacks a systematic way to manage uncertainty if the premises are partially incomplete or contradictory. In contrast, <Highlight>probabilistic methods</Highlight> explicitly quantify uncertainty in the premises and conclusions. Rather than a single chain of deterministic inference, a probabilistic system can weigh multiple hypotheses simultaneously, each with a certain likelihood, enabling robust decision-making under uncertainty.
+
+### Markov logic networks (high-level mention) for bridging logical and probabilistic reasoning
+
+<Highlight>Markov Logic Networks (MLNs)</Highlight> (Richardson & Domingos, 2006) combine first-order logic with Markov networks. They allow uncertain rules: each formula in a knowledge base has an associated weight, indicating how strong a constraint it imposes on the joint distribution. In effect, MLNs capture the interpretability of logical clauses and the flexibility of probabilistic graphical models. While implementing large MLNs can be computationally intensive, they are a significant step toward bridging symbolic knowledge representation and statistical reasoning.
+
+### Belief propagation: updating beliefs as new data arrives
+
+<Highlight>Belief propagation</Highlight> (also known as the <Highlight>sum-product algorithm</Highlight>) is a message-passing scheme used on factor graphs or Bayesian networks to compute marginal distributions efficiently. Each node sends and receives messages from its neighbors, iteratively updating its belief about its variable value. This approach is exact in tree-structured graphs and approximate in loopy networks.
+
+### Handling uncertainty in knowledge bases and knowledge graphs
+
+Knowledge bases (or knowledge graphs) may incorporate uncertain facts: for instance, an AI system might be only 80% sure that "Person A" lives in "City Z." Probabilistic logic or other uncertain reasoning frameworks can handle these partial truths, enabling the system to draw inferences (e.g., "Person A is likely connected to Person B who also lives in City Z.") with an associated confidence level. This allows more nuanced reasoning than strict Boolean logic in large knowledge graphs like those used by search engines.
+
+### Trade-offs between interpretability (logical rules) and flexibility (probabilistic models)
+
+Logical rules can be more interpretable: a domain expert can read, verify, or update them directly. However, purely rule-based systems do not scale well when domain knowledge is incomplete or data is high-dimensional. Probabilistic models, on the other hand, can handle partial information, noise, and uncertainty at scale but often lack straightforward interpretability (especially deep learning–based approaches). Hybrid systems, such as MLNs or Bayesian networks with explicit domain structure, try to fuse these two worlds.
+
+## The wampus world revisited (ai classic)
+
+### How partial observability drives the need for uncertain reasoning
+
+In the **Wampus World** environment from classic AI textbooks, an agent moves through a grid with hidden pits, a hidden Wampus monster, and gold. The agent receives only partial observations (like a stench or a breeze in adjacent squares). Because the agent lacks direct sight of hazards, every move involves uncertain inferences about where the Wampus or pits might be located. If the agent tries to formalize everything as certain knowledge, it cannot proceed safely. Instead, uncertain reasoning allows the agent to weigh probable hazards against potential rewards.
+
+### Bayesian update of the agent's "belief state" in the environment
+
+A Bayesian approach to Wampus World would track a probability distribution over all possible states (positions of the agent, the Wampus, the pits, etc.). As the agent senses a breeze, it updates its probability distribution about where pits might be. Over time, the agent's <Highlight>belief state</Highlight> becomes more refined, enabling safer or more optimal decisions. 
+
+### Balancing exploration and safety in an uncertain environment
+
+Exploration is risky if you suspect a pit or the Wampus in unknown squares. Safety might mean missing out on gold or taking a suboptimal route. Wampus World exemplifies real-world robotics problems where incomplete observations raise the stakes of each decision. The agent's strategy often emerges from a balance between expected utility of exploring further squares (potentially more gold) and the probability of encountering a lethal hazard.
+
+### Lessons from the classic example for modern robotics and game ai
+
+This idea of partial observability and belief states generalizes to:
+
+- **Mobile robotics**: A robot might have uncertain sensor data about obstacles or terrain characteristics, updating its internal map or localization using Bayesian filters (e.g., Kalman filters, Particle filters).
+- **Video game AI**: Non-player characters (NPCs) track uncertain information about the player's position or intentions, choosing strategies accordingly.
+- **Autonomous vehicles**: They maintain dynamic belief states about the environment, including other cars' potential future actions.
+
+### Incremental vs. global approaches to uncertain reasoning in Wampus World
+
+An <Highlight>incremental approach</Highlight> updates the belief state as each observation arrives, discarding the need to maintain all historical data explicitly. A <Highlight>global approach</Highlight> might attempt to keep a complete model of every possible environment configuration consistent with observations. The former is computationally cheaper, while the latter might produce more accurate results at small scales. In practice, incremental Bayesian updating is typically used in streaming or real-time scenarios.
+
+## Bayesian networks: structure and semantics
+
+### DAG construction fundamentals and interpretation of edges
+
+A Bayesian network is a **directed acyclic graph (DAG)** whose nodes represent random variables, and edges indicate direct conditional dependencies. The absence of an edge encodes conditional independence. Formally:
+
+<Latex text="\[
+P(X_1, \ldots, X_n) = \prod_{i=1}^n P\bigl(X_i \mid \text{Parents}(X_i)\bigr).
+\]"/>
+
+If <Latex text="\(X_i\)"/> has no parents, then <Latex text="\(P(X_i)\)"/> is an unconditional distribution. If it does, you specify <Latex text="\(P(X_i \mid \text{Parents}(X_i))\)"/>. This factorization is how Bayesian networks manage complexity, capturing only local conditional relationships.
+
+### Parameter learning vs. structure learning: data-driven vs. expert-driven approaches
+
+**Parameter learning** presupposes a known network structure, focusing on estimating the conditional probability tables or distributions. For example, you might fix a DAG for a medical diagnosis domain (symptoms <Latex text="\(\rightarrow\)"/> diseases <Latex text="\(\rightarrow\)"/> treatments) and then learn the probabilities from patient data.
+
+**Structure learning** is more challenging: the DAG itself is unknown, and you must discover which edges best explain the data. This can be approached via:
+
+1. **Constraint-based methods**: Use conditional independence tests to find edges.
+2. **Score-based methods**: Assign a score (e.g., Bayesian information criterion) to candidate structures and search the space of DAGs.
+
+Real-world systems often combine domain knowledge (expert-driven partial structure) with data-driven learning of uncertain or unknown relationships.
+
+### Typical applications: medical diagnosis, machine fault detection, user modeling
+
+Bayesian networks excel in domains where cause-effect relationships are somewhat understood, and uncertainties matter:
+
+- **Medical diagnosis**: Symptoms <Latex text="\(\rightarrow\)"/> possible diseases <Latex text="\(\rightarrow\)"/> treatments/outcomes. Classic examples include diagnosing heart disease or cancer risk with uncertain test results.
+- **Machine fault detection**: Observing sensor readings to infer which subsystem might be malfunctioning.
+- **User modeling**: Inferring user traits or preferences (e.g., knowledge tracing in e-learning systems).
+
+### Practical considerations: from small networks to large, complex graphs
+
+Small networks are manageable and can often be reasoned about manually. Large-scale Bayesian networks (with hundreds or thousands of variables) demand efficient inference algorithms (exact or approximate), good structure learning or well-crafted DAGs, and sometimes domain-specific heuristics to avoid exponential blow-up. 
+
+### Handling missing data and incomplete domain knowledge in BN design
+
+Data with missing values is common in real-world scenarios. Bayesian networks handle this gracefully by summing or integrating out missing variables. This can be done via the <Highlight>EM algorithm</Highlight> or sampling-based approaches. Incomplete domain knowledge can be partially mitigated by letting structure learning or parameter learning discover relationships from data, as long as you have enough representative samples.
+
+## Exact inference in bayesian networks
+
+### Variable elimination: step-by-step illustration
+
+**Variable elimination** rearranges the summations (or integrations) when computing a query <Latex text="\(P(X \mid E)\)"/> given evidence <Latex text="\(E\)"/>. By eliminating non-query, non-evidence variables one by one, you can systematically reduce the dimensionality of intermediate factors. This can be done in multiple orders; choosing an optimal elimination order is NP-hard in general, but heuristics exist.
+
+A step-by-step example might look like:
+
+1. Identify the set of all factors from the conditional probability tables relevant to <Latex text="\(X\)"/> and <Latex text="\(E\)"/>.
+2. Multiply factors that contain the variable to be eliminated.
+3. Sum out that variable.
+4. Repeat until only the factors containing <Latex text="\(X\)"/> or <Latex text="\(E\)"/> remain.
+5. Normalize to get <Latex text="\(P(X \mid E)\)"/>.
+
+### Clique/junction tree methods for more efficient inference
+
+**Clique trees** (or **junction trees**) further optimize the process by clustering variables into cliques and passing messages between these cliques. This structure ensures that each variable is eliminated exactly once per message pass, and computations are organized to minimize repeated summations. It's still exponential in the size of the largest clique, but for networks with small treewidth, it becomes efficient in practice.
+
+### Complexity constraints: when exact methods become infeasible
+
+Exact inference is generally <Highlight>NP-hard</Highlight> for arbitrary Bayesian networks (Cooper, 1990). Once the network has cycles or large cliques, the computational cost explodes exponentially. In large-scale or dense networks, it's often impossible to do exact inference in a reasonable time, making approximate inference methods a practical necessity.
+
+### Best practices for implementing exact inference in small to medium networks
+
+- Exploit **sparse structures**: If the network is near-tree-structured or has low treewidth, exact inference is more feasible.
+- Use **efficient data structures**: Factor graphs with well-implemented sum-product algorithms or specialized libraries for Bayesian networks can drastically reduce overhead.
+- **Prune irrelevant variables**: If you only need certain queries, you can ignore disconnected parts of the network.
+
+### Comparisons among exact methods (which approach works best under different structures)
+
+- **Enumeration**: The simplest but exponentially large; only for extremely small networks.
+- **Variable elimination**: A general method that works well if you can find a decent elimination order.
+- **Junction tree**: Typically more systematic, especially for repeated queries, but building the junction tree can be expensive. Optimal for networks with small treewidth.
+
+## Approximate inference for bayesian networks
+
+### Sampling-based approaches (rejection sampling, importance sampling, gibbs sampling)
+
+Sampling-based methods avoid direct factor computations:
+
+- **Rejection sampling**: Generate samples from the prior distribution. Discard any that conflict with the evidence. The fraction that remains approximates the posterior distribution. Inefficient when evidence is rare or high-dimensional.
+- **Importance sampling**: Samples come from a proposal distribution that's easier to sample from, weighting each sample by a likelihood ratio. Often more efficient than rejection sampling.
+- **Gibbs sampling**: A Markov Chain Monte Carlo (MCMC) technique. Sequentially sample each variable conditioned on the current values of all other variables, eventually converging to the joint posterior if done properly.
+
+### Variational inference concepts (mean-field, structured variational inference)
+
+Variational inference turns inference into an optimization problem: approximate the complex posterior <Latex text="\(P(\theta \mid D)\)"/> with a simpler distribution <Latex text="\(Q(\theta)\)"/> (often factorized). The goal is to minimize the KL divergence <Latex text="\(D_{KL}[Q || P]\)"/>. <Highlight>Mean-field</Highlight> assumes a fully factorized <Latex text="\(Q\)"/> over all variables, while <Highlight>structured variational inference</Highlight> uses a partially factorized form to capture some dependencies. Although you do lose some accuracy, variational methods are often orders of magnitude faster than MCMC for large models.
+
+### Trade-offs between sampling speed, accuracy, and ease of implementation
+
+- Sampling methods like <Highlight>MCMC</Highlight> can approximate very general distributions but might require careful tuning (e.g., step sizes, burn-in times, convergence checks).
+- Variational methods are often faster, provide straightforward optimization using gradient-based solvers, but may struggle to approximate multi-modal or heavy-tailed posteriors.
+- In large-scale industrial applications, <Highlight>variational</Highlight> or <Highlight>stochastic gradient MCMC</Highlight> methods strike a balance between speed and fidelity to the true posterior.
+
+### When to choose MCMC vs. variational approaches in large-scale problems
+
+- **MCMC**: If you need high accuracy for complex posteriors or if you can handle moderate computational overhead. Often used in smaller, more complex models or mid-scale problems where exact solutions are impossible but thorough exploration of the posterior is necessary.
+- **Variational**: If you have very large datasets or complicated hierarchical models and need faster approximate inference. Many deep learning–Bayesian hybrids adopt variational approaches because they plug into existing automatic differentiation frameworks.
+
+### Practical case studies: large BN in marketing analytics, topic modeling, etc.
+
+- **Marketing analytics**: Bayesian networks can model user behaviors, product interactions, and uncertain events across multiple channels. Approximate inference is crucial to handle large customer datasets, gleaning which marketing actions lead to the highest expected sales.
+- **Topic modeling**: <Highlight>Latent Dirichlet Allocation (LDA)</Highlight> uses a hierarchical Bayesian model. Variational inference is often used to scale LDA to large text corpora (Blei and gang, JMLR 2003). MCMC sampling can be more accurate but is slower for massive corpora.
+
+## Causal networks
+
+### How causal graphs differ from purely probabilistic graphs (pearl's do-calculus idea)
+
+**Causal networks** add the notion of interventions (<Latex text="\(\text{do}(\cdot)\)"/>) to a Bayesian network–like structure. Traditional Bayesian networks let you compute <Latex text="\( P(Y \mid X) \)"/> if <Latex text="\(X\)"/> is observed. But they do not necessarily capture the effect of forcibly setting <Latex text="\(X\)"/> to a certain value (an intervention). Judea Pearl's **do-calculus** extends inference to handle these "what if I do this?" questions. This is the crux of <Highlight>causal inference</Highlight>: distinguishing correlation from causation.
+
+### Identifying and handling confounders in real-world data
+
+A <Highlight>confounder</Highlight> is a variable that influences both the treatment <Latex text="\(X\)"/> and the outcome <Latex text="\(Y\)"/>. In purely observational data, confounders can produce spurious correlations. Causal networks make confounders explicit, allowing researchers to adjust for them (for example, using back-door or front-door criteria in do-calculus). This is crucial in domains like medicine (e.g., adjusting for age, sex, or comorbidities) or economics (e.g., adjusting for variables influencing both supply and demand).
+
+### Counterfactual reasoning: "what if" analysis for interventions and policy decisions
+
+**Counterfactual queries** ask, "If event <Latex text="\(X\)"/> had been different, would outcome <Latex text="\(Y\)"/> also be different?" This transcends standard conditional probabilities. Causal networks that encode structural equations can estimate such hypothetical worlds. For instance, in policy decisions, you might ask, "Would implementing policy A earlier have prevented outcome B?" or in medicine, "Would this patient's condition be better if they had taken drug X a month ago?" These questions require a robust causal model, not just correlation.
+
+### Applications in epidemiology, social sciences, and reinforcement learning
+
+- **Epidemiology**: Distinguishing cause-effect relationships in disease spread, adjusting for confounders (e.g., lifestyle factors) in observational studies.
+- **Social sciences**: Analyzing policies or interventions like improved education funding on standardized test scores, controlling for socioeconomic variables.
+- **Reinforcement learning**: Agents can interpret certain actions as interventions, updating their causal beliefs about environment dynamics. This fosters better transfer learning and interpretability.
+
+### Ethical and interpretability implications of causal inference in AI
+
+Causal models hold potential for greater transparency: if you know the causal structure, you can explain decisions or predictions more effectively. However, inferring causality from observational data alone can be fraught with pitfalls. If the structure is misidentified, misguided interventions might follow. Ethically, underestimating or overestimating causal effects in sensitive domains (healthcare, criminal justice) can lead to harm. The interpretability advantage of causal models can become a liability if the assumed causal assumptions are incorrect.
+
+## Introduction to probabilistic programming
+
+### High-level motivations for writing programs that directly encode uncertainty
+
+Probabilistic programming languages (PPLs) like <Highlight>Stan</Highlight>, <Highlight>Pyro</Highlight>, or <Highlight>Turing.jl</Highlight> enable you to define models with random variables as part of the code. Rather than manually deriving complicated posterior expressions, you specify a generative story, and the framework automates inference (through MCMC, variational, or other advanced methods). This is particularly advantageous for:
+
+- Building **hierarchical models** quickly.
+- Prototyping **new** or **exotic** model structures without rewriting inference from scratch.
+- Rapidly iterating on model design in complex domains like finance, bioinformatics, or large-scale user modeling.
+
+### Overview of popular frameworks (stan, pyro, turing.jl) and typical workflow
+
+- **Stan** (Carpenter and gang, JSS 2017): A high-level language for specifying probabilistic models, focusing on Hamiltonian Monte Carlo for inference. Typically used with R, Python, or command-line interfaces.
+- **Pyro** (Bingham and gang, UAI 2019): A PPL built on PyTorch. It leverages deep learning libraries for gradient-based inference and can combine neural network components with Bayesian models.
+- **Turing.jl**: A Julia-based PPL that integrates seamlessly with the Julia scientific stack, using various backends (like AdvancedHMC, ReverseDiff) for inference.
+
+A typical workflow: 
+1. Define the model with random variables.
+2. Provide observed data. 
+3. Choose an inference algorithm (HMC, variational, etc.).
+4. Run inference to obtain posterior samples or approximations.
+5. Analyze results: posterior means, intervals, predictive checks.
+
+### Hierarchical and relational models with minimal extra code
+
+One of the strengths of PPLs: you can express <Highlight>hierarchical Bayesian models</Highlight> by simply nesting random variables inside others, reflecting group-level distributions or context-dependent parameters. For instance, modeling test scores for multiple classes across multiple schools, each having a school-level effect but also obeying a global distribution. Writing such a model in a raw programming language would be verbose. In a PPL, it's often just a few lines of code.
+
+### Automatic differentiation and gradient-based inference in probabilistic programming
+
+Modern PPLs rely on automatic differentiation for gradient-based inference methods, like:
+
+<Latex text="\[
+\text{HMC (Hamiltonian Monte Carlo)} \quad\text{and}\quad \text{Variational Inference}.
+\]"/>
+
+This synergy with deep learning frameworks (e.g., PyTorch, TensorFlow) allows flexible model building (like combining neural networks with Bayesian layers) and efficient scaling to large datasets.
+
+### Emerging trends: universal probabilistic programming, automated model discovery
+
+**Universal probabilistic programming** aims to handle Turing-complete languages for generative modeling, meaning that arbitrary control flows (loops, recursion) can define random processes. Some frameworks automatically propose model structures or refine them based on data (metaprogramming or autoML for probabilistic models). Although it's still an active area of research, the long-term vision is to let developers focus on conceptual model design while the system automatically decides how best to do inference or even how to refine the model architecture.
+
+<Highlight>Probabilistic programming</Highlight> merges two previously separated tasks — writing models and performing inference — into a single integrated environment, promoting a more iterative and dynamic approach to uncertain reasoning in AI.
+
+---
+
+This concludes our exploration of "AI reasoning & uncertainty, pt. 1". We've navigated the philosophical and mathematical foundations of uncertainty, revisited core probability tenets, examined how uncertainty surfaces in decision-making, and explored fundamental tools like Bayesian networks and naive Bayes classification. We've also previewed the vital topic of causal inference and introduced the potential of probabilistic programming to unify modeling and inference in a single high-level framework.
+
+While the journey might appear long and detailed, the ideas here are only the initial steps toward building AI systems that not only make predictions but also reason about, quantify, and act under uncertainty. From advanced approximate inference algorithms to causal structure learning and beyond, there are many fascinating avenues to explore as we continue in subsequent parts of this course on AI reasoning. 
+
+Keep these key principles in mind as you progress: 
+1. Uncertainty is unavoidable — embrace it rather than ignore it.  
+2. Probabilistic reasoning offers a rich framework to systematically handle partial observability and incomplete knowledge.  
+3. Causality adds the crucial dimension of interventions, bridging the gap from correlation-based models to decision support systems that can shape real outcomes.  
+
+<Image alt="A high-level concept map of AI uncertainty" path="" caption="Concept map: from basic probability to causal networks and probabilistic programming" zoom="false" />
+
+Wherever your exploration leads, a strong grasp of these underpinnings will empower you to craft AI solutions that are both robust and transparent in the face of the world's inherent uncertainties.

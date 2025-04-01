@@ -1,0 +1,654 @@
+---
+index: 140
+indexCourse: 120
+indexFavorites:
+title: "Deep probabilistic models"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Deep probabilistic models"
+courseCategoryName: "Specialized & advanced architectures"
+desc: "Flirting with uncertainty"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "03.12.2024"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 3
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/deep_probabilistic_models.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/deep_probabilistic_models"
+slug: "/research/deep_probabilistic_models"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+- [DPM1 - Deep Probabilistic Models I](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/deep_probabilistic_models_I/tutorial_1.html)
+    - [0. General notes](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/deep_probabilistic_models_I/tutorial_1.html#0.-General-notes)
+    - [1. Data](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/deep_probabilistic_models_I/tutorial_1.html#1.-Data)
+    - [2. Text encoders](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/deep_probabilistic_models_I/tutorial_1.html#2.-Text-encoders)
+    - [3. Probabilistic model](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/deep_probabilistic_models_I/tutorial_1.html#3.-Probabilistic-model)
+    - [4. Parameter estimation](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/deep_probabilistic_models_I/tutorial_1.html#4.-Parameter-estimation)
+    - [5. Decision rules](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/deep_probabilistic_models_I/tutorial_1.html#5.-Decision-rules)
+    - [6. Training procedure](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/deep_probabilistic_models_I/tutorial_1.html#6.-Training-procedure)
+    - [7. Examples](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/deep_probabilistic_models_I/tutorial_1.html#7.-Examples)
+    - [8. Exercise: design your own deep probabilistic model (optional, non-graded)](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/deep_probabilistic_models_I/tutorial_1.html#8.-Exercise:-design-your-own-deep-probabilistic-model-(optional,-non-graded))
+- [DPM2 - Variational inference for deep discrete latent variable models](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/deep_probabilistic_models_II/tutorial_2a.html)
+    - [0. Intended Learning Outcomes](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/deep_probabilistic_models_II/tutorial_2a.html#0.-Intended-Learning-Outcomes)
+    - [1. Data](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/deep_probabilistic_models_II/tutorial_2a.html#1.-Data)
+    - [2. Latent variable models](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/deep_probabilistic_models_II/tutorial_2a.html#2.-Latent-variable-models)
+    - [3. Learning](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/deep_probabilistic_models_II/tutorial_2a.html#3.-Learning)
+    - [4. Beyond](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/deep_probabilistic_models_II/tutorial_2a.html#4.-Beyond)
+- [DPM 2 - Variational Inference for Deep Continuous LVMs](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/deep_probabilistic_models_II/tutorial_2b.html)
+    - [0. Intended Learning Outcomes](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/deep_probabilistic_models_II/tutorial_2b.html#0.-Intended-Learning-Outcomes)
+    - [1. Data](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/deep_probabilistic_models_II/tutorial_2b.html#1.-Data)
+    - [2. Latent variable models](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/deep_probabilistic_models_II/tutorial_2b.html#2.-Latent-variable-models)
+    - [3. Learning](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/deep_probabilistic_models_II/tutorial_2b.html#3.-Learning)
+    - [4. Beyond](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/deep_probabilistic_models_II/tutorial_2b.html#4.-Beyond)
+
+*/}
+
+
+{/*
+
+1. Introduction to Deep Probabilistic Models
+- What Are Deep Probabilistic Models?: Overview of how "deep" methods merge with probability theory to create flexible, interpretable models.
+- Motivation and Applications: Why uncertainty matters in machine learning, and how deep probabilistic approaches can help in NLP, computer vision, time-series, etc.
+- Key Distinctions: Differences between purely deterministic neural networks and probabilistic/bayesian frameworks.
+2. Topic-Related Probability Refresher
+- Random Variables: Importance of discrete vs. continuous variables, and why we need both in deep probabilistic modeling.
+- Joint & Conditional Distributions: How to define joint distributions; conditional probability as a cornerstone of deep probabilistic methods.
+- Marginalization & Factorization: Summation and integration as fundamental operations; connecting them to model parameterization.
+3. Likelihood Function, Again
+- How maximum likelihood estimation (MLE) underpins many deep probabilistic models.
+- Log-Likelihood vs. Likelihood: Numerical stability considerations; the significance of log-likelihood in large-scale training.
+4. Bayesian Networks and Graphical Models
+- Directed Graphical Models: How Bayesian networks encode conditional dependencies among variables.
+- Inference in Bayesian Networks: Summation over latent variables, message-passing interpretations, and approximate methods.
+- Modeling Complex Systems: Examples where Bayesian networks help factorize complicated distributions (e.g., disease diagnosis, sensor fusion).
+5. Hidden Markov Models and Deep Probabilistic Models
+6. Viterbi Algorithm for Sequence Decoding
+- Viterbi Recurrence: Explanation of how the algorithm finds the most likely hidden state sequence in an HMM.
+- Use Cases: Part-of-speech tagging in NLP, speech recognition decoding, other sequence prediction tasks.
+- Comparison with Other Decoding Methods: Greedy vs. exhaustive decoding, and the complexities involved.
+7. Baum-Welch Algorithm for HMM Parameter Estimation
+- EM Approach: The Expectation-Maximization principle behind Baum-Welch; iterative refinement of transition/emission parameters.
+- Implementation Details: Key steps in practical code, dealing with underflow and large state spaces.
+- Extensions Beyond HMM: How the same EM perspective generalizes to other latent variable models.
+8. Deep Probabilistic Models in Time-Series Analysis
+9. Text Pre-processing for Probabilistic Models
+- Tokenization & Normalization: Ensuring consistent input to deep probabilistic NLP pipelines.
+- Handling Unknown Words/Out-of-Vocabulary: Influence on building robust probability distributions for text.
+- Feature Engineering vs. Learned Representations: Transition from manual text features to embedding-based approaches.
+10. Part-of-Speech Tagging with Probabilistic Methods
+- HMM for POS Tagging: Classic application showcasing hidden states as POS labels and emissions as words.
+- Viterbi in Tagging: How the algorithm finds best POS sequences, including constraints (e.g., unknown tokens).
+- Deep Extensions: Incorporating neural encoders or deep CRFs for improved performance.
+11. IBM Watson and Practical Large-Scale Inference
+- Watson's Architecture: High-level overview of how probabilistic reasoning integrates with large corpora in QA systems.
+- ML Pipelines in Watson: Combining text pre-processing, search-based modules, and scoring in a probabilistic ensemble.
+- Lessons Learned: Why focusing on uncertainty estimation can improve real-world systems.
+12. Deep Probabilistic Models
+- Univariate Conditionals: Designing conditional probability distributions for discrete and continuous targets.
+- Parameter Estimation via Maximum Likelihood: Implementation details, PyTorch or similar frameworks.
+- Decision Rules & Bayesian Decision Theory: From utility-based decisions to maximizing expected gains.
+13. Advanced Autoregressive and Structured Models
+- Autoregressive Taggers: Sequence labeling and factorization of joint probabilities (chain rule).
+- Exact vs. Approximate Decoding: Why exact search is often intractable for large output spaces.
+- Beam Search & Greedy Approaches: Practical solutions and their trade-offs.
+14. Variational Inference
+- Importance of Latent Variable Models: When latent dimensions are large or continuous, direct marginalization becomes infeasible.
+- ELBO Formulation: The evidence lower bound as the cornerstone for approximate inference.
+- Gradient Estimation Techniques: Score-function vs. reparameterization trick; trade-offs in variance.
+15. Variational Inference for Deep Discrete Latent Variables
+- Discrete vs. Continuous: Challenges arising from discrete latent spaces, enumerations, and high variance gradient estimates.
+- Neural Variational Inference: Using neural networks to parameterize both generative and inference models.
+- Examples in Practice: Mixture models, discrete autoencoders, or VQ-VAE architectures.
+16. Continuous Latent Variable Models (VAEs)
+- Gaussian Prior & Posterior: Classic setup for a variational autoencoder with reparameterizable distributions.
+- Decoder Architectures: FFNN vs. CNN decoders; how the choice of architecture impacts reconstruction fidelity.
+- Extensions: Normalizing Flows, Hierarchical VAEs: Achieving richer latent distributions or deeper hierarchical structures.
+17. Practical Implementation Tips
+- Hardware Considerations: GPU memory usage, batch sizes, and stable training for large-scale data.
+- Hyperparameters & Regularization: Balancing the KL term vs. reconstruction term, setting learning rates, weight decay.
+- Debugging Convergence: Common pitfalls such as posterior collapse, mode-seeking behavior, or vanishing gradients.
+18. Future Directions & Conclusion
+- Scalable Inference: Stochastic, distributed, or streaming approaches for extremely large datasets.
+- Structured Latent Spaces: Incorporating domain knowledge into the latent variable structure for interpretability.
+- Research Frontier: Hybrid models (e.g., combining HMM and deep networks), bridging symbolic AI (IBM Watson) with advanced DPMs.
+
+*/}
+
+
+Deep probabilistic models are machine learning methods that systematically combine the representational power of deep neural networks with principled probabilistic frameworks. On one hand, neural networks excel at modeling complex functions over high-dimensional data; on the other hand, probability theory provides a robust foundation for handling uncertainty and for reasoning under incomplete information. A deep probabilistic model, in essence, leverages both: it includes a deep architecture (e.g., a feed-forward network, convolutional layers, recurrent cells, or more advanced structures) and a probabilistic formulation for latent variables, observed data, or both.
+
+In classical machine learning, a neural network typically gives you a single-point estimate (a deterministic mapping from inputs to outputs). Deep probabilistic models generalize this viewpoint. Instead of asking, ""What is the single best output?" we ask, ""What is the probability distribution over possible outputs (or latent states), given the observed data?" This is particularly valuable in scenarios where the data may be noisy, partially observed, or very high dimensional.
+
+Furthermore, many deep probabilistic models adopt latent variable frameworks. A latent variable (often denoted <Latex text="\(z\)"/>) is a hidden random variable that we do not directly observe but believe can explain important regularities in the data <Latex text="\(x\)"/>. By positing a distribution <Latex text="\(p(z)\)"/> and a conditional <Latex text="\(p(x \mid z)\)"/>, we create flexible and interpretable generative models that can capture complex data distributions without relying solely on direct parameterization in the <Latex text="\(x\)"/>-space.
+
+As we progress through this article, we will encounter many specific examples of deep probabilistic models: from Bayesian neural networks and graphical models to deep latent variable models such as variational autoencoders (VAEs) and deep generative approaches used in large-scale systems. Our focus will be on the underlying probability theory, the algorithmic frameworks for inference (both exact and approximate), and the interplay between deep architectures and uncertainty modeling.
+
+### motivation and applications
+The motivation for adopting a probabilistic (rather than purely deterministic) perspective in deep learning is rooted in a need for uncertainty quantification and structured representations. Some example domains include:
+
+- **Natural language processing**: Words and sentences are often ambiguous, and their interpretations can be best captured in a probabilistic sense (e.g., multiple meanings of a phrase).
+- **Vision**: An image may have occlusions, multiple objects in uncertain positions, or otherwise incomplete evidence. A probabilistic framework can model the variety of plausible scenes or segmentations.
+- **Reinforcement learning**: In sequential decision-making, the environment's states and transitions are typically uncertain. A deep probabilistic viewpoint can handle partial observability or belief states.
+- **Time-series**: Future events in a sequence can be modeled with predictive distributions, capturing the variance and possible future trajectories.
+- **Large-scale web systems**: For example, in recommendation or question-answering systems (think IBM Watson), we often combine multiple candidate sources of evidence in a probabilistic ensemble. This can help calibrate confidence scores or guide the search among candidate answers.
+
+### key distinctions
+The main difference between purely deterministic neural networks and deep probabilistic or Bayesian frameworks lies in how they treat parameters and predictions:
+
+- **Deterministic neural networks**: They learn a single set of network weights. Once trained, they output a single deterministic prediction (though they can appear stochastic if some dropout or random data augmentation is used at inference, that typically is not part of a principled probabilistic mechanism).
+- **Probabilistic/Bayesian neural networks**: They treat weights (and/or outputs) as random variables. In a Bayesian approach, you maintain a distribution over weights and integrate over that distribution to make predictions. In many latent variable models, part of the model is a distribution that explains unobserved factors. The prediction is a probability distribution over possible outcomes, not just a single point estimate.
+
+------
+
+## topic-related probability refresher
+
+### random variables
+A random variable is a variable that can take on different values according to some probability distribution. In the context of deep probabilistic models:
+
+- **Discrete random variables**: typically used for categorical phenomena (e.g., a class label for classification, or the presence/absence of certain attributes). For instance, in text generation, you might have discrete variables representing tokens.
+- **Continuous random variables**: typically used for real-valued phenomena (e.g., the location of an object in an image, or a latent code in a variational autoencoder). Gaussian or related distributions often appear in these settings.
+
+Many deep latent variable models, like VAEs, contain continuous latent variables, while other deep models for text and NLP might incorporate discrete latent structures.
+
+### joint & conditional distributions
+For random variables <Latex text="\(X\)"/> and <Latex text="\(Y\)"/>, the joint distribution <Latex text="\(p(x, y)\)"/> encodes the probabilities or densities for pairs of values <Latex text="(x, y)"/>. Conditional distributions appear when we condition on one variable to get <Latex text="\(p(y \mid x)\)"/>. In a deep model, we often define a distribution of the form:
+
+<Latex text="\[
+p_\theta(x, z) = p_\theta(z)\, p_\theta(x \mid z),
+\]"/>
+
+where <Latex text="\(z\)"/> is a latent variable. This factorization into <Latex text="\(p_\theta(z)\)"/> (the prior) and <Latex text="\(p_\theta(x \mid z)\)"/> (the likelihood or observation model) is central to many generative models.
+
+### marginalization & factorization
+Marginalization is the operation of integrating or summing out hidden variables. For example, to obtain <Latex text="\(p_\theta(x)\)"/>, we write:
+
+<Latex text="\[
+p_\theta(x) = \sum_{z} p_\theta(x, z) \quad \text{(if \(z\) is discrete)}
+\]"/>
+
+or
+
+<Latex text="\[
+p_\theta(x) = \int p_\theta(x, z)\, dz \quad \text{(if \(z\) is continuous).}
+\]"/>
+
+In large-scale deep probabilistic models, exactly performing this sum or integral is often intractable, which motivates approximate inference strategies like variational methods.
+
+------
+
+## likelihood function, again
+The likelihood function <Latex text="\(L(\theta)\)"/> for observed data <Latex text="\(x\)"/> is simply <Latex text="\(p_\theta(x)\)"/> viewed as a function of <Latex text="\(\theta\)"/>. Maximizing <Latex text="\(p_\theta(x)\)"/> typically corresponds to "fitting" or "training" the model parameters <Latex text="\(\theta\)"/>. 
+
+- **MLE (maximum likelihood estimation)**: we choose <Latex text="\(\theta\)"/> to maximize <Latex text="\(p_\theta(x)\)"/>.
+- **Log-likelihood**: often used for numerical stability. We prefer <Latex text="\(\log p_\theta(x)\)"/> in optimization, which turns products into sums and can help avoid underflow in large-scale data.
+
+Consider a dataset <Latex text="\( \{x_i\}_{i=1}^N\)"/>. Under an i.i.d. assumption, the likelihood is <Latex text="\(\prod_{i=1}^N p_\theta(x_i)\)"/>, or in log-form <Latex text="\(\sum_{i=1}^N \log p_\theta(x_i)\)"/>. Almost all modern large-scale approaches in deep probabilistic models rely on gradient-based optimization of this log-likelihood or some suitable proxy objective (like the evidence lower bound, or ELBO).
+
+------
+
+## bayesian networks and graphical models
+
+### directed graphical models
+A Bayesian network is a directed acyclic graph whose nodes represent random variables, and edges encode direct conditional dependencies. It factorizes a joint distribution as a product of local conditionals:
+
+<Latex text="\[
+p(x_1, \ldots, x_n) = \prod_{i=1}^n p(x_i \mid \text{Parents}(x_i)).
+\]"/>
+
+In a deep setting, imagine you have hidden layers <Latex text="\(\mathbf{z}_1, \mathbf{z}_2, \ldots\)"/> forming a deep generative chain. A simplified example might be:
+
+<Latex text="\[
+\mathbf{z}_1 \sim p_\theta(\mathbf{z}_1), \quad
+\mathbf{z}_2 \sim p_\theta(\mathbf{z}_2 \mid \mathbf{z}_1), \quad
+\ldots, \quad
+\mathbf{x} \sim p_\theta(\mathbf{x} \mid \mathbf{z}_k).
+\]"/>
+
+Deep Bayesian networks can represent complicated dependencies, but often come at the cost of more complex inference.
+
+### inference in bayesian networks
+Given a Bayesian network <Latex text="\(p_\theta(\mathbf{x}, \mathbf{z})\)"/>, we want <Latex text="\(p_\theta(\mathbf{z} \mid \mathbf{x})\)"/> or the marginal <Latex text="\(p_\theta(\mathbf{x})\)"/>. Exact summation or integration over <Latex text="\(\mathbf{z}\)"/> can be expensive or entirely intractable, especially as the dimension or structure grows. Instead, approximate methods (message passing, MCMC, variational inference) are used.
+
+### modeling complex systems
+Graphical models shine when you want to incorporate domain knowledge in conditional structure. For instance, in sensor fusion or medical diagnosis, you might structure your Bayesian network so it captures well-known conditional independencies. Or in large-scale QA systems (like IBM Watson), a Bayesian network can orchestrate how multiple candidate evidence sources combine into a final answer with a model of uncertainty.
+
+------
+
+## hidden markov models and deep probabilistic models
+A Hidden Markov Model (HMM) is a type of Bayesian network specialized for sequence data, with the structure <Latex text="\(z_1 \rightarrow z_2 \rightarrow \cdots \rightarrow z_T\)"/> and <Latex text="\(x_t \leftarrow z_t\)"/> for <Latex text="\(t=1,2,\ldots,T\)"/>. The latent states <Latex text="\(z_t\)"/> form a Markov chain, and each <Latex text="\(x_t\)"/> depends only on the corresponding <Latex text="\(z_t\)"/>.
+
+**Deep HMMs** can incorporate deep neural layers in the emission or transition probabilities. For instance, <Latex text="\(p_\theta(x_t \mid z_t)\)"/> might be parameterized by a neural network. Alternatively, we can chain multiple layers of hidden states. Although standard HMMs are limited in expressiveness, adding neural architectures can yield significantly richer sequence models.
+
+------
+
+## viterbi algorithm for sequence decoding
+
+### viterbi recurrence
+The Viterbi algorithm is a dynamic programming method for finding the most likely hidden state sequence <Latex text="\(z_{1:T}\)"/> given an observation sequence <Latex text="\(x_{1:T}\)"/> in an HMM. If <Latex text="\(p(\mathbf{z}, \mathbf{x})\)"/> denotes the joint likelihood of states and observations, Viterbi aims to solve:
+
+<Latex text="\[
+\arg \max_{z_{1:T}} p(z_1)\prod_{t=2}^T p(z_t \mid z_{t-1}) \prod_{t=1}^T p(x_t \mid z_t).
+\]"/>
+
+The recurrence for <Latex text="\(\delta_t(j)\)"/>, which denotes the highest probability of any state path reaching state <Latex text="\(j\)"/> at time <Latex text="\(t\)"/>, is typically:
+
+<Latex text="\[
+\delta_{t}(j) = \Bigl[\max_i \delta_{t-1}(i) \, p(z_t = j \mid z_{t-1} = i)\Bigr]\, p(x_t \mid z_t = j).
+\]"/>
+
+### use cases
+- **Part-of-speech tagging**: Identify the most likely POS sequence <Latex text="\(z_{1:T}\)"/> for the words in a sentence <Latex text="\(x_{1:T}\)"/>.
+- **Speech recognition**: Find the best word or phoneme sequence given acoustic frames.
+- **Other sequence prediction tasks**: Any domain with Markov assumptions over hidden states.
+
+### comparison with other decoding methods
+- **Greedy**: picks the locally best state at each step; not guaranteed globally optimal.
+- **Exhaustive**: enumerates all possible sequences; for large <Latex text="\(T\)"/>, this is exponential in <Latex text="\(T\)"/>.
+- **Viterbi**: polynomial complexity <Latex text="\(\mathcal{O}(T \cdot \#\text{states}^2)\)"/> for standard HMMs.
+
+------
+
+## baum-welch algorithm for hmm parameter estimation
+The Baum-Welch algorithm is an application of Expectation-Maximization (EM) for HMMs:
+
+- **Expectation step (E)**: Compute posterior probabilities over latent state sequences given the current model parameters <Latex text="\(\theta\)"/>. This typically uses the forward-backward procedure.
+- **Maximization step (M)**: Update <Latex text="\(\theta\)"/> by maximizing the expected complete-data log-likelihood under those posterior probabilities.
+
+### em approach
+<Latex text="\[
+\text{E-step}: \; Q(\theta, \theta^{(old)}) = \mathbb{E}_{p_{\theta^{(old)}}(z \mid x)}[\log p_\theta(x, z)].
+\]"/>
+
+<Latex text="\[
+\text{M-step}: \; \theta^{(new)} = \arg \max_\theta \, Q(\theta, \theta^{(old)}).
+\]"/>
+
+### implementation details
+When <Latex text="\(T\)"/> or the number of states is large, numerical stability issues (underflow) become central. Typically, logs are used throughout forward-backward computations. 
+
+### extensions beyond hmm
+The same iterative refinement idea extends to other latent variable models — any model with hidden <Latex text="\(z\)"/> can in principle use EM if exact computations are tractable or can be approximated (leading to variational EM).
+
+------
+
+## deep probabilistic models in time-series analysis
+Time-series often combine:
+
+1. A **latent process** that evolves over time (like <Latex text="\(z_t\)"/> states).
+2. **Deep neural networks** that model transitions or emissions in a flexible, high-capacity way.
+
+Examples:
+- **Deep Markov Model (DMM)**: a continuous-state generalization of HMM, but using neural networks for transitions and emissions. 
+- **Recurrent VAEs**: a variational autoencoder that processes sequential data, capturing high-level features in a latent space but also modeling the time evolution in a flexible manner.
+
+------
+
+## text pre-processing for probabilistic models
+In natural language processing contexts, we often feed text data <Latex text="\(x\)"/> into deep probabilistic models. Typical steps include:
+
+### tokenization & normalization
+- **Tokenization**: Splitting text into tokens (e.g., words, subwords, or characters). This yields a discrete sequence <Latex text="\(x_1, x_2, \ldots\)"/>.
+- **Normalization**: Lowercasing, removing punctuation, possibly lemmatizing. This ensures consistent input forms.
+
+### handling unknown words / out-of-vocabulary
+In a purely discrete model, an out-of-vocabulary (OOV) word leads to immediate mismatch. Approaches:
+- Use an <Highlight>UNK token</Highlight> to represent unseen words.
+- Use subword or character-based tokenization to drastically reduce OOV frequency.
+- In a probabilistic language model, the system might place a small probability on all unknown tokens.
+
+### feature engineering vs. learned representations
+Older pipelines might rely on hand-designed text features (e.g., TF-IDF). Modern deep probabilistic text models directly learn embeddings that better preserve semantic or syntactic structure. E.g., a deep Bayesian text classifier might embed text into a latent space and place a prior on those embeddings.
+
+------
+
+## part-of-speech tagging with probabilistic methods
+POS tagging is a canonical example for introducing hidden variable models in NLP. We can treat POS tags <Latex text="\(z_t\)"/> as hidden states, with each word <Latex text="\(x_t\)"/> conditionally dependent on <Latex text="\(z_t\)"/>.
+
+### hmm for pos tagging
+The classic approach uses transitions <Latex text="\(p(z_t \mid z_{t-1})\)"/> and emissions <Latex text="\(p(x_t \mid z_t)\)"/>. The Viterbi algorithm finds the best <Latex text="\(z_{1:T}\)"/>.
+
+### viterbi in tagging
+We compute <Latex text="\(\delta_t(j)\)"/> for each possible tag <Latex text="\(j\)"/> at position <Latex text="\(t\)"/>. The final result is the path of tags maximizing the product of transitions and emissions.
+
+### deep extensions
+State-of-the-art taggers often incorporate deep neural networks (e.g., BiLSTMs or Transformers) for richer feature extraction, with a CRF or HMM-like layer on top. This can be interpreted as a deep probabilistic approach if we keep a well-defined distribution over tags.
+
+------
+
+## ibm watson and practical large-scale inference
+IBM Watson's "DeepQA" system (famous for playing Jeopardy!) illustrates how multiple probabilistic modules can be combined with large corpora:
+
+### watson's architecture
+- **Search-based modules** identify candidate documents or passages for an input query.
+- **Scoring**: Each candidate answer is scored with learned models that incorporate textual features, structured knowledge, and confidence metrics.
+- **Probabilistic ensembles**: The overall confidence in an answer is an aggregate of multiple features, often computed in a log-linear or Bayesian fashion.
+
+### ml pipelines in watson
+Text pre-processing, search, candidate generation, scoring, and re-ranking happen in stages. Each stage can be framed probabilistically, e.g., "Given the question <Latex text="\(q\)"/>, what is the probability that snippet <Latex text="\(s\)"/> is relevant?"
+
+### lessons learned
+In large-scale systems, robust uncertainty estimation can be vital. Overconfident or miscalibrated modules lead to poor overall performance. A well-designed probabilistic ensemble can sometimes offset mistakes from individual modules and lead to better final answers.
+
+------
+
+## deep probabilistic models
+Up to now, we have seen or mentioned discrete latent variable models (e.g., HMM) and simpler parametric structures. We now discuss advanced deep probabilistic models more comprehensively:
+
+### univariate conditionals
+A single <Latex text="\(y\)"/> given <Latex text="\(x\)"/> might be discrete (like a classification) or continuous (like a real-valued measurement). A neural network can parameterize a probability distribution in either case. For instance, for regression:
+
+<Latex text="\[
+y \mid x \sim \mathcal{N}\bigl(\mu_\theta(x),\, \sigma^2_\theta(x)\bigr).
+\]"/>
+
+### parameter estimation via maximum likelihood
+We define <Latex text="\(p_\theta(y \mid x)\)"/> as a distribution from the neural predictor. Then we fit <Latex text="\(\theta\)"/> to maximize the log-likelihood of observed data <Latex text="\((x_i, y_i)\)"/>:
+
+<Latex text="\[
+\mathcal{L}(\theta) = \sum_i \log p_\theta(y_i \mid x_i).
+\]"/>
+
+### decision rules & bayesian decision theory
+Given a predicted distribution <Latex text="\(p_\theta(y \mid x)\)"/>, you might want to choose an action <Latex text="\(a\)"/> to maximize expected utility:
+
+<Latex text="\[
+a^* = \arg\max_a \sum_y u(a, y)\, p_\theta(y \mid x),
+\]"/>
+
+where <Latex text="\(u(a, y)\)"/> is the utility of action <Latex text="\(a\)"/> when the true outcome is <Latex text="\(y\)"/>. In many classification tasks with 0-1 utility, we take the mode <Latex text="\(\arg \max_y p_\theta(y \mid x)\)"/>. In other tasks, we might prefer the mean or median if we measure losses like squared error or absolute deviations.
+
+------
+
+## advanced autoregressive and structured models
+When outputs <Latex text="\(y\)"/> are sequences, trees, or graphs, a factorized approach is possible. For instance, we can express the probability of a sequence <Latex text="\(y_{1:T}\)"/> by the chain rule:
+
+<Latex text="\[
+p_\theta(y_{1:T} \mid x) = \prod_{t=1}^T p_\theta(y_t \mid y_{1:t-1}, x).
+\]"/>
+
+### autoregressive taggers
+In POS tagging or other labeling tasks, some advanced taggers approximate:
+
+<Latex text="\[
+p_\theta(z_1, \ldots, z_T \mid x) = \prod_{t=1}^T p_\theta(z_t \mid z_{1:t-1}, x).
+\]"/>
+
+### exact vs. approximate decoding
+- For purely factorized or conditionally independent structures, you can decode in <Latex text="\(\mathcal{O}(T)\)"/> by picking each <Latex text="\(z_t\)"/>. 
+- For fully autoregressive or other advanced factorization, searching for the exact mode might be <Latex text="\(\mathsf{NP}\)"/>-hard. Instead, we use approximate methods like greedy search or beam search.
+
+### beam search & greedy approaches
+These are heuristics for approximate decoding, used widely in machine translation, text generation, or structured prediction. They strike a trade-off between computational cost and search accuracy.
+
+------
+
+## variational inference
+In many deep probabilistic models, a central challenge is dealing with hidden (latent) variables <Latex text="\(z\)"/> in <Latex text="\(p_\theta(x, z)\)"/>. The posterior <Latex text="\(p_\theta(z \mid x)\)"/> is typically intractable. Variational inference addresses this problem by introducing a simpler distribution <Latex text="\(q_\phi(z \mid x)\)"/> (the variational distribution or inference model) to approximate <Latex text="\(p_\theta(z \mid x)\)"/>. 
+
+### importance of latent variable models
+Latent variables capture hidden structure, making the model more expressive. But the marginal <Latex text="\(p_\theta(x)\)"/> is <Latex text="\(\int p_\theta(x, z)\, dz\)"/> (for continuous <Latex text="\(z\)"/>) or <Latex text="\(\sum_z p_\theta(x, z)\)"/> (discrete). That integral or sum can be huge.
+
+### elbo formulation
+The **Evidence Lower BOund (ELBO)** is given by:
+
+<Latex text="\[
+\log p_\theta(x) \ge \mathbb{E}_{q_\phi(z \mid x)}\bigl[\log p_\theta(x \mid z)\bigr] - \mathrm{KL}\bigl[q_\phi(z \mid x) \;||\; p_\theta(z)\bigr].
+\]"/>
+
+Maximizing this lower bound w.r.t. <Latex text="\(\theta\)"/> and <Latex text="\(\phi\)"/> is equivalent to performing approximate maximum likelihood on <Latex text="\(p_\theta\)"/> while also improving <Latex text="\(q_\phi\)"/> as an approximation to the true posterior.
+
+### gradient estimation techniques
+- **Score-function (REINFORCE or NVIL)**: Directly estimates the gradient of the ELBO by seeing the log of <Latex text="\(q_\phi(z \mid x)\)"/> as a "policy." Often exhibits high variance, but can handle discrete or complicated <Latex text="\(z\)"/>.
+- **Reparameterization trick**: For continuous reparameterizable distributions (like Gaussians), we write <Latex text="\(z = \mu_\phi(x) + \sigma_\phi(x) \odot \epsilon\)"/>, <Latex text="\(\epsilon \sim \mathcal{N}(0, I)\)"/>. This typically yields lower-variance gradient estimates.
+
+------
+
+## variational inference for deep discrete latent variables
+When <Latex text="\(z\)"/> is discrete, we often rely on score-function or related gradient estimators. For example, in a discrete autoencoder with <Latex text="\(z \in \{1,\ldots,K\}^D\)"/>, enumerating <Latex text="\(K^D\)"/> possibilities is usually impossible. Instead we define a factorized or structured <Latex text="\(q_\phi(z \mid x)\)"/> (like a product of categorical distributions) and do a typical policy-gradient approach.
+
+### discrete vs. continuous
+Discrete latent spaces cannot typically exploit the reparameterization trick. There are advanced methods (e.g., Gumbel-Softmax, straight-through estimators, or more sophisticated relaxations) that attempt to approximate discrete sampling with continuous surrogates. But a standard fallback is the score-function approach plus variance reduction techniques.
+
+### neural variational inference
+This phrase often means constructing <Latex text="\(q_\phi(z \mid x)\)"/> with a neural network, plus using gradient-based optimization of the ELBO. Many architectures show up in tasks like neural clustering, discrete sequence autoencoders, or generative models for text.
+
+### examples in practice
+- **Mixture of experts**: <Latex text="\(z\)"/> might be an indicator for which "expert" neural network processes the input. 
+- **Discrete autoencoders**: <Latex text="\(z\)"/> is a code from a codebook (like VQ-VAE).
+- **Latent classification variables**: <Latex text="\(z\)"/> might represent class membership, combined with deeper generative structure for <Latex text="\(x\)"/>.
+
+------
+
+## continuous latent variable models (vaes)
+If <Latex text="\(z\)"/> is continuous, we can often exploit reparameterization-based variational inference. The classical example is the **Variational Autoencoder (VAE)**.
+
+### gaussian prior & posterior
+A standard approach is:
+
+<Latex text="\[
+z \sim \mathcal{N}(0, I), \quad
+x \mid z \sim p_\theta(x \mid z),
+\]"/>
+
+and approximate <Latex text="\(p_\theta(z \mid x)\)"/> by a diagonal Gaussian <Latex text="\(q_\phi(z \mid x)\)"/> with neural networks for its mean and variance. Then we can sample
+
+<Latex text="\[
+z = \mu_\phi(x) + \sigma_\phi(x)\odot \epsilon, \quad \epsilon \sim \mathcal{N}(0, I).
+\]"/>
+
+### decoder architectures
+- **FFNN**: simple flattening from the latent code <Latex text="\(z\)"/> to output <Latex text="\(x\)"/>.
+- **Convolutional decoders**: useful for image data, building an up-sampling or transposed convolution pipeline from <Latex text="\(z\)"/> to an <Latex text="\(H \times W \times \text{channels}\)"/> image.
+
+### extensions: normalizing flows, hierarchical vaes
+- **Normalizing flows**: let you transform a simple distribution (like a diagonal Gaussian) into a more flexible one by applying a series of invertible transformations. This is a powerful method to approximate complicated posteriors.
+- **Hierarchical VAEs**: stack multiple latent layers <Latex text="\(z_1, z_2, \ldots\)"/> so each distribution can capture different levels of abstraction.
+
+------
+
+## practical implementation tips
+
+### hardware considerations
+Training deep probabilistic models can be GPU intensive. Some tips:
+- **Batch sizes**: Large batches can speed up training, but memory usage might blow up (especially if the model enumerates or stores large distributions). 
+- **Mixed precision**: If using libraries that support half-precision, watch for potential numerical instabilities in computing log probabilities.
+
+### hyperparameters & regularization
+- **KL-term weighting**: In VAEs, the <Latex text="\(\mathrm{KL}[q_\phi(z \mid x)||p(z)]\)"/> can be scaled by a factor <Latex text="\(\beta\)"/>. This is often used to encourage certain properties (e.g., encouraging more or fewer codes to be used).
+- **Early stopping**: Evaluate the ELBO on validation data to prevent overfitting. 
+- **Learning rates**: reparameterized models often do well with Adam or other adaptive optimizers. For SFE-based discrete models, RMSProp might handle high variance better.
+
+### debugging convergence
+- **Posterior collapse**: sometimes the VAE training leads <Latex text="\(q_\phi(z \mid x)\)"/> to ignore <Latex text="\(x\)"/>, collapsing to the prior. 
+- **Mode-seeking behavior**: especially in discrete latent variable models. 
+- **Vanishing or exploding gradients**: as usual in deep learning, watch for numerical stability.
+
+------
+
+## future directions & conclusion
+Deep probabilistic models are a rich and rapidly evolving area. Some directions include:
+
+- **scalable inference**: Stochastic, distributed, or streaming approaches for extremely large datasets or streaming data.
+- **structured latent spaces**: Incorporating domain knowledge (graphs, hierarchies) to achieve interpretability or improved performance.
+- **advanced expansions**: bridging symbolic AI with deep probabilistic approaches for logic, reasoning, or knowledge representation.
+
+In conclusion, deep probabilistic models unite the representational depth of neural networks with the interpretability and rigor of probability theory. Through frameworks like Bayesian networks, HMMs, VAEs, and their numerous extensions, we can capture a wide variety of data modalities and structures while still maintaining a principled handle on uncertainty. The combination of approximate inference strategies — variational or otherwise — and high-capacity decoders or prior structures continues to open new frontiers in machine learning research and practical enterprise applications alike.
+
+------
+
+## references and further reading
+- D.P. Kingma, M. Welling. "Auto-Encoding Variational Bayes." *ICLR*, 2014.
+- Rezende, D.J., Mohamed, S. "Variational Inference with Normalizing Flows." *ICML*, 2015.
+- Bishop, C.M. "Pattern Recognition and Machine Learning." *Springer*, 2006.
+- Jordan, M.I., Ghahramani, Z., Jaakkola, T.S., and Saul, L.K. "An Introduction to Variational Methods for Graphical Models." *Machine Learning*, 1999.
+- Neal, R.M. "Bayesian Learning for Neural Networks." *Ph.D. Thesis*, 1995.
+- Blei, D.M., Kucukelbir, A., and McAuliffe, J.D. "Variational Inference: A Review for Statisticians." *J. American Statistical Association*, 2017.
+- J. Ba, R. R. Salakhutdinov, R. Grosse, B. Frey. "Learning Wake-Sleep Recurrent Attention Models." *NeurIPS*, 2015.
+- J. Pearl. "Probabilistic Reasoning in Intelligent Systems: Networks of Plausible Inference." *Morgan Kaufmann*, 1988.
+
+------
+
+## code snippets: an illustrative example
+
+Below is a simplified code demonstration (in Python) that references the core building blocks used in many deep probabilistic modeling workflows. We wrap it in an example of training a variational autoencoder with a Gaussian prior <Latex text="\(p_\theta(z)\)"/> and a Bernoulli decoder <Latex text="\(p_\theta(x \mid z)\)"/>. We then show how to build an inference network <Latex text="\(q_\phi(z \mid x)\)"/> that is also Gaussian.
+
+**Note**: This is a self-contained snippet that demonstrates the essential logic. In a real codebase, you would typically separate modules, handle data loaders more carefully, add logging, etc.
+
+<Code text={`
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import torch.optim as optim
+from torch.utils.data import DataLoader
+import numpy as np
+
+# Suppose we have a dataset X in shape (N, x_dim).
+# We define a simple VAE with:
+#   - p(z) = N(0, I)
+#   - p(x|z) = Bernoulli( decoder(z) )
+#   - q(z|x) = N(mu(x), diag(sigma^2(x)))
+
+class Encoder(nn.Module):
+    def __init__(self, x_dim, z_dim, hidden_dim=256):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Linear(x_dim, hidden_dim),
+            nn.ReLU(),
+            nn.Linear(hidden_dim, hidden_dim),
+            nn.ReLU(),
+        )
+        # separate heads for mean and log-variance
+        self.mu_head = nn.Linear(hidden_dim, z_dim)
+        self.logvar_head = nn.Linear(hidden_dim, z_dim)
+    
+    def forward(self, x):
+        h = self.net(x)
+        mu = self.mu_head(h)
+        logvar = self.logvar_head(h)
+        return mu, logvar
+
+class Decoder(nn.Module):
+    def __init__(self, z_dim, x_dim, hidden_dim=256):
+        super().__init__()
+        self.net = nn.Sequential(
+            nn.Linear(z_dim, hidden_dim),
+            nn.ReLU(),
+            nn.Linear(hidden_dim, hidden_dim),
+            nn.ReLU(),
+            nn.Linear(hidden_dim, x_dim),
+        )
+    
+    def forward(self, z):
+        # outputs logits for Bernoulli
+        return self.net(z)
+
+class VAE(nn.Module):
+    def __init__(self, x_dim, z_dim, hidden_dim=256):
+        super().__init__()
+        self.encoder = Encoder(x_dim, z_dim, hidden_dim)
+        self.decoder = Decoder(z_dim, x_dim, hidden_dim)
+        self.z_dim = z_dim
+    
+    def reparameterize(self, mu, logvar):
+        # z = mu + eps * sigma
+        # logvar is log(sigma^2), so sigma = exp(0.5*logvar)
+        std = torch.exp(0.5 * logvar)
+        eps = torch.randn_like(std)
+        return mu + eps * std
+
+    def forward(self, x):
+        # encode
+        mu, logvar = self.encoder(x)
+        z = self.reparameterize(mu, logvar)
+        # decode
+        logits = self.decoder(z)
+        return logits, mu, logvar
+
+def vae_loss(x, logits, mu, logvar):
+    # Reconstruction term: Bernoulli negative log-likelihood
+    # We use F.binary_cross_entropy_with_logits in PyTorch
+    recon_loss = F.binary_cross_entropy_with_logits(
+        logits, x, reduction='sum'
+    )
+    # KL term: D_KL( N(mu, diag(sigma^2)) || N(0, I) )
+    # = 0.5 * sum( exp(logvar) + mu^2 - 1 - logvar )
+    kld = 0.5 * torch.sum(torch.exp(logvar) + mu**2 - 1.0 - logvar)
+    return recon_loss + kld
+
+# Example usage
+def train_vae(model, dataloader, optimizer, device):
+    model.train()
+    total_loss = 0.
+    for batch_x in dataloader:
+        batch_x = batch_x.to(device)
+        optimizer.zero_grad()
+        logits, mu, logvar = model(batch_x)
+        loss = vae_loss(batch_x, logits, mu, logvar)
+        loss.backward()
+        optimizer.step()
+        total_loss += loss.item()
+    return total_loss / len(dataloader.dataset)
+
+# Suppose x_dim=784 (like flattened MNIST), z_dim=20
+x_dim = 784
+z_dim = 20
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+vae_model = VAE(x_dim, z_dim).to(device)
+optimizer = optim.Adam(vae_model.parameters(), lr=1e-3)
+
+# Example: a fake dataset
+N = 1000
+fake_data = torch.bernoulli(torch.rand(N, x_dim))  # random Bernoulli
+dloader = DataLoader(fake_data, batch_size=64, shuffle=True)
+
+# training loop
+epochs = 3
+for ep in range(epochs):
+    loss_val = train_vae(vae_model, dloader, optimizer, device)
+    print(f"Epoch {ep} Loss = {loss_val:.3f}")
+
+`}/>
+  
+*(The above code uses a Bernoulli decoder for demonstration, as would be typical for binarized MNIST. Adjust the reconstruction term for continuous data if needed.)*
+
+------  
+
+I hope this long exploration has helped illuminate the wide spectrum of **Deep Probabilistic Models** — from HMMs and Bayesian networks to advanced VAEs and large-scale inference systems. By blending neural architectures with solid probabilistic reasoning, you can open up a world of interpretability, robustness to noise, and capacity to incorporate domain knowledge or uncertainty in a principled way.

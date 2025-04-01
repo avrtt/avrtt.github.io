@@ -1,0 +1,544 @@
+---
+index: 67
+indexCourse: 87
+indexFavorites:
+title: "Word embeddings"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Word embeddings"
+courseCategoryName: "Natural language processing"
+desc: "Meaning has direction and magnitude"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "14.08.2023"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 1
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/word_embeddings.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/word_embeddings"
+slug: "/research/word_embeddings"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+[https://www.youtube.com/watch?v=aZ5se_SW81c&list=PL4_hYwCyhAvY7k32D65q3xJVo8X8dc3Ye&index=2](https://www.youtube.com/watch?v=aZ5se_SW81c&list=PL4_hYwCyhAvY7k32D65q3xJVo8X8dc3Ye&index=2)  
+[https://www.youtube.com/watch?v=egvX1wGCKSg&list=PL4_hYwCyhAvY7k32D65q3xJVo8X8dc3Ye&index=3](https://www.youtube.com/watch?v=egvX1wGCKSg&list=PL4_hYwCyhAvY7k32D65q3xJVo8X8dc3Ye&index=3)  
+[https://www.youtube.com/watch?v=XlEHTf93Y8w&list=PL4_hYwCyhAvZLp0CTIDVQr9FtDR_7DaUr&index=1](https://www.youtube.com/watch?v=XlEHTf93Y8w&list=PL4_hYwCyhAvZLp0CTIDVQr9FtDR_7DaUr&index=1)  
+Векторное представление слов
+https://neerc.ifmo.ru/wiki/index.php?title=%D0%92%D0%B5%D0%BA%D1%82%D0%BE%D1%80%D0%BD%D0%BE%D0%B5_%D0%BF%D1%80%D0%B5%D0%B4%D1%81%D1%82%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D1%81%D0%BB%D0%BE%D0%B2
+
+*/}
+
+
+{/*
+
+1. Introduction to Embeddings
+- Definition of embeddings: Embeddings are dense, numerical vector representations of data (words, sentences, images, etc.) that capture semantic meanings.
+- Purpose and advantages: By converting raw data into fixed-length vectors, embeddings allow machine learning models to understand and compare complex data more effectively.
+- Example usage: Word embeddings represent similar words with similar vectors, enabling tasks like semantic search, recommendations, and anomaly detection.
+2. Key Use Cases of Embeddings
+- Semantic Search: Embeddings help capture the underlying intent of queries and documents, retrieving relevant information even when exact terms don't match.
+- Data Classification: Classifiers trained on embeddings can capture hidden relationships and improve accuracy for tasks like text classification, image categorization, and spam detection.
+- Recommendation Systems: By embedding both items and users, recommendation engines rank item similarity based on vector proximity, improving recommendation quality.
+- Anomaly Detection: Embeddings map data points in high-dimensional space, making outliers stand out from typical clusters, useful in fraud detection and quality control.
+3. Fundamentals of Word Embeddings
+- Definition of word embeddings: Dense vector representations that place semantically similar words close together in vector space.
+- Importance in NLP: They capture nuanced relationships like analogy (e.g., "king" + "woman" − "man" &asymp; "queen") and improve model performance on downstream tasks.
+- Comparison with other embeddings: Word embeddings are specialized for textual data, whereas other embeddings can represent images, audio, or broader contexts.
+4. One-Hot Encoding
+- Explanation: Assign each word a unique vector of length K (vocabulary size), with 1 in one position and 0 elsewhere.
+- Drawbacks: Large dimensionality, sparse representation, and inability to capture semantic similarity among words.
+5. Word2Vec
+- Overview of Word2Vec: A neural network-based method (by Tomas Mikolov) that learns word vectors from large text corpora by predicting context.
+- Skip-gram model: Predicts context words given a target word, useful for capturing rare word relationships.
+- CBOW (Continuous Bag of Words): Predicts a missing target word from its surrounding context.
+- Negative Sampling and Hierarchical Softmax: Speed up training by reducing the computational cost of predicting probabilities over the entire vocabulary.
+- Cosine Similarity: Measures vector closeness, reflecting semantic similarity.
+6. FastText
+- Subword (N-gram) approach: Represents words as the sum of their character n-gram embeddings, allowing out-of-vocabulary word handling.
+- Benefits over Word2Vec: Better at dealing with rare words or morphological variants by sharing subword units across different words.
+- Typical use cases: Especially effective in languages with rich morphology or limited corpora.
+7. GloVe
+- Concept: Global Vectors for Word Representation (GloVe) uses a matrix factorization approach on global word co-occurrence statistics.
+- Key idea: Leverages the ratio of co-occurrence probabilities to learn word relationships.
+- Differences from Word2Vec: Focuses on the entire corpus co-occurrence matrix rather than predicting local context windows only.
+8. ELMO
+- Contextual embeddings: Each occurrence of a word gets a different vector based on its sentence context.
+- BiLSTM architecture: Uses multiple layers of bidirectional LSTM, capturing both syntactic and semantic nuances at different depths.
+- Weighted layer combination: The final embedding is a weighted sum of all hidden layers, fine-tuned for a specific NLP task.
+9. BERT
+- Transformer-based model: Uses bidirectional self-attention layers instead of recurrent networks for context.
+- Masked Language Modeling: Randomly masks 15% of tokens and trains the model to predict them, improving deep bidirectional context capture.
+- Next Sentence Prediction: Helps the model learn how sentences logically follow one another, aiding downstream tasks like question answering.
+- Usage in downstream tasks: BERT's final hidden states can be fed into a classifier for tasks like sentiment analysis or named entity recognition.
+10. Implementation with Gensim (Examples)
+- Loading pre-trained embeddings: Demonstration of loading the Russian "word2vec-ruscorpora-300" model and querying word similarities.
+- Training Word2Vec: Shows how to train on an English corpus (e.g., text8) and compute most similar words.
+- Training FastText: Illustrates how to handle out-of-vocabulary words using subword embeddings.
+- Practical code snippets: Examples of similarity, analogy tasks, and finding the odd-one-out.
+11. Additional Considerations
+- Data Preprocessing: Tokenization, lowercasing, and handling special characters are crucial for better embeddings.
+- Dimensionality and Hyperparameters: Choosing vector size, window context, and negative samples can heavily impact results.
+- Domain-Specific Embeddings: Adapting or fine-tuning models for specialized domains (medical, legal, etc.) can yield better performance.
+- Model Interpretability: Understanding how embeddings encode meaning remains an area of active research.
+12. Conclusion
+- Summary of key concepts: Word embeddings revolutionize NLP by providing dense, semantic representations of text.
+- Future directions: Contextual embeddings (like ELMO, BERT) point toward even more powerful language models.
+- Final remarks: Word embeddings continue to evolve, influencing tasks beyond NLP, including multimodal applications in images and audio.
+13. References
+- Word2Vec article by Mikolov: https://arxiv.org/abs/1301.3781
+- FastText article: https://arxiv.org/pdf/1607.04606.pdf
+- BERT article: https://arxiv.org/abs/1810.04805
+- ELMO article: https://arxiv.org/abs/1802.05365
+- Gensim documentation: https://radimrehurek.com/gensim
+- Other tutorials and code: https://github.com/RaRe-Technologies/gensim-data, https://code.google.com/archive/p/word2vec/
+
+*/}
+
+
+Embeddings are a powerful and versatile method of representing data — such as words, sentences, images, or audio — as dense numerical vectors in a high-dimensional space. The underlying purpose of these embeddings is to capture semantic meaning or other significant relationships in the data, which can then be leveraged by machine learning models for tasks ranging from text classification to recommendation systems. Unlike traditional methods that rely on sparse, high-dimensional encodings (e.g., one-hot vectors), embeddings make it feasible to map similar items close together in a continuous vector space, thereby greatly enhancing a model's ability to generalize, detect patterns, and make nuanced comparisons.
+
+In natural language processing (<Highlight>NLP</Highlight>), word embeddings transform each word in a vocabulary into a fixed-length vector. Two words that often appear in similar contexts — such as "doctor" and "physician" — are placed relatively close to each other in the embedded space. This notion of "closeness" typically relies on a similarity measure, often <Latex text="\( \text{cosine similarity} \)"/>. When these embeddings are plugged into machine learning models (e.g., for classification, question answering, or sentiment analysis), they facilitate a deeper understanding of text by highlighting semantic and syntactic relationships that discrete indexes simply cannot capture on their own.
+
+There has been a long evolution from naive bag-of-words encodings to more advanced contextual embeddings that adapt to the specific usage and context of a word. In modern <Highlight>NLP</Highlight> pipelines, embeddings such as <Highlight>Word2Vec</Highlight>, <Highlight>FastText</Highlight>, <Highlight>GloVe</Highlight>, <Highlight>ELMo</Highlight>, and <Highlight>BERT</Highlight> are a staple. These approaches have revolutionized the field by bringing in robust representational capabilities that drastically improve downstream tasks like named entity recognition, text classification, machine translation, and even question answering and summarization.
+
+When extended beyond text, the concept of embeddings can map entire sentences, paragraphs, or documents into vectors, and can similarly be used for images, audio, and video data. In short, embeddings serve as a powerful foundation for many advanced applications, enabling computers to interpret meaning in a manner that is much closer to how humans understand language and other data modalities.  
+
+By the end of this article, the reader should have a solid grasp of word embeddings from the ground up, starting with simple one-hot representations and moving on to advanced neural-based or transformer-based approaches. I will also present code snippets, practical tips, and references to influential research that shaped these techniques. Let's dive deeper into how we get from raw text to semantically rich vectors.
+
+
+## Key use cases of embeddings
+
+Embeddings excel in a diverse range of applications. While word embeddings are most often associated with NLP tasks, the general concept can be applied to any domain in which we need to capture nuanced relationships among entities. Below are some of the most prominent use cases for embeddings and why they have become indispensable in modern data science.
+
+### Semantic search
+
+Semantic search is a retrieval mechanism that goes beyond raw keyword matching. Instead of merely scanning for the exact word or phrase in a target document, a semantic search engine transforms both the query and the documents into vectors using an embedding model. These vectors ideally capture semantic information, so that two different phrases or queries referencing the same underlying concept will be placed close to each other in the embedding space.
+
+By comparing the distance (or similarity) between vectors, a semantic search system can match a query against documents or other entities even if the precise terms are not shared. This is particularly important in applications like legal and academic search, customer support chatbots, or large-scale knowledge base retrieval. An end user might ask for "the official guidelines on property maintenance" and retrieve documents that mention "building upkeep regulations," which is not guaranteed when performing a simple keyword search.
+
+Common similarity metrics include <Latex text="\( \text{cosine similarity} \)"/>, <Latex text="\( L2 \)"/> distance, or even learned distance measures in more advanced scenarios. The advantage of embeddings is their ability to group conceptually similar items together, greatly boosting retrieval performance in real-world systems.
+
+### Data classification
+
+Word embeddings make data classification more powerful by creating a dense, information-rich input representation. Traditional classification pipelines (e.g., logistic regression or feed-forward neural networks) can suffer when the inputs are too sparse or lack semantic relationships. When text or other forms of raw data are embedded, the resulting vectors capture underlying patterns, thereby allowing simple classifiers to perform better.
+
+For example, in spam detection, an embedding-based approach can recognize that terms like "miracle cure," "free money," and "unbelievable offer" share a certain semantic domain of "promotional or suspicious content." Even if the text changes slightly (e.g., "100% free gift" vs. "completely free giveaway"), an embedding-based classification model can pick up that the messages carry similar meaning. This improves the model's recall and precision, and it often yields more robust results compared to purely keyword-based approaches.
+
+### Recommendation systems
+
+In recommendation systems, embeddings have become a vital tool for representing both users and items in the same latent vector space. Here, the typical approach might be to embed users based on their interactions or preferences and items based on their properties. If a user's vector representation is close to an item's vector representation, we can infer that the user is likely to enjoy or consume that item. This approach is widely used in streaming media platforms, e-commerce sites, and social media recommendation feeds.
+
+The underlying logic is often the same: by converting the data — user tastes, item genres, textual descriptions, or even item images — into dense vectors, the model can measure similarity as a proxy for compatibility. Large-scale solutions, such as collaborative filtering or neural collaborative filtering methods, often rely on some variant of embeddings to capture underlying structures in user-item interactions.
+
+### Anomaly detection
+
+Anomaly detection with embeddings hinges on the principle that "normal" data clusters together in embedding space, whereas outliers or anomalies lie far from these clusters. In text-based anomaly detection — say, for fraud detection in textual logs — one can embed each log message or user query as a vector. If a new message is placed in a region that rarely appears in the training distribution, the system flags it as potentially suspicious.
+
+This approach can be adapted across diverse domains, including network intrusion detection, insurance claims analysis, or manufacturing defect detection. The embedding step often reveals patterns that wouldn't be evident with simpler feature engineering, because embeddings can capture more subtle context and relationships.
+
+
+## Fundamentals of word embeddings
+
+Word embeddings are a specialized form of embeddings used strictly for representing individual words within a language. In this paradigm, each word from the vocabulary is mapped to a dense vector in a relatively low-dimensional space (for instance, 50–300 dimensions, though some embeddings go even higher). These vectors are learned by analyzing the contexts in which words appear, under the assumption that words occurring in similar contexts are semantically related.
+
+A famous demonstration of the power of word embeddings is analogy reasoning:  
+<Latex text="\[
+\text{king} - \text{man} + \text{woman} \approx \text{queen}
+\]"/>  
+This arises not because the model "understands" the meaning of monarchy or gender but because it detects consistent contextual shifts in how these words are used in a large corpus.
+
+These embeddings significantly simplify tasks that rely on lexical or semantic information. Before their introduction, manual feature engineering or large, sparse one-hot vectors were prevalent, creating difficulties in capturing word similarity or more nuanced linguistic phenomena. Modern NLP has effectively replaced those sparse representations with embeddings. Below, I go through early methods like one-hot encoding, transitioning into more sophisticated systems such as Word2Vec, FastText, GloVe, and the more recent contextual approaches, ELMO and BERT.
+
+
+## One-hot encoding
+
+### Explanation
+
+One-hot encoding is the simplest encoding scheme, in which each word is mapped to a vector of length <Latex text="\( K \)"/> — the size of the vocabulary. All entries are zero except for a single position set to 1, identifying the word's index in that vocabulary. For example, if we have a vocabulary of <Latex text="\( K=5 \)"/> words: ["cat," "dog," "mouse," "banana," "car"], the word "dog" might be represented as <Latex text="\( [0,1,0,0,0] \)"/>.
+
+One-hot vectors are easy to compute and straightforward to implement, but they suffer from major drawbacks:
+
+1. **Sparsity**: For large vocabularies, each word vector can be enormous in dimension, and yet all but one entry is zero. This leads to memory inefficiency.
+2. **Lack of semantic similarity**: One-hot vectors do not convey any notion of the distance between words. There is no built-in notion that "car" is more similar to "automobile" than "banana." Each word is represented as an equidistant point from every other word.
+3. **Vocabulary growth**: In many real-world tasks, the vocabulary can be extremely large, and new words can appear frequently. Incorporating out-of-vocabulary words in one-hot encoding is impractical.
+
+Due to these limitations, one-hot encoding is seldom used for advanced NLP pipelines. Instead, it primarily serves as the foundation upon which more nuanced encoding schemes are built (for instance, in the input layers of Word2Vec or CBOW).  
+
+## Word2Vec
+
+### Overview of Word2Vec
+
+<Highlight>Word2Vec</Highlight>, introduced by Tomas Mikolov and colleagues (Mikolov and gang, NeurIPS 2013), is considered one of the first large breakthroughs in practical word embedding techniques. It uses a small, two-layer neural network that takes a textual corpus as input and produces word embeddings as its learned parameters. The model effectively captures co-occurrence statistics of words in local contexts without the heavy overhead of storing entire large co-occurrence matrices in memory (like some earlier matrix-factorization approaches might do).
+
+There are two main architectures for Word2Vec:
+
+- **Skip-gram**: Predict surrounding (context) words given a central ("target") word.
+- **Continuous Bag-of-Words (CBOW)**: Predict a target word based on the words around it.
+
+### Skip-gram model
+
+Skip-gram is particularly good at capturing rare word relationships because it tries to predict multiple context words for each single target word. For instance, if the target word is "computer," the skip-gram model uses "computer" to predict words that might appear in its vicinity, such as "processor," "keyboard," or "memory," depending on the chosen window size. Over a large corpus, the model learns that certain words frequently co-occur with "computer," thereby associating them with similar vector directions.
+
+Formally, suppose <Latex text="\( w_t \)"/> is the target word at position <Latex text="\( t \)"/> and <Latex text="\( (w_{t-1}, w_{t-2}, \ldots, w_{t-k}, w_{t+1}, w_{t+2}, \ldots, w_{t+k}) \)"/> are the surrounding context words within a fixed window size <Latex text="\( k \)"/>. The skip-gram model tries to maximize the likelihood:
+
+<Latex text="\[
+\prod_{t=1}^{T} \prod_{j=-k, j \neq 0}^{k} P(w_{t+j} \mid w_t)
+\]"/>
+
+where <Latex text="\( T \)"/> is the total number of words in the corpus. Through training, it learns an embedding matrix whose rows (or columns, depending on the implementation) contain the final word vectors.
+
+### CBOW (continuous bag of words)
+
+In contrast, the CBOW model does the inverse: it predicts the target word given its context words. Because each training instance pools the entire context into a single input, it can train faster and might work better for more frequent words. The objective is to maximize:
+
+<Latex text="\[
+\prod_{t=1}^{T} P(w_t \mid w_{t-1}, w_{t-2}, \ldots, w_{t-k}, w_{t+1}, \ldots, w_{t+k})
+\]"/>
+
+While skip-gram can capture more subtle semantics (particularly for infrequent words), CBOW is often more efficient. In practice, the choice between skip-gram and CBOW might come down to the corpus size, the domain, or the coverage needed for rare words.
+
+### Negative sampling and hierarchical softmax
+
+For large vocabularies, computing the full softmax (the probability for each word in the vocabulary) can be extremely expensive in each training step. Word2Vec offers alternatives:
+
+- **Negative sampling**: Rather than updating parameters for all words in the vocabulary, negative sampling updates the model using only a few "negative" examples (words that are not in the true context). This drastically cuts down the computational cost.  
+- **Hierarchical softmax**: A tree-based approach that estimates the softmax more efficiently. Instead of enumerating all words, it arranges them in a binary tree. The model updates only the path in the tree that leads to the relevant word.
+
+Both approaches aim to approximate the full softmax distribution while maintaining tractable training time.
+
+### Cosine similarity
+
+Once Word2Vec is trained, the embedding vectors can be compared using <Latex text="\( \text{cosine similarity} \)"/>:
+
+<Latex text="\[
+\text{similarity}(\mathbf{A}, \mathbf{B}) = \frac{\mathbf{A} \cdot \mathbf{B}}{\|\mathbf{A}\| \|\mathbf{B}\|}
+\]"/>
+
+Where <Latex text="\( \mathbf{A}, \mathbf{B} \)"/> are word embedding vectors. Cosine similarity is often used because it normalizes for magnitude, focusing instead on the angle between vectors. This angle-based measure correlates well with semantic similarity in many embedding spaces: words used in comparable contexts typically have embedding vectors pointing in similar directions.
+
+Below is an illustrative placeholder image that often appears in tutorials, depicting how word vectors may align to reflect linear relationships such as <Latex text="\( \text{king} - \text{man} + \text{woman} \approx \text{queen} \)"/>:
+
+<Image alt="High-level 2D projection of Word2Vec embeddings showing semantic relationships" path="" caption="Conceptual diagram showing that semantic relationships among words often translate into linear vector arithmetic in embedded space." zoom="false" />
+
+
+## FastText
+
+### Subword (n-gram) approach
+
+<Highlight>FastText</Highlight> (Bojanowski and gang, 2016) is an extension of Word2Vec created by Facebook AI Research. One of the issues with Word2Vec is that if a word does not appear in the training corpus ("out-of-vocabulary" word), you cannot derive a meaningful embedding for it. FastText addresses this by learning embeddings not just for entire words but also for <Latex text="\( n \)"/>-grams of characters. A word's final embedding is effectively the sum of its <Latex text="\( n \)"/>-gram embeddings.  
+
+For example, for the word "banana" and <Latex text="\( n=3 \)"/>, the 3-gram subwords would be "ban," "ana," "nan," and so forth. Even if the entire word "banana" never appeared in the training set, each of these subwords might occur in other words. Therefore, FastText can offer reasonable approximations for new or rare words because it can look up embeddings of their subwords.
+
+### Benefits over Word2Vec
+
+1. **OOV words**: Out-of-vocabulary words can be embedded by breaking them down into subwords that the model has already seen.
+2. **Morpheme-like subwords**: In morphologically rich languages (e.g., Russian, Turkish, Finnish), words can have numerous forms. FastText's subword approach helps share parameters among these variations, improving accuracy and coverage.
+3. **Small additional overhead**: While it has to store <Latex text="\( n \)"/>-gram vectors in addition to full-word vectors, in many cases this overhead is negligible compared to the value gained.
+
+### Typical use cases
+
+FastText is especially useful for:
+
+- Languages with large morphological variability.
+- Scenarios where you expect to encounter or must handle many out-of-vocabulary words (e.g., user-generated content, social media text).
+- Environments that require real-time generation of embeddings for new terms (e.g., real-time chat applications, language learning platforms).
+
+<Image alt="Visualization of subword embeddings concept in FastText" path="" caption="In FastText, each word vector is formed as the sum of its subword vectors, facilitating better handling of rare words." zoom="false" />
+
+
+## GloVe
+
+### Concept
+
+<Highlight>GloVe</Highlight> (Global Vectors for Word Representation) is another popular approach to word embeddings, proposed by Pennington and gang (2014) at Stanford. Unlike Word2Vec's local context-based predictions, GloVe relies on global corpus statistics. It constructs a large word-word co-occurrence matrix (or a condensed version of it) and factors this matrix to produce word embeddings.
+
+The main intuition is that ratios of co-occurrence probabilities encode unique semantic information. For instance, the probability that "ice" co-occurs with "cold" will be much higher than the probability that "ice" co-occurs with "hot." By learning a vector space that preserves these ratio relationships, GloVe captures both local context information and global corpus-wide statistics.
+
+### Key idea
+
+Let <Latex text="\( X \)"/> be the co-occurrence matrix, where <Latex text="\( X_{ij} \)"/> is the number of times word <Latex text="\( j \)"/> appears in the context of word <Latex text="\( i \)"/>. GloVe uses a weighted least squares objective that aims to factorize <Latex text="\( X \)"/>, producing embeddings <Latex text="\( \mathbf{w}_i \)"/> and <Latex text="\( \mathbf{w}_j \)"/> for words <Latex text="\( i \)"/> and <Latex text="\( j \)"/> such that:
+
+<Latex text="\[
+f(X_{ij}) (\mathbf{w}_i^\top \mathbf{\tilde{w}}_j + b_i + \tilde{b}_j - \log X_{ij})^2
+\]"/>
+
+Here:
+- <Latex text="\( \mathbf{w}_i, \mathbf{\tilde{w}}_j \)"/> are the word vectors to be learned.  
+- <Latex text="\( b_i, \tilde{b}_j \)"/> are bias terms.  
+- <Latex text="\( X_{ij} \)"/> is the co-occurrence count of words <Latex text="\( i \)"/> and <Latex text="\( j \)"/>.  
+- <Latex text="\( f \)"/> is a weighting function that lessens the effect of very large or very small co-occurrence counts.
+
+### Differences from Word2Vec
+
+- GloVe explicitly uses global statistics (full co-occurrence counts across the entire corpus) rather than sampling local context windows alone.
+- Training can sometimes be faster if the co-occurrence matrix is not extremely large.
+- The resulting embeddings can capture certain global patterns more systematically.
+
+### Typical usage
+
+GloVe embeddings are often used in NLP tasks that benefit from robust global relationships. The <Highlight>Stanford GloVe</Highlight> site provides pre-trained embeddings (e.g., 50D, 100D, 200D, 300D) trained on corpora like Common Crawl or Wikipedia, which are commonly employed for downstream tasks in text analytics.  
+
+<Image alt="Matrix factorization of co-occurrence counts in GloVe" path="" caption="GloVe embeddings factorize the global word co-occurrence matrix, seeking to preserve important ratio information among co-occurrence probabilities." zoom="false" />
+
+
+## ELMO
+
+### Contextual embeddings
+
+Prior to <Highlight>ELMo</Highlight> and other contextual approaches, word embeddings were static: each word type had exactly one vector, regardless of how it was used in a sentence. This is a fundamental limitation, because words often have multiple senses or roles depending on context (e.g., "bank" can be a financial institution or the side of a river).
+
+<Highlight>ELMo</Highlight> (Embeddings from Language Models), introduced by Peters and gang (2018), overcame this by generating embeddings that depend on the entire context in which a word appears. Instead of a single vector per word type, ELMo provides different vectors for each occurrence of the same word.
+
+### BiLSTM architecture
+
+ELMo is based on a deep bidirectional <Latex text="\( LSTM \)"/> language model. The idea is to train a stacked bidirectional <Latex text="\( LSTM \)"/> on a large corpus using a language modeling objective. In a simplified form, it tries to predict the next word given the previous words (forward direction) as well as the previous word given the next words (backward direction).  
+
+At each layer <Latex text="\( j \)"/>, the forward <Latex text="\( \overrightarrow{h_{k, j}^{LM}} \)"/> and backward <Latex text="\( \overleftarrow{h_{k, j}^{LM}} \)"/> hidden states together capture lexical, syntactic, and semantic information at different levels of abstraction. Lower layers capture more syntactic (e.g., part-of-speech) features, and higher layers capture more semantic aspects (e.g., word sense, discourse context).
+
+### Weighted layer combination
+
+At inference time, ELMo produces word embeddings for the <Latex text="\( k \)"/>-th token by combining these hidden states with learned, task-specific weights:
+
+<Latex text="\[
+\text{ELMo}_{k}^{\text{task}} = \gamma^{\text{task}} \sum_{j=0}^{L} s_{j}^{\text{task}} \, h_{k,j}^{LM}
+\]"/>
+
+Where:
+- <Latex text="\( L \)"/> is the number of layers in the <Latex text="\( LSTM \)"/>.  
+- <Latex text="\( s_j^{\text{task}} \)"/> are softmax-normalized weights that indicate how much each layer contributes to the final embedding for that specific task (e.g., named entity recognition, sentiment analysis).  
+- <Latex text="\( \gamma^{\text{task}} \)"/> is a scalar scaling parameter.
+
+This framework lets each downstream task "focus" on the layer or combination of layers that are most relevant. The result is a contextual embedding that can differentiate between "bank" in "I went to the bank to deposit money" vs. "He sat on the river bank," generating distinct vector representations for each usage.  
+
+ELMo is widely recognized for substantially boosting performance across a variety of NLP benchmarks. Researchers discovered that it allows even relatively simple models to incorporate contextual information that was previously difficult to encode.
+
+<Image alt="High-level overview of ELMo architecture" path="" caption="ELMo stacks bidirectional LSTM networks, creating context-sensitive embeddings for each word occurrence." zoom="false" />
+
+
+## BERT
+
+### Transformer-based model
+
+<Highlight>BERT</Highlight> (Bidirectional Encoder Representations from Transformers), introduced by Devlin and gang (2018), marked a significant leap forward in contextual embeddings. Unlike RNN-based approaches (e.g., ELMo), BERT employs a multi-layer bidirectional Transformer encoder. Transformers use a mechanism called self-attention, allowing the model to weigh the relevance of every token to every other token in a sentence, capturing context in a far more parallelizable manner than <Latex text="\( LSTMs \)"/>.
+
+### Masked language modeling
+
+BERT's pre-training objective is "masked language modeling." It randomly masks a certain percentage (often 15%) of tokens in the input and tries to predict them from the unmasked tokens. This forces the model to learn contextual representations from both left and right contexts.
+
+<Latex text="\[
+\text{Loss}_{MLM} = -\sum_{t \in \text{masked positions}} \log P(\text{actual token at } t \mid \text{context})
+\]"/>
+
+Because BERT sees context on both sides of each masked position, it is said to be a deeply bidirectional model, unlike older left-to-right language models (e.g., GPT-like models in their earlier forms).
+
+### Next sentence prediction
+
+During training, BERT also uses an auxiliary "next sentence prediction" objective. It pairs two sentences (A and B) and trains the model to predict whether B actually follows A in the original text. This helps BERT learn inter-sentence relationships, facilitating tasks such as question answering or natural language inference.
+
+Although more recent variants (e.g., RoBERTa) have modified or removed this next sentence prediction objective, it remains a hallmark of the original BERT model.
+
+### Usage in downstream tasks
+
+BERT's final outputs are richly contextualized token embeddings. Typically, for classification tasks, one takes the representation from the special <Highlight>[CLS]</Highlight> token, which stands at the beginning of the input sequence, and passes it through a feed-forward layer to get the final prediction. For token-level tasks, each token's final embedding from BERT can be fed into a decoder for, say, named entity recognition or part-of-speech tagging.
+
+The success of BERT spurred a wave of Transformer-based language models (<Highlight>ALBERT</Highlight>, <Highlight>DistilBERT</Highlight>, <Highlight>RoBERTa</Highlight>, <Highlight>DeBERTa</Highlight>, etc.), all of which rely on large-scale pre-training and can be fine-tuned on specific downstream tasks with minimal effort. These models significantly advanced the state-of-the-art in NLP by capturing deep contextual nuances in language.
+
+<Image alt="Diagram illustrating the BERT architecture" path="" caption="BERT uses multiple layers of bidirectional Transformers, each containing self-attention and feed-forward networks to yield rich contextual embeddings." zoom="false" />
+
+
+## Implementation with Gensim (examples)
+
+<Highlight>Gensim</Highlight> is a popular Python library for topic modeling, document similarity, and — crucially for our focus — word embedding training and usage. Below are some practical snippets, illustrating both loading pre-trained models and training them from scratch on a corpus.
+
+### Loading pre-trained embeddings
+
+Many pre-trained embeddings exist for different languages. Gensim provides an easy way to download and load them. Below, I demonstrate loading a pre-trained Russian model, "word2vec-ruscorpora-300," which was trained on a large Russian corpus:
+
+<Code text={`
+import gensim
+import gensim.downloader as download_api
+
+russian_model = download_api.load('word2vec-ruscorpora-300')
+
+# List the first 10 words in the model's vocabulary.
+list(russian_model.vocab.keys())[:10]
+# Example output: ['весь_DET', 'человек_NOUN', 'мочь_VERB', 'год_NOUN', ...]
+
+# Finding similar words:
+similar_cats = russian_model.most_similar('кошка_NOUN')
+print(similar_cats)
+# Example output might contain [('кот_NOUN', 0.757...), ('котенок_NOUN', 0.726...), ...]
+`}/>
+
+In the example above, the model has sub-tags on words (e.g., _NOUN, _VERB) to indicate their part-of-speech, which is beneficial in some NLP pipelines.
+
+You can also compute similarities between words, find the odd one out in a set, and perform arithmetic analogies:
+
+<Code text={`
+# Word similarity
+russian_model.similarity('мужчина_NOUN', 'женщина_NOUN')
+
+# Odd one out
+russian_model.doesnt_match('завтрак_NOUN хлопья_NOUN обед_NOUN ужин_NOUN'.split())
+
+# Word analogy:
+russian_model.most_similar(positive=['король_NOUN', 'женщина_NOUN'],
+                           negative=['мужчина_NOUN'], topn=1)
+# This might return something like [('королева_NOUN', 0.731...)]
+`}/>
+
+### Training Word2Vec on a small corpus
+
+If you do not have a large-scale pre-trained model that fits your domain, you can train a specialized one from scratch or continue fine-tuning an existing model. For demonstration, Gensim hosts a small corpus called "text8," which contains about 17 million characters of text from Wikipedia.
+
+<Code text={`
+from gensim.models.word2vec import Word2Vec
+import gensim.downloader as download_api
+
+# Download the text8 corpus
+corpus = download_api.load('text8')  # This returns an iterable of tokenized sentences
+
+# Train a Word2Vec model
+word2vec_model = Word2Vec(corpus, size=100, workers=4)
+
+# Check top 3 similar words to 'car'
+word2vec_model.most_similar('car')[:3]
+`}/>
+
+In this snippet, <Highlight>size=100</Highlight> sets the dimensionality of the embeddings, and <Highlight>workers=4</Highlight> uses 4 CPU threads for parallelization. You can also tune other parameters such as <Highlight>window</Highlight> (the context window size), <Highlight>min_count</Highlight> (minimum word frequency), <Highlight>sg</Highlight> (use skip-gram if 1, else CBOW), <Highlight>negative</Highlight> (number of negative samples), etc.
+
+### Training FastText
+
+Similarly, one can train <Highlight>FastText</Highlight> embeddings using Gensim, which will handle subwords for out-of-vocabulary tokens:
+
+<Code text={`
+from gensim.models.fasttext import FastText
+
+fasttext_model = FastText(corpus, size=100, workers=4)
+fasttext_model.most_similar('car')[:3]
+# Potentially returns subword-based expansions like ('boxcar', ...), etc.
+`}/>
+
+Even though "car" might appear in the corpus, some morphological variant or a closely related subword might not. FastText's ability to break words into subwords helps handle new or rare word forms more gracefully.
+
+### Practical code snippets
+
+<Code text={`
+# Finding word similarities
+print(word2vec_model.wv.most_similar('queen'))
+
+# Odd one out (English)
+print(word2vec_model.wv.doesnt_match("breakfast cereal lunch dinner".split()))
+
+# Analogies
+print(word2vec_model.wv.most_similar(positive=['king','woman'], negative=['man'], topn=1))
+`}/>
+
+Such queries give a tangible sense of how word embeddings encode relationships within their vector spaces.
+
+
+## Additional considerations
+
+### Data preprocessing
+
+No matter which embedding algorithm you choose, data preprocessing remains critical. Often, you will:
+
+- **Normalize text**: lowercasing, removing extra spaces, and dealing with punctuation.
+- **Tokenize**: break sentences into meaningful tokens (words, subwords, or characters).
+- **Filter**: remove extremely rare words or noise, or handle them through subword techniques.
+- **Handle domain-specific text**: possibly incorporating domain knowledge for specialized tasks. 
+
+Poor preprocessing can introduce noise, degrade the quality of the learned embeddings, and hamper downstream performance.
+
+### Dimensionality and hyperparameters
+
+Selecting the dimensionality (<Latex text="\( d \)"/> of embeddings) is a non-trivial decision. Higher dimensions can capture more nuanced relationships but may require more data to prevent overfitting. Typical dimensionalities range from 50 to 300 for many classical use cases. For deep contextual models (e.g., BERT), hidden sizes may be 768, 1024, or even larger in advanced applications.
+
+Additional hyperparameters include:
+
+- **Window size**: how many words to the left and right to consider as context.  
+- **Negative samples** (for Word2Vec and FastText).  
+- **Number of training epochs**.  
+- **Learning rate** and scheduling.  
+
+Each influences how embeddings form in the vector space, and slight changes can lead to substantial differences in performance.
+
+### Domain-specific embeddings
+
+When working with specialized texts (e.g., legal, medical, or technical corpora), general-purpose embeddings might not capture domain-specific vocabulary or sense distinctions. Training or fine-tuning on in-domain data can yield better results. For example, in a medical context, "cohort," "trial," "dosage," and "patient" have very domain-specific relationships that might not appear in standard English corpora.
+
+### Model interpretability
+
+Although embeddings can produce impressive results, one challenge is interpretability. The high-dimensional spaces are difficult to visualize beyond 2D or 3D projections. Researchers sometimes rely on techniques like <Highlight>t-SNE</Highlight> or <Highlight>UMAP</Highlight> to project embeddings to a lower-dimensional space for qualitative analysis. Another approach is to inspect nearest neighbors or track changes in embedding norms during training, but fully understanding or interpreting how embeddings encode meaning remains an ongoing area of research.
+
+### Going beyond words
+
+Modern practice often moves from word-level embeddings to sentence-level or even document-level embeddings. Approaches such as <Highlight>Doc2Vec</Highlight> or <Highlight>Sentence-BERT</Highlight> (Reimers and Gurevych, 2019) aim to capture the meaning of entire sequences. These embeddings can then be used for tasks like sentence similarity, text retrieval, or summarization. Similarly, in vision tasks, we embed images into a latent space, allowing cross-modal comparisons if we also embed text (e.g., <Highlight>CLIP</Highlight> from OpenAI, Radford and gang, 2021).
+
+Finally, large language models can produce embeddings at the token level, sentence level, or entire passage level. As these models continue to grow, they capture more sophisticated aspects of semantics, context, and world knowledge.  
+
+<Image alt="Visualization of how domain-specific embeddings differ from general embeddings" path="" caption="When building domain-specific models, focusing on an in-domain corpus can drastically alter the learned embedding space to highlight relevant semantics." zoom="false" />
+
+
+## Conclusion
+
+Word embeddings lie at the heart of many modern <Highlight>NLP</Highlight> systems. By leveraging dense vector representations, they radically improve a model's ability to "understand" the relationships among words and phrases, compared to older, more sparse encoding methods. The evolution of embeddings — from one-hot to Word2Vec, FastText, GloVe, and then to contextual models like ELMo and BERT — mirrors the broader trend in NLP toward capturing richer context and deeper language features.
+
+Static embeddings such as Word2Vec, FastText, and GloVe remain highly valuable for many tasks, especially when resources are limited or when domain adaptation is relatively straightforward. Contextual embeddings, exemplified by ELMo, BERT, and their successors, have opened the door to a new era of performance gains and advanced capabilities such as multi-lingual understanding, zero-shot learning, and more.
+
+For practitioners, the best approach often depends on the size and scope of the data, the complexity of the task, and computational constraints. Pre-trained embeddings can serve as a powerful "universal" foundation, while domain-specific retraining or fine-tuning can help optimize performance. Furthermore, interpretability challenges persist: these vector spaces, though powerful, are not trivially transparent. Nonetheless, with the right tools and an understanding of how embeddings are formed, data scientists can harness them to build robust, state-of-the-art solutions in numerous NLP and broader machine learning applications.
+
+
+## References
+
+- Mikolov and gang, 2013. "Efficient Estimation of Word Representations in Vector Space". <Highlight>(arXiv:1301.3781)</Highlight>.  
+- Bojanowski and gang, 2016. "Enriching Word Vectors with Subword Information". <Highlight>(arXiv:1607.04606)</Highlight>.  
+- Pennington, Socher, Manning, 2014. "GloVe: Global Vectors for Word Representation". <Highlight>(EMNLP 2014)</Highlight>.  
+- Peters and gang, 2018. "Deep Contextualized Word Representations". <Highlight>(arXiv:1802.05365)</Highlight>.  
+- Devlin and gang, 2018. "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding". <Highlight>(arXiv:1810.04805)</Highlight>.  
+- Gensim documentation: <Highlight>https://radimrehurek.com/gensim</Highlight>  
+- Gensim data repository: <Highlight>https://github.com/RaRe-Technologies/gensim-data</Highlight>  
+- Word2Vec code (original Google Code archive): <Highlight>https://code.google.com/archive/p/word2vec</Highlight>  
+- RusVectōrēs (online semantic relationships for Russian): <Highlight>https://rusvectores.org/ru/</Highlight>  
+- FastText site (Facebook AI Research): <Highlight>https://fasttext.cc/</Highlight>  
+- "word2vec-ruscorpora-300" model: <Highlight>https://rusvectores.org/en/models</Highlight>  
+- Additional tutorials: <Highlight>https://rare-technologies.com/word2vec-tutorial</Highlight>, <Highlight>https://towardsdatascience.com</Highlight> and various GitHub references for deeper examples.  
+
+------
+
+As the field continues to evolve, new embeddings — especially large-scale, multi-modal approaches — push the boundaries of what machines can do with language and other types of data. Yet the core insight remains: by embedding data in a meaningful way, we endow computational models with a powerful lens through which they can compare, retrieve, and generate information in a manner that feels increasingly intuitive.

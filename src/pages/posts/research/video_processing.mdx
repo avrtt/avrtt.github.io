@@ -1,0 +1,519 @@
+---
+index: 28
+indexCourse: 97
+indexFavorites:
+title: "Video processing"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Video processing"
+courseCategoryName: "Computer vision"
+desc: "I hate my job"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "25.12.2022"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 1
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/video_processing.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/video_processing"
+slug: "/research/video_processing"
+---
+
+import Tooltip from "../../../components/Tooltip"
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+{/*
+
+1. Introduction  
+   Distinction between still image processing and video processing  
+2. Characteristics of videos  
+   Including bitrate, codecs (lossless vs. lossy), the illusion of motion (frames in sequence), etc.  
+3. The role of video processing in machine learning and data science  
+   Key tasks (classification, detection, segmentation). Popular applications (action recognition, video captioning). Influence of modern architectures (e.g., vision transformers).
+4. Differences between image and video processing  
+   4.1 Additional temporal axis in video data  
+   4.2 Complexity from sequential frames  
+   4.3 Larger data size and memory constraints  
+   4.4 Need for spatiotemporal feature extraction  
+5. Temporal continuity in videos  
+   Importance of temporal relations. Challenges in capturing changing information over time. Common strategies for handling temporal data.  
+6. Motion estimation  
+   Definition and significance of motion estimation. Impact on video compression and quality.
+   6.1 Traditional approaches (optical flow, block matching)  
+   6.2 Modern deep learning methods for motion tracking  
+7. Approaches for video tokenization and modeling  
+   7.1 Uniform frame sampling  
+   7.2 Tubelet embedding  
+   7.3 Comparing patch-based vs. spatiotemporal approaches  
+   7.4 Integration of position and time encodings  
+8. Challenges in video processing  
+   8.1 Computational complexity and resource demands  
+   8.2 Memory storage constraints for large-scale video data  
+   8.3 Handling noise, occlusions, and motion blur  
+   8.4 Balancing quality vs. compression (bitrate, codecs)  
+   8.5 Real-time vs. offline processing considerations  
+
+*/}
+
+
+Video processing is a multifaceted domain of computer vision and machine learning focused on analyzing, enhancing, manipulating, and extracting meaningful information from moving visual media. Although still image processing and video processing share some foundational concepts — such as pixel-level operations, transformations, and feature extraction — videos add the dimension of time. This extra dimension introduces temporal coherence and potentially large volumes of data, creating unique challenges and opportunities that are fundamentally different from the processing of individual static images.
+
+The basic structure of a video is a rapid sequence of still images (frames) displayed one after another, typically at a specific frame rate (e.g., 24, 30, or 60 frames per second). This rapid display induces the illusion of continuous motion, much like a flipbook. Techniques that worked well for still images — like convolutional neural networks (CNNs) or even modern Vision Transformers (ViTs) — often need to be adapted to capture and exploit the temporal patterns that arise from frame-to-frame dynamics.
+
+In this article, we will dive into the distinct characteristics of videos, analyze their significance in machine learning and data science contexts, and discuss how video differs from image processing. We will also examine the role of temporal continuity, typical approaches for motion estimation, and modern spatiotemporal modeling strategies. Finally, we will cover the most prevalent challenges — ranging from data storage constraints to real-time processing requirements — that practitioners and researchers must address when developing solutions in video processing.
+
+Throughout this piece, we will reference several influential research projects and relevant techniques that have shaped the field in recent years (e.g., advanced spatiotemporal modeling with 3D convolutional networks, optical flow estimation, and video transformers). We will highlight how these cutting-edge approaches address core challenges in video understanding, including tasks such as action recognition, object tracking, detection, segmentation, and more. This discussion aims to provide clarity and depth for experienced practitioners looking to expand their theoretical foundations and practical skills in video processing.
+
+## Characteristics of videos
+
+In contrast to still images, videos have more properties that directly impact both computational and storage requirements. Furthermore, these additional aspects — such as codec types, bitrates, and the consistent illusion of motion — significantly shape how we conduct and optimize machine learning pipelines.
+
+### Bitrate
+
+The term <Highlight>bitrate</Highlight> describes the quantity of data required to encode and transmit (or store) one second of a video. It is typically measured in kilobits per second (kbps) or megabits per second (Mbps). Higher bitrates generally preserve more visual information, thus providing clearer images, but at the cost of increased storage requirements and greater bandwidth consumption during streaming. To reduce file sizes, compression methods (lossy or lossless) adjust the bitrate or selectively eliminate certain information.
+
+### Codecs
+
+A <Highlight>codec</Highlight> (compressor-decompressor) is a hardware or software component used to compress raw video and decompress it during playback or processing. Codecs come in two primary categories:
+
+- **Lossless codecs:** These preserve every detail of the video frames. They are used for high-precision tasks (like professional film editing or medical imaging), where losing even small amounts of information is unacceptable. Examples include some specialized codecs used for archiving.  
+- **Lossy codecs:** These remove a fraction of the data in order to reduce file size. In many cases, the removed data is imperceptible to the human eye at typical playback speeds. Examples include H.264/AVC, H.265/HEVC, VP9, and AV1. Machine learning pipelines can also use these codecs but must handle the potential artifacts they introduce (e.g., blockiness, blurred edges).
+
+For real-world applications, the choice of codec is a balancing act between video quality, computational overhead, and storage or transmission constraints. Modern machine learning workflows dealing with large-scale data frequently rely on compressed videos to keep storage demands manageable, even though decompression overhead can slow processing pipelines.
+
+### The illusion of motion
+
+The core difference between still images and video is that a video is perceived as a continuous motion rather than a static snapshot. This arises from the biological phenomenon of <Highlight>persistence of vision</Highlight>, in which the human eye and brain hold onto an image briefly after it disappears. When frames are shown in quick succession — generally at a rate of at least 24 frames per second — our visual system interprets the rapid sequence as continuous motion.
+
+Whereas still images contain a snapshot in time, videos contain sequences of snapshots that inherently encode object movement and transformations from frame to frame. This spatiotemporal context is crucial for tasks like action recognition, where the difference between "walking" and "running" can be subtle in a single frame but obvious when observing multiple frames in sequence.
+
+### Frame rate
+
+<Highlight>Frame rate</Highlight>, typically measured in frames per second (fps), describes how many frames are displayed (or captured) each second. Common frame rates include 24 fps (common in cinema), 30 fps (common in television and general video), and 60 fps (common in high-definition or slow-motion scenarios). Higher frame rates produce smoother motion, but also increase the data size and computational cost. In certain high-speed imaging tasks (e.g., sports analytics or industrial inspection), specialized cameras can capture thousands of frames per second.
+
+### Resolution and aspect ratio
+
+The <Highlight>resolution</Highlight> of a video refers to the pixel dimensions of each frame (e.g., 1920×1080 for Full HD). Larger resolutions (e.g., 4K at 3840×2160) offer more detailed visual information but come at the cost of higher storage requirements and processing overhead. Meanwhile, the <Highlight>aspect ratio</Highlight> indicates the proportional relationship between width and height (e.g., 16:9 for many modern displays).
+
+### Audio and metadata
+
+Although typically overshadowed by the visual dimension, videos also incorporate audio tracks and possibly supplementary metadata (e.g., subtitles, timestamps, or sensor data for augmented reality). In advanced data science applications, audio analysis can be important (e.g., detecting speech, classifying sounds, or combining visual and auditory cues for improved event recognition).
+
+The combination of all these properties — video resolution, frame rate, bitrate, codecs, and possible additional data streams — renders video processing more complex than single-frame processing. As we will see, however, this very complexity enables new challenges and new possibilities for machine learning.
+
+## The role of video processing in machine learning and data science
+
+<Highlight>Video processing</Highlight> techniques are central to a wide range of modern machine learning and data science applications. With the explosive growth of video content on the internet (e.g., social media platforms, streaming services, surveillance cameras, autonomous vehicles, industrial automation, etc.), efficiently analyzing, interpreting, and transforming large volumes of video data has become a priority.
+
+Several specific tasks highlight the broad utility of video processing in machine learning and data science:
+
+- **Video classification:** Classifying short clips into categories such as <Tooltip text="Examples: sports, cooking, vlogging, etc."/> or identifying specific activities (e.g., "playing guitar," "dribbling a basketball").  
+- **Object detection and tracking:** Identifying and localizing objects frame by frame and keeping track of their trajectories. This is crucial for tasks such as vehicle traffic analysis, surveillance, or autonomous navigation.  
+- **Video segmentation:** Labeling every pixel in each frame according to its semantic category (semantic segmentation), instance identity (instance segmentation), or both. This is used for advanced scene understanding, special effects, and more.  
+- **Action recognition:** Classifying the activity or action taking place in a clip (e.g., "jumping," "swinging a tennis racket"). Often combined with robust spatiotemporal feature extraction to handle subtle motion cues.  
+- **Video captioning and summarization:** Automatically generating textual descriptions of video content or extracting the "key frames" to produce a condensed representation.  
+- **Anomaly detection in video:** Identifying unusual or suspicious events, e.g., in security footage.  
+- **Video enhancement and super-resolution:** Improving video quality by reducing noise, enhancing resolution, or correcting color.  
+- **Video-to-video translation and domain adaptation:** Transforming video from one style to another (e.g., day-to-night transformation, or applying an artistic style).  
+
+Modern deep learning architectures — especially Vision Transformers (ViTs), spatiotemporal convolutional neural networks (3D CNNs), recurrent neural networks (RNNs), and attention-based models — enable these tasks at large scale, often surpassing traditional feature engineering methods. Recent research has also explored the synergy between large language models and video understanding, leading to advanced multi-modal systems that integrate both textual and visual contexts (e.g., video question-answering or cross-modal retrieval).
+
+## Differences between image and video processing
+
+While image processing focuses on static 2D signals, video processing extends into the temporal domain, introducing a host of new concepts and complexities. Below are the major points that set video processing apart from the simpler case of handling individual images.
+
+### 4.1 Additional temporal axis in video data
+
+A single image is indexed by two spatial coordinates (e.g., <Latex text="\( x \)"/> and <Latex text="\( y \)"/> ). A video, on the other hand, is indexed by three coordinates — two spatial (<Latex text="\( x, y \)"/>) and one temporal (<Latex text="\( t \)"/>). Conceptually, we can think of a video as a function:
+
+<Latex text="\[
+V(x, y, t) : \{(x, y, t) \mid x \in [1, W], y \in [1, H], t \in [1, T]\} \rightarrow \mathcal{C}
+\]"/>
+
+where <Latex text="\(W, H\)"/> denote the frame width and height, <Latex text="\(T\)"/> the total number of frames, and <Latex text="\(\mathcal{C}\)"/> the color space (e.g., RGB). This temporal dimension is key to the notion of motion and changes in scene content over time.
+
+### 4.2 Complexity from sequential frames
+
+Because a video is comprised of sequential frames, the model must account for dynamic changes — both subtle (e.g., slight movement of a hand) and large (e.g., sudden scene cuts). Furthermore, the number of frames in even a short clip can be sizable; a 10-second clip at 30 fps yields 300 frames. Naively treating each frame as an independent image can be computationally expensive and overlooks the context provided by adjacent frames. Many advanced methods aim to share or fuse information across frames to improve both computational efficiency and performance.
+
+### 4.3 Larger data size and memory constraints
+
+Video data is inherently large because it stacks a series of high-resolution images. Even a compressed video file can quickly balloon in size when stored in raw pixel form or uncompressed streams. This volume of data places heavy demands on GPU memory, CPU processing time, and disk space. Data scientists often must design specialized strategies for reading, buffering, and processing video data (e.g., working with short clips, using streaming techniques, or applying advanced compression/decompression pipelines).
+
+### 4.4 Need for spatiotemporal feature extraction
+
+In image processing, "spatial features" (edges, corners, textures, object shapes, etc.) are sufficient for tasks such as image classification or object detection. In video processing, "temporal features" — the patterns of change from frame to frame — can be equally crucial. Merging these into a unified <Highlight>spatiotemporal feature representation</Highlight> is often the crux of successful video recognition models. Methods such as 3D convolutions or self-attention across space and time can explicitly encode how objects and scenes evolve as the video progresses.
+
+## Temporal continuity in videos
+
+<Highlight>Temporal continuity</Highlight> describes the fact that consecutive frames in a natural video are often correlated. For instance, objects typically move slightly between consecutive frames, so there is a consistent transformation connecting them. This continuity is fundamental to capturing actions and events that unfold across time. Conversely, abrupt scene changes break this continuity, indicating transitions in the story or environment.
+
+Leveraging temporal continuity can improve various applications:
+
+- **Action recognition:** By analyzing how the visual content shifts over a short time window, we can recognize that a subject is walking, running, or jumping.  
+- **Object tracking:** Tracking depends on the assumption that object positions or appearances in consecutive frames do not drastically change under normal conditions.  
+- **Video super-resolution:** Interpolating or upscaling frames benefits from knowledge of how adjacent frames relate, potentially filling in missing details more robustly.  
+
+Several common strategies exist for handling temporal data in deep learning:
+
+- **Early fusion:** Stacking frames along the channel dimension (or time dimension) as if they were separate channels.  
+- **Late fusion:** Processing each frame or small set of frames individually before merging higher-level features.  
+- **Recurrent approaches:** Feeding spatiotemporal features into RNNs (e.g., LSTM or GRU) to maintain hidden state across the sequence.  
+- **3D CNNs:** Extending 2D convolutional filters into the time dimension to capture motion cues.  
+- **Spatiotemporal transformers:** Applying self-attention over both spatial patches and temporal segments to unify contextual information across frames.
+
+These approaches aim to harness the unique advantage that video data provides: the interplay of space and time that can reveal more complex semantic content than any single static image alone.
+
+## Motion estimation
+
+<Highlight>Motion estimation</Highlight> is the process of quantifying and tracking movement in consecutive frames. This includes shifts in object position, changes in shape, or transformations in the background. Motion estimation provides not only a tool for analyzing how objects move through the scene but also underpins key aspects of video compression, real-time monitoring, and advanced spatiotemporal tasks.
+
+### 6.1 Traditional approaches (optical flow, block matching)
+
+Before the rise of deep learning, classical computer vision techniques for motion estimation were already well developed:
+
+- **Optical flow:** Optical flow methods (e.g., the Horn–Schunck or Lucas–Kanade algorithms) estimate the pixel-wise motion field between two consecutive frames. The <Highlight>optical flow vector</Highlight> at each pixel indicates how it moves from one frame to the next.  
+
+  Mathematically, optical flow solves for a velocity field <Latex text="\( (u, v) \)"/> that approximates the change in pixel intensity or color between frames <Latex text="\( I(t) \)"/> and <Latex text="\( I(t+1) \)"/>. For example, the Horn–Schunck approach tries to minimize a global energy function:
+
+  <Latex text="\[
+  E(u, v) = \iint \left( \frac{\partial I}{\partial t} + \frac{\partial I}{\partial x}u + \frac{\partial I}{\partial y}v \right)^2 + \lambda \left( \left|\nabla u\right|^2 + \left|\nabla v\right|^2 \right) \, dx\,dy
+  \]"/>
+
+  where <Latex text="\( \left(\frac{\partial I}{\partial x}, \frac{\partial I}{\partial y}, \frac{\partial I}{\partial t}\right) \)"/> are the spatiotemporal intensity gradients, <Latex text="\( (u, v) \)"/> is the flow field, and <Latex text="\( \lambda \)"/> is a regularization parameter that enforces smoothness.
+
+- **Block matching:** Videos are split into small rectangular blocks, and each block in the current frame is matched with the most similar block in the next frame. The displacement between matching blocks is interpreted as the motion vector. This technique is popular in video codecs (e.g., MPEG standards) due to its relative simplicity.
+
+### 6.2 Modern deep learning methods for motion tracking
+
+Deep neural networks have taken motion estimation to new heights by learning robust feature representations directly from training data. Some well-known neural approaches for optical flow and motion tracking include:
+
+- **FlowNet** (Fischer and gang, 2015) and **FlowNet2** (Ilg and gang, 2017): Used CNN architectures to learn optical flow end-to-end from large synthetic and real datasets.  
+- **RAFT** (Teed & Deng, ECCV 2020): A recurrent all-pairs field transforms approach that refines optical flow estimates iteratively, achieving state-of-the-art accuracy on several benchmarks.  
+- **PWC-Net** (Sun and gang, CVPR 2018): Builds a pyramid, warping, and cost volume architecture to compute optical flow in a coarse-to-fine manner.
+
+In addition to explicit flow estimation, many spatiotemporal CNNs or attention-based models implicitly capture motion by analyzing multiple frames in a sliding window. Thus, the network effectively "learns" the concept of flow or other motion cues without directly computing an explicit flow map.
+
+Below is a short code snippet illustrating how one might compute optical flow using OpenCV's (classical) built-in functions in Python:
+
+```
+<Code text={`
+import cv2
+import numpy as np
+
+# Initialize video capture
+cap = cv2.VideoCapture('input_video.mp4')
+
+# Parameters for Lucas-Kanade optical flow
+lk_params = dict(winSize=(15, 15),
+                 maxLevel=2,
+                 criteria=(cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 0.03))
+
+# Read the first frame and convert to grayscale
+ret, old_frame = cap.read()
+old_gray = cv2.cvtColor(old_frame, cv2.COLOR_BGR2GRAY)
+
+# Detect good feature points to track
+feature_params = dict(maxCorners=100,
+                      qualityLevel=0.3,
+                      minDistance=7,
+                      blockSize=7)
+p0 = cv2.goodFeaturesToTrack(old_gray, mask=None, **feature_params)
+
+mask = np.zeros_like(old_frame)
+
+while True:
+    ret, frame = cap.read()
+    if not ret:
+        break
+
+    frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+    # Calculate optical flow
+    p1, st, err = cv2.calcOpticalFlowPyrLK(old_gray, frame_gray, p0, None, **lk_params)
+
+    # Select good points
+    good_new = p1[st == 1]
+    good_old = p0[st == 1]
+
+    # Draw the tracks
+    for i, (new, old) in enumerate(zip(good_new, good_old)):
+        x_new, y_new = new.ravel()
+        x_old, y_old = old.ravel()
+        mask = cv2.line(mask, (x_new, y_new), (x_old, y_old), (0, 255, 0), 2)
+        frame = cv2.circle(frame, (x_new, y_new), 5, (0, 0, 255), -1)
+
+    img = cv2.add(frame, mask)
+    cv2.imshow('frame', img)
+
+    # Update old frame and points
+    old_gray = frame_gray.copy()
+    p0 = good_new.reshape(-1, 1, 2)
+
+    if cv2.waitKey(30) & 0xFF == 27:
+        break
+
+cap.release()
+cv2.destroyAllWindows()
+`}/>
+```
+
+This example uses the Lucas-Kanade method for computing optical flow for a sparse set of "good feature points," illustrating a simple (non-deep-learning) approach to capture motion in a video.
+
+## Approaches for video tokenization and modeling
+
+As deep learning frameworks evolve to handle more intricate spatiotemporal tasks, novel ways of "tokenizing" or representing video inputs for neural network processing have been proposed. In general, the objective is to break down a video into discrete elements ("tokens") that a network (e.g., a transformer) can process systematically, retaining the essential information of both spatial and temporal dimensions.
+
+### 7.1 Uniform frame sampling
+
+<Highlight>Uniform frame sampling</Highlight> is a straightforward strategy: from a longer video sequence, we sample frames at fixed intervals or a fixed rate (e.g., every nth frame). Each extracted frame is then processed in the same manner as a still image. For a Vision Transformer, this means dividing each frame into non-overlapping patches, flattening them, and projecting them into embeddings. Finally, we concatenate the sequence of frame-level tokens into a single token series for the model.
+
+Although it simplifies the pipeline, uniform frame sampling can overlook significant parts of the video (particularly if the frame selection interval is large). It also effectively treats each frame as an independent entity, leaving it up to the Transformer's subsequent attention mechanisms to infer temporal relationships.
+
+### 7.2 Tubelet embedding
+
+Rather than focusing exclusively on spatial patches, <Highlight>tubelet embedding</Highlight> extends the patch-based approach into the temporal dimension. Here, we slice the input volume into spatiotemporal "tubes," each capturing a patch of the video in space and a chunk of frames in time. Flattening and projecting each tube into an embedding can be viewed as a 3D convolution with a kernel shape that covers a certain range of frames.
+
+This approach explicitly encodes local motion patterns, as each tube spans a small temporal window. By merging spatial and temporal information early, tubelet embedding often provides superior results in tasks such as action recognition, where consistent short-term motion features are crucial.
+
+### 7.3 Comparing patch-based vs. spatiotemporal approaches
+
+From the vantage point of network design, the key question is: **Should we process frames independently and rely on a large network to learn temporal relationships, or should we encode spatiotemporal patterns early on?**
+
+- **Patch-based (2D) approach:** 
+  - Pros: Simpler; can be built on top of proven 2D image-based architectures.
+  - Cons: Potentially misses fine temporal details; might require more parameters to capture time-dependent features later.
+
+- **Spatiotemporal (3D) approach:** 
+  - Pros: Encodes local motion cues directly, possibly improving performance in tasks heavily reliant on motion.
+  - Cons: Increased computational cost and memory usage; more complex to implement.
+
+### 7.4 Integration of position and time encodings
+
+Transformers require positional encodings to keep track of the original spatial ordering of patches. When extended to videos, we often incorporate not only a 2D position embedding but also a temporal position embedding. For instance, each patch or tube can have a learnable embedding that encodes which frame in the sequence it came from. This helps preserve the ordering of frames and signals the network to attend to tokens with adjacent time positions.
+
+Recent research (e.g., Arnab and gang, 2021; Bertasius and gang, 2021) has studied various ways to mix these spatiotemporal embeddings, showing that well-crafted embeddings significantly improve the accuracy of video transformers across tasks like action recognition and detection.
+
+## Challenges in video processing
+
+While video processing opens up unique opportunities to capture and analyze temporal dynamics, it also presents a range of significant challenges that practitioners must address. Below, we discuss some of the most common difficulties and potential strategies for mitigation.
+
+### 8.1 Computational complexity and resource demands
+
+Video-based tasks can be orders of magnitude more computationally expensive than image-based tasks. If an image classification model processes a single 224×224 image, a comparable video classification model might process 32 frames of size 224×224 each, resulting in 32 times more data. Depending on the chosen network architecture (e.g., 3D convolutions or dense transformer blocks), GPU memory usage and training time can become prohibitive.
+
+Possible solutions:
+
+- **Shorter clips or frame subsampling:** Work with small or carefully sampled sequences to reduce computational load.  
+- **Lightweight architectures:** Use more efficient network designs, e.g., mobile or shuffle-based blocks for 3D CNNs, or efficient attention variants for transformers.  
+- **Distributed training:** Parallelize across multiple GPUs or use specialized hardware (TPUs, custom ML accelerators).  
+- **Mixed-precision training:** Leverage half-precision (FP16) computations to speed up training and reduce memory usage, commonly used in frameworks like PyTorch or TensorFlow.
+
+### 8.2 Memory storage constraints for large-scale video data
+
+Storing and processing large video datasets (such as Kinetics, AVA, or Something-Something) can easily run into tens or hundreds of terabytes. Traditional image-based datasets are much smaller, enabling offline processing and random access. For video, one must often consider streaming directly from disk or from a distributed file system. Large volumes of data can strain local disk space and bandwidth.
+
+Common mitigation techniques:
+
+- **Cloud-based storage:** Hosting data on cloud services (AWS S3, Google Cloud Storage) and streaming directly in training clusters.  
+- **On-the-fly decoding:** Decoding compressed videos frame by frame at training time rather than storing them in raw format.  
+- **Dataset-level compression:** Using efficient codecs to store data, combined with a fast decode pipeline to feed the GPUs.  
+- **Subset or curriculum training:** Pretraining on smaller subsets or frames, followed by fine-tuning on larger sequences if needed.
+
+### 8.3 Handling noise, occlusions, and motion blur
+
+Due to the temporal dimension, video frames often exhibit additional artifacts like motion blur, abrupt camera movements, partial occlusions, or environmental noise. A robust video processing pipeline must handle these variations. Techniques to address them include:
+
+- **Data augmentation:** Random cropping, temporal jittering, color jitter, random occlusion, or random slow-motion augmentation.  
+- **Advanced denoising or deblurring modules:** Incorporating dedicated layers or sub-networks (e.g., spatiotemporal autoencoders) to clean up frames before the main task.  
+- **Temporal smoothing or gating:** Weighted smoothing or gating mechanisms that suppress spurious high-frequency noise across consecutive frames.
+
+### 8.4 Balancing quality vs. compression (bitrate, codecs)
+
+Many real-world applications rely on compressed videos. Yet heavy compression can introduce block artifacts or degrade fine details crucial for tasks like object detection or recognition. The challenge is to find a sweet spot between storage/bandwidth efficiency and minimal information loss.
+
+- **Choose specialized codecs:** Some next-generation codecs (e.g., H.265/HEVC, VP9, AV1) outperform older standards with better compression ratios for a given quality.  
+- **Adaptive bitrate streaming:** Dynamically adjust bitrate based on network conditions or user demands, though this can complicate analysis if the content changes resolution over time.  
+- **Codec-aware training:** In some recent works, training the network with data that reflect the same compression artifacts as the final application scenario can lead to better performance in real-world settings.
+
+### 8.5 Real-time vs. offline processing considerations
+
+Video tasks often need to run in real-time, for instance, in scenarios like live surveillance, robotics, or interactive user experiences. Offline batch processing, in contrast, relaxes time constraints, allowing more complex and thorough analysis.
+
+- **Real-time constraints:** The pipeline must process frames at or above the video's framerate. Efficient models or hardware acceleration become paramount.  
+- **Latency vs. accuracy trade-off:** Real-time applications sometimes compromise slight accuracy for drastically lower latency. For example, using specialized hardware-accelerated inference (e.g., NVIDIA TensorRT or Intel OpenVINO) can significantly reduce inference time.  
+- **Edge vs. cloud processing:** Some applications require video analysis to occur at the "edge" (e.g., on embedded devices), imposing stringent constraints on model size and inference speed. Others can rely on high-performance cloud services.
+
+<Highlight>Video processing</Highlight> is an indispensable area within the broader field of machine learning and data science, supporting countless applications and driving innovation in areas such as surveillance, health care, sports analytics, entertainment, and more. However, it also demands careful strategies for data handling, spatiotemporal modeling, computational resources, and robust training methodologies.
+
+<br/>
+
+## Additional considerations and advanced perspectives
+
+While the preceding sections covered the essential aspects of video processing, there are several advanced directions and research thrusts to be aware of:
+
+### Advanced spatiotemporal architectures
+
+- **Two-stream networks (Simonyan & Zisserman, 2014):** Early approach that processes both RGB frames and optical flow maps in parallel, then fuses their outputs for action recognition.  
+- **3D Convolutional Neural Networks:** Starting from C3D (Tran and gang, ICCV 2015), I3D (Carreira & Zisserman, CVPR 2017), and R(2+1)D networks (Tran and gang, CVPR 2018), these architectures apply 3D kernels to capture motion cues and have become a staple for video recognition tasks.  
+- **SlowFast networks (Feichtenhofer and gang, ICCV 2019):** Process the video at two different frame rates to capture both slow semantic context and fast motion details.  
+- **Temporal Segment Networks (TSN) (Wang and gang, ECCV 2016):** Sample frames across different segments of the video and aggregate results to capture long-range temporal structure.
+
+### Transformer-based video models
+
+- **Video Vision Transformers (ViViT)**: Expands the standard Vision Transformer to video by combining patch embedding with temporal embeddings or 3D patch tokens.  
+- **TimeSformer** (Bertasius and gang, CVPR 2021): Applies divided space-time attention that factorizes attention across space and time, significantly reducing complexity.  
+- **MViT** (Fan and gang, ICCV 2021): A Multiscale Vision Transformer that progressively reduces spatial resolution while expanding the channel dimension, especially suitable for video.
+
+### Multi-modal integration
+
+Videos often come with additional data such as audio or text (subtitles, metadata). Models that combine multiple data streams — called <Highlight>multi-modal models</Highlight> — can outperform single-modal approaches on tasks like video captioning or query-based retrieval.
+
+### Self-supervised and weakly supervised learning
+
+Because labeling large video datasets can be extremely labor-intensive, research on self-supervised or weakly supervised methods has gained traction. These approaches use data pretext tasks (e.g., "predict the correct ordering of frames," "mask and reconstruct future frames," or "contrast different segments") to learn general representations of motion and appearance without extensive manual labeling.
+
+### Reinforcement learning for video tasks
+
+Some advanced applications, like robotics or autonomous vehicles, require decision making based on continuous video input. Integrating video processing with reinforcement learning methods can yield systems that perceive their environment and make real-time decisions (e.g., controlling a robot's actions in response to observed motion).
+
+### Ethical and privacy concerns
+
+Video data often contains sensitive information about individuals, locations, or activities. Ethical frameworks and regulatory guidelines (e.g., GDPR in Europe, or other privacy laws) must be considered when collecting, storing, or analyzing large volumes of video content. Techniques such as face anonymization or bounding-box-level obfuscation are sometimes mandated.
+
+<br/>
+
+## (Optional) Example: Building a video action recognition inference pipeline
+
+Below is a simplified demonstration of how one might put together a video action recognition pipeline using a hypothetical PyTorch 3D CNN model or a spatiotemporal transformer. This snippet focuses only on the fundamental structure of inference, not training:
+
+```
+<Code text={`
+import torch
+import torch.nn as nn
+import torchvision.transforms as T
+import cv2
+import numpy as np
+
+# Suppose we have a pretrained model that takes N frames of size 224x224, 3D input
+class MockVideoModel(nn.Module):
+    def __init__(self, num_classes=10):
+        super(MockVideoModel, self).__init__()
+        # Mock architecture: just a placeholder
+        self.conv = nn.Conv3d(in_channels=3, out_channels=8, kernel_size=(3,3,3), padding=1)
+        self.pool = nn.AdaptiveAvgPool3d((1,1,1))
+        self.fc = nn.Linear(8, num_classes)
+
+    def forward(self, x):
+        # x shape: (batch, channels=3, frames=N, height=224, width=224)
+        out = self.conv(x)
+        out = self.pool(out)
+        out = out.view(out.size(0), -1)
+        out = self.fc(out)
+        return out
+
+model = MockVideoModel(num_classes=5)  # e.g., 5 possible actions
+model.eval()
+
+# Example transformation: resizing to 224x224, convert to tensor, etc.
+transform = T.Compose([
+    T.ToPILImage(),
+    T.Resize((224,224)),
+    T.ToTensor()
+])
+
+# Load video capture
+cap = cv2.VideoCapture('test_video.mp4')
+
+frames = []
+MAX_FRAMES = 16  # example: we'll use 16-frame snippets
+
+while True:
+    ret, frame = cap.read()
+    if not ret:
+        break
+    
+    # Convert frame to RGB
+    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    # Apply transform
+    tensor_frame = transform(frame_rgb)
+    frames.append(tensor_frame)
+    
+    # If we have enough frames, run inference
+    if len(frames) == MAX_FRAMES:
+        # Stack frames along a new dimension -> shape (frames, channels, height, width)
+        clip = torch.stack(frames, dim=0)
+        # Reorder to (channels, frames, height, width)
+        clip = clip.permute(1, 0, 2, 3).unsqueeze(0)  # add batch dim at index 0
+
+        # Inference
+        with torch.no_grad():
+            logits = model(clip)
+            probs = torch.softmax(logits, dim=1)
+        
+        predicted_class = torch.argmax(probs, dim=1)
+        print(f"Predicted class index: {predicted_class.item()}, Probability distribution: {probs.squeeze().tolist()}")
+
+        # Reset frames for next snippet
+        frames = []
+
+cap.release()
+`}/>
+```
+
+In this simple illustration:
+
+1. We read frames from a video in real-time.  
+2. Each frame is transformed to a consistent resolution and converted into a tensor.  
+3. Once we have enough frames to form a snippet (in this case, 16 frames), we group them into a single 5D tensor: <Latex text="\((B, C, T, H, W)\)"/>.  
+4. We feed it to the model for classification, obtaining a probability distribution over possible actions.  
+5. The snippet is reset, and the process continues for the next batch of frames.
+
+Though rudimentary, this example demonstrates a common pipeline for many spatiotemporal models, whether 3D CNN-based or using advanced video transformers.
+
+<br/>
+
+## Conclusion
+
+Video processing is a dynamic, expansive field that transcends the challenges of standard image-based tasks by incorporating an additional temporal dimension. This extra dimension empowers a host of new applications, ranging from real-time object tracking to complex action recognition and beyond, but it also introduces non-trivial complexities. Handling massive volumes of data, ensuring efficient spatiotemporal feature extraction, and balancing the nuances of compression and quality are only a few of the many hurdles practitioners face.
+
+Yet, the progression of techniques — starting from classical optical flow and block matching, moving through 3D CNNs, and arriving at sophisticated spatiotemporal transformer models — demonstrates the ongoing innovation and expanding capabilities in this area. Researchers are increasingly exploring methods that fuse multi-modal signals (audio, text, sensor data) with the visual stream, pushing the boundaries of what can be understood and inferred from video data. Meanwhile, growing emphasis on distributed training, efficient model architectures, and powerful hardware accelerators helps mitigate the formidable computational and storage challenges.
+
+For data scientists and machine learning engineers, developing expertise in video processing opens up a multitude of opportunities to drive forward solutions in domains such as surveillance, healthcare, entertainment, robotics, sports analytics, and more. By mastering concepts like motion estimation, spatiotemporal feature extraction, and advanced architectures for deep learning, practitioners can harness the inherent richness of video data — turning raw streams into actionable insights and intelligent systems.
+
+---
+
+<Image alt="Illustration of spatiotemporal representation in a video clip" path="" caption="Example depiction of how frames form a 3D volume of (Width × Height × Time) to be processed for tasks like action recognition." zoom="false" />
+
+<Image alt="Depiction of tubelet embedding for video transformers" path="" caption="Diagram showing how a clip is divided into spatiotemporal 'tubes' that capture both space and time information for embedding." zoom="false" />

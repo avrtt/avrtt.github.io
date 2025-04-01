@@ -1,0 +1,386 @@
+---
+index: 101
+indexCourse: 125
+indexFavorites:
+title: "Social networks analysis"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Social networks analysis"
+courseCategoryName: "Graph theory in ML"
+desc: "This world is small"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "13.04.2024"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 2
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/social_network_analysis.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/social_network_analysis"
+slug: "/research/social_network_analysis"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+import Tooltip from "../../../components/Tooltip"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+Анализ социальных сетей
+https://neerc.ifmo.ru/wiki/index.php?title=%D0%90%D0%BD%D0%B0%D0%BB%D0%B8%D0%B7_%D1%81%D0%BE%D1%86%D0%B8%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D1%85_%D1%81%D0%B5%D1%82%D0%B5%D0%B9
+
+*/}
+
+
+{/*
+
+## Chapter 1. Introduction
+1.1 Overview of social networks analysis  
+1.2 Importance in machine learning and data science  
+1.3 Scope of this article
+## Chapter 2. Fundamentals of social network analysis
+2.1 Key definitions and concepts  
+2.2 Graph theory basics  
+2.3 Nodes, edges, and adjacency representations
+## Chapter 3. Data collection and preprocessing
+3.1 Sources of social network data  
+3.2 Data crawling and APIs  
+3.3 Data cleaning and transformation  
+3.4 Handling missing or incomplete data
+## Chapter 4. Metrics and features in social networks
+4.1 Centrality measures  
+    4.1.1 Degree centrality  
+    4.1.2 Closeness centrality  
+    4.1.3 Betweenness centrality  
+4.2 Community detection  
+    4.2.1 Modularity  
+    4.2.2 Louvain algorithm  
+    4.2.3 Girvan–Newman algorithm  
+4.3 Other structural properties  
+    4.3.1 Clustering coefficient  
+    4.3.2 Diameter and average path length  
+    4.3.3 Connected components
+## Chapter 5. Machine learning techniques for social networks
+5.1 Predictive modeling on networked data  
+5.2 Link prediction and recommendation systems  
+5.3 Node classification and community detection integration  
+5.4 Embedding methods for networked data
+## Chapter 6. Temporal and dynamic network analysis
+6.1 Evolving social networks  
+6.2 Tracking community changes over time  
+6.3 Dynamic link prediction  
+6.4 Streaming data considerations
+## Chapter 7. Ethical and privacy considerations
+7.1 Data protection and user consent  
+7.2 Bias and fairness in social network analysis  
+7.3 Responsible use of publicly available data
+## Chapter 8. Case studies and real-world applications
+8.1 Social influence and marketing campaigns  
+8.2 Misinformation and rumor detection  
+8.3 Crisis management and humanitarian response  
+8.4 Fraud detection and cybersecurity
+
+*/}
+
+
+Social network analysis is a field dedicated to understanding the relationships and interactions between individuals, groups, or even abstract entities such as organizations or websites. These relationships are often reflected in datasets that model social structures, with individuals represented as nodes in a graph (often called "vertices") and the relationships between them as edges. The analytical techniques that stem from social network analysis provide powerful ways to measure influence, detect communities, and predict how information might diffuse across a network. By exploring structural properties and identifying key features inherent in the connectivity of nodes, social network analysis offers a quantitative framework and a rich theoretical background that can be applied to numerous domains, including sociology, psychology, marketing, epidemiology, cybersecurity, and beyond.
+
+Early systematic explorations of social networks can be traced back to the mid-20th century, with sociologists looking at how social ties and group memberships influence behaviors. Since then, the field has grown in tandem with computational sciences and machine learning. Today, rich digital footprints produced by social media and communication platforms mean that we have an abundance of data describing how individuals interact, share content, form groups, and shape online communities. These massive datasets have spurred the development of advanced algorithms and machine learning models that glean deep insights about how humans connect and influence each other, as well as how various structures evolve over time.
+
+Though it is sometimes viewed as purely a domain of sociology, social network analysis now integrates methods from mathematics, graph theory, statistics, and machine learning. Researchers and practitioners often collaborate using tools that range from specialized software libraries (such as NetworkX or iGraph) to advanced neural architectures for graph-structured data. Over the past decades, conferences such as KDD (Knowledge Discovery and Data Mining) and NeurIPS (Neural Information Processing Systems) have featured influential papers that highlight new ways to infer latent representations of nodes (e.g., Node2Vec, DeepWalk, GraphSAGE) and describe the dynamic properties of evolving networks.
+
+### 1.2 Importance in machine learning and data science
+
+Social network analysis has become increasingly vital in modern machine learning and data science for several key reasons. First, the structure of a network itself can provide meaningful features that standalone tabular data might not capture. For instance, detecting highly influential individuals can help in product marketing campaigns by directing efforts toward those who can maximize information dissemination. Similarly, central nodes in a terrorist or criminal network become critical to identify and monitor to inhibit malicious activities.
+
+Second, many real-world data problems involve relationships or interactions. Recommendation engines in e-commerce platforms, friend suggestions on social media sites, or collaborative filtering approaches in content delivery systems all stand to benefit from analyzing network structures. Machine learning models often treat these networks as graphs, extracting structural features for tasks like link prediction, node classification, and community detection.
+
+Third, networks evolve over time, which introduces challenging dynamics. Tracking newly formed connections, ephemeral communities, or emergent patterns of node behavior is essential to understanding phenomena such as the sudden rise of viral trends, the spread of misinformation, or the abrupt changes in consumer sentiment. By combining tools from time-series analysis, streaming data processing, and graph theory, data scientists can design models that adapt to real-time changes in large, continuously updated networks.
+
+### 1.3 Scope of this article
+
+In this extensive article, I will dive into the foundations of social network analysis, starting from graph-theoretical principles and essential definitions. I will explore how to collect and preprocess social network data, the key metrics and features (like centrality and community detection methods), and how modern machine learning techniques are applied to networked data. I will also discuss temporal and dynamic networks, emphasizing how network structures evolve, and how analytics must adapt to these changes. Toward the end, I will examine ethical and privacy issues, highlighting why data practitioners must grapple with considerations of consent, fairness, and responsible use of public data. Lastly, I will present a range of real-world case studies ranging from marketing campaigns to crisis management, showcasing how social network analysis can be used to tackle complex problems in modern society.
+
+This article aims to address a specialized yet diverse audience — researchers, machine learning engineers, data scientists, and even domain experts in sociology or marketing who are seeking advanced theoretical insights. At the same time, the exposition will strive to remain accessible and illustrative, drawing on practical examples, code snippets, and references to state-of-the-art research. By the end, any motivated reader should be equipped with a thorough understanding of the conceptual building blocks, computational tools, and real-world considerations that make social network analysis a powerful component of the data science toolkit.
+
+## Chapter 2. Fundamentals of social network analysis
+
+### 2.1 Key definitions and concepts
+
+A social network can typically be denoted as <Latex text="\(G = (V, E)\)"/>, where <Latex text="\(V\)"/> is the set of nodes (representing individuals, organizations, etc.) and <Latex text="\(E\)"/> is the set of edges (representing interactions or ties between entities). Social networks often exhibit a variety of interesting phenomena such as homophily (<Tooltip text="Homophily refers to the tendency of similar entities to connect with each other."/>), transitivity (individuals in a close-knit group often cluster among themselves), and preferential attachment (popular nodes tend to accumulate even more links over time).
+
+Among the most critical concepts in social networks are:
+
+• Tie strength: The notion that edges (or relationships) might vary in strength or importance, capturing how frequently individuals interact or how strongly they influence each other.  
+• Structural holes: Gaps between distinct communities or sub-networks, which can be exploited by brokers who bridge these gaps.  
+• Ego networks: Focus on a particular node (the "ego") and its immediate neighbors, plus the relationships among those neighbors. Ego networks are often used to measure the local environment of a node.
+
+In the study of social networks, researchers frequently probe into phenomena such as small-world effects, scale-free properties (Barabási and Albert, Science 1999), and complex contagion. Small-world networks, for instance, are characterized by short average path lengths and high clustering coefficients, reflecting how "six degrees of separation" might exist in large social systems. Scale-free networks, on the other hand, have a node degree distribution following a power law, meaning that some nodes develop overwhelmingly high connectivity relative to the average node.
+
+### 2.2 Graph theory basics
+
+Graph theory provides the formal foundation for social network analysis. Key notions include paths, walks, cycles, degrees, adjacency matrices, and so forth. A path in a graph is a sequence of edges connecting a sequence of distinct vertices. A cycle is a path starting and ending at the same vertex without repeating edges or nodes in between. The degree of a node <Latex text="\(v\)"/> is the number of edges incident to <Latex text="\(v\)"/>. In directed graphs, one distinguishes between in-degree and out-degree.
+
+Researchers often use adjacency matrices to store graph information. The adjacency matrix <Latex text="\(A\)"/> associated with a graph <Latex text="\(G\)"/> is a <Latex text="\(|V|\times |V|\)"/> matrix where the cell <Latex text="\(A_{i,j}\)"/> is 1 if there is an edge from node <Latex text="\(i\)"/> to node <Latex text="\(j\)"/> (or vice versa, depending on orientation) and 0 otherwise. One can also represent graphs using adjacency lists, which can be more efficient for sparse networks.
+
+Lemma-like results in graph theory — such as those relating to connectivity, bipartite structures, or spanning trees — enable social network analysts to reason about which parts of a network might be crucial for the flow of information. Tools from advanced graph theory, like spectral graph theory or algebraic graph theory, also prove invaluable. For instance, the eigenvalues and eigenvectors of graph Laplacians can inform us about cluster structure (via spectral clustering), partitions, and potential bottlenecks in information flow.
+
+### 2.3 Nodes, edges, and adjacency representations
+
+Nodes in a social network typically represent individuals, but they can also be items, organizations, documents, or more abstract constructs such as hashtags or features. Edges, on the other hand, denote a relationship or an interaction. This relationship might be an explicit "friend" or "follower" link on a social media platform, or it might be an implicit co-occurrence pattern (e.g., two individuals are in the same online discussion thread).
+
+Adjacency representations come in multiple forms. In an adjacency matrix <Latex text="\(A\)"/>, a row <Latex text="\(i\)"/> combined with a column <Latex text="\(j\)"/> indicates the presence (or the weight, in the case of weighted graphs) of a tie between <Latex text="\(i\)"/> and <Latex text="\(j\)"/>. When networks become large, storing a full adjacency matrix can be memory-intensive. That is why adjacency lists are often the more flexible representation for large and sparse graphs: each node is associated with a list containing only the nodes to which it is directly connected.
+
+Below is a simple demonstration in Python using NetworkX, illustrating how to create a small undirected social network for illustrative purposes:
+
+<Code text={`
+import networkx as nx
+
+# Create an empty undirected graph
+G = nx.Graph()
+
+# Add some nodes (people, organizations, etc.)
+G.add_node("Alice")
+G.add_node("Bob")
+G.add_node("Carol")
+
+# Add edges (relationships)
+G.add_edge("Alice", "Bob")
+G.add_edge("Bob", "Carol")
+
+# Print adjacency list
+for line in nx.generate_adjlist(G):
+    print(line)
+`}/>
+
+In practice, one might load a dataset of edges from a CSV or connect to an API that streams user-to-user interactions (e.g., a Twitter feed). The chosen representation (matrix vs. list vs. edge list) will depend on the nature and size of the problem at hand.  
+
+<Image alt="Adjacency matrix depiction" path="" caption="A conceptual view of a simple adjacency matrix comparing nodes across its rows and columns." zoom="false" />
+
+## Chapter 3. Data collection and preprocessing
+
+### 3.1 Sources of social network data
+
+Modern social network data sources are extremely varied. Popular social platforms like Twitter, Facebook, LinkedIn, or Instagram generate billions of interactions daily, while professional and academic communication tools such as Slack or email networks also provide valuable datasets for analysis. In many cases, these networks are partially or entirely public, meaning that a researcher or engineer can gather a subset of the data through official APIs. In other instances, private or proprietary platforms may require special agreements or data-sharing terms.
+
+Outside of social media, one can also find social network structures in collaborative environments like GitHub (where edges might indicate collaboration on repositories or code commits), or in scientific co-authorship networks (where edges refer to co-authored papers). Even messaging platforms, online fora, or crowd-sourced knowledge platforms (e.g., Stack Overflow) contain nuanced social networks that may require domain-specific parsing. Government agencies studying phone call records or bank transactions often find themselves applying the same network-based logic to detect fraudulent schemes or suspicious activities.
+
+### 3.2 Data crawling and APIs
+
+For public social platforms, obtaining data typically involves using an API, such as the Twitter API or Facebook Graph API, which allows developers to query user profiles, friendships, posts, likes, and so forth. However, many platforms enforce strict rate limits and usage policies to protect user privacy and commercial interests. Therefore, data scientists must design efficient crawlers, cache results to avoid redundant API calls, and carefully handle potential data anomalies or incomplete retrievals. Tools like the Python library tweepy can help in systematically gathering Twitter data, while other specialized libraries provide wrappers for various platform APIs.
+
+Some projects rely on custom web scraping approaches. While this may be feasible for certain platforms, it can raise ethical and legal concerns, especially if a website's terms of service prohibit automated data collection. The definition of what constitutes publicly available data can also vary from one jurisdiction to another. Hence, it is critical to confirm that data gathering practices follow both the platform's guidelines and local regulations.
+
+### 3.3 Data cleaning and transformation
+
+Once raw, unstructured data has been collected, it often must be cleaned and transformed before analysis. This involves tasks like:  
+• Removing duplicated or extraneous records.  
+• Resolving inconsistencies, such as varying user IDs across different data sources.  
+• Converting textual or time-stamped data into structured formats that can be used to construct edges between nodes.  
+• Filtering out noise or spam accounts that might distort the network topology.
+
+For instance, if you are building a mention network in Twitter (where two users become connected if one mentions the other), you might have to parse tweet content for "@username" references, handle retweets, or interpret hashtags. After cleaning, you may wish to produce a simplified edge list in which each row contains two user identifiers that are connected, optionally with a timestamp for the creation time of that connection. If the edges have weights (e.g., the frequency of retweets), it is prudent to store them in a column or use a specialized data structure that retains weights.
+
+### 3.4 Handling missing or incomplete data
+
+Real social network data frequently suffers from missing or incomplete information. For example, consider a platform where only a subset of users has opted into sharing certain aspects of their profile data. Alternatively, perhaps an API call reached a rate limit, thereby skipping data for certain nodes. Incomplete data can lead to biased structural analyses if important relationships or entire communities are omitted from the collected dataset.
+
+Researchers handle these uncertainties in a variety of ways. Statistical imputation can be employed to fill in missing or unknown features, though naive approaches may cause distortions. Some analyses specifically examine the effects of partial network observations (Smith and gang, NeurIPS 2021), proposing robust or resilient measures that remain stable even when a fraction of edges is missing. An important best practice is always to document the extent of missing data and consider sensitivity analyses or re-sampling strategies to estimate how data gaps might affect measured metrics such as centrality or community structure.
+
+## Chapter 4. Metrics and features in social networks
+
+### 4.1 Centrality measures
+
+Centrality measures help identify the most "important" or "influential" nodes in a network. Importance can be defined in different ways, leading to multiple types of centrality.
+
+**4.1.1 Degree centrality**  
+Perhaps the simplest measure, degree centrality posits that a node is more important if it has a higher number of links. Formally, for an undirected graph, the degree centrality <Latex text="\(C_D(v)\)"/> of a node <Latex text="\(v\)"/> is just:
+
+<Latex text="\(C_D(v) = \deg(v)\)"/>
+
+where <Latex text="\(\deg(v)\)"/> denotes the degree of <Latex text="\(v\)"/> — i.e., the count of edges incident on <Latex text="\(v\)"/>. In a directed graph, one might differentiate between in-degree and out-degree, depending on the direction of edges.
+
+**4.1.2 Closeness centrality**  
+Closeness centrality focuses on how near a node is to all other nodes in the graph via the shortest paths. For node <Latex text="\(v\)"/>, its closeness centrality <Latex text="\(C_C(v)\)"/> is typically defined as:
+
+<Latex text="\(C_C(v) = \frac{1}{\sum_{u \neq v} d(v, u)}\)"/>
+
+where <Latex text="\(d(v,u)\)"/> is the shortest path distance between nodes <Latex text="\(v\)"/> and <Latex text="\(u\)"/>. A node with a smaller average distance to all other nodes has higher closeness centrality, indicating that it is more "centrally located" in terms of graph-geodesic distance.
+
+**4.1.3 Betweenness centrality**  
+Betweenness centrality captures the notion of being on the shortest paths that connect pairs of other nodes. For a node <Latex text="\(v\)"/>, its betweenness centrality <Latex text="\(C_B(v)\)"/> can be expressed as:
+
+<Latex text="\(C_B(v) = \sum_{s \neq v \neq t} \frac{\sigma_{s,t}(v)}{\sigma_{s,t}}\)"/>
+
+where <Latex text="\(\sigma_{s,t}\)"/> is the number of shortest paths from <Latex text="\(s\)"/> to <Latex text="\(t\)"/> and <Latex text="\(\sigma_{s,t}(v)\)"/> is the number of those paths passing through <Latex text="\(v\)"/>. Nodes with higher betweenness centrality serve as "bridges" or "brokers" among otherwise distinct parts of a network.
+
+### 4.2 Community detection
+
+Many networks exhibit community structure — that is, nodes naturally cluster into groups whose members are more densely connected to each other than to the rest of the network. Identifying these communities provides insight into social groups, functional modules, or topical sub-networks.
+
+**4.2.1 Modularity**  
+A common measure for community partitions is the modularity <Latex text="\(Q\)"/>, which compares the density of edges within communities to what one would expect under a random graph model. One standard definition of modularity is:
+
+<Latex text="\[
+Q = \frac{1}{2m} \sum_{i,j} \bigl[A_{i,j} - \frac{k_i k_j}{2m}\bigr] \delta(c_i, c_j)
+\]"/>
+
+Here, <Latex text="\(m\)"/> is the number of edges in the graph, <Latex text="\(A_{i,j}\)"/> is the adjacency between nodes <Latex text="\(i\)"/> and <Latex text="\(j\)"/> (1 if connected, 0 otherwise, or higher for weighted edges), <Latex text="\(k_i\)"/> is the degree of node <Latex text="\(i\)"/>, and <Latex text="\(c_i\)"/> is the community assignment of node <Latex text="\(i\)"/>. The function <Latex text="\(\delta\)"/> is 1 if both nodes are in the same community, and 0 otherwise.
+
+**4.2.2 Louvain algorithm**  
+The Louvain algorithm (Blondel and gang, J. Stat. Mech. 2008) is a popular, heuristic-based method for maximizing modularity. It operates by initially assigning each node to its own community, then iteratively merging communities if it results in a modularity gain. This multi-level approach tends to be quite efficient for large networks — it aggregates nodes into progressively coarser "super-nodes" while seeking local maxima of modularity.
+
+**4.2.3 Girvan–Newman algorithm**  
+The Girvan–Newman algorithm (Girvan and Newman, PNAS 2002) focuses on edge betweenness: it repeatedly removes the edge with the highest betweenness centrality, gradually splitting the network into separate components. While more computationally expensive than Louvain for large networks, Girvan–Newman offers an intuitive perspective on how bridging edges hold networks together.
+
+### 4.3 Other structural properties
+
+Social network analysis also relies on numerous other graph metrics that give insight into connectivity, resilience, and the "small-world" phenomenon.
+
+**4.3.1 Clustering coefficient**  
+The clustering coefficient of a node measures how tightly knit its neighborhood is. A node's local clustering coefficient is the ratio of the number of edges among its neighbors to the number of edges that could possibly exist among them. Networks with high average clustering coefficient often have a robust local grouping property, reflecting tight-knit circles of friends or collaborators.
+
+**4.3.2 Diameter and average path length**  
+The diameter of a network is the longest shortest path between any two nodes in the graph. Meanwhile, the average path length is the mean distance over all pairs of nodes. Small-world networks typically have relatively short paths between any two nodes, reinforcing the familiar notion that people are only a few steps away in large social graphs.
+
+**4.3.3 Connected components**  
+A connected component in an undirected graph is a subgraph in which any two vertices are connected by a path. In social network analysis, discovering connected components (or weakly/strongly connected components in directed graphs) can tell us if certain individuals or communities are entirely isolated. Large networks often have a giant connected component that includes most nodes, plus a collection of much smaller components or isolated nodes on the periphery.
+
+## Chapter 5. Machine learning techniques for social networks
+
+### 5.1 Predictive modeling on networked data
+
+When performing predictive tasks on social networks, the structural information in the network can be treated as features that complement typical user-based or item-based features. For instance, imagine that each node in a social graph has numeric or categorical attributes describing individual characteristics. By incorporating measures like centrality, community memberships, or even node embeddings, a model might better capture user-level variations that correlate with an outcome of interest (e.g., user churn, purchase intent, or the spread of rumors).
+
+One challenge is that many machine learning techniques assume data instances are independent and identically distributed, whereas social network data typically exhibits correlations among nodes. Models must therefore account for network autocorrelation where connected nodes share certain traits. Advanced approaches, such as relational classifiers or collective inference methods, treat labels in a network as interdependent, updating predictions for a node based on the (partially) known labels of its neighbors.
+
+### 5.2 Link prediction and recommendation systems
+
+Link prediction attempts to forecast which edges (relationships) will emerge in the network over time. Common applications include friend suggestions on social media platforms ("People You May Know" types of recommendations) or matching algorithms that help users find relevant connections. Link prediction algorithms traditionally rely on node similarity measures (like Jaccard similarity, Adamic–Adar scores) derived from neighborhood overlaps. More sophisticated approaches can incorporate machine learning or deep learning methods that combine structural features with node attributes.
+
+In recommendation systems, social signals can be integrated into collaborative filtering approaches. For instance, a user who is connected to people with certain preferences might receive recommendations reflecting those preferences. Alternatively, a graph-based recommendation model could rank potential items by measuring how strongly a user is connected to other users who endorse or interact with those items.
+
+### 5.3 Node classification and community detection integration
+
+Node classification problems aim to predict a categorical label for each node. Examples range from predicting whether a social media user is a bot or human, to inferring political alignment, or evaluating whether a certain user might become a high-value customer. By integrating standard node features (e.g., profile data, user behaviors) with graph-based features (e.g., degrees, closeness centrality, cluster memberships), a classification algorithm may achieve better accuracy.
+
+Community detection itself can be viewed as a form of unsupervised learning that partitions a graph. Sometimes, node classification might be performed in synergy with community detection. For example, semi-supervised approaches can use a small subset of labeled nodes to guide how the algorithm discovers communities, thereby ensuring that discovered clusters align with relevant domain labels. Conversely, one might first detect communities and then classify entire communities based on a small set of known labels, effectively transferring labels to all nodes within a discovered group.
+
+### 5.4 Embedding methods for networked data
+
+In recent years, embedding methods that learn low-dimensional vector representations of nodes have gained significant traction. These representations aim to preserve structural relationships so that nodes that are close in the graph also appear close in the embedding space. Some well-known methods include:
+
+• DeepWalk (Perozzi and gang, KDD 2014): Uses random walks on the graph to generate node sequences, then applies techniques analogous to word2vec to learn embeddings.  
+• Node2Vec (Grover and Leskovec, KDD 2016): Extends DeepWalk by introducing a flexible sampling strategy that balances depth-first and breadth-first exploration of the graph.  
+• GraphSAGE (Hamilton and gang, NeurIPS 2017): Learns a function that generates embeddings by sampling and aggregating features from a node's local neighborhood, enabling inductive learning for unseen nodes.  
+• Graph Convolutional Networks (Kipf and Welling, ICLR 2017): Utilizes a neural network architecture specifically designed for graph data, effectively convolving node features in the graph domain.
+
+These embedding methods are widely used for machine learning tasks like node classification, link prediction, and cluster analysis, often outperforming more traditional similarity-based approaches. For example, once a node embedding is learned, a simple distance metric in the embedding space can be used to predict new links or to categorize nodes by similarity.  
+
+<Image alt="Graph embeddings visual" path="" caption="Conceptual depiction of nodes mapped to a low-dimensional space for simpler classification and clustering." zoom="false" />
+
+## Chapter 6. Temporal and dynamic network analysis
+
+### 6.1 Evolving social networks
+
+Unlike static graphs, social networks often evolve over time as new edges form or old edges dissipate. Users join or leave platforms, relationships strengthen or weaken, and entire discussion communities can appear or vanish. These dynamics can profoundly affect standard metrics. For instance, a node might have low centrality at one point in time but become crucial later, or a closely knit community can fragment into separate clusters due to real-world events.
+
+Dynamic network analysis aims to capture these temporal patterns, typically by storing time-stamped edges or by constructing snapshots of the network at discrete intervals. Researchers may then examine how measures like centrality, connectivity, or community assignments change from one snapshot to the next. Techniques like dynamic stochastic block models or time-varying graph neural networks can further help in capturing transitional phenomena.
+
+### 6.2 Tracking community changes over time
+
+Community detection in a dynamic network can illuminate when communities grow, merge, split, or disappear. One approach is to perform community detection separately on consecutive snapshots and then track node memberships across these slices. Alternatively, advanced algorithms have been proposed that incorporate temporal regularization terms (Tang and gang, KDD 2015), ensuring that community structures do not fluctuate wildly from one time step to the next without justification. Such approaches are useful for understanding user "loyalty" to certain groups, identifying ephemeral sub-networks around short-lived events, or analyzing how major external shocks (e.g., policy changes, global crises) might reshape social connectivity.
+
+### 6.3 Dynamic link prediction
+
+Standard link prediction methods can also be adapted to dynamic settings by factoring in not just the current state of the network but also its past. This might involve using sequences of adjacency matrices or time series of node interactions as input. One could, for example, consider the frequency and recency of interactions or measure the rate at which certain network statistics are changing. If a pair of nodes has had repeated interactions in prior snapshots, that may hint at a stronger propensity for future connection.
+
+An example approach might train a supervised model that takes as input a series of aggregated features (common neighbors, Adamic–Adar, etc.) computed at different time intervals and attempts to predict whether a link will form at the next time step. More sophisticated models may rely on recurrent neural networks or attention-based mechanisms, effectively capturing both network structure and temporal evolution to make the link prediction more accurate.
+
+### 6.4 Streaming data considerations
+
+In certain scenarios, data arrives in real time (e.g., live tweets, streaming logs of user interactions), so the social network is always in flux. Algorithms designed for streaming graph analytics must be incremental and memory-efficient, often maintaining approximate statistics rather than recalculating everything from scratch. For example, to track betweenness centrality in a streaming environment, one might update only the affected shortest paths when a new edge arrives, rather than recomputing betweenness for the entire graph.
+
+Tools such as Apache Spark, Flink, or Kafka Streams have modules that aid in handling streaming data pipelines. Specialized libraries can also facilitate streaming graph computations, allowing data scientists to respond quickly to emerging trends or anomalies in large-scale social networks.  
+
+## Chapter 7. Ethical and privacy considerations
+
+### 7.1 Data protection and user consent
+
+Social network analysis raises critical questions about user privacy, consent, and data ownership. While large datasets can be scraped or gathered through APIs, it is essential to ensure compliance with regulations such as the General Data Protection Regulation (GDPR) in the European Union or the California Consumer Privacy Act (CCPA) in the United States. Platforms themselves may impose terms of service or developer policies requiring user consent, or limiting data usage for research and commercial purposes.
+
+Practitioners must remain conscious that even seemingly innocuous metadata can reveal sensitive personal information once it is aggregated. Location traces, relationship patterns, or posting timestamps can compromise anonymity. Pseudonymized or aggregated data might be re-identified if an attacker cross-references it with external data sources. As a result, privacy-preserving techniques like differential privacy or secure multi-party computation might become relevant for analyzing social network data without exposing sensitive nodes or edges.
+
+### 7.2 Bias and fairness in social network analysis
+
+Machine learning models that operate on social networks can inadvertently amplify biases if the underlying network structure itself is biased. For instance, if certain demographic groups are systematically under-connected in the network, or if interactions reflect historical inequalities, standard centrality or embedding approaches might rank these nodes less favorably. Such outcomes have implications for fairness in recommendation systems or job-matching platforms that rely on link prediction or node classification.
+
+Researchers have begun proposing fairness-aware or bias-mitigating strategies. One approach is to incorporate fairness constraints when learning node embeddings or building community assignments, ensuring that sensitive attributes do not disproportionately affect the representation or the final decisions. Another method might re-sample or re-weight edges to minimize structural bias. Since social networks are deeply intertwined with real-world social processes, addressing bias requires both robust algorithmic solutions and thoughtful domain-oriented interventions.
+
+### 7.3 Responsible use of publicly available data
+
+Some data scientists argue that data placed on the internet is "fair game", yet many ethical guidelines caution that the mere availability of data does not negate the obligation to respect user expectations and potential harms. Publicly available posts, profiles, or images might still carry personal data or reveal emotional states that users did not expect to be systematically mined or analyzed for commercial ends. Responsible data use entails clarifying the purpose of your analysis, implementing robust anonymization or pseudonymization, and limiting the scope of data collection to what is strictly necessary for the project.
+
+In academic contexts, Institutional Review Boards (IRBs) often require that researchers articulate how they will handle user privacy, data storage, and potential risks of re-identification. Even in a corporate environment, it is wise to follow best practices that minimize risk to users and protect their privacy.  
+
+## Chapter 8. Case studies and real-world applications
+
+### 8.1 Social influence and marketing campaigns
+
+A pivotal application in social network analysis is identifying individuals who influence community opinion or consumer behavior. Marketers want to know which user or set of users can amplify a brand message, leading to viral reach. One technique is to compute centrality measures across the network to locate well-positioned "hubs" or to systematically measure how often certain nodes appear on shortest paths between others (i.e., betweenness). Another approach might involve advanced algorithms that simulate or model information diffusion (e.g., using variations of the independent cascade model or the linear threshold model).
+
+Companies can do targeted influencer outreach once they identify these key nodes. For instance, a recommendation model might rank potential influencers who not only have large networks but also have highly engaged followers. The synergy between these analytics and a well-executed marketing campaign can drastically improve advertising return on investment.  
+
+### 8.2 Misinformation and rumor detection
+
+Social platforms have grappled with the proliferation of false or misleading information, especially during elections or public health crises. Social network analysis helps identify suspicious clusters responsible for rapidly spreading questionable content. Through a combination of node classification (bot detection), community detection (identifying echo chambers), and link analysis (tracking how certain claims jump from one group to another), one can isolate potentially malicious networks or individuals, as well as detect patterns indicative of organized disinformation campaigns.
+
+Machine learning approaches can be integrated with natural language processing and sentiment analysis to further characterize the nature and credibility of shared content. Graph-based anomaly detection methods can also be used to detect sudden bursts of coordinated linking or posting activity. Scholars like Vosoughi and gang (Science 2018) have highlighted how false news travels on social networks differently from true news, often with different structural signatures that can be analyzed with these techniques.
+
+### 8.3 Crisis management and humanitarian response
+
+During disasters, pandemics, or humanitarian crises, social networks become critical channels for disseminating urgent information and coordinating relief efforts. Platforms such as Twitter can reveal real-time updates about where resources are needed or where misinformation is emerging about safety measures. By leveraging social network analytics, government agencies and NGOs can map out hotspots of request activity, identify key information hubs, and streamline communication.
+
+Dynamic community detection might show how crises spawn temporary alliances among previously disconnected interest groups. Additionally, temporal link analysis can indicate how information about critical resources (like hospital bed availability or urgent donation requests) flows through the network, helping crisis responders address bottlenecks or misinformation.  
+
+### 8.4 Fraud detection and cybersecurity
+
+Fraudulent or malicious behavior often manifests in distinctive patterns of network connectivity. In banking, for instance, money-laundering rings may demonstrate a high frequency of transactions within a tightly knit sub-network of accounts, or certain anomalies in the manner funds flow from one community to another. Similarly, in cybersecurity, botnets or groups of compromised systems might exhibit synchronized or patterned connections.
+
+By applying social network analysis, investigators can detect suspicious clusters or unusual motifs in transaction or communication graphs. Link prediction (or link removal prediction) can also be used to forecast how a malicious ring might expand if it is not interdicted. Combining such analyses with domain knowledge (e.g., known fraudulent account characteristics) can yield powerful detection systems that adapt to evolving criminal strategies.  
+
+<Image alt="Case study examples" path="" caption="Illustrative examples of real-world scenarios benefiting from social network analysis." zoom="false" />
+
+---
+
+Practical applications of social network analysis continue to expand as researchers refine algorithms to handle large-scale, dynamic, and high-dimensional data. From fueling next-generation recommendation systems and marketing insights to detecting fraud and misinformation, the structural lens on data that social network analysis provides has proven indispensable. Even as the field grows, it remains crucial for practitioners to remain vigilant about ethical hazards, ensuring that the power of these techniques is used responsibly and fairly. Bringing together rigorous methodology from graph theory, robust machine learning models tailored to relational data, and a thoughtful approach to privacy and ethics, social network analysis stands at the forefront of advanced data science and machine intelligence.

@@ -1,0 +1,741 @@
+---
+index: 135
+indexCourse: 80
+indexFavorites:
+title: "Normalizing flows"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Normalizing flows"
+courseCategoryName: "Generative models"
+desc: "Likelihood-based approach"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "01.11.2024"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 2
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/normalizing_flows.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/normalizing_flows"
+slug: "/research/normalizing_flows"
+---
+
+import Tooltip from "../../../components/Tooltip"
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+[Tutorial 11: Normalizing Flows for image modeling](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial11/NF_image_modeling.html)
+- [Normalizing Flows as generative model](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial11/NF_image_modeling.html#Normalizing-Flows-as-generative-model)
+- [Normalizing Flows on images](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial11/NF_image_modeling.html#Normalizing-Flows-on-images)
+- [Multi-scale architecture](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial11/NF_image_modeling.html#Multi-scale-architecture)
+- [Analysing the flows](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial11/NF_image_modeling.html#Analysing-the-flows)
+- [Conclusion](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial11/NF_image_modeling.html#Conclusion)
+
+- [AGM - Advanced Topics in Normalizing Flows - 1x1 convolution](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Advanced_Generative_Models/Normalizing_flows/advancednormflow.html)
+    - [Introduction](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Advanced_Generative_Models/Normalizing_flows/advancednormflow.html#Introduction)
+    - [Invertible 1x1 convolution](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Advanced_Generative_Models/Normalizing_flows/advancednormflow.html#Invertible-1x1-convolution)
+    - [Conclusion](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/DL2/Advanced_Generative_Models/Normalizing_flows/advancednormflow.html#Conclusion)
+
+*/}
+
+
+{/*
+
+1. Motivation  
+2. Fundamentals of normalizing flows  
+    Revisit required concepts here  
+    Basic definitions and change of variables  
+    Probability densities, invertibility, and log-determinants  
+    Comparing to other generative approaches (VAEs, GANs, EBMs)  
+    etc.  
+3. Normalizing flows for image modeling  
+    Why images? Advantages and challenges  
+    Filled notebooks, pre-trained models, and code references  
+    Hands-on example: MNIST dataset and PyTorch Lightning setup  
+    etc.  
+4. Dequantization  
+    Discrete vs. continuous space  
+    Uniform dequantization: Adding noise to integer pixel values  
+    Variational dequantization: Learning a smoother noise distribution  
+5. Coupling layers  
+    Affine coupling: Planar and radial flows vs. piecewise transformations  
+    Checkerboard and channel masking strategies  
+    Implementing a gated convolutional network for parameterizing (s, t)  
+    Potential pitfalls in coupling-layer design  
+    etc.  
+6. Multi-scale architecture  
+    Motivation for multi-scale flows  
+    Squeeze and split operations  
+    Building a multi-scale flow (e.g., RealNVP- or Flow++-style)  
+    Quantitative and qualitative comparisons: speed, bits per dimension, and parameter counts  
+7. Invertible 1x1 convolution and actnorm   
+    Glow model overview and how it differs from RealNVP  
+    Actnorm: Per-channel scaling and shifting  
+    Invertible 1x1 convolution: Rethinking permutations for channel mixing  
+    Forward and inverse pass  
+    Determinant calculation with LU or QR decompositions  
+    Edge cases and ensuring invertibility  
+8.-... (other topics)  
+
+*/}
+
+
+Normalizing flows have grown rapidly in popularity as a flexible class of generative models that allow one to directly model the probability density of high-dimensional data. They belong to the broader family of likelihood-based approaches, which provide an explicit representation of the probability distribution and enable techniques such as exact likelihood evaluation or sample generation by a single model. Because they combine tractable likelihood estimation with expressive transformations parameterized by deep networks, normalizing flows present a powerful alternative or complement to more traditional generative models such as variational autoencoders <Tooltip text="VAEs: Variational Autoencoders are models that learn latent codes for data under an approximate posterior in a lower-dimensional space."/> or generative adversarial networks <Tooltip text="GANs: Generative Adversarial Networks rely on a min-max game between a generator that tries to fool a discriminator, and a discriminator that tries to distinguish real samples from generated ones."/>. 
+
+Broadly, the motivation behind normalizing flows can be summarized as follows:
+
+1. **Exact likelihood estimation**: Unlike VAEs, which provide only a variational lower bound on the log-likelihood, or GANs, which do not directly learn the likelihood, normalizing flows can produce an exact log-likelihood for each data point (under a continuous-space assumption). This property is immensely useful in many tasks where density estimates or likelihood-based scoring is essential.
+
+2. **Efficient sampling and invertibility**: Flow-based models typically offer a direct and efficient way to sample from the learned distribution. By starting from a simple prior distribution (often a standard Gaussian) and then inverting the chain of learned transformations, one obtains new samples in data space. This invertibility is also crucial for tasks like reconstruction, and it is a unique characteristic compared to many other generative models.
+
+3. **Continuous transformations**: Many flows can be stacked to form increasingly expressive transformations of a simple distribution into a complex data distribution. Coupled with specific architectural choices (like coupling layers, invertible <Latex text="\(1 \times 1\)"/> convolutions, multi-scale strategies, etc.), normalizing flows can capture intricate dependencies in the data while retaining exact invertibility.
+
+4. **Flexibility for various data types**: While normalizing flows were initially popularized on image data, subsequent research has demonstrated how they can be adapted to audio, text, point-cloud data, molecules, time series, and many other domains. The fundamental idea of transforming a base probability distribution into the target distribution remains widely applicable.
+
+Because of these motivations, normalizing flows have become a key technique in modern deep generative modeling. In this article, we will dive into the core theory behind normalizing flows, dissect important subcomponents such as coupling layers and multi-scale architectures, and walk through the practical details needed to implement them — particularly focusing on generative image modeling.
+
+
+## 2. fundamentals of normalizing flows
+
+In this section, we dig into the formal foundation of normalizing flows, revisiting relevant concepts from probability, invertible transformations, and how these transformations produce tractable likelihoods in high dimensions.
+
+### 2.1 revisit required concepts
+
+Before we dive into normalizing flows themselves, let's highlight a few concepts from probability and calculus that are essential:
+
+- **Probability density functions (PDFs)**: For continuous data <Latex text="\(x \in \mathbb{R}^d\)"/> with density <Latex text="\(p_x(x)\)"/>, we want a flexible model that can approximate this density.
+
+- **Change of variables**: If <Latex text="\(z = f(x)\)"/> is an invertible transformation, then the density for <Latex text="\(x\)"/> can be expressed in terms of the density of <Latex text="\(z\)"/>. Specifically:
+
+<Code text={`
+log p_x(x) = log p_z(f(x)) + log |det J_f(x)|,
+`}/>
+
+where <Latex text="\(J_f(x)\)"/> is the Jacobian matrix of partial derivatives of <Latex text="\(f\)"/> w.r.t. <Latex text="\(x\)"/>.
+
+- **Determinants and invertibility**: Computing <Latex text="(|det J_f(x)|)"/> is central to normalizing flows. For a transformation to be used in a normalizing flow, it must be invertible and the determinant of its Jacobian must be efficiently computable.
+
+- **Parametric families**: We aim to make <Latex text="\(f\)"/> or <Latex text="\(f^{-1}\)"/> flexible, typically using deep networks with carefully chosen constraints that preserve invertibility (e.g., certain types of coupling, carefully structured convolution, etc.).
+
+- **Types of prior distributions**: Typically, the prior <Latex text="\(p_z(z)\)"/> is chosen to be a simple distribution like an isotropic Gaussian. The transformations then warp this simple distribution into the complex distribution of the data <Latex text="\(p_x\)"/>.
+
+### 2.2 basic definitions and change of variables
+
+Let <Latex text="\(x \in \mathbb{R}^d\)"/> be our data variable, and <Latex text="\(z \in \mathbb{R}^d\)"/> a latent variable drawn from some simple distribution <Latex text="\(p_z(z)\)"/> (commonly <Latex text="\(\mathcal{N}(0,I)\)"/>). Consider an invertible mapping <Latex text="\(f\colon \mathbb{R}^d \to \mathbb{R}^d\)"/> with inverse <Latex text="\(f^{-1}\)"/>. Define <Latex text="\(z = f(x)\)"/> and <Latex text="\(x = f^{-1}(z)\)"/>. 
+
+Using the change of variables formula:
+
+<Latex text="\[
+p_x(x) = p_z(f(x)) \left\lvert \det \frac{\partial f(x)}{\partial x} \right\rvert.
+\]"/>
+
+Often, we instead store transformations in the inverse direction, <Latex text="\(x = g(z)\)"/>, because sampling from <Latex text="\(p_x\)"/> is most easily done by:
+1. Sampling <Latex text="\(z \sim p_z\)"/>.
+2. Letting <Latex text="\(x = g(z)\)"/>.
+
+Either direction is feasible, but the standard approach depends on how easy it is to compute and store the Jacobian determinant.
+
+#### stacking multiple transformations
+
+A practical design is to compose multiple invertible transformations:
+<Latex text="\(z_0 = f_1(x), \quad z_1 = f_2(z_0),\quad \ldots, \quad z_K = f_{K}(z_{K-1})\)"/>
+so the overall mapping is <Latex text="\(z_K = f_K \circ \cdots \circ f_1 (x)\)"/>. Each <Latex text="\(f_i\)"/> is structured to allow easy Jacobian determinant calculation. By stacking multiple such transformations, we can achieve a highly flexible model.
+
+### 2.3 probability densities, invertibility, and log-determinants
+
+A crucial aspect of normalizing flows is ensuring that each transformation <Latex text="\(f_i\)"/> is bijective. This means:
+
+1. **Each flow layer must be invertible**: So we can evaluate <Latex text="\(\log p_x(x)\)"/> without approximation, and also generate samples by going in the reverse direction.
+2. **We must efficiently compute the log-determinant**: <Latex text="\(\log | \det J_{f_i} | \)"/> must be tractable. If computing or storing the Jacobian for a naive fully connected transformation is <Latex text="\(\mathcal{O}(d^2)\)"/> or worse, this becomes impractical. Flow-based layer designs revolve around structures (e.g. coupling transformations, invertible convolutions) that reduce the complexity of determinant computation.
+
+### 2.4 comparing to other generative approaches (vaes, gans, ebms)
+
+**VAEs** (Kingma & Welling, ICLR 2014)  
+- Offer an amortized variational inference approach, learning a lower bound on the log-likelihood.  
+- Typically have an encoder (to map data to a latent variable) and a decoder (to reconstruct data from the latent representation).  
+- Have a stochastic latent space of lower dimension, which can hamper exact reconstruction but usually provides strong global structure.
+
+**GANs** (Goodfellow and gang, NeurIPS 2014)  
+- Do not directly optimize or compute <Latex text="\(p_x(x)\)"/>. Instead, they train a generator to fool a discriminator that tries to tell real from fake.  
+- Sampling is extremely efficient (just pass noise through the generator).  
+- They can produce high-quality, photorealistic samples but often lack a tractable density estimate and can be unstable to train.
+
+**EBMs (Energy-Based Models)** (Du & Mordatch, ICLR 2020; Grathwohl and gang, ICLR 2020)  
+- Assign an unnormalized energy function <Latex text="\(E(x)\)"/> to data, from which an implicit distribution is defined as <Latex text="\(p_x(x) = e^{-E(x)}/Z\)"/>, but computing the partition function <Latex text="\(Z\)"/> can be challenging.  
+- Sampling from EBMs typically involves MCMC. They can, in principle, represent complicated distributions.  
+- They provide a flexible family but suffer from difficulties in inference and complex training loops.
+
+**Normalizing flows**  
+- Provide an exact, tractable log-likelihood (under continuity assumptions).  
+- Are fully invertible, enabling both easy sampling and density evaluation.  
+- When used for images, flows have historically required large network capacities and have sometimes struggled to match the sample quality of advanced GANs, though more recent variants (e.g., Flow++ or improved multi-scale designs) have significantly boosted performance.  
+
+Hence, normalizing flows fill a unique niche: they unify *exact likelihood estimation*, *direct sampling*, and *continuous invertible transformations* within the same framework.
+
+
+## 3. normalizing flows for image modeling
+
+Although normalizing flows can be used on various data types (like audio waveforms, 3D point clouds, or text embeddings), image modeling remains one of the most visible and vibrant application areas. Training a flow-based model on images typically requires:
+
+- An *architecture* that is friendly to high-dimensional image data, often using *convolutional layers* rather than fully connected layers.
+- *Multi-scale* or *hierarchical* factoring of the input to manage computational overhead and memory usage. Examples include RealNVP (Dinh and gang [2017], ICLR) or Glow (Kingma & Dhariwal, NeurIPS 2018).
+
+### 3.1 why images? advantages and challenges
+
+1. **Images are large and complex**: Modeling them showcases how well or poorly a model can capture complicated distributions with potentially thousands or millions of dimensions.
+2. **Rich structure**: Convolutional neural networks (CNNs) and associated architectural designs have proved extremely effective for capturing image patterns. Normalizing flows can naturally incorporate convolutional layers in the transformations.
+3. **Discrete pixel intensities**: Real-world digital images are typically discrete integers (0–255 per channel in 8-bit images). Normalizing flows rely on continuous transformations, so bridging this discrete/continuous gap becomes a design consideration (dequantization).
+
+### 3.2 introduction to hands-on example: mnist dataset and pytorch lightning setup
+
+Below is a small code snippet that demonstrates how to set up an MNIST-based normalizing flow in PyTorch. We highlight some lines from a typical training loop. In a normalizing-flow scenario, each batch of data <Latex text="\(x\)"/> is transformed into a latent representation <Latex text="\(z\)"/> by chaining flow layers. Then we compute:
+
+<Code text={`
+z, ldj = forward_flow(x)
+log_pz = prior.log_prob(z).sum(...)
+log_px = ldj + log_pz
+loss = - log_px.mean()
+`}/>
+
+During training, we minimize the negative log-likelihood or bits-per-dimension metric. Sampling is done in reverse: we sample <Latex text="\(z\)"/> from the prior, invert the flow, and obtain new synthetic images <Latex text="\(x\)"/>.
+
+Here is a representative snippet to illustrate data loading, sampling, and so forth (simplified for demonstration):
+
+<Code text={`
+import torch
+import torchvision
+from torch import nn
+import pytorch_lightning as pl
+
+class ImageFlow(pl.LightningModule):
+    def __init__(self, flow_layers, prior):
+        super().__init__()
+        self.flow_layers = nn.ModuleList(flow_layers)
+        self.prior = prior  # e.g., Normal(0,1)
+
+    def forward(self, x):
+        # For logging or hooking; real forward pass is in the _get_likelihood function
+        return self._get_likelihood(x)
+
+    def _get_likelihood(self, x):
+        ldj = torch.zeros(x.size(0), device=x.device)
+        z = x
+        for layer in self.flow_layers:
+            z, ldj = layer(z, ldj, reverse=False)
+        log_pz = self.prior.log_prob(z).sum(dim=[1,2,3])
+        log_px = ldj + log_pz
+        return log_px
+
+    def training_step(self, batch, batch_idx):
+        x, _ = batch
+        log_px = self._get_likelihood(x)
+        loss = -log_px.mean()
+        self.log('train_nll', loss)
+        return loss
+
+    def sample(self, batch_size):
+        # sample z from prior
+        z = self.prior.sample((batch_size, 1, 28, 28))
+        ldj = torch.zeros(batch_size, device=z.device)
+        # invert the flow
+        for layer in reversed(self.flow_layers):
+            z, ldj = layer(z, ldj, reverse=True)
+        return z
+`}/>
+
+This skeleton can be expanded with advanced features, including multi-scale flow layers, dequantization strategies, coupling, and more.
+
+
+## 4. dequantization
+
+A critical challenge for image flows is that images typically store pixel intensities as discrete integers (e.g., 0–255). Normalizing flows as described rely on continuous variables, so modeling discrete data directly can create degenerate solutions (the model might collapse probability mass onto discrete points, leading to infinite density). 
+
+**Dequantization** is used to circumvent this. In short, we map discrete pixel values <Latex text="\(x \in \{0,1,\dots,255\}^D\)"/> to a continuous space <Latex text="\([0,1]^D\)"/> by adding a small noise term. The idea is to treat each integer pixel as representing an interval, then sample from that interval to produce a real number.
+
+### 4.1 discrete vs. continuous space
+
+In a purely continuous model, the integral of the PDF over the entire space must be 1, while points (with measure zero) effectively can receive infinite density. For a discrete value, the flow might be tempted to place enormous density at that exact integer location. This phenomenon can hamper training, since it does not produce a well-defined distribution in the continuous domain. Dequantization transforms each discrete pixel <Latex text="\(x\)"/> into <Latex text="\(x + u\)"/>, where <Latex text="\(u\)"/> is random noise in <Latex text="\([0,1)\)"/>. Then we scale appropriately, e.g. dividing by 256 if the pixel intensities range 0–255. The distribution of dequantized values better suits the smooth continuous transformations that flows apply.
+
+### 4.2 uniform dequantization: adding noise to integer pixel values
+
+The simplest approach: sample <Latex text="\(u \sim \mathrm{Uniform}(0,1)\)"/> (independently for each pixel), to get <Latex text="\(x_{\text{deq}} = (x + u)/256\)"/>. This ensures <Latex text="\(x_{\text{deq}}\in [0,1)\)"/>. The log-likelihood of the original discrete pixel then becomes the integral of the flow-based continuous model over that small interval. In practice, we approximate or re-interpret the training objective with a single sample of <Latex text="\(u\)"/>. This yields a lower bound on the discrete log-likelihood.
+
+Here is a minimal code snippet for uniform dequantization in a flow:
+
+<Code text={`
+class Dequantization(nn.Module):
+    def __init__(self, quants=256):
+        super().__init__()
+        self.quants = quants
+
+    def forward(self, x, ldj, reverse=False):
+        if reverse:
+            # rounding back to discrete
+            x = (x * self.quants).clamp(min=0, max=self.quants - 1)
+            x = torch.floor(x).to(torch.int32)
+            return x, ldj
+        else:
+            # add uniform noise
+            noise = torch.rand_like(x, dtype=torch.float32)
+            x = x.to(torch.float32) + noise
+            x = x / self.quants
+            # update ldj
+            ldj -= torch.log(torch.tensor(self.quants, device=x.device)) * x[0].numel()
+            return x, ldj
+`}/>
+
+### 4.3 variational dequantization: learning a smoother noise distribution
+
+Although uniform dequantization is straightforward, the boundaries at integer points can still be a bit sharp. Variational dequantization (Ho and gang, 2019) instead learns a distribution <Latex text="\(q_\theta(u \mid x)\)"/> inside each discrete cell to produce less abrupt transitions. This is typically implemented as an additional flow network that outputs parameters of the noise distribution conditioned on the original image. This approach significantly boosts performance on challenging datasets, since the flow no longer must represent extremely sharp edges in the continuous space. 
+
+A typical approach:  
+1. A smaller flow <Latex text="\(f_\theta\)"/> takes <Latex text="\(x\)"/> as a conditional input and transforms a base uniform distribution <Latex text="\(u\sim U(0,1)\)"/> into <Latex text="\(u' = f_\theta(u\mid x)\)"/>.  
+2. <Latex text="\(x_{\text{deq}} = (x + u') / 256\)"/>.  
+3. The log-likelihood objective is augmented with <Latex text="\(\log p(x + u')\)"/> plus a correction term from <Latex text="\(\log q_\theta(u'\mid x)\)"/>.  
+
+The net effect: a learned noise distribution that better matches real-world data than uniform. Implementation wise, we see something like:
+
+<Code text={`
+class VariationalDequantization(nn.Module):
+    def __init__(self, var_flow, quants=256):
+        super().__init__()
+        self.var_flow = var_flow  # smaller normalizing flow
+        self.quants = quants
+
+    def forward(self, x, ldj, reverse=False):
+        if reverse:
+            # revert to discrete
+            x = (x * self.quants).clamp(min=0, max=self.quants - 1)
+            x = torch.floor(x).to(torch.int32)
+            return x, ldj
+        else:
+            # transform x to [-1,1] or so if needed, and pass to var_flow
+            noise = torch.rand_like(x, dtype=torch.float32)
+            # invert some possible sigmoid or etc. in var_flow
+            # produce a nice distribution for noise
+            # ...
+            # combine x + learned noise, rescale
+            # update ldj accordingly
+            pass
+`}/>
+
+The exact code can get more involved, but the concept remains the same: we treat <Latex text="\(x\)"/> as discrete, learn a conditional distribution for the continuous offsets, and thereby produce a more accurate continuous data distribution that our main flow tries to transform from a prior.
+
+
+## 5. coupling layers
+
+A *coupling layer* is one of the most common building blocks in flow-based models. Introduced by Dinh, Krueger, and Bengio in NICE (2014) and RealNVP (2017), coupling layers are designed to be easily invertible with a simple Jacobian determinant, while still allowing complex transformations.
+
+### 5.1 affine coupling: planar/radial flows vs. piecewise transformations
+
+In an **affine coupling** layer, we typically partition the data <Latex text="\(z\)"/> into two disjoint sets of dimensions (commonly via a binary mask). Let <Latex text="\(z = (z_1, z_2)\)"/>. The transformation updates only one subset of components (say <Latex text="\(z_2\)"/>), while leaving the other (<Latex text="\(z_1\)"/>) unchanged. Concretely:
+
+<Latex text="\[
+z_2' = z_2 \odot \exp\big(s_\theta(z_1)\big) + t_\theta(z_1),
+\]"/>
+
+where <Latex text="\(s_\theta\)"/> and <Latex text="\(t_\theta\)"/> are outputs of a neural network that takes <Latex text="\(z_1\)"/> as input. The log-determinant of this transformation is:
+
+<Latex text="\[
+\log \left|\det \frac{\partial z'}{\partial z}\right| 
+= \sum_i s_\theta(z_1)_i.
+\]"/>
+
+Because <Latex text="\(z_1\)"/> is unchanged, the Jacobian is triangular in block form, and computing the determinant is straightforward. 
+
+**Planar and radial flows** (Rezende & Mohamed, 2015) are alternatives that can be inserted as transformations in a continuous normalizing flow, but for image-based flows, affine coupling or related piecewise transformations (e.g., Neural Spline Flows, Durkan and gang [2019]) are typically used because they scale better in high-dimensional convolutional setups.
+
+### 5.2 checkerboard and channel masking strategies
+
+When we specify <Latex text="\(z = (z_1, z_2)\)"/> for an image, we must decide how to partition the channels, height, and width for the coupling transformations. Two popular mask patterns are:
+
+1. **Checkerboard masks**: We alternate pixel positions across the image like a chessboard, so half the pixels belong to <Latex text="\(z_1\)"/> and the other half to <Latex text="\(z_2\)"/>. The advantage is that neighboring pixels often belong to different partitions, so local dependencies can be captured by the coupling.
+
+2. **Channel masks**: We split along channels (e.g., if there are <Latex text="\(c\)"/> channels, we might let the first <Latex text="\(c/2\)"/> channels be <Latex text="\(z_1\)"/> and the next <Latex text="\(c/2\)"/> be <Latex text="\(z_2\)"/>). This can help the next layers "see" different subsets of channels more effectively.
+
+RealNVP typically alternates between checkerboard and channel masks in successive blocks to ensure that all pixels eventually get transformed.
+
+### 5.3 implementing a gated convolutional network for parameterizing (s,t)
+
+For images, <Latex text="\(s_\theta\)"/> and <Latex text="\(t_\theta\)"/> are usually outputs of a CNN that operates only on the unmasked portion of the data. A small, well-designed CNN can learn complex transformations and yield scale and translation parameters for the masked portion. One approach is a so-called "gated convolution," which follows a pattern:
+
+<Code text={`
+class GatedConvNet(nn.Module):
+    def __init__(self, c_in, c_hidden):
+        super().__init__()
+        # Some convolutional layers, plus gating
+        # Typically we might do:
+        # 1) ConcatELU or other advanced activation
+        # 2) GatedResNet blocks
+        # 3) Final 1x1 conv
+        pass
+
+    def forward(self, x):
+        # returns [s, t] in shape
+        pass
+`}/>
+
+Then the coupling transform is:
+
+<Code text={`
+class AffineCoupling(nn.Module):
+    def __init__(self, mask, network):
+        super().__init__()
+        self.mask = mask  # binary mask
+        self.network = network
+
+    def forward(self, x, ldj, reverse=False):
+        x_masked = x * self.mask
+        # pass x_masked through CNN to get [s, t]
+        s, t = torch.chunk(self.network(x_masked), chunks=2, dim=1)
+        # apply transform
+        if not reverse:
+            x_out = x * torch.exp(s * (1 - self.mask)) + t * (1 - self.mask)
+            ldj += torch.sum(s * (1 - self.mask), dim=[1,2,3])
+        else:
+            x_out = (x - t * (1 - self.mask)) * torch.exp(-s * (1 - self.mask))
+            ldj -= torch.sum(s * (1 - self.mask), dim=[1,2,3])
+        return x_out, ldj
+`}/>
+
+### 5.4 potential pitfalls in coupling-layer design
+
+- **Mask design**: If we always use the same mask, half of the pixels might never get updated or might always get updated with the same conditioning. Typically we alternate or flip the mask patterns each layer.
+- **Gradient flow**: Because one half of the variables are passed directly through or used to predict <Latex text="\(s\)"/> and <Latex text="\(t\)"/>, we need deeper, residual, or carefully structured networks to ensure good gradient propagation.
+- **Scaling**: Some flows use <Latex text="\(\tanh(s)\)"/> or other constraints to keep scale factors stable.
+
+
+## 6. multi-scale architecture
+
+As the dimensionality and resolution of images grow, naive flows can become extremely large and computationally expensive. A *multi-scale* approach (Dinh and gang, 2017; Kingma & Dhariwal, 2018) alleviates this by successively factoring out some dimensions and modeling them at different scales.
+
+### 6.1 motivation for multi-scale flows
+
+If an image is <Latex text="\(H \times W \times C\)"/>, a naive flow that transforms all <Latex text="\(HWC\)"/> dimensions at once can lead to large memory footprints. Instead, multi-scale flows do the following:
+
+1. Apply a certain number of flow layers to the full resolution.
+2. *Factor out* half of the dimensions (or channels) and directly store them in the latent variable <Latex text="\(z_i\)"/> at that stage.
+3. Continue applying flow transformations to the remaining half, possibly after a "squeeze" operation that rearranges pixels to reduce spatial resolution and increase channels.
+
+This approach reduces the computational burden for later flow layers and is beneficial in capturing coarse structures at lower resolution, then fine details at higher resolution.
+
+### 6.2 squeeze and split operations
+
+**Squeeze**: A <Latex text="\(2\times2\)"/> squeeze rearranges blocks of 4 neighboring spatial pixels into 4 channels. For instance, <Latex text="\((H, W, C)\)"/> becomes <Latex text="\(\left(\tfrac{H}{2}, \tfrac{W}{2}, 4C\right)\)"/>. This operation helps a subsequent <Latex text="\(1 \times 1\)"/> convolution or coupling layer to mix local spatial structure more effectively.
+
+**Split**: Suppose the new shape is <Latex text="\((H/2, W/2, 4C)\)"/> after the squeeze. We then split out half of the channels (say <Latex text="\(2C\)"/>), treat them as part of the latent <Latex text="\(z_i\)"/>, and only continue flows on the remaining half. This drastically reduces dimension as we move deeper into the flow.
+
+### 6.3 building a multi-scale flow (e.g., realnvp- or flow++-style)
+
+A typical multi-scale architecture might look like:
+
+1. **Coupling block** (maybe 4–8 coupling layers).
+2. **Squeeze**.
+3. **Coupling block**.
+4. **Split** (factor out half the channels as latent).
+5. **Squeeze** again.
+6. **Coupling block** (further transformations).
+7. Possibly another split.
+
+At each split, the factored out variables are immediately modeled by the prior <Latex text="\(p_z\)"/> or stored as is, contributing to the log-likelihood. This pattern repeats until the entire set of channels is accounted for, typically in multiple scales.
+
+### 6.4 quantitative and qualitative comparisons: speed, bits per dimension, and parameter counts
+
+Because we're progressively removing dimensions, the flow at later stages has smaller resolution to transform. This leads to:
+
+- **Faster training / sampling**: The network doesn't always transform the entire <Latex text="\(H \times W \times C\)"/> simultaneously. 
+- **Often better bits-per-dimension**: By devoting more capacity to lower resolution scales, the network captures large structural patterns of the data effectively.
+- **Parameter efficiency**: Multi-scale architectures can use their parameters in an efficient stepwise manner, sometimes achieving better generative performance with fewer parameters than a naive, single-scale approach.
+
+
+## 7. invertible 1x1 convolution and actnorm
+
+So far, we have seen coupling layers, dequantization, and multi-scale structures. Another powerful invention, particularly seen in the **Glow** model (Kingma & Dhariwal, 2018), is the use of invertible <Latex text="\(1 \times 1\)"/> convolutions instead of fixed permutations of channels. Alongside it, the so-called **ActNorm** layer is used to replace batch normalization in an invertible manner.
+
+### 7.1 glow model overview and how it differs from realnvp
+
+**Glow** is a flow-based model that introduced:
+
+1. **Invertible <Latex text="\(1 \times 1\)"/> convolution**: Instead of just permuting channels to ensure that different sets of variables eventually get transformed, Glow learns a full invertible linear transformation of the channels at each layer. This is a generalization of permutations.  
+2. **ActNorm**: A per-channel scale-and-shift transformation that is initialized with data statistics in the first forward pass. It replaces the earlier "batch norm" style approach but in a way that is strictly invertible.  
+3. **Multi-scale architecture** similar to RealNVP, but the coupling layers are simplified (no checkerboard masks), and the model often uses channelwise masks plus the learned invertible <Latex text="\(1 \times 1\)"/> convolutions to mix the variables.
+
+### 7.2 actnorm: per-channel scaling and shifting
+
+Instead of using standard batch normalization or layer normalization inside a flow, Glow employs ActNorm. The transformation is:
+
+<Latex text="\[
+y = s \odot x + b,
+\]"/>
+
+where <Latex text="\(s\)"/> and <Latex text="\(b\)"/> are learned parameters that are broadcast across spatial dimensions but are distinct for each channel. The log-determinant is straightforward:
+
+<Latex text="\[
+\log \left|\det \frac{\partial y}{\partial x}\right| 
+= \sum_{c=1}^C \log|s_c| \times H \times W,
+\]"/>
+
+assuming the image is shape <Latex text="\(C\times H \times W\)"/>. Instead of computing data-dependent statistics each forward pass, ActNorm is typically initialized by one pass of data — computing the mean and standard deviation per channel — to set <Latex text="\(s\)"/> and <Latex text="\(b\)"/>. Once initialized, those parameters remain learned and do not average across the batch in subsequent iterations. This avoids some instabilities that can arise with batch norm for invertible architectures.
+
+A simplified snippet:
+
+<Code text={`
+class ActNorm(nn.Module):
+    def __init__(self, num_channels):
+        super().__init__()
+        self.loc = nn.Parameter(torch.zeros(1, num_channels, 1, 1))
+        self.log_scale = nn.Parameter(torch.zeros(1, num_channels, 1, 1))
+        self.register_buffer('initialized', torch.tensor(0))
+
+    def forward(self, x, ldj, reverse=False):
+        B, C, H, W = x.shape
+        if self.initialized.item() == 0:
+            # initialize using data stats
+            with torch.no_grad():
+                flat_x = x.permute(1,0,2,3).reshape(C, -1)
+                mean = flat_x.mean(dim=1).view(1, C, 1, 1)
+                std = flat_x.std(dim=1).view(1, C, 1, 1)
+                self.loc.data = -mean
+                self.log_scale.data = -std.log()
+                self.initialized.fill_(1)
+
+        if not reverse:
+            x = (x + self.loc) * torch.exp(self.log_scale)
+            ldj += (self.log_scale.sum(dim=[1,2,3]) * H * W)
+        else:
+            x = x * torch.exp(-self.log_scale) - self.loc
+            ldj -= (self.log_scale.sum(dim=[1,2,3]) * H * W)
+
+        return x, ldj
+`}/>
+
+### 7.3 invertible 1x1 convolution: rethinking permutations for channel mixing
+
+Before Glow, RealNVP typically permuted channels or used "channel flips." Glow generalizes this idea by inserting a linear transformation:
+
+<Latex text="\[
+y = W x
+\]"/>
+
+where <Latex text="\(W\)"/> is a <Latex text="\(C \times C\)"/> matrix applied identically at every pixel location. The transformation is a <Latex text="\(1\times1\)"/> convolution with no spatial kernel dimension. The log-determinant is:
+
+<Latex text="\[
+\log\left| \det\left(\frac{\partial y}{\partial x}\right)\right|
+= H \times W \times \log | \det W |.
+\]"/>
+
+Hence, if we ensure <Latex text="\(W\)"/> is invertible, we can easily compute the determinant once per forward pass, multiplied by the number of spatial elements. The inverse pass is <Latex text="\(x = W^{-1} y\)"/>.
+
+#### forward and inverse pass
+
+Forward pass:
+<Code text={`
+y = F.conv2d(x, W.reshape(C, C, 1, 1))
+ldj += (H * W) * logdet(W)
+`}/>
+
+Inverse pass:
+<Code text={`
+x = F.conv2d(y, W_inv.reshape(C, C, 1, 1))
+ldj -= (H * W) * logdet(W)
+`}/>
+
+where <Latex text="\(W^{-1}\)"/> is the inverse of <Latex text="\(W\)"/>. Typically we reparameterize or store an LU decomposition so that we can invert it quickly and compute <Latex text="\(\log|\det W|\)"/> cheaply.
+
+### 7.4 determinant calculation with lu or qr decompositions
+
+A naive determinant of a <Latex text="\(C\times C\)"/> matrix is <Latex text="\(\mathcal{O}(C^3)\)"/>. While <Latex text="\(C\)"/> might not be huge (for typical images, <Latex text="\(C\leq64\)"/> in early layers or <Latex text="\(C\leq512\)"/> in deeper layers), repeated factorization can still be slow. To speed things up:
+
+- **LU decomposition**: Factor <Latex text="\(W = P\,L\,U\)"/>. The determinant is just the product of diagonal entries of <Latex text="\(L\)"/> and <Latex text="\(U\)"/>, combined with the sign of the permutation matrix <Latex text="\(P\)"/>.
+- **QR decomposition**: Factor <Latex text="\(W = Q\,R\)"/>, and <Latex text="\(\log|\det W|\)"/>=<Latex text="\(\log|\det R|\)"/>. This also works well, but LU is typically simpler to handle in practice for invertible flows.
+
+In Glow, the authors used an LU-based parameterization of <Latex text="\(W\)"/>. The weight matrix is optimized in that factorized form, which ensures invertibility by construction, and the log-determinant is trivial to compute from the triangular factor.
+
+### 7.5 edge cases and ensuring invertibility
+
+A risk is that <Latex text="\(W\)"/> might approach a singular matrix. Usually, the learned parameterization ensures <Latex text="\(W\)"/> is invertible. But numerical issues may occasionally arise with large channels or near-singular updates. In practice, one might clamp or re-initialize if a near-singular matrix is detected.
+
+---
+
+Bringing these components together — coupling layers, multi-scale factoring, invertible <Latex text="\(1 \times 1\)"/> convolutions, and actnorm — yields a powerful flow-based architecture. By stacking a sequence of these blocks, one can achieve state-of-the-art or near-state-of-the-art log-likelihood performance on standard image benchmarks like CIFAR-10 or ImageNet (at moderate resolutions). 
+
+Below is a schematic (adapted from Kingma & Dhariwal, 2018) of repeated flow steps:
+
+<Image alt="Glow-like architecture" path="" caption="Illustration of repeated steps of ActNorm, invertible 1x1 convolution, and affine coupling, as used in Glow." zoom="false" />
+
+Here is a condensed pseudo-code block for a single "Glow step," ignoring multi-scale splits:
+
+<Code text={`
+class GlowStep(nn.Module):
+    def __init__(self, c_in):
+        super().__init__()
+        self.actnorm = ActNorm(c_in)
+        self.invconv = Invertible1x1Conv(c_in)
+        self.coupling = AffineCoupling(...)  # or an additive coupling
+
+    def forward(self, x, ldj, reverse=False):
+        if not reverse:
+            x, ldj = self.actnorm(x, ldj, reverse=False)
+            x, ldj = self.invconv(x, ldj, reverse=False)
+            x, ldj = self.coupling(x, ldj, reverse=False)
+        else:
+            x, ldj = self.coupling(x, ldj, reverse=True)
+            x, ldj = self.invconv(x, ldj, reverse=True)
+            x, ldj = self.actnorm(x, ldj, reverse=True)
+        return x, ldj
+`}/>
+
+Stack <Latex text="\(K\)"/> such steps, interleave with multi-scale splits or squeezes, and you have a full Glow.
+
+
+---
+
+## 8. additional advanced topics (beyond the standard outline)
+
+Given the richness of flow-based methods, it's helpful to briefly outline some further developments and directions in research:
+
+### 8.1 continuous normalizing flows
+
+**Neural ODEs** (Chen and gang, NeurIPS 2018) propose modeling the transformation as a continuous-time process governed by an ordinary differential equation. This leads to "continuous normalizing flows" where the log-determinant can be integrated over time using the trace of the Jacobian. While powerful in theory and opening new doors for invertible modeling, computing the continuous-time log-determinant can be numerically intensive. Further improvements like FFJORD (Grathwohl and gang, ICLR 2019) mitigate some of these costs.
+
+### 8.2 neural spline flows
+
+The RealNVP coupling transformation is affine. Neural Spline Flows (Durkan and gang, NeurIPS 2019) propose using learnable monotonic piecewise polynomials to transform data, capturing sharper nonlinearities. They maintain easy invertibility and a simple log-determinant formula.
+
+### 8.3 unconditional vs. conditional flows
+
+Flow-based models can be conditioned on side information (class labels, partial input, or other data). The transformations typically incorporate the conditioning signal in the coupling layers (e.g., <Latex text="\(s_\theta(z_1, y)\)"/> and <Latex text="\(t_\theta(z_1, y)\)"/>). This approach is used for *conditional generation* or *data imputation* tasks.
+
+### 8.4 multi-resolution and parallel architectures
+
+Techniques like i-ResNet, Residual Flows (Behrmann and gang, 2019, NeurIPS) expand possible invertible architectures by imposing constraints on residual blocks, ensuring invertibility. In practice, they can struggle with speed or capacity, but they broaden the design space significantly.
+
+---
+
+## 9. large code example: a complete normalizing flow on mnist
+
+Below is a more extended snippet that sketches out a normalizing flow architecture combining everything we've discussed: dequantization, multi-scale splits, invertible <Latex text="\(1 \times 1\)"/> convolutions, actnorm, and affine coupling. This example (though partial) aims to highlight how all the pieces fit together in code using PyTorch.
+
+<Code text={`
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import numpy as np
+
+# Suppose we already have classes: ActNorm, Invertible1x1Conv, AffineCoupling, Dequantization, etc.
+
+class GlowBlock(nn.Module):
+    def __init__(self, c_in):
+        super().__init__()
+        self.actnorm = ActNorm(c_in)
+        self.invconv = Invertible1x1Conv(c_in)
+        # A typical coupling might require a mask or channel-split approach
+        self.coupling = AffineCoupling(...)
+
+    def forward(self, x, ldj, reverse=False):
+        if not reverse:
+            x, ldj = self.actnorm(x, ldj, reverse=False)
+            x, ldj = self.invconv(x, ldj, reverse=False)
+            x, ldj = self.coupling(x, ldj, reverse=False)
+        else:
+            x, ldj = self.coupling(x, ldj, reverse=True)
+            x, ldj = self.invconv(x, ldj, reverse=True)
+            x, ldj = self.actnorm(x, ldj, reverse=True)
+        return x, ldj
+
+class MultiScaleFlow(nn.Module):
+    def __init__(self, c_in):
+        super().__init__()
+        # Example: 2 levels of multi-scale
+        self.dequant = Dequantization()  # or VariationalDequantization
+        self.flow1 = nn.ModuleList([
+            GlowBlock(c_in) for _ in range(4)
+        ])
+        # Squeeze
+        # Possibly do a SplitFlow here
+        self.flow2 = nn.ModuleList([
+            GlowBlock(4*c_in) for _ in range(4)
+        ])
+        # Another split if needed
+        self.prior = torch.distributions.Normal(0,1)
+
+    def forward(self, x, reverse=False):
+        ldj = torch.zeros(x.size(0), device=x.device)
+        if not reverse:
+            x, ldj = self.dequant(x, ldj, reverse=False)
+            # pass through flow1
+            for block in self.flow1:
+                x, ldj = block(x, ldj, reverse=False)
+            # maybe do squeeze, split
+            # pass through flow2
+            for block in self.flow2:
+                x, ldj = block(x, ldj, reverse=False)
+            # final latent distribution
+            # compute final ldj if factoring out dims
+            return x, ldj
+        else:
+            # sample or pass a latent back
+            pass
+`}/>
+
+This sort of structure can be further elaborated upon. For real workloads, one typically implements the multi-scale factoring carefully, keeps track of all split latents, and ensures correct log-determinant computation for each stage.
+
+---
+
+## 10. conclusion
+
+Normalizing flows provide a unique bridge between classical change-of-variables in probability theory and modern deep architectures. They deliver:
+
+- **Exact log-likelihood** for continuous data (with an appropriate dequantization step for discrete data).
+- **Direct sampling** from a tractable prior.
+- **Invertibility** by design, enabling reconstructions and manipulations in latent space that precisely map back to data space.
+
+Flows have been successfully applied in a myriad of scenarios: image generation (RealNVP, Glow, Flow++), audio waveform modeling (WaveGlow), molecular generation, text-based tasks with discrete dequantization, and beyond. While they can be parameter-heavy and sometimes less sample-efficient than specialized architectures (like advanced GANs), they remain a powerful and conceptually elegant generative modeling strategy.
+
+Moving forward, areas of active research include continuous normalizing flows, neural spline flows, augmented flows that incorporate discrete variables, invertible transformations for latent variable expansions, and the marriage of flows with other generative paradigms (like "Flow Matching," diffusion-meets-flow). Overall, normalizing flows will likely stay at the forefront of generative modeling research, offering a robust framework for many real-world applications.
+
+This concludes our deep dive into normalizing flows for image modeling, including essential topics like dequantization, affine coupling, multi-scale architectures, invertible <Latex text="\(1 \times 1\)"/> convolutions, and actnorm.  
+
+For further reading:
+
+- Dinh, L., Sohl-Dickstein, J., & Bengio, S. (2017). "Density estimation using Real NVP". In: *5th International Conference on Learning Representations (ICLR)*.  
+- Kingma, D. P., & Dhariwal, P. (2018). "Glow: Generative Flow with Invertible 1x1 Convolutions". In: *Advances in Neural Information Processing Systems* (NeurIPS).  
+- Ho, J. and gang (2019). "Flow++: Improving Flow-Based Generative Models with Variational Dequantization and Architecture Design". *ICML*.  
+- Durkan, C. and gang (2019). "Neural Spline Flows". *NeurIPS*.  
+- Rezende, D., & Mohamed, S. (2015). "Variational Inference with Normalizing Flows". *ICML*.  
+- Chen, T. Q. and gang (2018). "Neural Ordinary Differential Equations". *NeurIPS*.  
+
+And many others exploring advanced or specialized normalizing flow techniques.
+

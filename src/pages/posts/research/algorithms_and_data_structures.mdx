@@ -1,0 +1,364 @@
+---
+index: 14
+indexCourse: 15
+indexFavorites:
+title: "Algorithms and data structures"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Algorithms and data structures"
+courseCategoryName: "Programming"
+desc: "The core of programming"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "12.09.2022"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 1
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: "Programming"
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/algorithms_and_data_structures.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/algorithms_and_data_structures"
+slug: "/research/algorithms_and_data_structures"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+Для этого поста разобрать Obsidian-заметку (см. папку "🚧 Unfinished").
+
+*/}
+
+
+Algorithms and data structures form the backbone of computer science, and they are equally critical in the fields of data science and machine learning. While machine learning is often about training predictive models, you invariably deal with massive volumes of data, intricate transformations, and performance bottlenecks. A sound understanding of algorithms and data structures can help you select the right data representation, optimize resource usage, and drastically reduce computation time. This becomes especially important when working on large-scale datasets or deploying ML pipelines in production environments with strict latency constraints.
+
+In this article, we will explore foundational and advanced data structures, important algorithmic concepts, Big O notation, and selected Python essentials that will help you prototype and optimize data science and machine learning applications effectively. We will also cover practical use cases in ML workflows — ranging from tree-based models to graph analytics — and touch upon deeper topics such as P vs. NP problems, which, while not always front-and-center in day-to-day DS/ML tasks, underscore the theoretical limits of what can be computed efficiently.
+
+---
+
+## Python essentials for advanced data structures and algorithms
+
+Although data structures and algorithms are language-agnostic, Python provides high-level constructs and syntactic conveniences that can speed up development. Understanding some of Python's powerful features, such as functional programming tools, iterators, generators, and object-oriented programming (OOP) design, will help you quickly implement (and reason about) algorithmic ideas.
+
+### Functional tools: filter, map, and reduce
+
+Python's built-in functions <Highlight>filter</Highlight>, <Highlight>map</Highlight>, and <Highlight>reduce</Highlight> (available in the <Highlight>functools</Highlight> module) allow for concise and expressive code when dealing with transformations on sequences.
+
+- **filter**: Takes a function and a sequence, returning items in the sequence that satisfy the function's condition.
+- **map**: Applies a function to every element in the sequence.
+- **reduce**: Sequentially applies a function to elements of the sequence, reducing it to a single cumulative value.
+
+These constructs often come in handy for quick data manipulations, but keep in mind that, under the hood, they typically run in <Latex text="\(O(n)\)"/> time just as standard loops do. Their main benefit is code clarity — though in some cases, <Highlight>map</Highlight> and <Highlight>filter</Highlight> can be slightly faster than equivalent for-loops in CPython due to internal optimizations.
+
+<Code text={`
+from functools import reduce
+
+numbers = [1, 2, 3, 4, 5]
+
+# filter out only even numbers
+evens = list(filter(lambda x: x % 2 == 0, numbers))
+
+# square each number
+squares = list(map(lambda x: x*x, numbers))
+
+# compute product of all elements
+product = reduce(lambda x, y: x * y, numbers)
+print(evens, squares, product)
+`}/>
+
+### Generators and iterators
+
+Generators and iterators enable Python to handle large datasets without storing all data in memory at once. In many ML scenarios — like streaming or mini-batch gradient descent — this can be crucial for memory management.
+
+- **Generator expressions** use a syntax similar to list comprehensions but return an iterator instead of an entire list.  
+- **Yield-based generators** (using the <Highlight>yield</Highlight> keyword) enable stateful functions that remember where they left off each time they yield a value, resuming execution from that point upon the next iteration call.
+
+<Code text={`
+def fibonacci(n):
+    """Generate the first n Fibonacci numbers."""
+    a, b = 0, 1
+    count = 0
+    while count < n:
+        yield a
+        a, b = b, a + b
+        count += 1
+
+fib_gen = fibonacci(10)
+for val in fib_gen:
+    print(val)  # prints Fibonacci sequence up to n
+`}/>
+
+Generators are excellent for large-scale data pipelines where pulling data on-demand is more efficient than precomputing an entire dataset, especially if you only need to iterate over it once.
+
+### Object-oriented programming refresher (classes, inheritance, polymorphism, encapsulation)
+
+While many data science prototypes use functional or procedural code, object-oriented paradigms become invaluable when building complex ML systems or production-grade applications:
+
+- **Classes** define blueprints for objects; you bundle data (attributes) and behaviors (methods) together.  
+- **Inheritance** allows you to create hierarchies where child classes extend or specialize parent classes.  
+- **Polymorphism** lets you write code that can work interchangeably with different class types, as long as they implement the same interface.  
+- **Encapsulation** helps protect internal states via access modifiers (though Python itself relies on conventions like a leading underscore `_my_var` to denote a private or protected member).
+
+One practical use case is creating a common interface for ML models or data pipeline components. For instance, a base `Transform` class can define a method `transform(X)`, which all subclasses (e.g., `ScalingTransform`, `PolynomialTransform`, etc.) must implement.
+
+---
+
+## Understanding big O notation and algorithm optimization
+
+One of the cornerstones of algorithmic efficiency is understanding how code or data structure operations scale as your input grows. This is captured by **Big O notation**, which provides an asymptotic upper bound on growth in time or space usage.
+
+- **Time complexity**: How execution time scales.  
+- **Space complexity**: How memory usage scales.
+
+Common complexities:
+
+- <Latex text="\(O(1)\)"/>: Constant time — independent of input size.
+- <Latex text="\(O(n)\)"/>: Linear time — grows proportionally to the input size.
+- <Latex text="\(O(\log n)\)"/>: Logarithmic time — grows slowly, typical of divide-and-conquer or balanced tree lookups.
+- <Latex text="\(O(n \log n)\)"/>: Common in efficient sorting algorithms like mergesort and quicksort (on average).
+- <Latex text="\(O(n^2)\)"/>: Quadratic time — often arises from nested loops.
+- <Latex text="\(O(2^n)\)"/> and <Latex text="\(O(n!)\)"/>: Exponential or factorial time — these become impractical for larger inputs.
+
+### Best, average, and worst-case scenarios
+
+Many algorithms have different complexities depending on how favorable the input is:
+
+- **Best case**: The scenario in which the algorithm performs optimally (e.g., quicksort with an ideal pivot split).
+- **Average case**: The expected scenario over random input distributions.
+- **Worst case**: The upper bound scenario that ensures the algorithm never performs worse than a certain threshold (e.g., an already sorted list can degrade some sorting algorithms).
+
+### Techniques for performance improvement
+
+- **Optimized data structures**: Switch from arrays to hash tables for faster lookups, or from lists to heaps when you frequently need to extract the smallest or largest element.
+- **Caching and memoization**: Store partial results to avoid recomputing them (popular in dynamic programming and repeated sub-calculations).
+- **Parallelization**: Leverage concurrency and parallel libraries (e.g., <Highlight>multiprocessing</Highlight>, GPU computing).
+- **Algorithmic refinements**: Choose more optimal approaches when possible, e.g., binary search instead of linear search.
+
+---
+
+## Foundational data structures
+
+### Arrays
+
+An array is a contiguous block of memory that stores a fixed number of elements (often of the same type). In Python, the closest built-in structure is the <Highlight>list</Highlight>, which is more dynamic but typically backed by an array under the hood.
+
+- **Time complexity**:  
+  - Indexing by position: <Latex text="\(O(1)\)"/>  
+  - Appending (amortized): <Latex text="\(O(1)\)"/>  
+  - Insertion at arbitrary position: <Latex text="\(O(n)\)"/> (since elements need shifting)
+
+### Linked lists
+
+A linked list stores elements (nodes) where each node has a reference (pointer) to the next node (singly linked) or to both next and previous nodes (doubly linked).
+
+<Highlight>Advantages</Highlight> include constant-time insertion or deletion at known nodes. However, accessing an arbitrary element by index requires <Latex text="\(O(n)\)"/> traversal.
+
+<Code text={`
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class SinglyLinkedList:
+    def __init__(self):
+        self.head = None
+    
+    def insert_at_head(self, data):
+        new_node = Node(data)
+        new_node.next = self.head
+        self.head = new_node
+`}/>
+
+### Stacks
+
+A stack follows a Last-In-First-Out (<Highlight>LIFO</Highlight>) principle. The primary operations are:
+- **push**: Insert an item onto the stack (top).
+- **pop**: Remove the most recently added item.
+- **peek**: View the top item without removing it.
+
+In Python, you can simulate a stack using a list and the <Highlight>append</Highlight> and <Highlight>pop</Highlight> methods.
+
+<Latex text="\( \text{push/pop: } O(1) \quad \text{peek: } O(1) \quad \text{search: } O(n) \)"/>
+
+### Queues
+
+A queue follows a First-In-First-Out (<Highlight>FIFO</Highlight>) pattern. The main operations are:
+- **enqueue**: Insert an item at the back.
+- **dequeue**: Remove the item from the front.
+
+For Python, <Highlight>collections.deque</Highlight> is highly optimized for queue operations at both ends in <Latex text="\(O(1)\)"/> time.
+
+### Hash tables
+
+Hash tables (or dictionaries in Python) map keys to values using a hashing function to determine bucket locations. They usually provide average-case <Latex text="\(O(1)\)"/> time for insertion, lookup, and deletion, though collisions can degrade performance.
+
+<Code text={`
+my_dict = {}
+my_dict["model"] = "RandomForest"
+print(my_dict["model"])  # average O(1) lookup
+`}/>
+
+This efficiency makes hash tables indispensable for tasks such as counting frequencies, caching intermediate computations, or implementing fast lookups in ML pipelines.
+
+---
+
+## Advanced data structures
+
+### Trees
+
+A tree is a hierarchical data structure with nodes connected by edges, having no cycles, and a designated root. The most common variant in data science is the **binary tree**, where each node has up to two children.
+
+- **Binary Search Tree (BST)**: Each node's left child is smaller, and the right child is greater (often used for sorted data).
+- **Balanced trees** (like AVL trees, Red-Black trees): Maintain <Latex text="\(O(\log n)\)"/> insertion/lookup/deletion by keeping tree height small.
+- **Decision trees** (a pillar in ML): Not exactly the same as BST, but they rely on a recursive branching structure to partition data.
+
+### Heaps
+
+A **heap** is a specialized binary tree satisfying the heap property:
+- In a **min-heap**, each node's value is smaller than or equal to that of its children (so the root is the minimum).
+- In a **max-heap**, each node's value is larger than or equal to that of its children (so the root is the maximum).
+
+Heaps are crucial for implementing **priority queues**, which let you insert an element and extract the highest (or lowest) priority element in <Latex text="\(O(\log n)\)"/> time. Python's <Highlight>heapq</Highlight> module implements a min-heap on top of a list.
+
+### Graphs
+
+A **graph** is a collection of nodes (vertices) connected by edges. Graphs can be:
+- **Directed or undirected**  
+- **Weighted or unweighted**  
+
+They model relationships between entities (e.g., users in a social network). In data science:
+- Graphs can represent everything from dependency structures in scheduling tasks to knowledge graphs capturing relationships between facts or concepts.
+- In ML, graph-based clustering and semi-supervised learning (e.g., label propagation) are active research areas (e.g., Zhu and Ghahramani, ICML 2002).
+
+---
+
+## Practical applications of advanced data structures in DS/ML
+
+### In decision trees and random forests
+
+Decision trees are naturally represented by **tree** data structures, where each node splits the data based on a feature threshold (for continuous features) or a specific category (for categorical features). Random forests are essentially **collections (ensembles) of decision trees**, thus the name "forest."
+
+### Priority queues for real-time tasks
+
+If you are dealing with streaming data (like real-time event processing or online learning), you might need to handle tasks or data points in the order of their priority (urgency, time stamp, etc.). Priority queues, implemented via **heaps**, excel in such scheduling and real-time scenarios.
+
+### Graph-based modeling in ML
+
+Certain ML tasks, such as community detection, recommender systems (collaborative filtering via user-item graphs), or shortest-path problems, rely heavily on graph data structures. For example, BFS and DFS can be used to traverse user connections in a social network, and advanced algorithms like PageRank (Page and gang, 1999) exploit graph connectivity.
+
+### Hash-based indexing for large-scale data
+
+When you have enormous datasets (say tens of millions of rows) that need fast random access, hashing-based structures can speed up lookups dramatically. Locality-sensitive hashing (LSH) is also used in approximate nearest neighbor search — a key technique in high-dimensional ML tasks (e.g., Johnson and gang, TPAMI 2019).
+
+---
+
+## Algorithms for sorting and searching
+
+### Sorting: quicksort, mergesort, and other variations
+
+**Quicksort** uses a pivot to divide the array into elements less than and greater than the pivot. Its average time complexity is <Latex text="\(O(n \log n)\)"/>, though worst-case is <Latex text="\(O(n^2)\)"/>.
+
+**Mergesort** splits the array into halves, recursively sorts them, then merges. It consistently runs in <Latex text="\(O(n \log n)\)"/> time, regardless of input distribution, at the cost of additional <Latex text="\(O(n)\)"/> space for the merging process.
+
+**Heapsort** uses a **max-heap** to repeatedly extract the largest element. It guarantees <Latex text="\(O(n \log n)\)"/> complexity without extra memory.
+
+### Searching: binary search and beyond
+
+**Linear search** is <Latex text="\(O(n)\)"/> and straightforward, but if your dataset is sorted, **binary search** can cut the search space in half each time, achieving <Latex text="\(O(\log n)\)"/> complexity.
+
+For unstructured or extremely large datasets, specialized approaches like **tree-based** or **hash-based** lookups can often outperform a naive linear search.
+
+### Efficient data retrieval for structured/unstructured datasets
+
+- **Database indexing**: B-trees or B+ trees help with quick lookups in relational databases.  
+- **Inverted indices**: Common in search engines for text-based retrieval.  
+- **Tries (prefix trees)**: Optimize prefix-based lookups (common in NLP tasks or auto-completion systems).
+
+---
+
+## Graph algorithms
+
+### Breadth-first search (BFS) and depth-first search (DFS)
+
+- **BFS** visits neighbors first, then moves outward, making it ideal for shortest-path in unweighted graphs or layering-based problems.  
+- **DFS** digs deep along one branch before backtracking, often used for cycle detection, topological sorting (in directed acyclic graphs), or connected component detection.
+
+Both BFS and DFS run in <Latex text="\(O(V + E)\)"/> time, where <Latex text="\(V\)"/> is the number of vertices and <Latex text="\(E\)"/> is the number of edges.
+
+### Dijkstra's algorithm for shortest paths
+
+For weighted graphs (with non-negative edge weights), **Dijkstra's** algorithm finds the shortest path from a source to all other vertices. Typically implemented with a **min-heap** or **priority queue**, it runs in <Latex text="\(O(E + V \log V)\)"/> time if using a Fibonacci heap or <Latex text="\(O(E \log V)\)"/> with a binary heap.
+
+### Other advanced graph techniques
+
+- **A\*** search: Incorporates heuristics to speed up pathfinding (common in routing applications).  
+- **Minimum Spanning Tree** (e.g., Kruskal's, Prim's): Extract a subgraph connecting all nodes with minimal total edge cost.  
+- **Network flow algorithms** (e.g., Edmond-Karp, Dinic's): Used in bipartite matching and max-flow/min-cut problems.
+
+---
+
+## Functional programming concepts
+
+### Lambdas and higher-order functions
+
+Python's **lambda** expressions are lightweight ways to create small anonymous functions. Higher-order functions accept other functions as arguments or return them (e.g., <Highlight>map</Highlight>, <Highlight>filter</Highlight>, <Highlight>reduce</Highlight>).
+
+In machine learning, especially for data wrangling or "mini transformations," lambdas and higher-order functions can drastically reduce boilerplate and make your code more composable.
+
+### Immutability and side-effect-free computations
+
+Functional programming advocates for pure functions (no side effects) and immutable data structures. This can simplify **reasoning about concurrency** and **parallel execution**. Libraries like <Highlight>pyspark</Highlight> adopt a functional style to scale transformations over distributed datasets seamlessly.
+
+### Real-world use cases in DS/ML
+
+- **Data pipeline transformations**: Chaining transformations like filtering missing values, scaling features, or encoding categories.  
+- **Feature engineering**: Rapidly combining column transformations, especially in frameworks that support parallel map operations.
+
+---
+
+## P vs. NP problems
+
+An understanding of **P vs. NP** is not mandatory for day-to-day data science but sheds light on **computational intractability**:
+
+- **P**: Class of problems solvable in polynomial time (relative to input size).  
+- **NP**: Class of problems whose solutions can be verified in polynomial time.  
+- **NP-complete**: Problems that are at least as hard as any other problem in NP (if you solve one efficiently, you effectively solve all NP problems efficiently).  
+- **NP-hard**: A superset of NP-complete problems — often, these problems don't even have to be in NP (verifiable in polynomial time).
+
+Some optimization problems encountered in ML or feature selection are **NP-hard**. For instance, the subset selection problem (selecting the best subset of features to minimize error) can be proven NP-hard. As a result, data scientists rely on heuristics, approximations, or specialized transformations instead of brute-force solutions for large instances.
+
+While P vs. NP remains an open question in theoretical computer science (Clay Mathematics Institute has a million-dollar prize for its resolution), practical data scientists and ML engineers use algorithmic heuristics, approximations, or problem-specific constraints to tackle these otherwise intractable problems.
+
+---
+
+By mastering data structures, algorithmic complexity, and the Python features covered here, you establish a solid foundation for building efficient, robust, and scalable data science and machine learning solutions. As you move forward, consider practicing common coding tasks that involve these data structures and algorithms (e.g., "Top Interview" problems on LeetCode) and keep exploring advanced techniques — like streaming algorithms, parallelization, and specialized data structures for high-dimensional ML — to stay on the cutting edge.

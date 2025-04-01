@@ -1,0 +1,280 @@
+---
+index: 18
+indexCourse: 25
+indexFavorites:
+title: "Regularization"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Regularization"
+courseCategoryName: "Regression"
+desc: "Correcting engineer's mistakes"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "11.10.2022"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 1
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/regularization.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/regularization"
+slug: "/research/regularization"
+---
+
+import Tooltip from "../../../components/Tooltip"
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+Для этого поста разобрать Obsidian-заметку (см. папку "🚧 Unfinished").
+
+*/}
+
+
+Regularization is a fundamental concept in machine learning aimed at preventing models from becoming overly tailored to training data. This tailoring, typically referred to as <Highlight>overfitting</Highlight>, happens when a model memorizes the noise or random fluctuations in the training dataset rather than learning the underlying signal. Regularization methods limit a model's capacity by penalizing overly large parameters or adding constraints, which in turn promotes better generalization and performance on unseen data.
+
+In the context of linear models, such as linear or logistic regression, traditional unconstrained optimization can yield solutions that fit the training data perfectly but fail to capture the broader patterns. The power of regularization lies in curbing model complexity — or, in probabilistic terms, in discouraging extreme parameter values. Several modern machine learning systems, ranging from <Highlight>deep neural networks</Highlight> to <Highlight>support vector machines</Highlight>, rely heavily on regularization techniques to achieve competitive and stable results. Before discussing the mechanics of common regularization techniques (Ridge, Lasso, ElasticNet), we will briefly touch on the phenomenon of overfitting/underfitting and the bias-variance tradeoff, which together form the motivation for using these methods.
+
+## Overfitting and underfitting  
+Overfitting manifests when a model fits the <Highlight>noise</Highlight> or random idiosyncrasies in the training dataset, leading to impressive training performance but poor performance on new data. Underfitting represents the opposite extreme: the model is too simple to capture the complexity of the data, and it performs poorly even on the training set.  
+
+A common illustration of this is polynomial regression. A very high-degree polynomial might pass through nearly every training point, thereby minimizing training error but capturing noise rather than the true underlying function (overfitting). Meanwhile, a straight line might be too simple to capture the curvature present in the data (underfitting).  
+
+In practice, the cost of overfitting can be severe. A highly overfitted model might:
+- Fail to generalize to real-world scenarios.
+- Provide misleadingly low training errors, inspiring false confidence.
+- Require more complex computational resources to maintain unnecessarily large numbers of parameters.
+
+Balancing model complexity is therefore critical. This is where regularization steps in: it adds additional terms or constraints to the optimization objective, effectively nudging model parameters toward simpler (often smaller in magnitude) solutions.
+
+## Gradient descent intuition  
+Regularization can be incorporated into most optimization methods, including the very commonly used gradient descent. Let's recall the cost function and how gradient descent updates typically work.
+
+When training a parametric model — such as a linear regressor with parameters <Latex text="\( \boldsymbol{\theta} \)"/> — we often define a cost function <Latex text="\( J(\boldsymbol{\theta}) \)"/> based on the sum of squared errors or negative log-likelihood, depending on the task. Gradient descent finds a (local) minimum of this cost by iteratively updating each parameter:
+
+<Latex text="\[
+\boldsymbol{\theta} := \boldsymbol{\theta} - \eta \nabla_{\boldsymbol{\theta}}J(\boldsymbol{\theta}),
+\]"/>
+
+where <Latex text="\( \eta \)"/> is the learning rate and <Latex text="\( \nabla_{\boldsymbol{\theta}}J(\boldsymbol{\theta}) \)"/> is the gradient of the cost with respect to <Latex text="\( \boldsymbol{\theta} \)"/>.
+
+### Role of gradients in parameter updates  
+The gradient <Latex text="\( \nabla_{\boldsymbol{\theta}}J(\boldsymbol{\theta}) \)"/> points in the direction of steepest ascent of the cost function; hence, subtracting it moves us toward a (local) minimum. In unregularized linear regression, this cost function might be:
+
+<Latex text="\[
+J(\boldsymbol{\theta}) = \frac{1}{m} \sum_{i=1}^{m} \bigl(h_{\boldsymbol{\theta}}(\mathbf{x}_i) - y_i\bigr)^2,
+\]"/>
+
+where <Latex text="\( m \)"/> is the number of training samples, <Latex text="\( \mathbf{x}_i \)"/> is the feature vector for the <Latex text="\( i \)"/>-th sample, and <Latex text="\( h_{\boldsymbol{\theta}}(\mathbf{x}_i) \)"/> is the model's prediction.
+
+### Limitations when models have too many parameters  
+When the number of parameters is large and the data is insufficient to constrain them properly, gradient descent (and other optimization algorithms) can converge to parameter configurations that appear optimal for the training data but do not generalize. This is especially prevalent when using complex models (e.g., high-degree polynomials, deep neural networks, or very flexible kernels in SVM). Regularization modifies the cost function to mitigate this effect.
+
+## Bias-variance tradeoff  
+The bias-variance tradeoff is a cornerstone of understanding how regularization works. <Highlight>Bias</Highlight> corresponds to the difference between the average model prediction and the true data distribution; <Highlight>variance</Highlight> refers to how sensitive the model is to fluctuations in the training set.  
+
+- **High bias**: The model is oversimplified and does not capture the structure of the data (underfitting).  
+- **High variance**: The model is too complex and fits random fluctuations in the training data rather than the true pattern (overfitting).
+
+By penalizing large parameter values, regularization generally reduces variance but may increase bias slightly. The net effect is often beneficial, as slightly higher bias is a small price to pay for drastically lower variance. Modern best practices, including cross-validation, help practitioners choose a regularization strength that balances bias and variance effectively (Hastie and gang, "The Elements of Statistical Learning").
+
+## Ridge (l2) regularization  
+Ridge regularization (sometimes known as Tikhonov regularization in statistics) adds an <Latex text="\( L_2 \)"/> penalty on parameter magnitude to the cost function.  
+
+### Definition and mathematical formulation  
+The ridge regularization term is:
+
+<Latex text="\[
+\lambda \sum_{j=1}^n \theta_j^2,
+\]"/>
+
+where <Latex text="\( \lambda \)"/> (lambda) is a hyperparameter that controls the strength of regularization. If our original cost function was <Latex text="\( J(\boldsymbol{\theta}) \)"/>, then the ridge-regularized cost function can be written as:
+
+<Latex text="\[
+J_{ridge}(\boldsymbol{\theta}) = J(\boldsymbol{\theta}) + \lambda \sum_{j=1}^n \theta_j^2.
+\]"/>
+
+Here, <Latex text="\( n \)"/> is the number of parameters (excluding, typically, a bias/intercept term which we do not penalize in many implementations).
+
+### Effect on model parameters (shrinkage)  
+The <Latex text="\( L_2 \)"/> penalty encourages smaller parameter values, effectively "shrinking" them toward zero. Unlike <Latex text="\( L_1 \)"/> methods, ridge does not enforce exact zeros in the coefficients but instead spreads out the penalty more smoothly. This shrinkage can alleviate the problem of high variance and produce a model that generalizes well.
+
+### Ridge penalty in gradient descent  
+Incorporating ridge regularization into gradient descent modifies the gradient as follows:
+
+<Latex text="\[
+\nabla_{\boldsymbol{\theta}} J_{ridge}(\boldsymbol{\theta}) = \nabla_{\boldsymbol{\theta}} J(\boldsymbol{\theta}) + 2 \lambda \boldsymbol{\theta}.
+\]"/>
+
+The term <Latex text="\( 2 \lambda \boldsymbol{\theta} \)"/> (or sometimes <Latex text="\( \lambda \boldsymbol{\theta} \)"/> depending on the constant factors used in definitions) systematically reduces parameter magnitudes at each step, helping to control overfitting.
+
+### Practical considerations in hyperparameter tuning  
+- <Latex text="\( \lambda \)"/> is chosen via model selection methods such as <Highlight>cross-validation</Highlight>.  
+- If <Latex text="\( \lambda \)"/> is too large, the model parameters are shrunk too aggressively, which may underfit.  
+- If <Latex text="\( \lambda \)"/> is too small, ridge behaves much like ordinary least squares, risking overfitting.  
+
+Below is a simple Python snippet illustrating the use of ridge regression in scikit-learn:
+
+```
+<Code text={`
+import numpy as np
+from sklearn.linear_model import Ridge
+from sklearn.model_selection import train_test_split, GridSearchCV
+
+X = np.random.rand(100, 5)
+y = 2.5*X[:, 0] - 1.3*X[:, 1] + 0.5*np.random.randn(100)
+
+X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2)
+
+param_grid = {'alpha': [0.001, 0.01, 0.1, 1, 10, 100]}
+ridge = Ridge()
+grid = GridSearchCV(ridge, param_grid, cv=5)
+grid.fit(X_train, y_train)
+
+print("Best alpha:", grid.best_params_)
+print("Validation score:", grid.best_score_)
+`}/>
+```
+
+## Lasso (l1) regularization  
+Lasso regularization, short for <Highlight>Least Absolute Shrinkage and Selection Operator</Highlight>, adds an <Latex text="\( L_1 \)"/> penalty on the parameter vector. Lasso is particularly well-known for its ability to produce sparse solutions (Tibshirani, 1996).
+
+### Definition and mathematical formulation  
+The lasso penalty is:
+
+<Latex text="\[
+\lambda \sum_{j=1}^n |\theta_j|.
+\]"/>
+
+Incorporating it into the cost function:
+
+<Latex text="\[
+J_{lasso}(\boldsymbol{\theta}) = J(\boldsymbol{\theta}) + \lambda \sum_{j=1}^n |\theta_j|.
+\]"/>
+
+### Sparsity and feature selection properties  
+A prominent effect of <Latex text="\( L_1 \)"/> regularization is that some parameters tend to become exactly zero if <Latex text="\( \lambda \)"/> is sufficiently large. This characteristic naturally selects features by eliminating those that do not contribute meaningfully to the predictive performance — making lasso popular in high-dimensional settings such as genomics or natural language processing.
+
+### L1 penalty in gradient descent  
+During gradient descent, the absolute value function <Latex text="\( |\theta_j| \)"/> introduces a discontinuity at zero, making it non-differentiable at that point. In practice, implementations often use subgradient methods or specialized optimizers (e.g., coordinate descent) to handle the <Latex text="\( L_1 \)"/> term.  
+
+A coordinate descent procedure for lasso systematically updates each parameter by solving a one-dimensional minimization problem that leads to a <Tooltip text="Soft thresholding operator"/> effect on the parameters.
+
+### Practical considerations in hyperparameter tuning  
+- Lasso's sparsity effect can be highly beneficial when you suspect many redundant or irrelevant features.  
+- As <Latex text="\( \lambda \)"/> increases, more coefficients are driven to zero.  
+- Strong regularization can lead to an underfit model if set too aggressively.  
+- In scikit-learn, `Lasso` can be used similarly to `Ridge` with a range of alpha values tested via cross-validation.
+
+## ElasticNet  
+ElasticNet (Zou and Hastie, 2005) combines both <Latex text="\( L_1 \)"/> and <Latex text="\( L_2 \)"/> penalties. It aims to leverage the benefits of lasso's sparsity and ridge's stability.
+
+### Combining l1 and l2 penalties  
+The ElasticNet regularization term is typically written as:
+
+<Latex text="\[
+\lambda \Bigl(\alpha \sum_{j=1}^n |\theta_j| + (1 - \alpha) \sum_{j=1}^n \theta_j^2\Bigr),
+\]"/>
+
+where <Latex text="\( 0 \le \alpha \le 1 \)"/> controls the ratio between the <Latex text="\( L_1 \)"/> and <Latex text="\( L_2 \)"/> components, and <Latex text="\( \lambda \)"/> scales the overall strength of regularization.
+
+### Advantages of the ElasticNet approach  
+- <Latex text="\( L_2 \)"/> part helps group correlated features, distributing the coefficient weights among them more evenly rather than zeroing one feature arbitrarily.  
+- <Latex text="\( L_1 \)"/> part still promotes sparsity, though often less aggressively than a pure lasso.  
+- Works well in scenarios where you have many correlated predictors.
+
+### Selecting the mixing parameter  
+The parameter <Latex text="\( \alpha \)"/> is often chosen through grid search in conjunction with <Latex text="\( \lambda \)"/>. Researchers frequently pick a few candidate values for <Latex text="\( \alpha \)"/> (e.g., 0.1, 0.5, 0.9) and then search across a range of <Latex text="\( \lambda \)"/> values.
+
+### When to use ElasticNet  
+ElasticNet is a strong choice when:
+- You suspect your data contains multiple correlated features.
+- Pure lasso might arbitrarily drop one of the correlated features (or keep them all if <Latex text="\( \lambda \)"/> is small).
+- You still want some feature selection (or partial feature selection) but with added stability over lasso alone.
+
+## Regularization in matrix form  
+For linear regression, an elegant view of regularization arises by revisiting the normal equation.
+
+### Revisiting the normal equation  
+Recall that in ordinary least squares (OLS), we solve:
+
+<Latex text="\[
+\boldsymbol{\theta} = (X^\top X)^{-1} X^\top \mathbf{y},
+\]"/>
+
+where <Latex text="\( X \)"/> is an <Latex text="\( m \times n \)"/> design matrix and <Latex text="\( \mathbf{y} \)"/> is the vector of observations. This solution can be ill-defined or numerically unstable if <Latex text="\( X^\top X \)"/> is close to singular (often due to highly correlated features or <Tooltip text="Multicollinearity"/>).
+
+### Adding the regularization term to the cost function  
+Ridge regression modifies the OLS cost function by adding <Latex text="\( \lambda \|\boldsymbol{\theta}\|^2 \)"/>:
+
+<Latex text="\[
+\min_{\boldsymbol{\theta}} \bigl\|X \boldsymbol{\theta} - \mathbf{y}\bigr\|^2 + \lambda \|\boldsymbol{\theta}\|^2.
+\]"/>
+
+### Deriving the regularized normal equation  
+Taking derivatives and setting them to zero yields:
+
+<Latex text="\[
+\boldsymbol{\theta} = \bigl(X^\top X + \lambda I\bigr)^{-1} X^\top \mathbf{y}.
+\]"/>
+
+Here, <Latex text="\( \lambda I \)"/> is a diagonal matrix that "stabilizes" <Latex text="\( X^\top X \)"/> by shifting its eigenvalues. This improved conditioning helps avoid exploding coefficients and reduces variance.  
+
+### Computational considerations  
+- Adding <Latex text="\( \lambda I \)"/> ensures that the matrix is invertible (or at least significantly better conditioned).  
+- In certain high-dimensional applications, direct matrix inversion remains expensive. Iterative methods like gradient descent or coordinate descent are often used instead.  
+
+## Practical guidelines and considerations  
+
+### Choosing the right regularization technique  
+- **Ridge (<Latex text="\( L_2 \)"/>):** Tends to shrink coefficients smoothly. Effective when you have many features of roughly similar importance.  
+- **Lasso (<Latex text="\( L_1 \)"/>):** Encourages feature selection by driving some coefficients to zero. Particularly helpful if you suspect a number of irrelevant or redundant predictors.  
+- **ElasticNet:** A flexible approach if you want both the stability of <Latex text="\( L_2 \)"/> and the feature selection effect of <Latex text="\( L_1 \)"/>.  
+
+### Cross-validation for hyperparameter tuning  
+Selecting hyperparameters <Latex text="\( \lambda \)"/> (and <Latex text="\( \alpha \)"/> in ElasticNet) via cross-validation is common practice. One typical strategy is:
+1. Split the data into training and validation folds.  
+2. Train multiple models with different values of <Latex text="\( \lambda \)"/> (and <Latex text="\( \alpha \)"/> for ElasticNet).  
+3. Evaluate each model on the validation fold (or folds).  
+4. Choose the hyperparameters that yield the best performance metric (e.g., mean squared error).
+
+### Impact on interpretability  
+- **Ridge:** May preserve all features' coefficients, but each is dampened. Interpretability remains straightforward if the coefficient magnitudes are not too large.  
+- **Lasso:** Produces sparse coefficients, simplifying interpretation. A zero coefficient means the corresponding feature is effectively removed.  
+- **ElasticNet:** Balances interpretability and stability; you may still get sparse solutions, but correlated features are handled more smoothly.
+
+Sometimes, especially in scientific applications, the interpretability of coefficients is as important as raw predictive performance. If interpretability and dimensionality reduction are priorities, lasso or ElasticNet are often recommended.
+
+---
+
+In summary, regularization is a versatile and vital tool for controlling complexity in machine learning models, mitigating overfitting, and improving generalization. By penalizing large weights (either in <Latex text="\( L_1 \)"/> or <Latex text="\( L_2 \)"/> form, or a combination of both), these methods ensure a balance between fitting power and generalization. With careful hyperparameter tuning and awareness of each approach's strengths and weaknesses, practitioners can unlock models that are both accurate and robust — a pillar of modern data science and machine learning.

@@ -1,0 +1,1294 @@
+---
+index: 128
+indexCourse: 154
+indexFavorites:
+title: "Knowledge representation"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Knowledge representation"
+courseCategoryName: "AI theory"
+desc: "From chaos to ontology"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "03.10.2024"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 3
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/knowledge_representation.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/knowledge_representation"
+slug: "/research/knowledge_representation"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+Представление знаний
+https://neerc.ifmo.ru/wiki/index.php?title=%D0%9F%D1%80%D0%B5%D0%B4%D1%81%D1%82%D0%B0%D0%B2%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B7%D0%BD%D0%B0%D0%BD%D0%B8%D0%B9 
+https://en.wikipedia.org/wiki/Knowledge_representation_and_reasoning
+Artificial Intelligence: A Modern Approach, Global Edition, 4ed: 10. Knowledge Representation
+Ontological engineering
+Categories and objects in knowledge representation
+Events in knowledge representation
+Mental objects and modal logic
+Reasoning systems for categories
+Reasoning with default information
+
+*/}
+
+
+{/* Дополненная версия (разобрать и перенести в основной текст)
+
+Knowledge representation lies at the heart of artificial intelligence and forms a foundational pillar for building intelligent systems capable of reasoning about the real world, making inferences, planning actions, and communicating with humans in natural language. In broad terms, <Highlight>knowledge representation</Highlight> (KR) refers to how we encode information — be it facts, rules, concepts, or procedures — within computational frameworks, so that this information can be processed effectively by algorithms and systems seeking to exhibit intelligent behavior. 
+
+Although this field originated from symbolic AI traditions that relied heavily on logic-based reasoning, it has now expanded to include modern trends such as <Highlight>neural-symbolic integration</Highlight> and <Highlight>knowledge graph embeddings</Highlight>. Researchers across various domains, from cognitive science to mathematics, from automated reasoning to large-scale data engineering, have contributed to an increasingly vast body of work on how best to capture knowledge in a form amenable to computer-based processing.
+
+This article draws from decades of AI research, including publications in top venues such as NeurIPS, ICML, JMLR, and AAAI, to provide a comprehensive overview of knowledge representation principles, methods, and applications. We will explore classical logic-based approaches, describe alternative frameworks like semantic networks, ontologies, and frames, and then move toward the integration of uncertainty, the role of planning and decision-making, and finally modern developments such as knowledge graphs and neuro-symbolic systems. By the end, you should have a deeper theoretical understanding of the state-of-the-art in knowledge representation, along with insights into emerging areas that seek to unify symbolic and sub-symbolic paradigms in AI.
+
+## Fundamentals of knowledge representation
+
+### Definition and purpose
+
+At its simplest, knowledge representation aims to encode information — i.e., knowledge — about the world so that a computational system can use it to solve complex tasks (e.g., diagnosing diseases, supporting natural language dialogue, or automated theorem proving). Historically, AI systems required vast amounts of domain-specific knowledge, and developers soon recognized that success hinged not merely on powerful inference engines, but also on how to structure that knowledge effectively.
+
+We typically distinguish between two major forms of knowledge:
+
+- **Declarative knowledge**: "Knowing that." This is information describing **what** is true in some domain, such as "An apple is a type of fruit."  
+- **Procedural knowledge**: "Knowing how." This captures **how** to do something, such as performing a series of actions or computations, like "How to parse a sentence in a natural language" or "How to multiply matrices efficiently."
+
+A robust knowledge representation scheme must handle both kinds of knowledge. It should allow the system to store everything from straightforward facts, to complex rules that specify behaviors or transformations.
+
+### Types of knowledge: declarative vs. procedural
+
+- <Highlight>Declarative knowledge</Highlight> can be more naturally expressed in logical statements, semantic networks, or relational structures. For instance, in a knowledge graph, we might represent "Marie Curie" as an entity connected by an "invented" relation to the concept of "Theory of Radioactivity." Such declarative statements are often easier to interpret and edit by human experts.
+
+- <Highlight>Procedural knowledge</Highlight> captures *how* to perform tasks. Procedural knowledge is often implicit in algorithms, control flows, or specialized data structures that encode instructions. For example, in a planning system, the representation might include operators that define how certain actions change the state of the world, or in a rule-based production system, we might encode a series of "if–then" rules that define how to respond to events.
+
+### Challenges in representing knowledge
+
+1. **Expressiveness vs. tractability**: A highly expressive language (e.g., full first-order logic with function symbols, or certain forms of higher-order logic) can encode almost any fact or inference pattern but often at the cost of intractable reasoning. Finding the right trade-off is an ongoing issue.
+
+2. **Uncertainty and vagueness**: Real-world information is rarely crisp. Ensuring that a representation can capture incomplete or ambiguous information is challenging. Probabilistic and fuzzy approaches attempt to address these limitations.
+
+3. **Dynamics and temporal aspects**: Knowledge changes over time. An event might invalidate prior statements or require updates. Representations must handle these changes gracefully.
+
+4. **Context and domain constraints**: Many statements only make sense in a certain domain or context. Representation frameworks often need context mechanisms or modular ontologies to separate domain-specific knowledge from universal knowledge.
+
+5. **Scalability**: Modern AI systems can contain knowledge about billions of facts or relationships. Maintaining a large knowledge base in a consistent and computationally usable form requires specialized data structures and distributed processing strategies.
+
+### The relationship between knowledge representation and reasoning
+
+Knowledge representation (KR) is intimately connected to <Highlight>reasoning</Highlight>: the process of drawing conclusions or making inferences from known information. The choice of representation directly impacts the complexity and style of the reasoning that can be performed. For instance, a rule-based system might rely on forward or backward chaining to draw conclusions, while a probabilistic graphical model will use inference algorithms such as belief propagation.
+
+Reasoning typically unfolds in three ways: 
+
+1. **Deductive reasoning**: Infers logically certain conclusions from given premises.  
+2. **Inductive reasoning**: Generalizes patterns from specific examples.  
+3. **Abductive reasoning**: Attempts to find the best explanation for a given observation.
+
+Each of these forms of reasoning requires different representational constructs. Hence, one of the first design steps is deciding what kind of queries or inferences the system must answer and choosing an appropriate representational approach accordingly.
+
+## Logical foundations
+
+Logic-based formalisms are among the earliest and most studied representations in AI. They have strong mathematical underpinnings, making it possible to analyze their soundness, completeness, and computational complexity. Below, we discuss the fundamentals of several logical systems commonly employed in AI.
+
+### Propositional logic
+
+<Highlight>Propositional logic</Highlight> (PL) is one of the simplest formal logics, dealing with atomic sentences (propositions) that can be true or false, and logical connectives (like AND, OR, NOT, IMPLIES). A typical propositional formula might look like:
+
+<Latex text="\( (p \land q) \rightarrow r \)"/>
+
+where <Latex text="\(p\)"/>, <Latex text="\(q\)"/>, and <Latex text="\(r\)"/> are atomic propositions, and <Latex text="\(\land\)"/> denotes logical conjunction, <Latex text="\(\rightarrow\)"/> denotes logical implication. 
+
+- **Advantages**: Propositional logic is easy to implement, and SAT solvers can handle extremely large formulae with advanced algorithms (e.g., DPLL, CDCL).  
+- **Limitations**: Propositional logic lacks internal structure for representing entities, relationships, or quantification. Hence, it is less expressive for complex domains.
+
+### First-order logic
+
+<Highlight>First-order logic</Highlight> (FOL) introduces quantifiers <Latex text="\(\forall\)"/> (universal) and <Latex text="\(\exists\)"/> (existential) and uses predicates to describe properties of objects:
+
+<Latex text="\[
+\forall x \bigl( \text{Human}(x) \rightarrow \text{Mortal}(x) \bigr).
+\]"/>
+
+Here, we say "For every <Latex text="\(x\)"/>, if <Latex text="\(x\)"/> is a human, then <Latex text="\(x\)"/> is mortal." In AI:
+
+- FOL allows for more direct modeling of real-world entities (people, places, objects).
+- It is **semi-decidable** in the general case; if the set of axioms is unsatisfiable, a complete theorem prover may run indefinitely.
+- Many knowledge-based systems rely on subsets of FOL or adopt heuristics to ensure tractable or semi-decidable inference.
+
+### Modal logic and temporal logic
+
+While FOL addresses many representational needs, it does not explicitly handle statements about belief, necessity, possibility, or time. <Highlight>Modal logics</Highlight> add modal operators such as <Latex text="\(\Box\)"/> ("necessarily") and <Latex text="\(\Diamond\)"/> ("possibly"). <Highlight>Temporal logics</Highlight>, such as LTL (Linear Temporal Logic) or CTL (Computation Tree Logic), embed time in the reasoning process, enabling statements like "Eventually, condition A will hold" or "It is always the case that B leads to C." 
+
+Modal and temporal logics are crucial for:
+
+- Formal reasoning about agent beliefs or knowledge states.
+- Modeling dynamic systems where states evolve over time.
+- Formal verification in software and hardware systems.
+
+### Non-monotonic reasoning
+
+In <Highlight>non-monotonic reasoning</Highlight> systems, the introduction of new facts may invalidate prior conclusions — unlike classical logics, which are monotonic. Non-monotonic logics capture the notion of "default" or "common-sense" reasoning:
+
+- **Default logic**: Allows "If we believe A, then we believe B, unless there is evidence of the contrary."  
+- **Circumscription**: Minimizes the extension of certain predicates to model assumptions of typicality or normality.
+
+This kind of reasoning matches real-life scenarios more closely, where agents frequently revise their assumptions in light of new evidence. Non-monotonic reasoning is widely studied in knowledge representation to capture real-world changes and exceptions.
+
+### Limitations of purely logical approaches
+
+Despite their elegance and mathematical rigor, purely logical approaches encounter challenges:
+
+1. **Expressiveness vs. complexity**: Full first-order logic is very expressive, but inference can be expensive and, in some cases, undecidable.  
+2. **Uncertainty**: Classical logics do not handle uncertainty natively, requiring extensions like probability or fuzzy sets.  
+3. **Context dependency**: Real-world knowledge often depends on context; logic-based representations can become cumbersome if we try to encode all contextual intricacies.  
+4. **Knowledge acquisition bottleneck**: Logical encodings can be tedious to create and maintain, particularly when large numbers of facts or rules are needed.
+
+Modern KR systems often combine logic with additional techniques — such as probabilistic reasoning, knowledge graphs, or deep learning methods — to achieve a richer, more robust representation.
+
+## Representational frameworks
+
+Over the years, AI researchers have proposed numerous frameworks for structuring knowledge. Each offers unique advantages in terms of interpretability, ease of reasoning, or expressiveness.
+
+### Semantic networks
+
+<Highlight>Semantic networks</Highlight> represent knowledge as graphs with nodes (concepts or entities) and edges (relationships). For instance, we can have a node "Cat" with links indicating that a cat "IsA" "Mammal," or that a cat "Eats" "Fish." Early AI systems used semantic networks extensively for tasks like natural language understanding or conceptual representation.
+
+- **Advantages**: Intuitive graphical structure that is easy to visualize; suitable for storing hierarchical or associative relationships.  
+- **Disadvantages**: Lacks standardized inference procedures; can become a "spaghetti" of relationships if not carefully managed.
+
+### Frames and scripts
+
+<Highlight>Frames</Highlight>, introduced by Marvin Minsky, are data structures resembling object-oriented classes: they group attributes (slots) and values under named concepts. For example, a "Restaurant" frame might have slots like "location," "menu," and "opening hours." Scripts extend frames for narrative structures, describing event sequences. A "restaurant script" might encode typical events like "entering," "being seated," "ordering," "eating," "paying," etc. 
+
+- **Advantages**: Natural for modeling everyday scenarios, easily integrating with procedural or object-oriented code.  
+- **Disadvantages**: Less formal than logic, and more domain-specific. Reasoning typically relies on specialized procedures or pattern matching.
+
+### Ontologies and taxonomy-based systems
+
+<Highlight>Ontologies</Highlight> systematically define categories (classes), relationships, properties, and constraints in a domain. Ontologies often use description logics or RDF-based languages (e.g., OWL) to achieve a structured, formal representation. A typical <Highlight>taxonomy-based system</Highlight> organizes terms into a hierarchy, capturing "is-a" relationships and other domain constraints.
+
+- **Advantages**: Facilitates data sharing and integration; standardization across domains (e.g., medical ontologies, genealogical databases).  
+- **Disadvantages**: Building a large, consistent ontology can be labor-intensive; ensuring maintenance over time is non-trivial.
+
+### Rules-based systems
+
+<Highlight>Rules-based systems</Highlight> store domain knowledge in the form of "if-then" rules (productions). For instance:
+
+```
+IF  (patient has high fever)
+AND (patient has elevated white blood cells)
+THEN (diagnose infection).
+```
+
+Production systems often use forward chaining (data-driven) or backward chaining (goal-driven) inference. 
+
+- **Advantages**: Well-understood inference algorithms, easy to interpret rules, widely used in industrial "expert systems."  
+- **Disadvantages**: Lacks hierarchical structuring unless supplemented with additional layering or integration with ontologies. Potential combinatorial explosion if many rules exist.
+
+### Case-based representation
+
+<Highlight>Case-based reasoning</Highlight> (CBR) systems store experiential knowledge as specific cases, each describing a problem situation and its solution or outcome. When a new problem arises, the system searches for similar past cases and adapts the known solution.
+
+- **Advantages**: Straightforward approach for domains where enumerating rules or formal logic is difficult but examples abound; each case is a "capsule" of real-world knowledge.  
+- **Disadvantages**: Requires a large, well-curated case library; retrieval and adaptation of cases can be non-trivial.
+
+## Reasoning techniques
+
+A knowledge representation system often needs robust reasoning algorithms to enable advanced inferences. Below we survey the main reasoning paradigms.
+
+### Deductive reasoning
+
+<Highlight>Deductive reasoning</Highlight> yields logically certain conclusions from given premises. Systems rely on *sound* inference rules (i.e., rules that never derive false conclusions from true premises). Common techniques include:
+
+- **Resolution** in logic-based systems (unification, refutation-based proof).  
+- **Forward chaining** in rule-based frameworks (apply all possible rules that match known facts).  
+- **Backward chaining** (start from a goal and recursively look for rules that can prove it).
+
+### Inductive reasoning
+
+<Highlight>Inductive reasoning</Highlight> generalizes from instances to broader rules or patterns. In many machine learning systems, the process of training a classifier (e.g., a decision tree or neural network) is a form of inductive reasoning: the system infers general decision boundaries from labeled examples. 
+
+- Central to supervised learning, where we gather data <Latex text="\( (x_i, y_i) \)"/> and try to learn a function <Latex text="\(f\)"/> that predicts <Latex text="\(y\)"/> from <Latex text="\(x\)"/>.  
+- <Highlight>Inductive Logic Programming (ILP)</Highlight> merges the learning of logical rules with logic-based representations.
+
+### Abductive reasoning
+
+<Highlight>Abductive reasoning</Highlight> attempts to find the best explanation for a given set of observations. For example, if an intelligent system observes that a patient has certain symptoms, it will hypothesize diseases that *could* cause those symptoms. The goal is to find an explanation that is consistent with the observations and fits domain constraints. While abductive reasoning is extremely powerful for diagnostic tasks, it can be computationally difficult due to the large search space of potential explanations.
+
+### Default reasoning
+
+<Highlight>Default reasoning</Highlight> extends logical inference with "common-sense" defaults. An example default rule might be "Birds typically fly," which can be overridden by exceptions such as "Penguins do not fly." Systems of default logic attempt to systematically handle these typical statements while preserving consistency.
+
+### Probabilistic reasoning
+
+<Highlight>Probabilistic reasoning</Highlight> is essential for domains that demand robust handling of uncertainty. One way to integrate probabilities into classical logic is to attach probabilities to certain statements or transitions. Another approach is to rely on specialized frameworks such as:
+
+- **Bayesian networks (directed graphical models)**  
+- **Markov random fields (undirected graphical models)**  
+- **Hidden Markov Models (when dealing with temporal sequences)**
+
+These frameworks define joint probability distributions over variables, enabling inference algorithms such as exact variable elimination, belief propagation, or Monte Carlo sampling.
+
+## Knowledge representation languages
+
+Over time, the AI community has developed various languages to express knowledge in a format that balances expressiveness, clarity, and computational tractability.
+
+### Description logics
+
+<Highlight>Description logics (DL)</Highlight> are a family of knowledge representation languages that provide a formal foundation for ontologies. They allow the specification of concepts (classes), roles (properties), and individuals (instances) through a formal syntax and semantics. Well-known examples include the logics behind the Web Ontology Language (OWL):
+
+- DL reasoners (e.g., Pellet, HermiT) can detect class inconsistencies, classify hierarchies, and answer queries.  
+- Commonly used to implement semantic web applications and domain ontologies in biology, healthcare, and e-commerce.
+
+### Resource Description Framework (RDF)
+
+<Highlight>RDF</Highlight> (Resource Description Framework) is a standard for representing information in a graph structure of subject–predicate–object triples. For example:
+
+```
+<http://example.org/people#Alice> 
+    <http://xmlns.com/foaf/0.1/knows> 
+    <http://example.org/people#Bob>.
+```
+
+This triple states that "Alice knows Bob." RDF forms the foundation of semantic web technologies and can be serialized in formats like Turtle or JSON-LD. It is well-suited for distributed knowledge on the web, where each resource has a unique URI.
+
+### Web Ontology Language (OWL)
+
+<Highlight>OWL</Highlight> is built on top of RDF but provides additional logical constructs (e.g., class intersection, union, complement, property restrictions). OWL is layered (OWL 2 EL, OWL 2 QL, OWL 2 RL, etc.) to offer various trade-offs between expressiveness and computational complexity. 
+
+OWL allows AI developers to define classes, sub-classes, object properties, and data properties with constraints, enabling automated reasoning to detect inconsistencies or discover implied relationships. 
+
+### Production rule systems
+
+<Highlight>Production rule systems</Highlight> store knowledge in the form of condition-action pairs. The Rete algorithm is a famous pattern-matching technique used in many rule engines (e.g., CLIPS, Drools). 
+
+A typical production rule is:
+
+```
+IF car.engineStatus IS "overheated"
+AND ambientTemperature IS "high"
+THEN setCoolingFanSpeed TO "max".
+```
+
+Production rules are often integrated into business rule management systems, real-time process control, or knowledge-based expert systems for commercial applications.
+
+### Domain-specific languages
+
+<Highlight>Domain-specific languages (DSLs)</Highlight> are specialized syntaxes or frameworks tailored to a particular domain. For instance, in finance, there might be a DSL for representing trading rules or credit risk models. In robotics, DSLs might specify motion constraints or sensor data processing flows. DSLs strike a balance by restricting the language to domain-relevant constructs, making reasoning tasks simpler or more efficient within that specialized realm.
+
+## Knowledge acquisition
+
+Building and maintaining a knowledge base can be one of the most time-consuming processes in the life cycle of an AI system. As knowledge representation schemes have become more complex, the field has explored a variety of approaches to automate or streamline the process of knowledge acquisition.
+
+### Manual knowledge engineering
+
+Historically, <Highlight>manual knowledge engineering</Highlight> was the norm. Domain experts and knowledge engineers sat down together to encode facts, rules, or ontologies by hand. While this approach can yield very high-quality knowledge bases, it is expensive, time-consuming, and prone to coverage gaps — particularly for large or dynamic domains.
+
+### Machine learning approaches
+
+Modern AI systems often learn from data using machine learning techniques. For example:
+
+- **Text mining / NLP**: Extract domain knowledge from unstructured text (scientific articles, manuals, business documents, or web pages).  
+- **Inductive Logic Programming (ILP)**: Learn logical rules from positive and negative examples, integrating well with an existing knowledge base.  
+- **Neural knowledge graph embeddings**: Systems like TransE, DistMult, ComplEx, or RotatE automatically learn vector representations of entities and relations to infer missing edges in large knowledge graphs (e.g., out of data from DBpedia or Wikidata).
+
+### Crowdsourcing and collaborative systems
+
+Large-scale open databases such as <Highlight>Wikipedia</Highlight>, <Highlight>Wikidata</Highlight>, and <Highlight>OpenStreetMap</Highlight> rely on community-driven efforts to add and edit structured knowledge. AI systems can harvest these resources for domain facts or relationships:
+
+- <Highlight>Crowdsourcing platforms</Highlight> like Amazon Mechanical Turk or specialized knowledge-sharing communities gather labeled examples or refine conceptual definitions.  
+- <Highlight>Collaborative ontologies</Highlight> are built by distributed communities, adopting version control and editorial policies to maintain consistency.
+
+### Challenges in knowledge acquisition
+
+1. **Data quality and noise**: Automatic extraction of knowledge can yield errors or inconsistencies.  
+2. **Cost**: Manually eliciting knowledge from experts is expensive.  
+3. **Coverage**: Ensuring that the knowledge base covers all relevant edge cases or domain sub-areas can be difficult.  
+4. **Evolution**: Domains evolve over time, rendering older facts or definitions outdated.
+
+Tools like <Highlight>ontology-learning "layer cakes"</Highlight> systematically combine text mining, statistical clustering, ILP, and human expert review, as proposed in various AI conferences and literature (e.g., Staab & Studer, 2010; Buitelaar and gang, 2018).
+
+## Uncertainty and vagueness in reasoning
+
+### Handling incomplete information
+
+<Highlight>Incomplete information</Highlight> is nearly unavoidable in real-world tasks. Classical logic demands that each statement be either true or false, which is often unrealistic. One approach is to designate unknown facts as "undecided," but that does not help with decisions that rely on uncertain knowledge. AI researchers turn to frameworks like:
+
+- **Reasoning by assumption**: Temporarily assume an unproven fact is true or false and explore the resulting inferences.  
+- **Defeasible logic**: A non-monotonic approach that allows for retraction of conclusions once contradictory evidence appears.
+
+### Fuzzy logic and approximate reasoning
+
+<Highlight>Fuzzy logic</Highlight> offers a graded notion of truth, typically with membership functions mapping an element to a real number in <Latex text="\([0,1]\)"/>. For instance, "temperature = hot" might be 0.8 true if the temperature is 30°C, or 0.4 true at 20°C. This approach is frequently employed in control systems (e.g., fuzzy controllers in appliances) and in contexts where crisp boundaries are artificial.
+
+### Probabilistic graphical models
+
+<Highlight>Probabilistic graphical models</Highlight> (PGMs) unify graph structure with probability theory, offering a powerful tool for uncertain reasoning. They let us factor a high-dimensional joint distribution into a product of smaller factors that correspond to local relationships:
+
+<Latex text="\[
+P(X_1, X_2, \ldots, X_n) = \prod_i \phi_i(\mathbf{X_i}),
+\]"/>
+
+where each factor <Latex text="\(\phi_i\)"/> represents the local structure (or clique) in the graphical model. Common examples:
+
+- **Bayesian networks**: Directed acyclic graphs capturing causal or conditional relationships.  
+- **Markov networks**: Undirected graphs capturing constraints or potential functions among variables.
+
+### Belief networks and Bayesian reasoning
+
+A <Highlight>belief network</Highlight> is a type of Bayesian network that focuses on representing beliefs about variables and how they relate conditionally. Bayesian reasoning updates these beliefs with new evidence. When an observation is made, the network uses inference procedures (e.g., variable elimination, belief propagation) to recalculate posterior probabilities.
+
+Such systems are invaluable for medical diagnosis (e.g., "given that the patient has a high fever and certain blood test results, the probability of infection is X"), risk assessment in finance, or reliability analysis in engineering.
+
+## Planning and decision-making
+
+### Representation for planning systems
+
+<Highlight>Planning systems</Highlight> in AI often rely on a symbolic representation of states, actions, and goals. A typical planning operator might be described in a STRIPS-like formalism:
+
+```
+Action:   Move(robot, from, to)
+Precond:  At(robot, from) AND PathExists(from, to)
+Effect:   NOT At(robot, from) AND At(robot, to)
+```
+
+Here, the knowledge representation details the conditions under which an action is valid (preconditions) and how that action changes the state of the world (effect). Planners then search or heuristically navigate the space of possible plans.
+
+### Constraint satisfaction problems
+
+<Highlight>Constraint satisfaction problems (CSPs)</Highlight> revolve around finding values for variables subject to constraints. For instance, scheduling tasks can be represented as "variable X cannot overlap with variable Y if they share a resource." Knowledge representation for CSPs typically includes:
+
+- A set of variables and their domains.  
+- A set of constraints (equalities, inequalities, membership constraints).  
+- A solver that systematically checks or prunes assignments.
+
+Examples include staff rostering, timetable generation, and resource allocation in multi-robot systems.
+
+### Heuristic search techniques
+
+When the search space of possible states or actions is large, <Highlight>heuristic search</Highlight> guides exploration effectively. Domain knowledge can be encoded as heuristics, turning planning into a knowledge-based search. For instance, in the A* algorithm, a heuristic function <Latex text="\(h(n)\)"/> estimates the cost of reaching the goal from node <Latex text="\(n\)"/>. Proper knowledge representation and engineering of that heuristic can drastically reduce search overhead.
+
+### Multi-agent reasoning
+
+<Highlight>Multi-agent systems</Highlight> add another layer of complexity. Each agent might hold partial knowledge about the environment, or they may have individual goals. Knowledge representation for multi-agent planning or negotiation can include:
+
+- A <Highlight>joint belief state</Highlight>, describing what is mutually known by all agents.  
+- Communication protocols that share new facts or requests.  
+- Models for agent intentions and capabilities, enabling coordination.
+
+## Temporal and spatial reasoning
+
+### Representing time and events
+
+Time is crucial in domains from robotics (sequences of actions) to finance (modeling stock prices over intervals). Common temporal representations:
+
+- <Highlight>Situation Calculus</Highlight>: Encodes states and actions in a logic-based formalism with <Latex text="\(s_0\)"/> (initial state) and <Latex text="\(do(a,s)\)"/> (result of performing action <Latex text="\(a\)"/> in state <Latex text="\(s\)"/>).  
+- <Highlight>Event Calculus</Highlight>: Focuses on events initiating or terminating "fluents" (properties that hold over intervals of time).
+
+### Spatial ontologies
+
+<Highlight>Spatial reasoning</Highlight> deals with how objects occupy space. Ontologies for geography or robotics define concepts like adjacency, containment, or relative orientation. Formally capturing these relationships is essential for tasks like path planning, geometric constraints, and even natural language processing (e.g., "the coffee is on the table near the mug").
+
+### Temporal and spatial reasoning algorithms
+
+Reasoning in these domains often relies on specialized algorithms:
+
+- **Allen's interval algebra** for reasoning about intervals and their relationships (before, after, overlaps, etc.).  
+- **Region connection calculus (RCC)** for abstract spatial reasoning.  
+- **Hybrid constraint systems** that unify time and space constraints.
+
+### Real-world applications
+
+- **Scheduling**: Handling dynamic resource allocation over intervals.  
+- **Robotics**: Understanding or navigating environments with path constraints and temporal deadlines.  
+- **Spatio-temporal databases**: Indexing geographic or spatio-temporal data for queries and analytics.
+
+## Computational complexity of reasoning
+
+### Trade-offs between expressivity and tractability
+
+A major theme in knowledge representation is the tension between expressivity (the ability to capture nuanced domain details) and <Highlight>computational tractability</Highlight> (the ability to perform inference within reasonable time bounds). For instance, many expressive logics are **EXPTIME** or worse, motivating the design of restricted languages (e.g., Horn clauses, Description Logic subsets) that guarantee polynomial-time reasoning.
+
+### Computational models and complexity classes
+
+- **SAT** and **#SAT**: Propositional satisfiability is NP-complete, while counting satisfiable assignments (#SAT) is #P-complete.  
+- **Model checking**: Checking whether a structure satisfies a temporal logic formula can be PSPACE-complete.  
+- **Inference in Bayesian networks**: Generally NP-hard for exact inference, but polynomial for certain graph structures (e.g., polytrees).
+
+### Techniques for efficient reasoning
+
+AI researchers develop specialized reasoners and heuristics:
+
+- **Tableau-based reasoners** for Description Logics.  
+- **Clause learning** and **branch-and-bound** for SAT-based solvers.  
+- **Approximate inference** (e.g., sampling or variational methods) for probabilistic models.  
+- **Anytime algorithms** that provide partial solutions if cut off prematurely.
+
+Balancing the complexity remains a cornerstone of knowledge representation research, ensuring that an approach is *sufficiently* expressive for the domain without rendering reasoning intractable.
+
+## Applications in artificial intelligence
+
+### Expert systems
+
+<Highlight>Expert systems</Highlight> were among the earliest large-scale deployments of knowledge-based AI. They rely on meticulously crafted rules or logical statements to mimic the decision-making ability of a human expert in domains like medicine (Mycin), geology (Prospector), or finance. While overshadowed in some areas by deep learning, expert systems remain relevant where transparent, rule-based decisions and strict correctness are paramount.
+
+### Natural language processing
+
+In <Highlight>natural language processing (NLP)</Highlight>, knowledge representation can help disambiguate concepts, parse sentences, or enable QA systems to better "understand" text. For example:
+
+- <Highlight>Semantic role labeling</Highlight> benefits from a lexical resource of typical argument structures (frames).  
+- <Highlight>Knowledge graphs</Highlight> are used for question-answering, e.g., queries like "Who wrote Pride and Prejudice?" can be answered by linking the entity "Pride and Prejudice" to "Jane Austen."
+
+### Robotics and autonomous systems
+
+Robots must represent knowledge about their environment (maps, object properties) as well as internal states (battery levels, tasks). High-level planning might rely on symbolic representation (e.g., PDDL) that then translates to low-level motion planning. Additionally, multi-robot coordination benefits from a shared representation of tasks and constraints.
+
+### Intelligent tutoring systems
+
+Educational technologies rely on <Highlight>knowledge representation</Highlight> to encode the subject matter and track a learner's mastery. By representing conceptual dependencies among topics (e.g., "understanding fractions is needed before tackling ratio problems"), the system can tailor feedback and content to each student's needs. This often involves combining explicit domain modeling with machine-learned estimates of student knowledge.
+
+## Knowledge graphs and modern developments
+
+<Highlight>Knowledge graphs</Highlight> (KGs) are arguably the most prominent real-world implementation of knowledge representation at scale. Companies like Google, Microsoft, and Amazon use knowledge graphs to power search, recommendation, and entity-based analytics. 
+
+- **Structure**: A knowledge graph organizes entities (nodes) and relationships (edges) in a labeled, directed graph.  
+- **Linking structured and unstructured data**: Text-based extraction pipelines map relevant concepts from documents into structured facts.  
+- **KG embeddings**: Approaches like TransE (Bordes and gang, 2013, NeurIPS) or ComplEx (Trouillon and gang, ICML) learn vector representations of nodes and relations, enabling link prediction (inferring missing edges) and node classification.  
+- **Role in AI applications**: Knowledge graphs underpin advanced QA systems, content recommendation, semantic search, and domain-specific analytics (e.g., supply chain management, drug discovery).
+
+Below is a short illustrative Python snippet showing a simplified approach to adding facts to a knowledge graph and performing a rudimentary link prediction. In practice, these tasks involve large-scale pipelines and advanced embeddings, but the core conceptual approach can remain the same.
+
+```
+import numpy as np
+
+# A simple container for KG triplets
+class KnowledgeGraph:
+    def __init__(self):
+        # Each triple is (subject, relation, object)
+        self.triples = set()
+        
+    def add_fact(self, s, r, o):
+        self.triples.add((s, r, o))
+    
+    def has_fact(self, s, r, o):
+        return (s, r, o) in self.triples
+
+# Example usage:
+kg = KnowledgeGraph()
+kg.add_fact("Marie_Curie", "invented", "Theory_of_Radioactivity")
+kg.add_fact("Marie_Curie", "born_in", "Poland")
+
+# Simple "link prediction" by naive guess (purely illustrative)
+possible_relations = ["invented", "born_in", "works_at", "studied_at"]
+for rel in possible_relations:
+    if not kg.has_fact("Marie_Curie", rel, "Sorbonne"):
+        print(f"Maybe Marie_Curie {rel} Sorbonne? (Unknown in the KG)")
+
+# Real link prediction would rely on learned embeddings or rules
+```
+
+Although trivial, such a snippet highlights how new facts are added to a knowledge graph, and how one might query or attempt naive "predictions" about missing links. Modern systems rely on sophisticated embeddings or rule-based engines.
+
+## Emerging trends and research directions
+
+Though knowledge representation has a rich history, it is hardly static. Research continues to push boundaries, especially as we integrate symbolic reasoning with machine learning, neural networks, and big data.
+
+1. **Neuro-symbolic reasoning**: Bridges the gap between logical reasoning and deep learning. One line of work uses neural modules to approximate or learn logical operators. Another approach uses deep networks to embed logical theories or constraints. This allows for interpretability, compositional generalization, and the ability to handle raw inputs like images or text.
+
+2. **Quantum computing in reasoning**: Preliminary research suggests that quantum computing could speed up certain logical or combinatorial tasks. Though still speculative, some frameworks explore quantum logic gates for knowledge inference.
+
+3. **Open-world reasoning**: Traditional knowledge bases assume a closed world (anything not stated is false). Open-world reasoning acknowledges that the absence of a fact does not imply its negation, an assumption that better fits the web-scale data found in knowledge graphs or unstructured sources.
+
+4. **Generalized AI and unified reasoning frameworks**: Efforts to create universal frameworks that handle symbolic, probabilistic, and neural forms of knowledge. Projects sometimes combine rewriting systems, constraint solvers, and neural backends so that the system can reason about complex queries that mix discrete and continuous data.
+
+5. **Integration with large language models (LLMs)**: Recently, the synergy between LLMs (like GPT-based architectures) and knowledge bases has gained attention. Instead of solely relying on the implicit "knowledge" in large language models, one can incorporate an external knowledge graph or ontology to ground the model's output in verified facts, or to provide context-specific reasoning that goes beyond the LLM's parameter-based memory. Research includes techniques like retrieval-augmented generation, knowledge-grounded dialogue systems, or advanced fine-tuning approaches that combine symbolic constraints with generative neural networks.
+
+6. **Expanded scope of knowledge representation**: With new application domains — such as biologically inspired computing, personalized medicine, or multi-modal data (image, text, audio, video) — the scope of knowledge representation is expanding. Systems require additional data structures that handle everything from 3D geometry and time series to molecular graphs and social networks.
+
+All these trends underscore the continued relevance and vitality of knowledge representation in AI, bridging decades-old formal methods with cutting-edge deep learning and big data paradigms.
+
+------
+
+## Additional Topics and Expanded Discussion
+
+In this section, we significantly expand on several specialized areas of knowledge representation, incorporating further details, additional frameworks, code snippets, modal logic considerations, ontological engineering perspectives, and much more. We also integrate material about categories, objects, events, mental objects, as well as default reasoning. This extended content is intended to deepen our understanding of both established and emerging approaches in knowledge representation.
+
+### Ontological engineering
+
+<Highlight>Ontological engineering</Highlight> addresses the systematic design, creation, and maintenance of ontologies — formal representations of domain concepts and relationships. This field aims at making explicit the knowledge embedded within software applications, organizational procedures, or the minds of domain experts. Ontologies facilitate:
+
+- **Interoperability**: Different systems or modules can communicate more seamlessly using a shared ontology.  
+- **Consistency**: Automated reasoners can detect contradictory facts or definitions across a large knowledge base.  
+- **Reusability**: Modular ontologies can be extended or adapted to new domains.
+
+Beyond the early successes of logic-based ontologies (e.g., those in Cyc or SUMO), modern ontological engineering often integrates with knowledge graphs (RDF/OWL), advanced reasoners (description logic engines), and machine learning pipelines to automate part of the construction or refinement of large ontologies.
+
+### Categories and objects in knowledge representation
+
+In many AI applications, an important task is to partition the domain of discourse into <Highlight>categories</Highlight> (or classes) and to identify the <Highlight>objects</Highlight> (or instances) that populate these categories. For example:
+
+- **Taxonomies**: Hierarchical structures where categories are arranged from general to specific (e.g., Animal → Mammal → Primate → Human).  
+- **Object classification**: Once categories are defined, new objects must be assigned to one or more categories. This classification process can be driven by explicit logical rules, probabilistic inference, or learned embeddings.
+
+A fundamental challenge in knowledge representation for categories is ensuring that the categorization scheme is consistent (i.e., no contradictory definitions) and useful for the tasks at hand. For instance, a medical taxonomy focusing on diseases might differ significantly from a taxonomy focusing on physiological processes, even though both belong to the biomedical domain.
+
+### Events in knowledge representation
+
+<Highlight>Events</Highlight> are central to describing how the world changes over time. An event is often defined as an occurrence that takes place at a specific time (or interval of time) and may alter the state of relevant objects. Event-centric modeling can appear in:
+
+- **Frame-based structures**: Where an event is encoded as a "frame" with specific roles (slots) for participants, location, time, etc.  
+- **Logical formalisms**: Situation Calculus and Event Calculus track how events initiate or terminate certain fluents (properties).  
+- **Knowledge graphs**: Represent events as nodes connected to participants, times, and locations through typed edges.
+
+AI systems that rely heavily on event modeling include narrative understanding, plan recognition, complex event processing, and temporal knowledge bases.
+
+### Mental objects and modal logic
+
+AI agents often need to reason about beliefs, desires, intentions, or other "mental objects." Representing mental states or mental objects is often facilitated by <Highlight>modal logic</Highlight>. For example:
+
+- **Epistemic logic**: Models what agents know (or do not know).  
+- **Doxastic logic**: Models agents' beliefs.  
+- **Dynamic logic**: Considers how knowledge and beliefs evolve after certain actions.
+
+A simplified epistemic logic statement could look like:
+
+<Latex text="\(K_{Alice} (Rain\_Today)\)"/>
+
+meaning "Alice knows that it is raining today." Integrating mental objects into a knowledge base allows the system to reason about the perspectives of different agents, handle incomplete information, and manage interactive dialogues.
+
+### Reasoning systems for categories
+
+Once an ontology or taxonomy is defined, a specialized reasoner can infer:
+
+- **Subclass and superclass relationships**  
+- **Disjointness**: Certain categories cannot overlap (e.g., "Dead" vs. "Alive")  
+- **Inconsistencies**: If an object is assigned conflicting category memberships
+
+Description logic reasoners excel at these tasks, leveraging concepts like subsumption to derive implied category memberships. By carefully designing categories and the constraints that relate them, the reasoner can automatically classify new entities or detect errors in the knowledge base.
+
+### Reasoning with default information
+
+Real-world reasoning frequently relies on <Highlight>default assumptions</Highlight> — general "rules of thumb" that hold unless contradicted by evidence. For example:
+
+```
+Default: Birds typically fly
+Exception: If Bird is Penguin, then does not fly
+```
+
+Non-monotonic logics, such as default logic or circumscription, allow these assumptions to be overridden when new, more specific information arises. Default reasoning helps model everyday or "common-sense" judgments that break purely monotonic frameworks.
+
+------
+
+### Additional Perspective: Russian-Language Overview of Knowledge Representation, Knowledge Graphs, and Ontologies
+
+In Russian-language literature, the term <Highlight>"Представление знаний"</Highlight> (knowledge representation) encompasses AI research aimed at encoding information for complex tasks like medical diagnosis or natural language dialogue. Below is a synthesis of relevant Russian-language passages on knowledge representation, knowledge graphs, and ontology construction, emphasizing the historical and contemporary perspectives.
+
+```
+'''Представление знаний''' (англ. ''knowledge representation'') — направление в исследованиях искусственного интеллекта, посвящённое представлению информации о мире в форме, которую было бы возможно использовать в компьютерных системах для решения сложных прикладных задач. Таковыми являются, например, диагностирование заболеваний или ведение диалога на естественном языке. Представление знаний включает в себя психологические исследования по решению задач человеком для построения формализмов, которые упростили бы работу со сложными системами. 
+Примерами формализмов представления знаний являются семантические сети, архитектуры систем, правила и онтологии. 
+```
+
+#### Графы знаний
+
+Knowledge graphs (<Highlight>"Графы знаний"</Highlight>) provide an interconnected structure of entities and relations, aligned with best practices for semantic data modeling. Early references in Russian sources link them to semantic networks (<Highlight>семантические сети</Highlight>):
+
+```
+В 1980-х гг. Гронингенский университет и университет Твенте начали работу над совместным проектом, названным "Графы знаний", базируясь на устройстве семантических сетей с рёбрами, ограниченными наперёд заданным количеством отношений — для упрощения алгебры на графах. В последовавшие десятилетия граница между понятиями "Графов знаний" и "Семантических сетей" размывалась всё больше.
+```
+
+Major commercial uses of knowledge graphs include question-answering systems (<Highlight>Вопросно-ответные системы</Highlight>), information storage for research, recommendation systems, and supply chain management. Open problems remain regarding:
+
+1. **Best practices for constructing knowledge graphs**  
+2. **Dynamic knowledge updates**  
+3. **Assessing correctness and completeness**  
+
+#### Онтология (Ontology)
+
+From an AI perspective, an <Highlight>"Онтология"</Highlight> organizes domain concepts, properties, and relationships in a formal structure. Echoing the broader English-language definitions, Russian discussions emphasize that an ontology must be:
+
+- **Machine-processable**  
+- **Oriented toward practical tasks**  
+- **Evaluated by its applicability and consistency**  
+
+Formally, ontologies often use conceptual schemas (<Highlight>"концептуальная схема"</Highlight>), which can be represented by a semantic network of classes, objects, and constraints. Philosophically, the concept of "ontology" in AI is a derived notion from the ancient philosophical concept, albeit with more explicit constraints to enable machine reasoning.
+
+Common ontology languages in both Russian and English sources include OWL, KIF, Common Logic, CycL, and DAML+OIL. 
+
+#### Построение при помощи методов машинного обучения
+
+Ontologies can be partially or entirely learned via machine learning, especially from unstructured or semi-structured data. Techniques include:
+
+- **Лингвистические методы** (linguistic methods): Part-of-speech tagging, lemmatization, extraction of noun phrases, etc.  
+- **Статистические методы**: Probabilistic or distributional analysis to group terms into concepts (LSA, clustering, association rule mining).  
+- **Индуктивное логическое программирование (ILP)**: Learns logical rules from examples, used to generate axioms.  
+
+One common depiction in Russian literature is the <Highlight>"слоеный пирог обучения онтологий"</Highlight> (layer cake approach), describing the incremental steps of text preprocessing, concept extraction, relation learning, and final ontology refinement.
+
+#### Оценка онтологии
+
+Russian-language sources concur with English-language references on ontology evaluation. Key approaches are:
+
+1. **Золотой стандарт**: Compare to a manually curated "gold standard."  
+2. **Экспертная оценка**: Involves domain experts assigning scores along a set of criteria.  
+3. **Оценка, основанная на конкретной задаче**: Evaluate the ontology's impact on task performance (e.g., document retrieval).  
+4. **Оценка с использованием конкретных источников знаний**: Compare coverage of domain data with the ontology's classes and relations.
+
+#### Особенности применения онтологии для конкретных задач
+
+Applying domain-specific ontologies, such as those for Russian-language text processing, must handle:
+
+- **Synonymy and polysemy** in natural language usage  
+- **Contextual dependencies** that affect the interpretation of certain terms  
+- **The creation or updating of specialized domain terms** absent from general ontologies  
+
+In the Russian NLP field, the "РуТез" (RuThes) resource is one example of a linguistic ontology developed specifically for the Russian language, addressing many of these challenges.
+
+------
+
+### Extended Example: Using Prolog for Knowledge Representation
+
+As an additional illustration, consider how one might use Prolog for knowledge representation and query answering. Prolog is a logic programming language well-suited for encoding facts and rules:
+
+```prolog
+% Basic facts
+man(socrates).
+man(plato).
+man(aristotle).
+mortal(X) :- man(X).
+
+% Example query:
+% ?- mortal(socrates).
+% Prolog responds: true.
+%
+% More complex rule:
+% Suppose we have a default that "birds typically fly," 
+% but we specify an exception for penguins.
+
+bird(tweety).
+bird(polly).
+bird(pingu).
+
+penguin(pingu).
+
+flies(X) :- bird(X), not(penguin(X)).
+% This rule states: X flies if X is a bird and not a penguin.
+
+% Query:
+% ?- flies(tweety).  -> true
+% ?- flies(pingu).   -> false
+```
+
+This simple example shows how default reasoning about categories (birds and penguins) can be modeled in Prolog, though more sophisticated non-monotonic logics require extended frameworks (like XSB, Flora-2, or Logtalk) for negation as failure and other advanced features.
+
+------
+
+### Large-Scale Knowledge Integration
+
+Today's AI systems often need to integrate multiple forms of knowledge representation:
+
+1. **Relational Databases** for fast querying and structured storage.  
+2. **Knowledge Graphs** (often RDF or property graphs) for flexible relationships among entities.  
+3. **Symbolic or Logic-based Systems** (rule-based, theorem provers).  
+4. **Statistical / Neural Approaches** (embeddings, deep learning models).  
+
+A multi-modal knowledge architecture allows bridging the gap between symbolic interpretability and sub-symbolic efficiency. One approach is to combine knowledge graphs with neural embeddings, enabling large-scale link prediction, entity resolution, and integration with unstructured data (e.g., documents, images).
+
+------
+
+### Additional Code Snippet: Simple Knowledge Graph Merging
+
+A crucial task in knowledge engineering is merging two or more knowledge graphs. Below is a simplified Python snippet that demonstrates reading two lists of triples and combining them, while detecting possible conflicts (in a naive manner):
+
+```python
+class MergeableKG:
+    def __init__(self):
+        self.triples = set()  # each triple is (subject, predicate, object)
+    
+    def add_triple(self, s, p, o):
+        self.triples.add((s, p, o))
+    
+    def merge(self, other):
+        """
+        Naive merge: just union the sets of triples. 
+        Potential conflicts are when the same (subject, predicate) has two distinct objects.
+        """
+        conflicts = []
+        
+        # Index the current KG
+        sp_map = {}
+        for (subj, pred, obj) in self.triples:
+            sp_map.setdefault((subj, pred), set()).add(obj)
+        
+        # Attempt to add from 'other'
+        for (subj, pred, obj) in other.triples:
+            if (subj, pred) in sp_map:
+                if obj not in sp_map[(subj, pred)]:
+                    # We have a conflict if there's a different object for the same subj/pred
+                    conflicts.append((subj, pred, obj, sp_map[(subj, pred)]))
+            else:
+                sp_map.setdefault((subj, pred), set()).add(obj)
+                self.triples.add((subj, pred, obj))
+        
+        return conflicts
+
+# Example usage:
+kg1 = MergeableKG()
+kg1.add_triple("Alice", "knows", "Bob")
+kg1.add_triple("Alice", "knows", "Carol")
+
+kg2 = MergeableKG()
+kg2.add_triple("Alice", "knows", "Eve")
+kg2.add_triple("Bob", "likes", "IceCream")
+
+conf = kg1.merge(kg2)
+print("Conflicts:", conf)
+print("Merged KG size:", len(kg1.triples))
+```
+
+This is a simplistic demonstration: real-world knowledge integration typically uses more advanced schema matching, ontology alignment, and conflict resolution strategies — often supported by specialized reasoners or neural embedding-based similarity checks.
+
+------
+
+## Comprehensive Summary
+
+Knowledge representation (KR) in AI is a multifaceted discipline that combines logical formalism, symbolic data structures (ontologies, frames, semantic networks), and modern statistical or neural approaches (embedding models, graph-based machine learning). From propositional and first-order logic to default reasoning and non-monotonic frameworks, KR provides the foundations for how an AI system "understands" the domain it operates in.
+
+Key takeaways:
+
+1. **Representation and Reasoning**: The structure of knowledge — be it logical axioms, frames, or graph embeddings — directly influences inference patterns and computational complexity.
+2. **Ontology and Taxonomy**: Systematic categorization of domain concepts promotes reusability, clarity, and robust reasoning.
+3. **Uncertainty Handling**: Real-world tasks demand probabilistic or fuzzy extensions, enabling partial truth values or confidence measures.
+4. **Planning, Decision-making, and Explanation**: Effective KR systems underpin advanced AI tasks from automated planning to natural language question-answering and multi-agent collaboration.
+5. **Integration with Machine Learning**: Modern systems leverage neural-symbolic integration, making knowledge acquisition more automated while preserving symbolic interpretability.
+
+As AI evolves, so too will knowledge representation schemes. Neuro-symbolic reasoning, open-world assumptions, quantum logic explorations, and the synergy with large language models all point to a continued expansion of the field. Whether in Russian, English, or any global research community, the core questions of how best to encode, share, and operationalize knowledge remain central to advancing intelligent systems.
+
+*/}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Knowledge representation lies at the heart of artificial intelligence and forms a foundational pillar for building intelligent systems capable of reasoning about the real world, making inferences, planning actions, and communicating with humans in natural language. In broad terms, <Highlight>knowledge representation</Highlight> (KR) refers to how we encode information — be it facts, rules, concepts, or procedures — within computational frameworks, so that this information can be processed effectively by algorithms and systems seeking to exhibit intelligent behavior. 
+
+Although this field originated from symbolic AI traditions that relied heavily on logic-based reasoning, it has now expanded to include modern trends such as <Highlight>neural-symbolic integration</Highlight> and <Highlight>knowledge graph embeddings</Highlight>. Researchers across various domains, from cognitive science to mathematics, from automated reasoning to large-scale data engineering, have contributed to an increasingly vast body of work on how best to capture knowledge in a form amenable to computer-based processing.
+
+This article draws from decades of AI research, including publications in top venues such as NeurIPS, ICML, JMLR, and AAAI, to provide a comprehensive overview of knowledge representation principles, methods, and applications. We will explore classical logic-based approaches, describe alternative frameworks like semantic networks, ontologies, and frames, and then move toward the integration of uncertainty, the role of planning and decision-making, and finally modern developments such as knowledge graphs and neuro-symbolic systems. By the end, you should have a deeper theoretical understanding of the state-of-the-art in knowledge representation, along with insights into emerging areas that seek to unify symbolic and sub-symbolic paradigms in AI.
+
+## Fundamentals of knowledge representation
+
+### Definition and purpose
+
+At its simplest, knowledge representation aims to encode information — i.e., knowledge — about the world so that a computational system can use it to solve complex tasks (e.g., diagnosing diseases, supporting natural language dialogue, or automated theorem proving). Historically, AI systems required vast amounts of domain-specific knowledge, and developers soon recognized that success hinged not merely on powerful inference engines, but also on how to structure that knowledge effectively.
+
+We typically distinguish between two major forms of knowledge:
+
+- **Declarative knowledge**: "Knowing that." This is information describing **what** is true in some domain, such as "An apple is a type of fruit."  
+- **Procedural knowledge**: "Knowing how." This captures **how** to do something, such as performing a series of actions or computations, like "How to parse a sentence in a natural language" or "How to multiply matrices efficiently."
+
+A robust knowledge representation scheme must handle both kinds of knowledge. It should allow the system to store everything from straightforward facts, to complex rules that specify behaviors or transformations.
+
+### Types of knowledge: declarative vs. procedural
+
+- <Highlight>Declarative knowledge</Highlight> can be more naturally expressed in logical statements, semantic networks, or relational structures. For instance, in a knowledge graph, we might represent "Marie Curie" as an entity connected by an "invented" relation to the concept of "Theory of Radioactivity." Such declarative statements are often easier to interpret and edit by human experts.
+
+- <Highlight>Procedural knowledge</Highlight> captures *how* to perform tasks. Procedural knowledge is often implicit in algorithms, control flows, or specialized data structures that encode instructions. For example, in a planning system, the representation might include operators that define how certain actions change the state of the world, or in a rule-based production system, we might encode a series of "if–then" rules that define how to respond to events.
+
+### Challenges in representing knowledge
+
+1. **Expressiveness vs. tractability**: A highly expressive language (e.g., full first-order logic with function symbols, or certain forms of higher-order logic) can encode almost any fact or inference pattern but often at the cost of intractable reasoning. Finding the right trade-off is an ongoing issue.
+
+2. **Uncertainty and vagueness**: Real-world information is rarely crisp. Ensuring that a representation can capture incomplete or ambiguous information is challenging. Probabilistic and fuzzy approaches attempt to address these limitations.
+
+3. **Dynamics and temporal aspects**: Knowledge changes over time. An event might invalidate prior statements or require updates. Representations must handle these changes gracefully.
+
+4. **Context and domain constraints**: Many statements only make sense in a certain domain or context. Representation frameworks often need context mechanisms or modular ontologies to separate domain-specific knowledge from universal knowledge.
+
+5. **Scalability**: Modern AI systems can contain knowledge about billions of facts or relationships. Maintaining a large knowledge base in a consistent and computationally usable form requires specialized data structures and distributed processing strategies.
+
+### The relationship between knowledge representation and reasoning
+
+Knowledge representation (KR) is intimately connected to <Highlight>reasoning</Highlight>: the process of drawing conclusions or making inferences from known information. The choice of representation directly impacts the complexity and style of the reasoning that can be performed. For instance, a rule-based system might rely on forward or backward chaining to draw conclusions, while a probabilistic graphical model will use inference algorithms such as belief propagation.
+
+Reasoning typically unfolds in three ways: 
+
+1. **Deductive reasoning**: Infers logically certain conclusions from given premises.  
+2. **Inductive reasoning**: Generalizes patterns from specific examples.  
+3. **Abductive reasoning**: Attempts to find the best explanation for a given observation.
+
+Each of these forms of reasoning requires different representational constructs. Hence, one of the first design steps is deciding what kind of queries or inferences the system must answer and choosing an appropriate representational approach accordingly.
+
+## Logical foundations
+
+Logic-based formalisms are among the earliest and most studied representations in AI. They have strong mathematical underpinnings, making it possible to analyze their soundness, completeness, and computational complexity. Below, we discuss the fundamentals of several logical systems commonly employed in AI.
+
+### Propositional logic
+
+<Highlight>Propositional logic</Highlight> (PL) is one of the simplest formal logics, dealing with atomic sentences (propositions) that can be true or false, and logical connectives (like AND, OR, NOT, IMPLIES). A typical propositional formula might look like:
+
+<Latex text="\( (p \land q) \rightarrow r \)"/>
+
+where <Latex text="\(p\)"/>, <Latex text="\(q\)"/>, and <Latex text="\(r\)"/> are atomic propositions, and <Latex text="\(\land\)"/> denotes logical conjunction, <Latex text="\(\rightarrow\)"/> denotes logical implication. 
+
+- **Advantages**: Propositional logic is easy to implement, and SAT solvers can handle extremely large formulae with advanced algorithms (e.g., DPLL, CDCL).  
+- **Limitations**: Propositional logic lacks internal structure for representing entities, relationships, or quantification. Hence, it is less expressive for complex domains.
+
+### First-order logic
+
+<Highlight>First-order logic</Highlight> (FOL) introduces quantifiers <Latex text="\(\forall\)"/> (universal) and <Latex text="\(\exists\)"/> (existential) and uses predicates to describe properties of objects:
+
+<Latex text="\[
+\forall x \bigl( \text{Human}(x) \rightarrow \text{Mortal}(x) \bigr).
+\]"/>
+
+Here, we say "For every <Latex text="\(x\)"/>, if <Latex text="\(x\)"/> is a human, then <Latex text="\(x\)"/> is mortal." In AI:
+
+- FOL allows for more direct modeling of real-world entities (people, places, objects).
+- It is **semi-decidable** in the general case; if the set of axioms is unsatisfiable, a complete theorem prover may run indefinitely.
+- Many knowledge-based systems rely on subsets of FOL or adopt heuristics to ensure tractable or semi-decidable inference.
+
+### Modal logic and temporal logic
+
+While FOL addresses many representational needs, it does not explicitly handle statements about belief, necessity, possibility, or time. <Highlight>Modal logics</Highlight> add modal operators such as <Latex text="\(\Box\)"/> ("necessarily") and <Latex text="\(\Diamond\)"/> ("possibly"). <Highlight>Temporal logics</Highlight>, such as LTL (Linear Temporal Logic) or CTL (Computation Tree Logic), embed time in the reasoning process, enabling statements like "Eventually, condition A will hold" or "It is always the case that B leads to C." 
+
+Modal and temporal logics are crucial for:
+
+- Formal reasoning about agent beliefs or knowledge states.
+- Modeling dynamic systems where states evolve over time.
+- Formal verification in software and hardware systems.
+
+### Non-monotonic reasoning
+
+In <Highlight>non-monotonic reasoning</Highlight> systems, the introduction of new facts may invalidate prior conclusions — unlike classical logics, which are monotonic. Non-monotonic logics capture the notion of "default" or "common-sense" reasoning:
+
+- **Default logic**: Allows "If we believe A, then we believe B, unless there is evidence of the contrary."  
+- **Circumscription**: Minimizes the extension of certain predicates to model assumptions of typicality or normality.
+
+This kind of reasoning matches real-life scenarios more closely, where agents frequently revise their assumptions in light of new evidence. Non-monotonic reasoning is widely studied in knowledge representation to capture real-world changes and exceptions.
+
+### Limitations of purely logical approaches
+
+Despite their elegance and mathematical rigor, purely logical approaches encounter challenges:
+
+1. **Expressiveness vs. complexity**: Full first-order logic is very expressive, but inference can be expensive and, in some cases, undecidable.  
+2. **Uncertainty**: Classical logics do not handle uncertainty natively, requiring extensions like probability or fuzzy sets.  
+3. **Context dependency**: Real-world knowledge often depends on context; logic-based representations can become cumbersome if we try to encode all contextual intricacies.  
+4. **Knowledge acquisition bottleneck**: Logical encodings can be tedious to create and maintain, particularly when large numbers of facts or rules are needed.
+
+Modern KR systems often combine logic with additional techniques — such as probabilistic reasoning, knowledge graphs, or deep learning methods — to achieve a richer, more robust representation.
+
+## Representational frameworks
+
+Over the years, AI researchers have proposed numerous frameworks for structuring knowledge. Each offers unique advantages in terms of interpretability, ease of reasoning, or expressiveness.
+
+### Semantic networks
+
+<Highlight>Semantic networks</Highlight> represent knowledge as graphs with nodes (concepts or entities) and edges (relationships). For instance, we can have a node "Cat" with links indicating that a cat "IsA" "Mammal," or that a cat "Eats" "Fish." Early AI systems used semantic networks extensively for tasks like natural language understanding or conceptual representation.
+
+- **Advantages**: Intuitive graphical structure that is easy to visualize; suitable for storing hierarchical or associative relationships.  
+- **Disadvantages**: Lacks standardized inference procedures; can become a "spaghetti" of relationships if not carefully managed.
+
+### Frames and scripts
+
+<Highlight>Frames</Highlight>, introduced by Marvin Minsky, are data structures resembling object-oriented classes: they group attributes (slots) and values under named concepts. For example, a "Restaurant" frame might have slots like "location," "menu," and "opening hours." Scripts extend frames for narrative structures, describing event sequences. A "restaurant script" might encode typical events like "entering," "being seated," "ordering," "eating," "paying," etc. 
+
+- **Advantages**: Natural for modeling everyday scenarios, easily integrating with procedural or object-oriented code.  
+- **Disadvantages**: Less formal than logic, and more domain-specific. Reasoning typically relies on specialized procedures or pattern matching.
+
+### Ontologies and taxonomy-based systems
+
+<Highlight>Ontologies</Highlight> systematically define categories (classes), relationships, properties, and constraints in a domain. Ontologies often use description logics or RDF-based languages (e.g., OWL) to achieve a structured, formal representation. A typical <Highlight>taxonomy-based system</Highlight> organizes terms into a hierarchy, capturing "is-a" relationships and other domain constraints.
+
+- **Advantages**: Facilitates data sharing and integration; standardization across domains (e.g., medical ontologies, genealogical databases).  
+- **Disadvantages**: Building a large, consistent ontology can be labor-intensive; ensuring maintenance over time is non-trivial.
+
+### Rules-based systems
+
+<Highlight>Rules-based systems</Highlight> store domain knowledge in the form of "if-then" rules (productions). For instance:
+
+```
+IF  (patient has high fever)
+AND (patient has elevated white blood cells)
+THEN (diagnose infection).
+```
+
+Production systems often use forward chaining (data-driven) or backward chaining (goal-driven) inference. 
+
+- **Advantages**: Well-understood inference algorithms, easy to interpret rules, widely used in industrial "expert systems."  
+- **Disadvantages**: Lacks hierarchical structuring unless supplemented with additional layering or integration with ontologies. Potential combinatorial explosion if many rules exist.
+
+### Case-based representation
+
+<Highlight>Case-based reasoning</Highlight> (CBR) systems store experiential knowledge as specific cases, each describing a problem situation and its solution or outcome. When a new problem arises, the system searches for similar past cases and adapts the known solution.
+
+- **Advantages**: Straightforward approach for domains where enumerating rules or formal logic is difficult but examples abound; each case is a "capsule" of real-world knowledge.  
+- **Disadvantages**: Requires a large, well-curated case library; retrieval and adaptation of cases can be non-trivial.
+
+## Reasoning techniques
+
+A knowledge representation system often needs robust reasoning algorithms to enable advanced inferences. Below we survey the main reasoning paradigms.
+
+### Deductive reasoning
+
+<Highlight>Deductive reasoning</Highlight> yields logically certain conclusions from given premises. Systems rely on *sound* inference rules (i.e., rules that never derive false conclusions from true premises). Common techniques include:
+
+- **Resolution** in logic-based systems (unification, refutation-based proof).  
+- **Forward chaining** in rule-based frameworks (apply all possible rules that match known facts).  
+- **Backward chaining** (start from a goal and recursively look for rules that can prove it).
+
+### Inductive reasoning
+
+<Highlight>Inductive reasoning</Highlight> generalizes from instances to broader rules or patterns. In many machine learning systems, the process of training a classifier (e.g., a decision tree or neural network) is a form of inductive reasoning: the system infers general decision boundaries from labeled examples. 
+
+- Central to supervised learning, where we gather data <Latex text="\( (x_i, y_i) \)"/> and try to learn a function <Latex text="\(f\)"/> that predicts <Latex text="\(y\)"/> from <Latex text="\(x\)"/>.  
+- <Highlight>Inductive Logic Programming (ILP)</Highlight> merges the learning of logical rules with logic-based representations.
+
+### Abductive reasoning
+
+<Highlight>Abductive reasoning</Highlight> attempts to find the best explanation for a given set of observations. For example, if an intelligent system observes that a patient has certain symptoms, it will hypothesize diseases that *could* cause those symptoms. The goal is to find an explanation that is consistent with the observations and fits domain constraints. While abductive reasoning is extremely powerful for diagnostic tasks, it can be computationally difficult due to the large search space of potential explanations.
+
+### Default reasoning
+
+<Highlight>Default reasoning</Highlight> extends logical inference with "common-sense" defaults. An example default rule might be "Birds typically fly," which can be overridden by exceptions such as "Penguins do not fly." Systems of default logic attempt to systematically handle these typical statements while preserving consistency.
+
+### Probabilistic reasoning
+
+<Highlight>Probabilistic reasoning</Highlight> is essential for domains that demand robust handling of uncertainty. One way to integrate probabilities into classical logic is to attach probabilities to certain statements or transitions. Another approach is to rely on specialized frameworks such as:
+
+- **Bayesian networks (directed graphical models)**  
+- **Markov random fields (undirected graphical models)**  
+- **Hidden Markov Models (when dealing with temporal sequences)**
+
+These frameworks define joint probability distributions over variables, enabling inference algorithms such as exact variable elimination, belief propagation, or Monte Carlo sampling.
+
+## Knowledge representation languages
+
+Over time, the AI community has developed various languages to express knowledge in a format that balances expressiveness, clarity, and computational tractability.
+
+### Description logics
+
+<Highlight>Description logics (DL)</Highlight> are a family of knowledge representation languages that provide a formal foundation for ontologies. They allow the specification of concepts (classes), roles (properties), and individuals (instances) through a formal syntax and semantics. Well-known examples include the logics behind the Web Ontology Language (OWL):
+
+- DL reasoners (e.g., Pellet, HermiT) can detect class inconsistencies, classify hierarchies, and answer queries.  
+- Commonly used to implement semantic web applications and domain ontologies in biology, healthcare, and e-commerce.
+
+### Resource Description Framework (RDF)
+
+<Highlight>RDF</Highlight> (Resource Description Framework) is a standard for representing information in a graph structure of subject–predicate–object triples. For example:
+
+```
+<http://example.org/people#Alice> 
+    <http://xmlns.com/foaf/0.1/knows> 
+    <http://example.org/people#Bob>.
+```
+
+This triple states that "Alice knows Bob." RDF forms the foundation of semantic web technologies and can be serialized in formats like Turtle or JSON-LD. It is well-suited for distributed knowledge on the web, where each resource has a unique URI.
+
+### Web Ontology Language (OWL)
+
+<Highlight>OWL</Highlight> is built on top of RDF but provides additional logical constructs (e.g., class intersection, union, complement, property restrictions). OWL is layered (OWL 2 EL, OWL 2 QL, OWL 2 RL, etc.) to offer various trade-offs between expressiveness and computational complexity. 
+
+OWL allows AI developers to define classes, sub-classes, object properties, and data properties with constraints, enabling automated reasoning to detect inconsistencies or discover implied relationships. 
+
+### Production rule systems
+
+<Highlight>Production rule systems</Highlight> store knowledge in the form of condition-action pairs. The Rete algorithm is a famous pattern-matching technique used in many rule engines (e.g., CLIPS, Drools). 
+
+A typical production rule is:
+
+```
+IF car.engineStatus IS "overheated"
+AND ambientTemperature IS "high"
+THEN setCoolingFanSpeed TO "max".
+```
+
+Production rules are often integrated into business rule management systems, real-time process control, or knowledge-based expert systems for commercial applications.
+
+### Domain-specific languages
+
+<Highlight>Domain-specific languages (DSLs)</Highlight> are specialized syntaxes or frameworks tailored to a particular domain. For instance, in finance, there might be a DSL for representing trading rules or credit risk models. In robotics, DSLs might specify motion constraints or sensor data processing flows. DSLs strike a balance by restricting the language to domain-relevant constructs, making reasoning tasks simpler or more efficient within that specialized realm.
+
+## Knowledge acquisition
+
+Building and maintaining a knowledge base can be one of the most time-consuming processes in the life cycle of an AI system. As knowledge representation schemes have become more complex, the field has explored a variety of approaches to automate or streamline the process of knowledge acquisition.
+
+### Manual knowledge engineering
+
+Historically, <Highlight>manual knowledge engineering</Highlight> was the norm. Domain experts and knowledge engineers sat down together to encode facts, rules, or ontologies by hand. While this approach can yield very high-quality knowledge bases, it is expensive, time-consuming, and prone to coverage gaps — particularly for large or dynamic domains.
+
+### Machine learning approaches
+
+Modern AI systems often learn from data using machine learning techniques. For example:
+
+- **Text mining / NLP**: Extract domain knowledge from unstructured text (scientific articles, manuals, business documents, or web pages).  
+- **Inductive Logic Programming (ILP)**: Learn logical rules from positive and negative examples, integrating well with an existing knowledge base.  
+- **Neural knowledge graph embeddings**: Systems like TransE, DistMult, ComplEx, or RotatE automatically learn vector representations of entities and relations to infer missing edges in large knowledge graphs (e.g., out of data from DBpedia or Wikidata).
+
+### Crowdsourcing and collaborative systems
+
+Large-scale open databases such as <Highlight>Wikipedia</Highlight>, <Highlight>Wikidata</Highlight>, and <Highlight>OpenStreetMap</Highlight> rely on community-driven efforts to add and edit structured knowledge. AI systems can harvest these resources for domain facts or relationships:
+
+- <Highlight>Crowdsourcing platforms</Highlight> like Amazon Mechanical Turk or specialized knowledge-sharing communities gather labeled examples or refine conceptual definitions.  
+- <Highlight>Collaborative ontologies</Highlight> are built by distributed communities, adopting version control and editorial policies to maintain consistency.
+
+### Challenges in knowledge acquisition
+
+1. **Data quality and noise**: Automatic extraction of knowledge can yield errors or inconsistencies.  
+2. **Cost**: Manually eliciting knowledge from experts is expensive.  
+3. **Coverage**: Ensuring that the knowledge base covers all relevant edge cases or domain sub-areas can be difficult.  
+4. **Evolution**: Domains evolve over time, rendering older facts or definitions outdated.
+
+Tools like <Highlight>ontology-learning "layer cakes"</Highlight> systematically combine text mining, statistical clustering, ILP, and human expert review, as proposed in various AI conferences and literature (e.g., Staab & Studer, 2010; Buitelaar and gang, 2018).
+
+## Uncertainty and vagueness in reasoning
+
+### Handling incomplete information
+
+<Highlight>Incomplete information</Highlight> is nearly unavoidable in real-world tasks. Classical logic demands that each statement be either true or false, which is often unrealistic. One approach is to designate unknown facts as "undecided," but that does not help with decisions that rely on uncertain knowledge. AI researchers turn to frameworks like:
+
+- **Reasoning by assumption**: Temporarily assume an unproven fact is true or false and explore the resulting inferences.  
+- **Defeasible logic**: A non-monotonic approach that allows for retraction of conclusions once contradictory evidence appears.
+
+### Fuzzy logic and approximate reasoning
+
+<Highlight>Fuzzy logic</Highlight> offers a graded notion of truth, typically with membership functions mapping an element to a real number in <Latex text="\([0,1]\)"/>. For instance, "temperature = hot" might be 0.8 true if the temperature is 30°C, or 0.4 true at 20°C. This approach is frequently employed in control systems (e.g., fuzzy controllers in appliances) and in contexts where crisp boundaries are artificial.
+
+### Probabilistic graphical models
+
+<Highlight>Probabilistic graphical models</Highlight> (PGMs) unify graph structure with probability theory, offering a powerful tool for uncertain reasoning. They let us factor a high-dimensional joint distribution into a product of smaller factors that correspond to local relationships:
+
+<Latex text="\[
+P(X_1, X_2, \ldots, X_n) = \prod_i \phi_i(\mathbf{X_i}),
+\]"/>
+
+where each factor <Latex text="\(\phi_i\)"/> represents the local structure (or clique) in the graphical model. Common examples:
+
+- **Bayesian networks**: Directed acyclic graphs capturing causal or conditional relationships.  
+- **Markov networks**: Undirected graphs capturing constraints or potential functions among variables.
+
+### Belief networks and Bayesian reasoning
+
+A <Highlight>belief network</Highlight> is a type of Bayesian network that focuses on representing beliefs about variables and how they relate conditionally. Bayesian reasoning updates these beliefs with new evidence. When an observation is made, the network uses inference procedures (e.g., variable elimination, belief propagation) to recalculate posterior probabilities.
+
+Such systems are invaluable for medical diagnosis (e.g., "given that the patient has a high fever and certain blood test results, the probability of infection is X"), risk assessment in finance, or reliability analysis in engineering.
+
+## Planning and decision-making
+
+### Representation for planning systems
+
+<Highlight>Planning systems</Highlight> in AI often rely on a symbolic representation of states, actions, and goals. A typical planning operator might be described in a STRIPS-like formalism:
+
+```
+Action:   Move(robot, from, to)
+Precond:  At(robot, from) AND PathExists(from, to)
+Effect:   NOT At(robot, from) AND At(robot, to)
+```
+
+Here, the knowledge representation details the conditions under which an action is valid (preconditions) and how that action changes the state of the world (effect). Planners then search or heuristically navigate the space of possible plans.
+
+### Constraint satisfaction problems
+
+<Highlight>Constraint satisfaction problems (CSPs)</Highlight> revolve around finding values for variables subject to constraints. For instance, scheduling tasks can be represented as "variable X cannot overlap with variable Y if they share a resource." Knowledge representation for CSPs typically includes:
+
+- A set of variables and their domains.  
+- A set of constraints (equalities, inequalities, membership constraints).  
+- A solver that systematically checks or prunes assignments.
+
+Examples include staff rostering, timetable generation, and resource allocation in multi-robot systems.
+
+### Heuristic search techniques
+
+When the search space of possible states or actions is large, <Highlight>heuristic search</Highlight> guides exploration effectively. Domain knowledge can be encoded as heuristics, turning planning into a knowledge-based search. For instance, in the A* algorithm, a heuristic function <Latex text="\(h(n)\)"/> estimates the cost of reaching the goal from node <Latex text="\(n\)"/>. Proper knowledge representation and engineering of that heuristic can drastically reduce search overhead.
+
+### Multi-agent reasoning
+
+<Highlight>Multi-agent systems</Highlight> add another layer of complexity. Each agent might hold partial knowledge about the environment, or they may have individual goals. Knowledge representation for multi-agent planning or negotiation can include:
+
+- A <Highlight>joint belief state</Highlight>, describing what is mutually known by all agents.  
+- Communication protocols that share new facts or requests.  
+- Models for agent intentions and capabilities, enabling coordination.
+
+## Temporal and spatial reasoning
+
+### Representing time and events
+
+Time is crucial in domains from robotics (sequences of actions) to finance (modeling stock prices over intervals). Common temporal representations:
+
+- <Highlight>Situation Calculus</Highlight>: Encodes states and actions in a logic-based formalism with <Latex text="\(s_0\)"/> (initial state) and <Latex text="\(do(a,s)\)"/> (result of performing action <Latex text="\(a\)"/> in state <Latex text="\(s\)"/>).  
+- <Highlight>Event Calculus</Highlight>: Focuses on events initiating or terminating "fluents" (properties that hold over intervals of time).
+
+### Spatial ontologies
+
+<Highlight>Spatial reasoning</Highlight> deals with how objects occupy space. Ontologies for geography or robotics define concepts like adjacency, containment, or relative orientation. Formally capturing these relationships is essential for tasks like path planning, geometric constraints, and even natural language processing (e.g., "the coffee is on the table near the mug").
+
+### Temporal and spatial reasoning algorithms
+
+Reasoning in these domains often relies on specialized algorithms:
+
+- **Allen's interval algebra** for reasoning about intervals and their relationships (before, after, overlaps, etc.).  
+- **Region connection calculus (RCC)** for abstract spatial reasoning.  
+- **Hybrid constraint systems** that unify time and space constraints.
+
+### Real-world applications
+
+- **Scheduling**: Handling dynamic resource allocation over intervals.  
+- **Robotics**: Understanding or navigating environments with path constraints and temporal deadlines.  
+- **Spatio-temporal databases**: Indexing geographic or spatio-temporal data for queries and analytics.
+
+## Computational complexity of reasoning
+
+### Trade-offs between expressivity and tractability
+
+A major theme in knowledge representation is the tension between expressivity (the ability to capture nuanced domain details) and <Highlight>computational tractability</Highlight> (the ability to perform inference within reasonable time bounds). For instance, many expressive logics are **EXPTIME** or worse, motivating the design of restricted languages (e.g., Horn clauses, Description Logic subsets) that guarantee polynomial-time reasoning.
+
+### Computational models and complexity classes
+
+- **SAT** and **#SAT**: Propositional satisfiability is NP-complete, while counting satisfiable assignments (#SAT) is #P-complete.  
+- **Model checking**: Checking whether a structure satisfies a temporal logic formula can be PSPACE-complete.  
+- **Inference in Bayesian networks**: Generally NP-hard for exact inference, but polynomial for certain graph structures (e.g., polytrees).
+
+### Techniques for efficient reasoning
+
+AI researchers develop specialized reasoners and heuristics:
+
+- **Tableau-based reasoners** for Description Logics.  
+- **Clause learning** and **branch-and-bound** for SAT-based solvers.  
+- **Approximate inference** (e.g., sampling or variational methods) for probabilistic models.  
+- **Anytime algorithms** that provide partial solutions if cut off prematurely.
+
+Balancing the complexity remains a cornerstone of knowledge representation research, ensuring that an approach is *sufficiently* expressive for the domain without rendering reasoning intractable.
+
+## Applications in artificial intelligence
+
+### Expert systems
+
+<Highlight>Expert systems</Highlight> were among the earliest large-scale deployments of knowledge-based AI. They rely on meticulously crafted rules or logical statements to mimic the decision-making ability of a human expert in domains like medicine (Mycin), geology (Prospector), or finance. While overshadowed in some areas by deep learning, expert systems remain relevant where transparent, rule-based decisions and strict correctness are paramount.
+
+### Natural language processing
+
+In <Highlight>natural language processing (NLP)</Highlight>, knowledge representation can help disambiguate concepts, parse sentences, or enable QA systems to better "understand" text. For example:
+
+- <Highlight>Semantic role labeling</Highlight> benefits from a lexical resource of typical argument structures (frames).  
+- <Highlight>Knowledge graphs</Highlight> are used for question-answering, e.g., queries like "Who wrote Pride and Prejudice?" can be answered by linking the entity "Pride and Prejudice" to "Jane Austen."
+
+### Robotics and autonomous systems
+
+Robots must represent knowledge about their environment (maps, object properties) as well as internal states (battery levels, tasks). High-level planning might rely on symbolic representation (e.g., PDDL) that then translates to low-level motion planning. Additionally, multi-robot coordination benefits from a shared representation of tasks and constraints.
+
+### Intelligent tutoring systems
+
+Educational technologies rely on <Highlight>knowledge representation</Highlight> to encode the subject matter and track a learner's mastery. By representing conceptual dependencies among topics (e.g., "understanding fractions is needed before tackling ratio problems"), the system can tailor feedback and content to each student's needs. This often involves combining explicit domain modeling with machine-learned estimates of student knowledge.
+
+## Knowledge graphs and modern developments
+
+<Highlight>Knowledge graphs</Highlight> (KGs) are arguably the most prominent real-world implementation of knowledge representation at scale. Companies like Google, Microsoft, and Amazon use knowledge graphs to power search, recommendation, and entity-based analytics. 
+
+- **Structure**: A knowledge graph organizes entities (nodes) and relationships (edges) in a labeled, directed graph.  
+- **Linking structured and unstructured data**: Text-based extraction pipelines map relevant concepts from documents into structured facts.  
+- **KG embeddings**: Approaches like TransE (Bordes and gang, 2013, NeurIPS) or ComplEx (Trouillon and gang, ICML) learn vector representations of nodes and relations, enabling link prediction (inferring missing edges) and node classification.  
+- **Role in AI applications**: Knowledge graphs underpin advanced QA systems, content recommendation, semantic search, and domain-specific analytics (e.g., supply chain management, drug discovery).
+
+Below is a short illustrative Python snippet showing a simplified approach to adding facts to a knowledge graph and performing a rudimentary link prediction. In practice, these tasks involve large-scale pipelines and advanced embeddings, but the core conceptual approach can remain the same.
+
+```
+<Code text={`
+import numpy as np
+
+# A simple container for KG triplets
+class KnowledgeGraph:
+    def __init__(self):
+        # Each triple is (subject, relation, object)
+        self.triples = set()
+        
+    def add_fact(self, s, r, o):
+        self.triples.add((s, r, o))
+    
+    def has_fact(self, s, r, o):
+        return (s, r, o) in self.triples
+
+# Example usage:
+kg = KnowledgeGraph()
+kg.add_fact("Marie_Curie", "invented", "Theory_of_Radioactivity")
+kg.add_fact("Marie_Curie", "born_in", "Poland")
+
+# Simple "link prediction" by naive guess (purely illustrative)
+possible_relations = ["invented", "born_in", "works_at", "studied_at"]
+for rel in possible_relations:
+    if not kg.has_fact("Marie_Curie", rel, "Sorbonne"):
+        print(f"Maybe Marie_Curie {rel} Sorbonne? (Unknown in the KG)")
+
+# Real link prediction would rely on learned embeddings or rules
+`}/>
+```
+
+Although trivial, such a snippet highlights how new facts are added to a knowledge graph, and how one might query or attempt naive "predictions" about missing links. Modern systems rely on sophisticated embeddings or rule-based engines.
+
+## Emerging trends and research directions
+
+Though knowledge representation has a rich history, it is hardly static. Research continues to push boundaries, especially as we integrate symbolic reasoning with machine learning, neural networks, and big data.
+
+1. **Neuro-symbolic reasoning**: Bridges the gap between logical reasoning and deep learning. One line of work uses neural modules to approximate or learn logical operators. Another approach uses deep networks to embed logical theories or constraints. This allows for interpretability, compositional generalization, and the ability to handle raw inputs like images or text.
+
+2. **Quantum computing in reasoning**: Preliminary research suggests that quantum computing could speed up certain logical or combinatorial tasks. Though still speculative, some frameworks explore quantum logic gates for knowledge inference.
+
+3. **Open-world reasoning**: Traditional knowledge bases assume a closed world (anything not stated is false). Open-world reasoning acknowledges that the absence of a fact does not imply its negation, an assumption that better fits the web-scale data found in knowledge graphs or unstructured sources.
+
+4. **Generalized AI and unified reasoning frameworks**: Efforts to create universal frameworks that handle symbolic, probabilistic, and neural forms of knowledge. Projects sometimes combine rewriting systems, constraint solvers, and neural backends so that the system can reason about complex queries that mix discrete and continuous data.
+
+5. **Integration with large language models (LLMs)**: Recently, the synergy between LLMs (like GPT-based architectures) and knowledge bases has gained attention. Instead of solely relying on the implicit "knowledge" in large language models, one can incorporate an external knowledge graph or ontology to ground the model's output in verified facts, or to provide context-specific reasoning that goes beyond the LLM's parameter-based memory. Research includes techniques like retrieval-augmented generation, knowledge-grounded dialogue systems, or advanced fine-tuning approaches that combine symbolic constraints with generative neural networks.
+
+6. **Expanded scope of knowledge representation**: With new application domains — such as biologically inspired computing, personalized medicine, or multi-modal data (image, text, audio, video) — the scope of knowledge representation is expanding. Systems require additional data structures that handle everything from 3D geometry and time series to molecular graphs and social networks.
+
+All these trends underscore the continued relevance and vitality of knowledge representation in AI, bridging decades-old formal methods with cutting-edge deep learning and big data paradigms.
+
+------
+
+This completes an expansive examination of knowledge representation. Far from being an esoteric subject reserved for theoretical AI, knowledge representation is central to practical, real-world systems in natural language processing, robotics, recommender systems, medical diagnosis, and countless other domains. As AI matures, representation paradigms that effectively combine symbolic richness, uncertainty handling, and large-scale data integration will remain crucial to building powerful, interpretable, and trusted intelligent machines.

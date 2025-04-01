@@ -1,0 +1,511 @@
+---
+index: 117
+indexCourse: 138
+indexFavorites:
+title: "Federated learning"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Federated learning"
+courseCategoryName: "Other ML problems & advanced methods"
+desc: "Democracy in ML lmao"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "20.07.2024"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 2
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/federated_learning.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/federated_learning"
+slug: "/research/federated_learning"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+1. Introduction, motivation, impact of federated learning on business strategies, industry adoption and case studies
+2. Core concepts of federated learning
+- the architecture of federated learning systems
+- data decentralization and local training
+- aggregation techniques
+- etc.
+3. Types of federated learning
+- horizontal federated learning
+- vertical federated learning
+- federated transfer learning
+- comparison of different types
+4. Key components of federated learning systems
+- client-server architecture
+- secure aggregation protocols
+- communication methods and optimization
+- role of edge devices
+- etc.
+5. Algorithms used in federated learning
+- federated averaging (FedAvg)
+- stochastic gradient descent (SGD) adaptations
+- optimization techniques for federated settings
+- advanced algorithms for non-iid data
+6. Challenges
+- non-iid data distribution challenges
+- communication bottlenecks and latency issues
+- client availability and stragglers
+- scalability of federated systems
+7. Applications
+8. Tools
+- tensorflow federated
+- pySyft and openmined
+- federated learning libraries in PyTorch
+- comparison of available tools
+9. Future of federated learning
+
+*/}
+
+
+Federated learning, often abbreviated as FL, has emerged in recent years as one of the most compelling paradigms for training machine learning models on distributed data without the need to centralize it. The idea that data can stay on the devices where it was produced — such as smartphones, hospital data centers, or other corporate data silos — offers significant advantages in terms of privacy and efficiency. I find it particularly fascinating because, in the modern digital landscape, organizations and individuals alike produce vast amounts of data that often cannot be shared freely due to governance constraints, confidentiality concerns, or compliance with regulations like HIPAA, GDPR, CCPA, and so on.
+
+### 1.1. Why federated learning?
+
+The traditional paradigm in machine learning has been: gather data from multiple sources, pool it into a single data store (e.g., a data warehouse or a cloud environment), and then train a model. This approach, though widely adopted, suffers from multiple drawbacks. First and foremost, privacy is endangered because data from individuals might be shared with third parties. Second, for large organizations, centralizing data can become incredibly expensive in terms of network bandwidth and storage. Finally, there are regulatory frameworks and legal guidelines that explicitly forbid transferring certain categories of sensitive data across national or organizational boundaries.
+
+Federated learning addresses these issues by moving the computation (i.e., model training) to the devices themselves and allowing them to train locally. Only the model updates — such as gradients or weight deltas — are sent back to an aggregating server that consolidates these updates into a global model. This approach ensures the raw data never leaves the device or local data center, significantly reducing the possibility of privacy breaches.
+
+### 1.2. Motivation and business impacts
+
+From a business perspective, federated learning paves the way for data monetization and machine learning improvements without the usual privacy pitfalls. Organizations that might have once been adversaries or competitors in the data space now have more opportunities for collaboration. For instance, two rival telecom companies could potentially perform a federated learning project on their user data without either side "seeing" the other's sensitive user information. This fosters new types of partnerships and data-driven products.
+
+Moreover, the capacity to train models without incurring substantial data transfer costs can be very appealing. Edge devices, such as smartphones, IoT sensors, or wearables, generate large volumes of data daily. By harnessing this data locally, service providers can create more personalized, real-time, and adaptive models. For example, think of a voice recognition system on mobile phones — training continuously on your device based on your personal usage patterns — while also contributing to an overarching global model that benefits from aggregated experiences across millions of devices.
+
+### 1.3. Industry adoption and case studies
+
+Several well-known companies have embraced federated learning. One of the earliest large-scale adopters was Google, which used it for improving the predictive keyboard on Android devices (the "Gboard" application). Instead of collecting typed text from user devices — a privacy nightmare — Google tested and updated language models locally and then aggregated only the learned updates. Another example is Apple's use of on-device machine learning for Siri, enabling partial personalization of speech recognition models on iPhones.
+
+In healthcare, federated learning has gained traction as a solution for collaborative medical research. Hospitals can train a shared model (for example, for cancer detection in medical images) without having to pool sensitive patient data in a single repository. Recent work, such as Sheller and gang in the Medical Image Computing and Computer-Assisted Intervention conference, demonstrated that federated learning can allow multiple hospitals to jointly build stronger radiological diagnostic models than any single hospital could on its own data. This collaborative approach is crucial for expanding data diversity and improving model robustness.
+
+In finance, banks and financial institutions are experimenting with federated approaches to detect fraud, analyze credit risk, or build recommendation models for personalized financial products. Each bank retains its user data but contributes to a global model that benefits from knowledge across multiple institutions.
+
+These examples underscore the multifaceted impact of federated learning, from reducing privacy concerns, cutting down data migration costs, to enabling consortia that co-develop advanced AI systems.
+
+## 2. Core concepts of federated learning
+
+At its heart, federated learning is about training a single global model across multiple devices or data centers that each hold their own private datasets. The objective is typically to minimize a global loss function:
+
+<Latex text="\[
+\min_{w} \frac{1}{K} \sum_{k=1}^{K} L_k(w),
+\]"/>
+
+where <Latex text="\(K\)"/> is the number of clients (devices or data silos), <Latex text="\(w\)"/> is the model parameter vector, and <Latex text="\(L_k(w)\)"/> is the local loss on the <Latex text="k^{th}"/> device. The subtlety is that you want to achieve this minimization without shipping all local data to a central server.
+
+### 2.1. The architecture of federated learning systems
+
+A typical federated learning system follows a client-server architecture. The central server coordinates the learning process, selecting which clients participate in each training round, sending them the current global model, receiving updates, and aggregating these updates into a new global model. Clients are devices or data centers that each store some portion of the data. That data never leaves the client. Usually, the server orchestrates periodic global updates (e.g., once per round), while clients do local computations on their data.
+
+#### Traditional pipeline
+
+1. The server initializes a global model <Latex text="\(w_0\)"/>.
+2. The server selects a subset of clients (randomly or based on availability).
+3. Each selected client trains the current model on its local dataset, obtaining updates (e.g., gradient steps).
+4. These local updates are transmitted to the server.
+5. The server aggregates these updates (e.g., using Federated Averaging, or some more sophisticated method).
+6. The server obtains a new global model <Latex text="\(w_1\)"/>.
+7. The process repeats until some convergence criteria is met.
+
+### 2.2. Data decentralization and local training
+
+One of the hallmark aspects of federated learning is data decentralization. Instead of a single data warehouse, each participating node (client) has partial data. This is more than just a design choice — it is the fundamental premise. Training occurs where the data resides. This approach is particularly powerful in scenarios where data is not only large but also highly sensitive. Hospitals, for instance, cannot share raw medical records due to regulations, but they can train local models on their premises and only share model updates.
+
+### 2.3. Aggregation techniques
+
+The fundamental operation that transforms local updates into a global model is called aggregation. The simplest and still one of the most widely-used aggregation methods is <Highlight>Federated Averaging</Highlight> (FedAvg), introduced by McMahan and gang (2017). In this procedure, each client computes an updated set of weights <Latex text="\(w_k\)"/> after local training. Then the central server aggregates these by taking a weighted average of the client updates, typically weighted by the size of each client's dataset:
+
+<Latex text="\[
+w_{t+1} = \sum_{k=1}^K \frac{n_k}{n_{\text{total}}} w_k^t,
+\]"/>
+
+where <Latex text="\(n_k\)"/> is the number of training samples on client <Latex text="k\)"/> and <Latex text="\(n_{\text{total}} = \sum_{k=1}^K n_k\)"/> is the total number of training samples across all selected clients. This ensures that clients with more data have a greater say in the global model.
+
+Advanced aggregation methods might involve robust aggregation strategies (e.g., ignoring outliers or malicious updates), secure aggregation that uses cryptographic techniques to hide individual updates, or gradient-based merging that better aligns with the distribution of the data.
+
+## 3. Types of federated learning
+
+Federated learning can be categorized based on how the data across clients is distributed — horizontally, vertically, or in some hybrid scenario. Another perspective is the difference in feature spaces across clients versus the difference in user sets.
+
+### 3.1. Horizontal federated learning
+
+Horizontal federated learning (HFL) is also sometimes referred to as sample-partitioned federated learning. In HFL, all participants (clients) share the same feature space but have different sets of data samples. For instance, each smartphone user has data from the same set of features (e.g., text typed in the keyboard, usage logs, etc.) but each user has unique training examples. This is the most common form of federated learning, and the typical FedAvg approach is often explained in terms of horizontal FL.
+
+### 3.2. Vertical federated learning
+
+Vertical federated learning (VFL) is feature-partitioned. This implies that two or more organizations have overlapping user bases (same set of data instances or subjects), but they store different features for these individuals. For example, a bank and an e-commerce platform might share many of the same customers but maintain different attributes for each. The bank has financial transaction data, while the e-commerce site has purchase behaviors. When these two organizations wish to build a predictive model together (e.g., for credit scoring or personalized recommendations), they face a challenge: they need a complete feature vector for each user, but that vector is split across two or more organizations. 
+
+Vertical FL solutions typically involve secure entity alignment protocols and cryptographic mechanisms to join partial features without revealing sensitive data. One line of research uses partial homomorphic encryption to ensure that model updates can be securely aggregated across the different feature owners.
+
+### 3.3. Federated transfer learning
+
+Federated transfer learning (FTL) addresses scenarios where the data distribution differs across the participating parties, and they might only partially overlap in terms of users. In some cases, the aim is to apply knowledge learned from a large dataset in one domain to a different but related domain. This situation might arise when an institution has a small dataset for a specific set of features, while a partner institution has a large dataset but not exactly the same features or the same distribution. 
+
+For instance, a health insurance firm might want to team up with a hospital chain. The hospital has clinical records (medical images, lab tests), while the insurer has claims data. The distribution of data is different, but certain shared elements — such as patient IDs or partial demographic information — can align them. Federated transfer learning then becomes a powerful approach to incorporate knowledge from each domain while respecting all privacy constraints.
+
+### 3.4. Comparison of different types
+
+- **Horizontal FL** is simpler in concept, focusing on how to aggregate model updates from many clients that share the same features but have different data samples.
+- **Vertical FL** requires more sophisticated privacy-preserving techniques to combine complementary features. This is typically more complex due to the need for secure joint modeling over partially overlapping user sets.
+- **Federated transfer learning** supports scenarios where both data distribution and feature spaces may differ significantly across participants, leveraging domain adaptation or transfer learning concepts.
+
+## 4. Key components of federated learning systems
+
+No matter which type of FL we discuss, some building blocks recur: a client-server architecture, secure aggregation protocols, effective communication channels, optimization strategies that handle model updates, and the enabling hardware (often edge devices).
+
+### 4.1. Client-server architecture
+
+Most real-world federated learning deployments rely on a central coordinating server. That server:
+- Maintains the global model.
+- Chooses a set of clients to participate in each round.
+- Sends them the model parameters.
+- Collects the updates.
+- Aggregates them.
+- Distributes the updated global model back to the participating clients.
+
+The clients may be mobile devices (phones, wearables, etc.), small data centers in edge environments, or siloed enterprise data warehouses. The main objective is to minimize communication overhead while maximizing the efficiency and reliability of local computations.
+
+### 4.2. Secure aggregation protocols
+
+One of the biggest draws of federated learning is privacy enhancement. However, naive approaches to distributing updates can still leak private information. For instance, if model gradients are shared in the clear, an attacker who gains access to those gradients might reconstruct some aspects of local data (this is sometimes referred to as an "inversion attack"). Hence, specialized cryptographic protocols or advanced privacy-preserving methods (e.g., differential privacy or homomorphic encryption) can be introduced.
+
+A well-cited solution is the "Secure Aggregation" protocol proposed by Bonawitz and gang (2017). In that framework, the server only sees the sum of the client updates, not the individual updates themselves. Each client's update is masked with random vectors that cancel out when aggregated, thereby hiding each client's contribution. This approach can significantly reduce the risk of data leakage through model updates.
+
+### 4.3. Communication methods and optimization
+
+Communication is often the bottleneck in federated learning. The success of a global model update depends on how effectively information from each client is captured in as few bits as possible. Techniques like gradient compression, quantization, and sparsification aim to reduce message size. Recently, there has been research into using advanced compression mechanisms, e.g., top-\<k\> gradient selection, or error-compensated quantization.
+
+Beyond the mechanics of communication, protocol optimization is also crucial. Federated learning environments often deal with partial participation, because not all clients are available or online at once, and some clients have limited bandwidth or battery. Hence, scheduling which clients should participate in each round is a non-trivial problem.
+
+### 4.4. Role of edge devices
+
+As the name suggests, a significant portion of federated learning research and industry applications revolve around edge devices such as smartphones, tablets, or IoT devices. These devices have constraints: limited compute power, limited storage, and sporadic connectivity. Therefore, FL algorithms must be resource-efficient, making local updates feasible within a small time window (for example, while the device is charging and connected to Wi-Fi). This impetus toward on-device learning has stimulated broad interest in model distillation and smaller neural architectures.
+
+### 4.5. Additional components
+
+While not always highlighted, there are further vital components:
+- **Reconnection policies** for devices that drop out mid-training.
+- **Client sampling strategies** for fairness or resource balancing.
+- **Logging and monitoring** to understand how the global model is improving (or not) across rounds.
+- **Fallback or fallback models** in case aggregated updates are insufficient or corrupted.
+
+## 5. Algorithms used in federated learning
+
+Federated learning has spurred numerous specialized algorithms. The general idea is that each client performs local updates (e.g., gradient descent) for one or several epochs, and then the server aggregates these updates into a new global state.
+
+### 5.1. Federated averaging (FedAvg)
+
+The classical FedAvg algorithm proposed by McMahan and gang (2017) is the foundation of most FL implementations. The server begins with an initial model <Latex text="\(w_0\)"/>. In each global round <Latex text="\(t\)"/>:
+
+1. The server randomly chooses a subset of clients <Latex text="(\mathcal{S}_t\)"/>.
+2. It sends <Latex text="\(w_t\)"/> to each client in <Latex text="(\mathcal{S}_t\)"/>.
+3. Each selected client performs a local update of <Latex text="\(w_t\)"/> by running multiple epochs of stochastic gradient descent (SGD) on its local data, yielding <Latex text="\(w_k^t\)"/>.
+4. The server collects these local updates and computes
+
+<Latex text="\[
+w_{t+1} = \sum_{k \in \mathcal{S}_t} \frac{n_k}{\sum_{j \in \mathcal{S}_t} n_j} w_k^t.
+\]"/>
+
+5. This becomes the new global model.
+
+FedAvg is straightforward and surprisingly effective in many practical settings, although it struggles with certain issues such as very heterogeneous data distributions, or pathological non-IID data splits.
+
+### 5.2. Stochastic gradient descent (SGD) adaptations
+
+Since local updates in federated learning are effectively a form of distributed SGD, many well-known SGD variants can be adapted. For instance, one could use local momentum, adaptive learning rates (e.g., Adam), or coordinate descent approaches. However, due to the typically limited computational resources on edge devices, simpler optimizers with fewer hyperparameters (like vanilla SGD or momentum) are more common.
+
+In addition, some approaches reduce the local computation steps to a single epoch or a single batch update (one step), especially when training on large datasets. This approach is known as Federated Stochastic Gradient Descent (FedSGD), where each client just computes a single gradient step per round, sending back the gradient rather than a fully updated set of weights.
+
+### 5.3. Optimization techniques for federated settings
+
+Federated learning typically faces the "Non-IID + Unbalanced" data challenge: each client may have a different data distribution, and the total number of data points can vary widely. There is a rich research line exploring specialized optimization strategies, for instance:
+
+- **FedProx**: An algorithm that adds a proximal term to the local objective. This term penalizes local updates from drifting too far from the global model, controlling the effect of heterogeneous local data. (Li and gang, 2020).
+- **SCAFFOLD**: Stands for "Stochastic Controlled Averaging Federated Learning", designed to correct for the client drift problem by introducing control variates that reduce gradient variance across heterogeneous clients (Karimireddy and gang, ICML 2020).
+- **FedNova**: A normalized averaging approach that tackles objective inconsistency issues when clients perform different numbers of local updates (Wang and gang, NeurIPS 2020).
+
+These algorithms target faster convergence and better stability in non-IID data settings, which is crucial for realistic federated deployments.
+
+### 5.4. Advanced algorithms for non-iid data
+
+Non-IID data (where each client sees a different distribution of classes or features) is perhaps the single most defining challenge in federated learning. Techniques to mitigate it include:
+- **Personalized FL**: Instead of training one global model for all clients, each client ends up with a local variant that is specialized to its data distribution. This can be achieved with meta-learning approaches or multi-task learning frameworks. 
+- **Clustered FL**: The global population of clients is partitioned into clusters of similar distributions, so the algorithm can learn different global models for each cluster. 
+- **Data sharing approaches**: A small fraction of globally shared data or synthetic data might be used to reduce the mismatch between clients. 
+- **Regularization**: Encouraging local models to remain close to a shared representation layer while still allowing local fine-tuning.
+
+## 6. Challenges
+
+While federated learning is undoubtedly promising, it faces numerous technical and operational challenges that shape ongoing research and real-world adoption.
+
+### 6.1. Non-iid data distribution challenges
+
+Models in federated learning typically see highly heterogeneous data. A single phone might have predominantly text in French, while another phone might be used by an English speaker. Hospitals in different geographical regions might have vastly different patient demographics or diseases prevalence. This variability slows training convergence, increases the risk of local overfitting, and can degrade the final global model's accuracy. 
+
+Solutions are multifaceted. They can involve advanced optimization algorithms (FedProx, SCAFFOLD), data augmentation strategies, or personalization layers that adapt the final model to each client's local distribution.
+
+### 6.2. Communication bottlenecks and latency issues
+
+Communication in federated learning can be expensive. If there are millions (or even billions) of devices, one cannot possibly communicate with all of them every single training round, as that would overload the network and cause unacceptable latency. Partial participation and client sampling are necessary, but then fewer clients means less global information per round, potentially slowing model convergence.
+
+Additionally, some clients might have slow or intermittent connections. This can cause straggler problems, where the server must wait a long time to receive updates from certain devices. Many architectures are forced to drop or skip updates from slow clients. Handling these network constraints remains a key engineering hurdle.
+
+### 6.3. Client availability and stragglers
+
+In typical cross-device federated learning scenarios (like mobile phones), clients come online and go offline unpredictably. If you are training a keyboard prediction model, you can only train at certain times (e.g., while the phone is charging and on Wi-Fi). This ephemeral availability complicates scheduling and can introduce biases in the training dataset if certain subsets of users are more frequently available.
+
+Straggler mitigation techniques include:
+- Limiting the time window for each training round (ignoring late updates).
+- Prioritizing clients that are historically more reliable or relevant.
+- Using asynchronous federated learning, in which the server does not wait for all updates but aggregates whenever an update arrives.
+
+### 6.4. Scalability of federated systems
+
+Taking a proof-of-concept prototype to production in a system with potentially millions of devices is a non-trivial undertaking. You need an infrastructure capable of selecting subsets of clients, distributing models or updates, collecting them back, ensuring reliability, preventing malicious or erroneous updates, and so on. This requires distributed systems engineering expertise. Adding advanced cryptography or differential privacy further increases the computational overhead.
+
+Moreover, different hardware capabilities among clients can cause the system to behave unpredictably. The presence of older devices with limited compute might drag the entire system behind if they are always included. There are open research questions on how best to scale FL to truly global populations.
+
+## 7. Applications
+
+Federated learning has found an expanding range of applications. The most notable domain is probably mobile phone personalization. Yet, beyond that, we see:
+
+- **Healthcare**: Collaborative models for disease detection, medical image segmentation, and diagnostic classification that preserve patient confidentiality. 
+- **Finance**: Fraud detection, credit risk scoring, and anti-money laundering checks that combine data across multiple banks without exposing sensitive account-level details.
+- **Manufacturing and IoT**: Predictive maintenance models across devices deployed in factories, wind turbines, or other equipment, enabling data-driven insights without centralizing data from multiple production lines or facilities.
+- **Recommendation systems**: Personalized recommendation algorithms that learn from user interactions on devices. 
+- **Smart vehicles**: Autonomous driving features or in-car personalization that rely on local sensor data from each vehicle, aggregated to improve a global driving policy or detection system.
+
+Given that privacy, compliance, or bandwidth constraints are common in these domains, federated learning is often the perfect fit.
+
+## 8. Tools
+
+Several open-source frameworks have emerged to help developers and researchers experiment with federated learning. These frameworks typically provide libraries for simulating federated environments, implementing secure aggregation, and orchestrating distributed training.
+
+### 8.1. TensorFlow Federated
+
+**TensorFlow Federated** (TFF) is a framework developed by Google that extends the TensorFlow ecosystem to support federated learning. TFF provides a high-level API for describing computations that occur on local devices, as well as how to aggregate them on a central server. One can define a training loop that leverages federated averaging or other algorithms seamlessly.
+
+A very simplified example of TFF might look like this:
+
+<Code text={`
+import tensorflow as tf
+import tensorflow_federated as tff
+
+# Define a simple model in Keras
+def create_keras_model():
+    return tf.keras.Sequential([
+        tf.keras.layers.Dense(10, activation='relu', input_shape=(784,)),
+        tf.keras.layers.Dense(10, activation='softmax')
+    ])
+
+# Convert Keras model to TFF model
+def model_fn():
+    keras_model = create_keras_model()
+    return tff.learning.from_keras_model(
+        keras_model,
+        input_spec=(tf.TensorSpec(shape=[None, 784], dtype=tf.float32),
+                    tf.TensorSpec(shape=[None], dtype=tf.int64)),
+        loss=tf.keras.losses.SparseCategoricalCrossentropy(),
+        metrics=[tf.keras.metrics.SparseCategoricalAccuracy()]
+    )
+
+# Example of an iterative process using federated averaging
+iterative_process = tff.learning.algorithms.build_weighted_fed_avg(
+    model_fn=model_fn
+)
+
+# Suppose we have a function get_federated_data() returning local datasets
+federated_data = get_federated_data()
+
+state = iterative_process.initialize()
+
+for round_num in range(1, 11):
+    state, metrics = iterative_process.next(state, federated_data)
+    print(f"Round {round_num}, metrics={metrics}")
+`}/>
+
+Though this snippet is simplified for illustration, TFF can be used to run simulations of federated learning using local datasets, and in principle, can connect to real distributed data in more sophisticated deployments.
+
+### 8.2. PySyft and OpenMined
+
+**PySyft**, developed by the OpenMined community, is a Python library that integrates secure multi-party computation (MPC) and differential privacy to facilitate privacy-preserving data science and machine learning. PySyft aims to allow training on decentralized data while ensuring no raw data is ever exposed. 
+
+A typical PySyft workflow might allow you to create "virtual workers" that represent different data holders, then you can write your normal PyTorch code while the data remains on these separate workers. The library also provides hooks to seamlessly integrate with PyTorch, enabling operations on remote data as if it were local, but under the hood, it ensures cryptographic or protocol-based safeguards are applied.
+
+### 8.3. Federated learning libraries in PyTorch
+
+While PySyft is one of the earliest entrants, there are other libraries and toolkits that provide FL capabilities on top of PyTorch. Some are official, some are community-driven. Often, they rely on the data parallelism abstractions that PyTorch offers, but with modifications to accommodate partial participation or secure aggregation steps. Some frameworks aim to give out-of-the-box support for FedAvg, FedProx, and other standard algorithms, while also simplifying the process of adding custom local training loops or aggregator logic.
+
+### 8.4. Comparison of available tools
+
+- **TensorFlow Federated**: Strong integration with TensorFlow's ecosystem, straightforward simulation environment, a well-structured approach to defining federated computations. Might have a steeper learning curve if you are used to standard TensorFlow/Eager mode. 
+- **PySyft**: Emphasizes secure data science, bridging differential privacy, secure computation, and federated learning. Integrates well with PyTorch, but can sometimes be less stable due to frequent library updates. 
+- **Other libraries**: There are many new solutions cropping up. For instance, Flower, FATE (Federated AI Technology Enabler by WeBank), or IBM's Federated Learning framework. Each might have unique features (e.g., specialized HPC integration, cryptographic primitives, or domain-specific tooling).
+
+In general, the choice depends on your existing infrastructure, programming language preferences, and the scope of your project. For cutting-edge academic research, TFF and PySyft remain popular; for enterprise solutions, you might find specialized commercial products that integrate with private data centers, cryptography modules, or existing HPC clusters.
+
+## 9. Future of federated learning
+
+Federated learning is still rapidly evolving. Many open questions remain, and new frontiers are being explored. I expect that in the coming years, we will see:
+
+- **Increased standardization**: Tools, protocols, and best practices for building and deploying federated learning systems across multiple industries.
+- **Better personalization**: Federated learning models that adapt to each client's unique data distribution, bridging global knowledge with local specializations.
+- **Advanced privacy guarantees**: Incorporating more robust cryptographic techniques (e.g., fully homomorphic encryption, secure multi-party computation) and advanced differential privacy mechanisms that reduce the risk of model inversion attacks.
+- **Decentralized orchestration**: Instead of the conventional client-server approach, some research is exploring decentralized or peer-to-peer topologies. This eliminates the single point of failure or the trust assumption in a central server.
+- **Federated analytics**: Going beyond just training a single global model to more general data analytics tasks that can be run across distributed data. This might include federated clustering, federated dimension reduction, or other forms of unsupervised/supervised analytics that do not rely on centralizing the data.
+- **Hardware improvements**: The development of specialized chips and hardware accelerators for edge devices that can handle on-device training more efficiently, drastically reducing energy consumption and computation time.
+- **Federated learning in 5G/6G networks**: With the rise of ultra-fast and low-latency networks, federated learning can expand to even more distributed contexts, from real-time sensor arrays to large-scale IoT ecosystems.
+
+The synergy between federated learning, privacy-preserving technologies, and the unstoppable momentum of data growth suggests that FL will become an integral part of the machine learning landscape. As privacy regulations become more stringent, and as the demand for real-time, personalized AI solutions increases, federated learning can fill the gap. This approach can harness massive amounts of distributed data that was previously inaccessible, forging new horizons in medicine, finance, autonomous systems, and beyond.
+
+Ultimately, federated learning is not a panacea. It's one compelling solution among many. However, its potential to respect user privacy, comply with data regulations, reduce bandwidth usage, and open up new collaborative AI scenarios is undeniable. Whether you're a data scientist, researcher, or business strategist, understanding the principles, algorithms, and challenges of federated learning is fast becoming essential knowledge.
+
+---
+
+I hope that this detailed exploration has shed some light on the conceptual underpinnings, technical aspects, and practical implications of federated learning. The field evolves rapidly, so keeping abreast of the latest research conferences, open-source tools, and industrial case studies is key to staying on top of best practices. It's an exciting time to be working on — or experimenting with — federated learning, given that it touches on everything from advanced optimization algorithms and cryptographic methods to real-world business considerations and device-level constraints.
+
+For any budding or experienced practitioner, I believe that building a foundation in federated averaging, secure aggregation, and dealing with non-IID distributions is paramount. Then, exploring advanced techniques such as personalized FL, vertical federated approaches, and cutting-edge communication optimizations can help push your skill set even further. Above all, it's crucial to appreciate that federated learning is more than a single algorithm or protocol; it's a paradigm that weaves together machine learning, systems engineering, privacy, and distributed computing, offering a genuinely novel way to harness the vast, heterogeneous data that populates today's digital ecosystem.
+
+## Additional expansions and deep dives
+
+Given the depth and breadth of federated learning, I would like to extend a series of discussions on advanced topics that might be of particular interest to those seeking medium-to-advanced theoretical grounding in the domain:
+
+### 9.1. Differential privacy in federated learning
+
+While secure aggregation protocols protect individual client updates from direct inspection, they do not fully address the possibility that aggregated updates may still leak sensitive information. <Highlight>Differential privacy</Highlight> (DP) provides a formal framework for ensuring that the outputs of a computation (like a federated model update) do not reveal too much about any single data point within a client. By adding carefully calibrated noise to gradients or model parameters, we can bound the degree to which any individual's data influences the final model. 
+
+The key measure in DP is the <Latex text="\(\epsilon\)"/> (epsilon) parameter, which roughly measures the privacy loss. A lower <Latex text="\(\epsilon\)"/> means higher privacy but can lead to decreased model accuracy. In a federated context, one might incorporate an algorithm called <Highlight>DP-FedAvg</Highlight>, which modifies the local gradient steps to add noise before sending them to the server. Another approach is for the server to aggregate updates first and then apply noise to the aggregated result.
+
+### 9.2. Homomorphic encryption and secure multiparty computation
+
+For organizations that require very strong confidentiality, solutions that rely on <Highlight>homomorphic encryption</Highlight> (HE) or <Highlight>secure multiparty computation</Highlight> (SMPC) can be integrated into the federated pipeline. Homomorphic encryption allows arithmetic operations to be performed on encrypted data without decrypting it. In a federated learning context, clients can encrypt their local gradients before sending them to the server, which can then combine these encrypted values and produce an encrypted aggregate. The server might never need to decrypt, or if it does, it does so under carefully managed protocols.
+
+SMPC protocols, on the other hand, distribute the secret (in this case, the local updates or the model parameters) among multiple participants such that no individual party ever sees the entire secret. By carefully orchestrating computations among these participants, one can ensure that the final aggregated output emerges without revealing intermediate values. This approach can be combined with decentralized topologies where there is no single server.
+
+These methods often come with computational overheads. Homomorphic encryption can be expensive in terms of CPU usage and memory, making it less feasible for edge devices in some scenarios. However, for certain vertical FL setups between major institutions, these overheads might be acceptable to comply with regulatory demands.
+
+### 9.3. Robustness against adversarial or malicious clients
+
+An often-overlooked aspect of federated learning is that some clients might not be trustworthy. In open cross-device scenarios, it's conceivable that an attacker could poison updates, either to degrade the global model's performance or to embed hidden backdoors. For instance, a malicious client might repeatedly send updates that cause the model to misclassify a certain trigger pattern as a benign class (backdoor attack).
+
+To mitigate such threats, robust aggregation rules have been proposed. Examples include:
+- **Coordinate-wise median** or **coordinate-wise trimmed mean** to remove outlier gradients.
+- **Krum** (Blanchard and gang, 2017), which selects the gradient that is most "in agreement" with the majority of other gradients.
+- **Bulyan** and other advanced versions that aim to detect and eliminate malicious updates.
+
+These defenses can help in ensuring that a few malicious clients do not subvert the global model. However, they can also reduce efficiency or hamper accuracy if large subsets of the data appear outlier-like, e.g., in the presence of legitimate but highly heterogeneous local data distributions.
+
+### 9.4. Fairness and incentives
+
+Another subtlety is <Highlight>fairness</Highlight>. In federated learning, not all participants have the same quantity of data or the same data distribution. Some participants might be underrepresented, leading to a global model biased toward the data from major participants. Fairness approaches attempt to ensure that the global model performs adequately across all relevant sub-populations of clients.
+
+Incentive mechanisms also come into play. Why would a client want to participate in federated learning? Is there an incentive system (e.g., monetary compensation, improved local performance, free product upgrades) encouraging them to keep contributing updates? This fosters the idea of <Highlight>federated marketplaces</Highlight>, where data owners can trade model updates for some kind of benefit, while preserving confidentiality.
+
+### 9.5. Communication-efficient FL
+
+Since communication is a major bottleneck, a considerable body of research focuses on <Highlight>communication-efficient FL</Highlight>. Basic techniques include compressing gradients through quantization (e.g., 8-bit or 1-bit compression), top-\<k\> selection of gradient components, or using iterative refinements. Some frameworks incorporate error feedback mechanisms so that the error introduced by compression is periodically corrected in subsequent updates. The overarching goal is to drastically reduce the number of bits that need to be transferred per client per round, especially for large neural network models.
+
+### 9.6. Asynchronous and decentralized FL
+
+The classical federated learning paradigm is synchronous, with a central server waiting for updates from clients chosen to participate in a round. But real-world constraints push us toward asynchronous or decentralized solutions. In asynchronous federated learning, any client can send updates whenever it completes local training. The server updates the global model on a rolling basis. This can be more flexible but requires carefully weighting or scaling updates from stale models.
+
+<Highlight>Decentralized FL</Highlight> or fully peer-to-peer solutions eliminate the central server. Instead, clients communicate in a graph topology, exchanging updates with neighbors to arrive at a consensus model. This approach can be robust to server failures but complicates the design of secure aggregation and demands efficient consensus protocols.
+
+### 9.7. Personalized federated learning
+
+Realizing that a single global model may not be optimal for every client's data distribution, <Highlight>personalized federated learning</Highlight> is a growing area of interest. The idea is that each client ends up with a personalized model adapted to its local domain, yet still benefiting from the shared knowledge of other participants. Approaches to personalization include:
+
+- **Fine-tuning**: Each client uses the global model as initialization and does local gradient descent on its data to specialize the model.
+- **Multi-task learning**: The learning process is framed as a multi-task problem in which each client's objective is somewhat distinct but related to the overall tasks.
+- **Meta-learning**: Techniques like MAML (Model-Agnostic Meta-Learning) can be adapted to federated contexts, teaching the global model to be quickly adaptable to each client's local distribution.
+- **Layer partitioning**: Some layers (like the feature extractor) are shared globally, while the final layers are trained locally, capturing local patterns or preferences.
+
+Personalization can yield significantly improved local performance while sacrificing minimal amounts of global consistency.
+
+### 9.8. Practical deployment considerations
+
+Before concluding our enormous deep dive, it's worth emphasizing the practical considerations that must be tackled to deploy a federated learning solution at scale:
+
+1. **Infrastructure**: Managing orchestration of client selection, update distribution, and result collection, typically in a cloud-based environment that interacts with a network of devices.
+2. **Security**: Ensuring that the communication channels are secure and that malicious updates or eavesdroppers do not compromise the system.
+3. **Compliance**: Verifying that the solution meets all relevant legal and regulatory guidelines (HIPAA, GDPR, CPRA, etc.).
+4. **Logging and Auditing**: Maintaining records of which clients contributed updates, how the model was aggregated, and how it performed to ensure transparency and traceability.
+5. **Model Debugging**: Diagnosing model failures is more complex in a federated setting because you cannot simply look at the raw data. Tools to trace the source of anomalies or distribution shifts are required.
+
+### 9.9. An extended example: Federated recommendation system
+
+To illustrate how federated learning can be practically applied, consider a recommendation system in a cross-company collaborative scenario. Suppose you have multiple music streaming services that each want to improve their recommendation algorithms by leveraging user behaviors across platforms, but none of them are willing or legally allowed to pool their user data in a shared location. With federated learning:
+
+1. Each streaming service hosts a local model that trains on usage logs (songs played, likes, skips).
+2. Periodically, these local models produce gradient updates or parameter deltas that are encrypted and shared with a central aggregator or a shared peer-to-peer network.
+3. The aggregator merges these updates into a global model that captures general user preferences.
+4. The aggregator (or decentralized consensus) sends the updated global model parameters back to each streaming service.
+5. Each service fine-tunes the model further for its own user base, achieving personalization while benefiting from the knowledge gained by the entire consortium of streaming platforms.
+
+This approach can allow smaller or niche streaming services to significantly enhance their recommendation quality without sacrificing user privacy or independence.
+
+## A massive overarching view
+
+The field of federated learning stands at the intersection of multiple disciplines — distributed systems, cryptography, machine learning, data privacy, and network protocols. Hence, a real mastery requires familiarity with each of these areas. Ongoing research is replete with novel variations, from bridging active learning and federated learning to combining reinforcement learning with FL for distributed robotics or embedded systems.
+
+Researchers continue to propose new ways of tackling the non-IID challenge, improving computational efficiency, or guaranteeing privacy. The swift uptake of FL in industry also means that enterprise-grade solutions are becoming more common. As data grows, and as the call for privacy and compliance intensifies, federated learning is poised to remain a fundamental approach for collaborative AI.
+
+<Highlight>In essence, if you're a data scientist, developer, or AI enthusiast, there has never been a better time to invest in learning about federated frameworks, investigating advanced optimization techniques, and staying abreast of evolving security and privacy standards in distributed settings.</Highlight>
+
+## Potential pitfalls and misconceptions
+
+I would like to also highlight a few pitfalls that frequently arise when someone first approaches federated learning:
+
+- **"Federated learning guarantees privacy automatically."** While FL mitigates certain privacy threats by avoiding centralization of raw data, there remain attack vectors such as gradient inversion. Additional measures (differential privacy, secure aggregation) are typically needed for rigorous privacy guarantees.
+- **"Federated learning is easy to scale once a basic prototype is built."** In reality, deploying FL at scale demands specialized system engineering to handle billions of devices, ephemeral connectivity, and limited resources. 
+- **"Non-IID data can be handled in the same way as in typical distributed learning."** Distributed learning often assumes data is IID across workers, which is not typically the case in federated scenarios, necessitating specialized algorithms.
+- **"All federated learning is about cross-device scenarios."** In fact, cross-silo federated learning (like hospital networks or banks) might be more relevant for many enterprise settings, and the constraints and solutions differ from cross-device FL.
+
+## Wrapping up
+
+Federated learning is a formidable innovation in how we think about distributed AI. It offers both philosophical and practical breakthroughs, changing the AI community's assumptions about centralization. While there is hype around privacy and personalization, the real breakthroughs lie in a combination of robust cryptographic protocols, advanced distributed optimization, creative approaches to model personalization, and the synergy with network engineering. 
+
+Going forward, I encourage you to:
+
+1. **Experiment with frameworks** like TensorFlow Federated or PySyft to get hands-on experience.
+2. **Study advanced algorithms** like FedProx, SCAFFOLD, or personalized FL approaches if you're dealing with heterogeneous data distributions.
+3. **Incorporate privacy** from day one in your design, especially if you operate in regulated industries.
+4. **Stay current** by following leading conferences (e.g., NeurIPS, ICML, ICLR), where cutting-edge federated learning research continues to be a focal point.
+
+Federated learning is more than just a technical curiosity; it's an evolving paradigm that has already influenced the AI strategies of tech giants, healthcare consortiums, and financial institutions. As models become larger and data becomes more siloed, the impetus for distributed, privacy-conscious collaboration will only intensify, and federated learning may well be at the heart of that transformation.
+
+<Image alt="Federated Learning Illustration" path="" caption="A conceptual diagram showing a central server coordinating with multiple edge devices, each holding its own local dataset, to train a shared global model without data centralization." zoom="false" />

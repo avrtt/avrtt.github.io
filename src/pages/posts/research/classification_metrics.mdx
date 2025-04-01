@@ -1,0 +1,546 @@
+---
+index: 41
+indexCourse: 28
+indexFavorites:
+title: "Classification metrics"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Classification metrics"
+courseCategoryName: "Classification basics & ensembling"
+desc: "For any occasion"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "01.04.2023"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 1
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/classification_metrics.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/classification_metrics"
+slug: "/research/classification_metrics"
+---
+
+import Tooltip from "../../../components/Tooltip"
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+Для этого поста разобрать Obsidian-заметку (см. папку "🚧 Unfinished").
+
+*/}
+
+
+{/*
+
+Оценка качества в задачах классификации и регрессии (ТА ЧАСТЬ, КОТОРАЯ ПРО КЛАССИФИКАЦИЮ)
+https://neerc.ifmo.ru/wiki/index.php?title=%D0%9E%D1%86%D0%B5%D0%BD%D0%BA%D0%B0_%D0%BA%D0%B0%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B0_%D0%B2_%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B0%D1%85_%D0%BA%D0%BB%D0%B0%D1%81%D1%81%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%86%D0%B8%D0%B8_%D0%B8_%D1%80%D0%B5%D0%B3%D1%80%D0%B5%D1%81%D1%81%D0%B8%D0%B8 
+[https://www.youtube.com/watch?v=GCLsYLseCio&list=PLA0M1Bcd0w8zxDIDOTQHsX68MCDOAJDtj&index=22](https://www.youtube.com/watch?v=GCLsYLseCio&list=PLA0M1Bcd0w8zxDIDOTQHsX68MCDOAJDtj&index=22)
+[https://www.youtube.com/watch?v=-jplpYLrcdM&list=PLA0M1Bcd0w8zxDIDOTQHsX68MCDOAJDtj&index=23](https://www.youtube.com/watch?v=-jplpYLrcdM&list=PLA0M1Bcd0w8zxDIDOTQHsX68MCDOAJDtj&index=23)
+[https://www.youtube.com/watch?v=m82eU_NkznM&list=PLA0M1Bcd0w8zxDIDOTQHsX68MCDOAJDtj&index=24](https://www.youtube.com/watch?v=m82eU_NkznM&list=PLA0M1Bcd0w8zxDIDOTQHsX68MCDOAJDtj&index=24)
+[https://alexanderdyakonov.wordpress.com/2019/05/31/функционалы-качества-в-задаче-бинарн/](https://alexanderdyakonov.wordpress.com/2019/05/31/%D1%84%D1%83%D0%BD%D0%BA%D1%86%D0%B8%D0%BE%D0%BD%D0%B0%D0%BB%D1%8B-%D0%BA%D0%B0%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B0-%D0%B2-%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B5-%D0%B1%D0%B8%D0%BD%D0%B0%D1%80%D0%BD/)
+Про все метрики и когда их использовать:
+[https://neptune.ai/blog/evaluation-metrics-binary-classification](https://neptune.ai/blog/evaluation-metrics-binary-classification)
+[https://scikit-learn.org/stable/modules/generated/sklearn.metrics.balanced_accuracy_score.html](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.balanced_accuracy_score.html)
+Обобщение MCC для мультиклассовой классификации:
+[https://en.wikipedia.org/wiki/Phi_coefficient#Multiclass_case](https://en.wikipedia.org/wiki/Phi_coefficient#Multiclass_case)
+[https://habr.com/ru/company/ods/blog/328372/](https://habr.com/ru/company/ods/blog/328372/)
+[https://towardsdatascience.com/the-5-classification-evaluation-metrics-you-must-know-aa97784ff226](https://towardsdatascience.com/the-5-classification-evaluation-metrics-you-must-know-aa97784ff226)
+[https://towardsdatascience.com/choosing-the-right-metric-is-a-huge-issue-99ccbe73de61](https://towardsdatascience.com/choosing-the-right-metric-is-a-huge-issue-99ccbe73de61)
+[https://github.com/turi-code/userguide/blob/master/evaluation/classification.md](https://github.com/turi-code/userguide/blob/master/evaluation/classification.md)
+[https://www.youtube.com/watch?v=wGw6R8AbcuI](https://www.youtube.com/watch?v=wGw6R8AbcuI)
+[https://www.youtube.com/watch?v=W5meQnGACGo](https://www.youtube.com/watch?v=W5meQnGACGo)
+[https://ml-handbook.ru/chapters/model_evaluation/intro](https://ml-handbook.ru/chapters/model_evaluation/intro)
+[https://neerc.ifmo.ru/wiki/index.php?title=Оценка_качества_в_задачах_классификации_и_регрессии](https://neerc.ifmo.ru/wiki/index.php?title=%D0%9E%D1%86%D0%B5%D0%BD%D0%BA%D0%B0_%D0%BA%D0%B0%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B0_%D0%B2_%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B0%D1%85_%D0%BA%D0%BB%D0%B0%D1%81%D1%81%D0%B8%D1%84%D0%B8%D0%BA%D0%B0%D1%86%D0%B8%D0%B8_%D0%B8_%D1%80%D0%B5%D0%B3%D1%80%D0%B5%D1%81%D1%81%D0%B8%D0%B8)
+[https://stanford.edu/~shervine/teaching/cs-229/cheatsheet-machine-learning-tips-and-tricks](https://stanford.edu/~shervine/teaching/cs-229/cheatsheet-machine-learning-tips-and-tricks)
+https://alexanderdyakonov.wordpress.com/2019/08/29/%d0%ba%d1%80%d0%b8%d0%b2%d1%8b%d0%b5-%d0%b2-%d0%bc%d0%b0%d1%88%d0%b8%d0%bd%d0%bd%d0%be%d0%bc-%d0%be%d0%b1%d1%83%d1%87%d0%b5%d0%bd%d0%b8%d0%b8/
+- [Матрицы ошибок для измерения точности, полноты и чувствительности модели](https://towardsdatascience.com/understanding-confusion-matrix-a9ad42dcfd62).
+- [F1 оценка](https://towardsdatascience.com/understanding-confusion-matrix-a9ad42dcfd62).
+- [Истинно-положительный, истинно-отрицательный, ложно-позитивный и ложно-отрицательный результаты](https://medium.com/datadriveninvestor/confusion-matric-tpr-fpr-fnr-tnr-precision-recall-f1-score-73efa162a25f) (TPR, TNR, FTR, FNR).
+- [Ошибки первого и второго рода](https://www.stat.berkeley.edu/~hhuang/STAT141/Lecture-FDR.pdf).
+- [Кривые AUC-ROC](https://towardsdatascience.com/understanding-auc-roc-curve-68b2303cc9c5).
+
+Describe the classification metrics you know. Which metrics should be considered in case of class imbalance? (см. ML-канал)
+Перевести на ML язык запрос менеджера: "хочу, чтобы модель выявляла почти всех "плохих" заемщиков" + Какие метрики не чувствительны к несбалансированности классов + Как бороться с несбалансированности классов? (см. ML-канал)
+
+*/}
+
+
+{/*
+
+1. Introduction  
+2. Basic terminology  
+   2.1. Defining binary vs. multiclass classification  
+   2.2. Classes, labels, and decision boundaries  
+   2.3. Understanding positive and negative predictions  
+3. The confusion matrix  
+   True positives (TP), false positives (FP), true negatives (TN), and false negatives (FN). Visualizing and interpreting the matrix. Common pitfalls in reading a confusion matrix.  
+4. Core metrics derived from the confusion matrix  
+   4.1. Accuracy  
+   4.2. Precision  
+   4.3. Recall (sensitivity)  
+   4.4. F1 score  
+5. Advanced metrics and considerations  
+   5.1. Specificity and its role in performance evaluation  
+   5.2. Balanced accuracy for imbalanced datasets  
+   5.3. Matthews correlation coefficient (MCC)  
+6. Threshold-based evaluation and curves  
+   6.1. Precision-recall curve  
+   6.2. ROC curve  
+   6.3. Area under the curve (AUC) for ROC and PR  
+   6.4. Choosing appropriate thresholds  
+7. Multiclass classification metrics  
+   7.1. Macro, micro, and weighted averaging methods  
+   7.2. One-vs-all (OvA) and one-vs-one (OvO) strategies  
+   7.3. Extensions of F1 and accuracy to multiclass problems  
+8. Model comparison and selection  
+   8.1. Selecting the right metric for a given problem. When to use each of the described metrics.   
+   8.2. Interpreting multiple metrics together  
+   8.3. Practical strategies for comparing model performance  
+   8.4. Handling imbalanced datasets  
+   8.5. Overfitting and proper validation techniques  
+   8.6. Importance of domain context in metric selection  
+9. Conclusion  
+
+*/}
+
+
+Classification metrics lie at the heart of any thorough evaluation of machine learning models that attempt to categorize data points (instances) into distinct classes. As soon as you venture beyond toy examples in binary classification, you realize that choosing the ""best"" metric is rarely a trivial task. The classification space offers many different ways to quantify performance, from the simple notion of overall accuracy to more nuanced measures that handle class imbalance, varying thresholds, or multi-class settings. A single model can exhibit starkly different performance profiles depending on which metrics you examine, and it is often necessary to combine multiple metrics or carefully select a relevant metric for your problem domain.
+
+I find that classification metrics can be easily misunderstood or misapplied when one does not consider the details of a dataset or a model's underlying assumptions. Metrics such as <Highlight>accuracy</Highlight> might be hugely misleading in domains with severe class imbalance (e.g., fraud detection, where only a tiny fraction of transactions is fraudulent). By contrast, metrics such as the <Highlight>precision-recall curve</Highlight> or <Highlight>Area under the Precision-Recall Curve (PR AUC)</Highlight> can provide a clearer picture in such domains. In other settings, especially with multiple classes, <Highlight>macro</Highlight>, <Highlight>micro</Highlight>, or <Highlight>weighted</Highlight> averaging variants of F1 or other metrics can become crucial.
+
+In this article, I will walk you through core concepts and advanced considerations pertaining to classification metrics. Throughout, I will weave in references to cutting-edge research and highlight relevant use-cases, from typical academic tasks (like image classification from the <Tooltip text="ImageNet, CIFAR-10, etc."/> corpus) to specialized industry scenarios (like medical diagnosis, anomaly detection, or credit default prediction). At times, I will draw on some insights from papers that have appeared in conferences such as NeurIPS, ICML, and from journals such as the Journal of Machine Learning Research (JMLR).
+
+Given the breadth and importance of classification metrics, I will start by clarifying essential terminology and continue toward sophisticated topics like threshold-based curves, advanced metrics for imbalanced data, and multi-class classification approaches. This article is aimed at readers with some experience in machine learning, but I will strive for clarity and thoroughness. The ultimate goal is to help you interpret, compare, and select the right classification metrics for your problem.
+
+
+## Basic terminology
+
+Classification tasks involve predicting discrete labels for data instances. These tasks can be roughly divided into **binary classification** (two labels: e.g., positive or negative) and **multiclass classification** (two+ labels: e.g., \{cat, dog, bird, horse, …\}). Most classification metrics originate in the binary domain but can be extended or adapted for multiple classes in various ways. 
+
+### Defining binary vs. multiclass classification
+
+In a **binary classification** setting, we typically talk about a "positive" class and a "negative" class. For instance, in medical diagnostics, "positive" might indicate that a patient does have a particular condition and "negative" that the patient does not. In credit risk modeling, "positive" might refer to a borrower who will default. Even if the notion of "positive" is purely conventional, it helps unify the interpretation of various metrics: "positive" is the class of prime interest, where we suspect an elevated cost of errors or a higher business or scientific significance.
+
+In a **multiclass classification** setting, there are more than two possible classes (e.g., \{spam, promotional, important, social\} in an email classification system). Certain terminologies (positive vs. negative) do not directly apply to the entire problem in the same way. Instead, we might break down the classification into multiple one-vs.-rest or one-vs.-one subtasks, or we might adopt specialized multiclass metrics.
+
+### Classes, labels, and decision boundaries
+
+Consider the concept of a decision boundary: a model typically uses an internal rule or function (often learned from training data) to map an input <Latex text="\( x \)"/> to a probability <Latex text="\( p \)"/> that <Latex text="\( x \)"/> belongs to a certain class. In **binary** classification, for example, we might compare <Latex text="\( p \)"/> with a threshold <Latex text="\(\theta\)"/> (commonly 0.5) and then produce a label of 1 if <Latex text="\( p \ge \theta \)"/> or 0 if <Latex text="\( p < \theta \)"/>. The geometry or shape of the resulting decision boundary in feature space can vary drastically depending on the model type (linear, tree-based, neural network, etc.).
+
+### Understanding positive and negative predictions
+
+When we adopt the binary viewpoint, "positive prediction" means the model predicted label 1 (e.g., fraudulent, diseased, default). "Negative prediction" means the model predicted label 0 (e.g., legitimate, healthy, non-default). In the confusion matrix sections that follow, we will use these ideas to define **true positive**, **false positive**, **true negative**, and **false negative** predictions. 
+
+For advanced tasks, especially in fields like computational biology or anomaly detection, this positive vs. negative nomenclature can become a bit arbitrary or domain-specific. Nonetheless, the core definitions for classification metrics remain consistent once you fix which label is "positive."
+
+
+## The confusion matrix
+
+One of the most fundamental tools for evaluating classification results is the **confusion matrix**. In a **binary classification** setting, the confusion matrix is a 2×2 table that tabulates how many instances fall into each combination of actual and predicted classes.
+
+- **True Positives (TP):** The model predicted "positive" and the actual label is indeed "positive."  
+- **False Positives (FP):** The model predicted "positive" but the actual label is "negative."  
+- **True Negatives (TN):** The model predicted "negative" and the actual label is indeed "negative."  
+- **False Negatives (FN):** The model predicted "negative" but the actual label is actually "positive."
+
+You can visualize the confusion matrix as follows:
+
+```
+                Predicted Positive    Predicted Negative
+Actual Positive        TP                   FN
+Actual Negative        FP                   TN
+```
+
+Placing real values in this matrix is quite straightforward in practice:
+
+<Code text={`
+from sklearn.metrics import confusion_matrix
+import numpy as np
+
+# Example arrays (actual vs. predicted)
+y_true = np.array([1, 0, 1, 1, 0, 0, 1])
+y_pred = np.array([1, 0, 1, 0, 0, 1, 1])
+
+cm = confusion_matrix(y_true, y_pred, labels=[1,0])
+# By default, confusion_matrix returns rows in sorted order of labels,
+# which can sometimes be [0,1]. Here we force [1,0] for clarity if desired.
+
+print(cm)
+`}/>
+
+For a typical binary classification confusion matrix, the shape will be (2, 2). Many times you might want to visually plot it:
+
+<Code text={`
+import matplotlib.pyplot as plt
+from sklearn.metrics import ConfusionMatrixDisplay
+
+disp = ConfusionMatrixDisplay(confusion_matrix=cm,
+                              display_labels=["Positive","Negative"])
+disp.plot()
+plt.show()
+`}/>
+
+<Image alt="A confusion matrix illustration" path="" caption="A typical confusion matrix illustrating TP, FP, TN, and FN." zoom="false" />
+
+### Common pitfalls in reading a confusion matrix
+
+1. **Forgetting about imbalance:** If one class (e.g., negative) is overwhelmingly more frequent than the positive class, the absolute values in the matrix can be misleading. You might see a large diagonal (e.g., huge TN) that dwarfs the other entries. This can give the false impression that the classifier is "highly accurate," while in reality it might be missing almost all of the minority class.
+
+2. **Mixing up rows vs. columns:** Different textbooks or software libraries transpose the confusion matrix. Always confirm whether the rows or columns correspond to predicted vs. actual labels.
+
+3. **Confusion about positive vs. negative:** You must decide which label is "positive." In medical or anomaly contexts, it is typically the less frequent or more "critical" condition.
+
+With the confusion matrix in mind, we can now introduce the simplest and most common classification metrics derived from it.
+
+
+## Core metrics derived from the confusion matrix
+
+### Accuracy
+
+<Latex text="\( \mathrm{Accuracy} \)"/> is the simplest metric to understand: it is the proportion of correct predictions among all predictions. Formally,
+
+<Latex text="\( 
+\mathrm{Accuracy} = \frac{TP + TN}{TP + TN + FP + FN}.
+\)"/>
+
+It tells us, in straightforward terms, the fraction of instances for which the predicted class aligns with the true class. An accuracy of 1.0 (or 100%) means the classifier is perfect on the test set. 
+
+#### Drawbacks of accuracy
+
+Accuracy can be **highly misleading** in the presence of **imbalanced classes**. Consider a dataset where only 1% of instances belong to the positive class (e.g., fraud detection). A naive classifier that predicts everything as negative obtains 99% accuracy, even though it fails to identify any fraud. This is why, in many practical contexts, we avoid relying solely on accuracy, or we complement it with more robust metrics.
+
+<Code text={`
+from sklearn.metrics import accuracy_score
+
+acc = accuracy_score(y_true, y_pred)
+print("Accuracy:", acc)
+`}/>
+
+### Precision
+
+Also called the **positive predictive value (PPV)**, precision answers the question: "Of all instances predicted positive, how many are actually positive?" Formally,
+
+<Latex text="\( 
+\mathrm{Precision} = \frac{TP}{TP + FP}.
+\)"/>
+
+A high precision means that, when a classifier flags an instance as positive, it is likely to be correct. In certain domains, such as spam detection or law enforcement, precision might be critical, because a false positive can be highly problematic (e.g., inconveniencing legitimate users or accusing innocents). 
+
+### Recall (sensitivity)
+
+Also called **true positive rate (TPR)** or **sensitivity**, recall answers the question: "Out of all actual positive instances, how many does the classifier detect as positive?" Formally,
+
+<Latex text="\( 
+\mathrm{Recall} = \frac{TP}{TP + FN}.
+\)"/>
+
+A high recall means that the classifier succeeds in identifying most of the positives. In medical diagnostics, for instance, you might want to ensure that almost all genuinely sick patients receive further tests (i.e., you want to minimize false negatives). If the cost of missing a positive is extremely high, recall is an essential metric.
+
+### F1 score
+
+Precision and recall often trade off against each other — improving one can degrade the other. The <Highlight>F1 score</Highlight> (or **F1** measure) is the **harmonic mean** of precision and recall:
+
+<Latex text="\[
+\mathrm{F1} = 2 \cdot \frac{\mathrm{Precision} \cdot \mathrm{Recall}}{\mathrm{Precision} + \mathrm{Recall}}.
+\]"/>
+
+Equivalently,
+
+<Latex text="\( 
+\mathrm{F1} = \frac{2\,TP}{2\,TP + FP + FN}.
+\)"/>
+
+F1 can be viewed as a single summary statistic that balances precision and recall in an equal proportion. It is thus particularly popular when both false positives and false negatives carry significant cost, or if you want a single measure that punishes an extremely low recall or precision.
+
+Because the F1 score is the harmonic mean, it only achieves a high value if **both** precision and recall are comparably high. If either is low, F1 remains relatively low. This is more balanced than using just arithmetic means, because it penalizes large disparities.
+
+<Code text={`
+from sklearn.metrics import precision_score, recall_score, f1_score
+
+precision_val = precision_score(y_true, y_pred)
+recall_val = recall_score(y_true, y_pred)
+f1_val = f1_score(y_true, y_pred)
+
+print("Precision:", precision_val)
+print("Recall:", recall_val)
+print("F1 Score:", f1_val)
+`}/>
+
+
+## Advanced metrics and considerations
+
+### Specificity and its role in performance evaluation
+
+Often referred to as **true negative rate (TNR)**, specificity measures how well the classifier correctly identifies negatives:
+
+<Latex text="\( 
+\mathrm{Specificity} = \frac{TN}{TN + FP}.
+\)"/>
+
+In other words, out of all actual negatives, how many are predicted negative? Specificity is crucial when the cost of false positives is large. For example, in an oncology test, a false positive might create undue alarm and lead to expensive or invasive follow-up procedures. Specificity is complementary to recall (or sensitivity). 
+
+In practice, medical professionals, for instance, often examine both sensitivity (<Latex text="\( \mathrm{Recall} \)"/>) and specificity together — these are sometimes called "orthogonal metrics" because they gauge different kinds of errors. In certain contexts, you may also see the "Youden's J statistic," which is
+
+<Latex text="\( 
+\mathrm{Youden's\ J} = \mathrm{Sensitivity} + \mathrm{Specificity} - 1,
+\)"/>
+
+an older measure that tries to unify those two into a single scale.
+
+### Balanced accuracy for imbalanced datasets
+
+<Highlight>Balanced accuracy</Highlight> is designed to tackle the pitfalls of simple accuracy in **imbalanced** classification settings. Formally,
+
+<Latex text="\[
+\mathrm{Balanced\ Accuracy} = \frac{\mathrm{Sensitivity} + \mathrm{Specificity}}{2}.
+\]"/>
+
+It is the average of recall (sensitivity) for the positive class and recall for the negative class (equivalent to specificity if the negative class is denoted by 0). If the dataset is significantly skewed toward the negative class, the standard accuracy might be inflated by large TN counts, whereas balanced accuracy puts an equal emphasis on both classes.
+
+Some references generalize balanced accuracy to multi-class contexts by averaging the per-class recall values. If you are working with scikit-learn, you can use:
+
+<Code text={`
+from sklearn.metrics import balanced_accuracy_score
+
+bal_acc = balanced_accuracy_score(y_true, y_pred)
+print("Balanced Accuracy:", bal_acc)
+`}/>
+
+### Matthews correlation coefficient (MCC)
+
+The **Matthews correlation coefficient (MCC)** is another robust metric for binary classification, especially with class imbalance. It is defined as
+
+<Latex text="\[
+\mathrm{MCC} = \frac{TP \times TN - FP \times FN}{\sqrt{(TP + FP)(TP + FN)(TN + FP)(TN + FN)}}.
+\]"/>
+
+MCC can be interpreted as a correlation coefficient between the observed and predicted classifications. A coefficient of +1 indicates a perfect prediction, 0 indicates random prediction, and -1 indicates total disagreement between actual and predicted. One reason MCC is prized is that it is a **single** statistic that captures all four confusion matrix categories in a balanced way, and it is not inflated by high counts of a single category (like many TN in a highly skewed dataset).
+
+<Code text={`
+from sklearn.metrics import matthews_corrcoef
+
+mcc_val = matthews_corrcoef(y_true, y_pred)
+print("MCC:", mcc_val)
+`}/>
+
+
+## Threshold-based evaluation and curves
+
+Most modern classifiers (e.g., logistic regression, random forests, neural networks) do not merely generate a binary label. Instead, they output a **continuous score** or a probability that an instance belongs to a certain class. One can then apply different thresholds <Latex text="\(\theta\)"/> on that score to produce a discrete 0/1 decision. Varying <Latex text="\(\theta\)"/> from 0 to 1 changes the rates of TP, FP, TN, and FN, yielding different trade-offs in metrics such as precision vs. recall or TPR vs. FPR.
+
+### Precision-recall curve
+
+When dealing with heavily imbalanced data (like 1% positives and 99% negatives), the **precision-recall (PR) curve** often proves more illuminating than the ROC curve. You construct it by computing precision and recall for a range of threshold values. The result is a 2D plot with recall on the x-axis and precision on the y-axis:
+
+<Image alt="Precision-recall curve depiction" path="" caption="Precision-recall curve illustrating the trade-off between precision and recall as a classification threshold is varied." zoom="false" />
+
+By reading off different points on this curve, you can see how your classifier's precision changes as you demand higher or lower recall. 
+
+#### Area Under the Precision-Recall Curve (PR AUC)
+
+To summarize the overall shape of the PR curve, we often compute **average precision (AP)** or <Highlight>PR AUC</Highlight>, a single number between 0 and 1. This metric is typically computed as the integral of precision as a function of recall from 0 to 1, though in practice scikit-learn uses a stepwise approximation technique. A random classifier can achieve a PR AUC that is roughly equal to the fraction of positive instances (which can be very low in highly imbalanced tasks).
+
+<Code text={`
+from sklearn.metrics import precision_recall_curve, average_precision_score
+import matplotlib.pyplot as plt
+
+y_scores = np.array([0.9,0.2,0.85,0.1,0.3,0.05,0.99]) # example probabilities
+precision, recall, thresholds = precision_recall_curve(y_true, y_scores)
+
+ap_val = average_precision_score(y_true, y_scores)
+
+plt.plot(recall, precision, marker='.')
+plt.xlabel('Recall')
+plt.ylabel('Precision')
+plt.title(f'Precision-Recall Curve (AP=\{ap_val:.3f\})')
+plt.show()
+`}/>
+
+### ROC curve
+
+One of the most classic threshold-based curves is the **Receiver Operating Characteristic (ROC)** curve, which plots the **true positive rate (TPR)** against the **false positive rate (FPR)** as the threshold changes.  
+
+<Latex text="\( 
+\mathrm{TPR} = \frac{TP}{TP + FN} = \mathrm{Recall} \)"/>  
+<Latex text="\( 
+\mathrm{FPR} = \frac{FP}{FP + TN}. 
+\)"/>
+
+As we move the threshold from 1.0 (predict everything negative) down to 0.0 (predict everything positive), we trace out a curve in TPR–FPR space. The resulting plot typically starts at (0,0) for high threshold and ends at (1,1) for threshold = 0. A random classifier yields points scattered near the diagonal from (0,0) to (1,1). A highly capable classifier will produce a curve that bows sharply toward the top-left corner, reflecting high TPR for relatively low FPR.
+
+<Image alt="ROC curve depiction" path="" caption="An example ROC curve with TPR on the y-axis and FPR on the x-axis." zoom="false" />
+
+### Area under the curve (AUC) for ROC and PR
+
+The **Area Under the ROC Curve (AUROC or simply ROC AUC)** is the integral or area under the ROC curve. It is a widely cited summary statistic:
+
+- ROC AUC = 1.0 means a perfect rank ordering of positives above negatives.  
+- ROC AUC = 0.5 typically denotes a random classifier.  
+- ROC AUC \< 0.5 implies an "inversely predictive" classifier (one might flip its predictions to get \> 0.5).  
+
+However, be aware that **ROC AUC can sometimes be overly optimistic** in highly imbalanced scenarios, because the false positive rate uses <Latex text="\( FP + TN \)"/> in the denominator, and <Latex text="\( TN \)"/> might be extremely large relative to <Latex text="\( FP \)"/>. For heavily imbalanced data, the PR AUC might be more useful.
+
+<Code text={`
+from sklearn.metrics import roc_curve, roc_auc_score
+
+fpr, tpr, thresholds = roc_curve(y_true, y_scores)
+auc_val = roc_auc_score(y_true, y_scores)
+
+plt.plot(fpr, tpr, label=f'ROC curve (AUC = \{auc_val:.3f\})')
+plt.plot([0,1],[0,1], 'r--', label='Random classifier')
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title('ROC Curve')
+plt.legend()
+plt.show()
+`}/>
+
+### Choosing appropriate thresholds
+
+Selecting a good threshold <Latex text="\(\theta\)"/> is often critical. If you set <Latex text="\(\theta\)"/> too low, you might achieve high recall at the cost of more false positives. If you set it too high, you might reduce false positives but also lose many true positives. The best threshold depends on your project's objectives and the relative costs of errors. In certain real-world pipelines, you might determine the threshold from business constraints, such as: "We want to keep the false discovery rate under 5%." That requirement can be re-expressed in terms of precision or specificity, guiding the threshold choice accordingly.
+
+In advanced scenarios, you might even let the threshold vary across subgroups, or perform cost-sensitive classification, where the cost matrix changes for different types of errors.
+
+
+## Multiclass classification metrics
+
+When you have more than two classes, many of the above definitions require extension. For instance, we can compute a confusion matrix for K classes, resulting in a K×K grid, or we can reduce the problem to multiple binary tasks with strategies such as **One-vs.-All (OvA)** or **One-vs.-One (OvO)**. 
+
+<Image alt="Multiclass confusion matrix example" path="" caption="A 3×3 confusion matrix for a three-class classification problem." zoom="false" />
+
+### Macro, micro, and weighted averaging methods
+
+Most libraries define ways to compute precision, recall, and F1 in a multi-class context by different averaging strategies:
+
+1. **Micro averaging:** Aggregates the contributions of all classes to compute the average metric. In micro averaging, each instance carries the same weight, effectively summing up global TP, FP, FN across all classes, then computing the metric. This approach works well in imbalanced situations if you want each instance to matter equally.
+
+2. **Macro averaging:** Computes the metric independently for each class and then takes the average (hence treating all classes equally). This might not reflect the overall performance if there is a class that has very few instances. By default, each class is given the same weight regardless of frequency.
+
+3. **Weighted averaging:** Similar to macro averaging, but it weights each class's metric by the proportion of instances in that class. This can be a middle ground that accounts for imbalance while also measuring performance across classes distinctly.
+
+Using scikit-learn:
+
+<Code text={`
+from sklearn.metrics import f1_score
+
+# 'micro' aggregates the contributions of all classes
+f1_micro = f1_score(y_true, y_pred, average='micro')
+# 'macro' computes the mean of metrics computed per class
+f1_macro = f1_score(y_true, y_pred, average='macro')
+# 'weighted' accounts for class frequency
+f1_weighted = f1_score(y_true, y_pred, average='weighted')
+`}/>
+
+Choosing which averaging is "best" depends on your domain. If you want to treat all classes equally, macro might be appropriate. If you want to treat all instances equally, micro might be better. Weighted is useful if you want to reflect class frequencies in the final single metric but still partially decouple it from purely micro-based calculations.
+
+### One-vs-all (OvA) and one-vs-one (OvO) strategies
+
+When your base classifier is inherently binary (like SVM in classical usage), you can still handle multiple classes by constructing multiple binary subproblems:
+
+- In **OvA** (also known as **One-vs.-Rest**), for each class <Latex text="\( k \)"/> out of K, you build a separate classifier that separates class <Latex text="\( k \)"/> from the other <Latex text="\( K-1 \)"/> classes. If you have K classes, you end up training K distinct classifiers. 
+- In **OvO**, for each possible pair of classes, you build a classifier that distinguishes those two only. This yields <Latex text="\(\frac{K(K-1)}{2}\)"/> classifiers. At prediction time, one might use a voting scheme or other logic to combine the binary sub-predictions.
+
+Although these strategies originate in model training, they are relevant here because each OvA or OvO sub-classifier might produce its own metrics, and you might then combine them in various ways to arrive at an overall measure.
+
+### Extensions of F1 and accuracy to multiclass problems
+
+- **Multiclass accuracy** still means "the fraction of instances whose predicted label matches the true label." That is straightforward.  
+- **Multiclass F1** can be computed in micro, macro, or weighted ways. A single "global" F1 can be less intuitive to interpret, but libraries handle the details.  
+- **MCC** also has a multiclass extension, though it is more rarely used in day-to-day modeling. The formula generalizes to higher dimensions in a way that captures the correlation between predicted and actual label distributions (see *Wikipedia, "Phi coefficient — Multiclass case"*).
+
+
+## Model comparison and selection
+
+### Selecting the right metric for a given problem. When to use each of the described metrics.
+
+Your choice of metric depends heavily on your domain and your goals:
+
+- **Accuracy** is simplest when classes are balanced, and your primary goal is "just get as many correct as possible."  
+- **Precision** is key when you want to reduce false positives, for instance in tasks where a false alarm is costly (e.g., incorrectly labeling a legitimate user as a fraudster).  
+- **Recall (sensitivity)** is key when you want to minimize false negatives, e.g., not missing any truly fraudulent transaction or not missing a patient with disease.  
+- **F1** is a balanced measure that punishes extreme divergence between precision and recall.  
+- **Specificity** is crucial when you want to reduce the fraction of negative instances misclassified as positive, sometimes used in medical tests to measure the "true negative rate."  
+- **Balanced accuracy** helps when classes are imbalanced, as it ensures that each class's recall is weighted equally.  
+- **MCC** is also robust to imbalance and can be a good single-number measure for overall correlation.  
+- **ROC AUC** is popular for comparing ranking ability or overall discriminative power, but it may overestimate performance on highly skewed data.  
+- **PR AUC** or average precision is often more appropriate than ROC AUC in heavily imbalanced problems where the positive class is rare, as it focuses specifically on the performance in retrieving those positives.  
+
+In research contexts (for example, in *Saito & Rehmsmeier, "The Precision-Recall Plot Is More Informative than the ROC Plot When Evaluating Binary Classifiers on Imbalanced Datasets," PLoS ONE 2015*), it is increasingly common to use precision-recall analysis for problems with large class imbalance.  
+
+### Interpreting multiple metrics together
+
+In many practical projects, I strongly recommend that you do not rely on a single number, but rather look at multiple metrics to gain a holistic picture. For instance, you might examine:
+
+1. The confusion matrix.  
+2. The F1 score.  
+3. The precision-recall curve.  
+4. The ROC curve (and the ROC AUC).  
+5. Possibly the MCC or Balanced Accuracy.  
+
+This multi-dimensional approach is beneficial because each metric highlights different aspects of performance (like how many negatives are misclassified, how many positives are missed, etc.). If your domain has a well-defined cost matrix (where a false positive has cost <Latex text="\( C_{FP} \)"/> and a false negative has cost <Latex text="\( C_{FN} \)"/>), you can combine these metrics or incorporate cost-based metrics (such as the total cost or expected monetary value) to guide your final model selection.
+
+### Practical strategies for comparing model performance
+
+1. **Cross-validation:** Evaluate each candidate model or set of hyperparameters under cross-validation. Compute your chosen metrics on each fold, then average.  
+2. **Statistical tests:** If differences between metrics are small, you can use statistical methods (like a t-test or Wilcoxon signed-rank test on cross-validation folds) to see if the differences are robust.  
+3. **Ranking vs. threshold metrics:** Sometimes you might first examine how well the model ranks positive vs. negative with ROC AUC or PR AUC, then pick a threshold that yields a desirable operating point for precision, recall, or cost.  
+4. **Holdout vs. multiple splits:** If you have enough data, keep a large holdout set to measure generalization. If data is limited, repeated cross-validation can help.  
+
+### Handling imbalanced datasets
+
+**Class imbalance** is extremely common in fields like fraud detection, rare disease diagnosis, or system anomaly detection. Some ways to handle it:
+
+- **Metrics**: Use precision/recall, F1, balanced accuracy, PR AUC, or MCC instead of plain accuracy or ROC AUC alone.  
+- **Resampling**: Oversample the minority class or undersample the majority class, or employ synthetic approaches (e.g., SMOTE).  
+- **Adjust class weights**: Many algorithms (like logistic regression, SVM, or tree-based methods) allow weighting the classes inversely to their frequencies.  
+- **Focus on cost-sensitive learning**: If the cost ratio <Latex text="\( C_{FN} / C_{FP} \)"/> is high, tune the model threshold or training objective to reduce false negatives.  
+
+### Overfitting and proper validation techniques
+
+When you evaluate classification metrics, be aware of **overfitting**: it might inflate your reported performance on the training set. Always measure metrics on a separate validation or test set or via cross-validation. If your dataset is small or if hyperparameters have been heavily tuned, ensure that the test set remains purely out-of-sample. In Kaggle competitions, for instance, an unseen "private leaderboard" portion of the test set is used to detect overfitting to the public leaderboard.  
+
+### Importance of domain context in metric selection
+
+In practice, always consult with domain experts. For example, in diagnosing cancer, you might prefer near-perfect recall, because missing a cancer case is extremely costly. You might tolerate an elevated rate of false positives if they can be quickly double-checked with a cheaper follow-up. Meanwhile, in spam detection, a single false positive (legitimate email flagged as spam) can cause user frustration, so you might focus on precision or specificity. The domain context shapes the trade-offs among metrics.
+
+
+## Conclusion
+
+Classification metrics encompass a vast array of methods to evaluate and compare model performance, each revealing a different facet of how well a classifier is doing. By starting with the confusion matrix and deriving **accuracy**, **precision**, **recall**, and **F1**, you acquire a baseline understanding of your model's performance. From there, you can incorporate advanced considerations like **specificity**, **balanced accuracy**, **MCC**, **precision-recall curves**, **ROC curves**, and the corresponding AUC values. 
+
+For **binary** classification, these metrics can be extended in multiple ways to handle **imbalanced** classes or to produce thorough comparisons using threshold-based approaches. In **multiclass** settings, you can rely on micro, macro, or weighted averaging, or adopt the OvA/OvO strategies in tandem with well-chosen metrics to get a comprehensive understanding.
+
+Model evaluation is rarely about a single metric in isolation. The wise approach is to combine domain knowledge (about costs of errors, imbalance levels, etc.) with a multifaceted metric approach (looking at confusion matrices, threshold-based curves, and single-number summaries). Through this lens, you can select the model and the threshold that truly optimizes for your real-world objectives, ensuring that you neither over- nor underestimate your classifier's capabilities.
+
+When used properly, classification metrics are the essential lens through which you can interpret the predictions of your model and ensure that it genuinely aligns with practical, scientific, or economic requirements. I recommend exploring each of the metrics introduced here in your own data experiments. By systematically analyzing them, you will gain profound insight into how your classifier is behaving and where you might direct your next steps in model improvement or data collection.

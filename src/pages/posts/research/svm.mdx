@@ -1,0 +1,618 @@
+---
+index: 23
+indexCourse: 32
+indexFavorites:
+title: "Support vector machines"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Support vector machines"
+courseCategoryName: "Classification basics & ensembling"
+desc: "Grandpa's old shotgun"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "15.11.2022"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 1
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/support_vector_machines.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/svm"
+slug: "/research/svm"
+---
+
+import Tooltip from "../../../components/Tooltip"
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+{/*
+
+[https://www.youtube.com/watch?v=0g7d-TtPLDk&list=PLA0M1Bcd0w8zxDIDOTQHsX68MCDOAJDtj&index=19](https://www.youtube.com/watch?v=0g7d-TtPLDk&list=PLA0M1Bcd0w8zxDIDOTQHsX68MCDOAJDtj&index=19)
+[https://www.youtube.com/watch?v=PDCLoE-xOWM&list=PLA0M1Bcd0w8zxDIDOTQHsX68MCDOAJDtj&index=20](https://www.youtube.com/watch?v=PDCLoE-xOWM&list=PLA0M1Bcd0w8zxDIDOTQHsX68MCDOAJDtj&index=20)
+[https://www.youtube.com/watch?v=AVcTxA_JeAc&list=PLA0M1Bcd0w8zxDIDOTQHsX68MCDOAJDtj&index=21](https://www.youtube.com/watch?v=AVcTxA_JeAc&list=PLA0M1Bcd0w8zxDIDOTQHsX68MCDOAJDtj&index=21)
+[https://youtu.be/Toet3EiSFcM](https://youtu.be/Toet3EiSFcM)  
+[https://youtu.be/Qc5IyLW_hns](https://youtu.be/Qc5IyLW_hns)  
+[https://youtu.be/mA5nwGoRAOo](https://youtu.be/mA5nwGoRAOo)  
+[https://youtu.be/VngCRWPrNNc](https://youtu.be/VngCRWPrNNc)  
+[https://youtu.be/ZDu3LKv9gOI](https://youtu.be/ZDu3LKv9gOI)  
+[https://youtu.be/bGCafQT5h1s](https://youtu.be/bGCafQT5h1s)  
+[https://youtu.be/9IfT8KXX_9c](https://youtu.be/9IfT8KXX_9c)  
+[https://youtu.be/xqg5S-GrrDQ](https://youtu.be/xqg5S-GrrDQ)  
+[https://youtu.be/JHaqodAQqiI](https://youtu.be/JHaqodAQqiI)  
+[https://youtu.be/93AjE1YY5II](https://youtu.be/93AjE1YY5II)  
+[https://youtu.be/8A7L0GsBiLQ](https://youtu.be/8A7L0GsBiLQ)
+[https://www.youtube.com/watch?v=iEQ0e-WLgkQ](https://www.youtube.com/watch?v=iEQ0e-WLgkQ)
+[https://www.youtube.com/watch?v=OKFMZQyDROI](https://www.youtube.com/watch?v=OKFMZQyDROI)
+[https://www.youtube.com/watch?v=yJNrWmeYLhg](https://www.youtube.com/watch?v=yJNrWmeYLhg)
+[https://www.youtube.com/watch?v=bM4_AstaBZo](https://www.youtube.com/watch?v=bM4_AstaBZo)
+Mathematics for ML: глава 12
+[https://mml-book.github.io/book/mml-book.pdf](https://mml-book.github.io/book/mml-book.pdf)
+Курс от Andrew Ng "Machine Learning" (старая версия с Octave/Matlab): Лекция 12 (см. [здесь](https://www.youtube.com/@machinelearningandai3274/videos))
+[https://www.youtube.com/watch?v=efR1C6CvhmE](https://www.youtube.com/watch?v=efR1C6CvhmE)
+https://neerc.ifmo.ru/wiki/index.php?title=%D0%9C%D0%B5%D1%82%D0%BE%D0%B4_%D0%BE%D0%BF%D0%BE%D1%80%D0%BD%D1%8B%D1%85_%D0%B2%D0%B5%D0%BA%D1%82%D0%BE%D1%80%D0%BE%D0%B2_(SVM)
+https://jakevdp.github.io/PythonDataScienceHandbook/05.07-support-vector-machines.html#Fitting-a-support-vector-machine
+
+Опишите принцип работы алгоритма опорных векторов (см. ML-канал)
+
+*/}
+
+
+{/*
+
+1. Introduction to support vector machines
+     Definition, relevance and motivation.
+2. Mathematical foundations
+    2.1. Linear separability and hyperplanes  
+    2.2. Optimization principles  
+    2.3. Lagrangian formulation  
+    2.4. KKT conditions  
+    2.5. Geometric interpretation of margins
+3. Hard margin SVM 
+    3.1. Concept of the hard margin  
+    3.2. Maximizing the margin 
+    3.3. Constraints and feasibility  
+    3.4. Example in a 2D feature space
+4. Soft margin SVM  
+    4.1. Handling non-separable data  
+    4.2. Slack variables  
+    4.3. Role of the C parameter 
+    4.4. Trade-off between margin and misclassification
+5. Kernel methods
+    5.1. Introduction to kernel functions
+    5.2. The kernel trick
+    5.3. Popular kernels (linear, polynomial, RBF, sigmoid) 
+    5.4. Choosing the right kernel
+6. Nonlinear SVM  
+    6.1. Mapping to higher-dimensional feature space
+    6.2. Data transformation via kernels
+    6.3. Complex decision boundaries
+7. Model selection and hyperparameter tuning  
+    Cross-validation, grid search and randomized search refresher for SVM. Choosing C and kernel parameters. Practical tips for better performance.
+8. SVM in high-dimensional spaces  
+    8.1. Curse of dimensionality  
+    8.2. Feature selection and dimensionality reduction  
+    8.3. Effect of sparsity on SVM
+9. Advantages and limitations  
+    Benefits of SVM. Computational complexity considerations. Overfitting and underfitting concerns. Challenges with large datasets.
+10. Implementation details
+    Popular libraries (scikit-learn, LIBSVM). Practical coding examples. Tips for data preprocessing.
+11. Use cases
+    Text classification, image recognition, biomedical data analysis, financial time series forecasting.
+12. Extensions and advanced topics  
+    One-class SVM, SVM ensembles and boosting, online SVM learning, multiclass SVM strategies.
+
+*/}
+
+
+Support vector machines, often abbreviated as <Highlight>SVMs</Highlight>, stand at the forefront of the family of classical machine learning algorithms used for classification, regression, and related tasks. Originally introduced in the 1990s by Vladimir Vapnik and his collaborators (Cortes and Vapnik, 1995), SVMs quickly became a central method for a wide range of applications such as text categorization, bioinformatics, and image recognition. Today, despite the rapid growth of deep learning architectures, SVMs remain both relevant and widely deployed, especially in scenarios where data is not excessively large or where interpretability and theoretical guarantees are particularly desirable.
+
+An SVM's core motivation lies in defining an optimal boundary — or hyperplane — between different classes of data in such a way that the margin (i.e., the gap) between the classes and the boundary is maximized. In essence, one can view the SVM algorithm as trying to find a decision boundary that is as far as possible from any training data point. This "maximum margin" principle helps SVMs achieve robust generalization on a variety of problems.
+
+Unlike purely heuristic classifiers, SVMs rest on a foundation of convex optimization principles and geometric reasoning. Furthermore, their ability to handle nonlinear decision boundaries is powered by the concept of kernel functions, which allow SVMs to operate in (potentially) very high-dimensional feature spaces without explicitly computing every feature dimension. Thanks to this so-called "kernel trick," SVMs can learn extremely complex patterns while retaining mathematically elegant formulations and well-understood optimization properties.
+
+Where do SVMs fit in the modern data scientist's toolbox? Because they can often achieve high accuracy on moderately sized datasets, are relatively robust to overfitting (once carefully regularized), and have a transparent mathematical foundation, they are frequently considered a go-to method for classical ML tasks such as text classification, image categorization, certain biomedical analyses, and more. Their interpretability can also be more direct compared to many deep learning approaches — one can often identify a subset of "support vectors" that are critical for defining the boundary. In short, SVMs fill a niche wherein strong mathematical guarantees, high accuracy, and moderate data scale meet.
+
+In this article, we will dive into the underlying mathematics of support vector machines, explore both the "hard margin" and "soft margin" formulations, discuss the role of kernel methods, examine hyperparameter tuning considerations, reflect on SVM applications in high-dimensional data settings, highlight real-world use cases, and consider advanced extensions such as one-class SVMs and ensemble strategies. This piece aims to give readers a deep, well-rounded, and theoretically grounded perspective on what SVMs do, how they work, and when (and how) to use them.  
+
+To aid your understanding, we will include formulas (in a standardized LaTeX format), conceptual diagrams (placeholder image tags), and some code snippets in Python to illustrate the essential ideas.
+
+
+## 2. Mathematical foundations
+
+Support vector machines are, at their core, grounded in geometry, linear algebra, optimization, and statistical learning theory. Before we see how the final classification or regression algorithm emerges, it is important to walk through a few basic ideas: linear separability, hyperplanes, the nature of optimization in SVMs, the Lagrangian formulation, Karush-Kuhn-Tucker (KKT) conditions, and the geometric interpretation of margins.
+
+### 2.1. Linear separability and hyperplanes
+
+A fundamental concept in SVM theory is that of a <Highlight>hyperplane</Highlight>. In an <Latex text="\(n\)"/>-dimensional feature space, a hyperplane is an <Latex text="\((n-1)\)"/>-dimensional affine subspace that splits the space into two half-spaces. Concretely, we say a hyperplane <Latex text="\(H\)"/> can be represented in the form
+
+<Latex text="\( \langle \mathbf{w}, \mathbf{x} \rangle - b = 0 \)"/>
+
+where <Latex text="\(\mathbf{w} \in \mathbb{R}^n\)"/> is a weight (or normal) vector, and <Latex text="\(b \in \mathbb{R}\)"/> is a bias (or intercept) term. The vector <Latex text="\(\mathbf{w}\)"/> is orthogonal (normal) to the hyperplane, while <Latex text="\(\frac{b}{\|\mathbf{w}\|}\)"/> can be viewed as a scalar shift relative to the origin.
+
+If we have a dataset of points <Latex text="\(\{\mathbf{x}_i\}\)"/> in <Latex text="\(\mathbb{R}^n\)"/>, each with a class label <Latex text="\(y_i \in \{-1, +1\}\)"/>, we say the data is <Highlight>linearly separable</Highlight> if there exists at least one hyperplane such that all points of class <Latex text="\(+1\)"/> lie in one half-space, and all points of class <Latex text="\(-1\)"/> lie in the other. For such a scenario, we need:
+
+<Latex text="\( 
+y_i (\langle \mathbf{w}, \mathbf{x}_i \rangle - b) > 0, \quad \forall i 
+\)"/>
+
+Linear separability assumes no overlapping or ambiguous class assignments. While this assumption is not always realistic in real-world data, understanding it paves the way for the "hard margin" SVM. Later, we will see how the "soft margin" variant relaxes this assumption.
+
+
+### 2.2. Optimization principles
+
+The SVM approach is fundamentally an optimization problem. We do not simply want any hyperplane that separates the classes; we want the one that maximizes the <Highlight>margin</Highlight>, the distance from the decision boundary to the nearest points of any class. In the linear separable case, the margin <Latex text="\(\gamma\)"/> can be viewed as:
+
+<Latex text="\(
+\gamma = \min_{i} \left\{ \frac{| \langle \mathbf{w}, \mathbf{x}_i \rangle - b |}{\|\mathbf{w}\|} \right\}.
+\)"/>
+
+An alternative but common approach is to reformulate the problem so that the hyperplane with a specific normalization, typically <Latex text="\(\min_i y_i(\langle \mathbf{w}, \mathbf{x}_i \rangle - b) = 1\)"/>, is found. Then, maximizing the margin corresponds to minimizing <Latex text="\(\|\mathbf{w}\|^2\)"/> subject to the constraints <Latex text="\(y_i(\langle \mathbf{w}, \mathbf{x}_i \rangle - b) \geq 1\)"/>. The margin in that formulation ends up being <Latex text="\(\frac{2}{\|\mathbf{w}\|}\)"/>, so maximizing it is equivalent to minimizing <Latex text="\(\frac{1}{2}\|\mathbf{w}\|^2\)"/>.
+
+Hence, from an optimization standpoint, we can specify the <Highlight>primal problem</Highlight> for the hard margin scenario:
+
+<Latex text="\[
+\begin{cases}
+\frac{1}{2}\| \mathbf{w} \|^2 \rightarrow \min_{\mathbf{w}, b} \\
+\text{subject to: } y_i(\langle \mathbf{w}, \mathbf{x}_i \rangle - b) \geq 1, \; i=1,\ldots,\ell.
+\end{cases}
+\]"/>
+
+
+### 2.3. Lagrangian formulation
+
+Because the above is a (convex) quadratic optimization problem with linear constraints, we can apply standard Lagrangian methods. We define Lagrange multipliers <Latex text="\(\lambda_i \geq 0\)"/> (one for each constraint), and write the <Highlight>Lagrangian</Highlight>:
+
+<Latex text="\[
+\mathcal{L}(\mathbf{w}, b, \boldsymbol{\lambda}) = \frac{1}{2}\|\mathbf{w}\|^2 - \sum_{i=1}^{\ell} \lambda_i 
+\bigl( y_i(\langle \mathbf{w}, \mathbf{x}_i \rangle - b) - 1 \bigr).
+\]"/>
+
+We want to find the saddle point of <Latex text="\(\mathcal{L}(\mathbf{w}, b, \boldsymbol{\lambda})\)"/>. After taking partial derivatives with respect to <Latex text="\(\mathbf{w}\)"/> and <Latex text="\(b\)"/> and enforcing stationarity, one can re-express the problem in a <Highlight>dual form</Highlight> that depends solely on the Lagrange multipliers <Latex text="\(\lambda_i\)"/>. The dual problem reads:
+
+<Latex text="\[
+\begin{cases}
+W(\boldsymbol{\lambda}) = \sum_{i=1}^{\ell}\lambda_i 
+- \frac{1}{2}\sum_{i=1}^\ell \sum_{j=1}^\ell \lambda_i \lambda_j y_i y_j \langle \mathbf{x}_i,\mathbf{x}_j\rangle 
+\rightarrow \max_{\boldsymbol{\lambda}}, \\
+\text{subject to } \lambda_i \geq 0,\; \sum_{i=1}^{\ell} \lambda_i y_i = 0.
+\end{cases}
+\]"/>
+
+This <Highlight>dual optimization</Highlight> is also a quadratic program, but interestingly it involves only dot products <Latex text="\(\langle \mathbf{x}_i, \mathbf{x}_j\rangle\)"/> of data points. The solution yields a vector of optimal multipliers <Latex text="\(\boldsymbol{\lambda}^*\)"/>. Only a portion of these multipliers (those corresponding to the so-called <Highlight>support vectors</Highlight>) turn out to be nonzero. The final classifier can be expressed as:
+
+<Latex text="\( 
+a(\mathbf{x}) = \text{sign}\!\Bigl(\sum_{i=1}^\ell \lambda_i^* \, y_i \,\langle \mathbf{x}_i, \mathbf{x}\rangle - b\Bigr).
+\)"/>
+
+
+### 2.4. KKT conditions
+
+A crucial theoretical component behind SVM optimization are the <Highlight>KKT (Karush-Kuhn-Tucker) conditions</Highlight>. They provide necessary and sufficient conditions for optimality in constrained optimization problems. For our primal-dual setup, the KKT conditions revolve around:
+
+1. **Primal feasibility**: <Latex text="\(y_i (\langle \mathbf{w}, \mathbf{x}_i\rangle - b) \geq 1\)"/>.
+2. **Dual feasibility**: <Latex text="\(\lambda_i \geq 0\)"/>.
+3. **Complementary slackness**: <Latex text="\(\lambda_i \bigl(y_i(\langle \mathbf{w}, \mathbf{x}_i\rangle - b) - 1\bigr) = 0\)"/>.
+
+The final condition implies that if <Latex text="\(\lambda_i > 0\)"/>, then <Latex text="\(y_i(\langle \mathbf{w}, \mathbf{x}_i\rangle - b) = 1\)"/>; meaning the point <Latex text="\(\mathbf{x}_i\)"/> lies exactly on the boundary of the margin region. These points are the "support vectors." Points for which <Latex text="\(\lambda_i = 0\)"/> do not affect the boundary directly because they lie strictly outside the margin.
+
+
+### 2.5. Geometric interpretation of margins
+
+From a purely geometric perspective, SVMs attempt to find the hyperplane that creates the largest "no man's land" between classes. Consider two parallel hyperplanes:
+
+<Latex text="\(
+\langle \mathbf{w}, \mathbf{x}\rangle - b = 1 
+\quad \text{and} \quad
+\langle \mathbf{w}, \mathbf{x}\rangle - b = -1.
+\)"/>
+
+No training points from either class can lie between these hyperplanes in the hard margin scenario. The margin, or width of that forbidden region, is <Latex text="\( \frac{2}{\|\mathbf{w}\|}\)"/>. Hence, maximizing that margin is the same as minimizing <Latex text="\(\|\mathbf{w}\|\)"/>, which is precisely what the SVM solution accomplishes.
+
+Put in simpler terms, the SVM tries to "push apart" the two classes as far as possible, subject to all data constraints. Points that end up right on the boundary hyperplanes are the critical "support vectors." Changes to any points that are not support vectors do not affect the final solution, which is one reason SVM can be quite robust and computationally efficient once the support vectors are identified.
+
+
+## 3. Hard margin SVM
+
+When a dataset is perfectly linearly separable (no overlap between classes), the classical approach is the <Highlight>hard margin SVM</Highlight>. We call it "hard margin" because the algorithm insists that no training data points lie on the wrong side of the boundary. The margin must remain entirely free of data points from either class.
+
+### 3.1. Concept of the hard margin
+
+In the hard margin setup, the constraints:
+
+<Latex text="\( y_i (\langle \mathbf{w}, \mathbf{x}_i \rangle - b) \geq 1 \)"/>
+
+must hold for all data points <Latex text="\(\mathbf{x}_i\)"/>. Equivalently, no data point can "violate" the margin. When data is genuinely separable, an infinite number of separating hyperplanes may exist. SVM narrows these down to the single hyperplane that yields the widest margin.
+
+### 3.2. Maximizing the margin
+
+As mentioned, maximizing the margin
+
+<Latex text="\( \frac{2}{\|\mathbf{w}\|} \)"/>
+
+is rephrased as minimizing <Latex text="\(\frac{1}{2}\|\mathbf{w}\|^2\)"/>. Hence, the primal form:
+
+<Latex text="\[
+\begin{cases}
+\frac{1}{2}\|\mathbf{w}\|^2 \rightarrow \min_{\mathbf{w}, b},\\
+y_i(\langle \mathbf{w}, \mathbf{x}_i\rangle - b) \geq 1,\quad \forall i.
+\end{cases}
+\]"/>
+
+Geometrically, the algorithm tries to push the decision boundary to be as far from each class as possible.  
+
+### 3.3. Constraints and feasibility
+
+If the dataset is <Tooltip text="Meaning that there are no misclassifications or overlapping distributions of classes.">truly linearly separable</Tooltip>, then the feasible region for the primal problem is not empty. In other words, there indeed exists some hyperplane that classifies everything perfectly. However, in practice, many (if not most) real-world datasets are not strictly linearly separable — noise, outliers, or inherent class overlap typically cause minor or major violations. That is why the "hard margin" approach, while conceptually enlightening, is too restrictive. 
+
+### 3.4. Example in a 2D feature space
+
+Imagine a simple two-dimensional dataset:  
+<Image alt="2D dataset with classes" path="" caption="A toy 2D dataset with two linearly separable classes." zoom="false" />
+
+A naive linear classifier might yield many possible separating lines. However, the SVM solution emerges as the unique line maximizing the distance to the nearest points. In the figure, the margin lines are drawn parallel to the central decision boundary, and the points touching those lines are the support vectors.  
+
+To see this concretely in code, consider the Python snippet below (using scikit-learn). We assume we have some data arrays `X` (shape `[n_samples, 2]`) and `y` (with values -1 or +1):
+
+```
+<Code text={`
+import numpy as np
+from sklearn.svm import SVC
+import matplotlib.pyplot as plt
+
+# Suppose X, y represent a linearly separable 2D dataset
+model = SVC(kernel='linear', C=1e10)
+model.fit(X, y)
+
+# Let's plot the data, decision boundary, and margin
+plt.scatter(X[:, 0], X[:, 1], c=y, cmap='bwr')
+
+# Helper function to plot the boundary
+def plot_svc_decision_function(clf):
+    w = clf.coef_[0]
+    b = clf.intercept_[0]
+    x_coords = np.linspace(X[:,0].min(), X[:,0].max(), 100)
+    # Decision boundary: w0 * x + w1 * y - b = 0 => y = (b - w0*x)/w1
+    y_coords = (b - w[0]*x_coords) / w[1]
+    plt.plot(x_coords, y_coords, "k-")
+
+plot_svc_decision_function(model)
+plt.title("Hard Margin SVM in 2D")
+plt.show()
+`}/>
+```
+
+This simplistic example emphasizes the geometry behind SVM: once a hyperplane is found, the margin is "fixed."
+
+
+## 4. Soft margin SVM
+
+Real datasets are rarely perfectly separable. The presence of outliers, inherent overlaps, or minor label noise can make strict separation impossible or unwise. For instance, a single mislabeled training point could force the margin to shrink drastically if we insist upon zero classification error. To address this, the <Highlight>soft margin</Highlight> approach was introduced.
+
+### 4.1. Handling non-separable data
+
+<Highlight>Soft margin SVM</Highlight> essentially allows some points to violate the margin constraints if doing so yields a better overall solution. In other words, the algorithm tolerates a limited number of misclassified or near-boundary points but penalizes them in the objective function. This new perspective provides a more flexible margin that can adapt to the presence of outliers.
+
+### 4.2. Slack variables
+
+To implement the concept of soft margins, we introduce <Highlight>slack variables</Highlight> <Latex text="\(\{\xi_i\}\)"/>, one per training point, that measure how much each point <Latex text="\(\mathbf{x}_i\)"/> violates the ideal margin condition. Concretely, we replace the original constraints with:
+
+<Latex text="\(
+y_i(\langle \mathbf{w}, \mathbf{x}_i \rangle - b) \geq 1 - \xi_i, \quad 
+\xi_i \geq 0, \quad i = 1,\ldots,\ell.
+\)"/>
+
+If <Latex text="\(\xi_i = 0\)"/>, the point is correctly placed outside (or on) the margin boundary. But if <Latex text="\(\xi_i > 0\)"/>, it means the point <Latex text="\(\mathbf{x}_i\)"/> is within the margin or even misclassified. Larger <Latex text="\(\xi_i\)"/> implies a more severe violation.
+
+### 4.3. Role of the C parameter
+
+We must decide how much penalty to assign to slack variables: we do not want to allow too many misclassifications without cost. Thus, the optimization objective becomes:
+
+<Latex text="\[
+\frac{1}{2}\|\mathbf{w}\|^2 + C \sum_{i=1}^\ell \xi_i \rightarrow \min_{\mathbf{w}, b, \boldsymbol{\xi}},
+\]"/>
+
+subject to <Latex text="\(y_i(\langle \mathbf{w}, \mathbf{x}_i\rangle - b)\ge 1-\xi_i\)"/> and <Latex text="\(\xi_i \ge 0\)"/>. The constant <Highlight><Latex text="\(C\)"/></Highlight> is a critical hyperparameter. It balances two conflicting goals:  
+- **Minimize <Latex text="\(\|\mathbf{w}\|\)"/>** so that the margin is large.  
+- **Minimize <Latex text="\(\sum \xi_i\)"/>** so that margin violations are limited.
+
+When <Latex text="\(C\)"/> is very large, the term <Latex text="\(C \sum \xi_i\)"/> dominates, meaning the model tries hard to reduce slack. This typically forces the margin to become narrower, because we want fewer misclassifications. Conversely, a very small <Latex text="\(C\)"/> means we care less about misclassification: the margin can expand at the cost of a few more errors. Balancing <Latex text="\(C\)"/> to reflect the appropriate trade-off is vital in practice.
+
+### 4.4. Trade-off between margin and misclassification
+
+Setting <Latex text="\(C\)"/> too high can lead to overfitting; the SVM can become too "tightly" shaped around outliers in an effort to avoid margin violations at all costs. Setting <Latex text="\(C\)"/> too low may lead to underfitting, because the margin might expand so much that it incorrectly lumps some data in the wrong region.
+
+In real-world tasks, one typically tunes <Latex text="\(C\)"/> using cross-validation. By systematically testing multiple values of <Latex text="\(C\)"/> and measuring out-of-sample performance, we identify the sweet spot that balances margin width against classification accuracy on unseen data.
+
+
+## 5. Kernel methods
+
+One of the greatest breakthroughs that catapulted SVMs to fame is the <Highlight>kernel trick</Highlight>. The main concept is: we can transform a (potentially) low-dimensional input space into a higher-dimensional feature space where linear separation might become easier or more expressive. Instead of explicitly mapping data, we use specialized kernel functions that compute inner products in the higher-dimensional space without constructing that space explicitly.
+
+### 5.1. Introduction to kernel functions
+
+A <Highlight>kernel function</Highlight>, <Latex text="\(K(\mathbf{x}, \mathbf{x}')\)"/>, is a function that takes two data points <Latex text="\(\mathbf{x}\)"/> and <Latex text="\(\mathbf{x}'\)"/> from the input space and outputs the inner product of their images in some feature space <Latex text="\(\mathcal{H}\)"/>:
+
+<Latex text="\( 
+K(\mathbf{x}, \mathbf{x}') = \langle \phi(\mathbf{x}), \phi(\mathbf{x}') \rangle_{\mathcal{H}}.
+\)"/>
+
+Because an SVM's dual formulation depends only on dot products of training points, if we replace <Latex text="\(\langle \mathbf{x}_i, \mathbf{x}_j\rangle\)"/> with <Latex text="\(K(\mathbf{x}_i, \mathbf{x}_j)\)"/>, we effectively allow the SVM to "operate" in a possibly very high-dimensional space <Latex text="\(\mathcal{H}\)"/> without enumerating it explicitly. The classical name for this procedure is the "kernel trick."
+
+### 5.2. The kernel trick
+
+The kernel trick is best understood by example. Suppose we suspect that the data is not linearly separable in <Latex text="\(\mathbb{R}^2\)"/>, but mapping it into some <Latex text="\(\mathbb{R}^3\)"/> with features like <Latex text="\((x_1, x_2, x_1^2 + x_2^2)\)"/> might help. Instead of computing the new coordinates explicitly, we define:
+
+<Latex text="\( K(\mathbf{x}, \mathbf{x}') = (\mathbf{x} \cdot \mathbf{x}')^2 \)"/>
+
+or some function that matches <Latex text="\(\langle \phi(\mathbf{x}), \phi(\mathbf{x}')\rangle\)"/>. A more common example is the <Highlight>Radial Basis Function (RBF) kernel</Highlight>:
+
+<Latex text="\( 
+K(\mathbf{x}, \mathbf{x}') = \exp\left(-\gamma \|\mathbf{x}-\mathbf{x}'\|^2\right).
+\)"/>
+
+Using the RBF kernel, the SVM can effectively place flexible nonlinear boundaries in the original space by implementing linear separation in a much higher (potentially infinite) dimensional feature space.
+
+### 5.3. Popular kernels
+
+Among the many kernel types, some of the most popular are:
+
+1. **Linear kernel**: <Latex text="\(K(\mathbf{x}, \mathbf{x}') = \langle \mathbf{x}, \mathbf{x}' \rangle\)"/>.  
+   - Simpler approach, typically used for linearly separable data or high-dimensional text classification tasks.
+
+2. **Polynomial kernel**: <Latex text="\(K(\mathbf{x}, \mathbf{x}') = \bigl(\langle \mathbf{x}, \mathbf{x}' \rangle + c\bigr)^d\)"/>.  
+   - Allows polynomial decision boundaries with adjustable degree <Latex text="\(d\)"/>.
+
+3. **RBF (Gaussian) kernel**: <Latex text="\(K(\mathbf{x}, \mathbf{x}') = \exp\bigl(-\gamma \|\mathbf{x} - \mathbf{x}'\|^2\bigr)\)"/>.  
+   - Most widely used in practice. <Latex text="\(\gamma\)"/> controls the "spread" of the kernel.
+
+4. **Sigmoid kernel**: <Latex text="\(K(\mathbf{x}, \mathbf{x}') = \tanh\bigl(\alpha \langle \mathbf{x}, \mathbf{x}'\rangle + c\bigr)\)"/>.  
+   - Inspired by neural networks. Less common in standard SVM usage unless certain conditions are met.
+
+### 5.4. Choosing the right kernel
+
+Selecting a kernel typically involves heuristics or domain knowledge:
+
+- For text classification with extremely high-dimensional but sparse features, a linear kernel often suffices.  
+- For moderate dimensional data with potential nonlinear relationships, an RBF kernel is a popular choice.  
+- Polynomial kernels may be beneficial if one expects polynomial-like decision boundaries.  
+- Sigmoid kernels are seldom used except in specialized circumstances.
+
+In general, the RBF kernel is a strong default for nonlinear cases, but <Highlight>model selection</Highlight> (e.g., cross-validation) is used to fine-tune kernel-specific hyperparameters, such as <Latex text="\(\gamma\)"/> in the RBF kernel or the degree <Latex text="\(d\)"/> in the polynomial kernel.
+
+
+## 6. Nonlinear SVM
+
+The introduction of kernels is essentially the key that transforms a linear SVM into a <Highlight>nonlinear SVM</Highlight>. Instead of building linear separators in the raw input space, the SVM effectively builds linear separators in a (potentially) very complicated feature space. Nonlinear SVM thus can achieve extremely flexible decision boundaries.
+
+### 6.1. Mapping to higher-dimensional feature space
+
+Formally, we imagine a mapping <Latex text="\(\phi: \mathbb{R}^n \to \mathcal{H}\)"/>. The dimension of <Latex text="\(\mathcal{H}\)"/> might be extremely large (possibly infinite). But the SVM never needs to compute <Latex text="\(\phi(\mathbf{x})\)"/> explicitly. It uses the kernel function <Latex text="\(K(\mathbf{x}, \mathbf{x}') = \langle \phi(\mathbf{x}), \phi(\mathbf{x}')\rangle\)"/>.
+
+### 6.2. Data transformation via kernels
+
+By applying the kernel trick, even complicated data distributions in the original space can become more easily separable in <Latex text="\(\mathcal{H}\)"/>. This conceptual transformation is one of the reasons SVMs became so popular: practitioners were able to produce state-of-the-art results on numerous benchmarks using RBF kernels, for example.
+
+### 6.3. Complex decision boundaries
+
+Visually, in 2D or 3D plots, we see that SVM boundaries with RBF kernels can warp around clusters of data, effectively building local "bubbles" of decision regions. This local adaptivity is controlled by the kernel's parameters (e.g., <Latex text="\(\gamma\)"/> in the RBF kernel). Small <Latex text="\(\gamma\)"/> values produce smoother, more global boundaries, whereas large <Latex text="\(\gamma\)"/> values create numerous tight local boundaries that can overfit if <Latex text="\(\gamma\)"/> is not tuned properly.
+
+
+## 7. Model selection and hyperparameter tuning
+
+An SVM's performance hinges critically on the choice of hyperparameters, including <Latex text="\(C\)"/>, the kernel type, and kernel-specific parameters such as <Latex text="\(\gamma\)"/> (in the RBF kernel) or the polynomial degree <Latex text="\(d\)"/>. In practice, one seldom picks these values arbitrarily. Instead, you employ:
+
+- **Cross-validation** (e.g., k-fold cross-validation).
+- **Grid search** or **random search** for a structured or random exploration of candidate hyperparameter values.
+- **Bayesian optimization** or other advanced methods in more demanding scenarios.
+
+After systematically testing, you select the combination that yields the best validation performance. 
+
+Some typical guidelines:
+
+1. Start with a moderate grid of <Latex text="\((C, \gamma)\)"/> pairs if using an RBF kernel (e.g., <Latex text="\(C \in \{1, 10, 100\}\)"/>, <Latex text="\(\gamma \in \{0.01, 0.1, 1\}\)"/>).  
+2. Evaluate performance (accuracy, F1-score, etc.) on validation folds.  
+3. Narrow the grid or do a finer search around regions of the hyperparameter space that look promising.  
+
+A quick illustration with Python:
+
+```
+<Code text={`
+from sklearn.model_selection import GridSearchCV
+from sklearn.svm import SVC
+
+param_grid = {
+    'C': [0.1, 1, 10, 100],
+    'gamma': [0.001, 0.01, 0.1, 1],
+    'kernel': ['rbf']
+}
+
+model = SVC()
+grid_search = GridSearchCV(model, param_grid, cv=5)
+grid_search.fit(X, y)
+
+print("Best parameters:", grid_search.best_params_)
+print("Best CV score:", grid_search.best_score_)
+`}/>
+```
+
+With this approach, one systematically explores a variety of hyperparameter combinations to identify those that generalize best to unseen data.
+
+
+## 8. SVM in high-dimensional spaces
+
+<Highlight>SVMs</Highlight> historically gained popularity for text classification partly because they can handle high-dimensional input spaces surprisingly well, especially if many features are sparse. The interplay of margin-based classification, kernel methods, and the possibility of ignoring irrelevant features can yield robust performance even as <Latex text="\(n\)"/> grows large. However, one must still remain mindful of potential pitfalls.
+
+### 8.1. Curse of dimensionality
+
+In extremely high-dimensional settings (tens of thousands or more features), distances between data points can become less interpretable (this is sometimes referred to as the "curse of dimensionality"). While SVMs can remain more stable than some other methods, the risk of overfitting does rise if one does not regularize properly (choose <Latex text="\(C\)"/> suitably) or if the kernel is too flexible.
+
+### 8.2. Feature selection and dimensionality reduction
+
+When <Latex text="\(n\)"/> is extremely large, dimensionality reduction or feature selection can be beneficial before training the SVM:
+
+- **Principal Component Analysis (PCA)** or other linear transforms to reduce dimension.  
+- **Regularization-based feature selection** approaches to prune irrelevant features.  
+- **Domain-driven feature engineering** to isolate relevant signals.
+
+Doing so not only reduces the risk of overfitting but can substantially lower computational costs.
+
+### 8.3. Effect of sparsity on SVM
+
+Many real high-dimensional tasks (like text classification) exhibit sparse feature vectors. The linear SVM with <Highlight>hinge loss</Highlight> can handle these efficiently, and kernel-based approaches can be more expensive but still remain feasible if specialized optimizations or approximate kernel expansions are used. Overall, SVM is among the tried-and-true methods for high-dimensional data, but must be carefully tuned to avoid overfitting or excessive computational overhead.
+
+
+## 9. Advantages and limitations
+
+SVMs come with a range of practical <Highlight>advantages</Highlight>:
+
+1. **Robustness to Overfitting (once tuned)**: The maximum margin principle helps reduce structural risk.  
+2. **Flexibility with Kernels**: You can incorporate domain knowledge by designing or choosing specific kernels.  
+3. **Unique Global Solution**: The underlying optimization is convex, meaning you get a single global optimum.  
+4. **Interpretability**: The notion of support vectors often yields some interpretability about which data points are key in shaping the decision boundary.
+
+However, certain <Highlight>limitations</Highlight> must be acknowledged:
+
+1. **Sensitivity to Hyperparameters**: SVM performance can degrade significantly if <Latex text="\(C\)"/> or kernel parameters (<Latex text="\(\gamma\)"/>, polynomial degree, etc.) are not chosen well.  
+2. **Computational Complexity**: For extremely large datasets, especially beyond tens or hundreds of thousands of samples, SVM training can become computationally intensive (though specialized methods like SMO help).  
+3. **Difficulty with Non-Sparse, High-Dimensional Data**: Kernel computations can blow up in memory/time cost if not carefully managed.  
+4. **Interpretation**: Although simpler than deep nets, the learned boundaries in kernel spaces can still be quite abstract, making it trickier to interpret than, say, a shallow decision tree for some audiences.
+
+
+## 10. Implementation details
+
+There are multiple production-quality and research-grade libraries for training and using SVMs. Two widely used ones include:
+
+- **scikit-learn (Python)**: wraps LIBSVM and LIBLINEAR, providing easy access to SVC, SVR, LinearSVC, etc.
+- **LIBSVM**: a classic, standalone C++ library that supports a variety of kernels and tasks (classification, regression, one-class).
+- **LIBLINEAR**: specialized for linear SVMs and logistic regression on large-scale problems.
+
+In Python, the <Highlight>scikit-learn</Highlight> library is one of the most common go-tos. For instance:
+
+```
+<Code text={`
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.svm import SVC
+from sklearn.metrics import accuracy_score
+
+# Suppose X, y are input features and labels
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Create an RBF-kernel SVC with some hyperparameters
+clf = SVC(kernel='rbf', C=10, gamma=0.1)
+clf.fit(X_train, y_train)
+
+# Predict on test
+y_pred = clf.predict(X_test)
+acc = accuracy_score(y_test, y_pred)
+print("Test Accuracy = ", acc)
+`}/>
+```
+
+### Practical coding tips
+
+1. **Feature Scaling**: Many SVM implementations assume features are on a comparable scale. It is usually recommended to standardize or normalize features before fitting an SVM with an RBF or polynomial kernel.
+2. **Parameter Sweeps**: Use cross-validation-based grid or random search for hyperparameters, especially <Latex text="\(C\)"/> and <Latex text="\(\gamma\)"/>. 
+3. **Probability Estimates**: If you need probability estimates, you can enable <Highlight>Platt scaling</Highlight> in scikit-learn (by passing `probability=True` to the `SVC`). This can slow down training somewhat.
+4. **Sparse Data**: If your data is large but sparse, consider using `LinearSVC` or specialized libraries like LIBLINEAR or vowpal wabbit (though the latter is not strictly an SVM).
+
+### Data preprocessing
+
+- **Outlier detection**: SVM can be sensitive to outliers, especially if <Latex text="\(C\)"/> is large. Consider removing outliers or use robust scaling.
+- **Balancing classes**: If you have severely imbalanced classes, weigh them differently or sample your data to get a balanced training set.
+
+
+## 11. Use cases
+
+SVMs have been successfully applied to numerous domains:
+
+1. **Text classification**: Spam detection, sentiment analysis, news topic classification. Linear SVM with L2 regularization remains a strong baseline in high-dimensional text tasks due to its efficiency and performance.  
+2. **Image recognition**: Particularly in the past, before deep learning's dominance, SVMs were popular for tasks like face recognition or object detection. Feature descriptors (HOG, SIFT) fed into an RBF-kernel SVM can deliver robust results.  
+3. **Biomedical data analysis**: In gene expression classification (microarray data), SVMs often perform well because these tasks typically have high-dimensional, relatively small sample-size data.  
+4. **Financial time series forecasting**: SVM regression (SVR) can be used to predict stock prices or other time-dependent signals. Though tricky and often overshadowed by advanced neural architectures in current practice, SVR is still a candidate for smaller or well-structured time series tasks.
+
+In many of these scenarios, SVM-based solutions were once the gold standard or near top-of-the-line. Although they sometimes have been outperformed by modern deep models on large-scale tasks, SVMs can still remain extremely competitive or even superior in specialized or small-to-mid scale tasks.
+
+
+## 12. Extensions and advanced topics
+
+The SVM framework is broad and can be adapted in various ways to meet specialized demands.
+
+1. **One-Class SVM**  
+   - Targets anomaly or novelty detection. Learns a boundary around "normal" data and can then label outliers or novel points that fall outside. This approach is popular in fraud detection, intrusion detection, or any domain where "normal vs. abnormal" is the key question.
+
+2. **SVM ensembles and boosting**  
+   - While decision trees are commonly used in boosting or bagging, there exist ensemble strategies with SVM base learners. For instance, each SVM might see different subsets of data or features, and their decisions can be combined for a final majority or weighted vote.  
+
+3. **Online SVM learning**  
+   - Traditional SVM training is batch-based, meaning it sees the entire training set at once. Online SVM algorithms incrementally update the model with incoming data. This can be important for streaming or large-scale applications.  
+
+4. **Multiclass SVM strategies**  
+   - SVMs are fundamentally binary classifiers. For multiclass problems, we often combine multiple SVMs using "one-vs-one" or "one-vs-rest" schemes. In scikit-learn, passing a multiclass label set to an `SVC` automatically invokes these strategies under the hood.  
+
+5. **SVR (Support Vector Regression)**  
+   - The same maximum margin principle can be adapted to regression tasks, leading to Support Vector Regression. Instead of classification constraints, one defines an <Latex text="\(\epsilon\)"/>-insensitive tube around the regression function, controlling how much deviation is tolerated.  
+
+Beyond these widely known aspects, there are even more specialized modifications (e.g., <Highlight>structured SVMs</Highlight> for sequence labeling, <Highlight>weighted SVMs</Highlight> for cost-sensitive tasks, etc.). The fundamental principle remains the same: harness margin-based optimization and, if appropriate, kernel expansions to achieve robust generalization.
+
+
+## (Optional) Additional deep-dive on SVM formulation
+
+In more advanced treatments, one can explore the full details of:
+
+- **Sequential Minimal Optimization (SMO)**: An efficient algorithm for solving the SVM dual problem incrementally by focusing on pairs of Lagrange multipliers at a time (Platt, 1998). 
+- **Convergence properties**: SVM solutions are guaranteed to find the global minimum of the convex objective function. 
+- **Statistical learning theory**: SVMs are often seen as implementing <Highlight>Structural Risk Minimization</Highlight>, controlling the VC dimension through margin maximization.  
+
+While these topics may be beyond the immediate scope of this course article, they are a fascinating extension for those who want to fully internalize why SVMs have such strong theoretical underpinnings.
+
+
+## Conclusion (or final thoughts)
+
+Support vector machines remain a pillar of modern machine learning, combining geometric insights, convex optimization, and a flexible kernel framework into a single cohesive method. Their lineage stretches from basic linear classification to sophisticated nonlinear tasks, from small dataset classification to high-dimensional text and bioinformatics, and from classical supervised classification or regression to specialized forms like one-class and structured SVMs.
+
+While deep learning has stolen the limelight in many large-scale pattern recognition problems, SVMs endure in multiple applied domains and academic benchmarks alike — particularly when data is not exceedingly large, or interpretability and theoretical guarantees matter. The synergy of margin maximization and kernel expansions ensures that SVMs will remain part of the essential toolbox for scientists, researchers, and ML practitioners in the foreseeable future.
+
+---
+
+Below is a brief summary of essential points one should remember about SVMs:
+
+- They define an optimal hyperplane in a high-dimensional space, separating classes with maximum margin.  
+- The "kernel trick" allows them to learn linear boundaries in rich transformed spaces, enabling complex nonlinear boundaries in the original space.  
+- The soft margin extension is crucial for handling non-separable data.  
+- Careful tuning of hyperparameters (especially <Latex text="\(C\)"/> and any kernel parameters) is needed for best results.  
+- SVMs can handle classification, regression (SVR), outlier detection (one-class SVM), and more.
+
+The next step for you may be hands-on experimentation with SVM implementations in libraries such as scikit-learn, comparing results with other models, and practicing thorough model selection to see how well SVMs work in your data context.  
+
+<Image alt="SVM idea illustration" path="" caption="An illustration of SVM margins, hyperplane, and support vectors." zoom="false" />
+
+Enjoy harnessing the power of SVMs in your advanced data science and machine learning projects!

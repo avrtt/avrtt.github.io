@@ -1,0 +1,497 @@
+---
+index: 57
+indexCourse: 76
+indexFavorites:
+title: "Generative models"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Generative models"
+courseCategoryName: "Generative models"
+desc: "Aggressively stealing artistic people's work"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "20.06.2023"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 2
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/generative_models.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/generative_models"
+slug: "/research/generative_models"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+import Tooltip from "../../../components/Tooltip"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+Порождающие модели
+https://neerc.ifmo.ru/wiki/index.php?title=%D0%9F%D0%BE%D1%80%D0%BE%D0%B6%D0%B4%D0%B0%D1%8E%D1%89%D0%B8%D0%B5_%D0%BC%D0%BE%D0%B4%D0%B5%D0%BB%D0%B8 
+Генерация объектов
+https://neerc.ifmo.ru/wiki/index.php?title=%D0%93%D0%B5%D0%BD%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D1%8F_%D0%BE%D0%B1%D1%8A%D0%B5%D0%BA%D1%82%D0%BE%D0%B2
+[Introduction](https://huggingface.co/learn/computer-vision-course/en/unit5/generative-models/introduction/introduction)
+
+Две статьи ниже сильно пересекаются в содержании (или вообще копии)
+
+Deepfake
+https://neerc.ifmo.ru/wiki/index.php?title=Deepfake
+Генерация дипфейков с помощью нейронных сетей
+https://neerc.ifmo.ru/wiki/index.php?title=%D0%93%D0%B5%D0%BD%D0%B5%D1%80%D0%B0%D1%86%D0%B8%D1%8F_%D0%B4%D0%B8%D0%BF%D1%84%D0%B5%D0%B9%D0%BA%D0%BE%D0%B2_%D1%81_%D0%BF%D0%BE%D0%BC%D0%BE%D1%89%D1%8C%D1%8E_%D0%BD%D0%B5%D0%B9%D1%80%D0%BE%D0%BD%D0%BD%D1%8B%D1%85_%D1%81%D0%B5%D1%82%D0%B5%D0%B9
+
+*/}
+
+
+{/*
+
+1. Introduction  
+- Purpose of the article: Explains objectives, scope, and target audience for understanding generative models  
+- Historical context in machine learning: Outlines the evolution from rule-based systems to modern deep learning approaches  
+- Importance of generative models: Highlights how they can synthesize novel data, support creativity, and enhance learning tasks  
+2. Generative Models vs. Discriminative Models  
+- High-level comparison: Contrasts probability density estimation with direct decision-boundary modeling  
+- Modeling approaches: Discusses how generative models learn p(x) versus discriminative models focusing on p(y|x)  
+- Typical use cases: Illustrates scenarios such as data synthesis for generative models and classification tasks for discriminative models  
+3. Core Concepts of Generative Modeling  
+- Probability distributions and data likelihood: Examines maximum likelihood estimation and methods for fitting data distributions  
+- Latent variables and hidden representations: Explains how unobserved factors can capture complex data variations  
+- Sample generation techniques: Reviews sampling algorithms (e.g., ancestral sampling, importance sampling) for producing new data  
+- Bayesian inference and variational approximations: Introduces how posterior distributions are estimated and approximated  
+- Backpropagation through random operations
+4. Types of Generative Models  
+- Explicit density models: Covers maximum likelihood estimation and factorization assumptions (e.g., autoregressive models)  
+- Implicit density models: Highlights adversarial training and methods without explicit likelihood (e.g., GANs)  
+- Autoregressive models: Describes sequential generation (e.g., PixelCNN, WaveNet); drawing samples from autoencoders  
+- Variational autoencoders (VAEs): Details encoder-decoder framework and variational learning  
+- Generative adversarial networks (GANs): Explains generator-discriminator game, mode collapse, and training strategies  
+- Normalizing flows: Shows invertible transformations for tractable likelihood estimation  
+- Diffusion and score-based models: Introduces iterative noise-based generation and denoising score matching  
+- Energy-based models: Discusses energy functions and sampling methods (e.g., MCMC)  
+- Directed generative nets
+- Generative stochastic networks
+- Other generation schemes
+5. Boltzmann machines
+- Restricted boltzmann machines
+- Deep boltzman machines
+- Boltzmann machines for real-values data
+- Convolutional boltzmann machines
+- Boltzmann machines for structured or sequential outputs
+- Other boltzmann machines
+6. Deep belief networks
+7. Some models
+- Attribute2Image
+- GAN-INT-CLS
+- StackGAN
+- FusedGAN
+- ChatPainter
+- StackGAN++
+- HTIS
+- AttnGAN
+- CVAE&GAN
+- MMVR
+- MirrorGAN
+- TextKD-GAN
+- Obj-GAN
+- LayoutVAE
+- MCA-GAN
+8. Evaluating generative models
+9. Practical Applications  
+- Image synthesis and style transfer: Includes super-resolution, domain adaptation, and creative art generation  
+- Text and language generation: Covers chatbots, story writing, summarization, and machine translation  
+- Speech and audio synthesis: Describes text-to-speech systems and music generation  
+- Data augmentation in machine learning: Explains how synthetic data helps improve model robustness  
+- Medical imaging and diagnostics: Reviews applications in image segmentation, anomaly detection, and enhanced screening  
+- Drug discovery and molecular design: Covers protein folding predictions and novel compound generation  
+- Other domain-specific uses: Notes robotics (simulation-to-reality), finance (scenario generation), and gaming (procedural content)  
+10. Deepfakes
+11. Challenges and Limitations  
+- Mode collapse and training instabilities: Examines instability in GANs and potential remedies (e.g., gradient penalty)  
+- Evaluation metrics for generative models: Discusses FID, IS, and other methods for assessing sample quality and diversity  
+- Computational complexity and resource requirements: Highlights large-scale training, hardware constraints, and optimization concerns  
+- Overfitting and memorization: Warns of models reproducing training data and potential privacy violations  
+12. Advances and Future Directions  
+- Interpretable and controllable generation: Explores fine-grained manipulation of generated outputs and latent factors  
+- Multi-modal generative systems: Details cross-domain tasks that combine text, image, audio, and video generation  
+- Semi-supervised and self-supervised learning: Shows how partial labels or unlabeled data boost generative performance  
+- Federated generative models: Discusses decentralized training and privacy-preserving generation  
+- Evolving research trends and open problems: Emphasizes ongoing work on stability, scalability, and emerging architectures  
+
+*/}
+
+
+{/*
+
+- Attribute2Image
+- GAN-INT-CLS
+- StackGAN
+- FusedGAN
+- ChatPainter
+- StackGAN++
+- HTIS
+- AttnGAN
+- CVAE&GAN
+- MMVR
+- MirrorGAN
+- TextKD-GAN
+- Obj-GAN
+- LayoutVAE
+- MCA-GAN
+
+Boltzmann machines
+Restricted boltzmann machines
+Deep belief networks
+Deep boltzman machines
+Boltzmann machines for real-values data
+Convolutional boltzmann machines
+Boltzmann machines for structured or sequential outputs
+Other boltzmann machines
+Backpropagation through random operations
+Directed generative nets
+Drawing samples from autoencoders
+Generative stochastic networks
+Other generation schemes
+Evaluating generative models
+
+*/}
+
+
+Generative models occupy a special corner of the machine learning universe, enabling systems to not only analyze and classify data but also create new, synthetic data instances bearing remarkable similarity to the original domain. I want to showcase how these models originated, how they are evolving, and why they are instrumental for a variety of tasks spanning image generation, text synthesis, audio production, and an assortment of other applications. The goal in this article is to educate the deeply curious mind with a thorough theoretical and practical approach, elucidating key concepts, deep architectures, and advanced ideas that form the backbone of modern generative modeling. Although some of these ideas can feel quite intricate, I'll attempt to present them in a structured and comprehensible manner, without turning them into inscrutable abstractions or overly dry academic expositions.
+
+Historically, research on artificial intelligence took many forms. From expert systems based on codified rules to the advent of neural networks and data-driven approaches, the domain underwent multiple paradigm shifts. In earlier times, so-called rule-based systems tried to capture intelligence through human-crafted logic, but they often lacked flexibility and adaptability when confronted with complex, high-dimensional data. The dawn of neural networks, statistical learning, and particularly deep learning transformed the way we approach all things AI-related. Within deep learning, generative models hold a distinct place because they can handle tasks that go beyond classification or regression — they can literally imagine data. 
+
+One of the driving forces for the surge of interest in generative modeling is the capability to synthesize realistic images, produce convincingly human-like text, and blend modalities in ways that spark creativity and open brand-new avenues for research and commercial solutions. In many advanced fields such as medical imaging, these models are assisting with data augmentation, enabling better training for neural networks that might suffer from limited data. In design, they allow for exploring new variations that might never have been conceived by humans alone. In entertainment, generative algorithms can craft new types of artistic or musical expression, fueling a leap in creativity. Hence, the scope of generative modeling is not just interesting academically; it has material impact in practical settings as well.
+
+Throughout this article, I will highlight both the intuition and the mathematical foundation behind generative models. I'll provide conceptual sketches, short bits of code, references to seminal works (such as Goodfellow and gang, NeurIPS 2014, for GANs and Kingma and Welling, ICLR 2014, for VAEs), and advanced theoretical insights for the specialized reader. The target audience includes scientists, engineers, and researchers who already have a comfortable footing in machine learning principles — especially those who can appreciate deeper math, advanced optimization strategies, and the joys of neural architectures. That being said, if you're motivated enough and come from a related background, you might still find the article digestible with sufficient effort. Let's launch into a thorough discussion by contrasting the essential differences between generative and discriminative models, setting the stage for the main topics that follow.
+
+## generative models vs. discriminative models  
+A central conceptual dividing line in machine learning runs between generative and discriminative models. Discriminative models, the more familiar approach in typical supervised machine learning tasks, aim to predict a label <Latex text="\(y\)"/> given data <Latex text="\(x\)"/>. Formally, they approximate <Latex text="\(p(y \mid x)\)"/> and are optimized to draw boundaries that best separate classes or produce continuous predictions. By contrast, generative models are more fundamental in a probabilistic sense: they approximate <Latex text="\(p(x)\)"/>, the distribution of the observed data, or <Latex text="\(p(x, y)\)"/> in the presence of labels, from which they can derive <Latex text="\(p(y \mid x)\)"/> if needed.
+
+### high-level comparison  
+In a classification setting, a discriminative model such as a random forest, support vector machine, or logistic regression focuses solely on the boundary or function that maps <Latex text="\(x\)"/> to <Latex text="\(y\)"/>. It doesn't concern itself with the true underlying data distribution, only how to best differentiate among labels. A generative model tries to capture how data is produced in the real world, learning not just about boundaries but about the entire data manifold. This difference leads to distinctive capabilities. While a discriminative model can label a sample with high accuracy, a generative model can produce new samples that are consistent with the distribution of the training set. 
+
+### modeling approaches  
+Under the generative paradigm, the model aims to learn <Latex text="\(p(x)\)"/> or <Latex text="\(p(x, y)\)"/>. In practice, researchers often develop generative algorithms that either explicitly factorize the data distribution (explicit density models) or use implicit methods that do not produce a tractable probability density but still know how to generate new samples (implicit density models). By capturing the structure of the data distribution, generative models open the door to tasks like unsupervised learning, semi-supervised learning, data augmentation, and representation learning.
+
+### typical use cases  
+Scenarios in which generative models excel include synthetic data generation for scarce domains, simulation environments for robotics or gaming, creative content generation (e.g., artwork, music, text), and privacy-preserving data sharing (where real data might be replaced by high-fidelity synthetic data). Meanwhile, discriminative models remain paramount in straightforward classification tasks like object detection, sentiment classification, or fraud detection. There is indeed some overlap: a generative model can also do classification by modeling <Latex text="\(p(y \mid x)\)"/> via Bayes' rule, but that's not typically its main appeal. Instead, generative modeling is about synthesizing new phenomena that reflect the underlying data structure.
+
+## core concepts of generative modeling  
+Moving into the deeper mechanics of generative models, let's examine several interlocking concepts that underlie the theoretical and computational frameworks.
+
+### probability distributions and data likelihood  
+At the heart of any generative model is the notion of fitting a probability distribution to data. Suppose we have a dataset <Latex text="\(X = \{x_1, x_2, \ldots, x_N\}\)"/>. A generative model wants to learn parameters <Latex text="\(\theta\)"/> that define <Latex text="\(p_\theta(x)\)"/> — or <Latex text="\(p_\theta(x, y)\)"/> if dealing with labeled data — in a manner that aligns with the observed samples. One common learning principle is maximum likelihood estimation, in which we choose <Latex text="\(\theta\)"/> to maximize the likelihood:
+
+<Latex text="\[
+\mathcal{L}(\theta) = \sum_{i=1}^N \log p_\theta(x_i).
+\]"/>
+
+Here, <Latex text="\(p_\theta(x_i)\)"/> represents the probability or density that the model assigns to the data point <Latex text="\(x_i\)"/>. By maximizing <Latex text="\(\mathcal{L}(\theta)\)"/> (the total log-likelihood), we encourage the model to place higher probability mass on regions of the data space where real samples appear. This approach might involve direct parameter fitting if <Latex text="\(p_\theta(x)\)"/> is tractable, or approximate methods if it is not.
+
+### latent variables and hidden representations  
+A foundational idea in many generative frameworks is that real-world data often stems from a smaller set of underlying, unobserved factors. For instance, a face image might be determined by latent attributes like identity, pose, illumination, expression, etc. We can denote these latent variables as <Latex text="\(z\)"/> and write <Latex text="\(p(x)\)"/> as an integral over <Latex text="\(z\)"/>:
+
+<Latex text="\[
+p(x) = \int p_\theta(x \mid z) \, p_\theta(z)\, dz.
+\]"/>
+
+The distribution <Latex text="\(p_\theta(z)\)"/> often takes a simpler form (e.g., isotropic Gaussian), while <Latex text="\(p_\theta(x \mid z)\)"/> can be modeled by a neural network (decoder) that maps <Latex text="\(z\)"/> to an output in the data space. Learning the parameters <Latex text="\(\theta\)"/> might involve maximizing the marginal likelihood, which typically requires advanced approximations due to the integral. This concept underpins various generative architectures, especially VAEs.
+
+### sample generation techniques  
+Once a generative model is trained, we want to generate samples. This can happen in several ways. Autoregressive models, for instance, generate one dimension (or one time step) at a time, conditioning on previously generated tokens. Variational autoencoders sample from the latent variable prior <Latex text="\(p_\theta(z)\)"/> and then pass <Latex text="\(z\)"/> through the decoder. For implicit models (e.g., GANs), we sample from a latent distribution and feed it to a generator. Methods such as importance sampling and Markov chain Monte Carlo (MCMC) also show up, especially in the context of energy-based models and other approaches that require iterative procedures to sample from complicated distributions.
+
+### bayesian inference and variational approximations  
+Exact Bayesian inference for complex models is frequently intractable. Variational inference has become a leading technique to circumvent this difficulty by converting the inference problem into an optimization problem. Instead of computing the posterior <Latex text="\(p_\theta(z \mid x)\)"/> directly, we introduce a variational distribution <Latex text="\(q_\phi(z \mid x)\)"/> (usually parameterized by a neural network) and optimize a divergence measure (often KL divergence) between <Latex text="\(q_\phi\)"/> and <Latex text="\(p_\theta\)"/>. This concept emerges most famously in variational autoencoders, but resonates in many corners of generative modeling, including hierarchical Bayesian models.
+
+### backpropagation through random operations  
+Training generative models often requires differentiating through sampling steps. For instance, to update a model that stochastically draws a latent vector <Latex text="\(z\)"/>, we need to handle the fact that sampling <Latex text="\(z\)"/> is not a straightforward deterministic function. Solutions like the reparameterization trick, introduced by Kingma and Welling (ICLR 2014) and Rezende and gang (ICML 2014), recast random sampling as a deterministic function of noise. Concretely, instead of <Latex text="\(z \sim q_\phi(z \mid x)\)"/>, we might define <Latex text="\(z = \mu_\phi(x) + \sigma_\phi(x) \odot \epsilon\)"/> where <Latex text="\(\epsilon \sim \mathcal{N}(0, I)\)"/> is independent of <Latex text="\(x\)"/>. This trick makes it possible to backpropagate gradient signals through random operations, an essential capability in many generative models.
+
+## types of generative models  
+Generative models come in multiple flavors, each with a distinct approach to modeling or sampling from <Latex text="\(p(x)\)"/>. I'll walk through a variety of them, from explicit density estimators that let us compute a probability for each data point, to implicit methods that concentrate purely on generating samples without offering an easy way to compute or manipulate the density.
+
+### explicit density models  
+An explicit density model attempts to parameterize <Latex text="\(p_\theta(x)\)"/> in a form where we can directly evaluate probabilities or log-probabilities. Maximum likelihood estimation is straightforward here: we optimize the log-likelihood <Latex text="\(\sum_i \log p_\theta(x_i)\)"/> across training samples. The challenge lies in finding parametric forms that remain tractable while also being expressive. 
+
+Examples of explicit density models:
+- **Fully visible belief networks**: Factorize the joint distribution as <Latex text="\(p_\theta(x) = \prod_{d=1}^D p_\theta(x_d \mid x_{<d})\)"/> for data dimension <Latex text="\(d\)"/>.
+- **Autoregressive networks** like PixelCNN or WaveNet.
+
+### implicit density models  
+Implicit models generate samples from an unspecified distribution, typically via a neural network that transforms noise into data. Because these methods do not yield a readily accessible <Latex text="\(p_\theta(x)\)"/>, training them often relies on alternative objectives like adversarial training, in which a discriminator attempts to distinguish real vs. generated samples.
+
+### autoregressive models  
+Autoregressive generative models assume that the joint distribution can be factorized into a product of conditional distributions:
+
+<Latex text="\[
+p_\theta(x) = \prod_{d=1}^D p_\theta(x_d \mid x_1, \ldots, x_{d-1}),
+\]"/>
+
+where <Latex text="\(x\)"/> might be a time series, an image (flattened in some order), or tokens in a sequence. Popular implementations include PixelCNN (van den Oord and gang, ICML 2016) for images and WaveNet (van den Oord and gang, arXiv 2016) for audio. These networks typically use masked convolutions or specialized architectures to ensure that each dimension can only depend on previous ones, so that we can compute and train <Latex text="\(p_\theta(x)\)"/> via standard backpropagation.
+
+An example of generating a 1D sequence <Latex text="\(x\)"/> with an autoregressive model might look like this in pseudocode:
+
+```
+<Code text={`
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+class SimpleAutoregressiveModel(nn.Module):
+    def __init__(self, hidden_dim=128, vocab_size=256):
+        super(SimpleAutoregressiveModel, self).__init__()
+        self.embed = nn.Embedding(vocab_size, hidden_dim)
+        self.rnn = nn.GRU(hidden_dim, hidden_dim, batch_first=True)
+        self.fc_out = nn.Linear(hidden_dim, vocab_size)
+    
+    def forward(self, x):
+        # x: [batch_size, seq_len]
+        x_emb = self.embed(x)  # [batch_size, seq_len, hidden_dim]
+        rnn_out, _ = self.rnn(x_emb)
+        logits = self.fc_out(rnn_out)
+        return logits
+
+def generate_sequence(model, start_token=0, max_len=100):
+    model.eval()
+    x = torch.tensor([[start_token]], dtype=torch.long)
+    generated = [start_token]
+    for _ in range(max_len):
+        logits = model(x)  # [1, current_length, vocab_size]
+        next_token_logits = logits[0, -1, :]  # last time step
+        probs = F.softmax(next_token_logits, dim=-1)
+        next_token = torch.multinomial(probs, 1).item()
+        generated.append(next_token)
+        x = torch.tensor([generated], dtype=torch.long)
+    return generated
+`}/>
+```
+
+In this snippet, <Highlight>SimpleAutoregressiveModel</Highlight> learns to predict each next token given the previous tokens. Sampling is done by iteratively picking the next token from the output distribution, then appending it to the sequence, continuing until <Tooltip text="some stopping criterion like a special END token or length limit"/> is reached.
+
+### variational autoencoders (VAEs)  
+Variational autoencoders, introduced by Kingma and Welling (ICLR 2014) and Rezende and gang (ICML 2014), highlight a neural architecture that elegantly melds latent variable modeling with deep learning. The VAE introduces an encoder <Latex text="\(q_\phi(z \mid x)\)"/> that learns how to map data <Latex text="\(x\)"/> to a latent space <Latex text="\(z\)"/>, and a decoder <Latex text="\(p_\theta(x \mid z)\)"/> that reconstructs data from <Latex text="\(z\)"/>. By employing the reparameterization trick, we can backpropagate through the sampling operation. The VAE objective function tries to maximize the Evidence Lower Bound (ELBO):
+
+<Latex text="\[
+\log p_\theta(x) \ge \mathbb{E}_{q_\phi(z \mid x)}[\log p_\theta(x \mid z)]
+- \mathrm{KL}(q_\phi(z \mid x) \,\|\, p_\theta(z)).
+\]"/>
+
+In this formula:  
+- <Latex text="\(z\)"/> is the latent variable.  
+- <Latex text="\(q_\phi(z \mid x)\)"/> is the encoder's approximate posterior.  
+- <Latex text="\(p_\theta(x \mid z)\)"/> is the decoder's likelihood of <Latex text="\(x\)"/> given <Latex text="\(z\)"/>.  
+- <Latex text="\(\mathrm{KL}\)"/> denotes the Kullback-Leibler divergence between the encoder distribution and the prior <Latex text="\(p_\theta(z)\)"/> (often a standard Gaussian).
+
+Sampling a new data point typically follows:  
+1. Draw <Latex text="\(z\)"/> from the prior, e.g. <Latex text="\(z \sim \mathcal{N}(0, I)\)"/>.  
+2. Pass <Latex text="\(z\)"/> through the decoder to get <Latex text="\(x_{\mathrm{new}}\)"/>.  
+
+The learned latent space can be leveraged for interpolation, style transfer, or controlling semantic attributes in a structured manner if the latent representation is disentangled enough.
+
+### generative adversarial networks (GANs)  
+Generative adversarial networks, proposed by Goodfellow and gang (NeurIPS 2014), revolve around the idea of training two neural networks in tandem:  
+- A generator <Latex text="(G)"/> that creates synthetic data from noise.  
+- A discriminator <Latex text="(D)"/> that tries to distinguish between real samples and those produced by <Latex text="\(G\)"/>.  
+
+The objective can be formulated as a minimax game:
+
+<Latex text="\[
+\min_G \max_D \Bigl[ \mathbb{E}_{x\sim p_{\mathrm{data}}(x)}[\log D(x)]
++ \mathbb{E}_{z\sim p(z)}[\log(1 - D(G(z)))] \Bigr].
+\]"/>
+
+In practice, the generator aims to fool the discriminator by creating samples that appear real, while the discriminator tries to become better at telling them apart. This adversarial interplay, when stable, yields a generator that effectively captures the data distribution. However, GAN training can suffer from issues such as mode collapse, training instability, and sensitivity to hyperparameters. Many variants (WGAN, DCGAN, StyleGAN, BigGAN, etc.) have been introduced to mitigate these issues, each with different architectural or objective function tweaks.
+
+### normalizing flows  
+Normalizing flows transform a base distribution (often a Gaussian) through a sequence of invertible, differentiable mappings, ending up with a distribution that should match <Latex text="\(p(x)\)"/>. The log-likelihood under a normalizing flow is tractable, given by the base distribution plus the sum of log-determinants of the Jacobians of each transform step. A simplified version of the formula is:
+
+<Latex text="\[
+\log p_X(x) = \log p_Z(f^{-1}(x)) + \sum_{k=1}^K \log \left|\det \frac{\partial f_k^{-1}}{\partial f_{k-1}^{-1}(x)} \right|,
+\]"/>
+
+where each <Latex text="\(f_k\)"/> is an invertible transformation. Flows such as Real NVP, Glow, and MAF are widely used for tasks requiring precise density estimation while still offering a direct sampling procedure (by sampling <Latex text="\(z\)"/> from the base distribution and applying the forward transform).
+
+### diffusion and score-based models  
+Diffusion and score-based generative models (e.g., Sohl-Dickstein and gang, ICML 2015; Song and gang, NeurIPS 2019) use a forward process that incrementally adds noise to data until it becomes (approximately) Gaussian, and a reverse process that iteratively denoises samples. By learning to predict or model the score function (the gradient of the log density), these models can generate high-quality samples by reversing the noising process. This approach has recently led to state-of-the-art results in image generation (e.g., DALL-E 2, Stable Diffusion). The conceptual synergy between noise addition and denoising steps helps the model distribute coverage among multiple modes in the data distribution.
+
+### energy-based models  
+Energy-based models define an energy function <Latex text="\(E_\theta(x)\)"/> that assigns low energy to data-like samples and high energy to outliers. The corresponding probability distribution is:
+
+<Latex text="\[
+p_\theta(x) = \frac{e^{-E_\theta(x)}}{Z_\theta},
+\]"/>
+
+where <Latex text="\(Z_\theta\)"/> is the partition function (a normalizing constant). Learning <Latex text="\(E_\theta\)"/> can be challenging, as sampling typically involves MCMC or other complex iterative methods. The advantage is that energy-based models can be extremely flexible. They can, in principle, represent complicated multi-modal distributions. However, the cost of sampling can be high, and training instability may arise if the approximate sampling used in training diverges from the true energy distribution.
+
+### directed generative nets  
+Directed generative networks express the data generation process as a directed acyclic graph (DAG) of latent variables leading to observed data. Bayesian networks (with neural parameterization) can be seen as an example, but in deep learning contexts, the usual approach is to use feed-forward networks that map noise to data in a directed manner. VAEs, many autoregressive networks, and certain flow-based models are all encompassed within the broad tent of directed generative nets, though each with unique properties regarding how they factorize <Latex text="\(p(x)\)"/>.
+
+### generative stochastic networks  
+Generative stochastic networks incorporate noise at multiple layers during generation, effectively broadening the expressiveness of the model. Instead of a single noise injection point (like in standard GANs or VAEs), generative stochastic networks can have random units or random transformations at each layer. This approach merges ideas from autoencoders, Boltzmann machines, and other stochastic approximations, though it can be more challenging to train effectively in practice.
+
+### other generation schemes  
+The field of generative modeling continues to expand. Researchers are constantly experimenting with specialized architectures (e.g., RNN-based generative models for text), hierarchical approaches, multi-stage generation (where a model first generates coarse structures and then refines them), and more. Some models specifically target particular domains (e.g., neural radiance fields for 3D scene generation), while others aim for domain-agnostic approaches.  
+
+## boltzmann machines  
+Boltzmann machines represent a classical yet enduring approach to generative modeling, rooted in statistical physics. They are energy-based undirected graphical models that define a joint distribution over observed and hidden units. Despite their relatively older origins, the concepts behind Boltzmann machines continue to inform many advanced research directions in unsupervised learning.
+
+### restricted boltzmann machines  
+Restricted Boltzmann Machines (RBMs) are perhaps the best-known variety. They impose a bipartite structure between visible and hidden units with no intralayer connections. This restriction simplifies the computation of conditional distributions, making training feasible with methods like Contrastive Divergence. Formally, an RBM has an energy function:
+
+<Latex text="\[
+E(v, h) = -\sum_i \sum_j v_i W_{ij} h_j - \sum_i b_i v_i - \sum_j c_j h_j,
+\]"/>
+
+where <Latex text="\(v\)"/> are the visible units, <Latex text="\(h\)"/> the hidden units, and <Latex text="\(W, b, c\)"/> the parameters (weights and biases). By sampling from <Latex text="\(h \mid v\)"/> and <Latex text="\(v \mid h\)"/>, one can implement a learning procedure that gradually tunes <Latex text="\(W, b, c\)"/> so that <Latex text="\(p(v)\)"/> approximates the data distribution.
+
+### deep boltzmann machines  
+Deep Boltzmann Machines (DBMs) stack multiple layers of hidden units, resulting in a hierarchical generative model. They allow for more powerful representations but also demand more careful training strategies. Typically, researchers use greedy layerwise pretraining and advanced MCMC sampling to ensure adequate mixing. DBMs can capture complex dependencies among data dimensions and are an early example of deep unsupervised models predating some of the more popular generative frameworks like VAEs and GANs.
+
+### boltzmann machines for real-valued data  
+Classical RBMs and DBMs often rely on binary visible and hidden units. Extensions for real-valued data, sometimes called Gaussian-Bernoulli RBMs, incorporate continuous random variables at the visible layer, enabling them to handle domains such as image pixels (modeled as continuous intensities) or other real-valued features. The energy function adjusts accordingly, typically introducing Gaussian terms for visible units:
+
+<Latex text="\[
+E(v, h) = \sum_i \frac{(v_i - b_i)^2}{2\sigma_i^2} - \sum_i \sum_j \frac{v_i}{\sigma_i^2} W_{ij} h_j - \sum_j c_j h_j.
+\]"/>
+
+### convolutional boltzmann machines  
+To better handle image data, convolutional Boltzmann machines apply weight sharing and local receptive fields. These constraints mirror the logic of convolutional neural networks, leading to models that can capture spatial coherence more effectively. They are quite computationally heavy to train with MCMC, but they advanced the idea that domain-specific architectural design can be beneficial in generative modeling.
+
+### boltzmann machines for structured or sequential outputs  
+One can also adapt the undirected framework to structured outputs (graphs, sequences, etc.) with appropriate modifications. Such specialized variants might incorporate temporal dependencies for sequences or adjacency constraints for graphs. They maintain the idea of an energy-based formulation but add domain-specific constraints to the energy function and sampling schemes. The result is an extremely expressive generative model for those domains, though again accompanied by heightened complexity.
+
+### other boltzmann machines  
+Beyond these mainstream categories, there's a variety of specialized or hybrid designs:  
+- **Spike-and-slab RBMs** for capturing real-valued data with sparse latent representations.  
+- **Conditional RBMs** for modeling <Latex text="\(p(v \mid y)\)"/>.  
+- **Multimodal RBMs** to fuse different data modalities (e.g., vision + text).  
+
+While Boltzmann machines have largely been overshadowed by VAEs, GANs, and other deep frameworks, they remain conceptually important and sometimes appear in specialized tasks requiring their undirected, energy-based perspective.
+
+## deep belief networks  
+Deep Belief Networks (DBNs) are closely related to Boltzmann machines but adopt a hybrid directed-undirected structure. Typically, the top two layers form a restricted Boltzmann machine (undirected), while lower layers form directed connections downward. DBNs were famously used by Hinton and gang to pretrain deep networks at a time when purely supervised deep learning was struggling due to poor initialization strategies. Although DBNs are not as common today, many crucial insights from DBNs laid the groundwork for hierarchical generative approaches. The generative interpretation of DBNs is that you can sample from the top-level RBM, then propagate the samples down the directed layers to produce data-like signals. 
+
+## some models  
+In generative modeling, there's a rich ecosystem of specialized methods designed for particular tasks, especially image synthesis from textual descriptions. Below is a partial list of advanced or domain-specific generative models, often combining ideas from VAEs, GANs, and attention-based architectures:
+
+1. **Attribute2Image**: Focuses on generating images conditioned on specific attributes or textual descriptions.  
+2. **GAN-INT-CLS** (Generative Adversarial Network with Interpolated Condition): Generates images from text, interpolating across embeddings for continuous transitions between different textual descriptions.  
+3. **StackGAN**: Breaks down the generative task into stages, producing a coarse, low-resolution image first, and then refining it in subsequent stages.  
+4. **FusedGAN**: Typically fuses multiple modalities or multiple generators to produce complex data distributions with consistent cross-domain alignment.  
+5. **ChatPainter**: Explores bridging dialogue-based inputs to image generation, allowing iterative refinement of generated images through natural language.  
+6. **StackGAN++**: An improved version of StackGAN that refines the stage-wise approach and addresses issues like mode collapse and poor image diversity.  
+7. **HTIS**: Sometimes spelled out as Hierarchical Text-to-Image Synthesis (or a similarly named approach), applying hierarchical generative stages for better semantic alignment.  
+8. **AttnGAN**: Integrates attention mechanisms into GAN-based image generation, allowing the model to focus on relevant words in the textual description when generating particular parts of the image.  
+9. **CVAE&GAN**: Combines conditional VAE with GAN approaches, so the model can generate images conditioned on class labels, text, or other forms of side information, while also relying on adversarial signals.  
+10. **MMVR**: Multi-Modal Variational Recurrent frameworks, used to tackle tasks that require temporal or sequential generation in multiple modalities (like text plus images).  
+11. **MirrorGAN**: Uses text-to-image and image-to-text cycles to produce more semantically consistent images that can be translated back to the textual description.  
+12. **TextKD-GAN**: A text-based knowledge distillation approach integrated with GAN frameworks to leverage large-scale language models.  
+13. **Obj-GAN**: Focuses on object-driven text-to-image generation, ensuring that the arrangement and presence of objects in the scene match the textual specification.  
+14. **LayoutVAE**: Learns to generate spatial layouts (bounding boxes, arrangement of objects) before rendering them into image space.  
+15. **MCA-GAN**: Multi-Channel Attention-based Generative Adversarial Network, or similarly advanced architecture that uses multiple attention pathways for image detail enhancement.
+
+These specialized models demonstrate how generative modeling is frequently domain-tailored. The introduction of attention mechanisms, hierarchical generation, multi-stage refinements, and cross-modal interactions showcases the creative frontiers of generative research.
+
+## evaluating generative models  
+Evaluating a generative model's performance can be surprisingly nuanced. Common evaluation metrics include:
+
+- **Log-likelihood**: If the model provides explicit density, measuring log-likelihood on a held-out dataset can be straightforward. However, log-likelihood does not always correlate well with the perceptual quality of generated samples.  
+- **Inception Score (IS)**: Proposed as a quick measure of image quality and diversity. But it can be gamed by degenerate solutions and may not always reflect human judgments.  
+- **Fréchet Inception Distance (FID)**: Compares the distribution of real and generated images in a feature space (from a pretrained network like Inception). FID is widely used for image generation comparisons, but it still depends on the choice of feature extractor.  
+- **Precision and Recall** for generative models: Attempts to separate coverage (recall) of the data manifold from fidelity (precision). This can shed light on whether a model covers all modes or focuses on a small region of the data distribution.  
+- **Human evaluation**: Ultimately, subjective human scores can be critical for certain tasks like text generation or artistic image synthesis, although they are time-consuming and prone to variability.  
+
+## practical applications  
+Generative models have exploded in popularity largely due to their impact on real-world problems. I'll describe a few prominent application areas.
+
+### image synthesis and style transfer  
+Generative models can produce novel images, either unconditional or conditioned on semantic attributes (such as textual descriptions, class labels, or sketches). Style transfer, in which we transform an image's style while preserving its high-level content, can also be approached through generative techniques. Super-resolution, which aims to enhance the resolution of a low-resolution image, is likewise a natural fit for generative models that can imagine plausible high-frequency details. Domain adaptation or image-to-image translation tasks (e.g., day-to-night, summer-to-winter) similarly leverage conditional generative structures. 
+
+### text and language generation  
+Large language models like GPT, BERT, and others represent massive leaps in text-based generative modeling. However, smaller or more specialized generative language models can also handle story writing, summarization, or chat-oriented tasks. By modeling the probability distribution over sequences of tokens, these models can generate contextually coherent sentences, though true mastery of language nuances remains an area of active research. In practice, one might see these systems embedded in chatbots, voice assistants, or creative writing aids.
+
+### speech and audio synthesis  
+Generative models for audio, such as WaveNet or other neural vocoders, can synthesize highly realistic speech, bridging the gap to near-human-level quality in text-to-speech. Music generation also relies on generative strategies, whether using RNNs, Transformers, or latent variable models specifically tuned for temporal structures and harmonic relationships.
+
+### data augmentation in machine learning  
+When data is scarce or expensive to collect, synthetic data can help. Generated samples, if diverse and realistic, can expand the training dataset, improving generalization and reducing overfitting. For example, in medical imaging, where obtaining labeled examples is costly, generative models can produce additional training samples that help a classifier learn robust features.  
+
+### medical imaging and diagnostics  
+Beyond augmentation, generative models are often used for tasks like enhancing MRI or CT scans, predicting missing or corrupted regions, or simulating alternative viewpoints. Because of their ability to model complex distributions, they can also detect anomalies, highlighting potential pathology. The synergy between generative modeling and medical diagnostics holds significant promise for more accurate, data-driven healthcare solutions.
+
+### drug discovery and molecular design  
+Generative modeling in chemistry and biology includes generating novel molecules with desired properties, such as binding affinity or solubility. Techniques combining VAEs or GANs with graph-based or string-based representations of molecules have shown potential for accelerating the search space exploration in drug design. Protein folding predictions also sometimes rely on generative principles, although specialized frameworks like AlphaFold have combined deep learning with advanced physics-based knowledge.
+
+### other domain-specific uses  
+- **Robotics**: Generative models help bridge the reality gap by simulating physical environments (domain randomization).  
+- **Finance**: Scenario generation for stress-testing, synthetic data for algorithmic trading, or generating time-series with certain statistical properties.  
+- **Gaming**: Procedural content generation for levels, narratives, or character design, enabling more dynamic and replayable experiences.
+
+## deepfakes  
+An especially visible and controversial application involves deepfakes — the use of generative models (usually GANs or encoder-decoder networks) to produce highly realistic but synthetic media (video, audio, or images). Deepfakes can superimpose one person's face onto another's body, synthesize speech in a well-known person's voice, or create fictitious events that are challenging to detect. While these technologies open interesting creative avenues (like dubbing, movie post-production, interactive VR experiences), they also raise serious ethical, legal, and societal questions. Concerns about misinformation, identity theft, and manipulation have sparked extensive research into detection methods and policy discussions about how best to handle them. On the research side, the arms race continues: improved generative models produce more convincing fakes, while detection algorithms try to exploit subtle artifacts.
+
+## challenges and limitations  
+Despite their astonishing successes, generative models remain imperfect and present notable challenges.
+
+### mode collapse and training instabilities  
+GANs in particular can suffer from mode collapse, in which the generator produces samples from a limited subset of the possible data distribution (collapsing to a few modes) to fool the discriminator effectively. Training can also be quite unstable, requiring careful hyperparameter tuning, architectural choices, and heuristics like feature matching, gradient penalty, or spectral normalization to keep things stable.
+
+### evaluation metrics for generative models  
+As noted earlier, there's no one-size-fits-all metric for generative modeling. While certain numbers like IS, FID, and perplexity can offer partial insight, they don't comprehensively capture quality, diversity, or alignment with real-world semantics. The quest for better metrics continues, especially with the rise of multi-modal and self-supervised generative approaches.  
+
+### computational complexity and resource requirements  
+Training large-scale generative models can be computationally expensive, especially when dealing with high-dimensional data such as images or audio. These complexities extend to memory requirements and the intricacies of distributed or parallel training. Some models also demand large amounts of training data to achieve convincing results. However, new techniques like adaptive optimizers, mixed-precision training, and specialized hardware (GPUs, TPUs, custom AI accelerators) help mitigate these challenges.
+
+### overfitting and memorization  
+When a generative model is extremely powerful and has been trained on a dataset of limited size, it can memorize entire samples rather than learning the distribution. This becomes especially problematic in contexts like privacy-preserving data generation, where we don't want the model to reproduce training examples verbatim. It also raises concerns about intellectual property, data licensing, and regulatory compliance if sensitive data is inadvertently leaked.
+
+## advances and future directions  
+Generative modeling remains a fast-moving field, with breakthroughs and refinements continually emerging from major conferences (NeurIPS, ICML, ICLR, CVPR, etc.) and corporate research labs.
+
+### interpretable and controllable generation  
+There's a growing push for generative systems whose latent factors correspond to meaningful human concepts, making it easier to control or edit generated outputs. Disentangled representations, attribute-based editing, and fine-grained manipulation are increasingly in demand. Researchers are investigating ways to incorporate domain knowledge, constraints, or modular design patterns for better interpretability.
+
+### multi-modal generative systems  
+Text-to-image, image-to-speech, or video generation from textual narratives all exemplify multi-modal generation. Modern advanced architectures, like large Transformers, can handle multiple modalities if provided with carefully designed embeddings. This trend is likely to keep expanding, as bridging modalities is essential for tasks like language-guided video generation, AI-driven creative design, or cross-modal retrieval and search.
+
+### semi-supervised and self-supervised learning  
+Generative models benefit from vast amounts of unlabeled data. Techniques like self-supervised learning harness these models for representation learning, enabling improved performance on downstream tasks. For instance, training a large generative model on text data can produce powerful embeddings for tasks like classification or question answering, even with minimal labeled examples.
+
+### federated generative models  
+Privacy-preserving training has gained traction, particularly with medical or personal data. The idea is to train a generative model on distributed data sources without collecting all data centrally. Researchers explore methods for combining local updates into a global model while respecting data confidentiality. This extends the general concept of federated learning into generative paradigms, raising both practical and theoretical questions about how to aggregate generative model parameters or distributions effectively.
+
+### evolving research trends and open problems  
+- **Stability**: Despite progress, training stability in large-scale GANs or advanced diffusion models remains an art.  
+- **Scalability**: Pushing generative models to extremely high resolution or multi-billion parameter regimes can yield striking results but is daunting from an optimization standpoint.  
+- **Architectural innovation**: Hybrid approaches that meld flows, autoregressive structures, VAEs, and adversarial objectives are blossoming. This combinatorial explosion suggests that new synergy might be found among these diverse lines of research.  
+- **Ethical and societal considerations**: As generative models mature, it's crucial to address the ramifications: fairness, bias, malicious use, regulation, and responsible deployment in socially impactful domains.
+
+We've only scratched the surface of the intricacies and possibilities of generative modeling, but I hope this extensive tour provides a solid platform for further exploration. Generative models fundamentally shift how we think about data — from passive observation toward active, creative generation that can enrich, augment, or transform the real world in imaginative ways. Whether you are interested in images, text, audio, molecules, or some entirely new domain, generative models offer a powerful lens to harness the hidden structures in data and shape the future of AI-driven innovation.

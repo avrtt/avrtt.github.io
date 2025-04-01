@@ -1,0 +1,270 @@
+---
+index: 20
+indexCourse: 27
+indexFavorites:
+title: "Logistic regression"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Logistic regression"
+courseCategoryName: "Classification basics & ensembling"
+desc: "Predictive caterpillar"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "27.10.2022"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 1
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/logistic_regression.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/logistic_regression"
+slug: "/research/logistic_regression"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+Для этого поста разобрать Obsidian-заметку (см. папку "🚧 Unfinished").
+
+*/}
+
+
+Logistic regression is a cornerstone technique in supervised machine learning for tackling binary classification tasks. Although it is called a "regression," it is used primarily for classification, making it a prime example of how linear models can be adapted to classify data. Historically, linear models have been central to both statistics and machine learning (e.g., Nelder and Wedderburn's work on generalized linear models in 1972), and logistic regression stands as one of their most widely recognized forms in predictive analytics.
+
+In a typical classification setting, we have data points represented by feature vectors <Latex text="\( x \in \mathbb{R}^d \)"/> and an associated label <Latex text="\( y \in \{0, 1\} \)"/>. Our goal is to learn a function that can correctly map new, unseen <Latex text="\( x \)"/> to a label 0 or 1. For a linear model, one might initially think of extending linear regression by simply thresholding its output. However, such a direct approach can produce values outside the range <Latex text="\([0,1]\)"/> and is not ideally suited for probability estimation.  
+
+This is where logistic regression enters the scene: it transforms the output of a linear function into a probability via the logistic (sigmoid) function, ensuring that the output always lies within <Latex text="\([0,1]\)"/>. Although the resulting decision boundary is still linear in the input space, this probability-based interpretation is extremely powerful.  
+
+Nonetheless, logistic regression does have certain limitations, especially when dealing with complex, highly non-linear decision boundaries. Newer, more flexible models (e.g., kernel-based SVMs, neural networks) can capture richer representations. Still, logistic regression remains popular due to its interpretability, low computational cost, and the natural probabilistic interpretation of its outputs.
+
+---
+
+## Intuition behind logistic regression  
+
+### Transition from linear regression to logistic regression  
+If we take a naive step from linear regression to classification by simply saying "output class 1 if <Latex text="\(w^T x + b\)"/> exceeds some threshold," we run into problems of interpretability and unbounded outputs. While linear regression tries to fit:  
+<Latex text="\( \hat{y} = w^T x + b \)"/>,  
+this value can exceed 1 or be negative, so it is not a valid probability. Logistic regression solves this by mapping the linear output to the interval <Latex text="\([0,1]\)"/>.
+
+### The sigmoid function  
+The heart of logistic regression is the sigmoid (a.k.a. logistic) function:  
+<Latex text="\( \sigma(z) = \frac{1}{1 + e^{-z}} \)"/>,  
+where <Latex text="\( z = w^T x + b \)"/>.  
+
+- For large positive <Latex text="\(z\)"/> (i.e., <Latex text="\(w^T x + b \gg 0\)"/>), <Latex text="\(\sigma(z)\)"/> approaches 1.  
+- For large negative <Latex text="\(z\)"/> (i.e., <Latex text="\(w^T x + b \ll 0\)"/>), <Latex text="\(\sigma(z)\)"/> approaches 0.  
+
+Thus, the sigmoid neatly squeezes any real value into the <Latex text="\([0,1]\)"/> range, making it suitable as an estimated probability <Latex text="\( \hat{p} = \sigma(w^T x + b) \)"/>.  
+
+<Image alt="Sigmoid function plot" path="" caption="The sigmoid function <Latex text='S(z) = 1/(1 + e^{-z})'/> always outputs a value in [0,1]." zoom="false" />
+
+### Log-odds interpretation  
+One of logistic regression's most appealing characteristics is its direct log-odds interpretation. Specifically:  
+<Latex text="\[
+\log \left(\frac{p}{1-p}\right) = w^T x + b,
+\]"/>  
+where <Latex text="\(p\)"/> is the predicted probability that <Latex text="\(y=1\)"/>. The left-hand side <Latex text="\( \log \big(\frac{p}{1 - p}\big) \)"/> is called the "log-odds" or "logit." This means a one-unit change in a particular feature <Latex text="\(x_j\)"/> corresponds to an additive shift in the log-odds by <Latex text="\(w_j\)"/>, making the model coefficients directly interpretable in terms of odds ratios.  
+
+### Comparison to other classification methods  
+While advanced classifiers — such as random forests, gradient boosting, or neural networks — often outperform logistic regression in highly complex tasks, logistic regression's simplicity and interpretability remain key advantages. In regulated industries like healthcare or finance, understanding why a model makes a certain decision is sometimes paramount, and logistic regression is often more transparent than black-box models.  
+
+---
+
+## Cost function and log loss  
+Because logistic regression outputs probabilities, a suitable loss function should heavily penalize wrong predictions made with high confidence. The most common choice is the cross-entropy loss, also known as log loss in the binary setting:  
+<Latex text="\[
+J(w, b) = - \frac{1}{m} \sum_{i=1}^{m} \Big[y^{(i)} \log(\hat{p}^{(i)}) + (1 - y^{(i)}) \log(1 - \hat{p}^{(i)})\Big],
+\]"/>  
+where <Latex text="\( m \)"/> is the number of training samples, <Latex text="\( \hat{p}^{(i)} \)"/> is the predicted probability <Latex text="\( \sigma(w^T x^{(i)} + b) \)"/>, and <Latex text="\( y^{(i)} \)"/> is the true label in <Latex text="\{0,1\}"/>.  
+
+**Interpretation of terms:**  
+- <Latex text="\(y^{(i)} \log(\hat{p}^{(i)})\)"/>: If the true label is 1, we want <Latex text="\(\hat{p}^{(i)}\)"/> to be close to 1 to avoid a large penalty.  
+- <Latex text="\((1 - y^{(i)}) \log(1 - \hat{p}^{(i)})\)"/>: If the true label is 0, we want <Latex text="\(\hat{p}^{(i)}\)"/> to be near 0.  
+
+Because the logarithm grows large in magnitude (negatively) as <Latex text="\(\hat{p}\)"/> approaches 0, the model is heavily penalized for confident but incorrect predictions. Log loss is convex in terms of <Latex text="\(w\)"/> and <Latex text="\(b\)"/>, making it more tractable to optimize than many other losses.
+
+---
+
+## Parameter estimation  
+
+### Gradient descent approach  
+A widely used method to find optimal parameters <Latex text="\( (w, b) \)"/> that minimize the log loss is gradient descent. We iterate:  
+
+<Latex text="\[
+w := w - \alpha \frac{\partial J}{\partial w}, \quad b := b - \alpha \frac{\partial J}{\partial b},
+\]"/>  
+
+where <Latex text="\( \alpha \)"/> is the learning rate, and <Latex text="\(\partial J / \partial w\)"/> and <Latex text="\(\partial J / \partial b\)"/> are computed based on the cross-entropy loss. For each sample <Latex text="\( (x^{(i)}, y^{(i)}) \)"/>, we have:
+
+<Latex text="\( \hat{p}^{(i)} = \sigma\big(w^T x^{(i)} + b\big)\)"/>,
+
+and  
+
+<Latex text="\[
+\frac{\partial J}{\partial w} = \frac{1}{m} \sum_{i=1}^m \Big(\hat{p}^{(i)} - y^{(i)}\Big) x^{(i)}.
+\]"/>  
+
+Each update step moves <Latex text="\(w\)"/> and <Latex text="\(b\)"/> in the direction that locally decreases the loss.
+
+### Newton's method and other optimization techniques  
+For logistic regression, the cross-entropy loss has a nice structure that can also be tackled by second-order optimization methods, such as Newton's method. Newton's method uses curvature information (the Hessian matrix) to converge in fewer steps, though each step can be more computationally expensive. Libraries like statsmodels (in Python) often implement this approach, giving very precise parameter estimates.  
+
+Other methods include quasi-Newton approaches (e.g., L-BFGS) or coordinate descent (especially when regularization is involved). In practice, both first-order (gradient descent variants) and second-order methods can be effective depending on dataset size and constraints.
+
+### Convergence and computational considerations  
+- **Learning rate** (<Latex text="\( \alpha \)"/>): Too large can cause divergence; too small can slow convergence.  
+- **Number of features** (<Latex text="\( d \)"/>): When <Latex text="\( d \)"/> is massive, specialized optimizers or mini-batch gradient methods can improve performance.  
+- **Batch vs. stochastic updates**: In large-scale problems, we often use stochastic gradient descent (SGD) or mini-batch SGD for efficiency and faster iteration cycles.
+
+---
+
+## Properties of logistic regression  
+
+### Probabilistic interpretation  
+A prominent appeal of logistic regression is its ability to produce probabilities. Rather than merely classifying samples as 0 or 1, the model outputs <Latex text="\( \hat{p} \)"/> — the probability of belonging to the positive class — enabling well-calibrated decision rules. This is useful in domains (e.g., medical diagnosis) where you might need to act on a predicted probability instead of a hard label.
+
+### Decision boundaries and interpretability  
+Despite producing probability estimates, the final classification boundary in logistic regression is still linear: it is the set of <Latex text="\( x \)"/> such that <Latex text="\( w^T x + b = 0 \)"/>. Points on one side of the hyperplane yield probabilities above 0.5, and on the other side, below 0.5.  
+
+Logistic regression remains one of the most interpretable classifiers:  
+- **Coefficients <Latex text="\( w \)"/>**: Show how each feature contributes to the log-odds of the outcome.  
+- **Intercept <Latex text="\( b \)"/>**: Shifts the decision boundary globally.  
+
+### Overfitting and the role of regularization (L1, L2)  
+When the number of features is large compared to the number of samples, logistic regression can overfit. Regularization combats this by penalizing large parameter values:  
+
+1. **L2 regularization** (<Latex text="\( \|\!w\|\!_2^2 \)"/> penalty) tends to shrink coefficients smoothly, often used in practice (a.k.a. "Ridge" regularization).  
+2. **L1 regularization** (<Latex text="\( \|\!w\|\!_1 \)"/> penalty) promotes sparsity, driving some coefficients exactly to zero ("Lasso" style).  
+
+Regularization affects both interpretability (L1 can yield sparse models that are easier to interpret) and the shape of the decision boundary.
+
+### Feature scaling and its impact  
+Because logistic regression is sensitive to the relative scale of features, applying standardization or normalization typically accelerates convergence. This is especially relevant if gradient-based methods are used. Feature scaling ensures all features contribute comparably to the loss gradient, preventing large-scale features from dominating the learning process.
+
+---
+
+## Multiclass logistic regression  
+Although logistic regression was originally formulated for binary classification, there are straightforward methods to extend it to multi-class problems.
+
+### One-vs-all (OvA) strategy  
+Sometimes called "one-vs-rest," the OvA strategy trains a separate binary logistic classifier for each class <Latex text="\(k\)"/> by labeling all samples in class <Latex text="\(k\)"/> as 1 and all others as 0. For an <Latex text="\(N\)"/>-class problem, you end up with <Latex text="\(N\)"/> classifiers. A new sample is assigned to the class whose corresponding classifier outputs the highest probability.
+
+<Image alt="One-vs-all classification" path="" caption="Each class receives its own binary classifier distinguishing that class from the rest." zoom="false" />
+
+### One-vs-one (OvO) strategy  
+In one-vs-one, a separate classifier is trained for every pair of classes. For <Latex text="\(N\)"/> classes, this leads to <Latex text="\(N(N-1)/2\)"/> classifiers. When predicting, each pairwise classifier "votes" for one of the two classes it distinguishes, and the final class is the one with the most votes. This approach can be more efficient if your data is balanced among classes, but it can become cumbersome when <Latex text="\(N\)"/> is large.
+
+### Softmax (multinomial logistic regression) approach  
+Alternatively, the multinomial logistic regression (also called "softmax regression") generalizes the sigmoid to multiple classes by computing an exponentiated linear score for each class:  
+
+<Latex text="\[
+p(y = k \mid x) = \frac{\exp\big(w_k^T x + b_k\big)}{\sum_{j=1}^N \exp\big(w_j^T x + b_j\big)}.
+\]"/>  
+
+This approach uses a cross-entropy loss over all classes simultaneously. It is elegantly handled by many machine learning libraries (e.g., scikit-learn's `LogisticRegression` with `multi_class='multinomial'`).  
+
+---
+
+## Applications and practical tips  
+Logistic regression is ubiquitous across industries due to its reliability, interpretability, and relative ease of training. Common examples include:  
+
+- **Customer churn prediction**: Estimating the probability that a customer will stop using a service.  
+- **Medical diagnosis**: Predicting the probability of having a certain disease based on biomarkers and patient history.  
+- **Credit scoring**: Assessing the likelihood of default.  
+
+When working with logistic regression in practice, keep these tips in mind:  
+
+1. **Data preprocessing**: Clean your data and scale numeric features. Deal with missing values appropriately.  
+2. **Regularization**: Use <Latex text="\( \ell_2 \)"/> or <Latex text="\( \ell_1 \)"/> to avoid overfitting, especially with many features.  
+3. **Imbalanced datasets**: If your positive class is rare, consider oversampling, undersampling, or using class-weight adjustments.  
+4. **Interpretability**: Logistic regression coefficients are straightforward to interpret, but consider advanced explainability methods (e.g., SHAP, LIME) if needed for more complex use cases.  
+
+### Simple Python implementation example  
+
+Below is a very basic illustration of how one might implement logistic regression "from scratch" in Python using batch gradient descent. In practice, libraries such as scikit-learn, statsmodels, or PyTorch/TensorFlow are preferred for efficient and robust implementations.  
+
+```
+<Code text={`
+import numpy as np
+
+def sigmoid(z):
+    return 1 / (1 + np.exp(-z))
+
+def compute_loss_and_gradients(X, y, w, b):
+    m = X.shape[0]
+    # Predicted probabilities
+    z = X.dot(w) + b
+    p = sigmoid(z)
+    
+    # Cross-entropy loss
+    loss = -np.mean(y * np.log(p) + (1 - y) * np.log(1 - p))
+    
+    # Gradients
+    dw = (1/m) * X.T.dot(p - y)
+    db = np.mean(p - y)
+    
+    return loss, dw, db
+
+def train_logistic_regression(X, y, lr=0.01, num_iters=1000):
+    np.random.seed(42)
+    w = np.random.randn(X.shape[1]) * 0.01
+    b = 0.0
+    
+    for i in range(num_iters):
+        loss, dw, db = compute_loss_and_gradients(X, y, w, b)
+        w -= lr * dw
+        b -= lr * db
+        
+        if i % 100 == 0:
+            print(f"Iteration {i}, Loss: {loss:.4f}")
+    
+    return w, b
+
+# Example usage:
+# X_train, y_train = ... # Load or generate data
+# w, b = train_logistic_regression(X_train, y_train, lr=0.1, num_iters=1000)
+# print("Trained weights:", w)
+# print("Trained bias:", b)
+`}/>
+```
+
+In this small script:  
+
+- <Highlight>sigmoid</Highlight> implements <Latex text="\( \sigma(z) \)"/>.  
+- The function <Highlight>compute_loss_and_gradients</Highlight> calculates the cross-entropy loss and its gradients.  
+- <Highlight>train_logistic_regression</Highlight> iteratively updates parameters <Latex text="\( w \)"/> and <Latex text="\( b \)"/> using gradient descent.
+
+Logistic regression's simplicity keeps such implementations concise and readable.  
+
+You now have a deeper, more theoretical understanding of logistic regression: from its origins as a linear classifier with a probabilistic twist, through the details of the cost function, up to its optimization, properties, and multi-class extensions. Logistic regression remains a mainstay in modern data science and machine learning pipelines — especially for interpretable, moderate-scale problems where a straightforward, well-grounded model is invaluable.

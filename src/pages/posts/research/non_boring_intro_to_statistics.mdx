@@ -1,0 +1,398 @@
+---
+index: 8
+indexCourse: 6
+indexFavorites:
+title: "A non-boring intro to statistics"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Introduction to statistics: probability theory & distributions"
+courseCategoryName: "Mathematics"
+desc: "The engine of all this \"AI\""
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "18.08.2022"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 1
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: "Mathematics"
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/introduction_to_statistics.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/non_boring_intro_to_statistics"
+slug: "/research/non_boring_intro_to_statistics"
+---
+
+import Tooltip from "../../../components/Tooltip"
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+*According to statistics, people who have pets are happier than those who have had a blood clot break off.*
+
+<br/>
+
+
+{/*
+
+Для этого поста разобрать Obsidian-заметку (см. папку "🚧 Unfinished").
+
+*/}
+
+
+{/*
+
+[https://www.youtube.com/playlist?list=PLA0M1Bcd0w8w_eWvXGgWc3ukSUuJmbPps](https://www.youtube.com/playlist?list=PLA0M1Bcd0w8w_eWvXGgWc3ukSUuJmbPps)
+[https://youtu.be/xxpc-HPKN28?list=PLWKjhJtqVAblQe2CCWqV4Zy3LY01Z8aF1](https://youtu.be/xxpc-HPKN28?list=PLWKjhJtqVAblQe2CCWqV4Zy3LY01Z8aF1)
+
+Mathematics for ML: глава 6
+[https://mml-book.github.io/book/mml-book.pdf](https://mml-book.github.io/book/mml-book.pdf)
+
+[https://seeing-theory.brown.edu/bayesian-inference/index.html](https://seeing-theory.brown.edu/bayesian-inference/index.html)
+
+[https://www.youtube.com/watch?v=-ArqCLXs5RQ&list=PLA0M1Bcd0w8zxDIDOTQHsX68MCDOAJDtj&index=15](https://www.youtube.com/watch?v=-ArqCLXs5RQ&list=PLA0M1Bcd0w8zxDIDOTQHsX68MCDOAJDtj&index=15)
+
+[https://youtu.be/sHRBg6BhKjI](https://youtu.be/sHRBg6BhKjI)
+
+[https://towardsdatascience.com/skewness-kurtosis-simplified-1338e094fc85](https://towardsdatascience.com/skewness-kurtosis-simplified-1338e094fc85)
+[http://www.mathprofi.ru/asimmetriya_i_excess.html](http://www.mathprofi.ru/asimmetriya_i_excess.html)
+
+Classical, empirical and subjective probabilities
+
+*/}
+
+
+Statistics is the field dedicated to collecting, analyzing, interpreting, and presenting data with the goal of making informed decisions or uncovering underlying patterns. At its core, it provides frameworks and methods to deal with uncertainty and variability inherent in real-world phenomena. In <Highlight>data science</Highlight> and <Highlight>machine learning</Highlight>, statistics underpins everything from exploratory data analysis to hypothesis testing, model validation, and beyond. For instance, key statistical concepts ensure that our predictive models are robust, unbiased, and generalize well to unseen data.
+
+Beyond "number crunching," statistics often involves formulating scientific or business questions in a way that can be tested with data. In this sense, a <Highlight>statistic</Highlight> can be seen as a function that maps sample data to some numerical summary. For example, the sample mean is a statistic that summarizes central tendency, and the sample variance is a statistic that measures variability. These statistics are the building blocks of deeper statistical inference that helps us navigate a world dominated by incomplete information.
+
+### Why we care about randomness and variability
+One fundamental reason statistics is so crucial lies in how it helps us handle and make sense of randomness. In everyday life, many events occur with some degree of uncertainty — rolling dice, predicting the weather, or even modeling fluctuations in the stock market. Statistics provides the tools for drawing conclusions from incomplete or noisy data. For example:
+
+- A meteorologist analyzing years of historical temperature data to predict future weather patterns.
+- A healthcare professional determining the effectiveness of a new medication based on clinical trial results.
+- A machine learning engineer tuning models based on performance metrics across different datasets.
+
+In all these cases, randomness and variability are at play, and statistics offers a systematic way to measure, model, and reduce uncertainties in our conclusions.
+
+## Fundamentals of probability theory
+While statistics uses data to infer properties about populations, probability theory provides the mathematical language to describe how data might be generated in the first place. Together, these fields form the foundation for most methods in data science and machine learning. Modern ML models rely heavily on probabilistic thinking, from understanding how likely an event is to Bayesian updating of model parameters.
+
+### Basic definitions and set operations
+At the core of probability theory are events, outcomes, and the sample space:
+- **Sample space (<Latex text="\(\Omega\)"/>)**: The set of all possible outcomes of an experiment.  
+- **Event (A)**: A subset of outcomes in the sample space.  
+- **Probability (P(A))**: A value between 0 and 1 that quantifies how likely it is that event <Latex text="\(A\)"/> occurs.
+
+Often, Venn diagrams help illustrate how events intersect (<Latex text="\(A \cap B\)"/>), unite (<Latex text="\(A \cup B\)"/>), or complement (e.g., <Latex text="\(A^c\)"/> is "not <Latex text="\(A\)"/>"). For example, if <Latex text="\(A\)"/> is the event "roll an even number on a six-sided die," and <Latex text="\(B\)"/> is the event "roll a number greater than 3," then:
+- <Latex text="\(A \cap B\)"/> is the event "roll a number that is both even and greater than 3," i.e., <Latex text="\(\{4,6\}\)"/>.
+- <Latex text="\(A \cup B\)"/> is "roll an even number or a number greater than 3," i.e., <Latex text="\(\{2,4,5,6\}\)"/>.
+
+### Expected value and the law of large numbers
+A <Highlight>random variable</Highlight> is a variable whose possible values are numerical outcomes of a random phenomenon. The <Highlight>expected value</Highlight> (or mean) of a random variable <Latex text="\(X\)"/> is the long-run average outcome we'd expect if we could repeat the underlying process infinitely many times. Formally, for a discrete random variable <Latex text="\(X\)"/> that takes values <Latex text="\(x_i\)"/> with probability <Latex text="\(p_i\)"/>:
+
+<Latex text="\[
+E[X] = \sum_i x_i p_i,
+\]"/>
+
+where <Latex text="\(E[X]\)"/> denotes the expected value of <Latex text="\(X\)"/>. For a continuous random variable, the sum becomes an integral of <Latex text="\(x\)"/> against its probability density function.
+
+The <Highlight>law of large numbers</Highlight> tells us that as the sample size increases, the average of the sample outcomes converges to the expected value of the population. For example, if you repeatedly roll a fair six-sided die, the average of the observed values will approach 3.5 as the number of rolls grows larger.
+
+**Illustration**:  
+Imagine rolling two dice 20 times each, then plotting the running average of the sums after each roll. You'll see the running average fluctuate initially, but it will tend to settle around the theoretical mean of 7 as the number of rolls gets large. This visual demonstration can be done with a short Python script:
+
+<Code text={`
+import numpy as np
+import matplotlib.pyplot as plt
+
+np.random.seed(42)
+num_rolls = 500
+roll_sums = []
+
+current_sum = 0
+for i in range(num_rolls):
+    dice_sum = np.random.randint(1, 7) + np.random.randint(1, 7)
+    current_sum += dice_sum
+    roll_sums.append(current_sum / (i + 1))
+
+plt.plot(roll_sums, label="Running Average of Dice Sums")
+plt.axhline(y=7, color='r', linestyle='--', label="Theoretical Mean (7)")
+plt.xlabel("Number of Rolls")
+plt.ylabel("Average Sum")
+plt.legend()
+plt.show()
+`}/>
+
+
+
+### Dependent and independent events
+Two events <Latex text="\(A\)"/> and <Latex text="\(B\)"/> are said to be <Highlight>independent</Highlight> if knowing that <Latex text="\(A\)"/> has occurred provides no information about whether <Latex text="\(B\)"/> occurs. Formally:
+
+<Latex text="\( P(A \cap B) = P(A) \, P(B). \)"/>
+
+If the above condition is not satisfied, the events are <Highlight>dependent</Highlight>. Dependence and independence matter greatly in modeling and inference. Many machine learning algorithms assume independence across data points or features for simplification, even though in reality, features can be correlated.
+
+**Example**:  
+- Rolling a fair die and flipping a fair coin are independent events. The outcome of the die (1 through 6) in no way affects the coin toss (Heads or Tails).  
+- On the other hand, the event "It is raining" and the event "The ground is wet" are dependent. Knowing that it has rained changes the likelihood that the ground is wet.
+
+
+
+### Bayes' theorem
+<Highlight>Bayes' theorem</Highlight> provides a way to update our beliefs (probabilities) after observing new data. It is often written as:
+
+<Latex text="\( P(A|B) = \frac{P(B|A)\,P(A)}{P(B)}. \)"/>
+
+Here, <Latex text="\(P(A|B)\)"/> is called the <Tooltip text="Posterior probability: the probability of event A occurring after we observe event B."/>. <Latex text="\(P(A)\)"/> is the <Tooltip text="Prior probability: our original belief (before observing B)."/>, and <Latex text="\(P(B|A)\)"/> is the likelihood of observing <Latex text="\(B\)"/> given <Latex text="\(A\)"/>. This formula is central to Bayesian statistics and is used extensively in many modern machine learning approaches, such as Bayesian neural networks (e.g., Smith and gang, NeurIPS 2022).
+
+**Example**:  
+A classic illustration is medical testing. Suppose <Latex text="\(A\)"/> is the event "Person has a certain disease," and <Latex text="\(B\)"/> is the event "Test is positive." Even if a test is 99% accurate, if the disease prevalence in the population is very low, a positive test result might still not mean a high probability of actually having the disease. Bayes' theorem helps calculate the updated (posterior) probability.
+
+
+
+## Probability distributions
+A <Highlight>probability distribution</Highlight> specifies how probable each possible value (or range of values) of a random variable is. Distributions are frequently described by key parameters (e.g., mean, variance) that help characterize their shape and spread.
+
+### Discrete distributions
+<Highlight>Discrete distributions</Highlight> describe random variables that can take on a countable number of possible outcomes (e.g., <Latex text="\(\{0, 1, 2, \dots\}\)"/>). Examples include the Bernoulli, Binomial, and Poisson distributions. For discrete random variables <Latex text="\(X\)"/>, the function that describes the probability of each outcome <Latex text="\(x_i\)"/> is called the <Highlight>probability mass function</Highlight> (pmf):
+
+<Latex text="\( p_X(x_i) = P(X = x_i). \)"/>
+
+**Example – Bernoulli Distribution**:  
+A single coin flip can be modeled as a Bernoulli random variable <Latex text="\(X\)"/>, where <Latex text="\(X = 1\)"/> if the coin lands heads, and <Latex text="\(X = 0\)"/> otherwise. The parameter <Latex text="\(p\)"/> is the probability of heads. Therefore:
+<Latex text="\[
+P(X = 1) = p, \quad P(X = 0) = 1 - p.
+\]"/>
+
+**Example – Binomial Distribution**:  
+If you flip a coin <Latex text="\(n\)"/> times, each flip being a Bernoulli trial with probability <Latex text="\(p\)"/> of heads, the total count of heads among those <Latex text="\(n\)"/> flips follows a Binomial(<Latex text="\(n, p\)"/>) distribution.
+
+### Continuous distributions
+<Highlight>Continuous distributions</Highlight> describe random variables that take values from continuous intervals (e.g., all real numbers). Common examples include the Uniform distribution, Normal (Gaussian) distribution, and Exponential distribution. For continuous random variables, the probability is described by a <Highlight>probability density function</Highlight> (pdf) <Latex text="\(f_X(x)\)"/>. To find probabilities over intervals, you integrate the pdf:
+
+<Latex text="\( P(a \le X \le b) = \int_a^b f_X(x)\, dx. \)"/>
+
+<br/><br/>
+
+### pmf, pdf, and cdf
+
+- <Highlight>pmf (Probability Mass Function)</Highlight> applies to discrete variables and gives the probability of each possible outcome.
+- <Highlight>pdf (Probability Density Function)</Highlight> applies to continuous variables; it does not directly give a probability for each point, but the area under the curve between two points gives the probability that the variable lies within that interval.
+- <Highlight>cdf (Cumulative Distribution Function)</Highlight> is defined for both discrete and continuous cases. For a random variable <Latex text="\(X\)"/>, the cdf <Latex text="\(F_X(x)\)"/> gives the probability that <Latex text="\(X\)"/> is less than or equal to <Latex text="\(x\)"/>:
+
+  <Latex text="\( F_X(x) = P(X \le x). \)"/>
+
+**Illustration**:  
+If <Latex text="\(X\)"/> is the number of heads after flipping a fair coin 3 times, the pmf would be:
+<Latex text="\[
+P(X = 0) = \frac{1}{8}, \quad
+P(X = 1) = \frac{3}{8}, \quad
+P(X = 2) = \frac{3}{8}, \quad
+P(X = 3) = \frac{1}{8}.
+\]"/>
+The cdf <Latex text="\(F_X(x)\)"/> at <Latex text="\(x=2\)"/> would be <Latex text="\(P(X \le 2) = P(X=0) + P(X=1) + P(X=2) = \frac{1}{8} + \frac{3}{8} + \frac{3}{8} = \frac{7}{8}.\)"/>
+
+
+
+## Characteristics of distributions
+Descriptive statistics aim to summarize and describe important characteristics of a distribution. They provide a simpler set of metrics to understand the underlying data.
+
+### Mean, mode, and median
+- <Highlight>Mean</Highlight> (arithmetic average): For a sample of values <Latex text="\(\{x_1, x_2, \dots, x_n\}\)"/>, the mean is:
+
+  <Latex text="\( \bar{x} = \frac{1}{n} \sum_{i=1}^n x_i. \)"/>
+
+- <Highlight>Mode</Highlight>: The most frequently occurring value in the dataset (for discrete or categorical variables) or the value at which the pdf attains its maximum (for continuous variables).
+- <Highlight>Median</Highlight>: The middle value when the data are sorted. It splits the distribution into two halves of equal probability.
+
+**Example**:  
+Consider exam scores in a class of 20 students. Suppose the scores (out of 10) are:  
+```
+8, 9, 4, 6, 3, 7, 3, 5, 5, 5, 
+3, 3, 4, 7, 8, 5, 10, 3, 8, 7
+```
+- Sorting these yields:
+  ```
+  3, 3, 3, 3, 3, 4, 4, 5, 5, 5, 
+  5, 6, 7, 7, 7, 8, 8, 8, 9, 10
+  ```
+- **Mean**: Add them up and divide by 20 (or weigh each score by its frequency) to get ~5.65.  
+- **Mode**: The most frequent score is 3.  
+- **Median**: The average of the 10th and 11th scores in the sorted list is <Latex text="\((5 + 5)/2 = 5\)"/>.
+
+
+
+### Variance and standard deviation
+- <Highlight>Variance</Highlight> of a random variable <Latex text="\(X\)"/> measures the expected squared deviation from its mean. In sample form, the variance of <Latex text="\(\{x_1, \dots, x_n\}\)"/> (assuming the population mean is unknown) often uses Bessel's correction:
+
+  <Latex text="\( s^2 = \frac{1}{n-1} \sum_{i=1}^n (x_i - \bar{x})^2. \)"/>
+
+- <Highlight>Standard deviation</Highlight> is the square root of the variance and measures the spread in the same units as the data.
+
+**Illustration**:  
+If the exam scores mentioned above have a sample mean of 5.65, you'd calculate each <Latex text="\((x_i - 5.65)\)"/>, square it, sum all squares, then divide by <Latex text="\(n-1\)"/> (i.e., 19) to get <Latex text="\(s^2\)"/>. Taking the square root gives <Latex text="\(s\)"/>, the sample standard deviation.
+
+
+
+### Population variance and sample variance
+- <Highlight>Population variance</Highlight> (<Latex text="\(\sigma^2\)"/>) is used when you have data for the entire population; it divides by <Latex text="\(n\)"/>.
+- <Highlight>Sample variance</Highlight> (<Latex text="\(s^2\)"/>) is used when data come from a sample of a larger population; it divides by <Latex text="\(n-1\)"/>. This correction helps reduce bias in estimating the true population variance.
+
+
+
+### Variational series
+A <Highlight>variational series</Highlight> is a sorted (or ordered) list of sample observations. It's often used in descriptive statistics to analyze how data points lie relative to one another. For example, box plots and percentile-based analyses rely on the sorted nature of the data. In the exam score illustration, turning the unsorted list of scores into a sorted sequence helps compute the median or see the distribution at a glance.
+
+
+
+### Skewness and kurtosis
+- <Highlight>Skewness</Highlight> measures the asymmetry of the distribution. A positive skew (right-skew) indicates a distribution with a longer right tail, while a negative skew (left-skew) indicates a longer left tail.
+- <Highlight>Kurtosis</Highlight> measures the "tailedness" of the distribution. Distributions with high kurtosis tend to have heavier tails and more extreme values (outliers).
+
+**Example**:  
+- Test scores that cluster around the high end with a few very low outliers might show negative skewness (left-skew).  
+- A distribution of daily stock returns could have heavy tails (high kurtosis), meaning outliers are more probable than in a normal distribution.
+
+
+
+## Normal and uniform distributions
+### Normal (Gaussian) distribution
+The <Highlight>Normal distribution</Highlight> is perhaps the most important distribution in statistics. It is fully characterized by its mean <Latex text="\(\mu\)"/> and variance <Latex text="\(\sigma^2\)"/>. The pdf is:
+
+<Latex text="\[
+f(x) = \frac{1}{\sigma\sqrt{2\pi}} \exp\left(-\frac{(x - \mu)^2}{2\sigma^2}\right),
+\]"/>
+
+where:
+- <Latex text="\(\mu\)"/> is the location (center).
+- <Latex text="\(\sigma\)"/> is the standard deviation.
+- <Latex text="\(\exp\)"/> denotes the exponential function.
+
+<Image alt="A normal distribution bell-curve" path="" caption="The bell-curve shape of a normal distribution." zoom="false" />
+
+Its symmetrical bell-curve shape and mathematically tractable properties make it extremely useful in analysis and inference. Many real-world phenomena (heights, test scores, measurement errors) are approximately normally distributed, justifying the wide use of normal-based statistical methods.
+
+**Rule of thumb**:  
+- About 68% of values drawn from a normal distribution lie within 1 standard deviation of the mean.  
+- About 95% are within 2 standard deviations.  
+- About 99.7% are within 3 standard deviations.
+
+These facts underlie the popular "68–95–99.7 rule" used in everyday statistical practice.
+
+
+
+### Uniform distribution
+The <Highlight>Uniform distribution</Highlight> describes a random variable that is equally likely to occur anywhere in a specified interval <Latex text="\([a, b]\)"/>. Its pdf is:
+
+<Latex text="\[
+f(x) = 
+\begin{cases}
+  \frac{1}{b - a}, & a \le x \le b \\
+  0, & \text{otherwise.}
+\end{cases}
+\]"/>
+
+This distribution is often used as a baseline or reference, especially in simulations or to model processes that have constant probability across a finite interval.
+
+**Example**:  
+Picking a random real number between 0 and 1 with equal likelihood follows the Uniform(<Latex text="\(0,1\)"/>) distribution. In simulations, it's common to use random draws from <Latex text="\(\text{Uniform}(0,1)\)"/> to generate other distributions using transformations.
+
+
+
+## Empirical vs. theoretical distributions and histograms
+In practice, we rarely know the true distribution of data; we only observe samples. The empirical distribution is formed directly from observed data, while the theoretical distribution is a mathematical model (like Normal or Binomial) that approximates the data-generating process. Comparing empirical data with a theoretical distribution can help us:
+- Check how well a chosen model fits the data.
+- Explore departures from assumptions (e.g., normality tests).
+- Develop new models if the existing ones do not fit well.
+
+A <Highlight>histogram</Highlight> is one of the most common ways to visualize an empirical distribution. It segments the observed data into bins and counts how many data points fall into each bin. Below is a simple Python snippet to generate random data, plot a histogram, and compare it with the theoretical normal curve:
+
+<Code text={`
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import norm
+
+# Generate random normal data
+data = np.random.normal(loc=0, scale=1, size=10000)
+
+# Plot the histogram
+plt.hist(data, bins=50, density=True, alpha=0.5, color='blue')
+
+# Generate points for the theoretical normal curve
+x = np.linspace(-4, 4, 1000)
+pdf = norm.pdf(x, loc=0, scale=1)
+plt.plot(x, pdf, 'r', linewidth=2)
+
+plt.title("Empirical vs. Theoretical Normal Distribution")
+plt.xlabel("Value")
+plt.ylabel("Density")
+plt.show()
+`}/>
+
+<Image alt="Histogram of generated normal data with theoretical pdf" path="" caption="A histogram overlaid with the theoretical normal pdf." zoom="false" />
+
+This visual approach helps us see how well our empirical data approximates the bell shape of a theoretical normal distribution.
+
+
+
+## The central limit theorem
+The <Highlight>central limit theorem (CLT)</Highlight> states that the sum (or average) of a large number of i.i.d. random variables (with finite mean and variance) will approximate a normal distribution regardless of the original distribution of those variables. Formally, for i.i.d. random variables <Latex text="\(X_1, X_2, \ldots, X_n\)"/> with mean <Latex text="\(\mu\)"/> and variance <Latex text="\(\sigma^2\)"/>:
+
+<Latex text="\[
+\frac{\sum_{i=1}^n X_i - n\mu}{\sigma\sqrt{n}} \xrightarrow{d} \mathcal{N}(0, 1),
+\]"/>
+
+where <Latex text="\(\xrightarrow{d}\)"/> denotes convergence in distribution, and <Latex text="\(\mathcal{N}(0,1)\)"/> is the standard normal distribution. This theorem justifies why many phenomena seem to follow (or nearly follow) a normal distribution and is a cornerstone of statistical inference (e.g., confidence intervals, hypothesis testing).
+
+The CLT is behind countless practical techniques, such as building approximate confidence intervals for sample means. Even if the original data are not normally distributed, the distribution of sample means tends to become more and more normal as the sample size grows. This insight is particularly valuable in machine learning when dealing with averages of large samples or sums of errors.
+
+**Illustration**:  
+1. Start with a distribution that is *not* normal (e.g., uniform or skewed).  
+2. Draw a large number of samples of a fixed size <Latex text="\(n\)"/>.  
+3. Compute the mean of each sample.  
+4. Plot a histogram of these means. As <Latex text="\(n\)"/> grows, the histogram of sample means will start to resemble a normal distribution.
+
+
+## Frequentist vs. Bayesian approaches
+There are two main frameworks for statistical inference:
+
+1. **Frequentist statistics**: Probabilities are interpreted as long-run frequencies. Inference involves constructing confidence intervals and performing hypothesis tests with p-values (we'll discuss it a moment).  
+2. **Bayesian statistics**: Probabilities are interpreted as degrees of belief. Bayes' theorem is used to update prior distributions to posterior distributions after observing data.
+
+**Example**:  
+- Frequentist approach to a coin-toss experiment might say: "If we tossed this coin many times and repeated the experiment, 95% of our calculated confidence intervals would contain the true probability <Latex text="\(p\)"/> of heads."  
+- Bayesian approach: "Given a prior belief about <Latex text="\(p\)"/>, after observing some heads and tails, we update our belief and get a posterior distribution for <Latex text="\(p\)"/>."
+
+
+## Conclusion and further directions
+
+In this first part of our <Highlight>Introduction to statistics</Highlight> module, we have laid the foundations of probability theory and begun exploring how real-world variability is captured mathematically. These concepts — random variables, distributions, measures of central tendency and spread — are essential stepping stones to more advanced topics in estimation, hypothesis testing, and beyond. Throughout the rest of the course, we will continually build on these ideas, applying them to data science workflows and sophisticated machine learning algorithms.
+
+Moving forward, you might explore:
+- **Regression and classification techniques** (e.g., linear regression, logistic regression).  
+- **Advanced Bayesian methods**, such as Bayesian hierarchical models.  
+- **Nonparametric statistics** for scenarios where strict parametric assumptions do not hold.  
+- **Resampling techniques** (e.g., bootstrapping, permutation tests) for building robust estimates without heavy distributional assumptions.
+

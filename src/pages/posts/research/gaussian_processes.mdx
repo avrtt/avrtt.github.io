@@ -1,0 +1,594 @@
+---
+index: 37
+indexCourse: 57
+indexFavorites:
+title: "Gaussian processes"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Gaussian processes"
+courseCategoryName: "Probabilistic models & Bayesian methods"
+desc: "Bayesian poetry"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "10.03.2023"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 1
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/gaussian_processes.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/gaussian_processes"
+slug: "/research/gaussian_processes"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+{/*
+
+- [18.1. Introduction to Gaussian Processes](https://d2l.ai/chapter_gaussian-processes/gp-intro.html)
+    - [18.1.1. Summary](https://d2l.ai/chapter_gaussian-processes/gp-intro.html#summary)
+    - [18.1.2. Exercises](https://d2l.ai/chapter_gaussian-processes/gp-intro.html#exercises)
+- [18.2. Gaussian Process Priors](https://d2l.ai/chapter_gaussian-processes/gp-priors.html)
+    - [18.2.1. Definition](https://d2l.ai/chapter_gaussian-processes/gp-priors.html#definition)
+    - [18.2.2. A Simple Gaussian Process](https://d2l.ai/chapter_gaussian-processes/gp-priors.html#a-simple-gaussian-process)
+    - [18.2.3. From Weight Space to Function Space](https://d2l.ai/chapter_gaussian-processes/gp-priors.html#from-weight-space-to-function-space)
+    - [18.2.4. The Radial Basis Function (RBF) Kernel](https://d2l.ai/chapter_gaussian-processes/gp-priors.html#the-radial-basis-function-rbf-kernel)
+    - [18.2.5. The Neural Network Kernel](https://d2l.ai/chapter_gaussian-processes/gp-priors.html#the-neural-network-kernel)
+    - [18.2.6. Summary](https://d2l.ai/chapter_gaussian-processes/gp-priors.html#summary)
+    - [18.2.7. Exercises](https://d2l.ai/chapter_gaussian-processes/gp-priors.html#exercises)
+- [18.3. Gaussian Process Inference](https://d2l.ai/chapter_gaussian-processes/gp-inference.html)
+    - [18.3.1. Posterior Inference for Regression](https://d2l.ai/chapter_gaussian-processes/gp-inference.html#posterior-inference-for-regression)
+    - [18.3.2. Equations for Making Predictions and Learning Kernel Hyperparameters in GP Regression](https://d2l.ai/chapter_gaussian-processes/gp-inference.html#equations-for-making-predictions-and-learning-kernel-hyperparameters-in-gp-regression)
+    - [18.3.3. Interpreting Equations for Learning and Predictions](https://d2l.ai/chapter_gaussian-processes/gp-inference.html#interpreting-equations-for-learning-and-predictions)
+    - [18.3.4. Worked Example from Scratch](https://d2l.ai/chapter_gaussian-processes/gp-inference.html#worked-example-from-scratch)
+    - [18.3.5. Making Life Easy with GPyTorch](https://d2l.ai/chapter_gaussian-processes/gp-inference.html#making-life-easy-with-gpytorch)
+    - [18.3.6. Summary](https://d2l.ai/chapter_gaussian-processes/gp-inference.html#summary)
+    - [18.3.7. Exercises](https://d2l.ai/chapter_gaussian-processes/gp-inference.html#exercises)
+
+*/}
+
+
+{/*
+
+1. Introduction to gaussian processes  
+   Motivation and comparison with parametric models, key advantages and applications.
+2. Basic concepts
+   Observed data and missing inputs, prior functions and posterior functions, role of uncertainty (epistemic vs. aleatoric), etc. Add illustrations.  
+3. Covariance functions and kernels  
+   3.1 Definition of covariance/kernel functions  
+   3.2 Radial basis function (RBF) kernel  
+   3.3 Other common kernels  
+   Matern, Ornstein-Uhlenbeck, neural network kernels. NNs will be covered later.
+   3.4 Interpretable hyperparameters (amplitude, length-scale, etc.)  
+4. Gaussian process regression  
+   4.1 Noise-free vs. noisy observations  
+   4.2 Prior specification: mean function and covariance matrix  
+   4.3 Posterior inference: predictive mean and variance  
+   4.4 Handling observation noise and adding jitter  
+5. Hyperparameter learning with the marginal likelihood  
+   5.1 Marginal likelihood derivation  
+   5.2 Balancing model fit and complexity (Occam's razor)  
+   5.3 Common pitfalls and initialization strategies  
+6. Implementation from scratch  
+   6.1 Constructing the kernel matrix and adding noise terms  
+   6.2 Solving linear systems and computing log determinants  
+   6.3 Step-by-step example of fitting a GP to data  
+   6.4 Visualizing posterior means, credible intervals, and posterior samples  
+7. Implementation with gpytorch  
+   7.1 Overview of gpytorch and its exact GP models  
+   7.2 Specifying mean functions, kernels, and likelihoods  
+   7.3 Training hyperparameters via marginal log-likelihood  
+   7.4 Making predictions and computing confidence regions  
+   7.5 Comparison with the from-scratch approach  
+8. Conclusion  
+
+*/}
+
+
+Gaussian processes (GPs) are a powerful framework for modeling functions in a Bayesian, non-parametric way, providing a principled mechanism to handle uncertainty. Instead of prespecifying a fixed number of parameters — like the weights of a neural network — Gaussian processes place a distribution over functions directly. Any finite set of points evaluated from a GP follows a multivariate normal distribution, governed by a mean function and a covariance (kernel) function. 
+
+Because of their flexibility, GPs have been successfully used in regression, classification, optimization (e.g., Bayesian optimization), and beyond, including active learning, hyperparameter tuning, and even aspects of reinforcement learning. GPs are especially appealing in situations where data is not abundant or one needs interpretable uncertainty estimates. Historically, they gained significant traction in machine learning research following foundational works such as Radford Neal (1996) and the influential text by Rasmussen and Williams (2006).
+
+In this article, we will dive deep into Gaussian processes, focusing particularly on:
+- Their motivation and key advantages over classic parametric models.
+- The theoretical foundations of how they handle data and encode uncertainty.
+- How to specify and tune covariance kernels.
+- How to derive the posterior predictive distribution in regression tasks.
+- How to implement a GP from scratch.
+- How to implement a GP using the modern gpytorch library.
+- Pitfalls, initialization strategies, and advanced considerations.
+
+Throughout, we will maintain an emphasis on balancing clarity with theoretical depth, using American English in an informal yet precise style suitable for scientists and professionals in machine learning who desire a deeper grasp of Gaussian processes.
+
+## basic concepts
+
+Gaussian processes can be viewed as distributions over functions that allow us to reason directly about the function space rather than about parameters such as weights in a parametric model. Here, we introduce the most essential concepts and notations:
+
+### observed data and missing inputs
+
+Let <Latex text="\( \{(x_i, y_i)\}_{i=1}^n \)"/> be a set of observed data points, where <Latex text="\( x_i \)"/> typically belongs to some input space (e.g., <Latex text="\( \mathbb{R}^d \)"/>) and <Latex text="\( y_i \)"/> are the observed outputs. Often, we think of these outputs as real-valued (for regression problems), but Gaussian processes can also be extended to classification and other domains through more advanced likelihood models (albeit requiring approximate inference in many such cases).
+
+An especially appealing aspect of GPs is that they handle missing inputs naturally. If we have large gaps between observed inputs — or if we want to forecast beyond observed intervals — GPs automatically quantify increased uncertainty in those regions, a property strongly tied to the kernel function.
+
+### prior functions and posterior functions
+
+In the GP framework, we place a prior directly on the space of functions. Concretely, suppose <Latex text="\( f(x) \)"/> is a function we wish to model. Declaring <Latex text="\( f(x) \)"/> to be drawn from a Gaussian process with mean function <Latex text="\( m(x) \)"/> and covariance function <Latex text="\( k(x,x') \)"/> is written as:
+
+<Latex text="\[
+f(x) \sim \mathcal{GP}\bigl(m(x), k(x,x')\bigr).
+\]"/>
+
+This statement means that for any finite collection of points <Latex text="\( x_1, x_2, \ldots, x_n \)"/>, the random variables <Latex text="\( f(x_1), f(x_2), \ldots, f(x_n) \)"/> follow a multivariate Gaussian distribution whose mean vector and covariance matrix are determined by <Latex text="\( m(\cdot) \)"/> and <Latex text="\( k(\cdot,\cdot) \)"/>.
+
+When we observe data <Latex text="\( (x_i, y_i) \)"/>, we can update our beliefs about <Latex text="\( f(x) \)"/> at any point <Latex text="\( x \)"/> through Bayes' rule. This results in a posterior distribution over functions. In regression settings with Gaussian noise, this posterior is still a Gaussian process whose mean and covariance can be computed analytically, thus yielding predictive means and variances at any test input.
+
+### role of uncertainty: epistemic vs. aleatoric
+
+Uncertainty in GPs typically has two main components:
+
+- <Highlight>Epistemic uncertainty</Highlight>, which is reducible as we observe more data. This arises from not knowing the true function. Far away from training data, the GP's epistemic uncertainty grows because there are many plausible function values that fit the data. 
+- <Highlight>Aleatoric uncertainty</Highlight>, which comes from inherent noise in the observations themselves (e.g., measurement noise). This uncertainty is often irreducible, even if we collect more data under the same noisy conditions.
+
+By encoding both sources of uncertainty, Gaussian processes provide a coherent picture of where our model is confident or uncertain in its predictions.
+
+<Image alt="Illustration of data points with missing intervals" path="" caption="Illustration showing observed data and regions with missing inputs, highlighting growing GP uncertainty." zoom="false" />
+
+## covariance functions and kernels
+
+Covariance functions (often called kernels) are the core mechanism by which a Gaussian process encodes assumptions about our function's properties (e.g., smoothness, periodicity, amplitude, etc.). They govern how function values at different inputs are correlated.
+
+### definition of covariance/kernel functions
+
+A covariance function <Latex text="\( k(x,x') \)"/> must be symmetric and positive semidefinite. In other words, for any finite set of points <Latex text="\( x_1,\dots,x_n \)"/>, the covariance matrix <Latex text="\( K \)"/> with entries <Latex text="\( K_{ij} = k(x_i, x_j) \)"/> must be symmetric (<Latex text="\( K_{ij} = K_{ji} \)"/>) and positive semidefinite (all eigenvalues are nonnegative).
+
+Commonly, we interpret <Latex text="\( k(x,x') \)"/> as defining some measure of similarity or correlation between <Latex text="\( x \)"/> and <Latex text="\( x' \)"/>. If two inputs are "close," then <Latex text="\( k(x,x') \)"/> is large, implying their function values <Latex text="\( f(x) \)"/> and <Latex text="\( f(x') \)"/> should be highly correlated. Conversely, if they are far apart, <Latex text="\( k(x,x') \)"/> is small, allowing them to vary more independently.
+
+### radial basis function (RBF) kernel
+
+Perhaps the most widely used kernel is the <Highlight>radial basis function (RBF) kernel</Highlight> (also known as the Gaussian kernel or the squared exponential kernel). It is often written as:
+
+<Latex text="\[
+k_{\mathrm{RBF}}(x,x') = a^2 \exp\!\Bigl(-\frac{\|x - x'\|^2}{2\,\ell^2}\Bigr),
+\]"/>
+
+where:
+- <Latex text="\( a \)"/> (sometimes called <Latex text="\( \sigma \)"/>) is the amplitude parameter, scaling the overall variance of the function values.
+- <Latex text="\( \ell \)"/> is the length-scale, controlling how quickly the correlation decreases with distance. A smaller <Latex text="\( \ell \)"/> implies "wigglier" functions that can change values rapidly over short distances, whereas a large <Latex text="\( \ell \)"/> enforces smoother, slowly varying functions.
+
+The RBF kernel is stationary (depends only on <Latex text="\( x-x' \)"/>) and is infinitely differentiable, encoding the assumption that the modeled function is very smooth. This property can be beneficial for data that is indeed quite smooth but might be too restrictive for some real-world settings (for instance, if the underlying function has sharp transitions or is not so smoothly varying).
+
+<Image alt="Illustration of RBF kernel effect" path="" caption="Illustration showing how the RBF kernel yields smoother function samples with increasing length-scale." zoom="false" />
+
+### other common kernels
+
+Several alternative kernels exist to capture different properties:
+
+1. <Highlight>Matern kernels</Highlight>: A family of kernels parameterized by a smoothness parameter <Latex text="\( \nu \)"/>. For certain values of <Latex text="\( \nu \)"/>, the function samples are only <Latex text="\( \nu \)"/>-times differentiable. This can model rougher or less smooth functions better than an RBF kernel. The Matern class is often recommended as a default choice if you suspect your data is not extremely smooth.
+
+2. <Highlight>Ornstein-Uhlenbeck kernel</Highlight>: Often used for modeling time-series with certain Markov properties, especially in physics/finance contexts for processes with exponential decay correlations.
+
+3. <Highlight>Neural network kernels</Highlight>: Stemming from Neal's (1996) work showing that infinitely wide neural networks converge to GPs with specific kernels. Modern variants such as the Neural Tangent Kernel or the ArcCosine kernel can reflect the inductive biases of deep networks.
+
+4. <Highlight>Periodic kernels</Highlight>: Useful for data known to have strict periodicity (e.g., seasonal or cyclical data in time-series). One typical form is <Latex text="\( k_{\mathrm{per}}(x,x') = a^2 \exp\bigl(-\frac{2\sin^2\bigl(\pi|x-x'|/p\bigr)}{\ell^2}\bigr) \)"/>, capturing repeating structure with period <Latex text="\( p \)"/>.
+
+In practice, kernels are also combined by summation or product, e.g., to encode that part of a function is periodic plus a slowly varying trend. Summation corresponds to modeling the function as <Latex text="\( f_1(x)+f_2(x) \)"/>, each drawn from separate GPs, while product can encode more intricate interactions.
+
+### interpretable hyperparameters (amplitude, length-scale, etc.)
+
+One of the major advantages of GPs over black-box parametric models is interpretability in terms of <Highlight>hyperparameters</Highlight> (also called kernel parameters). For example:
+- The amplitude <Latex text="\( a \)"/> (or <Latex text="\( \sigma \)"/>) often controls the overall vertical variation of the function.
+- The length-scale <Latex text="\( \ell \)"/> influences how inputs close in <Latex text="\( x \)"/>-space affect each other's function values.
+
+By adjusting these hyperparameters, we control the "wiggliness" or smoothness and the general scale of the function variations. During model fitting, these parameters are typically learned via the marginal likelihood (in regression) or via approximate techniques in classification and other scenarios.
+
+## gaussian process regression
+
+Regression is one of the most straightforward applications of Gaussian processes: we assume real-valued outputs that are corrupted by (often Gaussian) observation noise.
+
+### noise-free vs. noisy observations
+
+Consider a latent function <Latex text="\( f(\cdot) \)"/> drawn from a GP:
+
+<Latex text="\[
+f(x) \sim \mathcal{GP}\bigl(m(x), k(x,x')\bigr).
+\]"/>
+
+- <Highlight>Noise-free observations:</Highlight> If we measure <Latex text="\( f(x) \)"/> directly, so that <Latex text="\( y_i = f(x_i) \)"/> with no noise, then the GP posterior will exactly interpolate those data points.
+- <Highlight>Noisy observations:</Highlight> More realistically, we only observe <Latex text="\( y_i = f(x_i) + \epsilon_i \)"/>, where <Latex text="\( \epsilon_i \sim \mathcal{N}(0, \sigma^2) \)"/>. When <Latex text="\( \sigma^2 > 0 \)"/>, the GP posterior does not necessarily interpolate exactly but finds a balance between fitting the data and smoothing based on the kernel structure.
+
+### prior specification: mean function and covariance matrix
+
+For a dataset <Latex text="\( \{(x_i, y_i)\}_{i=1}^n \)"/>, we gather the inputs in <Latex text="\( X \)"/> and outputs in <Latex text="\( \mathbf{y} \in \mathbb{R}^n \)"/>. The latent function values at these inputs is <Latex text="\( \mathbf{f} = (f(x_1),\ldots,f(x_n))^\top \)"/>. Under a GP prior,
+
+<Latex text="\[
+\mathbf{f} \sim \mathcal{N}\bigl(\boldsymbol{\mu},\, K(X,X)\bigr),
+\]"/>
+
+where <Latex text="\( \boldsymbol{\mu} \)"/> is the mean vector (obtained by evaluating <Latex text="\( m(\cdot) \)"/> at <Latex text="\( x_i \)"/>) and <Latex text="\( K(X,X) \)"/> is the covariance matrix built from the kernel <Latex text="\( k(\cdot,\cdot) \)"/> at all pairs of training points. When observational noise <Latex text="\( \epsilon \)"/> is Gaussian with variance <Latex text="\( \sigma^2 \)"/>, we have:
+
+<Latex text="\[
+\mathbf{y} = \mathbf{f} + \boldsymbol{\epsilon}, \quad \boldsymbol{\epsilon}\sim \mathcal{N}\bigl(\mathbf{0},\,\sigma^2 I\bigr).
+\]"/>
+
+Hence, <Latex text="\( \mathbf{y} \)"/> itself is also Gaussian-distributed:
+
+<Latex text="\[
+\mathbf{y} \sim \mathcal{N}\bigl(\boldsymbol{\mu},\,K(X,X) + \sigma^2 I\bigr).
+\]"/>
+
+### posterior inference: predictive mean and variance
+
+Suppose we want predictions at new inputs <Latex text="\( X_* = (x_{*1},\ldots,x_{*m}) \)"/>. Denote the latent function values at these new points by <Latex text="\( \mathbf{f}_* \)"/>. Jointly, we have:
+
+<Latex text="\[
+\begin{bmatrix}
+\mathbf{y}\\
+\mathbf{f}_*
+\end{bmatrix}
+\sim 
+\mathcal{N}\Bigl(
+\mathbf{0},
+\begin{bmatrix}
+K(X,X)+\sigma^2 I & K(X,X_*)\\
+K(X_*,X) & K(X_*,X_*)
+\end{bmatrix}
+\Bigr),
+\]"/>
+
+assuming a zero mean function for simplicity (or we can incorporate <Latex text="\( \boldsymbol{\mu} \)"/> if non-zero). Using standard conditional Gaussian identities, the posterior distribution for <Latex text="\( \mathbf{f}_* \)"/> given <Latex text="\( \mathbf{y} \)"/> is also Gaussian:
+
+<Latex text="\[
+\mathbf{f}_* \mid \mathbf{y}, X, X_* \sim \mathcal{N}\bigl(\bar{\mathbf{m}},\, \mathbf{S}\bigr),
+\]"/>
+
+where
+
+<Latex text="\[
+\bar{\mathbf{m}} = K(X_*,X)\bigl[K(X,X)+\sigma^2I\bigr]^{-1}\mathbf{y}, 
+\]"/>
+<Latex text="\[
+\mathbf{S} = K(X_*,X_*) \;-\; K(X_*,X)\bigl[K(X,X)+\sigma^2I\bigr]^{-1} K(X,X_*).
+\]"/>
+
+The <Highlight>predictive mean</Highlight> <Latex text="\( \bar{\mathbf{m}} \)"/> acts like a weighted combination of observed targets <Latex text="\( \mathbf{y} \)"/>. The <Highlight>predictive variance</Highlight> in <Latex text="\( \mathbf{S} \)"/> reflects both epistemic uncertainty (which grows away from observed data) and, if we fold in the noise term <Latex text="\( \sigma^2 \)"/>, observation noise as well.
+
+### handling observation noise and adding jitter
+
+To ensure numerical stability, especially for kernels like the RBF that can yield near-singular covariance matrices, it is standard to add small "jitter" <Latex text="\( \delta \approx 10^{-6} \)"/> to the diagonal. Thus, if we are in a low-noise regime, we replace <Latex text="\( K(X,X) + \sigma^2 I \)"/> by <Latex text="\( K(X,X) + \sigma^2 I + \delta I \)"/>. This ensures positive definiteness and avoids numerical issues in matrix factorizations like the Cholesky decomposition.
+
+## hyperparameter learning with the marginal likelihood
+
+A vital step in deploying Gaussian processes is choosing appropriate kernel hyperparameters (e.g., amplitude <Latex text="\( a \)"/>, length-scale <Latex text="\( \ell \)"/>, noise variance <Latex text="\( \sigma^2 \)"/>, etc.). We do so by maximizing the marginal likelihood (sometimes called the evidence) of the observed data.
+
+### marginal likelihood derivation
+
+From the joint distribution <Latex text="\( \mathbf{y} \sim \mathcal{N}\bigl(\mathbf{0}, K_{\theta}(X,X)+\sigma^2I\bigr) \)"/>, the marginal log-likelihood is:
+
+<Latex text="\[
+\log p(\mathbf{y}\mid X,\theta) 
+= -\tfrac{1}{2}\,\mathbf{y}^{\!\top}\bigl[K_{\theta}(X,X)+\sigma^2I\bigr]^{-1}\mathbf{y} \;-\; \tfrac{1}{2}\,\log\!\bigl\lvert K_{\theta}(X,X)+\sigma^2I\bigr\rvert \;-\; \tfrac{n}{2}\,\log(2\pi),
+\]"/>
+
+where <Latex text="\( \theta \)"/> collectively denotes the kernel hyperparameters. We then find:
+
+<Latex text="\[
+\hat{\theta} = \arg\max_\theta \;\log p(\mathbf{y}\mid X,\theta).
+\]"/>
+
+This objective has three terms:
+1. The data fit term <Latex text="\( -\tfrac{1}{2}\,\mathbf{y}^{\!\top}[K_{\theta}+\sigma^2I]^{-1}\mathbf{y} \)"/>.
+2. A complexity penalty <Latex text="\( -\tfrac{1}{2}\,\log\!\lvert K_{\theta}+\sigma^2I\rvert \)"/>, which can be viewed as an <Highlight>Occam's razor</Highlight> effect.
+3. A constant term <Latex text="\( -\tfrac{n}{2}\,\log(2\pi) \)"/>.
+
+Intuitively, the marginal likelihood tries to fit the data in as simple a manner as possible, which often prevents overfitting and yields a natural approach to model selection.
+
+### balancing model fit and complexity (Occam's razor)
+
+The second term, <Latex text="\( -\frac{1}{2}\,\log\!\lvert K_{\theta}+\sigma^2I\rvert \)"/>, penalizes overly flexible kernels that produce large covariance structures "able to fit everything." As we tweak hyperparameters, the determinant of the covariance matrix changes, capturing how "broad" or "narrow" our prior over functions is. This interplay automatically encodes a preference for simpler explanations that still match the data.
+
+### common pitfalls and initialization strategies
+
+- <Highlight>Local optima</Highlight>: The log marginal likelihood is not guaranteed to be convex in hyperparameters. Good initialization is key.
+- <Highlight>Overly small length-scales</Highlight>: Might cause overfitting to noise or numerical instabilities.
+- <Highlight>Overly large length-scales</Highlight>: Can lead to underfitting (the function is too "smooth").
+- <Highlight>Noise variance mismatch</Highlight>: If we start from a poor initial guess for <Latex text="\( \sigma^2 \)"/>, the optimizer might fail to find the correct region in parameter space.
+
+Reasonable heuristics include starting from length-scales on the order of the typical distance between points, starting from small to moderate noise variance, or from random draws within an acceptable range.
+
+## implementation from scratch
+
+In this section, we illustrate a GP regression workflow step by step: (1) constructing a kernel matrix, (2) adding noise terms, (3) solving linear systems for predictions, (4) computing log determinants for the marginal likelihood, and (5) visualizing posterior results.
+
+### constructing the kernel matrix and adding noise terms
+
+Below is a simple Python snippet to build an RBF kernel matrix:
+
+<Code text={`
+import numpy as np
+
+def rbf_kernel(X1, X2, lengthscale, amplitude=1.0):
+    """
+    Computes the RBF kernel matrix between two sets of inputs X1 and X2.
+    X1: shape (N, D)
+    X2: shape (M, D)
+    lengthscale: float
+    amplitude: float
+    Returns: kernel matrix of shape (N, M)
+    """
+    # Euclidean distance computations
+    dist_sq = np.sum(X1**2, axis=1).reshape(-1,1) \
+              + np.sum(X2**2, axis=1) \
+              - 2.0*np.dot(X1, X2.T)
+    K = amplitude**2 * np.exp(-0.5 * dist_sq / (lengthscale**2))
+    return K
+`}/>
+
+After constructing <Latex text="\( K(X,X) \)"/>, we incorporate the observation noise <Latex text="\( \sigma^2 I \)"/>. We may also add a small jitter <Latex text="\( \delta I \)"/> for stability:
+
+<Code text={`
+def kernel_with_noise(X, lengthscale, amplitude, sigma_noise, jitter=1e-6):
+    K_xx = rbf_kernel(X, X, lengthscale, amplitude)
+    n = X.shape[0]
+    # Add noise variance + jitter
+    K_xx += (sigma_noise**2 + jitter) * np.eye(n)
+    return K_xx
+`}/>
+
+### solving linear systems and computing log determinants
+
+A typical approach to invert <Latex text="\( K(X,X) + \sigma^2 I \)"/> is by using a Cholesky decomposition (which is stable for symmetric positive definite matrices). In NumPy:
+
+<Code text={`
+import numpy as np
+
+def log_marginal_likelihood(K, y):
+    """
+    Computes the log marginal likelihood term:
+    -0.5*y^T K^{-1} y - 0.5*log|K| - n/2*log(2*pi)
+    """
+    # Cholesky
+    L = np.linalg.cholesky(K)  # L is lower-triangular
+    alpha = np.linalg.solve(L.T, np.linalg.solve(L, y))
+    
+    # compute log determinant from L
+    log_det_K = 2.0 * np.sum(np.log(np.diag(L)))
+    n = y.shape[0]
+    
+    term1 = -0.5 * y.dot(alpha)
+    term2 = -0.5 * log_det_K
+    term3 = -0.5 * n * np.log(2.0 * np.pi)
+    return term1 + term2 + term3
+`}/>
+
+### step-by-step example of fitting a GP to data
+
+Let's walk through a synthetic example:
+1. Generate data from a known function with noise.
+2. Construct the kernel matrix with initial hyperparameters.
+3. Optimize the marginal likelihood to learn hyperparameters.
+4. Obtain posterior predictive distributions at test points.
+
+<Code text={`
+import numpy as np
+from scipy.optimize import minimize
+
+# 1) Generate data
+np.random.seed(42)
+X_train = np.linspace(0, 5, 30)[:, None]
+f_true = np.sin(X_train).ravel()
+noise_std = 0.2
+y_train = f_true + noise_std * np.random.randn(len(f_true))
+
+X_test = np.linspace(-1, 6, 100)[:, None]
+f_test_true = np.sin(X_test).ravel()
+
+# 2) Define a function to compute negative log marginal likelihood
+def neg_log_marg_lik(params):
+    lengthscale, amplitude, sigma_noise = params
+    K = kernel_with_noise(X_train, lengthscale, amplitude, sigma_noise)
+    return -log_marginal_likelihood(K, y_train)
+
+# 3) Optimize hyperparameters
+init_params = np.array([1.0, 1.0, 0.5])
+bnds = ((1e-3, 10.0), (1e-3, 10.0), (1e-3, 10.0))
+res = minimize(neg_log_marg_lik, init_params, bounds=bnds)
+
+lengthscale_opt, amplitude_opt, sigma_noise_opt = res.x
+print("Optimized lengthscale:", lengthscale_opt)
+print("Optimized amplitude:", amplitude_opt)
+print("Optimized noise std:", sigma_noise_opt)
+`}/>
+
+Once we have the optimized hyperparameters, we form the posterior predictive distribution at each test input <Latex text="\( x_* \)"/>:
+
+<Code text={`
+def posterior_predictive(X_star, X, y, lengthscale, amplitude, sigma_noise):
+    # Construct training covariance
+    K_xx = kernel_with_noise(X, lengthscale, amplitude, sigma_noise)
+    # Cross-covariances
+    K_x_xstar = rbf_kernel(X, X_star, lengthscale, amplitude)
+    K_xstar_xstar = rbf_kernel(X_star, X_star, lengthscale, amplitude)
+    
+    # Cholesky
+    L = np.linalg.cholesky(K_xx)
+    alpha = np.linalg.solve(L.T, np.linalg.solve(L, y))
+    
+    # Posterior mean
+    f_star_mean = K_x_xstar.T.dot(alpha)
+    
+    # Compute v = L^{-1} * K_x_xstar
+    v = np.linalg.solve(L, K_x_xstar)
+    # Posterior covariance
+    f_star_cov = K_xstar_xstar - v.T.dot(v)
+    
+    return f_star_mean, f_star_cov
+`}/>
+
+Finally, we can visualize the mean and credible intervals:
+
+<Code text={`
+import matplotlib.pyplot as plt
+
+# 4) Posterior predictions at test points
+f_mean, f_cov = posterior_predictive(X_test, X_train, y_train,
+                                     lengthscale_opt, amplitude_opt, sigma_noise_opt)
+
+std_post = np.sqrt(np.diag(f_cov))
+
+plt.figure(figsize=(8,5))
+plt.scatter(X_train, y_train, color='black', label='Training data')
+plt.plot(X_test, f_test_true, 'g--', label='True function')
+plt.plot(X_test, f_mean, 'b-', label='GP mean')
+plt.fill_between(X_test.ravel(),
+                 f_mean - 2*std_post,
+                 f_mean + 2*std_post,
+                 alpha=0.2,
+                 color='blue',
+                 label='95% cred. interval')
+plt.legend()
+plt.show()
+`}/>
+
+<Image alt="Plot of from-scratch GP regression" path="" caption="A from-scratch GP regression fit, showing training data, true function, GP posterior mean, and confidence bands." zoom="false" />
+
+### visualizing posterior means, credible intervals, and posterior samples
+
+In practice, it is also illuminating to visualize posterior <Highlight>samples</Highlight> — actual draws from the posterior distribution. These reveal the variety of plausible functions that remain consistent with the observed data. We can sample from <Latex text="\( \mathcal{N}(f_{\!*},\, \mathbf{S}_*) \)"/> using a standard multivariate normal routine. 
+
+Such plots make it extremely clear how the GP encodes increasing uncertainty in regions where we do not have data, often "fanning out" to express that many solution curves could pass through those points.
+
+## implementation with gpytorch
+
+Manually coding every step can be instructive but becomes cumbersome for advanced kernels, large-scale approximations, or non-Gaussian likelihoods. In these cases, <Highlight>gpytorch</Highlight> is a modern Python library that simplifies working with Gaussian processes in PyTorch.
+
+### overview of gpytorch and its exact GP models
+
+gpytorch provides:
+- <Highlight>Exact GP</Highlight> models for Gaussian likelihood, letting you do closed-form inference.
+- <Highlight>Variational GP</Highlight> classes for classification or large-scale data with approximate inference.
+- Tools for advanced kernel constructions (e.g., Matern, periodic, spectral mixture).
+- GPU support and scalable approximations (e.g., inducing points, structured kernel interpolation).
+
+Below is a succinct overview of how you set up and train an <Highlight>Exact GP</Highlight> with an RBF kernel:
+
+<Code text={`
+import torch
+import gpytorch
+import numpy as np
+
+# Suppose you have training data X_train, y_train
+X_train_torch = torch.from_numpy(X_train).float()
+y_train_torch = torch.from_numpy(y_train).float()
+
+class ExactGPModel(gpytorch.models.ExactGP):
+    def __init__(self, train_x, train_y, likelihood):
+        super().__init__(train_x, train_y, likelihood)
+        self.mean_module = gpytorch.means.ZeroMean()
+        self.covar_module = gpytorch.kernels.ScaleKernel(
+            gpytorch.kernels.RBFKernel()
+        )
+        
+    def forward(self, x):
+        mean_x = self.mean_module(x)
+        covar_x = self.covar_module(x)
+        return gpytorch.distributions.MultivariateNormal(mean_x, covar_x)
+
+likelihood = gpytorch.likelihoods.GaussianLikelihood()
+model = ExactGPModel(X_train_torch, y_train_torch, likelihood)
+`}/>
+
+### specifying mean functions, kernels, and likelihoods
+
+We can swap out the RBFKernel for a MaternKernel, PeriodicKernel, or combine multiple via additive kernels as needed. Also, if the data demands it, we can specify a different mean function (e.g., ConstantMean or LinearMean) to reflect prior beliefs about the baseline function shape. Meanwhile, <Highlight>GaussianLikelihood</Highlight> is the standard choice for regression.
+
+### training hyperparameters via marginal log-likelihood
+
+gpytorch uses standard PyTorch optimizers (like Adam) to optimize the negative marginal log-likelihood. The general procedure is:
+
+<Code text={`
+model.train()
+likelihood.train()
+optimizer = torch.optim.Adam(model.parameters(), lr=0.1)
+mll = gpytorch.mlls.ExactMarginalLogLikelihood(likelihood, model)
+
+num_iter = 50
+for i in range(num_iter):
+    optimizer.zero_grad()
+    output = model(X_train_torch)
+    loss = -mll(output, y_train_torch)
+    loss.backward()
+    optimizer.step()
+`}/>
+
+### making predictions and computing confidence regions
+
+At inference time, switch the model and likelihood to evaluation mode:
+
+<Code text={`
+model.eval()
+likelihood.eval()
+
+# Suppose we have test data X_test
+X_test_torch = torch.from_numpy(X_test).float()
+
+with torch.no_grad():
+    preds = likelihood(model(X_test_torch))
+    mean = preds.mean
+    lower, upper = preds.confidence_region()
+`}/>
+
+The <Highlight>confidence_region</Highlight> method typically provides upper and lower bounds corresponding to approximately two standard deviations in observation space. If you want the pure latent function uncertainty, you can retrieve <Latex text="\( \mathrm{cov}(f_*) \)"/> from <Highlight>model(X_test_torch)</Highlight> directly (which returns a <Highlight>MultivariateNormal</Highlight>).
+
+### comparison with the from-scratch approach
+
+The final predictive results match the from-scratch approach:
+
+- Both yield the same posterior <Latex text="\( \bar{\mathbf{m}} \)"/> and <Latex text="\( \mathbf{S} \)"/>. 
+- gpytorch handles the internal operations (Cholesky factor, caching, etc.). 
+- It also provides a unified framework to seamlessly switch kernels, incorporate GPU acceleration, or scale beyond <Latex text="\( \mathcal{O}(n^3) \)"/> with approximate methods.
+
+<Image alt="Screenshot of gpytorch regression fit" path="" caption="Using gpytorch to train a GP for regression and visualize the posterior." zoom="false" />
+
+## conclusion
+
+Gaussian processes offer a remarkably elegant way to reason about unknown functions by specifying correlations via kernel functions. Their ability to provide uncertainty estimates (epistemic and aleatoric) and the interpretability of their hyperparameters (like length-scale and amplitude) have made them a staple in applications needing robust regression and well-calibrated confidence intervals.
+
+**Key highlights from this discussion include:**
+1. **Covariance kernels** are central to GP assumptions, controlling function smoothness, periodicity, or other structure.  
+2. **Gaussian process regression** can be derived in closed form for noise-free or noisy observations under a Gaussian likelihood.  
+3. **Hyperparameters** are typically learned by **maximizing the marginal likelihood**, balancing goodness-of-fit with a penalty that promotes simpler explanations.  
+4. **From-scratch implementation** clarifies the underlying math but can be tedious for large datasets or advanced kernels.  
+5. **gpytorch** allows rapid experimentation with kernel choices, inference algorithms, and scaling strategies, all within a PyTorch environment.  
+
+In advanced settings — like classification, large data (where <Latex text="\( \mathcal{O}(n^3) \)"/> complexity is prohibitive), or deep kernel learning — further approximations or specialized methods (e.g., variational inference, inducing points, kernel interpolation techniques) become crucial. Even so, the conceptual foundation remains the same: a prior over functions combined with data yields a posterior that captures our updated beliefs about function values at unobserved points.
+
+By understanding the core Gaussian process machinery, researchers and practitioners can apply GPs with confidence, interpret the results meaningfully, and adapt them to a broad range of modern machine learning and data science challenges.

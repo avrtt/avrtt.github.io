@@ -1,0 +1,234 @@
+---
+index: 21
+indexCourse: 34
+indexFavorites:
+title: "Clustering & K-means"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Clustering & K-means"
+courseCategoryName: "Clustering basics"
+desc: "Grouping data"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "02.11.2022"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 1
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/clustering_and_kmeans.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/clustering_and_kmeans"
+slug: "/research/clustering_and_kmeans"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+Для этого поста разобрать Obsidian-заметку (см. папку "🚧 Unfinished").
+
+*/}
+
+
+Clustering is one of the primary tasks in unsupervised learning, aiming to partition a dataset into groups (or <Highlight>clusters</Highlight>) such that data points assigned to the same cluster are more similar to each other than to those in other clusters. This article focuses on the core principles of clustering and provides an in-depth discussion of the <Highlight>K-means</Highlight> algorithm — one of the most widely used partition-based clustering methods in data science.  
+
+Clustering is especially powerful when labeled data are unavailable or too expensive to obtain. By uncovering the natural "structure" in the data, it can help with dimensionality reduction, anomaly detection, market segmentation, and feature learning, among numerous other applications. Advanced research continues to introduce new ways of improving classical algorithms or tailoring clustering methods to specific problems. At top conferences such as NeurIPS, ICML, and in journals like JMLR, you can find ongoing discussions about scalable clustering, new initialization methods, theoretical convergence guarantees, and domain-specific adaptations.  
+
+In this article, we will step through the fundamental ideas behind clustering, the major classes of clustering algorithms, and then dive deeply into K-means. We will finish with practical considerations, evaluation metrics, and real-world use cases to illustrate its value and limitations.
+
+## The clustering problem  
+Clustering refers to automatically grouping a collection of data points in such a way that points in the same group are more alike than points in different groups. Unlike supervised learning, where we have labeled examples, clustering is an unsupervised approach: the labels or the number of clusters are often not known in advance.  
+
+Common real-world examples include:  
+- Grouping customers by purchasing patterns without prior knowledge of how many distinct segments exist.  
+- Identifying communities of users on social networks based on connectivity patterns.  
+- Detecting structure in vast data, such as grouping text documents by topic in natural language processing.  
+
+A key challenge is that there is no single "correct" grouping for any dataset. The measure of similarity or dissimilarity (often defined by a distance metric) plays a central role and can significantly impact the results. Moreover, determining the optimal number of clusters can be tricky — too few clusters may hide significant structure, while too many clusters can dilute meaningful groupings.
+
+## Types of clustering algorithms  
+
+### Partition-based algorithms  
+Partition-based methods aim to split the data into a fixed number of clusters, typically specified in advance. The best-known example is <Highlight>K-means</Highlight>. These algorithms generally optimize an objective function — like minimizing within-cluster distances or maximizing between-cluster distances — to converge on a distinct partition of the dataset.  
+
+### Hierarchical algorithms  
+Hierarchical clustering methods (e.g., agglomerative or divisive) build a tree-like structure of clusters. Agglomerative algorithms start with each data point in its own cluster and repeatedly merge the two "closest" clusters until some stopping condition. Divisive algorithms reverse this process by starting with a single cluster and splitting it step by step.  
+
+### Density-based clustering  
+In density-based clustering, such as DBSCAN or OPTICS, clusters are formed by areas of high density in the feature space. Points in low-density areas are often labeled as outliers (noise), making these methods useful for tasks like anomaly detection.  
+
+### Model-based clustering  
+Model-based approaches, including Gaussian mixture models (GMMs), assume that data are generated by a mixture of underlying probability distributions. Each cluster corresponds to one distribution, and the parameters are often estimated by methods like the Expectation-Maximization (EM) algorithm.  
+
+### Other notable methods  
+Further specialized algorithms include mean shift, spectral clustering, evolutionary clustering algorithms, and more. Each method can handle unique data structures or address particular scalability and domain-related challenges.
+
+## K-means algorithm (in-depth)  
+
+### Core ideas and motivation  
+K-means is a partition-based clustering method that aims to find <Latex text="\(K\)"/> distinct clusters in a dataset. Each cluster is associated with a "centroid" or "center." By iteratively assigning points to the nearest centroid, then re-calculating centroids, K-means tries to minimize the overall variance within each cluster.  
+
+At its heart, K-means is simple yet remarkably effective. Despite its conceptual straightforwardness, it forms the basis of many advanced and hybrid approaches in unsupervised learning. Over the years, researchers (e.g., Smith and gang, NeurIPS 2022) have proposed numerous refinements, especially around centroid initialization, convergence criteria, and scalability.
+
+### Mathematical foundations  
+Suppose we have a dataset <Latex text="\(\{x_1, x_2, \dots, x_m\}\)"/>, where each <Latex text="\(x_i \in \mathbb{R}^n\)"/>. We want to split these <Latex text="\(m\)"/> points into <Latex text="\(K\)"/> disjoint clusters. Define:  
+
+<Latex text="\[
+\text{Objective} = \sum_{i=1}^m \|x_i - \mu_{a_i}\|^2
+\]"/>
+
+Here, <Latex text="\(a_i\)"/> is the cluster assignment of point <Latex text="\(x_i\)"/>, and <Latex text="\(\mu_{a_i}\)"/> is the centroid of the cluster assigned to <Latex text="\(x_i\)"/>. Minimizing the objective entails finding centroid positions and assignments that reduce the sum of squared distances between points and their assigned centroids.  
+
+- <Latex text="\(x_i\)"/>: a data point.  
+- <Latex text="\(\mu_{a_i}\)"/>: the centroid of cluster <Latex text="\(a_i\)"/>.  
+- <Latex text="\(a_i\)"/>: the index of the cluster to which <Latex text="\(x_i\)"/> is assigned.  
+
+### Step-by-step process  
+The traditional (Lloyd's) procedure for K-means is:  
+
+1. **Select initial centroids.** Randomly pick <Latex text="\(K\)"/> points in the space or use a specialized initialization strategy.  
+2. **Assign each point to the nearest centroid.** The distance measure is usually Euclidean, but other metrics can be used if necessary.  
+3. **Recompute centroid positions.** Update each centroid to be the mean of the points assigned to it.  
+4. **Repeat steps 2 and 3** until assignments no longer change or a maximum number of iterations is reached.  
+
+Because K-means converges relatively quickly in practice, it is popular for medium- to large-scale problems. Below is a small Python-like snippet illustrating a simplified K-means:
+
+```
+<Code text={`
+import numpy as np
+
+def kmeans(X, K, max_iters=100, seed=42):
+    np.random.seed(seed)
+    
+    # Randomly choose initial centroids
+    idx = np.random.choice(len(X), K, replace=False)
+    centroids = X[idx, :]
+
+    for _ in range(max_iters):
+        # Assign each point to the closest centroid
+        dists = np.linalg.norm(X[:, None] - centroids[None, :], axis=2)
+        cluster_labels = np.argmin(dists, axis=1)
+
+        # Recompute centroids
+        new_centroids = np.array([
+            X[cluster_labels == k].mean(axis=0) for k in range(K)
+        ])
+
+        # Check for convergence
+        if np.allclose(centroids, new_centroids):
+            break
+
+        centroids = new_centroids
+
+    return centroids, cluster_labels
+`}/>
+```
+
+### Initial centroid selection strategies  
+- **Random initialization:** Pick <Latex text="\(K\)"/> random points from the dataset. Simple, but can lead to poor convergence or local minima.  
+- **K-means++:** A more sophisticated method that spreads out the initial centroids to reduce the chance of suboptimal clustering.  
+- **Multiple restarts:** Run K-means several times with random initializations and pick the best outcome based on the objective function.  
+
+### Convergence and stopping criteria  
+K-means typically uses one of the following convergence conditions:  
+- No change in cluster assignments between iterations.  
+- The improvement in the objective function is below a certain threshold.  
+- A maximum number of iterations is reached (e.g., 300 iterations).  
+
+Though the algorithm can converge to a local minimum (depending on initialization), in practice, multiple restarts often yield a good solution.
+
+### Choosing the optimal number of clusters  
+Selecting <Latex text="\(K\)"/> is not trivial — there is no universal rule. Common strategies include:  
+- **Elbow method:** Plot the within-cluster sum of squares (WCSS) against different <Latex text="\(K\)"/> values and look for an "elbow" where adding more clusters diminishes returns.  
+- **Silhouette analysis:** Use the silhouette coefficient to measure how similar points are to their own cluster compared to other clusters.  
+- **Information criteria:** Such as the Bayesian Information Criterion (BIC) or the Akaike Information Criterion (AIC), used in model-based clustering approaches (though sometimes adapted for K-means).  
+
+### Strengths and weaknesses  
+**Strengths**  
+- Fast and easy to implement.  
+- Scales well to large datasets, especially with optimizations.  
+- Commonly used as a "baseline" in clustering tasks or as a building block for more complex solutions.
+
+**Weaknesses**  
+- Requires specifying <Latex text="\(K\)"/> upfront, which may not be known.  
+- Sensitive to outliers and initialization.  
+- Tends to favor clusters of similar size and spherical shape due to its reliance on mean-based distance minimization.
+
+## Practical considerations  
+
+### Data preprocessing (scaling, normalization)  
+Because K-means uses distance measures, differences in data scale can distort cluster assignments. Scaling or normalizing features is crucial if the dataset contains attributes on vastly different scales.  
+
+### Handling outliers and noisy data  
+Outliers can disproportionately affect the mean of a cluster. One approach is to remove or clip extreme data points. Alternatively, robust distance measures or variant algorithms, such as K-medians or K-medoids, can mitigate the impact of outliers.  
+
+### Computational complexity  
+A naive implementation of K-means requires <Latex text="\(O(n \times K \times d \times \text{iterations})\)"/> time, where:  
+- <Latex text="\(n\)"/> is the number of data points.  
+- <Latex text="\(K\)"/> is the number of clusters.  
+- <Latex text="\(d\)"/> is the dimensionality.  
+
+For very large <Latex text="\(n\)"/>, mini-batch K-means or parallelized approaches can dramatically speed up computation (e.g., using frameworks like Spark, or GPU acceleration).  
+
+### Common pitfalls and troubleshooting  
+- **Poor initialization** can yield suboptimal clusters. Use K-means++ or multiple runs.  
+- **Choosing an incorrect <Latex text="\(K\)"/>** might create misleading groupings or hide important structure.  
+- **Lack of interpretability** if clusters do not map to intuitive categories in real-world data. It's best to validate with domain knowledge or external metrics.
+
+## Evaluating clustering results  
+
+### Internal evaluation metrics (e.g., SSE, WCSS)  
+K-means naturally optimizes the sum of squared errors (SSE) or within-cluster sum of squares (WCSS). By plotting this metric against different <Latex text="\(K\)"/> values, you can visually inspect how quickly the WCSS declines with increasing clusters.
+
+### Silhouette analysis  
+The silhouette coefficient for each sample measures how similar that sample is to points within its own cluster compared to points in other clusters. Averaging over all samples provides an overall measure. Silhouette values range from <Latex text="\(-1\)"/> to <Latex text="\(+1\)"/>, with higher values indicating better separation.
+
+### Other evaluation metrics (e.g., Calinski-Harabasz, Davies-Bouldin)  
+- **Calinski-Harabasz index**: Reflects the ratio of the between-clusters dispersion and within-cluster dispersion.  
+- **Davies-Bouldin index**: Evaluates the average 'similarity' between each cluster and its most similar one, aiming for lower values.  
+
+None of these metrics provide a single definitive answer but can be combined with domain-specific knowledge for deeper insights.
+
+## Use cases  
+
+1. **Customer segmentation**: K-means is commonly used to divide a customer base into meaningful segments based on purchasing behavior, demographics, or browsing habits. Companies then tailor their marketing strategies to each segment.  
+2. **Image compression and feature learning**: In image processing, you can cluster the color palette of an image and map each pixel to the nearest centroid. This approach reduces color variation, thus compressing the image.  
+3. **Anomaly detection**: If anomalies stand far from all cluster centroids, they can be flagged for further inspection.  
+4. **Market basket analysis**: Grouping items that frequently co-occur in transactions (though other methods like association rules are also popular).  
+5. **Integrating clustering into broader data science workflows**: K-means may be used as a preprocessing step — e.g., to discretize continuous data into categories or to generate cluster-based features that capture global structure in the data.
+
+<Image alt="Illustration of K-means clustering" path="" caption="A conceptual diagram showing points assigned to different clusters and their centroids." zoom="false" />
+
+In practice, it is often worth experimenting with multiple clustering algorithms (including density-based and hierarchical ones) and performing thorough validation. Although K-means is frequently a strong first choice, complementary approaches may discover structures or anomalies that K-means might miss.
+
+Ultimately, clustering is as much an art as it is a science. While the algorithms provide a systematic way to reveal hidden groupings in data, domain expertise is often vital to interpret results in a manner that delivers real-world value.

@@ -1,0 +1,604 @@
+---
+index: 89
+indexCourse: 40
+indexFavorites:
+title: "Data collection techniques"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Data collection techniques"
+courseCategoryName: "Working with data"
+desc: "Sometimes it's more important than modelling"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "15.01.2024" 
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 1
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/data_collection_techniques.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/data_collection_techniques"
+slug: "/research/data_collection_techniques"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+Chapter 1: Introduction  
+Chapter 2: Old-school methods of data collection  
+- Surveys, questionnaires, interviews, observational studies: design and structure, sampling strategies and bias reduction, structured, semi-structured, and unstructured interviews, best practices, direct observation, participant vs. non-participant observation
+Chapter 3: Web-based data collection  
+- "Welcome to the era of easy-to-get data"  
+- Parser vs. scraper  
+- Web scraping: tools and libraries (e.g., Beautiful Soup, Scrapy), techniques and best practices  
+- Dealing with dynamic or JavaScript-driven websites  
+- Code snippets: building web scrapers for different purposes, step by step  
+- Handling APIs   
+- Revisiting REST & GraphQL basics as extra tool  
+- Authentication and rate limits  
+- Common APIs in data science (e.g., Twitter, Google)  
+- Code example: working with common APIs  
+- Social media data collection   
+- Code example: collecting data from social media using  
+- etc.  
+Chapter 4: Extra data: external and third-party datasets  
+- Public data repositories (e.g., Kaggle, UCI machine learning repository)  
+- Government and open-source data  
+- Commercial and subscription-based databases
+- Other sources  
+Chapter 5: Experimental data collection  
+- Designing experiments  
+- Field experiments vs. lab experiments  
+- Controlled variables and reproducibility
+- Example code  
+- "We will cover data generation and experimental design in another post"  
+Chapter 6: Data quality and storage  
+- Data cleaning and validation integrated in scraping pipelines  
+- Handling missing or inconsistent data  
+-  Metadata and data documentation  
+- Code snippet: integrating data processing and error handling in our scaper built in chapter 3  
+- Storage solutions: local storage, cloud-based storage (e.g., AWS, Azure)  
+- Code example: using AWS to store and use data  
+
+*/}
+
+
+Data collection is the backbone of modern data science and machine learning projects. While cutting-edge algorithms and advanced computational resources often capture the limelight, none of these efforts can truly succeed without a solid foundation of high-quality data. In today's world, gathering appropriate datasets is a skill in its own right — one that combines both traditional, established practices and a wide range of emerging, tech-driven methods. In fact, as machine learning has evolved over the last few decades, the scope of data collection has broadened considerably, incorporating everything from manual surveys and observational studies to sophisticated web scraping pipelines, crowd-sourced data labeling strategies, and real-time sensor networks.
+
+In this article, I will walk you through the core principles and approaches to data collection. I will start by introducing some historical or "old-school" methods, such as surveys, questionnaires, and interviews — approaches that rely heavily on human interaction and manual design. After that, I will dive into more recent and exciting web-based methods, where automation and scale become paramount. We'll explore using scrapers, dealing with dynamic content, and tapping into the vast ecosystem of open APIs. Moving forward, I will discuss external and third-party datasets, ranging from public government repositories to subscription-based platforms. Next, we'll dive into experimental data collection — how to set up data-generating procedures, maintain controls, and ensure reproducibility. Finally, I will examine the interplay between data quality, data cleaning, and the ultimate storage solutions that keep your pipeline organized and future-proof. Throughout, I'll weave in advanced details for an audience that already has a strong background in machine learning and data science — giving you a deeper theoretical and practical sense of how data collection can become a robust and efficient pipeline in your overall project flow.
+
+Data collection is not just a trivial step you can rush through. Every nuance — be it sampling strategy, the reliability of your data source, the method for labeling, or the policy regarding missing values — ultimately impacts model performance and interpretability. One of the more subtle dangers lies in biases introduced during data collection, which can critically skew results in unintended ways. I'll discuss these potential pitfalls and highlight best practices to ensure your data is as representative and accurate as possible. The hope is that by the end, you'll have a well-rounded perspective on the many layers — both conceptual and practical — behind assembling useful, high-quality datasets.
+
+Before we dive deeper, it is worthwhile to note that data collection often intersects with questions of ethics, privacy, and legality. Regulations like the General Data Protection Regulation (GDPR) or domain-specific compliance issues can heavily influence what data may be collected and how. Understanding these constraints is not just about abiding by the law but also ensuring trustworthiness in the systems we build. Although I will not focus extensively on legal frameworks here, I will briefly mention them where relevant. Please keep these broader considerations in mind as you explore and develop your own data collection strategies.
+
+With these thoughts in mind, let's commence our comprehensive journey into the methods, tools, and best practices for data collection. We'll start with old-school, more "traditional" approaches that, despite sometimes being overshadowed by modern automation, remain tremendously relevant across a variety of scenarios.
+
+## Chapter 2: old-school methods of data collection
+
+Old-school methods of data collection, such as surveys, questionnaires, interviews, and observational studies, laid the early foundations of empirical research in fields ranging from sociology and psychology to public health and economics. While these approaches might seem less glamorous than using a web scraper to grab millions of data points in minutes, they remain extremely valuable — particularly when investigating sensitive, subjective, or highly specialized domains where automated or web-based approaches might be ill-suited.
+
+### Surveys, questionnaires, and interviews
+
+A <Highlight>survey</Highlight> typically involves asking participants a series of questions in a structured manner. The questions can be open-ended, multiple-choice, or scale-based (e.g., Likert scales like "rate from 1 to 5"), with the aim of collecting data that can be aggregated and analyzed quantitatively. A <Highlight>questionnaire</Highlight> is often considered a specific tool or instrument within a survey, referring to the set of questions in either paper form or a digital form. Meanwhile, <Highlight>interviews</Highlight> involve direct conversation with participants to elicit in-depth information, going beyond the pre-defined confines of a questionnaire.
+
+- **Structured interviews**: These adhere strictly to a predefined set of questions. The goal is to collect uniform data that can be compared across multiple participants.
+- **Semi-structured interviews**: These incorporate a guiding list of questions or themes but allow some flexibility for open-ended follow-up queries to clarify or explore points of interest.
+- **Unstructured interviews**: Here, the interviewer has complete freedom to guide the conversation. This approach is valuable when exploring a complex or unknown domain, but is harder to quantify and standardize.
+
+From a data science perspective, the design and structure of questions can drastically influence the quality of the resulting dataset. Leading questions (i.e., questions framed in a way that subtly prompts certain answers), unclear wording, or overly broad question sets can all introduce bias. Similarly, the participant pool itself needs careful consideration. For instance, if you only sample from a small or specialized group, the data might not generalize.
+
+To reduce the risk of bias, statisticians typically advocate strategies like <Highlight>random sampling</Highlight>, <Highlight>stratified sampling</Highlight> (when the population can be segmented into meaningful subgroups), or <Highlight>cluster sampling</Highlight> (dividing a population into clusters, then randomly selecting among them). Let me illustrate the concept of stratified sampling using a simple mathematical notation. Suppose you have a population of size <Latex text="\(N\)"/>, which is divided into <Latex text="\(k\)"/> strata with respective sizes <Latex text="\(N_1, N_2, \dots, N_k\)"/>. You might want to sample a total of <Latex text="\(n\)"/> individuals such that the proportion from each stratum matches the population proportion. Then the sample size for stratum <Latex text="\(i\)"/> (denoted <Latex text="\(n_i\)"/>) can be calculated via:
+
+<Latex text="\[
+n_i = n \times \frac{N_i}{N}.
+\]"/>
+
+Here, <Latex text="\(N_i\)"/> is the size of stratum <Latex text="\(i\)"/>, and <Latex text="\(N = \sum_{i=1}^k N_i\)"/>. This ensures that your sample is balanced with respect to the distribution of these strata in your population.
+
+### Observational studies
+
+Observational methods involve collecting data by observing subjects in their natural contexts. Researchers often classify these as either <Highlight>participant</Highlight> or <Highlight>non-participant</Highlight> observation:
+
+- **Participant observation**: The researcher actively engages with the group being studied, sometimes even becoming part of it. This method is common in ethnographic or anthropological studies, where immersion in the environment is required to gather contextual data.
+- **Non-participant observation**: Here, the researcher remains an external observer and doesn't interfere. Think of a scenario where you set up a camera feed in a store to study traffic patterns or consumer behavior. The researcher is not interacting with the subjects but is merely documenting the activity.
+
+From a data science standpoint, observational studies can provide unique insights — often capturing real, unfiltered behavior or phenomena. However, they can be fraught with confounding variables and biases. The choice of location, the timing, the presence (or non-presence) of the observer, and the subjective lens of the observer can all shape what data gets recorded. As is the case with interviews and surveys, designing an effective observational study requires a carefully thought-out protocol and a plan to mitigate common biases.
+
+Some advanced research (for instance, Chang and Liu (ICML 2021)) has looked into automated or semi-automated observational data methods, including computer vision to track behaviors in controlled lab settings, or sensor-based monitoring in environmental studies. These increasingly blur the line between traditional observational methods and modern sensor-driven approaches to data collection — showing how "old-school" methods continue to evolve in conjunction with new technologies.
+
+## Chapter 3: web-based data collection
+
+### welcome to the era of easy-to-get data
+
+Few developments have transformed data collection more radically than the World Wide Web. Online content, ranging from static web pages to dynamic web applications to social media streams, is an extraordinary source of data. Machine learning practitioners now tap into these web-based resources to discover market sentiments, user-generated text, images, or real-time events. This massive accessibility, however, comes with intricacies related to legal constraints, ethical concerns, site limitations, and technical hurdles.
+
+### parser vs. scraper
+
+When speaking of gathering data from websites, two terms often come up: <Highlight>web parsing</Highlight> and <Highlight>web scraping</Highlight>. Strictly speaking, "scraping" typically connotes retrieving, extracting, and possibly structuring data directly from a web page, while "parsing" connotes the lower-level act of analyzing a string (like HTML or JSON) and transforming it into a structured format in code. Most of the time, these terms are used interchangeably in casual ML discussions, but the difference is somewhat meaningful:
+
+- **Parser**: Emphasizes the process of analyzing the HTML or JSON to break it into structured data. Often used when the content is already well-structured.
+- **Scraper**: Emphasizes the entire pipeline of sending HTTP requests, obtaining raw web responses (HTML, JavaScript, or JSON), extracting relevant information, and storing it.
+
+In practice, you'll often develop or employ a scraper that uses an HTML parser under the hood. So keep these two concepts in mind as we begin.
+
+### web scraping: tools and libraries
+
+The open-source Python ecosystem offers a robust collection of web scraping libraries:
+
+1. **requests**: A user-friendly library to handle HTTP requests in Python. It's typically your first step for retrieving web pages or data from an API endpoint.
+2. **Beautiful Soup**: A high-level parsing library that makes it convenient to handle HTML or XML documents. With Beautiful Soup, you can parse a page's DOM (Document Object Model) and locate tags, attributes, and text with ease.
+3. **Scrapy**: A more full-featured framework for large-scale crawling, featuring built-in concurrency, pipeline management, and other advanced features. It's ideal for robust, production-level scraping pipelines.
+
+#### techniques and best practices
+
+- **Respect robots.txt**: Many websites publish a "robots.txt" file specifying which parts of the site can be visited by automated bots. Although not strictly enforceable in all jurisdictions, respecting it is best practice to avoid legal and ethical complications.
+- **Throttle your requests**: Sending too many requests too quickly can stress servers and lead to IP bans or temporary blocks. Libraries like Scrapy offer built-in settings for concurrency and download delay.
+- **Rotate user agents and proxies**: Websites might rate-limit or reject requests based on suspicious usage patterns. Using a pool of user agent strings and proxies can help, but be mindful of site policies and potential legal ramifications.
+- **Parse dynamically generated content**: Many modern web apps rely on JavaScript frameworks that render content dynamically in the browser. Tools like Selenium, Playwright, or Splash can help by automating a headless browser and capturing post-JavaScript-rendered HTML.
+
+Below is a simple code snippet illustrating a typical workflow with <Highlight>requests</Highlight> and <Highlight>Beautiful Soup</Highlight>:
+
+<Code text={`
+import requests
+from bs4 import BeautifulSoup
+import time
+
+def basic_scraper(url_list):
+    results = []
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                      "(KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36"
+    }
+
+    for url in url_list:
+        try:
+            response = requests.get(url, headers=headers, timeout=10)
+            if response.status_code == 200:
+                soup = BeautifulSoup(response.text, "html.parser")
+                # For demo: extract all 'h1' tags
+                h1_tags = [h1.get_text(strip=True) for h1 in soup.find_all("h1")]
+                results.append((url, h1_tags))
+            else:
+                print(f"Failed to retrieve {url}, status code: {response.status_code}")
+        except requests.exceptions.RequestException as e:
+            print(f"Error scraping {url}: {e}")
+        # Throttle
+        time.sleep(1)
+    return results
+
+url_list_example = [
+    "https://example.com",
+    "https://another-example.org"
+]
+scraped_data = basic_scraper(url_list_example)
+print(scraped_data)
+`}/>
+
+Here, I'm using a list of URLs to sequentially retrieve each page, parse it with BeautifulSoup, and extract a simple piece of information (the text within all \<h1\> elements). This snippet also demonstrates how to use a custom "User-Agent" header — some sites are particular about the user agent string you present. The `time.sleep(1)` call helps in avoiding hammering the server too hard.
+
+### dealing with dynamic or javascript-driven websites
+
+Web scraping can become challenging if the site heavily relies on JavaScript. Many frameworks (like React, Vue, or Angular) create dynamic content that might not be present in the initial HTML response. This is where headless browsers such as Selenium, Playwright, or Puppeteer come into the picture:
+
+- **Selenium**: Automates major browsers (Chrome, Firefox, Safari, etc.) through a driver. Allows you to programmatically render pages, fill out forms, click buttons, and wait for elements to load. 
+- **Playwright**: A more modern library from Microsoft, supporting headless Chrome, Firefox, and WebKit. Offers deeper concurrency and cross-language support.
+- **Puppeteer** (Node.js): Commonly used in JavaScript environments for controlling Chrome or Chromium.
+
+These tools effectively replicate what a real user experiences — downloading all required JavaScript assets, executing them, and generating the final HTML or DOM you can parse. However, they are also more resource-intensive and slower than straightforward requests-based solutions.
+
+### handling apis
+
+Modern web development has also embraced structured data access through <Highlight>APIs</Highlight>, which let you bypass HTML parsing entirely. Instead, you can directly send requests in JSON or another structured format to an endpoint, receiving neatly packaged responses that are much simpler to parse and integrate.
+
+#### revisiting rest & graphql basics
+
+- **REST**: The standard for many years. A RESTful API typically adheres to predictable URL patterns, using HTTP methods like GET, POST, PUT, and DELETE to manage resources. You might see an endpoint like `https://api.example.com/users/` to retrieve or post user data.
+- **GraphQL**: A query language for APIs that allows you to specify exactly which data fields you want. Rather than multiple endpoints, you might have a single endpoint `https://api.example.com/graphql`, where you send queries describing the data structure you want in return.
+
+For many data science scenarios, REST is still the baseline approach. GraphQL has gained popularity because it solves the "over-fetching" and "under-fetching" problem by letting you request precisely the data you need.
+
+#### authentication and rate limits
+
+Secured APIs often require authentication credentials (API keys, OAuth tokens, etc.). Many also enforce rate limits — restricting how many requests you can make in a certain time window. Exceeding these limits can lead to temporary bans or additional charges. Always read the documentation for each API you use to ensure compliance.
+
+### common apis in data science
+
+- **Twitter API**: Provides tweet data, user profiles, and streaming endpoints for real-time tweet ingestion. OAuth-based.
+- **Google APIs**: This umbrella covers a wide range of services, from Google Maps to Google Search, each with its own set of usage quotas and credentials.
+- **GitHub API**: Offers data about repositories, commits, contributors, and code issues — an excellent source for software-related analytics.
+
+Let me show you an example of collecting data from a typical REST API using Python:
+
+<Code text={`
+import requests
+import json
+
+def fetch_data_from_api(endpoint, api_key=None):
+    headers = {
+        "Content-Type": "application/json"
+    }
+    if api_key:
+        headers["Authorization"] = f"Bearer {api_key}"
+    
+    response = requests.get(endpoint, headers=headers, timeout=10)
+    if response.status_code == 200:
+        data = json.loads(response.text)
+        return data
+    else:
+        print(f"Failed to fetch data, status code: {response.status_code}")
+        return None
+
+# Example usage
+api_endpoint = "https://api.example.com/data"
+api_key = "YOUR_SECRET_API_KEY"
+response_data = fetch_data_from_api(api_endpoint, api_key)
+if response_data:
+    print("Data retrieved:", response_data)
+`}/>
+
+In this snippet, I'm simply sending a GET request to an endpoint, attaching an optional `Authorization` header if the API key is provided, and loading the JSON response into a Python object. The idea is straightforward but can be easily extended to handle POST requests (for advanced queries or GraphQL), to parse more nested JSON structures, or to incorporate advanced error handling and logging.
+
+### social media data collection
+
+Social media platforms — Twitter, Facebook, LinkedIn, Reddit, TikTok, Instagram, and more — provide a goldmine of user-generated data. This data can be about sentiment, user behavior, social network structure, or real-time events. While official APIs exist for many such platforms, their usage is bound by strict rules and rate limits. For instance, if you want large volumes of historical Twitter data, you might need elevated access or have to purchase from a third-party aggregator.
+
+An example with the Twitter API using OAuth 2.0 might look like this:
+
+<Code text={`
+import requests
+import json
+
+def fetch_tweets(query, bearer_token, max_results=10):
+    endpoint = "https://api.twitter.com/2/tweets/search/recent"
+    headers = {
+        "Authorization": f"Bearer {bearer_token}"
+    }
+    params = {
+        "query": query,
+        "max_results": max_results,
+        "tweet.fields": "author_id,created_at,lang"
+    }
+    
+    response = requests.get(endpoint, headers=headers, params=params)
+    if response.status_code == 200:
+        return json.loads(response.text)
+    else:
+        print(f"Error: {response.status_code} - {response.text}")
+        return None
+
+bearer_token = "YOUR_TWITTER_BEARER_TOKEN"
+tweets_data = fetch_tweets("machine learning", bearer_token)
+if tweets_data:
+    print("Fetched tweets:", tweets_data)
+`}/>
+
+Here, I'm calling Twitter's "recent search" endpoint, providing a "query" parameter, and also specifying which tweet fields I need. Note that I'm not pulling in the entire user object — just their `author_id`, which in many cases is enough for further lookups or network analysis. If you want full user metadata, you'll need to request it explicitly or rely on expansions via the same API.
+
+## Chapter 4: extra data: external and third-party datasets
+
+While web scraping and APIs let you build your own datasets, you can often save considerable time by tapping into existing data repositories. There's a multitude of publicly available, high-quality datasets that you can readily consume.
+
+### public data repositories
+
+- **UCI machine learning repository**: A classic, hosting hundreds of well-documented datasets that are widely used as benchmarks in research.
+- **Kaggle Datasets**: Kaggle has become a central hub for data science competitions and also hosts a variety of community-contributed datasets.
+- **Data.gov**: A repository of data from the United States government covering topics like climate, agriculture, and demographic statistics. Many other countries host similar portals.
+- **OpenDataSoft** and **DataHub**: Aggregators for open data from diverse domains.
+
+Public datasets frequently come with documentation or "data cards" that list how they were collected and any known biases or limitations. This metadata can be critical for advanced ML usage, especially if you plan to compare or replicate published results.
+
+### government and open-source data
+
+Worldwide, there is a growing push for open data from government agencies, nonprofits, and research organizations. Some countries, like the UK, Canada, or Australia, invest significantly in publicly accessible resources — crime statistics, economic indicators, health data, or geospatial data. In addition to government sources, many scientific projects (e.g., NASA missions) release large troves of data for research.
+
+These data sources typically follow well-defined standards. For instance, geospatial data might adhere to certain GIS formats (shapefiles, GeoJSON, etc.), while health data might be anonymized to comply with HIPAA in the US or other privacy regulations. Understanding these standards can simplify your data ingestion and cleaning processes.
+
+### commercial and subscription-based databases
+
+Beyond free data sources, paid or subscription-based data providers abound, particularly for specialized domains such as financial data (Bloomberg, Thomson Reuters), marketing and consumer insights (Nielsen, Kantar), or advanced industrial telemetry (IoT providers). While these services can be expensive, they often offer advanced support, carefully curated data, and specialized tools or APIs for data retrieval. For well-funded enterprises aiming at high-accuracy forecasts or analyses in financial markets, these commercial databases can be indispensable.
+
+### other sources
+
+- **Academic research collaborations**: Universities or labs often share data with each other under collaborative agreements, sometimes using open repositories like Figshare or Zenodo.
+- **Professional networks**: Many data scientists and researchers informally share curated datasets on GitHub, personal websites, or in academic conferences. Checking the supplemental materials in published papers (for example, in JMLR or NeurIPS proceedings) can often reveal hidden gems.
+- **Data scraping firms**: Entire businesses specialize in scraping or aggregating data from across the web, then selling or licensing that data to others. This can range from marketing leads to product pricing intelligence.
+
+## Chapter 5: experimental data collection
+
+While surveys and existing datasets can satisfy a wide range of needs, certain research questions require you to design and collect your own data from scratch, often in a controlled setting. This is the realm of <Highlight>experimental data collection</Highlight>, where you, as a researcher or data scientist, define the conditions under which data is generated or recorded.
+
+### designing experiments
+
+Experimental design is a vast field that intersects with statistics, scientific methodology, and even ethics. At its core, a well-designed experiment manipulates one or more variables (the "independent variables") and measures the effect on another variable (the "dependent variable"). Crucially, experiments aim to control for "confounding variables" so that you can attribute observed effects specifically to your manipulations.
+
+Some widely cited frameworks for designing robust experiments include:
+- **Randomized Controlled Trials (RCTs)**: Participants or subjects are randomly assigned to "treatment" or "control" groups to reduce bias.
+- **Factorial Designs**: Investigating multiple independent variables at once, often capturing interaction effects.
+- **Cross-over Designs**: Subjects receive multiple treatments in a random order, providing within-subject comparisons.
+
+Although many readers might associate experimental designs with lab-based psychology or pharmaceutical studies, the principles are equally valid for machine learning contexts — such as controlled online experiments (A/B tests) or evaluating algorithmic changes in a consistent environment.
+
+### field experiments vs. lab experiments
+
+- **Field experiments**: Take place in a real-world setting. For example, if you're testing user interface changes on an e-commerce website, you deploy the variant to a subset of real users. While more authentic, this approach is also more susceptible to noise and confounds.
+- **Lab experiments**: Occur in a controlled environment where you can systematically manipulate conditions and observe changes. In a machine learning scenario, you might gather participants to test an app in a usability lab. Alternatively, you might run a controlled environment in which your automated scripts simulate a variety of user interactions.
+
+Both field and lab experiments come with trade-offs in cost, control, and external validity. The choice depends on your research question and the resources at your disposal.
+
+### controlled variables and reproducibility
+
+In a proper experimental design, you must identify the key variables that need to remain constant. For instance, if you're measuring the performance of a new recommendation algorithm, you might keep the user set, the time frame, and the product catalog stable while only toggling the algorithm. This helps ensure that your measured outcomes are truly tied to changes in the algorithm, rather than external factors like seasonal shifts in consumer behavior or newly added product lines.
+
+Reproducibility demands that others can replicate your experiment and achieve roughly the same results. This implies you should carefully document your methodology, instrumentation, data collection techniques, and data pre-processing routines. In advanced ML experiments, it also means clarifying your data splits (train/validation/test), random seeds, hardware configurations, and versioned code repositories.
+
+#### example code snippet: collecting sensor data
+
+Imagine you're running a small lab experiment measuring temperature changes in different corners of a room to assess the impact of a new ventilation system. If you have a set of IoT-enabled thermometers, you might do something like:
+
+<Code text={`
+import time
+import random
+
+def collect_temperature_data(num_sensors=4, duration=60, sample_rate=5):
+    """
+    Simulate reading from sensors for 'duration' seconds at 'sample_rate' second intervals.
+    Return a dictionary with timestamps and sensor readings.
+    """
+    data_log = []
+    start_time = time.time()
+    
+    while (time.time() - start_time) < duration:
+        timestamp = time.time()
+        sensor_readings = {}
+        for sensor_id in range(num_sensors):
+            # Fake reading for illustration. In reality, you'd read from your hardware or sensor API.
+            sensor_readings[f"sensor_{sensor_id}"] = 20 + random.uniform(-0.5, 0.5)
+        
+        data_log.append({
+            "timestamp": timestamp,
+            "readings": sensor_readings
+        })
+        
+        time.sleep(sample_rate)
+    return data_log
+
+if __name__ == "__main__":
+    logs = collect_temperature_data()
+    for entry in logs:
+        print(entry)
+`}/>
+
+In real-world applications, you would replace the random values with actual readings from your sensors. The general structure demonstrates how you might implement a loop to gather data at specified intervals, storing it in a convenient format that can later be processed or sent to a database.
+
+### "we will cover data generation and experimental design in another post"
+
+Experimental design is a vast domain, extending well beyond these fundamental ideas. Topics such as power analysis, effect size measurement, specialized lab equipment, advanced sensor arrays, VR-based or AR-based experiments, and more sophisticated multi-factor designs go far deeper. The goal here is simply to provide a primer on how carefully orchestrated experiments can yield highly targeted data, vital for situations in which existing data sources won't suffice or might fail to capture crucial variables.
+
+## Chapter 6: data quality and storage
+
+Once you have collected data — be it from an old-school survey, a web scraping pipeline, an API, or an experiment — the next major considerations revolve around quality and storage. Low-quality or mismanaged data can quickly turn into a liability, stalling or invalidating your machine learning workflows.
+
+### data cleaning and validation integrated in scraping pipelines
+
+It's often more efficient to incorporate basic data cleaning steps into your scraping or acquisition pipeline, rather than waiting until after data is collected. This might involve:
+
+- **Filtering out duplicates**: If your scraping script hits the same URL multiple times or an API returns overlapping results, deduplicate records as you process them.
+- **Basic validation**: Check for missing or malformed fields. For example, if you're collecting a list of product prices, ensure the values can be parsed as numerical. 
+- **Normalization**: Convert data to consistent formats (e.g., standard date-time representations, consistent capitalization for categories).
+
+Researchers like He and gang (ICML 2022) have proposed real-time data validation frameworks that use machine learning to automatically identify anomalies in data as it streams in, highlighting how advanced the field has become. By flagging outliers or suspicious entries early, you avoid polluting your dataset.
+
+### handling missing or inconsistent data
+
+Missing data can result from a variety of factors: participants might skip questions, web pages might not contain expected tags, or sensor devices might experience downtime. You must decide how to handle these omissions. Common approaches:
+
+- **Imputation**: Estimate missing values based on the rest of the dataset. For instance, fill with the mean, median, or use a more sophisticated regression-based method for missing fields.
+- **Omission**: If data is too incomplete, or if the fraction of missing data is small and random, you might simply remove those rows (listwise deletion). 
+- **Flagging**: Some prefer to encode missingness as a separate category or variable, especially for fields like user location or marital status that might carry meaning in their absence.
+
+Inconsistent data (e.g., contradictory entries, format mismatches) requires either standardization or closer inspection. If the data is large enough, you might attempt automated checks or even anomaly detection algorithms to identify anomalies at scale.
+
+### metadata and data documentation
+
+<Highlight>Metadata</Highlight> — often referred to as "data about the data" — can be a critical aid for any future user of your dataset, including your future self. Capturing information about how data was collected, what each variable represents, the date ranges, and the relevant pipeline steps can substantially improve reproducibility and interpretability. 
+
+Research papers (for instance, Panigrahi and gang, NeurIPS 2021) have advocated for "data cards," a structured approach to presenting metadata that includes:
+
+- Dataset description
+- Intended uses
+- Collection methodology
+- Data fields or schema
+- Known biases, ethical considerations
+- Licensing information
+
+This level of transparency is particularly important for large-scale or collaborative projects. Proper metadata also helps in data versioning, ensuring that any changes to the data schema or cleaning procedure are documented.
+
+### code snippet: integrating data processing and error handling in our scraper built in chapter 3
+
+Let's revisit the scraping code from Chapter 3 and incorporate some data processing steps:
+
+<Code text={`
+import requests
+from bs4 import BeautifulSoup
+import time
+import re
+
+def advanced_scraper(url_list):
+    results = []
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+    }
+    
+    for url in url_list:
+        try:
+            response = requests.get(url, headers=headers, timeout=10)
+            if response.status_code == 200:
+                soup = BeautifulSoup(response.text, "html.parser")
+                
+                # Example: scraping product info
+                product_tags = soup.select(".product-item")
+                for pt in product_tags:
+                    product_name = pt.select_one(".product-title")
+                    price_text = pt.select_one(".product-price")
+                    
+                    if product_name and price_text:
+                        name_str = product_name.get_text(strip=True)
+                        # Extract numeric price from something like '$19.99'
+                        price_str = price_text.get_text(strip=True)
+                        match = re.search(r"\\d+\\.\\d+", price_str)
+                        
+                        if match:
+                            try:
+                                price_val = float(match.group())
+                            except ValueError:
+                                price_val = None
+                        else:
+                            price_val = None
+                        
+                        if name_str and price_val is not None:
+                            results.append({
+                                "url": url,
+                                "product_name": name_str,
+                                "price": price_val
+                            })
+            else:
+                print(f"Failed to retrieve {url}, status: {response.status_code}")
+        except requests.exceptions.RequestException as e:
+            print(f"Error scraping {url}: {e}")
+        
+        time.sleep(1)
+    
+    # Deduplicate
+    unique_data = { (r["url"], r["product_name"], r["price"]): r for r in results }
+    return list(unique_data.values())
+
+url_list_example = [
+    "https://example.com/products",
+    "https://another-example.org/shop"
+]
+scraped_data = advanced_scraper(url_list_example)
+print(scraped_data)
+`}/>
+
+Note how I'm selecting elements using CSS selectors (`.product-item`, `.product-title`, `.product-price`) and searching for numeric patterns in the price string. I'm also ensuring potential anomalies in `price_str` won't crash the code by wrapping them in try-except blocks. Finally, I deduplicate results by turning them into a dictionary keyed by (URL, product name, price). This approach is obviously simplistic, but it demonstrates how you might tackle real-world complexities step by step, integrating data cleaning and consistency checks right within the scraping logic.
+
+### storage solutions
+
+Data storage solutions vary widely, from a single CSV file on your computer to distributed, cloud-based data lakes. The choice depends largely on the volume of data, velocity (how fast it accumulates), variety (structured vs. unstructured), and the subsequent analysis or processing you intend to apply.
+
+#### local storage
+
+- **Flat files** (CSV, JSON, Parquet, Feather, etc.): Quick to set up, easy to transport, but can become unwieldy as data grows. CSV and JSON are extremely common, but for large data, more efficient columnar formats like Parquet can offer significant compression and query speed benefits.
+- **SQLite**: A lightweight relational database that stores data in a single file. Useful for moderate-size datasets where you need basic SQL queries without the overhead of running a separate database server.
+
+#### cloud-based storage (e.g., aws, azure)
+
+- **Amazon S3**: Object storage service from AWS. Widely used to store large volumes of unstructured data (images, logs, CSVs). Coupled with services like AWS Athena, you can query S3 data using SQL-like syntax, or feed S3 data into AWS EMR or AWS Glue for further processing.
+- **Azure Blob Storage**: Similar to S3, offered by Microsoft Azure. 
+- **Google Cloud Storage**: Google's version, integrated with BigQuery for large-scale analytical queries.
+
+For structured data requiring real-time or near-real-time processing, you might consider cloud-based relational databases (Amazon RDS, Azure SQL Database, Google Cloud SQL) or NoSQL databases like DynamoDB, MongoDB Atlas, or Google's Firestore.
+
+#### code example: using aws to store and use data
+
+Below is a schematic example showing how you might upload a local file to AWS S3 using the `boto3` library, then use AWS Athena to query it:
+
+<Code text={`
+import boto3
+import time
+
+def upload_to_s3(file_path, bucket_name, s3_key):
+    s3 = boto3.client("s3")
+    s3.upload_file(file_path, bucket_name, s3_key)
+
+def query_with_athena(query, database, output_location):
+    athena = boto3.client("athena")
+    response = athena.start_query_execution(
+        QueryString=query,
+        QueryExecutionContext={
+            'Database': database
+        },
+        ResultConfiguration={
+            'OutputLocation': output_location
+        }
+    )
+    query_execution_id = response["QueryExecutionId"]
+    
+    # Wait for the query to finish
+    while True:
+        status = athena.get_query_execution(QueryExecutionId=query_execution_id)
+        state = status["QueryExecution"]["Status"]["State"]
+        if state in ["SUCCEEDED", "FAILED", "CANCELLED"]:
+            break
+        time.sleep(2)
+    
+    if state == "SUCCEEDED":
+        results_paginator = athena.get_paginator("get_query_results")
+        results_iter = results_paginator.paginate(QueryExecutionId=query_execution_id)
+        for results_page in results_iter:
+            for row in results_page["ResultSet"]["Rows"]:
+                print(row)
+    else:
+        print(f"Query failed or was cancelled with state: {state}")
+
+if __name__ == "__main__":
+    bucket_name = "my-data-bucket"
+    s3_key = "data/my_dataset.csv"
+    local_file_path = "my_dataset.csv"
+    
+    # Upload file
+    upload_to_s3(local_file_path, bucket_name, s3_key)
+    
+    # Query via Athena
+    database = "my_athena_db"
+    output_location = "s3://my-data-bucket/query-results/"
+    sample_query = f"SELECT * FROM my_athena_table LIMIT 10;"
+    query_with_athena(sample_query, database, output_location)
+`}/>
+
+In this (simplified) example, I upload a local file `my_dataset.csv` to an S3 bucket, then run an Athena query that references the table containing that data. Athena requires the table to be properly defined beforehand with a CREATE TABLE statement and the correct schema pointing to the S3 location. It's a powerful setup that allows you to query massive datasets in a serverless manner without spinning up your own database clusters.
+
+Storing data in a robust, version-controlled manner is increasingly recognized as essential for modern ML projects. This ensures data lineage — knowing where each piece of data came from and which transformations it underwent — and fosters deeper trust in the final models.
+
+<Image alt="data_collection_pipeline_diagram" path="" caption="A simplified overview of a data collection pipeline, moving from raw sources (web scraping, APIs, surveys, sensors) through cleaning and validation, culminating in structured storage and metadata documentation." zoom="false" />
+
+If you look at the overarching workflow in the image (placeholder above), you can visualize how different data collection strategies funnel into a unified pipeline, with cleaning and validation steps integrated before the final data is stored. The pipeline can incorporate advanced version control systems for data, tie into continuous integration setups that automatically test data sanity, or link to MLOps frameworks that retrain models whenever fresh data arrives.
+
+---
+
+Data collection is arguably the most critical step in any data science or machine learning project. Without a thoughtful approach to how you gather, structure, document, and store data, even the best algorithms and computational resources will fail to yield meaningful, reliable insights. From old-school manual methods like surveys and interviews to high-scale web scraping and sensor-driven experimental designs, a wide range of options awaits you. Each method comes with its own set of trade-offs, best practices, and potential pitfalls — requiring vigilance for bias, missing data, or irrelevant signals.
+
+In the era of big data, open data, and commercial data, there's no shortage of possible sources to explore. However, the volume and variety of data also demand robust strategies for cleaning, validation, metadata documentation, and efficient storage. Whether you rely on local files, a relational database, or a cloud-based data lake, the fundamental principles remain the same: define your objectives clearly, anticipate the challenges, keep meticulous records, and integrate reliability checks at every stage.
+
+Although much of the excitement in machine learning can revolve around neural architectures, advanced optimization methods, or model interpretability frameworks, none of these matter without a solid foundation of high-quality data. By mastering the diverse toolkit of data collection methods described here, you'll be in a far stronger position to tackle the complexities of real-world machine learning tasks — where data rarely arrives neatly curated, labeled, and bias-free.

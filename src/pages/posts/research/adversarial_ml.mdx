@@ -1,0 +1,651 @@
+---
+index: 134
+indexCourse: 160
+indexFavorites:
+title: "Adversarial ML"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Adversarial ML"
+courseCategoryName: "AI engineering"
+desc: "Teaching models paranoia as a feature"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "28.10.2024"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 3
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/adversarial_machine_learning.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/adversarial_ml"
+slug: "/research/adversarial_ml"
+---
+
+import Tooltip from "../../../components/Tooltip"
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+- [Tutorial 10: Adversarial attacks](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial10/Adversarial_Attacks.html)
+    - [Deep CNNs on ImageNet](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial10/Adversarial_Attacks.html#Deep-CNNs-on-ImageNet)
+    - [White-box adversarial attacks](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial10/Adversarial_Attacks.html#White-box-adversarial-attacks)
+    - [Protecting against adversarial attacks](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial10/Adversarial_Attacks.html#Protecting-against-adversarial-attacks)
+    - [Conclusion](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial10/Adversarial_Attacks.html#Conclusion)
+    - [References](https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/tutorial10/Adversarial_Attacks.html#References)
+https://alexanderdyakonov.wordpress.com/2019/03/22/%d0%bf%d0%be%d0%b4%d0%bc%d0%b5%d0%bd%d0%b0-%d0%b7%d0%b0%d0%b4%d0%b0%d1%87%d0%b8-%d0%b2-ml/
+
+*/}
+
+
+{/*
+
+1. Motivation  
+2. Foundations of adversarial machine learning  
+3. White-box attacks  
+    Fast gradient sign method (FGSM)  
+    Mathematical formulation  
+    Implementation details  
+    Visualization of adversarial noise  
+    Projected gradient descent (PGD)  
+    Iterative refinement of adversarial examples  
+    Comparison with FGSM  
+    Other gradient-based attacks  
+    Carlini & Wagner  
+    DeepFool 
+4. Black-box attacks  
+    Zero-knowledge attacks vs. limited-knowledge attacks  
+    Query-based approaches  
+    Surrogate model attacks (transferability in black-box settings)  
+    Evolutionary and optimization-based methods
+5. Adversarial patches  
+    Concept of patch attacks and localized perturbations  
+    Training adversarial patches  
+    Objective function and optimization  
+    Use of random transformations (rotation, scaling)  
+    Examples and visualizations  
+    Real-world applications of patch-based attacks
+6. Practical implementation and experiments  
+    Pre-trained models and datasets  
+    Using PyTorch, torchvision, and pretrained weights  
+    Measuring robustness (accuracy vs. fooling rate)  
+    Common pitfalls and reproducibility checks
+    Code snippets  
+    etc.  
+7. Defensive strategies, challenges and lessons from adversarial vulnerabilities  
+    Adversarial training (data augmentation)  
+    Defensive distillation  
+    Preprocessing and detection methods  
+    Limitations and ongoing research  
+    Toward causal and uncertainty-aware models
+    How deep neural networks "see" images  
+    Role of activation functions (e.g., ReLU)  
+    The manifold perspective and sparsity in high dimensions  
+    Transfer learning and ensemble methods
+    Final remarks on adversarial robustness
+
+*/}
+
+
+Adversarial machine learning has transformed from a niche concern to a central topic in the machine learning and data science community over the last decade. Although modern deep neural networks, especially convolutional neural networks (CNNs) and other large-scale architectures, boast remarkable accuracy on sophisticated tasks such as image recognition and language understanding, they can still be vulnerable to small and carefully crafted perturbations in their inputs. These tiny changes — typically undetectable or nearly imperceptible to a human observer — are capable of triggering dramatic misclassifications or performance degradation in what would otherwise be reliable models.  
+
+The implications of these adversarial vulnerabilities are profound. From a security standpoint, a well-crafted adversarial example can subvert neural networks deployed in real-world systems — for instance in autonomous vehicles or facial recognition services — with potentially dire or malicious outcomes. If a self-driving car fails to detect pedestrians, or a face-recognition gate misidentifies unauthorized individuals, it becomes clear that small input perturbations may have severe consequences. The phenomenon underscores deep concerns about model interpretability and reliability, as well as the fundamental nature of how these high-dimensional models learn from data.  
+
+Yet the scope of adversarial machine learning extends beyond malicious attacks. It also opens doors to interesting opportunities, such as building robust models by embracing adversarial training or using adversarial "patches" to detect and correct distribution shifts. In some cases, adversarial methods are used in data science tasks to detect significant mismatches between training and testing sets (so-called "adversarial validation"). From a theoretical standpoint, adversarial examples challenge longstanding assumptions about smoothness, manifold learning, and the geometry of the decision boundaries that high-capacity models learn to separate classes in high-dimensional space.  
+
+Despite extensive research, adversarial vulnerabilities in neural networks are nowhere near resolved. Emerging defense strategies seek to patch these holes, but each new defense often triggers the development of more adaptive or sophisticated attacks. Indeed, the arms race between attackers and defenders in the ML domain serves as a compelling mirror of more classical cybersecurity challenges. In this article, my aim is to dive into the theoretical underpinnings of adversarial machine learning, concretely illustrate common attack methods, demonstrate code-level details using popular frameworks such as PyTorch, and shed light on current defense approaches — all while maintaining an approachable, course-oriented style.  
+
+We will also integrate relevant insights from the broader data science community, including references to the idea of "adversarial approaches" as they appear in tasks such as distribution mismatch checking and advanced data exploration. This notion overlaps with formal adversarial ML because it leverages the same concept of generating strategic data manipulations to probe potential weaknesses or relationships. By the end of this article, you should have a thorough conceptual and technical understanding of adversarial machine learning, including the motivations, foundational theory, established attacks, and emergent defenses.  
+
+------
+
+## foundations of adversarial machine learning
+
+Adversarial machine learning generally focuses on creating adversarial perturbations or examples that push a learned model to produce incorrect or unexpected outputs. A simple but powerful way to phrase this is:
+
+> How can we modify an input <Latex text="\(x\)"/> to become <Latex text="\(x'\)"/> so that <Latex text="\(x'\)"/> is "close" to <Latex text="\(x\)"/> by human standards (or some formal distance metric) but leads the model <Latex text="\(f(\cdot)\)"/> to produce a drastically different or specifically targeted output?
+
+In classification settings, we often want to ensure that <Latex text="\(x'\)"/> is misclassified with high confidence. In other scenarios (e.g., generative modeling), the adversarial objective can be more nuanced.  
+
+### definitions and notations
+
+Let:
+- <Highlight>f</Highlight> be a trained machine learning model, such as a deep neural network parameterized by <Latex text="\( \theta \)"/>.
+- <Latex text="\( x \)"/> be an input (for instance, an image) belonging to some data manifold or broader input space <Latex text="\( \mathcal{X} \)"/>.
+- <Latex text="\( y \)"/> be the ground truth label (in classification tasks) or ground truth target (in regression tasks).
+- <Latex text="\( x' \)"/> be the adversarially perturbed version of <Latex text="\( x \)"/>.
+- A typical requirement is <Latex text="\( \| x' - x \| \le \epsilon \)"/>, where <Latex text="\( \|\cdot\| \)"/> denotes some norm (e.g., <Latex text="\( \ell_\infty \)"/> or <Latex text="\( \ell_2 \)"/>) and <Latex text="\( \epsilon \)"/> is a small radius. In words, <Latex text="\( x' \)"/> must remain perceptually close to <Latex text="\( x \)"/>.
+
+An attack is frequently framed as an optimization problem. We want to find:
+<Code text={`
+# Pseudocode-like example for an adversarial objective
+# We want to maximize the model's loss w.r.t. x':
+
+maximize   Loss(f(x'), y)
+subject to ||x' - x|| <= epsilon
+`}/>
+The standard training loop aims to minimize loss with respect to network parameters <Latex text="\( \theta \)"/>. An adversarial method flips this viewpoint, effectively searching over <Latex text="\( x' \)"/> within an <Latex text="\(\epsilon\)"/>-bounded region around the original <Latex text="\( x \)"/> to *maximize* the same loss or to achieve a targeted misclassification.  
+
+### threat models
+
+A crucial notion in adversarial machine learning is the "threat model". It defines the attacker's knowledge and capabilities. Two canonical threat models are:
+
+1. **White-box attacks**: The adversary has complete access to the model, its architecture, and parameters. The adversary can thus compute or approximate gradients <Latex text="\( \nabla_x \)"/> of the loss function with respect to inputs.  
+2. **Black-box attacks**: The adversary only sees outputs or predictions from the model. They do not know the exact architecture, parameters, or direct gradient values. Instead, they might query the model repeatedly or try to transfer adversarial examples from surrogate models that mimic the behavior of the unknown target.
+
+### early work and subsequent research
+
+Initial demonstrations of adversarial instability date back to (Szegedy and gang, 2013) and (Goodfellow and gang, 2015), where they introduced fundamental concepts like the Fast Gradient Sign Method (FGSM). Subsequent efforts (Kurakin and gang, 2016; Carlini & Wagner, 2017; Madry and gang, 2018) systematically improved the quality of adversarial examples and extended them to many settings: from straightforward image classification tasks to more complex segmentation and object detection tasks in computer vision, as well as to natural language processing (NLP) and tabular data.  
+
+In parallel, defenses advanced. Researchers developed adversarial training methods (Madry and gang, 2018), defensive distillation (Papernot and gang, 2016), input preprocessing strategies (Guo and gang, 2018), detection-based defenses, or even robust optimization frameworks. These solutions often claimed partial success but frequently spurred new and more creative attacks in a cat-and-mouse dynamic.  
+
+Beyond direct security concerns, adversarial strategies sometimes find use in verifying distribution alignment, searching for data leaks (in so-called adversarial validation in Kaggle or data science competitions), or diagnosing overfitting. The concept is broad and continues to evolve — bridging pure theoretical explorations about high-dimensional geometry to highly practical concerns about safely deploying machine learning in the real world.  
+
+------
+
+## white-box attacks
+
+White-box attacks assume the adversary has full visibility into the model's architecture, parameters, and training process. Under this assumption, an attacker can calculate gradients of the loss function with respect to the input features. The strong assumption typically yields some of the most potent adversarial attack methods.  
+
+### fast gradient sign method (fgsm)
+
+#### conceptual overview
+
+The Fast Gradient Sign Method (FGSM) stands out as one of the earliest and most direct algorithms to produce adversarial perturbations (Goodfellow and gang, 2015). The rationale is simple: if you want to *increase* the model's loss for a particular input <Latex text="\( x \)"/>, then move <Latex text="\( x \)"/> a small step in the direction of the *gradient of the loss with respect to <Latex text="\( x \)"/>*. In typical training, we do gradient descent on parameters <Latex text="\( \theta \)"/>. But in FGSM, we do a single gradient *ascent* step with respect to <Latex text="\( x \)"/>.  
+
+Formally, let <Latex text="\( J(\theta, x, y) \)"/> be the loss function for model parameters <Latex text="\( \theta \)"/>, input <Latex text="\( x \)"/>, and label <Latex text="\( y \)"/>. FGSM constructs an adversarial example <Latex text="\( x' \)"/> as follows:
+
+<Latex text="\[
+x' = x + \epsilon \,\mathrm{sign}\bigl(\nabla_x \, J(\theta, x, y)\bigr),
+\]"/>
+
+where:
+- <Latex text="\( \epsilon \)"/> is a small scalar controlling the perturbation strength (often in <Latex text="\( \ell_\infty \)"/> norm).
+- <Latex text="\( \mathrm{sign}(\cdot) \)"/> takes the sign of each gradient component, effectively creating a small uniform shift per dimension but aligned with the direction that maximizes the loss.
+
+Visually, FGSM can be seen as the simplest first-order approximation that pushes <Latex text="\( x \)"/> outward along the cost's gradient. Despite its simplicity, FGSM can be surprisingly effective at fooling a wide variety of neural network architectures, even for modest values of <Latex text="\( \epsilon \)"/> (e.g., 0.01 or 0.02 in normalized pixel scales).  
+
+#### mathematical formulation
+
+Given a model <Latex text="\( f_\theta(\cdot) \)"/> that outputs logits or probability estimates, define the standard cross-entropy loss for classification:
+
+<Latex text="\[
+J(\theta, x, y) = -\sum_{c=1}^{C} \mathbb{1}[c = y] \log \bigl(\sigma(f_\theta(x))_c\bigr)
+\]"/>
+
+where <Latex text="\( \sigma(\cdot) \)"/> is the softmax function, and <Latex text="\( C \)"/> is the number of classes. We compute <Latex text="\( \nabla_x J(\theta, x, y) \)"/>, the gradient with respect to the input <Latex text="\( x \)"/>. Each component of that gradient indicates how a small change in one pixel (or feature) can increase or decrease the loss. FGSM simply aggregates the sign of those components and multiplies by <Latex text="\( \epsilon \)"/>:
+
+<Latex text="\[
+\nabla_x J(\theta, x, y) \in \mathbb{R}^d \quad\text{(if x is d-dimensional)}
+\]"/>
+<Latex text="\[
+\mathrm{sign}\bigl(\nabla_x J(\theta, x, y)\bigr) \in \{-1, +1\}^d.
+\]"/>
+
+Hence:
+
+<Latex text="\[
+x' = x + \epsilon \,\mathrm{sign}\bigl(\nabla_x \, J(\theta, x, y)\bigr).
+\]"/>
+
+If <Latex text="\( \epsilon \)"/> is small enough (in the 0–1 scaled image domain, it might be around 0.01–0.05), <Latex text="\( x' \)"/> typically looks identical or nearly identical to <Latex text="\( x \)"/> from a human perspective, yet <Latex text="\( f_\theta \)"/> can produce a drastically different or incorrect classification.  
+
+#### implementation details
+
+Below is a concise illustration of FGSM in PyTorch-like pseudocode. The snippet assumes you already have a pretrained model <Highlight>model</Highlight>, an input image batch <Highlight>images</Highlight>, and ground-truth labels <Highlight>labels</Highlight>. Notice how the only difference from typical training code is that we treat the input <Highlight>images</Highlight> as a parameter that we differentiate with respect to:
+
+<Code text={`
+import torch
+import torch.nn.functional as F
+
+def fgsm_attack(model, images, labels, epsilon):
+    # Ensure gradients wrt 'images' can be computed
+    images.requires_grad = True
+    
+    # Forward pass
+    outputs = model(images)
+    loss = F.cross_entropy(outputs, labels)
+    
+    # Backprop to get gradient wrt input images
+    model.zero_grad()
+    loss.backward()
+    
+    # Collect sign of gradient
+    grad_sign = images.grad.sign()
+    
+    # Create the perturbed image by adjusting each pixel
+    perturbed_images = images + epsilon * grad_sign
+    
+    # Clip to valid image range [0,1] if needed (or other normalization)
+    perturbed_images = torch.clamp(perturbed_images, 0, 1)
+    
+    return perturbed_images
+`}/>
+
+In practice, you might also consider domain-specific transformations or stricter constraints on pixel changes. In some frameworks, images are normalized or scaled differently, so <Latex text="\( \epsilon \)"/> must be calibrated accordingly.  
+
+#### visualization of adversarial noise
+
+Often, to illustrate how subtle (yet devastating) the perturbations are, we can display the raw noise <Latex text="\( x' - x \)"/> on a gray scale or color scale. Even if it looks random, the gradient sign has specifically arranged the directions of each pixel so as to maximize the model's classification error. These perturbations can appear like high-frequency static or faint outlines of shapes that align with a class-specific signature.  
+
+### projected gradient descent (pgd)
+
+#### iterative refinement of adversarial examples
+
+While FGSM operates with a single-step gradient, the Projected Gradient Descent (PGD) method (Madry and gang, 2018) refines this approach through *iterative* gradient steps. PGD is thus sometimes referred to as the iterative version of FGSM. Instead of applying <Latex text="\( \epsilon \)"/> in a single shot, PGD applies several smaller steps (e.g., each of size <Latex text="\( \alpha \)"/>) in the direction of the gradient. After each step, it projects the perturbed input back into the <Latex text="\( \ell_p \)"/> ball of radius <Latex text="\( \epsilon \)"/> around the original <Latex text="\( x \)"/> to ensure the total distortion remains bounded.  
+
+In formula form, starting with <Latex text="\( x_0 = x \)"/>:
+
+<Latex text="\[
+x_{t+1} = \prod_{\|x - x_0\|\le \epsilon} \Bigl( x_t + \alpha\, \mathrm{sign}\bigl(\nabla_{x_t}J(\theta,x_t,y)\bigr) \Bigr)
+\]"/>
+
+where <Latex text="\( \prod_{\|x-x_0\|\le \epsilon}\bigl(\cdot\bigr) \)"/> denotes the projection operator that enforces <Latex text="\( \|x_t - x\|\le \epsilon \)"/>.  
+
+PGD tends to yield stronger adversarial examples than the single-step FGSM since it systematically searches within the <Latex text="\( \epsilon \)"/>-bounded region. Indeed, Madry and gang (ICLR 2018) propose PGD as a "universal first-order adversary," meaning that if a network is robust against PGD across all random restarts, it is robust against a broad class of first-order attacks.  
+
+#### comparison with fgsm
+
+- **FGSM** is fast, requiring only one gradient pass, thus it is sometimes used in real-time or large-scale generation scenarios (or as part of adversarial training for a quick data augmentation step).
+- **PGD** is more computationally expensive but typically produces more potent adversarial examples, often resulting in significantly lower accuracy for the victim model.  
+
+### other gradient-based attacks
+
+#### carlini & wagner attacks
+
+Carlini & Wagner (C&W) introduced a family of attacks (Carlini & Wagner, 2017) that focus on optimizing a refined objective function that includes:
+1. A term encouraging misclassification,
+2. A term penalizing the size of the perturbation.  
+
+In short, the C&W attacks solve a more intricate optimization. They often generate adversarial perturbations that are *visually* imperceptible yet extremely effective at fooling a network. They also handle targeted misclassifications (where you want <Latex text="\( x' \)"/> to appear as class <Latex text="\( y_{\text{target}} \)"/>).  
+
+Though more computationally demanding than FGSM or PGD, C&W attacks historically have proven highly effective at circumventing many proposed defense mechanisms, thereby acting as a strong benchmark in adversarial robustness research.  
+
+#### deepfool
+
+DeepFool (Moosavi-Dezfooli and gang, 2016) finds minimal perturbations that move the sample across the nearest decision boundary. It approximates the boundary in a piecewise linear sense and iteratively refines the perturbation. The key idea is that in high-dimensional spaces, a linear approximation can identify the most direct path from <Latex text="\( x \)"/> to a misclassification boundary.  
+
+DeepFool typically yields smaller perturbation norms (in <Latex text="\( \ell_2 \)"/> sense) compared to simpler methods, and often reveals vulnerabilities that single-step methods cannot. It is, however, less straightforward to incorporate into adversarial training than FGSM or PGD, primarily because it's more complex to implement at large scale.  
+
+------
+
+## black-box attacks
+
+Contrary to white-box settings, in black-box attacks the adversary lacks direct access to the model's gradients or structure. Instead, the attacker must rely on limited knowledge (maybe only input-output queries or even less). Although this restriction complicates the generation of adversarial examples, a variety of black-box attack strategies have proven feasible and potent.
+
+### zero-knowledge attacks vs. limited-knowledge attacks
+
+- **Zero-knowledge attacks**: The attacker only knows the final predictions or decisions of the model and cannot make multiple queries to adjust or refine the attack. In extreme cases, the attacker just knows that a classifier <Latex text="\( f(\cdot) \)"/> exists and is seeking a universal or random approach to degrade its performance.  
+- **Limited-knowledge attacks**: The attacker can query the model multiple times and observe outputs (such as the predicted class probabilities, top-1 label, or even confidence scores). Over repeated queries, it is possible to estimate partial gradient signals or build a local "surrogate model."  
+
+### query-based approaches
+
+In a query-based black-box attack, the idea is to approximate the gradient by measuring how small changes to <Latex text="\( x \)"/> influence the model's output. For instance, one can do finite-difference approximations:
+
+<Latex text="\[
+\frac{\partial J}{\partial x_i} \approx \frac{J(\theta, x + \delta e_i, y) - J(\theta, x, y)}{\delta}
+\]"/>
+
+where <Latex text="\( e_i \)"/> is a one-hot perturbation to the <Latex text="\( i \)"/>-th feature. Although straightforward, a naive version of this approach requires a large number of queries (linear in the input dimension). More sophisticated approaches reduce query complexity, for example by using random gradient estimates or evolutionary search.  
+
+### surrogate model attacks (transferability in black-box settings)
+
+One of the most remarkable (and troubling) facts about adversarial examples is their *transferability*. If an attacker trains their own surrogate or substitute model <Latex text="\( g(\cdot) \)"/> on a similar dataset and obtains a set of adversarial examples that fool <Latex text="\( g \)"/> in a white-box manner, there's a surprisingly high chance that these same examples will also fool the *target* model <Latex text="\( f \)"/>.  
+
+Transferability arises because different neural networks, especially if they share comparable architectures or have been trained on the same dataset, often learn similar decision boundaries. This phenomenon is a powerful advantage for black-box attackers because they can craft adversarial examples using their local surrogate model and then simply feed these examples to the actual remote or proprietary model.  
+
+### evolutionary and optimization-based methods
+
+Where gradient approximations are infeasible or too expensive, attackers can resort to population-based search, genetic algorithms, or more general derivative-free optimization. These black-box search strategies treat the input as a solution vector in a large search space, evolving it in ways that reduce or alter the target model's confidence in the correct label. Although these methods can also be expensive in terms of queries, they have proven effective in scenarios with partial model feedback or unusual data types (e.g. discrete tokens in NLP).  
+
+------
+
+## adversarial patches
+
+### concept of patch attacks and localized perturbations
+
+Adversarial patches (Brown and gang, 2017) expand the notion of adversarial examples beyond subtle pixel-level changes across the entire image. Instead, a patch focuses on a localized region. By simply pasting (digitally or physically) a small square or pattern anywhere on an image, an attacker can force a misclassification. Unlike an "imperceptible noise" approach, an adversarial patch is often quite visible. Yet from a real-world standpoint, it can be placed or printed in a way that does not arouse suspicion.  
+
+### training adversarial patches
+
+Instead of solving for a small perturbation <Latex text="\( \delta \)"/> for each image <Latex text="\( x \)"/>, we now solve for a universal patch <Latex text="\( P \)"/> that, when pasted onto any image, systematically causes misclassification. Typically, we pick a target class <Latex text="\( y_{\mathrm{target}} \)"/> and want <Latex text="\( f_\theta(x + \mathrm{PatchOverlay}(P,x)) = y_{\mathrm{target}} \)"/> for many or most images <Latex text="\( x \)"/>.  
+
+One approach is:
+
+1. Initialize the patch <Latex text="\( P \)"/> randomly (or set it to an image from <Latex text="\( y_{\mathrm{target}} \)"/>).  
+2. In each training iteration:
+   - Sample a minibatch of images.  
+   - Randomly place the patch <Latex text="\( P \)"/> in each image (optionally with random rotation or scaling).  
+   - Compute the loss that encourages the model to predict class <Latex text="\( y_{\mathrm{target}} \)"/> for these patched images.  
+   - Update <Latex text="\( P \)"/> in the direction of the gradient that maximizes this objective, typically with standard stochastic gradient ascent.  
+
+### objective function and optimization
+
+For a batch of images <Latex text="\( (x_i, y_i) \)"/> with <Latex text="\( i=1,\ldots,B \)"/>, we define a patching operation <Latex text="\( \mathrm{PatchOverlay}(P,x_i) \)"/> that returns the image with the patch applied at some random location. Then let:
+
+<Latex text="\[
+\mathcal{L}(\theta, P) \;=\; \sum_{i=1}^B J\Bigl(\theta,\; x_i + \mathrm{PatchOverlay}(P,x_i),\; y_{\mathrm{target}}\Bigr),
+\]"/>
+
+where <Latex text="\( y_{\mathrm{target}} \)"/> is the desired fooling label. Minimizing this with respect to the neural net parameters <Latex text="\( \theta \)"/> is not our aim; instead, we consider <Latex text="\( \theta \)"/> as fixed, and we *maximize* with respect to <Latex text="\( P \)"/>:
+
+<Latex text="\[
+P^* = \mathrm{argmax}_P \;\mathcal{L}(\theta, P).
+\]"/>
+
+Stochastic gradient ascent steps:
+
+<Latex text="\[
+P \;\leftarrow\; P + \eta\;\nabla_P\,\mathcal{L}(\theta, P).
+\]"/>
+
+One detail: we typically constrain <Latex text="\( P \)"/> to be a valid image region, e.g., pixel intensities in <Latex text="\( [0,1] \)"/>. This can be enforced by clamping or a <Latex text="\( \tanh(\cdot) \)"/> transformation.  
+
+### use of random transformations (rotation, scaling)
+
+To ensure the patch works even if printed out in the real world or placed at random angles, one can incorporate random transformations during training:
+- Randomly rotate the patch by <Latex text="\( \pm 30^\circ \)"/> or more.  
+- Randomly scale the patch from, say, 80–120% of its size.  
+- Possibly add small random occlusions or color jitter.  
+
+This data augmentation step fosters a more robust universal patch that can reliably break the classifier from multiple vantage points.  
+
+### examples and visualizations
+
+In the original work by Brown and gang (2017) (NeurIPS), a small toaster-like patch forced the network to see a "toaster" class in nearly any scene, including images of animals or random objects. Visual depictions often show a patch with swirling shapes or odd color patterns that do not necessarily look like a natural object. Yet these patterns are carefully optimized to produce a strong activation for the target class.  
+
+### real-world applications of patch-based attacks
+
+Patch-based attacks can be physically instantiated: for instance, an attacker could place a small printed sticker on a stop sign or hold up an odd pattern in front of a camera feed. Real-world experiments have confirmed that such patches can fool object detection systems or mislead image classifiers in real, unaltered scenarios.  
+- In autonomous driving, a patch might trick the system into misreading traffic signs or ignoring pedestrians.  
+- In face recognition, a small sticker on the face can cause misidentification.  
+- In retail environments, a maliciously placed patch on product packaging might cause an inventory recognition system to mislabel goods.
+
+------
+
+## practical implementation and experiments
+
+### pre-trained models and datasets
+
+To explore adversarial attacks in practice, many researchers and practitioners use standard datasets and pre-trained models:
+- **ImageNet** with pretrained ResNet, DenseNet, or other architectures in PyTorch or TensorFlow.  
+- **CIFAR-10** or **CIFAR-100** for smaller-scale experiments.  
+- **MNIST** as a starting point for didactic examples, though modern networks achieve near-perfect performance on it.
+
+Below is an indicative example of code that loads a pretrained PyTorch model (such as ResNet34) and demonstrates a quick adversarial FGSM attack. This snippet is high-level and is for illustration only.
+
+<Code text={`
+import torch
+import torch.nn.functional as F
+import torchvision.transforms as T
+from torchvision.models import resnet34
+
+# 1) Load pretrained model
+model = resnet34(weights='IMAGENET1K_V1')
+model.eval()
+
+# 2) Prepare input image x
+transform = T.Compose([
+    T.Resize(224),
+    T.CenterCrop(224),
+    T.ToTensor(),
+    # Normalize with ImageNet's mean & std
+    T.Normalize([0.485, 0.456, 0.406],
+                [0.229, 0.224, 0.225])
+])
+# Suppose we have an input PIL image 'orig_img'
+x = transform(orig_img).unsqueeze(0)  # shape: [1, 3, 224, 224]
+x.requires_grad = True
+
+# 3) Forward pass
+logits = model(x)
+label = logits.argmax(dim=1)
+
+# 4) Compute FGSM
+loss = F.cross_entropy(logits, label)
+model.zero_grad()
+loss.backward()
+epsilon = 0.02
+perturbation = epsilon * x.grad.sign()
+x_adv = x + perturbation
+x_adv = torch.clamp(x_adv, 0, 1)
+
+# 5) Evaluate
+logits_adv = model(x_adv)
+pred_adv = logits_adv.argmax(dim=1)
+print("Original label:", label.item())
+print("Adversarial label:", pred_adv.item())
+`}/>
+
+### measuring robustness (accuracy vs. fooling rate)
+
+When evaluating adversarial robustness, it is helpful to track:
+1. **Clean accuracy**: Standard accuracy on the unperturbed test set.  
+2. **Adversarial accuracy** or fooling rate: The fraction of test samples that remain correctly classified under adversarial perturbations. Some authors define a fooling rate as the fraction of samples that switch from correct to incorrect under attack.  
+
+In the simplest sense:
+- **High adversarial accuracy** <Tooltip text="(the fraction of images still correct under adversarial noise)"/> implies the model is robust.  
+- **Low adversarial accuracy** means the model is easily deceived.
+
+Moreover, we can measure how the adversarial accuracy changes as <Latex text="\( \epsilon \)"/> grows, or under increasingly sophisticated attacks (FGSM vs. PGD vs. C&W, etc.).  
+
+### common pitfalls and reproducibility checks
+
+1. **Normalization**: Adversarial perturbations must be scaled consistently with input normalization. For instance, if images are normalized by mean and standard deviation, <Latex text="\( \epsilon \)"/> must be adjusted accordingly in that transformed space.  
+2. **Clamping**: After you perturb an image, ensure the result is still in a valid pixel range if that is part of your data pipeline.  
+3. **Random seeds and hardware**: Adversarial training or random restarts can yield slightly different outcomes, so controlling for randomness is crucial to reproducibility.  
+4. **Misreporting**: Sometimes, reported robust accuracies might reflect an incomplete or suboptimal search by the attacker. If the adversarial method is not thorough, it might overestimate the true robustness.  
+
+### code snippets
+
+A few lines of (PyTorch) code that illustrate an iterative approach for PGD:
+
+<Code text={`
+def pgd_attack(model, images, labels, epsilon=0.03, alpha=0.01, iters=40):
+    """
+    model: neural network
+    images: input batch
+    labels: ground truth labels
+    epsilon: maximum perturbation
+    alpha: step size
+    iters: number of iteration steps
+    """
+    # Clone images for re-usage
+    ori_images = images.clone().detach()
+
+    for i in range(iters):
+        images.requires_grad = True
+        outputs = model(images)
+        loss = F.cross_entropy(outputs, labels)
+        
+        model.zero_grad()
+        loss.backward()
+        adv_grad = images.grad.data
+        
+        # Gradient ascent step
+        images = images + alpha * adv_grad.sign()
+        
+        # Project back into the epsilon-ball
+        # clamp each pixel so that overall dist from ori_images <= epsilon
+        eta = torch.clamp(images - ori_images, min=-epsilon, max=epsilon)
+        images = torch.clamp(ori_images + eta, 0, 1).detach()
+    
+    return images
+`}/>
+
+------
+
+## defensive strategies, challenges and lessons from adversarial vulnerabilities
+
+Having explored how easily state-of-the-art models can be tricked, it's natural to look for defenses. While numerous methods have been proposed, none provide a definitive solution for all threat models. Nonetheless, there are a variety of partial or context-specific defenses that can significantly raise the bar for an attacker.
+
+### adversarial training (data augmentation)
+
+One of the most intuitive and widely studied defenses is **adversarial training**. It basically expands the training distribution by including adversarial examples:
+
+1. Generate adversarial examples on the current model (e.g., via FGSM or PGD).  
+2. Add these examples (labeled with the original ground truth) into the training set.  
+3. Retrain or continue training so the network learns to classify them correctly.  
+
+Algorithmically, we can write a min-max problem:
+<Latex text="\[
+\min_{\theta} \;\; \mathbb{E}_{(x,y)\sim \mathcal{D}} \Bigl[ \max_{\|x'-x\|\le \epsilon} J(\theta, x', y) \Bigr].
+\]"/>
+This is akin to simultaneously training <Latex text="\( \theta \)"/> and solving the worst-case perturbation <Latex text="\( x' \)"/> for each sample. The inner maximization is an adversarial attack (like PGD).  
+
+Adversarial training is conceptually powerful and can, in practice, yield robust models, especially if done with multi-step PGD and large-scale data. However, it entails a significant computational cost because each training step runs a small adversarial optimization. It also might degrade standard (clean) accuracy if not carefully tuned, as the model invests capacity in being robust rather than optimizing purely for clean accuracy.  
+
+### defensive distillation
+
+Defensive distillation (Papernot and gang, 2016) tries to smooth the decision surface by training a model to mimic the "soft" outputs of another model. The original steps:
+1. Train a network on the training set normally, extracting softmax probabilities as <Latex text="\( p(x) \)"/>.  
+2. Train a second network on the same inputs, but use the soft labels from <Latex text="\( p(x) \)"/> rather than the hard ground-truth labels.  
+
+The rationale is that learning from soft labels might flatten or smooth the gradients that attacks exploit. Although some early success was reported, subsequent papers (Carlini & Wagner, 2017) found that more sophisticated or tuned attacks could circumvent the defense. Distillation might still provide partial benefit, but it is not a catch-all solution.  
+
+### preprocessing and detection methods
+
+A wide range of defenses revolve around pre-processing the input before inference:
+- **Denoising**: Use filters or wavelet denoising to remove small perturbations.  
+- **Pixel defense**: Add randomization or compression steps (e.g. random resizing, bit-depth reduction).  
+- **Feature squeezing**: Project inputs onto a lower-dimensional manifold to remove fine-grained noise.  
+
+Alternatively, detection-based defenses attempt to identify whether an input is adversarial. For instance, if the input is abnormally far from the training data manifold or triggers suspicious feature activations, a model might label it as suspect. Although these approaches sometimes catch naive attacks, adaptive adversaries often circumvent them by designing perturbations that survive or exploit the preprocessing transformations.  
+
+### limitations and ongoing research
+
+Defenses frequently fail or degrade against new or more adaptive attacks. This pattern is reminiscent of a cat-and-mouse arms race. Some deeper limitations:
+- **Computational overhead**: Many robust training methods require heavy compute resources, restricting their feasibility for very large models or real-time applications.  
+- **Transferability**: Even if you robustly defend one model, an attacker might train a surrogate or black-box approach to circumvent your defense.  
+- **Data constraints**: Some adversarial training methods require large, diverse training sets to generalize, or else risk overfitting to a specific type of adversarial pattern.  
+
+### toward causal and uncertainty-aware models
+
+One promising path is the pursuit of *causal* approaches that do not rely solely on spurious correlations in the data. By grounding predictions in stable, causal features, models might be less prone to out-of-distribution shifts or trivial perturbations. Meanwhile, *uncertainty-aware* techniques, such as Bayesian neural networks or deep ensembles, attempt to produce well-calibrated confidence estimates, potentially flagging low-confidence predictions when encountering adversarial inputs. Though these ideas are still under development, they represent a deeper shift in how we might approach robust machine learning.  
+
+### how deep neural networks "see" images
+
+Many interpretability studies show that CNNs and other deep architectures can exploit high-frequency signals imperceptible to humans. These networks do not necessarily learn exactly the features humans use for classification. ReLU-like activation functions, combined with the high dimensional nature of images, create an environment where subtle changes in each pixel can accumulate, flipping decisions in ways that remain hidden to human vision.  
+
+### role of activation functions (e.g., relu)
+
+Rectified Linear Units (ReLUs) introduce piecewise linearity, meaning that an adversarial perturbation can abruptly activate or deactivate certain neurons, drastically changing the final output. On one hand, ReLUs are easier to optimize with respect to network parameters than saturating nonlinearities. On the other hand, this piecewise linear surface often contributes to a lack of inherent smoothness in the model's decision boundary with respect to <Latex text="\( x \)"/>.  
+
+### the manifold perspective and sparsity in high dimensions
+
+An overarching intuition is that training data only occupies a low-dimensional manifold within the broad input space. The region of genuine data is relatively sparse. Neural networks can exhibit unpredictable or poorly constrained behavior in the vast regions of space between the manifold clusters. Adversarial noise effectively pushes <Latex text="\( x \)"/> into these uncharted areas. The manifold perspective suggests that if we had perfect generative knowledge of the data manifold, we could project inputs onto it and possibly remove adversarial components. However, learning such a manifold at scale is itself a formidable challenge.  
+
+### transfer learning and ensemble methods
+
+#### ensembles for defense
+
+Ensembling multiple models can sometimes provide partial robustness gains. The attacker then needs to find a perturbation that fools *all* models simultaneously, which can be more difficult. However, adversarial transferability can still be strong across similarly trained architectures, so naive ensembles might not be enough.  
+
+#### transfer learning vulnerabilities
+
+Transfer learning can inadvertently preserve vulnerabilities from the base model. For instance, if you load a pretrained network on ImageNet and fine-tune only the top layers for a new domain, the underlying features might remain susceptible to the same forms of adversarial attack from the original domain.  
+
+### final remarks on adversarial robustness
+
+Despite intense research, there is no universal solution for adversarial attacks, especially in open-ended real-world scenarios. However, a combination of methods — adversarial training with multi-step attacks, input transformations, ensemble strategies, uncertainty estimation, or novel architectural changes — can yield more robust and trustworthy predictions.  
+
+------
+
+<Highlight>Below this point, I include an extended discussion to provide additional theoretical context and references, bridging to tasks that sometimes leverage adversarial ideas in data science, such as "adversarial validation." This can help advanced ML practitioners see how the underlying concept of adversarial optimization extends beyond direct security concerns.</Highlight>
+
+## extra: bridging adversarial ml with advanced data science techniques
+
+In broader data science and advanced analytics, the term "adversarial approach" arises in multiple contexts. While the fundamental concept always involves constructing or analyzing a scenario in which some entity is trying to "trick" or probe a model, the objectives may differ from classical adversarial attacks that merely cause misclassification.  
+
+One such example is known as "adversarial validation," wherein the data scientist checks for distribution mismatch between training and testing sets (or between subsets of the data). The approach is to build a binary classifier that distinguishes training samples from test samples and then measures how accurately it can do so. If an advanced classifier reliably classifies a point as belonging to the training or test set, that suggests the two distributions differ significantly.  
+
+### distribution mismatch detection
+
+1. Label all training data with 0, all test data with 1.  
+2. Train a binary classifier (which could be a neural network or gradient boosting model) to predict these labels.  
+3. If the classifier achieves high accuracy or high AUC, it implies the distributions differ so much that a supervised model can separate them.  
+4. By examining the important features in that classifier, you can glean which input variables drive the distribution mismatch.  
+
+This technique is reminiscent of a black-box adversarial concept: you're effectively trying to see if there is a small set of manipulations or inherent differences that can tell training from test points. Although the objective is not to *break* the system, it uses adversarial logic to probe a mismatch that might lead to poor generalization.  
+
+### feature dependency and "podmena zadachi"
+
+Another interesting data science technique uses the notion of training a model to recover a certain feature from all the other features. This is sometimes framed as "if we can build a strong classifier or regressor for a given feature <Latex text="\( F \)"/>, then <Latex text="\( F \)"/> is not truly independent from the rest of the data; the information is partly redundant." This method, explained in some data science circles as "подмена задачи" (translated as "task substitution"), helps discover correlated or functionally dependent features, or detect and fill missing values intelligently.  
+
+While not always labeled as adversarial, the technique effectively sets up an alternate objective: treat <Latex text="\( F \)"/> as the target label and see how well we can guess it from the remaining data. If we can do so too well, we might suspect data leakage or strong correlation that may or may not help the original predictive task.  
+
+These advanced data exploration methods connect conceptually to adversarial ML in the sense that both rely on carefully structured manipulations or re-labellings of data to test the boundaries of the model's capabilities.
+
+------
+
+## images and placeholders
+
+Where beneficial, an instructor might include images or diagrams to illustrate specific points. For instance:
+
+<Image alt="adversarial_perturbation_example" path="" caption="A subtle perturbation can drastically change the predicted label." zoom="false" />
+
+You could show two side-by-side images: the original vs. the adversarial one, plus the difference image.  
+
+<Image alt="adversarial_patch_example" path="" caption="A small patch can force the classifier to see a chosen class in nearly any image." zoom="false" />
+
+------
+
+## conclusion (optional remarks)
+
+Adversarial machine learning began as a surprising revelation that deep networks — so accurate by standard metrics — could be derailed by almost imperceptible perturbations. Over time, it has become clear that these vulnerabilities stem from broader issues: non-robust features, spurious correlations, the geometry of high-dimensional manifolds, and a possible misalignment between how models and humans perceive data.  
+
+On the attack side, we have an extensive repertoire: single-step methods like FGSM, iterative approaches like PGD, more specialized attacks like Carlini–Wagner, DeepFool, black-box methods leveraging transferability or query-based gradient approximations, and localized patch attacks that physically realize adversarial threats in real-world scenarios.  
+
+On the defense side, we have strategies from adversarial training (the gold standard in many settings but computationally expensive) to model distillation, input preprocessing, detection heuristics, and deeper architecture-level changes. None of these alone guarantee absolute robustness. Instead, we have a continuously evolving interplay between attack and defense — a reflection of standard security practices but transplanted into the ML domain, which is complicated by data distribution shifts, model interpretability challenges, and the extremely high-dimensional nature of deep learning.  
+
+Even outside of strictly malicious contexts, adversarial perspectives offer valuable insights and tools for diagnosing distribution mismatch, investigating data leaks, clarifying feature dependencies, or exploring generalization errors. This synergy of adversarial logic with broader data science tasks (like adversarial validation) underscores the conceptual power of shaping a secondary objective that tries to "break" or "distinguish" something about a dataset or model.  
+
+Looking ahead, research in adversarial robustness aims to either achieve stable, provable bounds on a model's sensitivity to input perturbations or to develop flexible methods that gracefully handle the intrinsic uncertainty in real-world data. Current trends include bridging causal models, Bayesian or ensemble-based uncertainty estimates, robust optimization, and new directions like generative manifold projection and certified defenses with formal proofs for small norm-bounded perturbations.  
+
+I encourage you to experiment with these methods in code, scrutinize your own models' responses to small input perturbations, and consider the bigger picture: robust and reliable ML systems require a holistic approach, from careful data curation and architecture design to ongoing testing against newly developed adversarial techniques.
+
+------
+
+**References and suggested readings**  
+- Goodfellow, I. J., Shlens, J., and Szegedy, C. "Explaining and harnessing adversarial examples." ICLR 2015.  
+- Szegedy, C. and gang "Intriguing properties of neural networks." ICLR 2014.  
+- Madry, A. and gang "Towards deep learning models resistant to adversarial attacks." ICLR 2018.  
+- Carlini, N. and Wagner, D. "Towards evaluating the robustness of neural networks." IEEE S&P (2017).  
+- Brown, T. B. and gang "Adversarial patch." arXiv:1712.09665 (2017).  
+- Moosavi-Dezfooli, S. M., Fawzi, A., and Frossard, P. "DeepFool: A simple and accurate method to fool deep neural networks." CVPR 2016.  
+- Papernot, N. and gang "Distillation as a defense to adversarial perturbations against deep neural networks." IEEE S&P 2016.  
+- Kurakin, A., Goodfellow, I., and Bengio, S. "Adversarial examples in the physical world." ICLR Workshop 2017.  
+- Tramer, F. and gang "Ensemble adversarial training: Attacks and defenses." ICLR 2018.  
+
+------
+
+I hope this comprehensive coverage clarifies not just the mechanics of adversarial machine learning, but also its theoretical foundations and practical nuances. Even as these adversarial phenomena present significant challenges to the ML community, they continue to motivate innovative directions for building safer, more resilient, and ultimately more trustworthy AI systems.

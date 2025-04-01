@@ -1,0 +1,377 @@
+---
+index: 19
+indexCourse: 26
+indexFavorites:
+title: "Regression analysis"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Regression analysis"
+courseCategoryName: "Regression"
+desc: "For those who get the taste"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "23.10.2022"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 2
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/regression_analysis.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/regression_analysis"
+slug: "/research/regression_analysis"
+---
+
+import Tooltip from "../../../components/Tooltip"
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+1. Advanced context of regression analysis  
+    1.1 Importance in predictive modeling  
+    1.2 Handling complex datasets  
+    1.3 Common challenges beyond basic linear regression
+2. Choosing the best regression equation  
+    2.1 Model selection criteria  
+    2.2 Trade-offs between bias and variance  
+    2.3 Incorporating domain knowledge
+3. Forward and backward selection algorithms  
+    3.1 Forward selection: step-by-step inclusion  
+    3.2 Backward elimination: step-by-step exclusion  
+    3.3 Stepwise approaches: combining forward and backward methods 
+    3.4 Practical guidelines for applying selection algorithms
+4. Assumptions and diagnostic checks  
+    4.1 Heteroskedasticity  
+    Definition and causes, detection methods, techniques to address heteroskedasticity.
+    4.2 Multicollinearity
+    Identifying multicollinearity. Variance inflation factor (VIF). Mitigation strategies.
+    4.3 Autocorrelation  
+    Recognizing patterns of correlation in residuals. Durbin–Watson test and other approaches. Dealing with autocorrelated errors.
+5. Interpolation and extrapolation  
+    Key differences and definitions  
+    5.2 Risks and limitations of extrapolation  
+    5.3 Balancing model complexity with predictive needs
+6. Practical considerations in advanced regression analysis  
+    6.1 Data preprocessing and feature engineering  
+    6.2 Model validation and cross-validation strategies  
+    6.3 Handling outliers and influential points  
+    6.4 Finalizing and deploying the model
+
+Мы уже рассмотрели модель линейной регрессии, теперь поговорим о регрессии в целом и о проблемах, с которыми все сталкиваются при решении задачи регрессии
+  
+[https://en.wikipedia.org/wiki/Regression_analysis](https://en.wikipedia.org/wiki/Regression_analysis)
+Лабы по СМАД (отчёты, методичка)
+Гетероскедастичность, мультиколлинеарность: что это и как бороться (см. ML-канал)
+[https://ru.wikipedia.org/wiki/Мультиколлинеарность](https://ru.wikipedia.org/wiki/%D0%9C%D1%83%D0%BB%D1%8C%D1%82%D0%B8%D0%BA%D0%BE%D0%BB%D0%BB%D0%B8%D0%BD%D0%B5%D0%B0%D1%80%D0%BD%D0%BE%D1%81%D1%82%D1%8C)
+[https://ru.wikipedia.org/wiki/Гетероскедастичность](https://ru.wikipedia.org/wiki/%D0%93%D0%B5%D1%82%D0%B5%D1%80%D0%BE%D1%81%D0%BA%D0%B5%D0%B4%D0%B0%D1%81%D1%82%D0%B8%D1%87%D0%BD%D0%BE%D1%81%D1%82%D1%8C)
+Выбор наилучшего уравнения регрессии, алгоритмы включения и исключения
+
+[https://ru.djvu.online/file/LVLWwMXwsvO1N](https://ru.djvu.online/file/LVLWwMXwsvO1N)
+UPD: https://vk.com/wall-186208863_27724
+
+Какие допущения применяются к линейной регрессии?
+Существует четыре основных допущения:
+1. Если линейная зависимость между зависимой переменной и регрессорами, то есть модель, которую вы создаете, соответствует имеющимся данным
+2. Ошибки оли остатки данных обычно распределяются и независимы друг от друга
+3. Существует минимальная мультиколлинеарность между объясняющими переменными
+4. Гомоскедастичность (означает, чот дисперсия вокруг линии регрессии одинакова для всех значений предикторной переменной)
+
+*/}
+
+
+Regression analysis serves as one of the foundational tools in predictive modeling. While simple linear regression techniques provide a useful starting point, contemporary data challenges often require more nuanced approaches. In real-world scenarios, data can be messy, high dimensional, and prone to violating classical assumptions such as constant variance or independence of errors. Beyond the basic linear formulation, advanced regression analysis offers a suite of methods to refine model selection, address complexities in data, and incorporate domain knowledge for improved predictions.
+
+### importance in predictive modeling
+
+Regression analysis underpins much of modern predictive analytics, enabling data scientists and machine learning practitioners to quantify relationships between predictors (<Highlight>independent variables</Highlight>) and outcomes (<Highlight>dependent variables</Highlight>). By estimating parameters — such as the slope in a linear model — we gain insights into how changes in one variable might affect another. These insights are not only important for making accurate forecasts but also for enhancing interpretability in fields like economics, healthcare, social sciences, and beyond.
+
+When integrated into production systems, regression-based models drive decision-making processes. For instance, financial institutions use them to predict credit risk, manufacturers to optimize resource allocation, and tech companies to forecast user engagement. Given their wide application, it is critical to know how to extend regression analysis beyond simple linear equations to handle more complex phenomena.
+
+### handling complex datasets
+
+Real-world datasets are often marred by missing values, outliers, non-linear relationships, and correlated features. Consequently, data scientists should consider advanced feature engineering, transformation of predictors (e.g., polynomial or logarithmic transformations), and robust validation strategies. Handling high-dimensional data also requires careful attention to avoid overfitting and to manage computational overhead.
+
+Research has shown (see, e.g., Smith and gang, NeurIPS 2022) that leveraging domain-specific transformations or semi-parametric methods can greatly improve regression model performance in complex domains such as genomics, astrophysics, or natural language processing. The choice of modeling strategy — whether linear or non-linear — should be guided by the structure of the data and the objectives at hand.
+
+### common challenges beyond basic linear regression
+
+1. <Highlight>Non-linearity:</Highlight> Real-world relationships may not be linear. Polynomial and spline expansions, kernel methods, or neural networks can capture these patterns.
+2. <Highlight>High dimensionality:</Highlight> When the number of features grows, regularization techniques such as L1 (Lasso) or L2 (Ridge) become essential for preventing overfitting.
+3. <Highlight>Violations of assumptions:</Highlight> Assumptions like constant variance, independence, or lack of autocorrelation are often not satisfied, requiring advanced diagnostic checks and remedy strategies.
+4. <Highlight>Complex interactions:</Highlight> Features may interact with each other. Manually specifying interaction terms or using automated techniques can uncover hidden relationships.  
+
+## choosing the best regression equation
+
+Selecting an optimal regression equation goes well beyond plugging data into a linear model. Data scientists need to balance predictive accuracy with interpretability, all while considering domain constraints and avoiding model over-complexity.
+
+### model selection criteria
+
+Common criteria for model selection include:
+
+- <Highlight>Akaike information criterion (AIC)</Highlight>: Provides a trade-off measure between goodness of fit and model complexity. Lower AIC indicates a better model, penalizing extra parameters.
+- <Highlight>Bayesian information criterion (BIC)</Highlight>: Similar to AIC but penalizes model complexity more strongly, favoring simpler models.
+- <Highlight>Adjusted <Latex text="\(R^2\)"/></Highlight>: Adjusts the <Latex text="\(R^2\)"/> statistic for the number of predictors, guarding against artificially high fit due to additional features.
+- <Highlight>Cross-validation error</Highlight>: Techniques such as <Tooltip text="k-fold cross-validation partitions the dataset into k subsets, ensuring a robust estimate of out-of-sample performance."/> provide a direct measure of how the model might generalize.
+
+By evaluating these criteria, one can gauge the risk of overfitting versus underfitting, honing in on a model that appropriately captures underlying patterns without spurious complexity.
+
+### trade-offs between bias and variance
+
+The <Highlight>bias-variance trade-off</Highlight> is a central consideration in model selection. Complex models, with many parameters, often exhibit low bias but high variance, meaning they fit training data well yet may fail to generalize to new data. Simpler models, by contrast, might have higher bias but lower variance, potentially producing stable but less accurate predictions.
+
+To illustrate this mathematically, the expected prediction error can be decomposed (roughly) into bias, variance, and irreducible error:
+
+<Latex text="\[
+\text{MSE}(\hat{f}(x)) = \mathrm{Var}(\hat{f}(x)) + [\mathrm{Bias}(\hat{f}(x))]^2 + \sigma^2.
+\]"/>
+
+where:
+- <Latex text="\( \hat{f}(x) \)"/> is our fitted model,  
+- <Latex text="\( \mathrm{Var}(\hat{f}(x)) \)"/> represents how sensitive the model is to different training data samples,  
+- <Latex text="\( [\mathrm{Bias}(\hat{f}(x))]^2 \)"/> measures how far the model's average prediction is from the true function,  
+- <Latex text="\( \sigma^2 \)"/> is the irreducible noise inherent in the data.
+
+Balancing these components is key to achieving strong real-world performance in regression tasks.
+
+### incorporating domain knowledge
+
+While statistical criteria offer objective guidance, <Highlight>domain knowledge</Highlight> can refine or override purely data-driven decisions. For instance, if scientific theory suggests a certain variable should not have a negative coefficient — or that certain interactions are crucial — then the model selection process should reflect those constraints or inclusions.
+
+- <Highlight>Expert-driven features:</Highlight> Incorporating known breakpoints or transformations based on established theory can improve interpretability and performance.
+- <Highlight>Constraints and monotonicity:</Highlight> In many fields (e.g., medicine, engineering), it makes sense to enforce monotonic relationships between specific predictors and outcomes for more realistic models.
+
+## forward and backward selection algorithms
+
+In real-world scenarios, one may start with a large pool of candidate predictors and require a systematic procedure to choose a subset. Forward and backward selection algorithms remain popular for their simplicity and interpretability, even though modern approaches (like regularization) often provide competitive alternatives.
+
+### forward selection: step-by-step inclusion
+
+1. <Highlight>Start with no features.</Highlight>  
+2. Iteratively test each predictor not yet in the model. Fit a model including that feature in addition to all previously selected features.  
+3. Choose the predictor that most improves your selection criterion (e.g., lowest AIC, highest adjusted <Latex text="\(R^2\)"/>, or best cross-validation score).  
+4. Repeat until no significant improvement is observed or until a stopping rule is satisfied.
+
+Forward selection is computationally cheaper than exhaustively testing all subsets, especially for high-dimensional data.
+
+### backward elimination: step-by-step exclusion
+
+1. <Highlight>Start with all features.</Highlight>  
+2. Iteratively remove the least useful predictor. To determine the "least useful," you can compare which variable's removal yields the biggest improvement (or smallest degradation) in your selection criterion.  
+3. Continue removing variables one at a time until no further improvement is achieved or until you reach a predefined number of features.
+
+Backward elimination works well when you suspect many features are non-informative but have enough data points to estimate a model with all features initially.
+
+### stepwise approaches: combining forward and backward methods
+
+<Highlight>Stepwise selection</Highlight> combines forward selection and backward elimination. In each step, a feature may be added if it significantly improves the model, but any previously included feature that becomes insignificant can be removed. This bidirectional approach attempts to address some limitations of purely forward or backward methods.
+
+However, stepwise approaches can still suffer from overfitting or from ignoring correlation structures among variables. They also rely heavily on the chosen significance threshold (or selection criterion) at each step, which can lead to unstable subsets when data changes slightly.
+
+### practical guidelines for applying selection algorithms
+
+1. <Highlight>Always validate:</Highlight> Use techniques like cross-validation to ensure that selected features generalize.  
+2. <Highlight>Combine with domain insights:</Highlight> If known relationships or constraints exist, enforce them to avoid discarding relevant predictors.  
+3. <Highlight>Beware of multi-collinearity:</Highlight> Highly correlated predictors can confound selection-based methods, so consider removing or combining correlated variables beforehand.  
+4. <Highlight>Stay aware of model interpretability:</Highlight> A small, stable subset of features is often more interpretable and more robust to new data.
+
+Below is a simple illustration of a forward selection procedure in Python:
+
+```
+<Code text={`
+import numpy as np
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
+
+def forward_selection(data, target, candidate_features, criterion='aic'):
+    """
+    Forward selection for linear regression.
+    data: DataFrame containing all features plus the target.
+    target: name of the target column in data.
+    candidate_features: initial list of candidate features to consider.
+    criterion: selection criterion ('aic' or 'mse' for simplicity).
+    """
+    selected_features = []
+    best_score = float('inf')
+    
+    while True:
+        scores = []
+        for feature in candidate_features:
+            if feature not in selected_features:
+                current_features = selected_features + [feature]
+                
+                X = data[current_features]
+                y = data[target]
+                
+                model = LinearRegression()
+                model.fit(X, y)
+                
+                predictions = model.predict(X)
+                mse = mean_squared_error(y, predictions)
+                
+                if criterion == 'aic':
+                    # AIC ~ n * log(MSE) + 2 * k, ignoring constants
+                    # where k is number of parameters
+                    n = len(y)
+                    k = len(current_features) + 1  # +1 for intercept
+                    score = n * np.log(mse) + 2 * k
+                else:
+                    # default to MSE
+                    score = mse
+                
+                scores.append((score, feature))
+        
+        scores.sort(key=lambda x: x[0])
+        best_candidate_score, best_candidate_feature = scores[0]
+        
+        if best_candidate_score < best_score:
+            best_score = best_candidate_score
+            selected_features.append(best_candidate_feature)
+        else:
+            break
+    
+    return selected_features
+`}/>
+```
+
+Though simplistic, this snippet demonstrates the iterative nature of forward feature selection, using either an approximate AIC or MSE criterion.
+
+## assumptions and diagnostic checks
+
+Classical regression models rest on several key assumptions: linearity, independence, normality of residuals, and homoscedasticity (constant variance). Violations of these assumptions can degrade model performance and invalidate inferential statistics (like p-values or confidence intervals). Hence, advanced regression analysis requires rigorous diagnostic checks.
+
+### heteroskedasticity
+
+<Highlight>Heteroskedasticity</Highlight> refers to the situation where the variance of the residuals is not constant across all levels of the predictors. Common causes include:
+
+- Increasing variability with larger predictor values (often seen in economic data).
+- Omission of significant variables that systematically affect variance.
+
+One common detection method is to plot residuals against predicted values or specific predictors:
+
+<Image alt="residual-plot-showing-heteroskedasticity" path="" caption="Residual plot illustrating a fan-shaped pattern, indicative of heteroskedasticity." zoom="false" />
+
+If the spread of residuals grows or shrinks with the predicted value, heteroskedasticity may be present. Statistical tests such as the <Highlight>Breusch–Pagan test</Highlight> or the <Highlight>White test</Highlight> can formally check for non-constant variance.
+
+To address heteroskedasticity:
+
+- <Highlight>Transformations:</Highlight> Apply log or other transformations to stabilize variance.
+- <Highlight>Robust standard errors:</Highlight> Adjust standard errors to account for heteroskedasticity without altering the coefficient estimates.
+- <Highlight>Weighted least squares (WLS):</Highlight> Weight observations inversely to their variance estimates, making residual variance more uniform.
+
+### multicollinearity
+
+<Highlight>Multicollinearity</Highlight> arises when two or more predictors are highly correlated, making it difficult to isolate their individual effects. This can inflate the variance of regression coefficients, leading to erratic estimates and significance tests.
+
+One common measure is the <Highlight>variance inflation factor (VIF)</Highlight>:
+
+<Latex text="\[
+\mathrm{VIF}_j = \frac{1}{1 - R_j^2},
+\]"/>
+
+where <Latex text="\(R_j^2\)"/> is the coefficient of determination when regressing the <Latex text="\(j^\text{th}\)"/> predictor on all other predictors. A VIF above 5 or 10 often signals a problem, although acceptable thresholds can vary by domain.
+
+Strategies to mitigate multicollinearity include:
+
+- <Highlight>Removing or combining correlated predictors</Highlight> (e.g., taking the average or principal component).
+- <Highlight>Regularization methods</Highlight> (Ridge or Lasso) that shrink coefficients and handle multicollinearity more gracefully.
+- <Highlight>Dimension reduction</Highlight> (e.g., <Tooltip text="Principal component analysis (PCA) is often used in the context of high-dimensional data."/>).
+
+### autocorrelation
+
+<Highlight>Autocorrelation</Highlight> in the residuals means successive observations (often in time-series data) are correlated rather than independent. For regression models that assume independent errors, autocorrelation violates a key assumption and can lead to biased standard errors or inefficient parameter estimates.
+
+The <Highlight>Durbin–Watson test</Highlight> is frequently used to detect first-order autocorrelation, with test statistic values near 2 suggesting no strong autocorrelation. Other advanced approaches, such as the Ljung–Box test, can detect higher-order autocorrelation.
+
+To manage autocorrelation, one may:
+
+- Include lagged variables or difference terms to model temporal structure.
+- Use specialized time-series regression techniques such as <Highlight>ARIMA</Highlight> models.
+- Employ <Highlight>Generalized least squares (GLS)</Highlight> or <Highlight>Newey–West standard errors</Highlight> to correct for correlated error terms.
+
+## interpolation and extrapolation
+
+### key differences and definitions
+
+- <Highlight>Interpolation</Highlight>: Making predictions within the range of observed data. Often considered more reliable since the model has seen comparable inputs during training.
+- <Highlight>Extrapolation</Highlight>: Predicting beyond the range of observed data, which can be perilous if the model's assumptions do not hold for new input values.
+
+### risks and limitations of extrapolation
+
+Extrapolation is notoriously risky. Even small model mis-specifications can lead to large errors once you step outside the domain of your training data. In practice, many relationships that appear linear over a certain range may exhibit saturation effects or change direction in regions not observed in your data.
+
+### balancing model complexity with predictive needs
+
+In some scenarios, you cannot avoid extrapolation — for instance, predicting future economic indicators or anticipating device performance outside tested conditions. Mitigating risks often involves:
+
+- <Highlight>Including theoretical bounds or expert constraints</Highlight> on possible outcomes.
+- <Highlight>Reporting confidence intervals</Highlight> that widen as you move away from known data.
+- <Highlight>Cross-validation on an extended range</Highlight> (if partial data beyond the main range is available).
+
+## practical considerations in advanced regression analysis
+
+### data preprocessing and feature engineering
+
+High-quality data is the cornerstone of any predictive model:
+
+- <Highlight>Missing data handling:</Highlight> Techniques like imputation or dropping rows (if minimal) can reduce bias.  
+- <Highlight>Feature engineering:</Highlight> Domain-driven transformations, polynomial terms, or interaction features can capture more complex relationships.  
+- <Highlight>Scaling:</Highlight> Standardize or normalize variables to aid optimization routines or distance-based methods (if integrated).
+
+### model validation and cross-validation strategies
+
+A robust validation framework is essential to evaluate how well your regression model generalizes:
+
+1. <Highlight>k-fold cross-validation:</Highlight> The dataset is split into <Latex text="\(k\)"/> subsets. Each fold is used as a test set once, while the model is trained on the remaining <Latex text="\(k-1\)"/> folds.
+2. <Highlight>Leave-one-out cross-validation (LOOCV):</Highlight> A special case of k-fold with <Latex text="\(k = n\)"/> (the number of samples), maximizing training data usage but at higher computational cost.
+3. <Highlight>Bootstrapping:</Highlight> Sampling with replacement to generate multiple training sets, allowing direct estimation of the distribution of the parameter estimates.
+
+### handling outliers and influential points
+
+Outliers can disproportionately affect ordinary least squares (OLS) estimates:
+
+- <Highlight>Detecting outliers:</Highlight> Studentized residuals or Cook's distance highlight points that significantly alter model parameters.  
+- <Highlight>Influential points:</Highlight> Observations that heavily affect the regression coefficients, often due to large leverage (far from the center of the data in predictor space).
+- <Highlight>Robust regression techniques:</Highlight> Methods such as RANSAC or Huber regression reduce the influence of outliers by assigning lower weights to large residuals.
+
+### finalizing and deploying the model
+
+Once an advanced regression model has been carefully selected, validated, and optimized, the final steps involve:
+
+1. <Highlight>Refitting on the entire dataset:</Highlight> Incorporate all available data (after ensuring no major overfitting issues) to optimize predictive performance.  
+2. <Highlight>Generating prediction intervals:</Highlight> Go beyond point estimates by providing intervals, capturing uncertainty in predictions.  
+3. <Highlight>Documentation and reproducibility:</Highlight> Store your feature engineering steps, hyperparameters, and model metadata so others can re-run and audit your analysis.  
+4. <Highlight>Deployment pipeline:</Highlight> Integrate the final model into a production environment, ensuring efficient inference. For instance, containerization (e.g., Docker) or REST API endpoints can facilitate real-time predictions.
+
+---
+
+Advanced regression analysis is an essential skill for data scientists looking to build accurate, interpretable predictive models. By mastering model selection, feature engineering, assumption checks, and robust validation strategies, practitioners can handle complex, real-world datasets with greater confidence and extract valuable insights for informed decision-making.

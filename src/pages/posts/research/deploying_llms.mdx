@@ -1,0 +1,415 @@
+---
+index: 154
+indexCourse: 157
+indexFavorites:
+title: "Deploying LLMs"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Deploying LLMs"
+courseCategoryName: "AI engineering"
+desc: "Building an army"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "13.03.2025"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 2
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: false
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/deploying_llms.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/deploying_llms"
+slug: "/research/deploying_llms"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+### 6. Deploying LLMs
+Deploying LLMs at scale is an engineering feat that can require multiple clusters of GPUs. In other scenarios, demos and local apps can be achieved with a much lower complexity.
+- **Local deployment**: Privacy is an important advantage that open-source LLMs have over private ones. Local LLM servers ([LM Studio](https://lmstudio.ai/), [Ollama](https://ollama.ai/), [oobabooga](https://github.com/oobabooga/text-generation-webui), [kobold.cpp](https://github.com/LostRuins/koboldcpp), etc.) capitalize on this advantage to power local apps.
+- **Demo deployment**: Frameworks like [Gradio](https://www.gradio.app/) and [Streamlit](https://docs.streamlit.io/) are helpful to prototype applications and share demos. You can also easily host them online, for example using [Hugging Face Spaces](https://huggingface.co/spaces).
+- **Server deployment**: Deploy LLMs at scale requires cloud (see also [SkyPilot](https://skypilot.readthedocs.io/en/latest/)) or on-prem infrastructure and often leverage optimized text generation frameworks like [TGI](https://github.com/huggingface/text-generation-inference), [vLLM](https://github.com/vllm-project/vllm/tree/main), etc.
+- **Edge deployment**: In constrained environments, high-performance frameworks like [MLC LLM](https://github.com/mlc-ai/mlc-llm) and [mnn-llm](https://github.com/wangzhaode/mnn-llm/blob/master/README_en.md) can deploy LLM in web browsers, Android, and iOS.
+
+### 7. Securing LLMs
+In addition to traditional security problems associated with software, LLMs have unique weaknesses due to the way they are trained and prompted.
+- **Prompt hacking**: Different techniques related to prompt engineering, including prompt injection (additional instruction to hijack the model's answer), data/prompt leaking (retrieve its original data/prompt), and jailbreaking (craft prompts to bypass safety features).
+- **Backdoors**: Attack vectors can target the training data itself, by poisoning the training data (e.g., with false information) or creating backdoors (secret triggers to change the model's behavior during inference).
+- **Defensive measures**: The best way to protect your LLM applications is to test them against these vulnerabilities (e.g., using red teaming and checks like [garak](https://github.com/leondz/garak/)) and observe them in production (with a framework like [langfuse](https://github.com/langfuse/langfuse)).
+
+*/}
+
+
+{/*
+
+1. Introduction  
+- Overview of deployment contexts: balancing local privacy, demo agility, server scalability, and edge constraints.  
+- Critical factors: cost-to-performance ratios, latency thresholds, hardware compatibility, and regulatory requirements.  
+2. Local deployment  
+- Tools like LM Studio and Ollama for CPU/GPU hybrid setups, with hardware recommendations for RAM and VRAM.  
+- Use cases in regulated industries (e.g., healthcare) where data must never leave on-premises infrastructure.  
+- etc.  
+3. Demo deployment  
+- Gradio/Streamlit workflows for creating interactive UIs in <50 lines of code, hosted on Hugging Face Spaces.  
+- Trade-offs: Limited scalability for high traffic and challenges transitioning demo logic to production pipelines.  
+- etc.  
+4. Server deployment  
+- vLLM's PagedAttention for 24x higher throughput vs. baseline Hugging Face pipelines, Kubernetes for autoscaling.  
+- Cost comparison: Cloud GPU clusters (A100/V100) vs. on-prem LoRaX deployments with consumer-grade GPUs.  
+- etc.  
+5. Edge deployment  
+- MLC LLM's universal compilation to WebGPU, WASM, and Android NDK, leveraging 4-bit quantization for 2GB RAM usage.  
+- Real-world constraints: Managing model hallucinations without server-side fallbacks in offline environments.  
+- etc.  
+6. Optimizing inference for deployment (speed vs. accuracy)  
+- Quantization trade-offs: GPTQ's 4-bit precision vs. GGUF's CPU-first design, dynamic batching for 40% latency reduction.  
+- Hardware-specific optimizations: TensorRT-LLM for NVIDIA Ampere architectures, OpenVINO for Intel Xeon CPUs.  
+- etc.  
+7. Scaling strategies: from zero to millions of tokens/second  
+- vLLM's continuous batching vs. TGI's token streaming, auto-scaling GPU pods based on queue depth metrics.  
+- SkyPilot's spot instance management to cut cloud costs by 70% while maintaining SLA-backed uptime.  
+- etc  
+8. Securing LLMs  
+- Red teaming frameworks like garak for stress-testing 50+ attack vectors, including DAN jailbreaks.  
+- Layered defenses: Input regex filters, output moderation APIs, and runtime anomaly detection with Langfuse.  
+- etc.  
+9. Monitoring and maintenance  
+- Key metrics: Per-user token quotas, GPU memory utilization alerts, and drift detection for degraded outputs.  
+- CI/CD pipelines for seamless model updates: Canary deployments with 5% traffic shadowing for GPT-4 parity checks.  
+- etc.  
+
+*/}
+
+
+Large language models (LLMs) have rapidly evolved from being research curiosities in natural language processing to powerful tools widely integrated into various applications — ranging from text completion and chatbots to sophisticated code generation, medical diagnosis assistance, creative writing, and beyond. The modern era of LLMs is characterized by a dizzying array of architectures, training scales, and deployment contexts, each with its own set of costs, benefits, and complexities. In the context of machine learning engineering, "deploying LLMs" refers to the process of taking a trained language model — perhaps a refined version of an open-source foundation model such as LLaMA or a commercial offering like GPT-3.5 — and making it available to end-users or other systems in a reliable, performant, and secure manner.
+
+In any LLM deployment strategy, the following key decisions arise:
+
+- **Balancing local privacy, agility, and scale**: In some use cases, data must remain on-premises or on a local machine to ensure privacy (e.g. in heavily regulated industries). In other contexts, you might favor easily shareable prototypes or large-scale hosted solutions.  
+- **Cost-to-performance ratio**: Deploying LLMs can be expensive, particularly if you are using large GPU clusters on the cloud. Not all tasks require the largest models, and there may be ways to reduce resource utilization (e.g. through quantization or pruning).  
+- **Latency thresholds and hardware compatibility**: Many real-time applications (like chat interfaces or interactive coding companions) need sub-second latency. This can be challenging when model sizes explode. Additionally, hardware constraints — such as limited VRAM or edge devices with only a few gigabytes of RAM — shape how you quantize, optimize, or reduce your model footprint.  
+- **Regulatory requirements**: Depending on your location and the type of data your application processes, you may need to comply with specific rules around data protection, model interpretability, or auditability. The domain might be healthcare, finance, or other highly regulated verticals.
+
+While LLM research focuses on model architectures and training regimes, deploying them often involves advanced engineering, distributed systems knowledge, container orchestration (e.g. Kubernetes), real-time monitoring, robust security frameworks, and more. Throughout this article, I will provide a deep yet approachable guide to LLM deployment in a variety of contexts — spanning from local setups to cloud-scale server deployments, from demos to mission-critical production endpoints, and even to edge devices with extremely constrained resources. I will also highlight cutting-edge optimizations, best practices from the research literature (NeurIPS, ICML, JMLR, etc.), and toolkits that have become central to the state-of-the-art.
+
+By the end, you should have a solid grasp of the engineering trade-offs and advanced considerations needed to achieve your specific deployment goals — be that minimal-latency inference, robust security in untrusted environments, or unstoppable scalability under high traffic.
+
+
+## 2. Local deployment
+
+Local deployment can be a compelling option for data privacy, compliance, convenience, or simply for demonstration and offline experimentation. By running the model on machines or servers you directly control, you gain granular control over data flow and resource allocation. Additionally, local deployment is often a gateway to deeper system-level optimizations — such as customizing GPU usage or employing specialized libraries. Although local deployment historically required heavy hardware (like a server-grade GPU with 24+ GB VRAM) to handle modern LLMs, emerging techniques have made local solutions more accessible.
+
+### 2.1 Why deploy LLMs locally?
+
+1. **Privacy and confidentiality**: For organizations dealing with sensitive data — healthcare, legal, finance — transmitting data to a remote API might be impossible or discouraged. Strict data governance may require on-premise processing.  
+2. **Offline functionality**: You might need the model to remain available without any internet connection, such as in remote scientific stations, submarines, or industrial settings with air-gapped networks.  
+3. **Reduced latency**: If your system can handle local GPU or CPU inference, you sidestep potential round-trip network delays to a remote server — particularly relevant for high-frequency or real-time tasks.  
+4. **Cost control**: If you already own the hardware, local deployment can have predictable costs. In contrast, cloud-based GPU usage can quickly become expensive under continuous load.
+
+### 2.2 Tools and frameworks for local LLMs
+
+Over the last couple of years, open-source communities have made it far simpler to run large language models locally. A few highlights:
+
+- **LM Studio**: Provides a user-friendly interface for hosting local LLM instances, including some that are quantized to fit within modest consumer GPU constraints.  
+- **Ollama**: A macOS-focused solution that streamlines model serving on Apple Silicon by leveraging metal-based optimizations. Also works on Linux-based platforms.  
+- **oobabooga/text-generation-webui**: A popular web-based interface enabling easy uploading and serving of various model checkpoints. It supports extensions for specialized tasks and multiple backends (CPU, GPU, etc.).  
+- **kobold.cpp**: Built around performance optimizations in C++ for inference with GPT-like architectures. Focuses primarily on CPU-based or CPU-GPU hybrid usage.
+
+### 2.3 Hardware recommendations
+
+The primary drivers of local hardware requirements are:
+
+1. **Model size**: A parameter-giant LLM may require tens of gigabytes of RAM or VRAM.  
+2. **Precision**: Lower-precision (e.g. 4-bit quantized) models significantly reduce memory.  
+3. **Expected concurrency**: Serving multiple users or processes simultaneously increases memory and GPU usage.  
+
+Below is a rough guideline on memory requirements for different quantization levels, ignoring overhead:
+
+<Latex text="\[
+\text{Memory usage} = \text{Parameters} \times \text{Precision} \times \text{Implementation factor}
+\]"/>
+
+Where:
+- <Latex text="\( \text{Parameters} \)"/> is the total number of parameters (e.g. 7B, 13B, 65B, etc.).  
+- <Latex text="\( \text{Precision} \)"/> is the number of bits (e.g. 4, 8, 16, or 32).  
+- <Latex text="\( \text{Implementation factor} \)"/> accounts for overhead in memory representation, typically ranging from 1.1 to 1.4 in practice.
+
+For instance, a 7B-parameter model in 4-bit precision might roughly require:
+
+<Latex text="\[
+7\times10^9 \times 4 \text{ bits} \approx 28 \text{ GB of bits} 
+\]"/>
+
+Since 1 byte = 8 bits, that is about 3.5 GB in raw parameter data. Factoring in overhead, loading it into memory can be about 4 — 5 GB. Not all frameworks are perfectly optimized, so real usage might be higher.  
+
+A typical consumer GPU with 8 GB VRAM might handle a 7B to 13B parameter model if it is quantized adequately. For 30B+ parameter models, you might need a 16 — 24+ GB GPU or else rely heavily on CPU offloading (increasing inference latency).
+
+### 2.4 Local deployment in regulated industries
+
+On-premises servers are often mandated in industries bound by stringent compliance regulations. For example:
+
+- **Healthcare**: Protected health information (PHI) must not leave the facility or must remain within regional jurisdictions.  
+- **Finance**: Sensitive financial records or strategies should never be uploaded to third-party servers.  
+- **Public sector / defense**: Government agencies may require air-gapped solutions or heavily restricted cloud usage.
+
+When you combine local deployment with rigorous logging and access control, you create a system that meets or exceeds many data confidentiality requirements. However, the trade-off is that scaling up local infrastructure can be expensive, especially when usage spikes unexpectedly.
+
+
+## 3. Demo deployment
+
+While local hosting is great for personal or offline use cases, the next step is sharing prototypes or demos with colleagues, stakeholders, or the public. In the context of LLMs, you might develop a small interactive UI that collects text prompts, calls your model, and displays the generated responses. From a practical standpoint, there are lightweight frameworks that make building and hosting these demos trivial — sometimes in under 50 lines of Python.
+
+### 3.1 Using Gradio or Streamlit
+
+**Gradio** and **Streamlit** have become go-to solutions for building quick interactive data science and ML demos, including for LLMs:
+
+- **Minimal code**: You can create a chat-like interface or text box for summarization, sentiment analysis, or general Q&A with a few lines of code.  
+- **Rapid iteration**: They provide fast feedback loops — simply update your Python code, and the UI changes live.  
+- **Hugging Face Spaces hosting**: Once you have a Gradio or Streamlit app, you can push it to a public or private repository on Hugging Face Spaces, letting others interact with your model through a web URL.
+
+Below is a simplified example using Streamlit to host a local LLM:
+
+<Code text={`
+import streamlit as st
+from transformers import AutoTokenizer, AutoModelForCausalLM
+
+@st.cache_resource
+def load_model():
+    model_name = "decapoda-research/llama-7b-hf"
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    model = AutoModelForCausalLM.from_pretrained(model_name)
+    return tokenizer, model
+
+tokenizer, model = load_model()
+
+st.title("LLM Demo")
+
+user_input = st.text_input("Type your prompt here:")
+if st.button("Generate"):
+    inputs = tokenizer(user_input, return_tensors="pt")
+    output = model.generate(**inputs, max_length=128)
+    response = tokenizer.decode(output[0], skip_special_tokens=True)
+    st.write(response)
+`}/>
+
+While the above example is fairly bare-bones, you can easily add advanced features like temperature sliders, top-k sampling parameters, or multiple prompts in parallel.
+
+### 3.2 Hosting demos on Hugging Face Spaces
+
+**Hugging Face Spaces** is a popular platform to host small-scale LLM demos. Deployment steps might involve:
+
+1. Creating a new repository under your Hugging Face account with the "Spaces" option.  
+2. Selecting either "Gradio" or "Streamlit" as the environment type.  
+3. Pushing your code (the same code snippet as above, for example) to that repository.  
+4. Hugging Face will automatically build and serve your app at a custom URL, e.g. https://huggingface.co/spaces/yourusername/your-app.
+
+**Trade-offs**:
+
+- **Scalability**: While Spaces can handle moderate traffic, it may not handle very large-scale or enterprise-level concurrency without specialized solutions.  
+- **Transition to production**: The logic in your Streamlit or Gradio app might be more oriented toward demonstration and less modular for large production-grade systems. Migrating from a prototype environment to a robust pipeline can require refactoring.  
+- **Commercial usage**: For private or enterprise use, you may opt for private Spaces or self-host Gradio/Streamlit behind your own firewall.
+
+
+## 4. Server deployment
+
+When you anticipate real or large-scale usage, you typically move to dedicated server infrastructure — either in the cloud or on-prem — that can handle the concurrency, autoscaling, and reliability demands of production. This often involves specialized inference frameworks, containerization, robust monitoring, and distributed resource management systems like Kubernetes.
+
+### 4.1 vLLM's PagedAttention and performance
+
+One advanced approach to text generation is **vLLM**. It is an inference engine designed for efficient large-scale deployment of LLMs, focusing on a novel memory management system called **PagedAttention**. The vLLM team reported up to **24x higher throughput** compared to baseline Hugging Face Transformers inference pipelines under certain workloads. The key technique:
+
+- **PagedAttention**: Instead of storing key/value tensors in typical contiguous GPU memory (which can be quite large), PagedAttention uses a sophisticated paging scheme that allows partial offloading and more efficient usage of GPU memory.  
+
+This improves throughput and memory utilization, especially in multi-user or multi-batch scenarios. For organizations hosting large LLM-based services with high concurrency, these optimizations can significantly lower costs or improve user-perceived latency.
+
+### 4.2 Kubernetes for autoscaling
+
+If you need to serve a large number of requests, an orchestration platform like **Kubernetes** becomes invaluable:
+
+1. **Containerization**: Package your inference engine (e.g. vLLM or TGI) along with the model weights in a Docker container.  
+2. **Horizontal pod autoscaling**: Set CPU or GPU utilization thresholds so that more pods automatically spin up under high load and spin down when demand is low.  
+3. **Load balancing**: Use a service layer or an ingress controller to distribute requests across multiple pods, ensuring no single instance is overloaded.  
+
+Such an approach is widely adopted in large-scale ML-serving scenarios, as it abstracts away many complexities of networking, scheduling, and resource management.  
+
+### 4.3 Cost comparison: cloud vs. on-prem
+
+You can run large language models on powerful cloud GPU instances — like NVIDIA A100 or V100 setups from AWS, Azure, or GCP. Alternatively, you can invest in on-premise systems with consumer-grade GPUs (e.g. NVIDIA RTX 4090 or 3090). Which approach is more cost-effective?
+
+- **Cloud**:  
+  - **Pros**: Pay-as-you-go, easy to scale, fast to set up.  
+  - **Cons**: Potentially high ongoing costs, egress charges for large data, variable performance due to multi-tenant environments.  
+
+- **On-prem**:  
+  - **Pros**: Predictable costs once hardware is purchased, possible synergy with existing HPC resources, fully controlled environment.  
+  - **Cons**: Significant upfront capital expenditure, hardware maintenance responsibilities, inability to scale up quickly if usage spikes unexpectedly.
+
+In practice, many organizations opt for a hybrid model — running base workloads on in-house hardware, but bursting to the cloud for peak times or specialized tasks. Another advanced approach uses **LoRa (Low-Rank Adaptation)** to fine-tune smaller parts of the model on consumer-grade hardware, saving large-scale training or inference for the cloud only when needed.
+
+
+## 5. Edge deployment
+
+One of the most exciting frontiers for LLMs is pushing them to edge devices — phones, IoT boards, browsers, or embedded systems. While this is still an emerging field, significant progress has been made in making smaller LLMs run on surprisingly constrained hardware.
+
+### 5.1 MLC LLM: universal compilation
+
+**MLC LLM** is a project that aims to compile LLMs to a variety of targets, including WebGPU (for browser inference), WASM (for serverless usage), and Android NDK (for mobile apps). Its approach:
+
+- **Graph-level optimization**: Converts the model graph into an IR (intermediate representation) that can be optimized for different backends.  
+- **Quantization**: 4-bit or 8-bit quantization to enable sub-2GB RAM usage for smaller LLM architectures.  
+- **Hardware abstraction**: Instead of handcrafting code for each chipset, it uses a universal compiler stack that optimizes for each device's capabilities.
+
+### 5.2 Use cases and constraints
+
+- **Offline personal assistants**: Suppose you want an LLM to run on a smartphone in areas without stable connectivity. The user can still ask questions or get translations locally.  
+- **Industrial or automotive**: In automotive or factory settings, an edge device might handle part of the control logic or user interactions.  
+- **Limited fallback**: Because no server is available, the edge model must handle potential hallucinations or erroneous outputs without a robust server-side re-check. This might require extra heuristics or fallback systems.
+
+The primary challenge is that extremely quantized or pruned models can degrade in quality. It is a continual balancing act: the smaller the model footprint, the higher the risk of performance trade-offs in accuracy or fidelity.
+
+
+## 6. Optimizing inference for deployment (speed vs. accuracy)
+
+LLM deployment often revolves around a single question: **How do I make my model run fast enough while still being accurate enough?** The size and precision of your model, the type of hardware it runs on, and concurrency or batching strategies all determine the final user experience. Here we explore popular techniques.
+
+### 6.1 Quantization trade-offs
+
+Quantization reduces the bit precision of model parameters — from 32-bit floating point (FP32) down to 16-bit (FP16), 8-bit (INT8), or even 4-bit. Two prominent methods in the community:
+
+- **GPTQ**: A method specifically designed to compress large language models to 4-bit while maintaining much of their predictive performance. It has fine-grained strategies for rounding weights and calibrating quantization thresholds.  
+- **GGUF**: Another design aimed at CPU-first inference, balancing memory usage and throughput for lower-end or CPU-based systems.
+
+The trade-off typically comes in the form of:
+
+<Latex text="\( \text{speed gain vs. performance drop} \)"/>
+
+More extreme quantization yields faster inference but might degrade text coherence, reasoning steps, or knowledge retention.  
+
+### 6.2 Dynamic batching for latency reduction
+
+Modern inference servers often implement dynamic batching, where multiple user requests are processed in a single forward pass. For example, you might batch together N requests, each with different prompt lengths, ensuring more efficient GPU utilization. Tools like **vLLM** and **TGI** handle this automatically. Dynamic batching can yield up to **40% or more** improvements in throughput compared to naive one-request-per-inference strategies. However, it introduces **batch scheduling** complexity: if you wait too long to accumulate enough requests for a bigger batch, your per-request latency might increase. There's a balance between throughput and individual user latency.
+
+### 6.3 Hardware-specific optimizations
+
+Different vendors provide libraries to optimize inference for their hardware:
+
+1. **TensorRT-LLM (NVIDIA)**: Leverages kernel fusion, FP16 or INT8 acceleration, and GPU-specific scheduling to maximize throughput on Ampere or newer GPUs.  
+2. **OpenVINO (Intel)**: Accelerates inference on Intel CPUs (like Xeon) and Intel GPUs, employing low-level optimizations and specialized instructions for matrix multiplication.  
+3. **AMD ROCm**: For AMD-based GPUs, there's an emerging ecosystem of optimized libraries and frameworks that replicate some of NVIDIA's best practices.  
+
+Generally, if you can compile or optimize your model specifically for the hardware at hand, you can squeeze out additional gains in speed or memory usage. The more customized your approach, though, the higher the engineering overhead.
+
+
+## 7. Scaling strategies: from zero to millions of tokens/second
+
+While some deployments only need to serve a handful of requests, others might face thousands of concurrent queries. Achieving a stable, high-throughput system requires robust scaling strategies — from micro-level optimizations like continuous batching to macro-level resource scheduling across multiple GPU nodes.
+
+### 7.1 vLLM's continuous batching vs. TGI's token streaming
+
+Two leading open-source solutions for high-throughput text inference:
+
+- **vLLM**: Emphasizes continuous batching, sophisticated memory management (PagedAttention), and GPU scheduling that merges partial requests. This can dramatically increase tokens-per-second throughput.  
+- **TGI (Text Generation Inference)**: Built by Hugging Face, focuses on streaming partial tokens to end-users for better interactivity. It also has dynamic batching and HPC-friendly features.  
+
+Comparing them often comes down to your priorities. vLLM might yield the absolute highest throughput for certain model sizes, while TGI's token-by-token streaming can enhance responsiveness for real-time chat applications.
+
+### 7.2 Auto-scaling GPU pods based on queue depth
+
+When running on Kubernetes or other orchestrators, you might measure the length of the request queue (or the average wait time) to trigger the creation of additional GPU pods. This metric-based scaling is a good alternative to CPU usage or GPU usage alone, as LLM inference can have bursty traffic patterns. If your queue depth grows beyond a threshold, a new pod is provisioned (assuming GPU resources are available), and traffic rebalances.
+
+### 7.3 SkyPilot's spot instance management
+
+**SkyPilot** is a framework that automates multi-cloud or hybrid-cloud training and inference. One of its advanced features is orchestrating **spot instances** to reduce costs. Spot instances are typically much cheaper but can be taken away by the cloud provider at short notice.
+
+- **70% cost savings**: By leveraging spot instances during off-peak times, you can slash GPU billing.  
+- **Maintaining SLA**: A portion of your pods remain on on-demand instances to ensure continuity, while the rest scale up or down with spot instances as available.
+
+
+## 8. Securing LLMs
+
+Beyond the usual web application and system security concerns, large language models introduce unique vulnerabilities. Their behavior can be influenced by carefully crafted prompts, and their parameter space can hide backdoors or memorized data. Understanding these risks — and mitigating them — is crucial for responsible deployment.
+
+### 8.1 Red teaming with garak
+
+Tools like **garak** systematically test your LLM's resilience against:
+
+- **Prompt injection**: Malicious user inputs that aim to override the system's instructions and produce disallowed content.  
+- **Jailbreaking**: A specialized form of prompt engineering that tries to disable safety mechanisms or model filters.  
+- **Training data extraction**: Attempts to recover sensitive data from the training set.
+
+By simulating these attack vectors, you can uncover weaknesses before they appear in production. In the research community, "red teaming" has become a recognized practice for stress-testing generative models (Brown and gang, NeurIPS 2021).
+
+### 8.2 Layered defenses
+
+No single measure can comprehensively protect an LLM-based system. Instead, a **layered defense** is recommended:
+
+1. **Input sanitization**: Filter out or transform obviously malicious prompts using regex rules or parser-based checks.  
+2. **Output moderation**: Tools like perspective-based classifiers, OpenAI's content filters, or custom classifiers to intercept disallowed content (e.g. hate speech).  
+3. **Runtime anomaly detection**: Observing the internal states of the model (e.g. logit distributions) or analyzing the final output for suspicious patterns, using frameworks like **Langfuse**.  
+
+### 8.3 Backdoors and data poisoning
+
+LLM training is highly data-hungry, so it often involves collecting text from the web or external sources. Attackers could insert malicious triggers into that data (e.g. "When you see this code word, output a special message."). Defending against such an attack may involve:
+
+- **Careful data curation**: Vet your training corpus, removing suspicious examples.  
+- **Differential privacy**: In some advanced scenarios, you might apply differential privacy strategies to reduce the risk of memorizing specific user data.  
+- **Model auditing**: Periodically check the model's responses to known trigger phrases, or use specialized algorithms that search the weights for suspicious patterns.
+
+
+## 9. Monitoring and maintenance
+
+Once your LLM-based service is live, the journey has only just begun. Real-world usage data can reveal new performance bottlenecks, emergent vulnerabilities, or model "drift" over time. Achieving a sustainable deployment requires ongoing monitoring, logging, and robust update practices.
+
+### 9.1 Key metrics
+
+Some metrics especially relevant to LLM deployment:
+
+- **Per-user token quotas**: You may want to throttle or limit usage for cost control or user fairness.  
+- **GPU memory utilization**: LLMs can have spiky usage patterns, so continuous monitoring of VRAM usage is critical to avoid out-of-memory errors.  
+- **Drift detection**: Over time, user queries may shift (e.g. new slang or domain topics). The model's performance might degrade if it was not trained or fine-tuned for such changes. Tracking the performance across a sample of real queries or measuring user feedback can indicate the need for re-training or further fine-tuning.  
+
+### 9.2 CI/CD pipelines for model updates
+
+In modern MLOps, it is common to treat model updates with the same rigor as software releases. The pipeline might look like:
+
+1. **Development**: Fine-tune the model or update quantization strategies in a staging environment.  
+2. **Testing**: Evaluate performance on a hold-out dataset or run automatic red teaming checks.  
+3. **Canary deployment**: Gradually route a small percentage (e.g. 5%) of real user traffic to the new model instance. Compare logs and results with the main production model.  
+4. **Full rollout**: If performance meets or exceeds expectations, shift more traffic to the new version until it becomes the production default.
+
+This approach is sometimes used with **GPT-4 parity checks**, where organizations measure how a new model version compares to GPT-4 on carefully curated test sets. The objective is to ensure no major regression or unexpected behaviors appear.
+
+---
+
+I hope this extensive exploration has provided you with a deeper understanding of the complexities and cutting-edge solutions around large language model deployments. As you can see, "deploying LLMs" is an intricate discipline that merges advanced machine learning with distributed systems engineering, hardware acceleration techniques, security best practices, and real-world monitoring. Whether you are starting small with a local on-prem solution or scaling up to serve millions of tokens per second across multi-cloud GPU pods, the foundational principles remain the same: manage cost, ensure performance, keep data secure, and remain vigilant in monitoring. Adopting these best practices will empower you to deliver robust, high-impact LLM-powered services that align with your organizational goals and user needs.

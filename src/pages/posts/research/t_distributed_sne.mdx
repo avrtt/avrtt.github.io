@@ -1,0 +1,466 @@
+---
+index: 44
+indexCourse: 46
+indexFavorites:
+title: "t-SNE"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "t-SNE"
+courseCategoryName: "Data visualization"
+desc: "Teasing out patterns that PCA won't show"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "25.04.2023"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 1
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/t_distributed_sne.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/t_distributed_sne"
+slug: "/research/t_distributed_sne"
+---
+
+import Tooltip from "../../../components/Tooltip"
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+Стохастическое вложение соседей с t-распределением
+https://neerc.ifmo.ru/wiki/index.php?title=%D0%A1%D1%82%D0%BE%D1%85%D0%B0%D1%81%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%BE%D0%B5_%D0%B2%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_%D1%81%D0%BE%D1%81%D0%B5%D0%B4%D0%B5%D0%B9_%D1%81_t-%D1%80%D0%B0%D1%81%D0%BF%D1%80%D0%B5%D0%B4%D0%B5%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5%D0%BC
+[https://youtu.be/NEaUSP4YerM](https://youtu.be/NEaUSP4YerM)  
+[https://en.wikipedia.org/wiki/T-distributed_stochastic_neighbor_embedding](https://en.wikipedia.org/wiki/T-distributed_stochastic_neighbor_embedding)
+
+*/}
+
+
+{/*
+
+1. Introduction  
+2. Algorithm  
+    High-dimensional probability distributions  
+    The use of the t-distribution in low-dimensional space  
+    Similarities and distances revisited  
+    Mathematical formulation  
+    Understanding the perplexity parameter  
+    Setting perplexity in different scenarios  
+    Early exaggeration phase  
+    Choosing the right learning rate
+3. Implementation  
+    Step-by-step with detailed code snippets      
+4. Visualization and interpretation  
+    Color coding and clustering  
+    Multiple runs and stability checks  
+    Combining t-SNE with other techniques  
+    etc.  
+5. Variants like bh-SNE and fft-SNE  
+6. Hybrid approaches with UMAP or PCA  
+7. Challenges and limitations  
+    Preserving global structure  
+    Parameter sensitivity  
+    Scalability issues  
+    Potential solutions and alternatives  
+
+*/}
+
+
+**TL;DR**: T-distributed stochastic neighbor embedding (<Highlight>t-SNE</Highlight>) is a powerful technique for mapping high-dimensional data into a lower-dimensional (typically 2D or 3D) space while preserving local structures. By employing a heavy-tailed <Tooltip text="A distribution whose tails (the extremities) have a higher probability mass compared to, for example, a Gaussian distribution."/> t-distribution in the low-dimensional embedding, it helps alleviate the well-known crowding problem and visually distinguishes clusters. This article explores the intuition, mathematical underpinnings, implementation details, visualization approaches, and key caveats of t-SNE, including parameter choices such as perplexity, early exaggeration, and learning rate. It also discusses popular variants (bh-SNE, fft-SNE), hybrid strategies with PCA or UMAP, and the challenges and limitations of using t-SNE for real-world applications.
+
+## 1. Introduction
+
+The <Highlight>t-distributed stochastic neighbor embedding (t-SNE)</Highlight> algorithm is one of the most widely used methods for visualizing high-dimensional data. Developed by Laurens van der Maaten and Geoffrey Hinton (Journal of Machine Learning Research, 2008), it represents a refinement of an earlier approach known as <Tooltip text="Stochastic neighbor embedding"/>SNE (Hinton and Roweis, NeurIPS 2002). t-SNE's principal objective is to preserve local neighborhood structures from a high-dimensional space (<Latex text="\( \mathbb{R}^D \)"/>) by creating an intuitive, visually interpretable, low-dimensional map — often 2D, though 3D is also used for more nuanced interactive visualizations.
+
+Why do we need a specialized algorithm for high-dimensional data visualization? When dealing with large datasets with tens, hundreds, or even thousands of features, humans struggle to perceive patterns directly because our natural spatial intuition is bound to three dimensions. A well-known phenomenon called the <Highlight>curse of dimensionality</Highlight> tells us that many distance-based or density-based intuition fails as dimensionality grows, because the volume of space expands so quickly that data points often appear to be equidistant or vanish in a high-dimensional "void." Simply running classical dimensionality reduction (like principal component analysis, PCA) may not always reveal the kind of local clusters that we want to see for tasks like pattern discovery, anomaly detection, or sample clustering. In such scenarios, t-SNE is particularly handy because it places a strong emphasis on preserving small pairwise distances — i.e., the local neighborhoods — while relaxing constraints for points that are far apart.
+
+Despite its popularity and impressive performance, t-SNE has important caveats. For instance, it is particularly good at revealing local structure (clusters) but is notorious for sometimes distorting global relationships (e.g., the relative distances between clusters). It also requires careful tuning of parameters such as perplexity, exaggeration factors, and the learning rate. Understanding these parameters is critical to producing a stable and meaningful visualization. 
+
+In this article, I will discuss:
+- The conceptual underpinnings of t-SNE, including why it introduces a <Highlight>t-distribution</Highlight> in the low-dimensional embedding instead of a Gaussian distribution.
+- The mathematical formulation and the idea of converting distances into probabilities.
+- Implementation details, with an illustrative code snippet that performs t-SNE on a toy dataset.
+- Variants and practical improvements: Barnes-Hut t-SNE (<Highlight>bh-SNE</Highlight>) and <Highlight>fft-SNE</Highlight>.
+- Tips for effectively visualizing t-SNE results, color-coding, clustering, and the interplay with other dimensionality reduction methods (e.g., PCA or UMAP).
+- Challenges and limitations, especially regarding parameter sensitivity, runtime performance, and the potential misinterpretation of the emergent geometry in the embedding.
+
+Let's dive into the foundations of the algorithm and uncover how t-SNE tackles some of the pitfalls present in earlier methods like SNE and <Tooltip text="Symmetric Stochastic Neighbor Embedding"/>Symmetric SNE.
+
+---
+
+## 2. Algorithm
+
+The t-SNE algorithm can be seen as a multi-stage process that transforms pairwise similarities in the original high-dimensional space into pairwise similarities in a low-dimensional space, then optimizes an objective function to make these two sets of similarities as close as possible. Below, I will present the conceptual and mathematical details step by step.
+
+### 2.1 high-dimensional probability distributions
+
+At the heart of the SNE family of algorithms is the concept of converting high-dimensional distances into conditional probabilities. For each data point <Latex text="\( x_i \in \mathbb{R}^D \)"/> in the original (high-dimensional) dataset, we define a conditional probability <Latex text="\( p_{j|i} \)"/> that represents how likely it is that <Latex text="\( x_i \)"/> would "choose" <Latex text="\( x_j \)"/> as its neighbor if neighbors were picked in proportion to their probability density under a Gaussian centered on <Latex text="\( x_i \)"/>. Formally:
+
+<Latex text="\( p_{j|i} = \frac{\exp \left( - \frac{\| x_i - x_j\|^2}{2 \sigma_i^2} \right)}{\sum_{k \neq i} \exp \left( - \frac{\| x_i - x_k\|^2}{2 \sigma_i^2} \right)}. \)"/>
+
+Here:
+- <Latex text="\( \sigma_i \)"/> is a parameter that determines the width of the Gaussian centered on <Latex text="\( x_i \)"/>.
+- The similarity <Latex text="\( p_{j|i} \)"/> increases as the distance between <Latex text="\( x_i \)"/> and <Latex text="\( x_j \)"/> decreases, matching our intuition that closer points in the high-dimensional space should remain close in some sense in the low-dimensional map.
+
+The distribution of <Latex text="\( p_{j|i} \)"/> is chosen so that each <Latex text="\( x_i \)"/> has a local neighborhood structure that sums up to 1 over all j. Typically, <Latex text="\( p_{i|i} \)"/> is defined to be 0.
+
+Furthermore, we typically define a <Highlight>joint probability distribution</Highlight> in the high-dimensional space by symmetrizing:
+
+<Latex text="\( p_{ij} = \frac{p_{j|i} + p_{i|j}}{2N}, \)"/>
+
+where <Latex text="\( N \)"/> is the number of data points (the term <Latex text="\( 2N \)"/> normalizes the probabilities to sum to 1 across pairs <Latex text="\( i,j \)"/>). This symmetric formulation is particularly relevant for t-SNE, though it was introduced initially in Symmetric SNE to avoid certain pathologies of purely one-sided conditional probabilities.
+
+### 2.2 the use of the t-distribution in low-dimensional space
+
+In standard SNE or Symmetric SNE, the similarities in the low-dimensional map are also modeled by a Gaussian distribution, typically with a fixed variance for all points. However, this approach suffers from the <Highlight>crowding problem</Highlight>: if you preserve many small distances well, it is difficult to proportionally represent large distances on a 2D or 3D plane. As dimensionality grows, local volumes are dwarfed by the volume at the periphery (the surface of a high-dimensional hypersphere), so many points inevitably appear too close once projected into low dimensions.
+
+t-SNE's key idea is: Instead of using a Gaussian to model pairwise interactions in the low-dimensional space, use a <Latex text="\( t \)"/>-distribution with one degree of freedom. In other words, the <Latex text="\( q_{ij} \)"/> distribution in the embedded space is not Gaussian, but is given by:
+
+<Latex text="\[
+q_{ij} = \frac{\left(1 + \| y_i - y_j \|^2 \right)^{-1}}{\sum_{k \neq l} \left(1 + \| y_k - y_l \|^2 \right)^{-1}}.
+\]"/>
+
+Here <Latex text="\( y_i \in \mathbb{R}^2 \)"/> (or <Latex text="\( \mathbb{R}^3 \)"/> in a 3D embedding) is the low-dimensional representation of the high-dimensional data point <Latex text="\( x_i \)"/>. The t-distribution has heavier tails than a Gaussian, so it places a higher probability on moderate or even large distances in the low-dimensional embedding. This property helps remedy the crowding issue by allowing points that are far apart in the original space to repel each other more strongly when mapped into fewer dimensions.
+
+### 2.3 similarities and distances revisited
+
+We have two sets of probabilities:
+
+- <Latex text="\( P = \{ p_{ij} \} \)"/> capturing neighborhood relationships in the high-dimensional space.
+- <Latex text="\( Q = \{ q_{ij} \} \)"/> capturing neighborhood relationships in the low-dimensional space.
+
+The original impetus is to choose an embedding <Latex text="\( \{ y_i \} \)"/> such that <Latex text="\( Q \)"/> is as similar to <Latex text="\( P \)"/> as possible, focusing primarily on the small distances (close neighbors). This is formalized by using the <Highlight>Kullback-Leibler (KL) divergence</Highlight>:
+
+<Latex text="\[
+C = KL(P \| Q) = \sum_{i \neq j} p_{ij} \log_2 \frac{p_{ij}}{q_{ij}}.
+\]"/>
+
+Minimizing <Latex text="\( KL(P \| Q) \)"/> ensures that if <Latex text="\( p_{ij} \)"/> is large (i.e., if <Latex text="\( x_j \)"/> is a close neighbor to <Latex text="\( x_i \)"/> in the original space), <Latex text="\( q_{ij} \)"/> should also be large (i.e., <Latex text="\( y_j \)"/> should be close to <Latex text="\( y_i \)"/> in the embedding). Because <Latex text="\( KL \)"/> is <Tooltip text="An asymmetric measure of difference between two probability distributions"/>, the penalty for "missing" a close neighbor is higher than the penalty for accidentally placing two distant points close together. This is often desirable for data visualization.
+
+### 2.4 mathematical formulation
+
+The objective function for t-SNE is:
+
+<Latex text="\[
+C = \sum_{i} \sum_{j} p_{ij} \log_2 \frac{p_{ij}}{q_{ij}}
+\]"/>
+
+where
+
+<Latex text="\[
+q_{ij} = \frac{(1 + \| y_i - y_j \|^2)^{-1}}{\sum_{k \neq l} (1 + \| y_k - y_l \|^2)^{-1}}.
+\]"/>
+
+To optimize <Latex text="\( C \)"/>, we use (stochastic) gradient descent. The gradient with respect to <Latex text="\( y_i \)"/> in t-SNE is:
+
+<Latex text="\[
+\frac{\delta C}{\delta y_i} = 4 \sum_j (p_{ij} - q_{ij}) (y_i - y_j)\, (1 + \| y_i - y_j \|^2)^{-1}.
+\]"/>
+
+We have a factor of 4 (as opposed to 2 in Symmetric SNE) because of the difference in how the t-distribution modifies the similarity measure and also due to symmetrical pairwise terms <Latex text="\( (p_{ij} - q_{ij}) \)"/>. Intuitively, if <Latex text="\( p_{ij} > q_{ij} \)"/>, then <Latex text="\( y_i \)"/> is "pulled" closer to <Latex text="\( y_j \)"/>. Conversely, if <Latex text="\( p_{ij} < q_{ij} \)"/>, <Latex text="\( y_i \)"/> is "pushed" away from <Latex text="\( y_j \)"/>. The factor <Latex text="\( (1 + \| y_i - y_j \|^2)^{-1} \)"/> ensures that distant points interact more strongly than they would under a Gaussian assumption, addressing the crowding problem.
+
+### 2.5 understanding the perplexity parameter
+
+One of the most important hyperparameters in t-SNE is the <Highlight>perplexity</Highlight>. Perplexity is closely related to the concept of <Tooltip text="Shannon entropy is often measured in bits, and perplexity is 2 to the power of the entropy."/>entropy in information theory. For each data point <Latex text="\( x_i \)"/>, we define a conditional distribution <Latex text="\( p_{j|i} \)"/> with a Gaussian kernel whose bandwidth <Latex text="\( \sigma_i \)"/> is chosen so that the Shannon entropy of <Latex text="\( p_{j|i} \)"/> equals some user-specified perplexity <Latex text="\( \mathrm{Perp} \)"/>:
+
+<Latex text="\[
+\mathrm{Perp}(P_i) = 2^{H(P_i)},
+\]"/>
+where
+<Latex text="\( H(P_i) = - \sum_j p_{j|i} \log_2 p_{j|i}. \)"/>
+
+Thus, a larger perplexity means a flatter <Latex text="\( p_{j|i} \)"/> distribution, implying that <Latex text="\( x_i \)"/> has a wider notion of which points are considered "neighbors." Typically, perplexity values between 5 and 50 are used in practice, though certain data sets might require going lower or higher.
+
+### 2.6 setting perplexity in different scenarios
+
+- **Dense or overlapping clusters**: If your dataset forms dense clusters with relatively small inter-cluster distances, you might start with a smaller perplexity (e.g., 5 — 10) because you want the local environment to be tight.  
+- **Broad or large-scale structures**: If your dataset has multiple cluster scales or you suspect that you need to capture broader neighborhoods (for instance, social networks with different connectivity densities), you may choose a higher perplexity (e.g., 30 — 50).  
+- **Heterogeneous data**: If you suspect that different data subsets have drastically different local densities, you might explore multiple perplexity values or a range-based approach to ensure the method doesn't break the dataset into artificially separated clusters.
+
+### 2.7 early exaggeration phase
+
+Another hallmark of the t-SNE algorithm is the <Highlight>early exaggeration</Highlight> phase. During the first few iterations of gradient descent, the probabilities <Latex text="\( p_{ij} \)"/> are multiplied by a constant factor (e.g., 4 or 12) that increases the overall attractive forces among points that are truly neighbors in the high-dimensional space. The effect is to create tight clusters that are relatively well-separated from each other early on. Over time, this separation allows for clusters to rearrange more easily without getting stuck in local minima. After a certain number of iterations, the exaggeration is turned off, and the optimization continues at the normal scale of <Latex text="\( p_{ij} \)"/>.
+
+### 2.8 choosing the right learning rate
+
+t-SNE uses (stochastic) gradient descent, which requires setting a <Highlight>learning rate</Highlight>. Choosing a suboptimal learning rate can cause:
+- **Too large**: The algorithm might overshoot local minima, leading to large point movements that never settle, causing chaotic or even degenerate embeddings.
+- **Too small**: Convergence becomes painfully slow, and the local minima might not be effectively escaped.
+
+A typical default learning rate is in the range of 100 — 200 for many standard t-SNE implementations, but this is heavily data- and scale-dependent. As you move beyond toy examples (like MNIST) to more complex or bigger data, you might need to adjust the learning rate. If you see that your final plot has points extremely cluttered or clumped into a single mass, the learning rate may be too high (or your perplexity may be mis-specified). Conversely, if you see a slow, partial formation of structure but the algorithm fails to produce well-separated clusters, you might try increasing the learning rate.
+
+---
+
+## 3. Implementation
+
+In this section, I provide a conceptual, step-by-step guide to implementing t-SNE, along with detailed code snippets. The purpose here is to illuminate the main steps and typical usage patterns rather than produce a hyper-optimized production-level code.
+
+### 3.1 step-by-step with detailed code snippets
+
+Let's assume we have <Latex text="\( X \)"/> as an array of shape <Latex text="\( (N, D) \)"/>, where <Latex text="\( N \)"/> is the number of data points and <Latex text="\( D \)"/> is the dimension of each data vector. We want to embed this data into <Latex text="\( Y \in \mathbb{R}^{N \times 2} \)"/>. Below is a conceptual code snippet in Python, using NumPy for illustration. In practice, one often uses a library like scikit-learn, PyTorch, or specialized implementations like openTSNE or Multicore-TSNE.
+
+<Code text={`
+import numpy as np
+
+def compute_pairwise_affinities(X, perplexity=30.0):
+    """
+    Compute p_{j|i} for all i, j in the dataset.
+    Use binary search to find sigma_i that matches the desired perplexity for each point.
+    Returns a matrix P of shape (N, N).
+    """
+    N = X.shape[0]
+    # Squared Euclidean distances
+    sum_X = np.sum(np.square(X), axis=1)
+    # Expand to create an NxN distance matrix
+    dists = -2 * np.dot(X, X.T) + np.expand_dims(sum_X, 1) + np.expand_dims(sum_X, 0)
+    
+    # Initialize result
+    P = np.zeros((N, N))
+    log_perp = np.log2(perplexity)
+    
+    for i in range(N):
+        beta_min, beta_max = -np.inf, np.inf
+        beta = 1.0  # 1 / (2 * sigma^2)
+        
+        # Exclude self-distance
+        mask = np.arange(N) != i
+        distances_i = dists[i, mask]
+        
+        # Binary search to match perplexity
+        max_tries = 50
+        for _ in range(max_tries):
+            # Compute p_{j|i} with current beta
+            p_i = np.exp(-distances_i * beta)
+            p_i_sum = np.sum(p_i)
+            p_i = p_i / p_i_sum
+            
+            # Shannon entropy in log base 2
+            H = -np.sum(p_i * np.log2(p_i))
+            H_diff = H - log_perp
+            
+            # If within tolerance, break
+            if np.abs(H_diff) < 1e-5:
+                break
+            
+            # If entropy is too high, increase beta; else decrease
+            if H_diff > 0:
+                beta_min = beta
+                if beta_max == np.inf or beta_max == -np.inf:
+                    beta *= 2.
+                else:
+                    beta = (beta + beta_max) / 2.
+            else:
+                beta_max = beta
+                if beta_min == -np.inf:
+                    beta /= 2.
+                else:
+                    beta = (beta + beta_min) / 2.
+        
+        # Assign final p_{j|i}
+        P[i, mask] = p_i
+    
+    # Symmetrize & normalize
+    P = 0.5 * (P + P.T)
+    P /= np.sum(P)
+    
+    return P
+
+def tsne(X, perplexity=30.0, dim=2, lr=200.0, n_iter=1000, early_exaggeration=12.0):
+    """
+    Simple demonstration of t-SNE with gradient descent in Python (NumPy).
+    """
+    np.random.seed(42)
+    N, D = X.shape
+    
+    # Step 1: Compute high-dimensional affinities
+    P = compute_pairwise_affinities(X, perplexity=perplexity)
+    P *= early_exaggeration
+    
+    # Step 2: Initialize Y randomly
+    Y = 0.01 * np.random.randn(N, dim)
+    
+    # Setup gradient descent parameters
+    momentum = 0.9
+    Y_inc = np.zeros_like(Y)
+    
+    # Number of iterations for early exaggeration
+    n_early = 250
+    for it in range(n_iter):
+        # Compute low-dimensional affinities Q
+        # t-distribution with 1 degree of freedom
+        sum_Y = np.sum(np.square(Y), axis=1)
+        dists = -2 * np.dot(Y, Y.T) + np.expand_dims(sum_Y, 1) + np.expand_dims(sum_Y, 0)
+        # (1 + distance)^{-1}
+        num = 1.0 / (1.0 + dists)
+        np.fill_diagonal(num, 0.0)
+        Q = num / np.sum(num)
+        
+        # Compute gradient
+        PQdiff = (P - Q)  # shape (N,N)
+        
+        # Weighted version: factor 4 as in t-SNE
+        # Expand dims to broadcast in subtraction
+        dY = np.zeros_like(Y)
+        for i in range(N):
+            # sum_j( (P-Q)_{ij} * (y_i - y_j) * (1 + dist_ij)^{-1} )
+            # We can vectorize, but let's do it more explicitly for clarity
+            diff_i = (Y[i] - Y)
+            grad_i = 4.0 * np.sum(
+                np.expand_dims(PQdiff[i], axis=1) * diff_i * num[i].reshape(-1,1),
+                axis=0
+            )
+            dY[i] = grad_i
+        
+        # Update with momentum
+        Y_inc = momentum * Y_inc - lr * dY
+        Y += Y_inc
+        
+        # Turn off early exaggeration after n_early iterations
+        if it == n_early:
+            P /= early_exaggeration
+        
+        # Optionally: decrease learning rate or update momentum, etc.
+        
+        # Printing or logging intermediate results:
+        if (it + 1) % 100 == 0:
+            cost = np.sum(P * np.log2((P + 1e-7) / (Q + 1e-7)))
+            print(f"Iteration {it+1}, KL-divergence cost: {cost:.5f}")
+    
+    return Y
+
+
+# Example usage on a toy dataset
+if __name__ == "__main__":
+    from sklearn.datasets import load_iris
+    X = load_iris().data  # shape (150, 4)
+    Y_embedding = tsne(X, perplexity=30.0, n_iter=1000)
+    print("Final embedding shape:", Y_embedding.shape)
+`}/>
+
+This code is for educational illustration. In real-world practice, you would use a robust, optimized library. Notice that we:
+1. Compute <Latex text="\( P \)"/> via binary search to match the specified perplexity for each point.
+2. Multiply <Latex text="\( P \)"/> by the early exaggeration factor for the initial <Latex text="\( n_{early} \)"/> iterations.
+3. Iteratively compute <Latex text="\( Q \)"/> in the low-dimensional space, take gradients, and update <Latex text="\( Y \)"/>.
+
+This code also demonstrates how one can incorporate momentum, a typical practice to accelerate convergence and smooth out gradient updates.
+
+---
+
+## 4. Visualization and interpretation
+
+The principal output of t-SNE is a set of coordinates <Latex text="\( \{ y_i \} \)"/> that you can plot on a 2D plane or in 3D. Often, these are used to highlight clusters, identify outliers, or glean broad relationships among data points. However, interpreting t-SNE plots can be tricky if you do not keep in mind the algorithm's biases.
+
+### 4.1 color coding and clustering
+
+One popular approach is to color-code each data point by some known label or other metadata. For instance, if you embed the famous MNIST dataset of handwritten digits, you might color each point by its digit label (0 — 9). This typically shows distinct digit clusters or transitions between visually similar digits (like 3 and 8). Even if your dataset does not come with labels, you can use an unsupervised clustering algorithm (e.g., DBSCAN or K-means in the projected 2D space) and color-code by cluster membership. Just remember that the geometry in a t-SNE plot emphasizes local relationships, so distance between two clusters might not necessarily reflect true global distances in the original space.
+
+### 4.2 multiple runs and stability checks
+
+t-SNE uses random initialization and a stochastic optimization procedure, so each run can produce somewhat different layouts. Clusters typically remain the same, but their arrangement on the plane can vary. To ensure that your results are consistent, do:
+
+- **Multiple runs** with different random seeds.
+- **Parameter sweeps** of perplexity, learning rate, etc.
+- **Visual consistency checks** to confirm that cluster groupings and broad structures are stable.
+
+### 4.3 combining t-SNE with other techniques
+
+In many workflows, one might combine t-SNE with complementary methods:
+- **Dimensionality reduction pre-processing**: For large datasets, applying PCA or truncated SVD to reduce dimensionality from thousands to, say, 50 or 100 can drastically speed up t-SNE. This can also help mitigate some noise in the data.
+- **UMAP**: Another popular manifold learning approach. Some researchers combine <Tooltip text="Uniform Manifold Approximation and Projection"/>UMAP or t-SNE for different stages of analysis or for cross-validation of cluster findings. UMAP tends to emphasize both local and some global structures more effectively, but t-SNE can produce more visually separated clusters in some cases.
+- **Clustering**: You can run a separate clustering algorithm (e.g., GMM, DBSCAN, K-means) on the 2D or 3D embedding to label or characterize groups. This helps interpret patterns visually discovered in the t-SNE map.
+
+---
+
+## 5. variants like bh-SNE and fft-SNE
+
+t-SNE as outlined above has a time complexity of about <Latex text="\( O(N^2) \)"/> per iteration, due to the need to compute pairwise interactions among <Latex text="\( N \)"/> points. For moderate datasets, this is acceptable, but for extremely large datasets (tens or hundreds of thousands of points), it becomes infeasible.
+
+Two major variants that address scalability are:
+1. <Highlight>Barnes-Hut t-SNE (bh-SNE)</Highlight> (Van der Maaten, 2014). This approach uses a <Tooltip text="An algorithm commonly used in n-body simulations to approximate forces between a large number of particles."/>Barnes-Hut tree-based approximation to compute <Latex text="\( Q \)"/> and the gradient more efficiently, reducing the complexity to about <Latex text="\( O(N \log N) \)"/>.
+2. <Highlight>fft-SNE</Highlight> (Linderman and gang, 2019). This leverages a fast Fourier transform–based approach to approximate the <Latex text="\( n \)"/>-body computations in an even more efficient manner, making it possible to process large datasets on single or multi-GPU systems.
+
+Both variants significantly speed up the calculation of the gradient by grouping distant points together, approximating their combined effect on each point.
+
+---
+
+## 6. hybrid approaches with UMAP or PCA
+
+Even with Barnes-Hut or FFT-based optimizations, t-SNE can still be expensive for extremely large datasets (e.g., millions of points). One commonly used workaround is:
+1. **Pre-process with PCA**: Reduce dimensionality from <Latex text="\( D \)"/> down to some intermediate dimension <Latex text="\( d \)"/> (like 50 or 100).
+2. **Apply t-SNE** on these <Latex text="\( d \)"/>-dim representations. The intuition is that PCA retains as much of the global variance as possible, thereby denoising the data, while t-SNE focuses on preserving local structure in the final low-dimensional embedding.
+3. Alternatively, use <Highlight>UMAP</Highlight> instead of PCA for the initial or final stage. UMAP can handle large-scale data quite efficiently and also provides a measure of global structure.
+
+Such hybrid approaches are widely reported to produce embeddings that are both computationally feasible and visually coherent. In many machine learning pipelines, the final 2D or 3D layout from t-SNE is used primarily for visualization rather than for subsequent modeling, so the approximate global structure is often acceptable.
+
+---
+
+## 7. challenges and limitations
+
+t-SNE is excellent at producing visually appealing 2D representations. However, it does come with drawbacks that you should be aware of before applying it to your data.
+
+### 7.1 preserving global structure
+
+A fundamental challenge is that t-SNE is heavily biased toward preserving local neighborhoods. Large distances are less faithfully preserved, meaning you can easily misinterpret how far apart the clusters truly are in the original space. In some cases, clusters that appear well-separated in a t-SNE plot might actually lie in a continuum if one transitions across multiple dimensions. As a result, t-SNE is not recommended for tasks requiring accurate global distances or arrangement.
+
+### 7.2 parameter sensitivity
+
+Picking parameters such as perplexity, early exaggeration factor, learning rate, and the number of iterations can drastically change the final embedding. A user unfamiliar with these hyperparameters may produce misleading or suboptimal visualizations if the chosen perplexity is too low, or if the learning rate is too high. Thus, some experimentation (parameter sweeps, cross-validation, or domain knowledge–based heuristics) is usually needed.
+
+### 7.3 scalability issues
+
+A naive <Latex text="\( O(N^2) \)"/> complexity can quickly become a bottleneck for large datasets (e.g., > 50,000 points). Techniques like bh-SNE and fft-SNE reduce the complexity significantly to approximately <Latex text="\( O(N \log N) \)"/>, but the memory footprint might still be large, and the constant factors are not negligible. On GPU-based systems, specialized libraries can produce significant speed-ups, but large-scale dimensionality reduction remains non-trivial.
+
+### 7.4 potential solutions and alternatives
+
+When the main limitations become problematic, consider:
+- <Highlight>UMAP</Highlight> as a more scalable alternative that also has interpretive benefits.  
+- <Highlight>Parametric t-SNE</Highlight> using neural networks to learn an explicit mapping from high-dimensional input to 2D/3D output.  
+- <Highlight>Tri-SNE</Highlight> or advanced approaches that incorporate constraints to preserve certain global relationships.  
+- <Highlight>Hierarchical SNE</Highlight>, which handles data in a hierarchical manner, providing multi-scale visualization.  
+- <Highlight>Other manifold learning methods</Highlight> such as Isomap, LLE, or brand-new approaches introduced regularly at top-tier conferences (e.g., NeurIPS, ICML).  
+
+Ultimately, the right approach depends on your dataset size, the structure in your data, and your downstream objectives.
+
+---
+
+<Image alt="t-SNE Visualization Example" path="" caption="An example of t-SNE on a high-dimensional dataset, illustrating tight clusters in a 2D embedding. Notice that local neighbor preservation is excellent, but global distances may not be faithful." zoom="false" />
+
+---
+
+Below, I have expanded certain points with additional commentary or reminders of how this topic connects to the broader ML pipeline:
+
+- **Connection to the rest of the course**: t-SNE is taught after fundamental courses on linear algebra, basic probability, and machine learning. Students are expected to already be aware of <Latex text="\( O(N^2) \)"/> complexity issues in large-scale algorithms (Chapters 25, 31, 32), the concept of gradient-based optimization (Chapters 31, 32), and the idea of <Tooltip text="Matrix factorization methods like SVD or PCA are introduced earlier in the course."/>matrix decompositions from earlier linear algebra sessions (Chapters 7, 17).  
+- **Relation to MLOps**: While t-SNE is typically used for data exploration rather than in production, MLOps practitioners might incorporate t-SNE–generated visual insights in monitoring or anomaly detection dashboards (Chapter 29). For instance, you can embed training data and newly incoming data to see if new data distributions drift significantly from the original training distribution.  
+- **Embedding interpretability**: t-SNE alone is not guaranteed to preserve hierarchical or global relationships. If interpretability of distances or cluster adjacency is critical, you might incorporate additional steps or constraints (or choose an alternative method, as indicated above).  
+
+Overall, t-SNE stands as a shining example of how non-linear dimensionality reduction can be harnessed to glean new insights about high-dimensional data. By focusing on local structures and employing a heavy-tailed distribution in the low-dimensional space, it addresses some of the fundamental challenges of earlier approaches while providing mesmerizingly clean cluster separation in many real-world applications. Nonetheless, mindful usage, parameter tuning, and awareness of its limitations are crucial for ensuring that your final 2D or 3D plot is as meaningful as it is visually compelling.
+
+If you want to learn more about advanced t-SNE usages, consider reading the original Van der Maaten and Hinton JMLR 2008 paper as well as more recent follow-ups on large-scale t-SNE improvements.

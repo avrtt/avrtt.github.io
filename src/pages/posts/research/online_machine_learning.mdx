@@ -1,0 +1,441 @@
+---
+index: 96
+indexCourse: 19
+indexFavorites:
+title: "Online machine learning"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Online machine learning"
+courseCategoryName: "Basic ML theory & techniques"
+desc: "Fluid intelligence"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "29.02.2024"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 1
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/online_machine_learning.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/online_machine_learning"
+slug: "/research/online_machine_learning"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+Обучение в реальном времени
+https://neerc.ifmo.ru/wiki/index.php?title=%D0%9E%D0%B1%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B2_%D1%80%D0%B5%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE%D0%BC_%D0%B2%D1%80%D0%B5%D0%BC%D0%B5%D0%BD%D0%B8 
+
+*/}
+
+
+{/*
+
+1. Introduction  
+   Definition  
+   Key differences from batch (offline) learning  
+2. Core concepts and principles  
+   2.1 Continuous model updating  
+   2.2 Streaming data frameworks  
+   2.3 Latency and throughput considerations  
+   2.4 Memory constraints and incremental updates  
+   etc.  
+3. Algorithms for online learning  
+   3.1 Stochastic gradient descent (brief reminder) 
+   3.2 Online perceptron algorithm  
+   3.3 Online support vector machines (SVMs)  
+   3.4 Bandit algorithms  
+   3.5 Online boosting techniques  
+   etc.  
+4. Advantages and challenges  
+   Lower computational cost over time  
+   Real-time adaptability  
+   Handling large-scale data  
+   Concept drift and non-stationary data  
+   Balancing model accuracy and speed  
+   Managing noisy and incomplete data  
+5. Real-world applications  
+   5.1 Recommendation systems  
+   5.2 Online fraud detection  
+   5.3 Dynamic resource allocation  
+   5.4 Adaptive control systems  
+   5.5 Streaming analytics  
+   etc.  
+6. Evaluation metrics  
+   6.1 Online accuracy and loss functions  
+   6.2 Time-based metrics and latency  
+   6.3 Memory-based performance measurements  
+   6.4 Rolling or incremental validation strategies  
+7. In practice  
+   Model deployment and maintenance  
+   Monitoring and alert systems  
+   Handling concept drift in production  
+   Tools and frameworks for online learning  
+   Implementation: code snippets step-by-step
+
+*/}
+
+
+Online machine learning — sometimes referred to as real-time learning or incremental learning — is a family of machine learning methods designed for scenarios in which data arrives sequentially and continuously over time. Rather than collecting a large static dataset, training a model all at once, and then using it for prediction (the batch or offline approach), online learning algorithms continually update model parameters as new data points come in. This type of learning is ideal for applications where the data stream is potentially unbounded, fast-changing, or simply too large to fit in memory at once.  
+
+To illustrate, suppose I want to maintain a classifier that detects fraudulent credit card transactions. Transactions stream in continuously around the clock. In a batch learning setting, I might train a model on historical data each night, for example, and only update it once per day. By contrast, in an online learning setup, I would incorporate new data points — labeled or partially labeled transactions — into the model's parameters immediately or in rapid mini-batches. That way, the model remains up-to-date with the latest behavior in the data, potentially adapting to new fraud patterns in near real time.
+
+### Key differences from batch (offline) learning
+
+Batch learning (offline learning) operates under the assumption that you have access to a large, curated dataset in its entirety before training begins. You typically load all of this data into memory (or mini-batches, if the dataset is too large), compute some aggregate statistic (like a gradient), adjust your model, and iterate until the model converges or runs out of time.
+
+In contrast, online learning algorithms receive data points one by one (or in small bursts, referred to as streaming data) and update model parameters with each new example (or each small subset). This single pass or limited multi-pass nature offers some distinct advantages, such as reduced memory usage, the ability to adapt to changing data distributions (concept drift), and immediate updates that allow real-time or near-real-time predictions. However, it also introduces unique complexities in algorithm design, model stability, and evaluation strategies.
+
+Online learning is often subdivided into:
+- <Highlight>Supervised online learning</Highlight>, in which labeled data becomes available in a streaming fashion, and you update the model accordingly.
+- Online learning with limited feedback, in which you only observe partial feedback or rewards (bandit scenarios).
+- <Highlight>Unsupervised online learning</Highlight>, in which the data doesn't come with labels or ground-truth, and the model updates incrementally based on clustering or density-based criteria.
+
+<Latex text="\( \text{In many cases, these categories overlap, especially in real-world applications.} \)"/>
+
+I'll dive deeper into how online learning differs from batch learning with respect to computational costs, memory constraints, and the speed at which models must make predictions, while also discussing the flexibility they provide in adaptive, high-velocity environments.
+
+## Core concepts and principles
+
+Online learning is guided by a set of foundational concepts that define how data is ingested, how the model parameters are updated, and how the entire workflow is orchestrated in real or near-real time. These concepts concern both the theoretical principles of incremental updates and the practical aspects of handling streaming data at scale.
+
+### 2.1 Continuous model updating
+
+Unlike the "train once and deploy" mindset of classic batch learning, online learning revolves around continuous model updating. Formally, suppose we have a model parameter vector <Latex text="\( w_t \)"/> at time step <Latex text="\( t \)"/>. When a new data point <Latex text="\( z_t \)"/> arrives (which could be a single example <Latex text="\( x_t \)"/> and its label <Latex text="\( y_t \)"/>, or some unlabeled observation in an unsupervised setting), an online algorithm updates <Latex text="\( w_t \)"/> to <Latex text="\( w_{t+1} \)"/> according to:
+
+<Latex text="\[
+w_{t+1} = w_t - \gamma_t \nabla_w Q(z_t, w_t)
+\]"/>
+
+where <Latex text="\( Q(z_t, w_t) \)"/> is a loss function measuring the discrepancy between the model's prediction and the actual label (or a reconstruction error in unsupervised learning), and <Latex text="\( \gamma_t \)"/> is a learning rate. This incremental update means we do not need to revisit old data. The model "learns as it goes," one sample at a time.
+
+This principle can be generalized: in advanced algorithms, we might not rely solely on a simple gradient but could incorporate second-order information, or use more complex updates that combine ensemble strategies or partial feedback. In each case, the overarching idea is to incorporate new information as soon as it arrives, thereby maintaining an updated model that is presumed more relevant to current conditions.
+
+### 2.2 Streaming data frameworks
+
+To implement online learning in production, I need systems that can ingest data in real time and feed it into the learning algorithm. Popular streaming frameworks like Apache Kafka, Apache Flink, Apache Storm, and Apache Samza are frequently used in big data pipelines to handle high-velocity data sources. They orchestrate data ingestion, buffering, and distribution to downstream consumers. In an online learning pipeline, the machine learning model acts as a consumer that processes events (i.e., data points) as soon as they arrive.
+
+A typical workflow might look like:
+1. **Data ingestion**: Data is produced by sensors, user interactions, or system logs, and is pushed to a message broker (like Kafka).
+2. **Stream processing**: A processing framework (e.g. Flink) consumes these events in micro-batches or as a continuous stream.
+3. **Model update**: The event (or batch of events) is sent to a module that adjusts the model parameters using an online learning algorithm.
+4. **Prediction service**: The updated model can then be used immediately for predictions or scoring.
+
+These frameworks also handle fault tolerance (by checkpointing the state of streams and computations) and enable horizontal scalability, so the online learning system can handle large or fluctuating data throughput without losing performance.
+
+### 2.3 Latency and throughput considerations
+
+Latency — the time it takes from receiving a new data point to updating the model and producing a prediction — is critical in many real-time applications. For instance, in an online fraud detection system, you can't wait for hours to confirm whether a transaction is fraudulent. Instead, you need a near-instantaneous decision. Similarly, in recommendation systems for large e-commerce websites, updated user interactions (clicks, purchases) feed back into the recommendation model in seconds or minutes to show users the most relevant items.
+
+Throughput — how many data points the system can handle per unit time — also matters. High-velocity streams may reach hundreds of thousands or even millions of events per second. Online learning algorithms thus must be efficient enough (in CPU and memory) to operate at these speeds.
+
+Balancing low latency and high throughput often requires specialized data structures, distributed computing setups, and algorithmic optimizations like mini-batch processing, asynchronous updates, or specialized approximate gradient computations.
+
+### 2.4 Memory constraints and incremental updates
+
+One of the main motivations for online learning is that storing the entire dataset in memory (as in batch learning) is impossible or cost-prohibitive in many modern applications. As new data arrives, older data might be discarded or summarized, rather than stored in full. Hence, the model must update parameters incrementally with minimal overhead.
+
+If the model tries to keep track of all historical data, we defeat the purpose of online learning and revert to a partial-batch approach. Instead, truly online algorithms are designed to only require the most recent model parameters (plus minimal auxiliary statistics) to incorporate new information. This incremental update approach is sometimes described mathematically as a stochastic approximation, because each step is effectively a gradient descent (or other optimization) step on a single sample or mini-batch from a large (often infinite) data stream.
+
+### 2.5 Concept drift and non-stationary distributions
+
+Online learning is especially relevant when the data distribution changes over time, often called concept drift. For example, the types of credit card fraud might change as fraudsters develop new schemes. A model trained on data from last year or even last month could become stale. Online models can track these distribution shifts more closely because they are always updating based on the latest examples. However, concept drift introduces extra complexity: older data might become less relevant or even misleading. Algorithms thus employ mechanisms to detect and adapt to drift, sometimes by putting more weight on recent data or by resetting or re-initializing parameters when a dramatic shift is detected.
+
+### 2.6 Partial feedback scenarios
+
+Traditional supervised online learning requires a labeled data stream to update the model. But in many real applications, I might only observe partial feedback. A prime example is the multi-armed bandit setting, where at each time step I must choose one of multiple actions (e.g., recommending one of several products), and I only observe the reward of that chosen action (e.g., whether the user clicked or purchased), not the reward I would have gotten from the other actions. Online learning in such partial feedback (or bandit) scenarios is an active area of research, driving new algorithmic developments for fast, adaptive decision-making under limited information.
+
+## Algorithms for online learning
+
+Below are some widely known algorithms and algorithm families designed explicitly (or easily adaptable) for online learning. These techniques vary in complexity and assumptions, but all are grounded in the principle of updating with minimal overhead per incoming observation or small micro-batch.
+
+### 3.1 Stochastic gradient descent (brief reminder)
+
+<Latex text="\( \text{Stochastic Gradient Descent (SGD)} \)"/> is the backbone of many online learning methods. In batch gradient descent, we compute the gradient of the loss function by summing over the entire dataset, then we update parameters. In contrast, <Latex text="\( \text{SGD} \)"/> updates model parameters using the gradient from just one (or a small batch of) sample(s):
+
+<Latex text="\[
+w_{t+1} = w_t - \gamma_t \nabla_w Q(z_t, w_t)
+\]"/>
+
+Here <Latex text="\( z_t \)"/> is the data point drawn at time step <Latex text="\( t \)"/> (or a small batch if using mini-batch SGD), <Latex text="\( \gamma_t \)"/> is the learning rate, and <Latex text="\( w_t \)"/> are the parameters at time <Latex text="\( t \)"/>. Typically, the term <Latex text="\( \nabla_w Q \)"/> stands for the gradient of a loss function measuring how well the model fits <Latex text="\( z_t \)"/>. In an online context, you can conceptualize <Latex text="\( z_t \)"/> as the most recent event from your data stream, so you only do a single pass (or a handful of passes) through the data. SGD is well-suited to large-scale and streaming scenarios, and, when combined with appropriate learning rate schedules or momentum-based techniques, it often converges more quickly than batch methods in practice.
+
+### 3.2 Online perceptron algorithm
+
+The perceptron is a simple linear classifier from the earliest days of machine learning. In batch form, it iterates over the dataset multiple times, adjusting weights whenever it makes a misclassification. The online perceptron is a natural extension of this idea: when a new data point arrives, the perceptron checks whether it misclassifies that point. If it does, it updates its weights. Otherwise, it leaves them as is. Formally:
+
+1. Given a labeled data point <Latex text="\( (x_t, y_t) \)"/>, where <Latex text="\( y_t \in \{ -1, +1 \} \)"/>.
+2. Predict <Latex text="\( \hat{y}_t = \text{sign}(w_t^\top x_t + \beta_t) \)"/>.
+3. If <Latex text="\( \hat{y}_t \ne y_t \)"/>, update:
+   <Latex text="\[
+   w_{t+1} = w_t + y_t x_t, \quad \beta_{t+1} = \beta_t + y_t
+   \]"/>
+4. Otherwise, <Latex text="\( w_{t+1} = w_t \)"/> and <Latex text="\( \beta_{t+1} = \beta_t \)"/>.
+
+Because it updates parameters immediately upon mistakes, the perceptron is a purely online algorithm. Although it converges under certain conditions (data linear separability), it remains a cornerstone example of incremental learning. Variants like the <Highlight>kernelized perceptron</Highlight> allow for non-linear decision boundaries in an online manner as well.
+
+### 3.3 Online support vector machines (SVMs)
+
+Support vector machines were originally formulated for batch learning, requiring a solution to a convex quadratic program. However, various adaptations exist to make SVMs more amenable to online or incremental learning. Examples include:
+- **LASVM**: An incremental SVM approach that updates the decision boundary by processing new data points one at a time (or in small bursts).
+- **NORMA** (Proposed by J. Kivinen, A. Smola, and R. Williamson): A general online kernel learning algorithm that updates the model in a stochastic gradient fashion, with a regularization term.
+
+In an online SVM, when a new labeled data point arrives, the algorithm checks whether it violates the margin conditions. If it does, the algorithm updates the support vectors (and the associated coefficients) accordingly. The challenge is to manage the support vector set size, which can grow with streaming data. Techniques such as support vector removal (to forget older data that is less relevant) or bounding the number of support vectors ensure the model remains tractable over time.
+
+### 3.4 Bandit algorithms
+
+Many real-time systems do not receive full label information immediately. Instead, they only receive partial feedback (sometimes called reward). For example, in an online advertisement scenario, you show an ad to a user, and you only see whether they click on it or not. You don't observe the user's response to other ads you *didn't* show. This is called the multi-armed bandit problem, reminiscent of a gambler who must choose which slot machine ("arm") to pull with limited knowledge of the reward distribution.
+
+Bandit algorithms like **UCB** (Upper Confidence Bound), **Thompson Sampling**, and **EXP3** are inherently online: they balance exploration (trying suboptimal actions to gather more information) and exploitation (favoring actions known to yield high reward) in a streaming fashion. Each time step yields a single reward from one action, and the algorithm updates its estimates about that action's distribution. These methods, especially contextual bandits that incorporate side information (features of the user or environment), have become key in recommendation systems and personalization engines.
+
+### 3.5 Online boosting techniques
+
+Boosting is a family of ensemble methods that combine multiple weak learners to produce a strong predictor. Classic boosting algorithms like AdaBoost or Gradient Boosting typically rely on multiple passes through the dataset to adjust the distribution or weighting of training examples. However, **online boosting** modifies these algorithms to update the ensemble incrementally as new data arrives.
+
+One approach is to maintain an ensemble of weak learners, each trained in an online manner (like an incremental decision tree or perceptron). When a new data point arrives, the ensemble updates each weak learner's weights (or parameters) based on its individual error, re-weights the data point for the next learner in the chain, and so on. This requires careful design to ensure the updated ensemble retains the theoretical advantages of boosting, such as reducing bias and variance.
+
+### 3.6 Other specialized algorithms
+
+Numerous other specialized online learning algorithms exist, for tasks like:
+- **Online matrix factorization** for streaming recommendation (collaborative filtering),
+- **Online clustering** (e.g., incremental k-means, streaming DBSCAN variants),
+- **Online variants of Bayesian methods** (e.g., using Bayesian updating or Bayesian online changepoint detection to track concept drift),
+- **Neural network-based online learning**, where weights are updated with each mini-batch of data in a constant stream.
+
+Each method must handle the ephemeral nature of streaming data, limit memory usage, and adapt quickly to changing distributions.
+
+## Advantages and challenges
+
+### Lower computational cost over time
+
+Batch learning can be computationally expensive if, every time new data arrives, you have to retrain the model from scratch (or do a large partial re-training). With online learning, you update incrementally at each time step, which can drastically reduce the average computation cost over the system's lifetime. In large-scale production settings, this advantage often translates to reduced infrastructure costs and more responsive systems.
+
+### Real-time adaptability
+
+By definition, an online approach reacts to newly arriving data instantly (or nearly so). This real-time adaptability is crucial for domains like anomaly or fraud detection, recommendation systems, dynamic resource allocation, and any environment where the data distribution can shift quickly (concept drift). Real-time updates can keep the model relevant and avoid performance degradation over time.
+
+### Handling large-scale data
+
+In scenarios with massive data volumes, it may be infeasible to store or process the entire dataset offline. Online learning can handle data as it arrives and then discard or compress it, significantly reducing memory overhead. With a well-designed streaming pipeline, you can keep pace with high-velocity data without facing the storage and processing bottlenecks of batch approaches.
+
+### Concept drift and non-stationary data
+
+One of the biggest challenges in real-world machine learning is that the data distribution is seldom stationary. Online learning mitigates this by continuously updating the model to reflect the most recent data. Of course, not all online algorithms automatically handle drift well; some might exhibit slow adaptation or be prone to forgetting older patterns. Specialized strategies exist to detect and respond to drift, such as resetting parameters, time-weighted updates, or drift detection using statistical tests.
+
+### Balancing model accuracy and speed
+
+Online updates are generally faster than retraining from scratch, but they can also accumulate noise or biases from small numbers of samples. A single mislabeled data point in a purely online system might cause a large model shift. Additionally, online methods often require fine-tuning of learning rates or forgetting factors. The fundamental tension is between reactivity (quickly adapting to new data) and stability (not overreacting to outliers). 
+
+### Managing noisy and incomplete data
+
+Because data in the wild often arrives with missing values, noisy signals, or partial feedback, online methods must handle these imperfections gracefully. Techniques like robust loss functions, partial labeling (e.g., bandits), or incremental imputation methods can help. Still, the possibility of "garbage in, garbage out" is even more pronounced in streaming environments where you can't always go back to clean or correct data once it's processed.
+
+## Real-world applications
+
+### 5.1 Recommendation systems
+
+Recommendation engines often leverage streaming user interactions (clicks, views, likes, ratings) to update their models in real time. For example, a large e-commerce site might continuously update user preference vectors or item latent factors in an online matrix factorization system as it observes new user behavior. This ensures that the recommendations reflect up-to-the-minute behavior, such as a sudden increased interest in a particular product category.
+
+### 5.2 Online fraud detection
+
+Fraud detection systems for credit cards, insurance claims, or other financial products must make split-second decisions about potentially fraudulent transactions. Because fraudulent patterns can evolve quickly (or attackers might test new methods), an online classifier or anomaly detection model is beneficial. By continuously retraining on new labeled or partially labeled transactions, the system maintains high detection accuracy and reduces the window of vulnerability to new fraud patterns.
+
+### 5.3 Dynamic resource allocation
+
+In networking, cloud computing, or manufacturing, resources (e.g., CPU, memory, production capacity) need to be allocated dynamically based on real-time loads or demands. An online method can update predictive models for resource usage on the fly, ensuring that decisions reflect the latest usage patterns. This is crucial in modern distributed systems where demand can spike unpredictably.
+
+### 5.4 Adaptive control systems
+
+Control systems in robotics, industrial process control, or autonomous vehicles often must learn and adapt to changing conditions. For instance, if a robot experiences wear in a joint or changes in its environment, an online reinforcement learning or control algorithm can adapt its policy incrementally without requiring a complete offline retraining.
+
+### 5.5 Streaming analytics
+
+Beyond predictive modeling, online learning also underpins many streaming analytics frameworks, such as computing rolling averages, rolling correlations, or incremental sketches for big data. Tools like HyperLogLog or Count-Min Sketch are not exactly "learning" algorithms, but they share the same incremental principle to handle large or unbounded data in real time.
+
+## Evaluation metrics
+
+Evaluating online models differs from standard batch evaluation. While we can still measure accuracy, precision, recall, or other supervised metrics, we need to do so in a streaming context, often with limited or delayed labels.  
+
+### 6.1 Online accuracy and loss functions
+
+One approach is to track the cumulative loss or accuracy over time. For example, at each step <Latex text="\( t \)"/>, I measure <Latex text="\( Q(z_t, w_t) \)"/> (the loss for the new data point) and then compute an overall metric such as <Latex text="\( \sum_t Q(z_t, w_t) \)"/>. Minimizing the average or total loss over the sequence is a typical objective in online learning theory. Alternatively, we can measure incremental classification accuracy on a rolling basis, such as the fraction of correctly predicted labels over the most recent <Latex text="\( k \)"/> samples.
+
+### 6.2 Time-based metrics and latency
+
+Because an online model's quality might degrade if it cannot keep up with the stream, time-based metrics (like end-to-end latency from data arrival to model inference) can be just as critical as predictive accuracy. In real-time applications, we may demand that the model produce predictions within a few milliseconds. For this reason, many frameworks log not only correctness metrics but also average or 99th-percentile latency.
+
+### 6.3 Memory-based performance measurements
+
+Online algorithms often tout minimal memory usage as a feature. To ensure this claim holds in practice, memory usage should be monitored as new data arrives. If the method's memory usage creeps upward (e.g., storing too many support vectors in an online SVM, or an unbounded buffer in streaming frameworks), you risk losing the advantages of an online approach.  
+
+### 6.4 Rolling or incremental validation strategies
+
+In a batch scenario, we typically separate data into training, validation, and test sets. But in online learning, new data arrives continuously, and you might not have a separate hold-out set at the start. Techniques like **prequential evaluation** (or test-then-train) are common: for each new data point, you first test the model on that point (to measure immediate prediction accuracy), then use that same point to update the model. This strategy simulates a real use case where the model must predict before it sees the true label, and ensures that you do not cheat by training on the same data before testing.
+
+## In practice
+
+### Model deployment and maintenance
+
+Deploying an online model typically involves setting up a pipeline that automatically:
+1. Collects or receives streaming data,
+2. Extracts or transforms features (potentially in real time),
+3. Updates the model parameters incrementally,
+4. Stores the updated model state (or partial states) to ensure persistence,
+5. Serves predictions to an application or user interface.
+
+<Highlight>Maintenance</Highlight> includes monitoring performance for concept drift, anomalies, or distribution changes. If a drastic shift occurs, you might have to reset, re-initialize, or drastically reconfigure the model. In some systems, a hybrid approach is used: a fully online model handles rapid short-term adaptation, while a larger batch pipeline occasionally retrains a more complex model with improved accuracy.
+
+### Monitoring and alert systems
+
+Because an online model updates itself with minimal human supervision, monitoring is vital. Typical monitoring includes:
+- **Prediction drift**: The model's predictions might systematically shift if the data changes distribution.
+- **Performance metrics**: Tracking classification error or reward over time, looking for abrupt drops.
+- **Resource usage**: CPU, memory, or network utilization, especially if scale is unpredictable.
+
+In robust production setups, you might define thresholds or triggers (alerts) for these metrics, prompting a deeper investigation or automated fallback if something drifts too far out of the ordinary.
+
+### Handling concept drift in production
+
+Concept drift can break an online model if the drift is large and abrupt. Production systems might:
+- Implement **drift detection**: Use statistical tests or specialized detectors (like DDM — Drift Detection Method) that analyze the online error rate. If the drift is detected, you might reset the model parameters or reduce the learning rate to carefully adapt.
+- Use **sliding windows**: Keep a window of the most recent data. Weight the examples within the window higher in the gradient updates. Discard or de-weight older data. This approach can track slow or gradual drifts well.
+- Maintain **ensemble approaches**: Each ensemble member might be trained on data from different time windows or start times, thus collectively reacting to drift. If one model's error spikes, it might be replaced with a freshly trained model.
+
+### Tools and frameworks for online learning
+
+- **River** (formerly **creme**): A Python library specialized for incremental learning on data streams, supporting classification, regression, and anomaly detection. River focuses on memory-efficient and streaming-friendly algorithms.
+- **Vowpal Wabbit**: A fast C++ library designed for online learning, with support for interactive learning (bandit) and large-scale linear or factorization-based models.
+- **scikit-multiflow**: Another Python-based library that focuses on streaming data, including concept drift detection, online ensemble methods, etc.
+- **Apache SAMOA**: An open-source platform for mining big data streams, integrating with Apache Storm, Flink, and Samza.
+
+### Implementation: code snippets step-by-step
+
+Let's illustrate a simple online learning workflow in Python using a partial fit approach. For instance, **scikit-learn** provides `partial_fit` methods for certain estimators (like `SGDClassifier`). Although scikit-learn is not specialized for streaming in the same sense as River or Vowpal Wabbit, it still demonstrates the principle of incremental updates.
+
+<Code text={`
+import numpy as np
+from sklearn.linear_model import SGDClassifier
+
+# Suppose we have streaming data generating function
+def data_stream(num_points=10000, dims=10):
+    for _ in range(num_points):
+        X = np.random.randn(dims)
+        # Generate a label using a random hyperplane
+        y = 1 if np.dot(X, np.random.randn(dims)) > 0 else 0
+        yield X, y
+
+# Initialize the online classifier
+clf = SGDClassifier(loss="log", learning_rate="constant", eta0=0.01)
+
+# We'll do an incremental training loop
+batch_size = 50
+X_buffer, y_buffer = [], []
+
+for i, (X, y) in enumerate(data_stream(num_points=1000, dims=10)):
+    X_buffer.append(X)
+    y_buffer.append(y)
+    
+    # Once we reach a mini-batch size, we do a partial fit
+    if (i + 1) % batch_size == 0:
+        X_batch = np.array(X_buffer)
+        y_batch = np.array(y_buffer)
+        
+        # If it's the first time, we need to provide the classes for partial_fit
+        if i < batch_size:
+            clf.partial_fit(X_batch, y_batch, classes=[0,1])
+        else:
+            clf.partial_fit(X_batch, y_batch)
+        
+        # Clear the buffer
+        X_buffer, y_buffer = [], []
+
+        # Optionally, evaluate on a small holdout or measure intermediate performance
+        # In real online learning, you might do prequential evaluation (test then train).
+`}/>
+
+In this example, each incoming data point is buffered until we reach a certain mini-batch size (50). Then we call `partial_fit` to update the model's parameters. The model is never fully retrained from scratch; it just updates the current parameters based on the new mini-batch. This is a simplified approach that merges batch-based processing with streaming concepts, bridging the gap between pure online (single-sample) updates and practical incremental updates.
+
+For a more genuine streaming approach, libraries like River allow you to do something like:
+
+<Code text={`
+from river import linear_model
+from river import optim
+from river import metrics
+
+model = linear_model.LogisticRegression(optimizer=optim.SGD(0.01))
+metric = metrics.Accuracy()
+
+for i, (X, y) in enumerate(data_stream(num_points=1000, dims=10)):
+    # Predict
+    y_pred = model.predict_one(dict(enumerate(X)))
+    # Update the metric
+    metric.update(y, y_pred)
+    # Learn (online update)
+    model.learn_one(dict(enumerate(X)), y)
+    
+    # If desired, print performance occasionally
+    if i % 100 == 0 and i > 0:
+        print(f"Step {i}, Accuracy: {metric.get()}") 
+`}/>
+
+Notice that with River, we feed one sample at a time directly to `learn_one`, achieving true single-sample incremental learning. This kind of approach is well-suited for production streaming systems or memory-constrained environments.
+
+<Image alt="Illustration of a continuous data stream updating a model in real-time" path="" caption="Conceptual diagram of how data flows into an online learning system and updates the model incrementally." zoom="false" />
+
+## (Optional) Extended discussion: theoretical underpinnings
+
+Many online learning algorithms can be viewed as instances of the *stochastic approximation* framework, wherein the goal is to minimize an expected risk <Latex text="\( J(w) \)"/>:
+
+<Latex text="\[
+J(w) = \mathbb{E}_z \; Q(z,w).
+\]"/>
+
+We do not know the distribution <Latex text="\( P(z) \)"/> explicitly, but we can sample from it as data arrives. A single online update step is effectively a stochastic gradient step toward minimizing <Latex text="\( J(w) \)"/>:
+
+<Latex text="\[
+w_{t+1} = w_t - \gamma_t \nabla_w Q(z_t, w_t).
+\]"/>
+
+Under mild conditions (like diminishing learning rates <Latex text="\( \gamma_t \)"/> and certain smoothness assumptions), such updates converge to a local or global minimum of <Latex text="\( J \)"/> in expectation. That said, real-time or streaming contexts introduce additional difficulties: concept drift, outlier data, or partial feedback. Researchers continue to refine these theories to handle more complicated scenarios.
+
+## Final remarks
+
+Online machine learning is a powerful framework that addresses the needs of modern data-driven applications where data arrives continuously and may change rapidly. By incrementally updating model parameters in real time and avoiding the need to store the entire dataset or retrain from scratch, online learning provides a flexible, scalable approach that adapts quickly to new information. However, success requires careful consideration of:
+- Algorithm selection (e.g., linear vs. ensemble vs. neural approaches),
+- Streaming data infrastructure (e.g., Kafka, Flink),
+- Monitoring for concept drift and anomalies,
+- Proper evaluation methods (prequential, incremental metrics),
+- Hyperparameter tuning (especially for learning rates and forgetting mechanisms).
+
+Adoption of online learning has accelerated with the growth of streaming analytics, IoT sensors, real-time personalization, and large-scale event-driven architectures. While the theoretical foundations date back decades (e.g., perceptron, stochastic approximation theory), recent advances in library support (River, scikit-multiflow, Vowpal Wabbit) and big data infrastructures (Kafka, Flink, Storm) have made it more accessible to practitioners. As data sources become ever more voluminous and time-sensitive, online machine learning will remain at the forefront of practical, adaptive AI solutions.

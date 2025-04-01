@@ -1,0 +1,477 @@
+---
+index: 144
+indexCourse: 61
+indexFavorites:
+title: "Partition function (a closer look)"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Partition function (a closer look)"
+courseCategoryName: "Probabilistic models & Bayesian methods"
+desc: "Learn some important details"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "12.01.2025"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 2
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/partition_function_a_closer_look.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/partition_function_a_closer_look"
+slug: "/research/partition_function_a_closer_look"
+---
+
+import Tooltip from "../../../components/Tooltip"
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+https://www.deeplearningbook.org/contents/partition.html
+
+*/}
+
+
+{/*
+
+1. Introduction
+- Why dedicating a separate article to partition function? 
+- Overview of undirected probabilistic models and the role of the partition function in normalizing unnormalized probabilities
+- Challenges arising from intractable sums or integrals in high-dimensional spaces
+- Importance of methods that circumvent or approximate the partition function
+2. The Log-Likelihood Gradient
+- Decomposition of the log-likelihood gradient into positive and negative phases
+- Why the partition function term makes the gradient difficult to compute
+- Role of the gradient of log Z and its interpretation in learning
+- (other related information)
+3. Stochastic Maximum Likelihood and Contrastive Divergence
+- Naive MCMC approaches and their computational drawbacks
+- Contrastive Divergence (CD-k): initialization from data, advantages, and bias issues
+- Stochastic Maximum Likelihood (SML) or Persistent Contrastive Divergence (PCD-k): maintaining a set of persistent chains for the negative phase
+- (other related information)
+4. Pseudolikelihood
+- Use of conditional probabilities to avoid direct computation of the partition function
+- Strengths of pseudolikelihood in certain tasks (e.g., missing data imputation) versus its limitations in density estimation
+- Trade-offs in computational cost and accuracy compared to maximum likelihood
+- (other related information)
+5. Score Matching and Ratio Matching
+- Score matching as a method to match gradients (the "score") of model and data without computing normalizers
+- Incompatibility with certain deeper or discrete-variable models that require only a lower bound on log p̃
+- Ratio matching for discrete data and its connection to local neighborhoods around training examples
+- (other related information)
+6. Denoising Score Matching
+- Motivation for smoothing distributions via added noise
+- How denoising modifies standard score matching to combat overfitting
+- Relationship to certain autoencoder training objectives
+- (other related information)
+7. Noise-Contrastive Estimation
+- Reduction of unsupervised learning to binary classification between data and noise samples
+- Simultaneous learning of model parameters and partition function offset
+- Advantages in some high-vocabulary or single-variable contexts and drawbacks in large multi-variable settings
+- (other related information)
+8. Estimating the Partition Function
+- Importance sampling: direct ratio estimation between proposal and target distribution
+- Annealed Importance Sampling (AIS): bridging from a known distribution to the target distribution with incremental "temperatures"
+- Bridge sampling: single "bridge" distribution strategy and relation to AIS
+- Linked importance sampling and other improvements for variance reduction
+- Practical considerations: when to estimate Z explicitly versus relying on partition-function-free training methods
+- (other related information)
+
+*/}
+
+
+When diving into probabilistic models — especially those that are undirected or energy-based — there is a central concept we cannot avoid: the partition function. I find it crucial to shine a bright spotlight on this because the partition function is at once ubiquitous and famously troublesome. It appears in virtually all undirected models, from <Highlight>Restricted Boltzmann Machines</Highlight> (RBMs) to <Highlight>Markov Random Fields</Highlight> (MRFs) and beyond, serving as the normalizing constant that transforms raw energy functions (or unnormalized log probabilities) into well-defined probability distributions. The partition function, often denoted as <Latex text="\(Z\)"/>, is often the direct cause of computational nightmares: it involves summing (or integrating) a potentially astronomical number of configurations across a high-dimensional space. Because of its fundamental importance — as well as its notorious intractability — an entire ecosystem of approximation strategies, alternative learning objectives, and algorithmic cleverness has emerged around it.
+
+The reason I dedicate a separate article to the partition function is the sheer depth of theoretical and practical methods that revolve around either avoiding it, approximating it, or circumventing its direct computation. In many advanced machine learning contexts, especially in the realm of energy-based models, the presence of the partition function <Latex text="\(Z\)"/> in the log-likelihood invites an elaborate interplay of gradient terms, sampling techniques, and approximate inference strategies. If we don't fully understand the role of <Latex text="\(Z\)"/> — and the difficulty it poses — our grasp of these learning algorithms will remain incomplete or superficial at best.
+
+### Role of the partition function in undirected probabilistic models
+
+To understand what <Latex text="\(Z\)"/> is, let's consider a general undirected model that assigns an energy <Latex text="\(E(\mathbf{x}; \theta)\)"/> (where <Latex text="\(\mathbf{x}\)"/> is the data and <Latex text="\(\theta\)"/> denotes parameters) to each possible configuration of <Latex text="\(\mathbf{x}\)"/>. The unnormalized probability of a particular configuration <Latex text="\(\mathbf{x}\)"/> can be expressed as:
+
+<Latex text="\[
+\tilde{p}(\mathbf{x}; \theta) = \exp\bigl(-E(\mathbf{x}; \theta)\bigr).
+\]"/>
+
+The partition function <Latex text="\(Z(\theta)\)"/> is then defined as
+
+<Latex text="\[
+Z(\theta) = \sum_{\mathbf{x}} \exp\bigl(-E(\mathbf{x}; \theta)\bigr),
+\]"/>
+
+if <Latex text="\(\mathbf{x}\)"/> is discrete, or
+
+<Latex text="\[
+Z(\theta) = \int \exp\bigl(-E(\mathbf{x}; \theta)\bigr)\, d\mathbf{x}
+\]"/>
+
+if <Latex text="\(\mathbf{x}\)"/> is continuous. The fully normalized probability distribution <Latex text="\(p(\mathbf{x}; \theta)\)"/> is then:
+
+<Latex text="\[
+p(\mathbf{x}; \theta) = \frac{\tilde{p}(\mathbf{x}; \theta)}{Z(\theta)}.
+\]"/>
+
+Hence, <Latex text="\(Z(\theta)\)"/> is the global normalizer. If <Latex text="\(Z(\theta)\)"/> is very difficult to compute or approximate, it complicates any method that relies on evaluating <Latex text="\(p(\mathbf{x}; \theta)\)"/> or its gradient with respect to <Latex text="\(\theta\)"/>.
+
+### Challenges in high-dimensional spaces
+
+In high-dimensional spaces — typical for image data, large-scale textual data, or other complex domains — computing <Latex text="\(Z(\theta)\)"/> exactly is typically out of the question. The number of configurations <Latex text="\(\mathbf{x}\)"/> can be astronomically large. Even approximate summation or integration can be burdensome without careful sampling or specialized methods. This intractability is what led to the development of widely used approximation strategies like <Highlight>Contrastive Divergence</Highlight> and <Highlight>Noise-Contrastive Estimation</Highlight>, as well as specialized sampling methods such as <Highlight>Annealed Importance Sampling</Highlight>.
+
+### Importance of partition-function-free methods
+
+An important thread in the literature is the desire to circumvent <Latex text="\(Z\)"/> altogether. One might consider alternative objectives or surrogate losses that do not explicitly include <Latex text="\(Z(\theta)\)"/>. This has led to methods such as <Highlight>Pseudolikelihood</Highlight> and <Highlight>Score Matching</Highlight>, each with its own nuances and domain of applicability. These methods are often deeply connected with fundamental statistical theory. For instance, score matching has roots in older ideas from <Highlight>Fisher divergence</Highlight> and leads to interesting ways to estimate parameters by matching model gradients to data gradients. Meanwhile, pseudolikelihood builds upon the factorization properties of conditional distributions and is sometimes used in fields like <Tooltip text="social network analysis"/> to handle large, complex networks of variables.
+
+By the end of this article, I hope you will see not only the specific reasons why the partition function demands so much care, but also the variety of ways researchers have tackled it. The theoretical insights, the sampling-based methods, and the approximate objectives form a multifaceted toolbox. When confronted with the dreaded <Latex text="\(Z(\theta)\)"/> in your own projects, you can decide whether to approximate it directly, bypass it with an alternative learning criterion, or try something more exotic altogether.
+
+## 2. The log-likelihood gradient
+
+When we train an undirected model such as an RBM or a Markov Random Field using maximum likelihood, we typically consider the log-likelihood function:
+
+<Latex text="\[
+\mathcal{L}(\theta) = \log p(\mathbf{X}; \theta) = \sum_{i=1}^N \log p(\mathbf{x}^{(i)}; \theta),
+\]"/>
+
+where <Latex text="\( \mathbf{x}^{(i)} \)"/> is the <Latex text="\(i\)"/>-th data point and <Latex text="\(N\)"/> is the size of the dataset. Expanding <Latex text="\(\log p(\mathbf{x}; \theta)\)"/>, we get:
+
+<Latex text="\[
+\log p(\mathbf{x}; \theta) = -E(\mathbf{x}; \theta) - \log Z(\theta).
+\]"/>
+
+Thus, the log-likelihood for the entire dataset is:
+
+<Latex text="\[
+\mathcal{L}(\theta) = -\sum_{i=1}^N E(\mathbf{x}^{(i)}; \theta) - N \log Z(\theta),
+\]"/>
+
+assuming a single <Latex text="\(E\)"/> for all data points, though in some contexts we might have a sum of energies if the model factorizes in certain ways.
+
+### Positive and negative phases
+
+The gradient of <Latex text="\(\mathcal{L}(\theta)\)"/> typically separates into what many in the Boltzmann machine literature call the "positive phase" and "negative phase". Specifically,
+
+<Latex text="\[
+\nabla_\theta \mathcal{L}(\theta) = -\sum_{i=1}^N \nabla_\theta E(\mathbf{x}^{(i)}; \theta) - N \nabla_\theta \log Z(\theta).
+\]"/>
+
+When distributing the negative sign, you might see it more commonly expressed as:
+
+<Latex text="\[
+\nabla_\theta \mathcal{L}(\theta) 
+= -\sum_{i=1}^N \nabla_\theta E(\mathbf{x}^{(i)}; \theta) + N \mathbb{E}_{p(\mathbf{x}; \theta)}\bigl[\nabla_\theta E(\mathbf{x}; \theta)\bigr].
+\]"/>
+
+Here the term involving <Latex text="\(\log Z(\theta)\)"/> has been rewritten as an expectation under the model distribution:
+
+<Latex text="\[
+\nabla_\theta \log Z(\theta) 
+= \frac{\nabla_\theta Z(\theta)}{Z(\theta)} 
+= \mathbb{E}_{p(\mathbf{x}; \theta)}\bigl[\nabla_\theta E(\mathbf{x}; \theta)\bigr].
+\]"/>
+
+- **Positive phase**: <Latex text="\(-\sum_{i=1}^N \nabla_\theta E(\mathbf{x}^{(i)}; \theta)\)"/> corresponds to matching the model's parameters so that it assigns low energy (thus high probability) to observed data <Latex text="\(\mathbf{x}^{(i)}\)"/>.
+- **Negative phase**: <Latex text="\(+ N \mathbb{E}_{p(\mathbf{x}; \theta)}\bigl[\nabla_\theta E(\mathbf{x}; \theta)\bigr]\)"/> corresponds to ensuring that the overall probability mass does not blow up, by nudging the parameters so that the model distribution does not assign too much probability to non-data configurations.
+
+### Why the partition function term makes the gradient hard
+
+The crux of the difficulty is that to compute <Latex text="\(\mathbb{E}_{p(\mathbf{x}; \theta)}\bigl[\nabla_\theta E(\mathbf{x}; \theta)\bigr]\)"/>, one must sample from the current model distribution <Latex text="\(p(\mathbf{x}; \theta)\)"/> or otherwise approximate it. Direct summation or integration over <Latex text="\(\mathbf{x}\)"/> is generally intractable, so we need to rely on methods such as <Highlight>Monte Carlo Markov Chain</Highlight> (MCMC) to approximate this expectation. If the MCMC chain mixes slowly or dimension is large, accurate sampling can become an expensive proposition.
+
+The partition function's gradient <Latex text="\(\nabla_\theta \log Z(\theta)\)"/> thus stands out as the key computational burden. Indeed, the entire impetus behind many alternative objectives is to avoid explicit computation of <Latex text="\(Z(\theta)\)"/> or its gradient. As we shall see in subsequent chapters, approaches like <Highlight>Pseudolikelihood</Highlight>, <Highlight>Score Matching</Highlight>, and <Highlight>Noise-Contrastive Estimation</Highlight> are creative attempts to get around the intractable nature of the partition function while still capturing meaningful statistics about the data.
+
+### Interpreting the gradient of log Z
+
+Another lens to see this from: <Latex text="\(Z(\theta)\)"/> can be interpreted in thermodynamic or statistical-physics terms as a normalizing factor ensuring that the "energy landscape" is consistent with a proper probability distribution. Its gradient effectively measures how changes in <Latex text="\(\theta\)"/> stretch or squash that landscape globally. Understanding this helps to see why we might approximate it locally (as in pseudolikelihood), or in a more global sense with approximate sampling (Contrastive Divergence), or by turning the problem into a classification problem (Noise-Contrastive Estimation).
+
+## 3. Stochastic maximum likelihood and contrastive divergence
+
+Historically, one of the early successes in dealing with the partition function within RBMs and other Boltzmann machines was the introduction of <Highlight>Contrastive Divergence</Highlight> (CD) by Hinton and subsequent refinements like <Highlight>Persistent Contrastive Divergence</Highlight> (PCD) or <Highlight>Stochastic Maximum Likelihood</Highlight> (SML). These methods revolve around MCMC sampling, but they do so in ways that reduce the computational cost and, crucially, the burden of having to approximate <Latex text="\(\log Z(\theta)\)"/> too precisely.
+
+### Naive MCMC approaches
+
+Let us consider the naive approach to maximum likelihood. We know that the gradient has this negative-phase term requiring samples <Latex text="\(\mathbf{x}\)"/> from the model distribution. One might try a straightforward Markov chain approach: for each gradient update, run a Markov chain from scratch (starting from a random initialization) to approximate the model distribution at the current <Latex text="\(\theta\)"/>. But in many high-dimensional models, this chain could take a prohibitive number of steps to mix properly. Doing that at each parameter update is unrealistic. The result is that naive MCMC maximum likelihood can be extremely slow, often so slow as to be infeasible.
+
+### Contrastive divergence (CD-k)
+
+Contrastive Divergence proposed a more practical compromise: rather than sampling from the model distribution until full mixing, one initializes the chain with the actual data (often called the "clamped" state) and then runs a small number of Gibbs sampling steps — <Latex text="\(k\)"/> steps is typical — to get a "negative sample". The intuition is that starting from real data hopefully puts us in a region of high probability under the model, so we do not need as many steps to reach some approximate sample from <Latex text="\(p(\mathbf{x}; \theta)\)"/>. Then we use that sample to estimate the negative phase. Formally, the CD-k gradient update looks like:
+
+<Latex text="\[
+\nabla_\theta \mathcal{L}(\theta) \approx -\sum_{i=1}^N \nabla_\theta E(\mathbf{x}^{(i)}; \theta) + \sum_{i=1}^N \nabla_\theta E(\mathbf{x}'^{(i)}; \theta),
+\]"/>
+
+where <Latex text="\(\mathbf{x}'^{(i)}\)"/> is the sample obtained after <Latex text="\(k\)"/> steps of Gibbs sampling starting from <Latex text="\(\mathbf{x}^{(i)}\)"/>. This is sometimes referred to as a form of "short-run MCMC".
+
+CD-k is fast, especially for an RBM where Gibbs sampling can be split into an alternating procedure between hidden and visible units in <Latex text="\(O(k)\)"/> time. However, it introduces bias: the samples you get may not match the true stationary distribution of the model. Interestingly, for small <Latex text="\(k\)"/>, the method often works well in practice (particularly in generative pretraining of deep networks). Yet for pure maximum likelihood, it is no longer guaranteed that we are performing gradient ascent on the true log-likelihood.
+
+### Stochastic maximum likelihood (SML) or persistent contrastive divergence (PCD)
+
+A refinement to mitigate the short-run bias is to maintain a set of "persistent" MCMC chains across parameter updates, rather than re-initializing from the data each time. This approach is known as <Highlight>Persistent Contrastive Divergence</Highlight> or <Highlight>Stochastic Maximum Likelihood</Highlight> (SML). The idea is:
+
+1. Initialize one (or more) Markov chains at random once at the beginning.
+2. For each update, sample a mini-batch of data for the positive phase.
+3. Use the current state(s) of the persistent Markov chain(s) for the negative phase, running a few Gibbs steps on these chains to update them.
+4. Update parameters based on the difference between the positive-phase gradient and the negative-phase gradient.
+5. Keep the updated chain states around for the next parameter update.
+
+Because these chains are not reset to the data at each iteration, they can potentially explore the model distribution more globally. SML is an (asymptotically) unbiased estimator of the gradient under certain conditions (e.g., if the chain is long-lived enough to approximate the stationary distribution). Still, the success of SML in practice depends heavily on the mixing properties of the chain and the complexity of the energy landscape.
+
+### Other related details
+
+Many research papers have proposed improvements, from parallel tempering to advanced sampling methods like <Highlight>Annealed Importance Sampling</Highlight> (which we will see in a later section) to reduce bias further and speed up mixing. In general, though, if your model is high-dimensional and has complicated energy contours, even these advanced MCMC-based approaches can be slow or get stuck in local modes. This persistent difficulty is a major driver of alternative methods that avoid the partition function entirely.
+
+## 4. Pseudolikelihood
+
+<Highlight>Pseudolikelihood</Highlight> is a venerable approach introduced by Besag in the 1970s. It seeks to circumvent direct computation of <Latex text="\(Z(\theta)\)"/> by replacing the joint likelihood <Latex text="\(p(\mathbf{x}; \theta)\)"/> with a product of conditional probabilities of each variable given all the others. Specifically, for a discrete variable set <Latex text="\(\mathbf{x} = (x_1, \dots, x_d)\)"/>, the pseudolikelihood is:
+
+<Latex text="\[
+\prod_{j=1}^d p(x_j \mid \mathbf{x}_{\setminus j}; \theta),
+\]"/>
+
+where <Latex text="\(\mathbf{x}_{\setminus j}\)"/> means "all variables except <Latex text="\(x_j\)"/>". Taking the log of that product gives:
+
+<Latex text="\[
+\log \mathrm{PL}(\theta) 
+= \sum_{j=1}^d \sum_{i=1}^N \log p\bigl(x_j^{(i)} \mid \mathbf{x}_{\setminus j}^{(i)}; \theta\bigr).
+\]"/>
+
+### Avoiding the partition function via conditional probabilities
+
+Why does this help? Each conditional probability can often be computed without requiring the full <Latex text="\(Z(\theta)\)"/>. For instance, in an Ising model or a discrete MRF, one might have:
+
+<Latex text="\[
+p(x_j \mid \mathbf{x}_{\setminus j}; \theta) 
+= \frac{\exp\bigl(-E(x_j, \mathbf{x}_{\setminus j}; \theta)\bigr)}{\sum_{x_j'} \exp\bigl(-E(x_j', \mathbf{x}_{\setminus j}; \theta)\bigr)},
+\]"/>
+
+and that summation in the denominator is only over the local states of <Latex text="\(x_j\)"/> (e.g., <Latex text="\(\pm 1\)"/> in an Ising spin system or a small discrete set). That is far easier to compute than the global <Latex text="\(Z(\theta)\)"/>, which sums over all variables <Latex text="\(x_1, \dots, x_d\)"/> simultaneously.
+
+### Strengths of pseudolikelihood
+
+One immediate benefit is that pseudolikelihood drastically cuts computation time for models with discrete local variables — especially if the local variable state space is small. The method also has theoretical guarantees in certain asymptotic regimes, meaning that it can yield consistent parameter estimates under some assumptions on the dependency structure. In some specialized tasks such as <Highlight>missing data imputation</Highlight>, optimizing conditional distributions may actually be more natural than focusing on the full joint distribution.
+
+### Limitations in density estimation
+
+However, pseudolikelihood can be a poor approximation to the true log-likelihood in settings where global dependencies matter a great deal. It does not necessarily place the correct amount of mass on joint configurations if each variable's local conditionals do not adequately capture the multi-way interactions present in <Latex text="\(p(\mathbf{x}; \theta)\)"/>. Thus, for pure density modeling or generative tasks, pseudolikelihood might fail to produce samples that match the global structure of the data. In fields like image modeling or any domain with complex dependencies, pseudolikelihood can produce subpar generative performance even if the local conditionals are well fit.
+
+### Implementation details
+
+In practice, one typically just replaces the negative log-likelihood with the negative log-pseudolikelihood and does standard optimization. Gradient-based methods remain feasible, and indeed are often simpler than MCMC-based maximum likelihood. Another use case is in certain forms of cross validation or hyperparameter tuning, where the pseudolikelihood can be computed quickly and used as a proxy objective in place of the intractable true likelihood.
+
+## 5. Score matching and ratio matching
+
+<Highlight>Score Matching</Highlight>, introduced by Hyvärinen (2005), is another strategy for models that might have an intractable normalizing constant. The idea is elegantly different from pseudolikelihood. Instead of trying to maximize <Latex text="\(\log p(\mathbf{x}; \theta)\)"/> directly, you match the gradient ("score") of the log-density with respect to <Latex text="\(\mathbf{x}\)"/> between model and data. A key advantage is that it can be done without ever computing <Latex text="\(Z(\theta)\)"/>.
+
+### Basic principle of score matching
+
+Let <Latex text="\(s_\theta(\mathbf{x}) = \nabla_{\mathbf{x}} \log p(\mathbf{x}; \theta)\)"/> be the score function, i.e., the gradient of the log-probability with respect to the data <Latex text="\(\mathbf{x}\)"/>. Score matching tries to find <Latex text="\(\theta\)"/> so that:
+
+<Latex text="\[
+\mathbb{E}_{p_{\text{data}}(\mathbf{x})}\bigl[\| s_\theta(\mathbf{x}) - s_{\text{data}}(\mathbf{x}) \|^2 \bigr]
+\]"/>
+
+is minimized, where <Latex text="\(s_{\text{data}}(\mathbf{x})\)"/> is the true gradient of the data distribution (in practice, we do not know this function, but the method sets up an alternative objective that is computable). Hyvärinen derived a neat trick that the difference of these gradients can be simplified so that the partition function disappears from the resulting formula. In short, the objective for score matching does not require <Latex text="\(Z(\theta)\)"/>.
+
+### Interpretation
+
+Intuitively, if two distributions match in terms of the derivatives of their log-densities, they must be the same distribution (under suitable regularity conditions). So matching the score function is a proxy for matching the distribution itself. Score matching can be particularly elegant in continuous spaces, e.g., in modeling natural images or other real-valued data, provided we can define <Latex text="\(E(\mathbf{x}; \theta)\)"/> in a differentiable manner.
+
+### Incompatibility with discrete-variable models
+
+A known drawback: standard score matching is not well-defined for discrete-variable models because you cannot treat <Latex text="\(p(\mathbf{x}; \theta)\)"/> as a smooth function in a continuous domain. One can attempt modifications for discrete data, but this is less straightforward and can degrade into complexity. Indeed, methods like <Highlight>ratio matching</Highlight> have been proposed for certain discrete scenarios.
+
+### Ratio matching
+
+Ratio matching tries to match <Latex text="\(\frac{p(\mathbf{x}; \theta)}{p_{\text{data}}(\mathbf{x})}\)"/> in local neighborhoods. As with score matching, the idea is to circumvent direct normalizing constants. Ratio matching sometimes finds use in specialized contexts, but it is far less mainstream than either pseudolikelihood or score matching. One might see it in cases where <Latex text="\(p_{\text{data}}(\mathbf{x})\)"/> is partially known or can be replaced with local empirical densities. For the majority of large-scale discrete tasks, though, methods such as <Highlight>Noise-Contrastive Estimation</Highlight> or <Highlight>Contrastive Divergence</Highlight> remain more common.
+
+## 6. Denoising score matching
+
+<Highlight>Denoising score matching</Highlight> extends the core idea of score matching by introducing an explicit noise model. It is deeply related to <Highlight>Denoising Autoencoders</Highlight> and has seen a recent surge of interest for tasks like generative modeling of images in the form of <Highlight>Denoising Diffusion Probabilistic Models</Highlight>.
+
+### Motivation for adding noise
+
+One practical issue with score matching is that the model might overfit the data's local geometry, especially if there is insufficient coverage of the space. By adding noise to <Latex text="\(\mathbf{x}\)"/> — essentially observing a perturbed version of <Latex text="\(\mathbf{x}\)"/> — you gain a smoothed version of the data distribution. The method trains the model to predict the score of the underlying clean distribution from the noisy samples. This also helps address regions of the space where the data is sparse, since you do not want your model to blow up arbitrarily in small pockets.
+
+### Mathematical form
+
+The standard formulation, as introduced by Vincent in the context of denoising autoencoders, is that given a noisy sample <Latex text="\(\mathbf{x}_{\text{noisy}}\)"/> created by adding a small Gaussian perturbation to <Latex text="\(\mathbf{x}\)"/>, the network (or model) tries to reconstruct the original <Latex text="\(\mathbf{x}\)"/>, or equivalently, to learn the gradient of the log of the clean data density. This can be cast as a form of score matching:
+
+<Latex text="\[
+\min_\theta \mathbb{E}_{\mathbf{x} \sim p_{\text{data}}, \mathbf{x}_{\text{noisy}} \mid \mathbf{x}} 
+\bigl[\| s_\theta(\mathbf{x}_{\text{noisy}}) - \nabla_{\mathbf{x}_{\text{noisy}}}\log p_{\text{noisy}}(\mathbf{x}_{\text{noisy}}) \|^2 \bigr].
+\]"/>
+
+Often, <Latex text="\(p_{\text{noisy}}(\mathbf{x}_{\text{noisy}})\)"/> is a known Gaussian corruption process. The partition function of the underlying distribution still never enters explicitly, so we circumvent <Latex text="\(Z(\theta)\)"/>.
+
+### Relationship to autoencoder training
+
+Denoising autoencoders similarly attempt to reconstruct the clean data from noisy input, effectively learning a latent representation that discerns the manifold of real data. The gradient-based viewpoint of denoising score matching unifies these ideas: in certain architectures, learning to denoise is analogous to learning local directions pointing back toward the data manifold, i.e., the negative gradient of the energy. This synergy has led to state-of-the-art generative modeling approaches, including <Highlight>score-based generative modeling</Highlight> in continuous time (also known as <Highlight>diffusion models</Highlight>) that unify the notion of iterative denoising with a continuous Markov process that can be reversed to generate new samples.
+
+## 7. Noise-contrastive estimation
+
+<Highlight>Noise-Contrastive Estimation</Highlight> (NCE), introduced by Gutmann and Hyvärinen, is a technique that recasts unsupervised density estimation as a supervised binary classification problem. The partition function is learned as a parameter (often called the "bias" or offset) that helps discriminate between "real data samples" and "noise samples".
+
+### Reduction to binary classification
+
+The key idea is: create a "noisy distribution" <Latex text="\(q(\mathbf{x})\)"/> that you can sample from easily, such as a uniform distribution or some other convenient distribution. Then combine real data samples (labeled <Latex text="\(y=1\)"/>) with noise samples (<Latex text="\(y=0\)"/>) into a single dataset. Train a classifier that tries to predict whether a sample is real or noise by looking at <Latex text="\(\log p(\mathbf{x}; \theta)\)"/> minus <Latex text="\(\log q(\mathbf{x})\)"/>. More concretely, define:
+
+<Latex text="\[
+D_\theta(\mathbf{x}) = \sigma\bigl(\log p(\mathbf{x}; \theta) - \log q(\mathbf{x})\bigr),
+\]"/>
+
+where <Latex text="\(\sigma\)"/> is the logistic sigmoid function. If <Latex text="\(p(\mathbf{x}; \theta)\)"/> is unnormalized as <Latex text="\(\tilde{p}(\mathbf{x}; \theta)\)"/>, you can treat <Latex text="\(\log Z(\theta)\)"/> as a parameter that is learned via gradient-based classification. Minimizing the cross-entropy classification loss with a balanced set of real and noise examples yields consistent estimates of both the model parameters <Latex text="\(\theta\)"/> and the partition function offset.
+
+### Simultaneous estimation of parameters and partition function
+
+The partition function effectively shows up in the log-odds for distinguishing real from noise. If <Latex text="\(\log Z(\theta)\)"/> is a free parameter, gradient descent will adjust it so that the separation between real and noise samples is maximized. One advantage is that you never explicitly sum over the entire data space. Another is that we can choose <Latex text="\(q(\mathbf{x})\)"/> in a way that makes sampling trivial.
+
+### Advantages and drawbacks
+
+- **Advantages**: NCE can be an elegant approach when dealing with large vocabulary but relatively simpler single-variable or low-dimensional contexts, e.g., certain language modeling tasks. It's also straightforward to implement since it reuses standard binary classification routines.
+- **Drawbacks**: In large multi-variable contexts with complex dependencies, choosing a suitable noise distribution <Latex text="\(q(\mathbf{x})\)"/> can be non-trivial. If <Latex text="\(q(\mathbf{x})\)"/> is too simplistic, the classifier finds the discrimination task too easy, leading to poor density estimates. On the other hand, generating noise samples that mimic real data intricacies might defeat the purpose. Moreover, the approach typically scales poorly if the dimensionality or complexity of <Latex text="\(\mathbf{x}\)"/> is high unless you have a very clever or domain-specific noise model.
+
+## 8. Estimating the partition function
+
+Even though many methods circumvent direct computation of <Latex text="\(Z(\theta)\)"/>, there are still scenarios where we may want an actual estimate of <Latex text="\(Z(\theta)\)"/>. For instance, in evaluating the absolute log-likelihood of a generative model, or comparing models by their <Latex text="\(\log p(\mathbf{X}; \theta)\)"/> on a validation set, or computing certain Bayesian model selection criteria, we need an estimate of <Latex text="\(\log Z(\theta)\)"/>. This final chapter surveys some of the widely used estimation techniques — mostly based on importance sampling variants and bridging methods.
+
+### Importance sampling
+
+<Highlight>Importance sampling</Highlight> is a standard technique for estimating integrals or sums with respect to a difficult distribution <Latex text="\(p(\mathbf{x}; \theta)\)"/> by using samples drawn from an easier proposal distribution <Latex text="\(r(\mathbf{x})\)"/>. Suppose we want:
+
+<Latex text="\[
+Z(\theta) = \int \exp\bigl(-E(\mathbf{x}; \theta)\bigr)\, d\mathbf{x}.
+\]"/>
+
+We can write:
+
+<Latex text="\[
+Z(\theta) = \int \frac{\exp\bigl(-E(\mathbf{x}; \theta)\bigr)}{r(\mathbf{x})} r(\mathbf{x})\, d\mathbf{x}.
+\]"/>
+
+Hence, if we sample <Latex text="\(\{\mathbf{x}^{(i)}\}_{i=1}^M\)"/> i.i.d. from <Latex text="\(r(\mathbf{x})\)"/>, an unbiased estimator is:
+
+<Latex text="\[
+\hat{Z} = \frac{1}{M} \sum_{i=1}^M \frac{\exp\bigl(-E(\mathbf{x}^{(i)}; \theta)\bigr)}{r(\mathbf{x}^{(i)})}.
+\]"/>
+
+Choosing <Latex text="\(r(\mathbf{x})\)"/> so that it resembles <Latex text="\(\exp\bigl(-E(\mathbf{x}; \theta)\bigr)\)"/> can reduce variance. But for high-dimensional distributions, finding or sampling from such an <Latex text="\(r(\mathbf{x})\)"/> is not trivial. If <Latex text="\(r(\mathbf{x})\)"/> does not adequately cover the important regions, the estimator can suffer from extremely high variance.
+
+### Annealed importance sampling (AIS)
+
+<Highlight>Annealed Importance Sampling</Highlight>, proposed by Neal (2001), is a significant improvement for evaluating <Latex text="\(Z(\theta)\)"/>. The method constructs a sequence of intermediate distributions bridging a tractable base distribution (e.g., a factorized Gaussian) and the target distribution <Latex text="\(p(\mathbf{x}; \theta)\)"/>. One typically uses a temperature parameter <Latex text="\(\beta\)"/> that goes from 0 to 1 in small steps:
+
+<Latex text="\[
+p_k(\mathbf{x}) \propto \exp\bigl(-\beta_k E(\mathbf{x}; \theta)\bigr),
+\]"/>
+
+where <Latex text="\(0 = \beta_0 < \beta_1 < \dots < \beta_K = 1\)"/>. For each step, you do importance sampling or MCMC transitions to move from <Latex text="\(p_{k-1}(\mathbf{x})\)"/> to <Latex text="\(p_k(\mathbf{x})\)"/>. The final product of importance weights across the chain yields an estimate of the ratio <Latex text="\(\frac{Z(\theta)}{Z_0}\)"/>, where <Latex text="\(Z_0\)"/> is the known normalizer of the base distribution. AIS often yields lower-variance estimates than a single-step importance sampling, given the chain of intermediate bridging distributions allows a more incremental adaptation from the easy distribution to the difficult one.
+
+### Bridge sampling
+
+<Highlight>Bridge sampling</Highlight> is a related idea in which you define a single "bridge" distribution <Latex text="\(r(\mathbf{x})\)"/> that lies somewhere between the base and target distributions. One sets up an estimator for <Latex text="\(Z(\theta)\)"/> that uses samples from both the base distribution and the target distribution with a bridging function that helps reduce variance. AIS can be viewed as an extension of bridge sampling in which you use multiple bridging distributions in a chain rather than just one.
+
+### Linked importance sampling and variance reduction
+
+Numerous variants exist, such as <Highlight>linked importance sampling</Highlight>, <Highlight>sequential Monte Carlo</Highlight>, and other advanced techniques that attempt to reduce variance by carefully correlating samples or controlling the shape of the bridging distributions. Each has its own set of pros and cons. The main takeaway is that if you truly need an accurate estimate of <Latex text="\(Z(\theta)\)"/> (or <Latex text="\(\log Z(\theta)\)"/>), these bridging or annealing approaches usually perform better than naive importance sampling.
+
+### Practical considerations
+
+- **When to estimate <Latex text="\(Z\)"/>**: If your downstream task only depends on unnormalized probabilities or partial derivatives of <Latex text="\(\log p(\mathbf{x}; \theta)\)"/>, you might circumvent <Latex text="\(Z\)"/>. Indeed, many modern generative modeling frameworks do not bother with explicit <Latex text="\(Z\)"/> estimation.
+- **Computational cost**: AIS and related methods require carefully tuned MCMC steps and bridging schedules. They can be computationally expensive. 
+- **Model comparison**: In practice, if you want to compare two models by their log-likelihood, approximate partition function estimates can have non-negligible variance. Tools like <Highlight>PSRF (Potential Scale Reduction Factor)</Highlight> from MCMC diagnostics or repeated runs can help gauge reliability.
+
+<Image alt="Partition function schematic" path="" caption="A schematic illustration of how an unnormalized model distribution compares to a known base distribution. The partition function is the ratio between the integral under the unnormalized function and the integral under the base distribution, bridging them is the essence of AIS." zoom="false" />
+
+---
+
+Below, I include a brief code snippet showing how one might implement a simplified AIS procedure in Python for a toy 2D energy function — just to illustrate the concept. Naturally, for real-world high-dimensional data, one must incorporate more sophisticated MCMC transition operators and schedules for <Latex text="\(\beta\)"/>.
+
+<Code text={`
+import numpy as np
+
+def energy_function(x, y):
+    # Simple 2D double well or ring structure as an example
+    r2 = x**2 + y**2
+    return 0.1 * (r2 - 1.0)**2  # Some contrived energy for demonstration
+
+def base_log_prob(x, y):
+    # Base distribution: e.g., isotropic Gaussian with mean 0, variance=1
+    return -(x**2 + y**2) / 2.0
+
+def ais(num_samples=10000, num_steps=1000):
+    samples = np.random.randn(num_samples, 2)  # from the base distribution
+    log_w = np.zeros(num_samples)
+    
+    # Beta schedule
+    betas = np.linspace(0, 1, num_steps)
+    delta_betas = betas[1:] - betas[:-1]
+
+    for i in range(num_steps-1):
+        beta0, beta1 = betas[i], betas[i+1]
+        
+        # Compute log unnormalized density difference
+        # which is [ -beta1 * E + beta1 * log base ] - [ -beta0 * E + beta0 * log base ]
+        # Because AIS is bridging from base to target
+        e_vals = np.array([energy_function(s[0], s[1]) for s in samples])
+        log_base = np.array([base_log_prob(s[0], s[1]) for s in samples])
+        
+        log_w += -beta1 * e_vals + beta1 * log_base - (-beta0 * e_vals + beta0 * log_base)
+        
+        # MCMC step (very naive: small random walk or something more advanced)
+        # We'll do a small Gaussian move
+        proposals = samples + 0.01 * np.random.randn(num_samples, 2)
+        
+        # Accept/reject with Metropolis-Hastings based on the intermediate distribution
+        current_energy = beta1 * np.array([energy_function(s[0], s[1]) for s in samples]) \
+                         - beta1 * np.array([base_log_prob(s[0], s[1]) for s in samples])
+        proposal_energy = beta1 * np.array([energy_function(p[0], p[1]) for p in proposals]) \
+                          - beta1 * np.array([base_log_prob(p[0], p[1]) for p in proposals])
+        
+        # Metropolis acceptance
+        accept_prob = np.exp(-(proposal_energy - current_energy))
+        rand_u = np.random.rand(num_samples)
+        accepts = rand_u < accept_prob
+        samples[accepts] = proposals[accepts]
+    
+    # Estimate ratio
+    z_base = 1.0  # The normalizer for the base distribution (2D Gaussian = 2*pi for sigma=1, ignoring constants for example)
+    w = np.exp(log_w)
+    z_est = np.mean(w) * z_base
+    return z_est
+
+if __name__ == "__main__":
+    z_est = ais(num_samples=20000, num_steps=500)
+    print("Estimated partition function:", z_est)
+`}/>
+
+This snippet is not optimized, but it should convey the essence: we start from an easy-to-sample distribution (the base), gradually anneal toward the target distribution, track the change in unnormalized log probabilities, and combine them into a single importance weight. The method ends up with an estimate of <Latex text="\(Z(\theta)\)"/>. Of course, for a real model, the energy function and base distribution would be replaced accordingly, and the MCMC steps would be carefully tuned.
+
+---
+
+This concludes our in-depth journey through the partition function, the difficulties it imposes, and the wide array of methods used to either approximate it or circumvent it altogether. I hope this article has shed some light on why the partition function merits its own dedicated discussion: from Contrastive Divergence to Noise-Contrastive Estimation to sophisticated AIS procedures for explicit computation, the partition function is the pivotal factor in many advanced probabilistic models. Understanding it, and understanding the techniques for dealing with it, is key to mastering energy-based modeling and a host of other undirected graphical models in modern machine learning.
+

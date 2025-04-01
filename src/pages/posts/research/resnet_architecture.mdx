@@ -1,0 +1,496 @@
+---
+index: 53
+indexCourse: 72
+indexFavorites:
+title: "ResNet architecture"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "ResNet architecture"
+courseCategoryName: "Fundamental NN architectures"
+desc: "Identity crisis"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "07.06.2023"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 2
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/resnet_architecture.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/resnet_architecture"
+slug: "/research/resnet_architecture"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+Материал перенести из дипломной работы
+[https://towardsdatascience.com/an-overview-of-resnet-and-its-variants-5281e2f56035](https://towardsdatascience.com/an-overview-of-resnet-and-its-variants-5281e2f56035)
+Модификация CNN
+[https://youtu.be/M_ukL_cDvWg](https://youtu.be/M_ukL_cDvWg)
+
+*/}
+
+
+{/*
+
+1. Motivation  
+2. Architecture  
+   Convolutional layers and feature extraction  
+   The role of skip connections  
+   Identity and projection shortcuts  
+   Resnet design principles  
+   Layer stacking strategy  
+   Bottle-neck building blocks  
+   Initialization and batch normalization practices  
+   etc.  
+3. Variants  
+   ResNet-18, ResNet-34, ResNet-50, and beyond  
+   Wide ResNet and ResNeXt  
+   Pre-activation ResNet  
+   etc.
+4. Training  
+   Data preprocessing and augmentation  
+   Hyperparameter tuning for depth and width  
+   Regularization  
+5. Implementation with TensorFlow  
+6. Advanced topics related to ResNet  
+
+*/}
+
+
+Deep convolutional neural networks have revolutionized computer vision tasks by dramatically increasing the accuracy of models on benchmarks such as ImageNet, COCO, and many other large-scale datasets. Starting from the early success of AlexNet (Krizhevsky and gang, NeurIPS 2012) and followed by VGGNet (Simonyan and Zisserman, ICLR 2015) and GoogLeNet (Szegedy and gang, CVPR 2015), the research community recognized that adding more layers to neural networks often improved representational capacity and overall performance. However, simply stacking layers to deepen a network introduced a major challenge — the vanishing gradient problem. As networks grew deeper, the gradients in backpropagation became extremely small for the early layers, hindering learning and leading to difficulties in training.  
+
+To address this issue, a team led by Kaiming He at Microsoft Research proposed the concept of residual learning, culminating in the groundbreaking "ResNet" architecture (He and gang, CVPR 2016). ResNet, an abbreviation for "residual network", introduced skip connections that effectively bypass certain layers, allowing gradients to flow unimpeded from later layers back to earlier layers. This approach mitigated vanishing gradients and made it possible to successfully train models with far deeper topologies — some versions of ResNet have well over 100 layers — while achieving superior performance compared to shallower models.  
+
+The motivation behind ResNet can be summarized by the insight that learning the "residual" mapping — the difference between a layer's input and output — may be easier than learning the unreferenced transformation from scratch. The skip (or "shortcut") connections in ResNet facilitate this by explicitly adding a reference pathway for the gradient, effectively turning certain sub-layers into residual blocks. The result is a network that not only addresses vanishing gradients but also accelerates convergence and enhances overall accuracy.  
+
+Historically, before residual learning, researchers struggled with networks deeper than 20 or 30 layers. VGGNet, for example, had up to 19 layers and required significant computational resources to train. Even slight modifications or expansions to deeper architectures often ran into severe training difficulties. ResNet overcame these limitations and showed that extremely deep networks — for instance, ResNet-101 or ResNet-152 — could match or surpass shallower networks in both accuracy and efficiency. This leap in performance ushered in a new wave of experiments with deeper and more complicated network designs, like DenseNet (Huang and gang, CVPR 2017) and ResNeXt (Xie and gang, CVPR 2017).  
+
+Another driving force for ResNet's emergence was the research community's hunger for models that could efficiently capture hierarchical and compositional structures in images. With skip connections, ResNets became highly expressive while avoiding some of the pitfalls of extremely deep architectures. In tasks such as object classification, detection, and semantic segmentation, ResNet-based models quickly became the de facto baseline, outperforming traditional convolutional backbones. Moreover, the skip-connection insight influenced numerous subsequent designs in natural language processing and speech recognition. In Transformers (Vaswani and gang, NeurIPS 2017), for example, skip-like residual pathways are ubiquitous, illustrating the widespread adoption of the residual concept.  
+
+Finally, from a theoretical standpoint, the impetus behind ResNet's design was also driven by studies about function optimization. Researchers speculated that deeper networks can approximate complicated functions with fewer parameters compared to shallower networks if they can be trained effectively. Residual learning made it feasible to push the depth of networks to new extremes, reaffirming the connection between architecture depth, function approximation capacity, and training stability.  
+
+In summary, ResNet was motivated by:  
+- The desire to train much deeper networks without vanishing gradients.  
+- The insight that learning residual functions is more tractable than learning unreferenced transformations.  
+- Demonstrated empirical success in surpassing prior state-of-the-art models on large-scale vision tasks.  
+- The theoretical promise of deep structures capable of representing highly complex features.  
+
+The rest of this article dives into the architecture and implementation details of ResNets, along with the training mechanisms that make them successful in practice, a survey of known variants, and a discussion of advanced topics.
+
+
+## 2. Architecture
+
+The ResNet architecture is characterized by its use of "residual blocks" that introduce skip connections, thereby enabling gradient flow across many layers. Although the design can vary depending on depth and intended application (e.g., image classification vs. object detection), there is a consistent set of principles that remain at the heart of any ResNet variant.  
+
+Below, I explore the fundamental building blocks of ResNet, highlighting details about convolutional layers, skip connections, layer stacking strategies, bottleneck structures, initialization strategies, and the role of batch normalization. These components form a cohesive framework that addresses key training challenges in deep neural networks.
+
+### 2.1 convolutional layers and feature extraction
+
+In typical convolutional neural network (CNN) designs, stacked convolutional layers act as hierarchical feature extractors. Early layers capture low-level features (edges, corners, simple color contrasts), while intermediate and deep layers capture more abstract features (object parts, textures, compositions). ResNet continues this tradition by using standard convolutional layers at every stage, but it couples them with the skip connection mechanism to facilitate robust gradient propagation.  
+
+A standard ResNet often begins with an initial convolution that has a relatively large kernel size (for example, a 7×7 convolution in the original ResNet for ImageNet classification) and a stride of 2, followed by a pooling layer. This initial layer helps the network quickly reduce the spatial dimensions of the input image, focusing computation on more abstract features. Subsequent layers are grouped into different stages, each doubling or otherwise scaling the number of channels (i.e., feature maps) and sometimes further reducing spatial dimensions via strided convolutions.  
+
+Formally, a single convolutional layer performing a 2D convolution can be described by:
+
+<Latex text="\[
+O_{i,j}^{(k)} = \sum_{u,v} W_{u,v}^{(k)} \times I_{i+u, j+v} + b^{(k)},
+\]"/>
+
+Here, <Latex text="\(O\)"/> is the output feature map at spatial coordinates <Latex text="\(i, j\)"/>, <Latex text="\(k\)"/> indexes the particular output channel, <Latex text="\(W\)"/> and <Latex text="\(b\)"/> are trainable weights and bias, respectively, and <Latex text="\(I\)"/> is the input feature map. While this is the basic convolution formula that underlies all CNNs, ResNet's innovation relies not in a new convolution itself but rather in how these convolutions are composed and connected.  
+
+Because ResNet aims to go deep, having 18, 34, 50, or even more layers, the design uses relatively small kernel sizes in many places (e.g., 3×3 kernels). This choice helps keep the number of parameters and the computational overhead within reasonable bounds. Additionally, these smaller kernels repeatedly capture local features and combine them across multiple layers, which can effectively represent complicated patterns in images.  
+
+From a practical standpoint, the choice of kernel sizes, stride, and padding in ResNet is deeply informed by earlier architectures (VGG, for instance) that proved 3×3 convolutions are quite effective. ResNet also consistently applies a stride of 2 at certain layers to reduce spatial resolution, akin to pooling, though it is carried out through convolution rather than relying exclusively on max-pooling layers. This process yields a hierarchical reduction in spatial dimension and an increase in channel depth, feeding deeper layers with progressively abstract feature maps.
+
+### 2.2 the role of skip connections
+
+Skip connections are the defining feature of ResNet, enabling the model to learn residual mappings. In a typical CNN without skip connections, the output of a stack of layers is simply:
+
+<Latex text="\( \text{output} = F(x) \)"/>
+
+where <Latex text="\(F(\cdot)\)"/> represents the transformation learned by the stacked layers and <Latex text="\(x\)"/> is the input to that stack. In ResNet, by contrast, the architecture explicitly adds <Latex text="\(x\)"/> to the output of <Latex text="\(F(x)\)"/>:
+
+<Latex text="\[
+\text{output} = F(x) + x.
+\]"/>
+
+Here, the function <Latex text="\(F(\cdot)\)"/> is often thought of as the "residual function" with respect to the identity mapping. By rephrasing the layer's objective as <Latex text="\(F(x) + x\)"/>, ResNet reduces the difficulty of directly approximating complex transformations. Instead, the network can learn to tweak the identity mapping, or in other words, it learns how the output should differ from <Latex text="\(x\)"/>. This approach has shown significant advantages in mitigating vanishing gradients, because the gradient of the loss with respect to <Latex text="\(x\)"/> can flow through the addition operation more directly.  
+
+Conceptually, if deeper layers are not needed to improve the performance beyond what earlier layers achieve, then the network can more easily learn something close to an identity function, effectively skipping the deeper layers. This approach addresses the phenomenon where adding more layers sometimes leads to higher training and test error (a problem known as "degradation"). Instead, deeper networks with skip connections are capable of learning at least as well as their shallower counterparts, and often substantially better.  
+
+In practice, the skip connection is typically implemented by a simple addition operation in the computational graph, occasionally preceded by a 1×1 convolution if matching shapes or dimension increases are needed. The success of this approach is not purely about gradient shortcuts; it also facilitates faster convergence. The network effectively sees references to earlier stage outputs, allowing deeper layers to refine, rather than wholly reinvent, the features from the earlier layers.
+
+### 2.3 identity and projection shortcuts
+
+ResNet uses two main forms of skip connections, often referred to as "shortcuts":  
+1. **Identity shortcut**: Where the input is added to the output of the stacked layers directly, requiring the output to match the input shape exactly (i.e., same number of channels and the same spatial resolution).  
+2. **Projection shortcut**: Where a 1×1 convolution (often accompanied by a stride) is applied to the input before addition, ensuring that shapes are compatible when the number of channels changes or when the spatial resolution is reduced.  
+
+Mathematically, we can describe a residual block with a projection shortcut (e.g., used when downsampling is required) as:
+
+<Latex text="\[
+\text{output} = F(x) + W_s x,
+\]"/>
+
+where <Latex text="\(W_s\)"/> is a learned weight matrix that projects the input <Latex text="\(x\)"/> to match the dimension of <Latex text="\(F(x)\)"/>. Typically, <Latex text="\(W_s\)"/> might represent a 1×1 convolution with stride 2 (or some other stride), effectively cutting the spatial dimension in half if needed and expanding or contracting the number of channels to match.  
+
+Identity shortcuts are used whenever possible, since they simplify the structure and lighten the parameter overhead. However, every time the network changes the output dimension or modifies resolution, a projection shortcut is employed to ensure that the summation <Latex text="\(F(x) + x\)"/> remains dimensionally consistent.  
+
+From a design perspective, identity shortcuts reflect the simplest approach to skip connections, and they reinforce the principle that the deeper layers are refining the features from earlier layers rather than discarding or rewriting them altogether. Projection shortcuts, while more computationally demanding, preserve the skip connection advantage when the feature map size or number of channels changes.  
+
+### 2.4 resnet design principles
+
+While the fundamental idea of residual blocks is straightforward, it is the careful orchestration of these blocks that drives ResNet's success. From the original paper, the creators of ResNet (He and gang) laid out a number of guiding principles:
+
+1. **Use of small kernels**: Many parts of ResNet rely heavily on 3×3 filters, following the VGG16/VGG19 design style. Small kernels reduce parameter counts and preserve a simpler architecture.  
+2. **Batch normalization**: Each convolutional layer in a residual block is typically followed by batch normalization (BN) and a ReLU activation. BN normalizes activations across the batch dimension, stabilizing gradients and accelerating training (Ioffe and Szegedy, ICML 2015).  
+3. **Downsampling**: ResNets use strided convolution (often in the first convolution of a residual block at each new stage) for downsampling. This approach replaces or supplements max-pooling layers.  
+4. **No pooling in the middle**: Rather than using repeated pooling layers throughout the network, ResNet relies primarily on strided convolutions for dimension changes.  
+5. **Avoiding complicated topologies**: Other advanced architectures, such as Inception, introduced more intricate module structures. By comparison, ResNet is simpler in its building block design, focusing on direct skip connections and 3×3 convolutions.  
+6. **Deep but consistent**: Stacking multiple blocks in a repeated pattern fosters a consistent design that is relatively easy to scale up or down.  
+
+These principles make ResNet more modular, facilitating the creation of different variants (e.g., ResNet-18 vs. ResNet-152) by repeating residual blocks in a standardized way. Researchers and practitioners alike find this modularity to be advantageous when customizing ResNets for different tasks.
+
+### 2.5 layer stacking strategy
+
+A typical ResNet architecture for ImageNet classification is divided into multiple "stages" or "groups":  
+
+- **Stage 0**: An initial convolution with a relatively large kernel (7×7) and stride 2, followed by a pooling layer.  
+- **Stage 1**: A stack of residual blocks with 64 filters (output channels).  
+- **Stage 2**: A stack of residual blocks with 128 filters, often with stride 2 in the first block to reduce spatial resolution.  
+- **Stage 3**: A stack of residual blocks with 256 filters, again using stride 2 for downsampling.  
+- **Stage 4**: A stack of residual blocks with 512 filters, downsampling once more.  
+
+The exact number of blocks in each stage determines the overall depth of the ResNet. For example, ResNet-18 uses fewer blocks in each stage compared to ResNet-50 or ResNet-152. After these stages, a global average pooling is usually applied, followed by a fully connected layer for classification (for tasks such as ImageNet).  
+
+The interplay between the number of filters and the spatial resolution is critical. The deeper stages have more filters but smaller spatial dimensions, keeping the computational footprint from exploding while still preserving the ability to capture complex, high-level features. The existence of skip connections across each block helps the network leverage features from earlier layers without forcing each stage to relearn the identity mapping.  
+
+In deployment scenarios, this stacking strategy can be adapted:  
+- For smaller input images, some stages might be shortened or omitted.  
+- For deeper architectures, additional blocks can be inserted into each stage.  
+- For specialized tasks like object detection (e.g., Faster R-CNN or Mask R-CNN), the ResNet backbone might be truncated in later layers or augmented with feature pyramid networks for multi-scale feature extraction.  
+
+### 2.6 bottleneck building blocks
+
+In deeper variants of ResNet — typically those with 50 or more layers (ResNet-50, ResNet-101, ResNet-152) — a "bottleneck" design is used within residual blocks. This design reduces the computational burden while allowing for deeper stacking. A bottleneck block typically uses three convolutions:
+
+1. **1×1 convolution** to reduce channel dimension (sometimes called the "reduction" or "compression" step).  
+2. **3×3 convolution** for the main spatial feature extraction.  
+3. **1×1 convolution** to restore the reduced dimension to the original channel dimension (sometimes called the "expansion" step).  
+
+Hence, the input with a certain number of channels is first reduced in dimensionality, processed with a 3×3 convolution at a smaller channel size, and then expanded back to the original dimension before the skip addition. This approach is beneficial because the intermediate 3×3 convolution operates on fewer channels, significantly lowering the number of operations and parameters while still providing the necessary capacity for learning complex transformations.  
+
+Mathematically, if <Latex text="\(C\)"/> is the number of input channels in the block, and the bottleneck factor is <Latex text="\(r\)"/> (typical values are around 4), then the intermediate representation might have <Latex text="\(C/r\)"/> channels. The 3×3 convolution will then have <Latex text="\(C/r \times C/r \times 3 \times 3\)"/> parameters rather than <Latex text="\(C \times C \times 3 \times 3\)"/>. The final 1×1 expansion reverts the channel count to <Latex text="\(C\)"/> so it can be added elementwise to the identity or projected input.  
+
+In summary, bottleneck blocks enable ResNet to go deeper (up to 152 layers and beyond) without incurring a massive computational cost. This architectural pattern has influenced a wide range of subsequent network designs, including many top-performers in computer vision challenges.
+
+### 2.7 initialization and batch normalization practices
+
+Another critical component of ResNet's training stability is the use of well-thought-out weight initialization and normalization layers. Two key elements stand out:
+
+1. **Initialization**: The original ResNet work used variants of He initialization (He and gang, ICCV 2015), which is especially designed for ReLU-based networks. This approach sets the initial weights in a manner that preserves the signal variance across layers. In subsequent practice, some prefer more nuanced initialization schemes or additional tricks like zero-initializing the last batch normalization gamma parameter in each residual branch, ensuring that each residual block initially behaves like an identity function. This further stabilizes early training and ensures that the network can effectively skip layers at the beginning if needed.  
+
+2. **Batch Normalization (BN)**: By normalizing the outputs of each convolution across the batch dimension, BN helps keep the activation distribution stable as data flows through many layers. This is absolutely vital in deeper networks, as unregulated activation distributions can explode or vanish quickly. BN also often includes learnable scale and shift parameters, which, together with skip connections, give the network further expressiveness.  
+
+In some advanced ResNet variants, researchers have experimented with alternatives to BN, such as group normalization or layer normalization, particularly for tasks where batch sizes are small or dynamic. However, BN remains the de facto standard for large-scale image classification tasks.  
+
+When these initialization strategies and BN layers are combined with residual blocks, the resulting network converges faster and exhibits consistently strong performance. If either piece were removed or improperly applied, the training process for extremely deep networks would be unstable and likely to fail.
+
+
+## 3. Variants
+
+The flexibility and success of ResNet quickly spurred the creation of multiple variants. These variants differ primarily in depth (i.e., how many layers), width (i.e., how many filters per layer), and the ordering/activation inside each block (e.g., pre-activation). In this section, I describe popular and influential ResNet variants, including the classic 18, 34, 50, 101, and 152-layer models, along with more specialized innovations like Wide ResNet, ResNeXt, and the pre-activation design.
+
+### 3.1 resnet-18, resnet-34, resnet-50, and beyond
+
+- **ResNet-18 and ResNet-34**: These are the "lighter" versions often used for smaller datasets or for tasks where computational resources are limited. They do not employ the bottleneck block; each residual block is a pair of 3×3 convolutions. Despite their relative simplicity, they tend to outperform similarly small networks in the same parameter range, largely thanks to the skip connections.  
+
+- **ResNet-50**: This version introduced the bottleneck block and became one of the most popular backbones for feature extraction in a variety of tasks, including object detection and image segmentation. Its balance between depth and computational cost makes it a staple in the ML community.  
+
+- **ResNet-101 and ResNet-152**: These deeper models expand upon the ResNet-50 design by adding more bottleneck blocks. They are more computationally expensive but can deliver improved accuracy on large-scale datasets. Many top entries in recognition challenges throughout the mid-to-late 2010s used ResNet-101 or ResNet-152.  
+
+- **ResNet-200 and deeper**: Some explorations push the depth even further. These extremely deep versions are less common in production but are used in research to show that the ResNet concept can scale to hundreds of layers without suffering from the vanishing gradient problem.  
+
+Each of these models follows the same overarching architecture strategy: an initial convolution and pooling layer, followed by multiple stages of residual blocks that downsample spatial dimensions while increasing channel depth, finally leading into a global average pooling and fully connected layer for classification. The difference lies in how many residual blocks appear in each stage and whether or not they use the bottleneck design.
+
+### 3.2 wide resnet and resnext
+
+Depth is not the only dimension that can be scaled. Researchers have also experimented with scaling "width" — the number of channels in the intermediate or final convolution layers. Two well-known offshoots from the original ResNet design are Wide ResNet (WRN) and ResNeXt:
+
+1. **Wide ResNet (WRN)**: Presented by Zagoruyko and Komodakis (BMVC 2016), Wide ResNets reduce the depth of the network but significantly increase the width (i.e., the number of channels). The authors found that a shallower but wider network could sometimes yield better accuracy and faster training than extremely deep counterparts, especially on datasets like CIFAR-10 and CIFAR-100. WRN preserves the skip connection philosophy but changes the channel multiplier to broaden each layer, addressing the possibility that additional depth is not always necessary to achieve strong representational power.  
+
+2. **ResNeXt**: Introduced by Xie and gang (CVPR 2017), ResNeXt modifies the ResNet bottleneck block by splitting the 3×3 convolution into multiple "cardinality" branches (also known as group convolutions). The outputs of these parallel branches are aggregated by summation (similar to the skip connection concept). The cardinality dimension can be increased to improve accuracy, often more efficiently than simply deepening or widening the network. Hence, a ResNeXt block introduces group convolutions that allow for more flexible multi-branch transformations without ballooning parameters as drastically as naive wide expansions.
+
+These variants illustrate that skip connections are not just about building deeper networks; they can also be leveraged in a variety of ways to broaden or restructure how each convolutional layer processes features. Both Wide ResNet and ResNeXt remain active baselines in tasks like image classification and even specialized tasks (e.g., super-resolution), showcasing the adaptability of ResNet's core approach.
+
+### 3.3 pre-activation resnet
+
+In the original ResNet, the structure of a residual block is:
+
+`[conv -> BN -> ReLU -> conv -> BN -> addition -> ReLU]`
+
+Here, the skip connection adds <Latex text="\(x\)"/> to the output of the second batch normalization. However, He and gang later introduced a **pre-activation** variant where the block is reorganized such that the activation and normalization occur before the convolution:
+
+`[BN -> ReLU -> conv -> BN -> ReLU -> conv -> addition]`
+
+In the pre-activation design, the skip connection is added to the output of the second convolution, which occurs **after** the batch normalization and ReLU. The difference is subtle, but it carries important implications for optimization. By moving batch normalization and ReLU to the front, the network sees cleaner gradient signals, and many have reported that training becomes more stable. Additionally, the identity mapping in the skip connection is potentially more "pure" (i.e., less subject to activation-induced distortions), further simplifying residual learning.  
+
+In practice, pre-activation ResNets can sometimes outperform standard (post-activation) ResNets, especially in deeper variants. Some frameworks default to pre-activation blocks for advanced training recipes. Nonetheless, the standard post-activation ResNet remains very common because of its historical significance, simpler block structure, and well-tested performance across many tasks.
+
+
+## 4. Training
+
+Training a ResNet is typically more straightforward than training similarly deep networks without skip connections, but there are still key considerations that can make or break performance. For instance, data preprocessing and augmentation strategies, hyperparameter settings, and regularization approaches all have a major impact on how well a deep residual network converges and generalizes.
+
+### 4.1 data preprocessing and augmentation
+
+1. **Data normalization**: Especially in image classification tasks, each input is usually normalized by mean subtraction and standard deviation scaling for the dataset at hand (e.g., using the Imagenet dataset's per-channel mean and standard deviation). This ensures that the inputs to the network are centered and scaled appropriately, which complements BN's internal normalization.  
+
+2. **Random crops and flips**: A common technique is to randomly crop a portion of the image and subsequently resize to the desired input dimension (for instance, 224×224 for ImageNet). Horizontal flipping is also widely used for data augmentation, effectively doubling the training set if flips are applied randomly.  
+
+3. **Color jitter and other distortions**: For more robust color invariance and to prevent overfitting, random perturbations of brightness, contrast, and saturation are often applied. Other spatial transformations like random rotation or slight random translation can also help.  
+
+4. **AutoAugment and RandAugment**: Recent research has introduced automated augmentation policies that choose from a range of transformations. Although these are not specific to ResNet, they often yield notable improvements in final accuracy.  
+
+5. **CutMix and MixUp**: These advanced augmentation strategies combine images (and corresponding labels) in creative ways to encourage the network to learn more robust decision boundaries.  
+
+These augmentation and preprocessing techniques become increasingly important as the network depth increases, because deeper networks tend to be more data-hungry and can easily overfit if not exposed to enough training variety.
+
+### 4.2 hyperparameter tuning for depth and width
+
+While ResNet alleviates many training problems, the choice of model depth and width still matters:
+
+- **Depth**: As we move from ResNet-18 to ResNet-50, 101, or 152, the representational power improves but so does the need for more compute and more data. For smaller datasets, going too deep can lead to diminishing returns or overfitting. In some tasks, ResNet-50 remains a sweet spot. In larger-scale tasks, deeper variants sometimes provide significant gains.  
+- **Width**: Adjusting width (i.e., the number of channels) can be a direct way to control the capacity of the network without making it significantly deeper. Networks such as Wide ResNet have shown that increasing width can sometimes yield better accuracy than adding more layers, especially in data-constrained settings.  
+- **Batch size**: A bigger batch size can improve statistical estimates in BN and accelerate training via parallelization, but it may require specialized hardware or tricky tuning of the learning rate. Conversely, training with small batches is feasible but often demands different hyperparameter choices, such as a well-tuned learning rate schedule or using group normalization instead of BN.  
+- **Learning rate schedules**: Typical schedules include step decays, where the learning rate is dropped at certain epochs, or more advanced methods like cosine annealing. "Warm restarts" and other adaptive scheduling strategies can also help the network avoid local minima.  
+
+Practitioners typically rely on empirical experimentation or well-established training "recipes" for a given dataset (e.g., the famous "ImageNet 1K recipe"). The skip connections in ResNet reduce the catastrophic effects of badly chosen hyperparameters, but a well-tuned set of hyperparameters remains crucial for best performance.
+
+### 4.3 regularization
+
+Regularization strategies reduce overfitting, which is essential for large, deep networks like ResNet:
+
+- **Weight decay**: Often set to a small constant (e.g., <Latex text="\(1e-4\)"/>) to penalize large weights, weight decay is one of the most common and effective forms of regularization.  
+- **Dropout**: In early ResNet papers, dropout was not extensively used; skip connections already provide a form of implicit regularization. However, in some specialized tasks or in variants (Wide ResNet in certain configurations), dropout remains beneficial.  
+- **Label smoothing**: This modifies the one-hot targets so that each class probability is slightly above zero rather than strictly 0 for classes other than the ground truth. This technique helps the model avoid overconfidence and can improve calibration.  
+- **Stochastic depth**: Proposed by Huang and gang (ECCV 2016), this technique randomly drops entire residual blocks during training, making the network effectively shallower for some forward passes. This approach can help generalization and speed up training.  
+
+Depending on the domain, advanced domain-specific regularization strategies (e.g., cutout for image classification) can also be integrated. The key idea is that ResNet's skip connections reduce the friction of adding more layers, but the network can still overfit if not properly regularized.  
+
+All of these tuning strategies, from data augmentation to weight decay, combine to allow the deeper ResNet variants to generalize well on large-scale tasks. Indeed, many computer vision top results from 2016 onward used ResNet backbones, either with or without modifications, attesting to the architecture's robust generalization when carefully trained.
+
+
+## 5. Implementation with tensorflow
+
+Below, I illustrate a simplified ResNet block implementation in TensorFlow (particularly TensorFlow 2.x / Keras). This code snippet shows the bottleneck block approach, including skip connections. Keep in mind that real production code often includes many additional optimizations and specialized settings.
+
+<Code text={`
+import tensorflow as tf
+from tensorflow.keras import layers, Model
+
+class BottleneckBlock(tf.keras.Model):
+    def __init__(self, filters, stride=1, downsample=None):
+        super(BottleneckBlock, self).__init__()
+        self.filters = filters
+        self.stride = stride
+        # 1x1 reduction
+        self.conv1 = layers.Conv2D(filters // 4, kernel_size=1, strides=1, padding='same', use_bias=False)
+        self.bn1 = layers.BatchNormalization()
+        
+        # 3x3 convolution
+        self.conv2 = layers.Conv2D(filters // 4, kernel_size=3, strides=stride, padding='same', use_bias=False)
+        self.bn2 = layers.BatchNormalization()
+        
+        # 1x1 expansion
+        self.conv3 = layers.Conv2D(filters, kernel_size=1, strides=1, padding='same', use_bias=False)
+        self.bn3 = layers.BatchNormalization()
+        
+        self.relu = layers.ReLU()
+        self.downsample = downsample
+
+    def call(self, x, training=False):
+        identity = x
+        
+        # First conv
+        out = self.conv1(x)
+        out = self.bn1(out, training=training)
+        out = self.relu(out)
+        
+        # Second conv
+        out = self.conv2(out)
+        out = self.bn2(out, training=training)
+        out = self.relu(out)
+        
+        # Third conv
+        out = self.conv3(out)
+        out = self.bn3(out, training=training)
+        
+        # Downsample if needed
+        if self.downsample is not None:
+            identity = self.downsample(x, training=training)
+        
+        # Skip connection
+        out = layers.add([out, identity])
+        out = self.relu(out)
+        
+        return out
+
+class ResNet(Model):
+    def __init__(self, layer_dims, num_classes=1000):
+        super(ResNet, self).__init__()
+        
+        # Initial layers (similar to 'stage 0')
+        self.conv1 = layers.Conv2D(64, kernel_size=7, strides=2, padding='same', use_bias=False)
+        self.bn1 = layers.BatchNormalization()
+        self.relu = layers.ReLU()
+        self.maxpool = layers.MaxPooling2D(pool_size=3, strides=2, padding='same')
+        
+        # ResNet stages
+        self.layer1 = self._make_layer(64,  layer_dims[0])
+        self.layer2 = self._make_layer(128, layer_dims[1], stride=2)
+        self.layer3 = self._make_layer(256, layer_dims[2], stride=2)
+        self.layer4 = self._make_layer(512, layer_dims[3], stride=2)
+        
+        # Classification head
+        self.avgpool = layers.GlobalAveragePooling2D()
+        self.fc = layers.Dense(num_classes)
+
+    def _make_layer(self, filters, blocks, stride=1):
+        downsample = None
+        
+        # If stride != 1 or in/out channels differ, create projection
+        if stride != 1:
+            downsample = tf.keras.Sequential([
+                layers.Conv2D(filters, kernel_size=1, strides=stride, use_bias=False),
+                layers.BatchNormalization()
+            ])
+        
+        layers_list = []
+        layers_list.append(BottleneckBlock(filters, stride=stride, downsample=downsample))
+        
+        # Additional blocks
+        for _ in range(1, blocks):
+            layers_list.append(BottleneckBlock(filters))
+        
+        return tf.keras.Sequential(layers_list)
+
+    def call(self, x, training=False):
+        x = self.conv1(x)
+        x = self.bn1(x, training=training)
+        x = self.relu(x)
+        x = self.maxpool(x)
+        
+        x = self.layer1(x, training=training)
+        x = self.layer2(x, training=training)
+        x = self.layer3(x, training=training)
+        x = self.layer4(x, training=training)
+        
+        x = self.avgpool(x)
+        x = self.fc(x)
+        
+        return x
+
+def ResNet50(num_classes=1000):
+    # layer_dims for ResNet-50
+    return ResNet(layer_dims=[3, 4, 6, 3], num_classes=num_classes)
+
+# Example usage:
+# model = ResNet50(num_classes=1000)
+# x = tf.random.normal((1, 224, 224, 3))
+# logits = model(x, training=True)
+# print(logits.shape)
+`}/>
+
+In this code:
+
+- We define a `BottleneckBlock` class that captures the 1×1 → 3×3 → 1×1 design and includes optional downsampling for dimension matching.  
+- We build the main network in `ResNet` by stacking these blocks in stages. The `_make_layer` method constructs sequences of blocks for each stage.  
+- `ResNet50` is instantiated by specifying a layer configuration `[3, 4, 6, 3]`, which is a well-known blueprint for ResNet-50.  
+- Real-world usage would typically also include a training loop or usage of Keras's `fit()` method, some additional utility for checkpointing or metrics logging, and possibly other advanced techniques.  
+
+This snippet highlights the essential structure of a ResNet: an initial convolution/pooling stage, several residual stages, a global average pooling, and a final fully connected layer for classification. If you wish to create ResNet-101, for instance, you could pass `[3, 4, 23, 3]` as `layer_dims` (the numbers represent the number of bottleneck blocks in each stage).
+
+
+## 6. Advanced topics related to resnet
+
+Since its introduction, ResNet has evolved and influenced a broad spectrum of neural architectures. Researchers have extensively experimented with modifications, applications, and theoretical analyses of ResNets. Here are several advanced topics that highlight the continued relevance of ResNet in cutting-edge research and real-world applications:
+
+1. **Application beyond image classification**:  
+   ResNets are widely used as backbones in object detection (e.g., Faster R-CNN, YOLO) and instance/semantic segmentation frameworks (e.g., Mask R-CNN, DeepLab). In these use-cases, the final global pooling and fully connected layer are often replaced or augmented by task-specific heads, and the output feature maps from intermediate ResNet stages are fed into multi-scale detection pipelines.  
+
+2. **ResNet for domain adaptation**:  
+   In domain adaptation scenarios, a ResNet backbone might be pretrained on a large labeled dataset and then adapted to a different domain where labeled data is scarce. The skip connections provide robust baseline features that can generalize across domains more reliably than purely feedforward CNNs.  
+
+3. **Residual connections in NLP**:  
+   The success of skip connections in ResNet has influenced many sequence models. Most modern Transformer-based architectures (like BERT, GPT, etc.) have skip connections around multi-head attention and feedforward layers. Although the data modality is different, the residual learning principle remains extremely powerful for stabilizing deep networks in any domain.  
+
+4. **Ablation of skip connection types**:  
+   Researchers have investigated different forms of skip connections, such as gating mechanisms that learn when to "turn on" or "turn off" the skip. Others have tried adding attention modules to the skip pathway. While these can occasionally improve performance, the straightforward addition approach remains the most common.  
+
+5. **ResNet's interpretability**:  
+   Because ResNets make deeper architectures more trainable, some research has analyzed internal representations formed by residual blocks. They have discovered that skip connections often preserve low-level signals that can be reintroduced in later layers, leading to interesting forms of feature reusability and hierarchical composition.  
+
+6. **Stochastic depth and other training variants**:  
+   Building on the success of skip connections, some researchers introduced partial or stochastic usage of these connections during training. This can reduce the effective depth of the network for certain forward passes, speeding training and sometimes boosting test accuracy.  
+
+7. **Normalization alternatives**:  
+   For small-batch or resource-constrained environments, group normalization or layer normalization can replace batch normalization. These changes often modify how the skip connections function in practice but still harness the same fundamental principle of learning residual transformations.  
+
+8. **Extension to generative models**:  
+   Residual blocks are not limited to discriminative tasks. Many generative adversarial networks (GANs) and variational autoencoders (VAEs) incorporate skip connections to aid training stability and produce higher-quality samples.  
+
+9. **ResNet in compact or mobile settings**:  
+   MobileNet and other efficient architectures sometimes incorporate depthwise separable convolutions and other compression techniques. While they are not strict ResNets, they frequently adopt the concept of residual connections in a lighter form to reduce parameter counts and memory usage, thus bridging the gap between full-scale ResNets and edge deployments.  
+
+10. **Residual blocks with attention**:  
+   Squeeze-and-excitation (SE) blocks (Hu and gang, CVPR 2018) insert small attention modules inside each residual block. This approach adaptively reweights channels, improving representational power for relatively few additional parameters. Another direction is using self-attention in place of some convolutions, bridging concepts from Transformers with residual blocks.  
+
+11. **Theoretical perspectives on skip connections**:  
+   Some studies dive into the functional aspects of skip connections, analyzing them as solutions to certain ordinary differential equations (ODE-based interpretations). By seeing the network as an iterative solver of an ODE or by interpreting each residual block as a discrete step in a dynamical system, researchers gain insights into why skip connections help to stabilize and accelerate training.  
+
+In conclusion, ResNet sparked a renaissance in architecture design, where the fundamental notion of learning residual mappings permeates the entire deep learning landscape. Although simpler in concept than many of its successors, ResNet remains a cornerstone model in computer vision and beyond, providing robust performance, flexibility, and interpretability — all while mitigating the obstacles posed by extreme depth.
+
+
+<Image alt="resnet block diagram" path="" caption="A simplified diagram of a residual block using bottleneck layers, featuring skip connections." zoom="false" />
+
+<Image alt="resnet skip connection" path="" caption="Visual depiction of adding the identity input to the output of the main convolutional layers." zoom="false" />
+
+<Image alt="resnet overall architecture" path="" caption="High-level view of a ResNet with four main stages plus an initial convolution and a final classification head." zoom="false" />  
+
+---
+
+This concludes the deep exploration of ResNet. By incorporating skip connections and carefully designing each layer, ResNet overcomes many of the issues that plagued prior deep architectures, ushering in an era of networks that are both deeper and more effective. Its influence persists not only in computer vision but also in other fields, where residual learning stands as a proven strategy to push the depth and performance boundaries of neural networks. Researchers and practitioners continue to adapt, extend, and refine ResNet principles, demonstrating the broad relevance of this architecture in the machine learning world.

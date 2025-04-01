@@ -1,0 +1,527 @@
+---
+index: 124
+indexCourse: 17
+indexFavorites:
+title: "Semi-supervised learning"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Semi-supervised learning"
+courseCategoryName: "Basic ML theory & techniques"
+desc: "There are two chairs..."
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "06.09.2024"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 1
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/semi_supervised_learning.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/semi_supervised_learning"
+slug: "/research/semi_supervised_learning"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+{/*
+
+Обучение с частичным привлечением учителя
+https://neerc.ifmo.ru/wiki/index.php?title=%D0%9E%D0%B1%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5_%D1%81_%D1%87%D0%B0%D1%81%D1%82%D0%B8%D1%87%D0%BD%D1%8B%D0%BC_%D0%BF%D1%80%D0%B8%D0%B2%D0%BB%D0%B5%D1%87%D0%B5%D0%BD%D0%B8%D0%B5%D0%BC_%D1%83%D1%87%D0%B8%D1%82%D0%B5%D0%BB%D1%8F 
+
+*/}
+
+
+{/*
+
+1. Introduction to semi-supervised learning
+- The growing need for semi-supervised techniques  
+- Definition and distinguishing features of semi-supervised learning  
+- The role of labeled and unlabeled data  
+- Why experts in supervised and unsupervised learning should explore semi-supervised learning
+2. Theoretical foundation of semi-supervised learning
+- Key assumptions in semi-supervised learning  
+- The cluster assumption  
+- The manifold assumption  
+- The low-density separation assumption  
+- The mathematics behind semi-supervised models  
+- Comparison with supervised, unsupervised, and reinforcement learning  
+- etc.
+3. Types of semi-supervised learning algorithms
+- Generative models  
+- Graph-based models  
+- Label propagation  
+- Consistency regularization methods  
+- Mean teacher model  
+- Virtual adversarial training  
+- Pseudo-labeling techniques  
+- Iterative refinement approaches  
+- Confidence thresholding  
+- Hybrid approaches combining multiple techniques  
+4. Applications
+5. Advantages and limitations
+- Benefits over purely supervised and unsupervised learning  
+- Challenges in applying semi-supervised techniques  
+- Overfitting to noisy labels  
+- Imbalanced labeled data distributions  
+- Scalability issues and computational cost
+6. Evaluation metrics
+- Metrics for assessing model performance  
+- Techniques for comparing against supervised and unsupervised baselines  
+- Dataset-specific considerations for evaluation
+7. Advances and trends in semi-supervised learning
+- Advances in model architecture and techniques  
+- The role of transfer learning in semi-supervised learning  
+- Semi-supervised learning in self-supervised paradigms  
+- Integration with large language models and foundation models
+8. Implementation
+- Real-world case studies demonstrating semi-supervised learning  
+- Tools and libraries for implementing semi-supervised learning
+- PyTorch and TensorFlow for custom implementations  
+- Scikit-learn's support for semi-supervised methods  
+- Using pre-trained models in semi-supervised workflows
+- Step-by-step implementation of a semi-supervised model  
+- Common pitfalls and troubleshooting in practice
+- Code
+
+*/}
+
+
+Semi-supervised learning has emerged as one of the most exciting areas of machine learning research in recent years, driven by the rapid increase in data volumes, the high cost of human annotation, and the desire to exploit large amounts of unlabeled data. In many real-world scenarios, the vast majority of raw data is unlabeled, while the smaller proportion is painstakingly annotated by expert labelers or by expensive automated labelers (such as specialized sensors). This imbalance between vast unlabeled datasets and comparatively small labeled datasets has created both the need and the opportunity for techniques that intelligently combine labeled and unlabeled data. Herein lies the essence of semi-supervised learning: we aim to learn better predictive models by incorporating structure, patterns, or manifold information gleaned from unlabeled points, alongside the rich but sparse signal from labeled examples.
+
+Broadly speaking, supervised learning relies on fully labeled data to train models, while unsupervised learning relies on unlabeled data alone. Semi-supervised learning (SSL) occupies a middle ground: one leverages both labeled and unlabeled data under the principle that unlabeled data can provide powerful insights into the structure of the underlying data distribution. If we only had supervised data, we might be limited in capturing complex manifolds or hidden relationships that are evident in large unlabeled samples. If we only used unsupervised data, we would have difficulty grounding the discovered patterns in the actual classes or relevant labels. By intelligently combining both labeled and unlabeled data, semi-supervised methods often achieve substantially better performance than purely supervised or purely unsupervised approaches, especially in domains where labeled data is precious.
+
+I will start by offering a conceptual and historical perspective on semi-supervised learning, then weave in more advanced theoretical frameworks that highlight why SSL is not merely a quick fix for label scarcity, but a deeply principled approach that touches on manifold learning, graph-based methods, self-training, generative models, and beyond. Since most readers of this course already have extensive experience with machine learning in general, I will also point out the most important nuances that distinguish semi-supervised learning from both supervised and unsupervised paradigms, as well as why it might be beneficial to pivot from purely supervised or purely unsupervised techniques to semi-supervised ones for specific types of problems.
+
+### The growing need for semi-supervised techniques
+
+Data-hungry algorithms — particularly modern deep learning approaches — often demand enormous amounts of labeled data to reach high accuracy. In fields such as computer vision, natural language processing, and speech recognition, researchers regularly push for bigger datasets (for instance, image datasets with tens of millions of labeled samples). However, hand-labeling data is extremely costly. Businesses might need to hire annotators, or research labs might use specialized equipment for labeling (e.g., medical imaging data might require a radiologist or pathologist to label precisely). By contrast, collecting unlabeled data is usually much cheaper: we can scrape text from the web, record sensor data continuously, or store large numbers of images from cameras without the need for immediate annotation. This discrepancy in cost between labeled and unlabeled data is precisely where semi-supervised learning thrives.
+
+### Definition and distinguishing features of semi-supervised learning
+
+Semi-supervised learning can be formally described as follows. Suppose we have a dataset of <Latex text="\(m\)"/> total samples (examples). A small subset of these — let's say <Latex text="\(l\)"/> samples — are accompanied by their labels, while the remaining <Latex text="\(m - l\)"/> samples have no labels. In many practical problems, <Latex text="\(l \ll m\)"/>. The goal is to build a predictive model <Latex text="\(a(\cdot)\)"/> or a decision function <Latex text="\(a: X \rightarrow Y\)"/> that can accurately predict the labels <Latex text="\(y_i\)"/> for both the labeled and unlabeled (and future test) data, by making judicious use of both the labeled portion <Latex text="\((X_l, Y_l)\)"/> and the unlabeled portion <Latex text="\(X_u\)"/>. 
+
+What sets semi-supervised learning apart is its explicit attempt to glean structural or distributional information from <Latex text="\(X_u\)"/>. The methods assume that unlabeled data are not random noise but reflect meaningful data points sampled from the underlying distribution(s). By harnessing such unlabeled data effectively — often under certain assumptions about cluster structure, manifold geometry, or local smoothness — semi-supervised learning tries to generalize better than purely supervised methods trained on the same small labeled set.
+
+### The role of labeled and unlabeled data
+
+The labeled set, of course, provides the ground truth needed to anchor the learning process in known classes or regression targets. The unlabeled set, on the other hand, provides clues as to the overall shape of the data in feature space. For instance, if unlabeled data cluster around certain modes, those clusters might be associated with distinct classes. Or, if the data lie on a lower-dimensional manifold embedded in a high-dimensional space, the unlabeled samples can help approximate that manifold, thereby improving classification or regression performance.
+
+### Why experts in supervised and unsupervised learning should explore semi-supervised learning
+
+Researchers well-versed in supervised learning may sometimes wonder: "Why not simply collect more labeled data or use data augmentation if we are short on labels?" Indeed, that might be possible in some circumstances. But in many practical settings, the cost or practicality of labeling is prohibitive, or the distribution of the data is so vast that it is infeasible to annotate every region. Meanwhile, those with expertise in unsupervised methods might argue that they can cluster or embed the data effectively without labels. While that approach certainly helps discover structure, it does not necessarily align discovered clusters or embeddings with the actual class labels or tasks of interest. Hence, semi-supervised learning merges the best of both worlds: it uses labels to guide the partitioning or transformation of the data, and it exploits unlabeled data to refine and contextualize that partition or transformation.
+
+Semi-supervised learning has proven valuable for a variety of tasks, including text classification (where labeled documents are limited but unlabeled text is plentiful), image recognition (where we have a handful of labeled images but a huge library of unlabeled ones), speech and audio processing, and many more. As we continue to see exponential growth in unstructured data available online, the relevance of SSL only increases, especially in industrial contexts where labeling can become a bottleneck.
+
+<br/>
+
+## 2. Theoretical foundation of semi-supervised learning
+
+Semi-supervised learning, though relatively straightforward in concept, relies on several critical theoretical assumptions regarding the distribution of data. These assumptions help explain why, and under what conditions, unlabeled data can actually be helpful. If these assumptions fail or are violated severely, semi-supervised methods may not offer improvement — in fact, in some cases, they can even degrade performance compared to purely supervised learning.
+
+### Key assumptions in semi-supervised learning
+
+Typically, the fundamental assumptions are:
+
+1. **Smoothness assumption (sometimes called the 'continuity' assumption).**  
+2. **Cluster assumption.**  
+3. **Manifold assumption.**  
+4. **Low-density separation assumption.**  
+
+These assumptions provide guidelines on how unlabeled data might inform labeling decisions. They also relate to more general ideas in manifold learning, kernel methods, and graph-based approaches.
+
+### The cluster assumption
+
+The cluster assumption states that data points that belong to the same cluster are more likely to share a label. In other words, if unlabeled data naturally form distinct clusters in feature space, it is likely that each cluster corresponds (largely) to a single class. This assumption resonates well with methods like label propagation and cluster-based generative approaches. For example, if we have a cluster of images all containing the same object category — say, images of cats — and only a few of them are labeled as 'cat,' we can infer that the entire cluster probably belongs to the 'cat' class.
+
+This can fail if the clusters do not correspond to classes or if multiple classes are interspersed within the same cluster. However, in a great many real-world tasks, data do cluster in meaningful ways. Indeed, from a geometric perspective, data points that are close together or well-connected in feature space often share many semantic similarities.
+
+### The manifold assumption
+
+The manifold assumption posits that the data of interest (e.g., images, audio signals, text) lie on or near a lower-dimensional manifold embedded in a higher-dimensional space. If true, then local neighborhoods on this manifold can inform how to propagate labels. For instance, suppose we are dealing with images of a rotating 3D object. Although each 2D image can be represented by thousands of pixels (thus living in a very high-dimensional space), the degrees of freedom (i.e., the angles of rotation) may be quite small. The manifold assumption leads us to say: once we understand that images change continuously along certain parameters (like object rotation or color shift), we can better group or label images using unlabeled data that fill in intermediate states.
+
+### The low-density separation assumption
+
+One variant or specific interpretation of the smoothness assumption is that the decision boundary (the boundary that separates classes) should preferably lie in regions of low data density. This means that one tries to place the decision boundary where there are fewer data points, allowing more robust classification across the dense clusters. Since unlabeled data show us how data is distributed in the feature space, we can adjust the boundary to avoid slicing through high-density areas. Semi-supervised methods such as semi-supervised SVMs (S3VM) explicitly try to find a decision boundary that is as wide as possible from data points — both labeled and unlabeled — to ensure low-density separation.
+
+### The mathematics behind semi-supervised models
+
+While each branch of semi-supervised learning has its own unique formulation, the unifying theme is that there is often an objective function that depends on both labeled and unlabeled data. Let <Latex text="\( (X_l, Y_l) \)"/> represent the labeled dataset and <Latex text="\( X_u \)"/> represent the unlabeled set. Then a common mathematical template is:
+
+<Latex text="\[
+\min_\theta \Big( L_\text{sup}(X_l, Y_l; \theta) + \alpha\,L_\text{unsup}(X_u; \theta) \Big)
+\]"/>
+
+where:
+
+- <Latex text="\( L_\text{sup} \)"/> is the supervised loss (e.g., a cross-entropy loss on labeled examples).
+- <Latex text="\( L_\text{unsup} \)"/> is an unsupervised or consistency-based term that relies on unlabeled data (e.g., enforcing that points close in feature space should yield similar predictions).
+- <Latex text="\( \alpha \)"/> is a weighting factor balancing the two terms.
+
+Sometimes the objective function is solved by iterative refinement (like the Expectation-Maximization (EM) algorithm in generative models), or by gradient-based approaches in neural networks that incorporate consistency regularization or pseudo-labeling. The ultimate goal is to find parameters <Latex text="\( \theta \)"/> that yield accurate predictions on new data, leveraging both the supervisory signal from labeled samples and the distributional structure gleaned from unlabeled samples.
+
+### Comparison with supervised, unsupervised, and reinforcement learning
+
+- **Supervised learning**: Relies solely on labeled data for training. It can be extremely powerful if large amounts of labeled data are available, but it falters when labeled data is scarce.
+- **Unsupervised learning**: Uses only unlabeled data to discover inherent structures — clusters, latent factors, embeddings, etc. By definition, it does not have labels to anchor or evaluate the discovered structure with respect to an actual classification or regression task.
+- **Semi-supervised learning**: Bridges these approaches by combining a small amount of labeled data with abundant unlabeled data, under assumptions about how unlabeled data can help shape the decision boundary or identify manifold structure.
+- **Reinforcement learning**: Focuses on learning via reward signals from an environment, which is conceptually different but can sometimes incorporate forms of semi-supervised logic if we treat certain states or transitions as partially labeled experiences.
+
+Semi-supervised learning is thus uniquely positioned to tackle the challenge of label scarcity without discarding the overwhelming supply of unlabeled data.
+
+<br/>
+
+## 3. Types of semi-supervised learning algorithms
+
+Over the years, a rich ecosystem of semi-supervised methods has developed. While there are many ways to categorize these algorithms, a commonly accepted grouping includes:
+
+- **Generative models**  
+- **Graph-based models**  
+- **Label propagation**  
+- **Consistency regularization methods**  
+- **Mean teacher model**  
+- **Virtual adversarial training**  
+- **Pseudo-labeling (self-training)**  
+- **Iterative refinement approaches**  
+- **Confidence thresholding**  
+- **Hybrid approaches combining multiple techniques**  
+
+Below, I will describe each of these major categories, their underlying ideas, and typical use cases. I will also highlight references to classic and state-of-the-art works from top-tier machine learning conferences and journals.
+
+### Generative models
+
+Generative models for semi-supervised learning build an explicit model of <Latex text="\( p(x, y) \)"/>. They rely on specifying or learning the joint distribution of data and labels. A well-known approach is to assume a parametric form <Latex text="\( p(x\mid y,\theta) \)"/> with mixture components for each class (like Gaussian mixture models). The unlabeled data can help refine the estimate of <Latex text="\( p(x\mid y,\theta) \)"/>, while the labeled data anchors it with actual class assignments.
+
+Historically, the Expectation-Maximization (EM) algorithm plays a central role here. During the E-step, the model infers possible label assignments for unlabeled data; during the M-step, the model updates the parameters. This approach can be quite powerful if the assumed distribution is close to the true one. However, it can be brittle if the assumptions are strongly violated. Some advanced generative approaches employ deep latent variable models (such as variational autoencoders, VAEs) and incorporate labeled/unlabeled data in a semi-supervised fashion (e.g., Kingma and gang, ICML 2014).
+
+### Graph-based models
+
+A hallmark of semi-supervised learning is the use of graph-based methods. One constructs a graph whose nodes represent data points — both labeled and unlabeled. Edges represent similarity, often computed by distance in feature space or some domain-specific kernel. The intuition is that if two points <Latex text="\( x_i \)"/> and <Latex text="\( x_j \)"/> are connected strongly (i.e., have a large weight in the similarity graph), they likely share the same label. Once the graph is constructed, one can use techniques such as label propagation or graph Laplacian regularization to spread the labeled information to unlabeled nodes. 
+
+Mathematically, label propagation tries to minimize an objective that enforces label consistency along edges of the graph. Let <Latex text="\( f_{1:n} \)"/> be the label assignment for all nodes (both labeled and unlabeled). One approach is to minimize:
+
+<Latex text="\[
+\sum_{i=1}^l \bigl(y_i - f(x_i)\bigr)^2 + \lambda \sum_{i,j} w_{ij}\bigl(f(x_i) - f(x_j)\bigr)^2
+\]"/>
+
+where <Latex text="\( w_{ij} \)"/> is the edge weight between <Latex text="\( x_i \)"/> and <Latex text="\( x_j \)"/>. The first term enforces correct labeling for the labeled nodes, and the second term enforces smoothness with respect to the graph. Graph-based methods can perform remarkably well if one constructs a meaningful graph (e.g., by capturing local neighborhoods in a manifold-like dataset). However, if the graph is poorly constructed — due to an ill-chosen distance metric, insufficient connectivity, or contradictory edges — performance can degrade.
+
+<Image alt="Manifold illustration" path="" caption="Manifold visualization and label propagation on a graph-based structure can help group unlabeled points with their nearest labeled cluster." zoom="false" />
+
+### Label propagation
+
+Label propagation can be seen as a subset or direct method within the family of graph-based techniques. The idea is straightforward: one repeatedly updates label assignments for unlabeled nodes by looking at the labels of their neighbors until convergence. Each iteration effectively 'propagates' the known labels across the network of unlabeled data, guided by the graph's connectivity.
+
+For example, in the so-called 'vanilla' label propagation, each unlabeled node is assigned the average (or weighted average) of the labels of its neighbors in the graph. Over multiple iterations, labels diffuse from the labeled nodes to the unlabeled ones. If there are multiple classes, the process typically deals with label distributions or class probabilities rather than single label values. Once the process stabilizes, each node is assigned the class with the highest probability. This works well if the graph's edges accurately represent semantic similarity.
+
+### Consistency regularization methods
+
+Another major category of semi-supervised learning focuses on the notion of **consistency**. The central tenet is that a small perturbation of an unlabeled example <Latex text="\( x \)"/> should not drastically change the model's output distribution. In other words, the model should predict a similar label for <Latex text="\( x \)"/> and for a stochastically or adversarially perturbed version of <Latex text="\( x \)"/>. 
+
+Popular methods that implement consistency regularization include:
+
+- **Mean Teacher (Tarvainen and Valpola, NeurIPS 2017)**: Maintains an exponential moving average of the model weights as a teacher model. The teacher's predictions on unlabeled data are used to train the student model, enforcing consistency under perturbations.
+- **Virtual Adversarial Training (VAT)**: Seeks the smallest perturbation that changes the model's output the most, and then trains the model to be robust against that perturbation.
+- **Mixup-based or augmentation-based approaches**: Where unlabeled examples are augmented (with random crops, flips, or mixups) and the model is required to produce consistent outputs for these augmented variants.
+
+These methods rely heavily on the smoothness assumption: that points in a high-density region likely share a label, so the model should not drastically fluctuate within that region.
+
+### Mean teacher model
+
+The Mean Teacher approach is a prime example of consistency-based methods. The idea is to have two networks: a student and a teacher. The teacher's weights are an exponential moving average of the student's weights across training steps. For unlabeled data <Latex text="\( x_u \)"/>, one obtains a pseudo-target from the teacher network's output, and the student network is trained to match this target (with some ramp-up weighting schedule). The result is that the teacher accumulates stable knowledge, while the student is forced to produce consistent predictions. This approach has proven successful for tasks like image classification when labeled data is scarce.
+
+### Virtual adversarial training
+
+Proposed by Miyato and gang, virtual adversarial training attempts to find adversarial directions in which to perturb unlabeled examples in feature space. The model is then trained to be invariant to such adversarial perturbations. The name "virtual" stems from the fact that we do not rely on actual label-based adversaries but on small perturbations that maximize the divergence between the model's predictions on the original and the perturbed example. By minimizing this divergence, we enforce a smoother label function on unlabeled data and thus harness unlabeled examples more effectively.
+
+### Pseudo-labeling techniques (self-training)
+
+Pseudo-labeling, sometimes broadly called **self-training**, is one of the earliest and simplest forms of semi-supervised learning. The procedure typically proceeds as follows:
+
+1. Train a classifier on the available labeled data.
+2. Use that classifier to predict labels on the unlabeled data.
+3. Select the unlabeled samples with high-confidence predictions, and add these pseudo-labeled samples to the training set.
+4. Retrain the classifier with this expanded labeled dataset.
+5. Iterate until some stopping criterion is met.
+
+One advantage of pseudo-labeling is its simplicity: you can wrap essentially any supervised learning method in this self-training loop. However, the risk is that if the classifier's initial predictions are wrong for certain unlabeled points, those mistakes can be reinforced as the model retrains. Various heuristics (like thresholding on confidence, removing incorrectly labeled examples in a subsequent iteration, or weighting by confidence) help mitigate that risk. 
+
+### Iterative refinement approaches
+
+Many semi-supervised approaches can be cast as iterative refinement. Generative models that use EM, co-training (where multiple classifiers teach each other), and label propagation can all be seen as iterative processes that gradually refine label assignments or model parameters. If care is taken to avoid reinforcing mistakes, these iterative algorithms typically converge to a more confident label assignment for unlabeled data, ultimately boosting performance.
+
+### Confidence thresholding
+
+Confidence thresholding is often used in conjunction with pseudo-labeling. The model only uses pseudo-labels it is sufficiently confident about — say, if the predicted probability for a certain class is above 0.9. By discarding low-confidence unlabeled points, we reduce the chance of polluting the training set with incorrect labels. While this can be beneficial, it also means that some unlabeled data is effectively wasted. One must strike a balance between caution and coverage.
+
+### Hybrid approaches combining multiple techniques
+
+As semi-supervised learning has matured, many modern methods combine multiple ideas. For example, a method might incorporate consistency regularization (through perturbations) and pseudo-labeling (through self-training) in one cohesive framework. State-of-the-art SSL algorithms for image classification (e.g., MixMatch, FixMatch, and UPS) usually do exactly this. They exploit a range of augmentations, consistency constraints, and confidence-based pseudo-labeling to get the best of each approach.
+
+<br/>
+
+## 4. Applications
+
+Semi-supervised learning is widely applicable to scenarios where obtaining large amounts of labeled data is expensive or time-consuming, but unlabeled data is plentiful.
+
+1. **Natural Language Processing (NLP)**: Many NLP tasks — such as text classification, sentiment analysis, and named entity recognition — suffer from label scarcity. Semi-supervised learning can leverage the vast supply of unlabeled text from the web or domain-specific corpora.
+2. **Computer Vision**: Annotating images, particularly in domains like medical imaging, can be extremely costly. Semi-supervised techniques are used for object recognition, semantic segmentation, and more. For instance, label propagation on image similarity graphs or consistency regularization with heavy data augmentation are popular approaches.
+3. **Speech and Audio Processing**: High-quality speech transcripts or audio labels can be expensive to obtain. SSL can help a speech recognition system utilize hours of unlabeled audio, refining acoustic or language models beyond what is possible with labeled data alone.
+4. **Recommender Systems**: User interactions and ratings data might be partially available, but large sets of items or user events remain unlabeled. Semi-supervised approaches can glean user-item relationships from unlabeled events (clickstreams, browsing logs) that do not explicitly contain a rating or label.
+5. **Medical and Biological Sciences**: Labeled medical data often requires domain experts (radiologists, clinicians, pathologists), so unlabeled patient data can be used to improve disease classification or patient stratification models.
+6. **Web-scale Data Mining**: Large corporations often have logs of user interactions (e.g., clicks, partial conversions), but they lack explicit labeled data for certain tasks. Semi-supervised learning methods help utilize these massive unlabeled logs.
+
+In each of these areas, semi-supervised learning can significantly reduce labeling requirements and accelerate model development without sacrificing (and often improving) accuracy.
+
+<br/>
+
+## 5. Advantages and limitations
+
+### Benefits over purely supervised and unsupervised learning
+
+- **Better performance with fewer labels**: By tapping into the distribution of unlabeled examples, semi-supervised models often outperform purely supervised models trained on the same limited labeled data.
+- **Extraction of meaningful structure**: SSL can discover cluster or manifold structures that align with classes, bridging the best of unsupervised data organization with supervised tasks.
+- **Cost-effective**: In some domains, labeling is extremely expensive; using unlabeled data can yield substantial returns in terms of performance per labeled sample.
+
+### Challenges in applying semi-supervised techniques
+
+- **Risk of propagating errors**: Many SSL methods (such as pseudo-labeling) risk reinforcing incorrect guesses. A small set of mislabeled samples can poison the process.
+- **Imbalanced labeled data distributions**: If the labeled data is unrepresentative or imbalanced, it might mislead how unlabeled data is interpreted. Some SSL algorithms can exacerbate biases in the labeled set.
+- **Scalability issues and computational cost**: Graph-based methods may require building and storing a large similarity graph, which can be expensive if the dataset is huge. Iterative algorithms might have high computational overhead.
+- **Choosing hyperparameters**: Balancing the supervised and unsupervised loss terms, deciding on confidence thresholds, or picking an appropriate graph construction method requires careful experimentation.
+
+### Overfitting to noisy labels
+
+Because unlabeled data is not truly unlabeled once we start inferring pseudo-labels, it introduces the possibility of overfitting to mistakes. For example, if we incorrectly guess that an unlabeled sample belongs to class A, we might push the model to entrench this erroneous label. Carefully selecting or weighting unlabeled samples based on predicted confidence can help.
+
+<br/>
+
+## 6. Evaluation metrics
+
+Evaluating semi-supervised learning can be trickier than evaluating purely supervised methods, because:
+
+1. **We typically have fewer labeled samples** for both training and validation.
+2. **Comparison to unsupervised baselines** might be necessary, especially if we want to see how well the structure gleaned from unlabeled data aligns with cluster-based metrics like Silhouette Coefficient or Dunn index in purely unsupervised settings.
+3. **Dataset-specific considerations**: For instance, if your labeled set is imbalanced, typical metrics like accuracy might be misleading. Alternative metrics (precision, recall, F1-score, or AUROC) might give deeper insights.
+
+Nevertheless, standard supervised metrics — accuracy, precision, recall, F1-score, etc. — remain applicable for the final evaluation on a hold-out test set. The difference is that the training procedure uses unlabeled data. One must also be mindful of hyperparameter selection: typically, a small labeled validation set is used for early stopping or for tuning the weight of the unlabeled loss term <Latex text="\( \alpha \)"/>.
+
+<br/>
+
+## 7. Advances and trends in semi-supervised learning
+
+As deep learning continues to dominate many subfields of machine learning, semi-supervised learning has likewise evolved to incorporate high-capacity neural networks. Several notable trends include:
+
+1. **Advanced model architectures**: Convolutional neural networks (CNNs) for images, recurrent neural networks (RNNs) or Transformers for text, and advanced architectures that incorporate self-attention or gating for complex domains.
+2. **Integration with large-scale pretraining**: Modern practice often includes pretraining on unlabeled data (sometimes in a self-supervised manner), followed by fine-tuning with a small labeled dataset. This approach loosely intersects with semi-supervised learning, as the unlabeled data used in pretraining helps shape the representation.
+3. **Self-supervised paradigms**: In recent years, the lines between self-supervised and semi-supervised learning have blurred. Self-supervised pretraining tasks (e.g., masked language modeling in NLP, contrastive learning in vision) produce features or embeddings that are then fine-tuned with a small amount of labeled data. While some might call this purely self-supervised, many also see it as a form of semi-supervised approach when the final model is anchored on a small labeled set.
+4. **Consistency-based and pseudo-label synergy**: Methods like MixMatch (Berthelot and gang, NeurIPS 2019), FixMatch (Sohn and gang, NeurIPS 2020), and others combine strong data augmentations, consistency constraints, and confidence thresholding in unified frameworks that achieve near state-of-the-art performance across multiple benchmarks.
+5. **Application to large language models (LLMs)**: A popular approach is to take a large foundation model — pretrained on unlabeled text — and then feed in a small number of labeled examples to refine it for a specific task. This can be viewed in the context of semi-supervised or few-shot learning. While typically we see references to 'prompting' or 'instruction tuning,' the underlying principle (leveraging unlabeled data distributions plus small labeled sets) is akin to the semi-supervised spirit.
+
+<br/>
+
+## 8. Implementation
+
+### Real-world case studies demonstrating semi-supervised learning
+
+Many companies and research groups have demonstrated real-world success with SSL. For example:
+
+- **Google** has applied semi-supervised learning strategies to large-scale image datasets, saving thousands of hours of annotation.
+- **Medical imaging** labs have used semi-supervised approaches to detect tumors, leveraging a small set of annotated scans supplemented by a larger pool of unlabeled scans.
+- **E-commerce** companies have used semi-supervised methods to classify products, harnessing unlabeled product descriptions or user reviews.
+
+### Tools and libraries for implementing semi-supervised learning
+
+While semi-supervised support in popular ML libraries is not as extensive as purely supervised functionality, there are still multiple resources:
+
+- **scikit-learn**: Includes a few semi-supervised estimators like LabelPropagation and LabelSpreading. These can be a gentle introduction for smaller datasets.
+- **PyTorch** and **TensorFlow**: Offer flexibility to implement custom SSL procedures (self-training loops, consistency regularization, etc.). Many open-source repositories on GitHub demonstrate advanced SSL approaches, including recent SOTA methods.
+- **Dedicated repositories**: The community often hosts code for popular SSL methods (like FixMatch, MixMatch, Mean Teacher) in open-source frameworks, making it relatively straightforward to experiment with them.
+
+### PyTorch and TensorFlow for custom implementations
+
+Since semi-supervised learning typically requires iterative or specialized training loops, frameworks like PyTorch or TensorFlow are well-suited. For instance, you might define a custom training step that computes a supervised loss on labeled data plus a consistency loss on unlabeled data augmented with transformations.
+
+<Image alt="Semi-supervised illustration" path="" caption="Visualization of labeled vs. unlabeled points in a two-dimensional embedding, used for iterative training." zoom="false" />
+
+### Scikit-learn's support for semi-supervised methods
+
+Although scikit-learn focuses heavily on supervised and unsupervised algorithms, it does offer:
+
+- **LabelPropagation**: A graph-based approach that assigns labels to unlabeled points by iterative propagation.
+- **LabelSpreading**: A variant of LabelPropagation with a different loss function and potentially more robust regularization.
+
+These classes can be effective for relatively small datasets where a graph-based approach is tractable. 
+
+### Using pre-trained models in semi-supervised workflows
+
+One productive approach is to take a pre-trained model — obtained via a large unlabeled dataset or via a self-supervised technique — and fine-tune it using a small labeled dataset. When additional unlabeled data from the same domain is available, you can keep updating your model's representation or add a consistency-based loss that refines the final layers. This synergy of pretraining plus semi-supervised fine-tuning can deliver strong performance, especially if your labeled set is small.
+
+### Step-by-step implementation of a semi-supervised model
+
+Below is an example in Python (using PyTorch) of a simplified semi-supervised workflow that uses pseudo-labeling. The snippet focuses on classification tasks, with a placeholder dataset. The code is for demonstration purposes — it is not heavily optimized but illustrates the main steps.
+
+<Code text={`
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.utils.data import DataLoader, Subset
+
+# Suppose we have a dataset of images or tabular data
+# dataset_labeled: a PyTorch dataset that returns (x, y) for labeled samples
+# dataset_unlabeled: a PyTorch dataset that returns (x, _) for unlabeled samples
+# We'll create DataLoaders for both.
+
+batch_size = 32
+dataloader_labeled = DataLoader(dataset_labeled, batch_size=batch_size, shuffle=True)
+dataloader_unlabeled = DataLoader(dataset_unlabeled, batch_size=batch_size, shuffle=True)
+
+# Simple neural network classifier
+class SimpleNN(nn.Module):
+    def __init__(self, input_dim, hidden_dim, num_classes):
+        super(SimpleNN, self).__init__()
+        self.fc1 = nn.Linear(input_dim, hidden_dim)
+        self.relu = nn.ReLU()
+        self.fc2 = nn.Linear(hidden_dim, num_classes)
+
+    def forward(self, x):
+        out = self.fc1(x)
+        out = self.relu(out)
+        out = self.fc2(out)
+        return out
+
+model = SimpleNN(input_dim=100, hidden_dim=64, num_classes=10)  # example dimensions
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(model.parameters(), lr=1e-3)
+
+def train_supervised(model, dataloader_labeled):
+    model.train()
+    total_loss = 0.0
+    for (x, y) in dataloader_labeled:
+        x, y = x.float(), y.long()
+        optimizer.zero_grad()
+        logits = model(x)
+        loss = criterion(logits, y)
+        loss.backward()
+        optimizer.step()
+        total_loss += loss.item()
+    return total_loss / len(dataloader_labeled)
+
+def pseudo_labeling(model, dataloader_unlabeled, threshold=0.9):
+    model.eval()
+    pseudo_labeled_samples = []
+    with torch.no_grad():
+        for (x, _) in dataloader_unlabeled:
+            x = x.float()
+            logits = model(x)
+            probs = nn.Softmax(dim=1)(logits)
+            conf, predicted_labels = torch.max(probs, dim=1)
+            # select only high-confidence predictions
+            mask = conf >= threshold
+            selected_x = x[mask]
+            selected_y = predicted_labels[mask]
+            pseudo_labeled_samples.append((selected_x, selected_y))
+    # flatten the list of tensors
+    xs = []
+    ys = []
+    for (x_sel, y_sel) in pseudo_labeled_samples:
+        xs.append(x_sel)
+        ys.append(y_sel)
+    if len(xs) == 0:
+        return None  # no pseudo-labeled data found
+    return torch.cat(xs, dim=0), torch.cat(ys, dim=0)
+
+def create_pseudo_dataset(x_pseudo, y_pseudo):
+    # create a small in-memory dataset for the pseudo-labeled samples
+    return [(x_pseudo[i], y_pseudo[i]) for i in range(len(y_pseudo))]
+
+num_epochs = 5
+for epoch in range(num_epochs):
+    # 1. Train on the labeled dataset
+    loss_sup = train_supervised(model, dataloader_labeled)
+    print(f"Epoch {epoch}: supervised loss = {loss_sup:.4f}")
+
+    # 2. Generate pseudo labels for unlabeled data
+    pseudo_data = pseudo_labeling(model, dataloader_unlabeled, threshold=0.9)
+    if pseudo_data is not None:
+        x_pseudo, y_pseudo = pseudo_data
+        pseudo_dataset = create_pseudo_dataset(x_pseudo, y_pseudo)
+        # 3. Merge pseudo-labeled data with labeled dataset
+        # This is simplistic; in practice, we might store them separately or limit how many we add each epoch
+        extended_dataset = list(dataset_labeled) + pseudo_dataset
+        dataloader_extended = DataLoader(extended_dataset, batch_size=batch_size, shuffle=True)
+
+        # 4. Retrain model on the extended dataset
+        model.train()
+        total_loss = 0.0
+        for (x_ext, y_ext) in dataloader_extended:
+            x_ext, y_ext = x_ext.float(), y_ext.long()
+            optimizer.zero_grad()
+            logits_ext = model(x_ext)
+            loss_ext = criterion(logits_ext, y_ext)
+            loss_ext.backward()
+            optimizer.step()
+            total_loss += loss_ext.item()
+        print(f"Epoch {epoch}: extended training loss = {total_loss / len(dataloader_extended):.4f}")
+    else:
+        print(f"Epoch {epoch}: no pseudo-labeled samples met the threshold." )
+`}/>
+
+This example demonstrates the typical self-training loop: train with the labeled set, generate pseudo-labels for high-confidence unlabeled samples, combine them with the labeled set, and retrain. One can refine it with advanced data augmentation, scheduling, or different thresholding strategies.
+
+### Common pitfalls and troubleshooting in practice
+
+1. **Label drift**: If the model incorrectly pseudo-labels a large portion of unlabeled data, the model might spiral toward poor solutions. Monitoring validation performance is crucial.
+2. **Over-reliance on early predictions**: If the model is incompetent at first, the pseudo-labels might be mostly noise. Gradually ramping up the weight of unlabeled data in the loss function can help.
+3. **Hyperparameter sensitivity**: The threshold for confidence, the weighting of unsupervised loss, and other details can significantly affect performance. A small labeled validation set is typically used for parameter tuning.
+
+<br/>
+
+## (Extra) Further reading on advanced semi-supervised methods
+
+While the main outline has been covered, I want to briefly highlight a few advanced methods at or near the cutting edge:
+
+- **FixMatch (Sohn and gang, 2020)**: Combines consistency regularization with pseudo-labeling and strong data augmentations. Achieves state-of-the-art results on standard vision benchmarks with minimal labeled data.
+- **UDA (Unsupervised Data Augmentation)**: Encourages consistent predictions for unlabeled data under advanced augmentations, used heavily in NLP and vision tasks.
+- **Noisy Student Training**: Applies knowledge distillation with unlabeled data in an iterative fashion for large-scale image classification tasks.
+
+These methods often feature sophisticated data augmentation pipelines and rely on large neural networks. Researchers frequently showcase performance gains on benchmarks like CIFAR-10, CIFAR-100, SVHN, and ImageNet when labels are artificially restricted to a small subset.
+
+<br/>
+
+## Final remarks
+
+Semi-supervised learning is not merely a halfway point between supervised and unsupervised learning; it is a vibrant field with deep theoretical underpinnings, broad application potential, and continuously evolving methods. The synergy between labeled and unlabeled data offers a powerful way to scale up machine learning when labeling is costly or incomplete. From classical methods (like self-training, co-training, label propagation) to modern deep semi-supervised approaches (like FixMatch, Mean Teacher, and generative SSL), the field is rich with ideas — and it continues to be a cornerstone of state-of-the-art systems in vision, NLP, speech, and beyond.
+
+As you dive deeper into semi-supervised learning, I recommend experimenting with smaller graph-based or label propagation methods first (e.g., scikit-learn's LabelPropagation) for conceptual clarity. Then move on to advanced neural approaches that harness consistency and self-training. Keep in mind the importance of properly tuning hyperparameters and validating on small labeled sets. And always be conscious of the assumptions — cluster, manifold, and smoothness — when applying SSL to ensure that unlabeled data is indeed beneficial rather than detrimental.
+
+By understanding these foundations, exploring the diverse array of methods, and appreciating the trade-offs, you will be well-equipped to harness unlabeled data effectively and unlock new levels of performance in your machine learning tasks.

@@ -1,0 +1,632 @@
+---
+index: 120
+indexCourse: 108
+indexFavorites:
+title: "Geometry estimation, pt. 1"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Geometry estimation, pt. 1"
+courseCategoryName: "Computer vision"
+desc: "A promising area of ​​research"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "07.08.2024"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 30
+difficultyLevel: 3
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: false
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/geometry_estimation.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/geometry_estimation"
+slug: "/research/geometry_estimation"
+---
+
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+
+
+*A computer vision researcher is like an artist (always starving).*
+
+<br/>
+
+
+{/*
+
+Оценка геометрии изображения - довольно новый и малоизученный раздел компьютерного зрения.
+Unit 8:
+https://huggingface.co/learn/computer-vision-course/en/unit0/welcome/welcome
+https://en.wikipedia.org/wiki/Geometric_feature_learning
+Определение геометрии изображения
+https://neerc.ifmo.ru/wiki/index.php?title=%D0%9E%D0%BF%D1%80%D0%B5%D0%B4%D0%B5%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5_%D0%B3%D0%B5%D0%BE%D0%BC%D0%B5%D1%82%D1%80%D0%B8%D0%B8_%D0%B8%D0%B7%D0%BE%D0%B1%D1%80%D0%B0%D0%B6%D0%B5%D0%BD%D0%B8%D1%8F 
+
+*/}
+
+
+{/*
+
+1. Motivation
+- Historical background of geometry in computer science: how geometric concepts laid the groundwork for machine learning applications.
+- Modern motivations: why geometry is crucial for tasks such as 3D object recognition, autonomous driving, robotics, and augmented reality.
+- Overview of key challenges in integrating geometric knowledge into machine learning workflows.
+2. Fundamentals of Geometry in Machine Learning
+- Euclidean vs. non-Euclidean spaces: their relevance in ML.
+- Role of geometry in data understanding: embedding data in low-dimensional manifolds, shape analysis, and object representation.
+- Geometry in various ML tasks: classification, segmentation, reconstruction, and retrieval.
+- Relationship between geometry and deep learning: embeddings and shape representations.
+- Definitions of geometry in a machine learning context.
+3. Linear Algebra for 3D Data
+- Vector and matrix transformations: foundation for geometric computations.
+- Eigenvalues and eigenvectors: their role in principal component analysis (PCA) and shape alignment.
+- Singular Value Decomposition (SVD) and its applications in 3D data processing.
+4. Basic Geometric Concepts
+- Curves and surfaces: discrete vs. continuous representations; how continuous geometry translates into discrete samples (e.g., mesh vertices).
+- Transformations: translations, rotations, scaling, reflections, and shearing.
+- Point clouds: advantages and drawbacks in representing 3D shapes.
+- Meshes: vertices, edges, and faces for surface representation.
+- Voxels: volumetric representation for occupancy grids and 3D CNNs.
+- Parametric surfaces and implicit functions: alternative representations for complex geometries.
+5. Camera Models and Perspective Geometry
+- Pinhole camera model: projection of 3D points into 2D images.
+- Intrinsic and extrinsic camera parameters: calibration and transformations.
+- Distortion models: radial and tangential distortions in real-world lenses.
+6. Representations of 3D Data
+- Point clouds: advantages and limitations.
+- Meshes: topological structure and connectivity.
+- Voxels: volumetric representation and memory efficiency.
+- Implicit representations: signed distance functions (SDFs) and neural implicit models.
+7. Coordinate Systems, Transformations, and Projections
+- Cartesian, polar, and spherical coordinates: when and why each is used.
+- Homogeneous coordinates and projective transformations; their applications (e.g., camera calibration).
+- Projection methods (orthographic vs. perspective): impact on geometric interpretation in vision tasks.
+8. Graph Representations for Geometric Data
+- Graph structures for representing meshes, skeletons, and connectivity; using graphs to represent relationships among points or mesh vertices.
+- Adjacency matrices, graph Laplacians, and spectral representations; capturing local and global structural information.
+- Graph-based learning techniques for 3D object recognition.
+- Challenges with irregular data structures and strategies to address them.
+9. Metrics and Measurements in Geometry
+- Distance metrics: Euclidean, geodesic, Manhattan, Mahalanobis, etc.
+- Curvature estimation: Gaussian, mean, and principal curvature.
+- Area, volume, and surface integral properties in discrete geometric representations; measuring 2D and 3D shapes in continuous and discrete settings.
+10. Geometry Estimation Techniques
+- Least squares methods: solving overdetermined systems for geometric fitting; linear and non-linear least squares for fitting geometric models.
+- Iterative approaches: ICP (Iterative Closest Point) for shape alignment.
+- Analytical solutions vs. numerical optimization for different geometric problems.
+- The notion of fitting geometric primitives (lines, planes, circles) to data.
+- Importance of noise handling and outlier robustness in geometric tasks.
+- Trade-offs between computational complexity and estimation accuracy.
+11. Robust Estimation Techniques (RANSAC and Variants)
+- Robust estimation techniques: handling noise and outliers.
+- RANSAC: random sampling to find inliers in noisy data.
+- Extensions of RANSAC (MLESAC, MSAC, PROSAC): increasing robustness and computational efficiency.
+- Use cases in computer vision: homography estimation, fundamental matrix estimation, and more.
+12. Machine Learning-Based Geometry Estimation
+- Regression models for geometric predictions; predicting 2D/3D landmarks or transformations.
+- Deep learning-based estimators: learning transformations, depth, pose and surface normals.
+- Loss functions tailored to geometric data: Chamfer distance, Earth Mover's Distance.
+- Role of regularization and loss functions tailored to geometric constraints.
+13. Evaluation Metrics for Geometry Estimation
+- Mean squared error (MSE) in geometric contexts; pros and cons in geometric settings.
+- Chamfer distance: measuring point cloud similarity; measuring shape similarity for point clouds or meshes.
+- Earth Mover's Distance (EMD): comparing 3D distributions; a more precise metric for matching distributions of points.
+14. Introduction to Stereo Vision
+- Binocular vision: fundamentals of disparity and depth perception.
+- Epipolar geometry: fundamental matrix, essential matrix, and rectification.
+- Stereo matching algorithms: traditional and learning-based approaches.
+15. Geometric Feature Learning
+- Definition of geometric features: curvature-based descriptors, shape contexts, keypoints.
+- Hand-crafted vs. learned features: advantages, limitations, and historical evolution.
+- Common applications of geometric features: object recognition, matching, and registration.
+- Benefits of learning geometric features
+- Overview of feature extraction methods
+
+*/}
+
+
+Geometry and its associated concepts have long played a pivotal role in the history of computer science, shaping how we represent and interpret the world in computational systems. The interplay between geometry and algorithmic thinking dates back to the earliest eras of computational geometry, when researchers studied methods for polygon clipping, line intersection, and triangulation to solve basic problems in computer graphics and geographical information systems. In the 1960s and 1970s, as computer graphics technology gradually matured, the demand for faster and more efficient geometric algorithms grew, leading to the formal inception of computational geometry as a discipline — defined primarily by the rigorous study of algorithms for geometric problems.
+
+By the 1980s, geometry started becoming central to robotics, computer vision, and pattern recognition research, where tasks such as object localization and shape matching required robust geometric transformations (translation, rotation, and scaling) to be handled computationally. Simultaneously, the rise of personal computing and the gaming industry fueled an interest in 3D rendering and real-time graphics, triggering a cascade of research in geometric modeling, hidden surface removal, and advanced rendering pipelines. As machine learning evolved from statistical pattern recognition, geometry found further relevance — particularly in the representation of high-dimensional data and the extraction of meaningful, lower-dimensional structures to facilitate classification or regression tasks.
+
+Pioneering works in the 1990s, such as those by Hartley, Zisserman, and others, established the theoretical and algorithmic bedrock for geometric computer vision (epipolar geometry, projective transformations, and camera calibration). These breakthroughs allowed accurate 3D reconstruction from images and fostered robust methodologies for tasks like stereo vision and structure-from-motion. With these developments, geometry became a unifying theme across multiple branches of AI research: it related the abstract notion of an object in the world to pixel intensities in an image, bridging the gap between raw sensory input and 3D scene understanding.
+
+### Modern motivations
+Today, geometry underpins numerous modern and emerging applications in machine learning and data science. Autonomous driving systems, for instance, rely on real-time geometry estimation from LiDAR point clouds and camera feeds to detect obstacles and estimate motion trajectories. In augmented reality (AR) and virtual reality (VR), accurate understanding of 3D scene geometry is essential for projecting or blending virtual objects into real-world scenes in a photorealistic and geometrically consistent manner. Moreover, in robotics, geometry informs navigation, mapping (e.g., SLAM — Simultaneous Localization and Mapping), and manipulation tasks that enable robots to interact intelligently with their environment.
+
+In the realm of deep learning, geometry has become indispensable: network architectures increasingly incorporate geometric priors to handle 3D data, from point-based networks that process unstructured point clouds (e.g., PointNet, PointNet++), to mesh-based learning for shape analysis and segmentation, to 3D convolutional neural networks for volumetric data. There is also a fast-growing body of research on neural implicit representations for 3D reconstruction, such as neural radiance fields (NeRF), which estimate scenes by modeling continuous implicit functions. These advanced methods highlight how geometry is no longer just an afterthought in learning-based pipelines; it is integral to how modern systems interpret, represent, and manipulate the world around them.
+
+### Overview of key challenges in integrating geometric knowledge into machine learning workflows
+Despite geometry's importance, incorporating geometric knowledge into machine learning workflows remains challenging. First, real-world data can be extremely noisy, incomplete, or unstructured, leading to substantial difficulties in stable estimation of geometric parameters. For example, sensor data from LiDAR or depth cameras often contain missing regions and partial occlusions. Handling such imperfection requires robust, noise-tolerant algorithms.
+
+Second, many of the common machine learning approaches — particularly standard fully connected or convolutional neural networks — are well-suited for images (2D pixel arrays) or sequential data, but are less trivial to adapt to geometric data structures like point clouds or meshes that do not share regular topologies. Designing architectures that preserve rotational or translational invariances, while still learning powerful representations, is an ongoing research endeavor.
+
+Furthermore, bridging Euclidean geometry with modern deep networks often requires advanced losses, metrics, or optimization techniques. Simply using Euclidean distance in high-dimensional latent spaces can be insufficient for capturing the manifold structure of complex geometric objects. Researchers therefore explore geodesic distances on manifolds, graph-based adjacency representations for meshes, or specialized distance metrics (e.g., Chamfer distance, Earth Mover's Distance) that account for the unique properties of geometric data.
+
+Finally, geometry in machine learning often involves dealing with transformations: pose estimation, calibration, or alignment. Solving transformation parameters typically involves iterative optimization or specialized algorithms such as RANSAC for robust estimation. These tasks can be computationally intensive, especially at scale or in real-time applications like robotics and self-driving cars. The quest to unify geometric rigor, computational efficiency, and machine learning performance remains a key frontier for researchers and practitioners alike.
+
+With these motivations and challenges in mind, I will now dive into the fundamental principles and tools that drive geometry estimation in machine learning contexts, beginning with a look at the basic definitions and concepts that connect geometry and data representation.
+
+---
+
+## 2. Fundamentals of geometry in machine learning
+
+### Euclidean vs. non-Euclidean spaces: their relevance in ML
+The starting point for studying geometry in machine learning is to understand the spaces in which data resides. A <Highlight>Euclidean space</Highlight> is a flat, n-dimensional space where distances and angles follow the well-known Euclidean norm. For instance, 2D and 3D coordinate systems used in classical geometry are typical Euclidean spaces, and much of the standard ML repertoire — like linear regression or standard neural networks — implicitly assumes data in such a space.
+
+However, real-world data can often lie on manifolds that do not conform strictly to Euclidean geometry. These <Highlight>non-Euclidean spaces</Highlight> can have curvature, complex topological structures, or adjacency relationships that make them better described by Riemannian geometry or graph-based representations. Applications such as analyzing social networks, analyzing meshes for 3D object surfaces, or modeling spherical data (like Earth geodesics) need to break free from purely Euclidean assumptions. This has led to the development of specialized frameworks — like geometric deep learning (e.g., GCNs, graph neural networks) — that respect the underlying structure of non-Euclidean data.
+
+### Role of geometry in data understanding: embedding data in low-dimensional manifolds, shape analysis, and object representation
+Machine learning often involves mapping high-dimensional data to lower-dimensional representations, a process sometimes referred to as <Highlight>embedding</Highlight>. Techniques like principal component analysis (PCA), manifold learning (e.g., Locally Linear Embedding, t-SNE, UMAP), and autoencoders exemplify how geometry helps us discover the underlying low-dimensional structure in data.
+
+In 3D shape analysis, geometry is crucial in capturing intrinsic properties such as curvature or topological features. For instance, shape descriptors derived from curvature or geodesics can be used to classify objects in a 3D dataset. Object representation methods — like point clouds, meshes, or implicit surfaces — are all essentially geometric encodings that aim to preserve shape information. The type of representation chosen can drastically affect the performance of subsequent learning tasks such as classification or segmentation.
+
+### Geometry in various ML tasks: classification, segmentation, reconstruction, and retrieval
+Geometry plays a direct role in various ML tasks:
+- **Classification**: 3D object classification can benefit from geometric features (e.g., shape descriptors) or from specialized networks that process 3D data. 
+- **Segmentation**: Geometric cues help identify boundaries and regions on surfaces or volumes, separating an object's parts meaningfully. 
+- **Reconstruction**: Inferring a full geometry (e.g., reconstructing a complete 3D shape from partial sensor scans) demands robust modeling that respects the inherent geometric constraints of objects. 
+- **Retrieval**: Retrieving similar shapes or images from a database often involves computing shape distances or descriptors that are robust to noise, partial occlusions, or transformations.
+
+### Relationship between geometry and deep learning: embeddings and shape representations
+The integration of geometry into deep learning manifests in different ways. One popular approach is to define <Highlight>geometric deep learning</Highlight> architectures that accept graph-structured data or manifold-structured data as input, preserving adjacency information. Another approach is to incorporate geometry into the loss function — like the Chamfer distance or Earth Mover's Distance for shape matching — ensuring that the network output is penalized in a way that truly reflects geometric (rather than purely pixelwise or coordinatewise) deviations.
+
+In shape representation learning, networks may implicitly learn geometry, such as in implicit neural representations, where a neural network function <Latex text="\(f(\mathbf{x})\)"/> indicates occupancy or signed distance for each point <Latex text="\(\mathbf{x}\)"/> in space. By learning this continuous function, the geometry is represented in the network weights themselves. This approach has yielded state-of-the-art results in tasks like shape completion and novel view synthesis.
+
+### Definitions of geometry in a machine learning context
+In a machine learning context, geometry usually refers to the study of:
+- **Spaces**: Euclidean, Riemannian, manifold-based, etc.
+- **Transformations**: Rigid (rotation, translation), affine (scaling, shear), or projective transformations.
+- **Metrics**: Distances or similarity measures that reflect geometric relationships between data points or shapes.
+- **Representations**: Discrete (point clouds, meshes, graphs) or continuous (implicit functions) ways of expressing objects or datasets.
+- **Optimization**: Methods to estimate parameters (e.g., pose, shape) that minimize or maximize a geometric objective function.
+
+Understanding these definitions is the first step toward applying geometry in real-world machine learning pipelines.
+
+---
+
+## 3. Linear algebra for 3D data
+
+### Vector and matrix transformations: foundation for geometric computations
+Linear algebra provides the fundamental language of geometry in many machine learning applications, especially when dealing with 3D data. Vectors represent points or directions in <Latex text="\(\mathbb{R}^3\)"/>, while matrices encode transformations such as rotation, scaling, or reflection. A rotation matrix <Latex text="\(R\)"/>, for example, is an orthonormal <Latex text="\(3 \times 3\)"/> matrix with determinant 1. When we multiply a vector <Latex text="\(\mathbf{v} \in \mathbb{R}^3\)"/> by <Latex text="\(R\)"/>, we effectively rotate <Latex text="\(\mathbf{v}\)"/> around the origin by a certain angle and axis determined by <Latex text="\(R\)"/>.
+
+Translation is not linear in the strict sense — adding a constant offset to a vector is an affine transformation — so it is often handled in a homogeneous coordinate system of dimension 4. In homogeneous coordinates, a 4D matrix can represent combined operations like rotation, translation, and scaling in a single framework, making it extremely convenient for camera transformations and object manipulations.
+
+### Eigenvalues and eigenvectors: their role in principal component analysis (PCA) and shape alignment
+Eigenvalues and eigenvectors are central to many geometry-related tasks. If we have a covariance matrix <Latex text="\(\Sigma\)"/> describing the distribution of points in <Latex text="\(\mathbb{R}^3\)"/>, the eigenvectors of <Latex text="\(\Sigma\)"/> give the principal axes of variation, and the eigenvalues indicate how much variance exists along these axes. This is the cornerstone of PCA, which can reduce dimensionality or align shapes. 
+
+For instance, in shape alignment, one might compute the centroid of a set of 3D points, subtract this centroid from all points, and then compute the covariance. The dominant eigenvector indicates the direction of greatest variance, which can serve as a reference axis for aligning that shape to a canonical orientation.
+
+### Singular Value Decomposition (SVD) and its applications in 3D data processing
+The <Highlight>Singular Value Decomposition (SVD)</Highlight> is a powerful tool for working with matrices in geometry. Given a matrix <Latex text="\(M\)"/>, SVD factors it as:
+
+<Latex text="\[
+M = U \Sigma V^T,
+\]"/>
+
+where:
+- <Latex text="\(U\)"/> and <Latex text="\(V\)"/> are orthonormal matrices.
+- <Latex text="\(\Sigma\)"/> is a diagonal matrix (with possibly rectangular shape if <Latex text="\(M\)"/> is not square) containing the singular values.
+
+In 3D data processing, SVD often appears in shape alignment problems. For example, if we want to find the rotation <Latex text="\(R\)"/> that best aligns two point sets <Latex text="\(\{ \mathbf{x}_i \}\)"/> and <Latex text="\(\{ \mathbf{y}_i \}\)"/> (assuming zero-centered data), we might form a correlation matrix <Latex text="\(H = \sum_i \mathbf{y}_i \mathbf{x}_i^T\)"/>. Then we can compute the SVD of <Latex text="\(H\)"/>:
+
+<Latex text="\[
+H = U \Sigma V^T,
+\]"/>
+
+and set:
+
+<Latex text="\( R = V U^T \)"/>
+
+(if <Latex text="\(\det(V U^T) < 0\)"/>, we correct for reflection by flipping one column in <Latex text="\(V\)"/>). This yields the optimal rotation that minimizes the sum of squared distances between corresponding points <Latex text="\(\mathbf{x}_i\)"/> and <Latex text="\(\mathbf{y}_i\)"/>.
+
+Below is a quick code snippet in Python illustrating how one might use SVD for a simple alignment of two 3D point clouds:
+
+<Code text={`
+import numpy as np
+
+def align_point_clouds(X, Y):
+    """
+    Aligns point cloud X to point cloud Y via least squares
+    rotation and translation. X, Y: (N, 3) arrays.
+    Returns rotation matrix R and translation vector t
+    such that R@X + t ~ Y.
+    """
+    # 1. Compute centroids
+    centroid_X = np.mean(X, axis=0)
+    centroid_Y = np.mean(Y, axis=0)
+    
+    # 2. Center the clouds
+    X_centered = X - centroid_X
+    Y_centered = Y - centroid_Y
+    
+    # 3. Compute correlation matrix
+    H = X_centered.T @ Y_centered
+    
+    # 4. SVD
+    U, S, Vt = np.linalg.svd(H)
+    R = Vt.T @ U.T
+    
+    # Ensure a proper rotation (det(R) should be +1)
+    if np.linalg.det(R) < 0:
+        Vt[2, :] *= -1
+        R = Vt.T @ U.T
+    
+    # 5. Compute translation
+    t = centroid_Y - R @ centroid_X
+    
+    return R, t
+`}/>
+
+This simple routine demonstrates how linear algebra is deeply intertwined with geometry estimation tasks in 3D data processing. 
+
+---
+
+## 4. Basic geometric concepts
+
+### Curves and surfaces: discrete vs. continuous representations
+From a purely mathematical viewpoint, curves and surfaces exist in a continuous domain. However, in computational systems, we typically represent them discretely — e.g., a parametric curve sampled at many points, or a surface represented as a mesh (with vertices and faces). Translating continuous geometry into discrete form introduces potential approximations, since we can only store a finite amount of data.
+
+- **Curves**: A curve in <Latex text="\(\mathbb{R}^2\)"/> or <Latex text="\(\mathbb{R}^3\)"/> can be parameterized by a function <Latex text="\(\mathbf{r}(t)\)"/> for <Latex text="\(t\)"/> in some interval. In practice, we might store only a set of sampled points <Latex text="\(\{\mathbf{r}(t_i)\}\)"/>. 
+- **Surfaces**: A surface in <Latex text="\(\mathbb{R}^3\)"/> can be described by a parameterization <Latex text="\(\mathbf{R}(u,v)\)"/>. Discretely, we might store a mesh or point cloud approximation.
+
+### Transformations: translations, rotations, scaling, reflections, and shearing
+These <Highlight>geometric transformations</Highlight> can drastically change the appearance or orientation of an object, but they preserve certain geometric properties:
+
+- **Translation**: Shifts an object by a constant vector <Latex text="\(\mathbf{t}\)"/>.
+- **Rotation**: Pivots an object around some axis by an angle <Latex text="\(\theta\)"/>, using a rotation matrix <Latex text="\(R\)"/>.
+- **Scaling**: Changes the size of an object, uniformly or anisotropically, with a scaling matrix <Latex text="\(S\)"/>.
+- **Reflection**: Mirrors an object across a plane or line, using a reflection matrix (determinant -1).
+- **Shearing**: Skews the coordinate axes, preserving volume for small transformations but distorting angles.
+
+In many shape analysis tasks, we try to factor out these transformations when comparing shapes, ensuring that the comparison metric is invariant under rigid transformations (translation, rotation) and possibly scale. Reflection invariance may or may not be desirable, depending on the context (e.g., chirality or left-right symmetry might be relevant for certain objects).
+
+### Point clouds: advantages and drawbacks in representing 3D shapes
+A <Highlight>point cloud</Highlight> is a set of points in <Latex text="\(\mathbb{R}^3\)"/> representing the surface or volume of an object. Point clouds are often directly obtained from sensors such as LiDAR or depth cameras. They are simple to store (just a list of coordinates) and easy to capture, but they have some drawbacks:
+- **No explicit connectivity**: Adjacent points in space are not explicitly linked, complicating the extraction of surfaces or meshes.
+- **Sensitivity to sampling density**: Different regions of an object may have different densities, leading to potential holes or redundancy.
+- **Difficult to compute curvature or topology** without additional processing or local neighborhood searches.
+
+Despite these issues, point clouds are widely used because they are the most direct representation from many depth sensors and are supported by specialized deep learning architectures (e.g., PointNet, PointNet++).
+
+### Meshes: vertices, edges, and faces for surface representation
+A <Highlight>mesh</Highlight> is a structured representation of a surface using a set of vertices <Latex text="\(\{v_i\}\)"/>, edges <Latex text="\(\{e_i\}\)"/>, and faces <Latex text="\(\{f_i\}\)"/>. The most common form is a triangular mesh, where each face is a triangle. Meshes explicitly encode connectivity: which vertices are neighbors and how faces are arranged. This allows more sophisticated geometric computations, such as curvature estimation, collision detection, and advanced rendering algorithms. However, generating a good-quality mesh from raw data might require complex post-processing steps (e.g., surface reconstruction from point clouds).
+
+### Voxels: volumetric representation for occupancy grids and 3D CNNs
+<Highlight>Voxels</Highlight> are the 3D analog of pixels: small cubic units that partition a volume. A voxel grid is a 3D array where each cell can store occupancy information (is it inside or outside the object?), color, or other attributes. Voxels are extremely intuitive for certain tasks (like occupancy grids in robotics), and 3D convolutional neural networks can process voxel data similarly to how 2D CNNs process images. However, voxel representations can be memory-intensive for high-resolution grids, and they may also require interpolation or downsampling to fit into computational constraints.
+
+### Parametric surfaces and implicit functions: alternative representations for complex geometries
+More advanced representations can capture complex geometries efficiently:
+- **Parametric surfaces**: Define surfaces by a function <Latex text="\(\mathbf{R}(u,v)\)"/> with <Latex text="\((u,v)\)"/> in a parameter domain, enabling direct control over shape. Examples include Bézier surfaces, NURBS, and spline models frequently used in computer-aided design.
+- **Implicit functions**: Define a surface as the zero-level set of a function <Latex text="\(f(\mathbf{x})\)"/>. For instance, a signed distance function (SDF) encodes how far (and inside/outside) a point <Latex text="\(\mathbf{x}\)"/> is from the surface. Neural implicit representations (e.g., DeepSDF, NeRF) leverage neural networks to model these continuous functions across space, often achieving excellent reconstruction detail.
+
+Each representation has unique strengths and challenges, and the choice often depends on the application's requirements regarding memory, precision, and ease of manipulation.
+
+---
+
+## 5. Camera models and perspective geometry
+
+### Pinhole camera model: projection of 3D points into 2D images
+In computer vision, perhaps the most fundamental geometric model is the pinhole camera. It describes how 3D points in the scene get projected onto a 2D image plane. If a 3D point is given by <Latex text="\( \mathbf{X} = (X, Y, Z) \)"/>, the pinhole camera model says that the corresponding 2D point <Latex text="\( \mathbf{x} = (x, y) \)"/> on the image plane is found via perspective projection:
+
+<Latex text="\[
+\begin{pmatrix}
+x \\
+y \\
+1
+\end{pmatrix}
+= K \left[ R \mid \mathbf{t} \right]
+\begin{pmatrix}
+X \\
+Y \\
+Z \\
+1
+\end{pmatrix},
+\]"/>
+
+where:
+- <Latex text="\(K\)"/> is the <Highlight>intrinsic camera matrix</Highlight>, encoding focal length and principal point.
+- <Latex text="\([R \mid \mathbf{t}]\)"/> is the <Highlight>extrinsic parameters</Highlight> matrix, describing the rotation <Latex text="\(R\)"/> and translation <Latex text="\(\mathbf{t}\)"/> of the camera relative to the world coordinate system.
+
+This model can explain much of the perspective geometry we observe: objects farther away from the camera project to smaller image footprints, and parallel lines in 3D appear to converge in the image (vanishing points).
+
+### Intrinsic and extrinsic camera parameters: calibration and transformations
+- **Intrinsic parameters**: These include the focal lengths <Latex text="\((f_x, f_y)\)"/>, the optical center or principal point <Latex text="\((c_x, c_y)\)"/>, and possibly skew or aspect ratio parameters (often negligible in well-designed cameras). They define how 3D rays map to the 2D image plane inside the camera.
+- **Extrinsic parameters**: These define the camera's orientation (rotation) and position (translation) in the world. Together, they form a transformation that carries points from a global or object coordinate frame into the camera coordinate frame.
+
+<Highlight>Camera calibration</Highlight> is the process of determining <Latex text="\(K\)"/> and <Latex text="\([R \mid \mathbf{t}]\)"/>. Calibration often involves taking pictures of known calibration objects (like checkerboard patterns) and solving for these parameters through optimization. In multi-camera setups, extrinsic calibrations between cameras must also be estimated to combine data consistently.
+
+### Distortion models: radial and tangential distortions in real-world lenses
+Real lenses introduce distortions that deviate from the ideal pinhole model. Two common types:
+- **Radial distortion**: Arises because lens magnification changes with distance from the optical center. Straight lines in 3D might appear curved in the image. This is typically modeled with coefficients <Latex text="\(k_1, k_2, k_3\)"/> in polynomial expansions.
+- **Tangential distortion**: Occurs when the lens is not perfectly parallel to the imaging plane, modeled with parameters <Latex text="\(p_1, p_2\)"/>. These distortions shift the image points slightly in tangential directions, causing asymmetrical warping.
+
+Correcting distortion is crucial for accurate geometric measurements from images, especially in robotics and 3D reconstruction tasks, where small calibration errors can lead to large reprojection errors in 3D.
+
+---
+
+## 6. Representations of 3D data
+
+(This section somewhat overlaps with earlier content on point clouds, meshes, voxels. I will use this chapter to dive more deeply into the trade-offs and best use cases.)
+
+### Point clouds: advantages and limitations
+Point clouds represent a set of 3D points <Latex text="\(\{\mathbf{p}_i\}\)"/>. As mentioned, they are easy to capture directly from LiDAR or structured-light sensors. They work well in real-time tasks where speed is paramount, such as collision detection or quick environment scanning. However, point clouds do not carry explicit connectivity or adjacency, and their sampling density can vary widely. This complicates computations that rely on surface normals or curvature. Researchers often approximate local geometry by building a neighborhood graph or using a K-d tree to locate nearest neighbors for each point.
+
+### Meshes: topological structure and connectivity
+Meshes remain the gold standard when we need a well-defined surface. For instance, many high-level operations — like texture mapping, advanced rendering, or finite element analysis — depend on a clean mesh. Nonetheless, generating a clean mesh from sensor data can be non-trivial. In advanced machine learning tasks (e.g., 3D shape generation or segmentation), specialized neural networks can output mesh vertices and faces directly, but this typically requires a more complex pipeline than point cloud or voxel-based methods.
+
+### Voxels: volumetric representation and memory efficiency
+Voxel grids have an intuitive analogy with images, enabling the use of 3D CNN architectures for tasks like 3D object classification or segmentation. However, naive voxelization at high resolution consumes enormous memory, limiting real-time use on large scenes or requiring coarse resolution that might lose detail. Techniques like octrees or hierarchical voxel grids mitigate memory use, storing finer resolution only where needed. If the data's bounding volume is known and not too large, voxels offer a straightforward solution.
+
+### Implicit representations: signed distance functions (SDFs) and neural implicit models
+One of the most revolutionary developments in recent years has been the use of neural networks to represent geometric shapes implicitly. For instance, a neural network <Latex text="\(f_\theta(\mathbf{x})\)"/> might take as input a 3D coordinate <Latex text="\(\mathbf{x}\)"/> and output the signed distance to the shape surface. Wherever <Latex text="\(f_\theta(\mathbf{x}) = 0\)"/>, we are on the surface. This approach can achieve high fidelity reconstructions while using less memory than a dense voxel grid, because the function is parameterized by the network's weights, not by a discretized grid.
+
+Neural Radiance Fields (NeRF), while not exactly an SDF, is a closely related approach that encodes radiance and density in a neural network. It has shown remarkable results for novel view synthesis. The theme is consistent: an implicit neural representation can store a lot of shape and appearance information in a compact form, providing a continuous, high-resolution geometry that can be sampled at arbitrary points in space.
+
+---
+
+## 7. Coordinate systems, transformations, and projections
+
+### Cartesian, polar, and spherical coordinates: when and why each is used
+Different applications benefit from different coordinate systems:
+
+1. **Cartesian coordinates** <Latex text="\((x,y,z)\)"/>: Straightforward and universal; used by default in many machine learning methods due to matrix-based linear algebra. 
+2. **Polar (2D) or cylindrical (3D) coordinates** <Latex text="\((r, \theta)\)"/> or <Latex text="\((r, \theta, z)\)"/>: Useful for rotationally symmetric situations or for analyzing radial features.
+3. **Spherical coordinates** <Latex text="\((\rho, \phi, \theta)\)"/>: Handy when dealing with all-round radial symmetries or spherical data (like geospatial or astronomy data).
+
+While transformations between these systems are standard, the choice of coordinate system can simplify or complicate computations. For instance, analyzing rings in a radial domain might be easier in polar or spherical coordinates, but typical ML frameworks expect Cartesian data arrays.
+
+### Homogeneous coordinates and projective transformations; their applications (e.g., camera calibration)
+<Highlight>Homogeneous coordinates</Highlight> embed <Latex text="\(\mathbb{R}^n\)"/> in <Latex text="\(\mathbb{R}^{n+1}\)"/>, allowing translation to be expressed via matrix multiplication. A point <Latex text="\(\mathbf{x} \in \mathbb{R}^3\)"/> is represented as <Latex text="\((x, y, z, 1)\)"/> in homogeneous form. This representation also paves the way for <Highlight>projective transformations</Highlight>, which can model perspective effects, camera intrinsics, and other advanced transformations with a single <Latex text="\(4 \times 4\)"/> matrix in 3D.
+
+Camera calibration heavily relies on homogeneous coordinates because it unifies rotation, translation, and projection into one linear framework. For instance, a point in world coordinates is multiplied by the extrinsic matrix (rotation + translation) to get the camera coordinate, then multiplied by the intrinsic matrix to map to the 2D image plane, all in a homogeneous formulation.
+
+### Projection methods (orthographic vs. perspective): impact on geometric interpretation in vision tasks
+- **Orthographic projection** assumes parallel projection rays, ignoring perspective foreshortening. It is simple but less realistic, and it's sometimes used for tasks that require a dimensionally consistent view (e.g., technical drawings or analyzing distant objects).
+- **Perspective projection** is the real-world model where rays converge at the camera center. Objects further from the camera appear smaller. This is more accurate but also more complex to handle analytically.
+
+In machine learning tasks, perspective projection is typically used when dealing with real image data or 3D reconstruction from cameras. Orthographic projection might be suitable for specialized tasks, such as medical imaging slices or certain engineering applications.
+
+---
+
+## 8. Graph representations for geometric data
+
+### Graph structures for representing meshes, skeletons, and connectivity; using graphs to represent relationships among points or mesh vertices
+A mesh can be interpreted as a graph whose vertices are mesh points and whose edges represent adjacency. Beyond meshes, graphs are widely used to represent skeletons (e.g., for human pose estimation, connecting joints with edges) or even point clouds, by building a nearest-neighbor graph. This allows leveraging graph-based algorithms — like graph searches or shortest paths — and advanced spectral tools (e.g., the graph Laplacian).
+
+### Adjacency matrices, graph Laplacians, and spectral representations; capturing local and global structural information
+- **Adjacency matrix <Latex text="\(A\)"/>**: A square matrix where <Latex text="\(A_{ij}=1\)"/> if vertices <Latex text="\(i\)"/> and <Latex text="\(j\)"/> are connected, and 0 otherwise. This is a direct way to encode graph connectivity, but it can be memory heavy for large graphs.
+- **Graph Laplacian <Latex text="\(L\)"/>**: Defined as <Latex text="\(D - A\)"/> where <Latex text="\(D\)"/> is the diagonal degree matrix. The Laplacian's eigenvalues and eigenvectors reveal structural properties of the graph, like connected components or smoothness. In geometry processing, the Laplacian can approximate curvature on a mesh.
+- **Spectral representations**: Many algorithms exploit the eigen-decomposition of <Latex text="\(L\)"/> to define <Highlight>spectral filtering</Highlight> or <Highlight>spectral embeddings</Highlight>. For instance, in manifold learning, one might use the first few eigenvectors of <Latex text="\(L\)"/> to parameterize a manifold in a lower-dimensional space.
+
+### Graph-based learning techniques for 3D object recognition
+<Highlight>Geometric deep learning</Highlight> has spawned a variety of graph neural network (GNN) architectures (e.g., Graph Convolutional Networks, Graph Attention Networks, MeshCNN). These methods propagate information along edges in the graph, allowing each vertex's representation to be updated based on its neighbors. For 3D object recognition, this can incorporate local geometric features while preserving global connectivity. In tasks like mesh segmentation, each face or vertex is classified into object parts by iteratively aggregating local context from neighbors in the graph.
+
+### Challenges with irregular data structures and strategies to address them
+Unlike images (which are structured grids), meshes and point clouds yield <Highlight>irregular data structures</Highlight> with no uniform connectivity. This complicates standard CNN-based approaches that rely on consistent 2D arrays. Researchers address these challenges by:
+- **Graph-based layers** that handle irregular neighborhoods explicitly.
+- **Spatial partitioning** like K-nearest neighbors or octrees to impose local organization.
+- **Parameterization** of surfaces onto planar patches (e.g., UV mapping) to enable partial 2D processing.
+- **Mixed approaches** that integrate point-based or voxel-based preprocessing, bridging the gap between structured and unstructured data.
+
+---
+
+## 9. Metrics and measurements in geometry
+
+### Distance metrics: Euclidean, geodesic, Manhattan, Mahalanobis, etc.
+Choosing an appropriate distance metric can drastically affect ML performance on geometric tasks:
+- **Euclidean distance**: The standard metric in <Latex text="\(\mathbb{R}^n\)"/>. Computed as <Latex text="\(\sqrt{(x_1 - x_2)^2 + \dots}\)"/>.
+- **Manhattan distance**: Sums absolute differences in coordinates. Sometimes used for grid-like data.
+- **Mahalanobis distance**: Incorporates covariance structure, making it more robust to correlated dimensions.
+- **Geodesic distance**: The shortest path on a manifold or surface. On a mesh, geodesic distance can be approximated by shortest paths in the graph sense. This matters if you want to measure surface-based distances instead of straight-line (through space) distances.
+
+### Curvature estimation: Gaussian, mean, and principal curvature
+Curvature characterizes how a surface bends. 
+- **Gaussian curvature** is the product of the principal curvatures. It indicates how the surface bends in orthogonal directions. 
+- **Mean curvature** is the average of the principal curvatures. 
+- **Principal curvatures** are the eigenvalues of the shape operator, revealing maximum and minimum bending directions.
+
+Accurately estimating curvature from discrete data (meshes, point clouds) can be challenging, requiring robust neighborhood fitting or specialized operators (e.g., discrete Laplacian operators).
+
+### Area, volume, and surface integral properties in discrete geometric representations; measuring 2D and 3D shapes in continuous and discrete settings
+Measuring geometric properties like area or volume is straightforward in the continuous setting with integrals. Discretely, we approximate integrals by summing over polygonal faces or volumetric cells:
+- **Polygonal mesh area**: Sum the areas of all faces.
+- **Volumetric grids**: Count or sum the occupied voxels, multiplied by voxel volume.
+- **Hybrid approaches**: Use Monte Carlo integration methods where random points are sampled, and one checks whether they lie inside or outside the shape (often feasible in high dimensions).
+
+In real-world machine learning tasks — like medical image segmentation — computing organ volume from segmentation masks is exactly an area + slice thickness or voxel counting problem. Accuracy depends heavily on resolution and the fidelity of the segmentation.
+
+---
+
+## 10. Geometry estimation techniques
+
+### Least squares methods: solving overdetermined systems for geometric fitting; linear and non-linear least squares for fitting geometric models
+<Highlight>Least squares</Highlight> is the fundamental technique for fitting a model to data by minimizing the sum of squared residuals. In geometry, one might fit a line, plane, circle, or polynomial surface to a set of points. 
+- A <Highlight>linear least squares</Highlight> example is plane fitting: If you want a plane <Latex text="\(ax + by + c = z\)"/>, and you have points <Latex text="\((x_i, y_i, z_i)\)"/>, you can solve for <Latex text="\(a, b, c\)"/> by forming a design matrix and using normal equations or SVD.
+- <Highlight>Non-linear least squares</Highlight> arises for fitting circles, spheres, or more complex surfaces. One typically uses iterative solvers (e.g., Gauss-Newton, Levenberg-Marquardt) to refine parameters.
+
+### Iterative approaches: ICP (Iterative Closest Point) for shape alignment
+The <Highlight>Iterative Closest Point (ICP)</Highlight> algorithm is a workhorse for aligning two shapes (often in point cloud form). The algorithm:
+1. Computes correspondences between points in the source and target sets (e.g., the closest points).
+2. Estimates a transformation (rigid or affine) that minimizes distances between corresponding points.
+3. Applies the transformation to the source and repeats until convergence.
+
+ICP can handle partial overlaps and noise but may converge to local minima if the initial alignment is too far off. Variants exist to speed up convergence or improve outlier resistance.
+
+### Analytical solutions vs. numerical optimization for different geometric problems
+Some geometry estimation problems (e.g., a 2D line fit or a rigid alignment using SVD) have closed-form solutions. Others (e.g., multi-view reconstruction with bundle adjustment) require iterative optimization. Analytical solutions tend to be faster and are guaranteed to find the global optimum (if the assumptions hold). Numerical optimizations, while more flexible, may require careful initialization and can be prone to local minima.
+
+### The notion of fitting geometric primitives (lines, planes, circles) to data
+Fitting primitives is often the first step in a geometry pipeline — detecting lines in images, planes in point clouds, or circles in 2D data. This might be used for structural recognition in CAD models, urban scenes (walls, floors), or basic object detection (cylinders, spheres). Even deep learning pipelines can incorporate these modules: for instance, a network might segment a scene into planar regions, and then a geometric module fits planes to those regions.
+
+### Importance of noise handling and outlier robustness in geometric tasks
+Real-world data invariably includes noise and outliers (e.g., spurious points from sensor artifacts). Traditional least squares is sensitive to outliers, leading to large errors in the final fit. Robust methods — like RANSAC — are often used to handle outliers by ignoring them in the fitting step. Another approach is to use robust cost functions (e.g., Huber loss) that reduce the influence of large residuals.
+
+### Trade-offs between computational complexity and estimation accuracy
+Accurate geometry estimation may require iterative methods that are computationally expensive. In time-critical applications (autonomous driving, robotics), real-time performance constraints can force simpler or approximate solutions. Hence, each domain balances speed, robustness, and accuracy according to its needs. For large-scale offline tasks (like building a 3D map from thousands of images), one might invest heavily in a large iterative optimization (e.g., bundle adjustment) to achieve high accuracy.
+
+---
+
+## 11. Robust estimation techniques (RANSAC and variants)
+
+### Robust estimation techniques: handling noise and outliers
+In geometric tasks, outliers can appear for many reasons — sensor dropouts, reflective surfaces, dynamic objects in the environment, or erroneous keypoint matches in images. <Highlight>Robust estimation techniques</Highlight> aim to find model parameters that fit the majority of the data, ignoring outliers.
+
+### RANSAC: random sampling to find inliers in noisy data
+<Highlight>RANSAC</Highlight> (RANdom SAmple Consensus) is a classic algorithm:
+1. Randomly pick a minimal subset of points sufficient to fit the desired model (e.g., two points for a line, three points for a plane).
+2. Estimate model parameters from this subset.
+3. Count how many points in the entire dataset fit this model within a threshold (the inliers).
+4. Repeat many times; keep the model with the best inlier count.
+5. Optionally refine with a final least squares fit on all inliers.
+
+RANSAC excels when the fraction of outliers is not too large and is widely used in computer vision tasks like homography estimation (for image stitching), fundamental matrix estimation (for stereo vision), or plane detection in point clouds.
+
+### Extensions of RANSAC (MLESAC, MSAC, PROSAC): increasing robustness and computational efficiency
+- **MLESAC**: Uses a maximum-likelihood approach for scoring the fit, rather than a simple inlier count.
+- **MSAC**: A modification that better penalizes outliers.
+- **PROSAC**: Prioritized RANSAC uses prior probabilities for each data point's membership, sampling more likely inliers first to speed up convergence.
+
+These extensions demonstrate how robust estimation has evolved to handle increasingly complex data distributions, large outlier rates, or real-time constraints.
+
+### Use cases in computer vision: homography estimation, fundamental matrix estimation, and more
+RANSAC and its variants are essential in structure-from-motion and multi-view geometry. For example:
+- **Homography estimation**: If two images depict the same planar surface from different viewpoints, a homography transforms points from one image to the other. RANSAC can robustly find this transformation from matched keypoints (like SIFT or ORB features).
+- **Fundamental matrix estimation**: In stereo vision or epipolar geometry, the fundamental matrix relates matched points in two images. Again, RANSAC helps separate inliers (correct matches) from outliers (mismatches).
+- **Pose estimation**: Estimating camera pose from 3D-2D correspondences also benefits from robust sampling schemes.
+
+---
+
+## 12. Machine learning-based geometry estimation
+
+### Regression models for geometric predictions; predicting 2D/3D landmarks or transformations
+Sometimes geometry estimation can be framed as a direct regression problem: a neural network might predict the coordinates of facial landmarks, the 3D pose of an object, or the transformation parameters that align one shape to another. For instance, a network might output the Euler angles <Latex text="\(\alpha, \beta, \gamma\)"/> for rotation and the translation <Latex text="\(\mathbf{t}\)"/> in <Latex text="\(\mathbb{R}^3\)"/>. The main challenge is dealing with the cyclical nature of angles (i.e., <Latex text="\(\alpha\)"/> and <Latex text="\(\alpha + 2\pi\)"/> represent the same rotation) and ensuring the predicted transformations remain valid.
+
+### Deep learning-based estimators: learning transformations, depth, pose and surface normals
+<Highlight>Deep learning</Highlight> can go beyond standard regression by incorporating specialized layers or losses:
+- **Depth estimation**: Networks can learn to output a dense depth map for every pixel in an image, effectively performing geometry estimation from a single image or multiple views.
+- **Pose estimation**: In object or camera pose estimation, architectures combine convolutional layers for feature extraction with fully connected layers (or specialized transformations) for predicting 6-DoF pose.
+- **Surface normals**: Another key geometric attribute for each pixel or point can be learned directly by a network. This is relevant in tasks like photometric stereo or shape-from-shading.
+
+### Loss functions tailored to geometric data: Chamfer distance, Earth Mover's Distance
+Standard L2 or L1 losses might not fully capture the geometry between shapes or point sets. Specialized distances are used:
+- **Chamfer distance**: For two point sets <Latex text="\(P\)"/> and <Latex text="\(Q\)"/>, the Chamfer distance sums the distance from each point in <Latex text="\(P\)"/> to its nearest neighbor in <Latex text="\(Q\)"/> and vice versa. 
+- **Earth Mover's Distance (EMD)**: Interprets point sets as distributions, measuring the minimal cost of transporting mass from one distribution to match the other. Often yields better shape alignment but is more expensive to compute.
+
+<Latex text="\[
+\text{Chamfer}(P, Q) = \sum_{\mathbf{p} \in P} \min_{\mathbf{q} \in Q} \|\mathbf{p} - \mathbf{q}\|^2 + \sum_{\mathbf{q} \in Q} \min_{\mathbf{p} \in P} \|\mathbf{p} - \mathbf{q}\|^2
+\]"/>
+
+EMD can be expressed via an optimal matching problem between points in <Latex text="\(P\)"/> and <Latex text="\(Q\)"/>.
+
+### Role of regularization and loss functions tailored to geometric constraints
+In geometry estimation, we often want to enforce constraints like smoothness, symmetry, or manifold continuity. <Highlight>Regularization</Highlight> terms in the loss function can encode these priors. For instance, a shape reconstruction network might incorporate a Laplacian smoothness term on a mesh to discourage spiky edges, or a normal consistency term to maintain consistent surfaces. These constraints lead to more physically or geometrically plausible outputs, especially when the training data is noisy or incomplete.
+
+---
+
+## 13. Evaluation metrics for geometry estimation
+
+### Mean squared error (MSE) in geometric contexts; pros and cons in geometric settings
+<Highlight>MSE</Highlight> is the simplest metric to measure the average squared difference between predicted coordinates and ground-truth coordinates. While easy to compute and interpret, it does not always reflect perceptual or geometric fidelity, especially if shapes are misaligned or topologically different. MSE also heavily penalizes outliers, which might not be desired in certain tasks.
+
+### Chamfer distance: measuring point cloud similarity; measuring shape similarity for point clouds or meshes
+As introduced, the <Highlight>Chamfer distance</Highlight> is a popular metric for shape comparison. It's relatively straightforward to compute but can sometimes fail to capture fine-grained differences in shape distribution if points are scattered. Still, for many point-based reconstruction tasks, Chamfer distance provides a robust measure that aligns well with the geometry of the data.
+
+### Earth Mover's Distance (EMD): comparing 3D distributions; a more precise metric for matching distributions of points
+<Highlight>EMD</Highlight> is a more accurate reflection of how one shape can be transformed into another by a transport plan. It typically yields better alignment than Chamfer distance, but the linear assignment or flow optimization can be expensive for large point sets. Nevertheless, EMD is often considered superior for tasks where we truly care about point-to-point correspondences and distribution shapes.
+
+---
+
+## 14. Introduction to stereo vision
+
+### Binocular vision: fundamentals of disparity and depth perception
+<Highlight>Stereo vision</Highlight> mimics human binocular vision. By observing the same scene from two slightly different viewpoints, we can recover depth information from the <Highlight>disparity</Highlight> of corresponding points in the two images. Disparity is inversely related to depth — the larger the shift between matching pixels, the closer the object.
+
+### Epipolar geometry: fundamental matrix, essential matrix, and rectification
+<Highlight>Epipolar geometry</Highlight> underlies stereo vision. For a pair of cameras, each point in 3D space projects to two points on the image planes. The lines connecting these projections with the camera centers intersect in the epipoles. The fundamental matrix <Latex text="\(F\)"/> encapsulates the relationship between matched points <Latex text="\((x_1, x_2)\)"/> in the two images:
+
+<Latex text="\[
+x_2^T F \, x_1 = 0.
+\]"/>
+
+For calibrated cameras (with known intrinsics), we use the essential matrix <Latex text="\(E\)"/> instead, which is related to <Latex text="\(F\)"/> by the intrinsics. <Highlight>Rectification</Highlight> reprojects the images so that epipolar lines align horizontally, making stereo matching simpler.
+
+### Stereo matching algorithms: traditional and learning-based approaches
+Traditional stereo matching involves:
+1. Computing a cost function (e.g., sum of absolute differences in a window around each pixel).
+2. Searching for the best matching point in the other image along the epipolar line.
+3. Optionally using global optimization to ensure smoothness.
+
+Deep learning has transformed stereo matching by using CNNs or GNNs to compute matching costs at each pixel, leading to more robust and accurate disparity maps. Some architectures (e.g., GCNet, PSMNet) incorporate 3D convolution on the cost volume, capturing global context. More recent methods integrate attention mechanisms or end-to-end learning with robust outlier handling.
+
+---
+
+## 15. Geometric feature learning
+
+### Definition of geometric features: curvature-based descriptors, shape contexts, keypoints
+<Highlight>Geometric features</Highlight> capture local or global shape attributes that remain relatively invariant under transformations. Examples include:
+- **Curvature-based descriptors**: For surfaces, local curvature at each vertex or point can characterize shape bending.
+- **Shape contexts**: A 2D or 3D histogram that captures how neighboring points are distributed around a reference point, used for shape matching.
+- **Keypoints**: Distinctive points that are repeatably detectable (e.g., corners or high-curvature regions). 3D keypoints can be used like SIFT in 2D images for establishing correspondences.
+
+### Hand-crafted vs. learned features: advantages, limitations, and historical evolution
+Historically, geometric features (e.g., SIFT-3D, curvature histograms) were <Highlight>hand-crafted</Highlight> by domain experts. They often performed well in carefully controlled applications but lacked adaptability. The modern trend is to learn features from data with deep networks (e.g., PointNet++). Learned features typically outperform hand-crafted ones in large-scale tasks, but they require big labeled datasets and careful architecture design to capture geometric invariances.
+
+### Common applications of geometric features: object recognition, matching, and registration
+By capturing shape-specific signatures, geometric features enable:
+- **Recognition**: Distinguish objects by their geometry, even under occlusion or partial views.
+- **Matching**: Align different scans of the same object or scene by matching local keypoints.
+- **Registration**: Combine partial scans or multi-view images into a coherent 3D model via geometric correspondences.
+
+### Benefits of learning geometric features
+Networks trained on 3D data can learn robust, discriminative representations that handle variations in sampling, noise, or partial visibility. They can also combine geometry with color or texture if available (multimodal). This synergy often leads to more robust performance across diverse tasks in robotics, AR/VR, and object recognition.
+
+### Overview of feature extraction methods
+Modern <Highlight>feature extraction</Highlight> can be as simple as applying a point-based network (like PointNet) to each local patch or as elaborate as constructing a graph-based approach that propagates contextual features across vertices or edges. Mesh-based CNNs can define convolution operators over the mesh faces, while voxel-based methods can apply standard 3D convolutions. The choice depends on the nature of the input data, the desired computational efficiency, and the end task.
+
+---
+
+# Extra notes and recommended reading
+
+Below, I list some further reading suggestions and references for those who want to dive deeper into cutting-edge research on geometry estimation in ML and computer vision:
+
+- **Hartley and Zisserman ("Multiple View Geometry in Computer Vision")**. This classic text formalizes epipolar geometry, camera calibration, and 3D reconstruction from images.
+- **Besl and McKay (1992)**. The original ICP paper, titled "A Method for Registration of 3-D Shapes".
+- **Zachary Teed and Jia Deng, "DeepV2D" (ICCV 2019)**. Demonstrates learning-based stereo (and multi-view) depth estimation with deep networks.
+- **Qi and gang, "PointNet" (CVPR 2017) and "PointNet++" (NeurIPS 2017)**. Seminal works for deep learning directly on point clouds.
+- **Mescheder and gang, "Occupancy Networks" (CVPR 2019)** and **Park and gang, "DeepSDF" (CVPR 2019)**. Key references for implicit neural representations.
+- **Mildenhall and gang, "NeRF" (ECCV 2020)**. Landmark paper for neural radiance fields, bridging geometry and view synthesis.
+
+<Highlight>I hope this first part of our exploration into geometry estimation sets the stage for deeper dives into 3D reconstruction, motion estimation, photogrammetry, and advanced geometric deep learning techniques.</Highlight> Throughout this article, I've tried to highlight both the historical roots and the modern frontiers of geometry in machine learning. As the field progresses, geometric insights will likely remain central to bridging the gap between raw sensor data and rich, structured understandings of the 3D world.
+
+<Image alt="3D point cloud example" path="" caption="An example of a 3D point cloud representation of an object, showing unstructured points in space" zoom="false" />
+
+<Image alt="Mesh representation" path="" caption="A mesh representation of the same object, illustrating vertices, edges, and faces" zoom="false" />
+
+<Image alt="Camera model diagram" path="" caption="A pinhole camera model showing how 3D points are projected onto a 2D image plane" zoom="false" />
+
+<Image alt="Stereo vision setup" path="" caption="A simplified stereo vision setup with two cameras capturing a scene from slightly different viewpoints" zoom="false" />
+
+<Image alt="Geometric transformations" path="" caption="Visual depiction of transformations like rotation, translation, and scaling applied to a shape" zoom="false" />
+
+Such illustrations and the above text together create a more intuitive comprehension of the fundamental geometric principles that underpin many advanced machine learning applications.
