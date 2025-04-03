@@ -54,9 +54,9 @@ const PostProduction = () => {
 			<Spoiler 
 				title={"More about this category"} 
 				block1={categoryDescDetailed}
+				block2={"The following list represents some of my highlighted media content post-production projects."}
 			/>
 			<br/>
-			<M text="The following list represents some of my highlighted media content post-production projects:"/>
 
 			{projectsFiltered.map((project) => (
 				<FreelanceProject 

@@ -54,9 +54,9 @@ const TechnicalWritingRu = () => {
 			<Spoiler 
 				title={"Подробнее про эту категорию"}  
 				block1={categoryDescDetailedRu}
+				block2={"В данном списке представлены некоторые мои проекты, связанные с техрайтингом."}
 			/>
 			<br/>
-			<M text="В данном списке представлены некоторые мои проекты, связанные с техрайтингом:"/>
 
 			{projectsFiltered.map((project) => (
 				<FreelanceProject 

@@ -54,9 +54,9 @@ const PythonAppsRu = () => {
 			<Spoiler 
 				title={"Подробнее про эту категорию"}  
 				block1={categoryDescDetailedRu}
+				block2={"В данном списке представлены некоторые мои проекты, связанные с Python-разработкой (исключая вклад в open-source и прочие проприетарные или небольшие проекты)."}
 			/>
 			<br/>
-			<M text="В данном списке представлены некоторые мои проекты, связанные с Python-разработкой (исключая вклад в open-source и прочие проприетарные или небольшие проекты):"/>
 
 			{projectsFiltered.map((project) => (
 				<FreelanceProject 

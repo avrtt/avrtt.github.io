@@ -54,9 +54,9 @@ const PythonApps = () => {
 			<Spoiler 
 				title={"More about this category"} 
 				block1={categoryDescDetailed}
+				block2={"The following list represents some of my highlighted Python projects (excluding open-source contributions and other proprietary or small projects)."}
 			/>
 			<br/>
-			<M text="The following list represents some of my highlighted Python projects (excluding open-source contributions and other proprietary or small projects):"/>
 
 			{projectsFiltered.map((project) => (
 				<FreelanceProject 
