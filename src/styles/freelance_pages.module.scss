@@ -153,6 +153,8 @@ $padding-default: 20px 20px 8px 20px;
   overflow: hidden;
   background-color: $bg-dark;
   transition: max-height 0.2s ease-out;
+  font-size: 18px;
+  line-height: 20px;
 }
 
 .expandText {

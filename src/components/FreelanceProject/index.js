@@ -4,7 +4,7 @@ import Img from "../Image"
 import * as stylesFreelancePages from "../../styles/freelance_pages.module.scss"
 
 const emojiStyle = {
-  'margin-right': '14px',
+  'margin-right': '19px',
 }; 
 
 const projectNameStyle = {
@@ -37,6 +37,7 @@ const FreelanceProject = ({ isExample=false, emoji, projectName, projectDesc, da
     'font-size': '18px',
     'margin-left': '47px',
     'width': '75%',
+    'line-height': '20px',
     'padding-top': isExample ? '14px' : '0'
   }
 
