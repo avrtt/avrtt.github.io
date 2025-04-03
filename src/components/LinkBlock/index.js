@@ -13,13 +13,13 @@ const LinkBlock = ({
     icon,
     categoryEmoji = '',
     categoryName = '',
-    iconSize = '70px',
+    iconSize = '55px',
     name = 'Untitled link',
     handle,
     description = '',
-    fontSizeName = '20px',
-    fontSizeHandle = '17px',
-    fontSizeDescription = '17px',
+    fontSizeName = '18px',
+    fontSizeHandle = '14px',
+    fontSizeDescription = '14px',
     textColorName = '#000000',
     textColorHandle = '#696969',
     textColorDescription = '#696969',
@@ -92,7 +92,7 @@ const LinkBlock = ({
         padding: paddingDescription,
         wordWrap: 'break-word',
         overflowWrap: 'break-word',
-        lineHeight: '1.5rem'
+        lineHeight: '1rem'
     }
 
     const inactiveNoticeStyle = {
@@ -103,7 +103,7 @@ const LinkBlock = ({
     }
 
     const categoryEmojiStyle = {
-        opacity: '0.4',
+        opacity: '1',
         marginLeft: '10px'
     }
 

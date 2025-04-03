@@ -473,14 +473,14 @@ const About = () => {
                             <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🗄️</span> Self-hosting</div>   
                             <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>👍</span> Hitchhiking</div>
                             <div class={stylesTagBadges.badgeAboutMarked}><span class={stylesTagBadges.badgeEmoji}>🛋️</span> Couchsurfing</div>
-                            <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🔢</span> Number theory</div>
+                            <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🦾</span> Robotics</div>
                             <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>👾</span> Theoretical computer science <Tooltip isBadge={true} text="Especially information theory."/></div>
                             <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🎛️</span> Mixing & DJing</div>
                             <div class={stylesTagBadges.badgeAboutMarked}><span class={stylesTagBadges.badgeEmoji}>🔎</span> Data analysis</div>
                             <div class={stylesTagBadges.badgeAboutMarked}><span class={stylesTagBadges.badgeEmoji}>📶</span> Data visualization</div>
                             <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🏍️</span> Motorcycles <Tooltip isBadge={true} text="I like enduro bikes, but realistically, I'd rather buy a more practical motorcycle for traveling."/></div>
                             <div class={stylesTagBadges.badgeAboutMarked}><span class={stylesTagBadges.badgeEmoji}>📖</span> Russian literature</div>
-                            <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🦾</span> AI research</div>
+                            <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>💡</span> AI research</div>
                             <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🧠</span> Philosophy of AI</div>
                             {/* Cybernetics, Transhumanism */}
                         </div>
@@ -552,7 +552,7 @@ const About = () => {
                         emoji="🐍"
                         emojiGif={snake}
                         description={<>
-                            <p>In most of my political attitudes, I support the ideas of <a href="https://en.wikipedia.org/wiki/Right-libertarianism">right-wing libertarianism</a> (more towards <a href="https://en.wikipedia.org/wiki/Classical_liberalism">classical liberalism</a>) and <a href="https://en.wikipedia.org/wiki/Cultural_conservatism">cultural conservatism</a> — as I'm moderately conservative overall.&nbsp; <Tooltip text={<>I support some initiatives of the <b>Libertarian Party of Russia</b> since 2018. The party proposes libertarian reforms in the political system of Russia, but since 2022 it has been completely in political exile, mostly being focused on distingushing Russian people from the Russian state against the backdrop of collective discrimination.</>}/>
+                            <p>In most of my political attitudes, I support the ideas of <a href="https://en.wikipedia.org/wiki/Right-libertarianism">right-wing libertarianism</a> (more towards <a href="https://en.wikipedia.org/wiki/Classical_liberalism">classical liberalism</a>) and <a href="https://en.wikipedia.org/wiki/Cultural_conservatism">cultural conservatism</a> — as I'm moderately conservative overall.&nbsp; <Tooltip text={<>In short, I mostly advocate true federalization along with gradual reduction of government, which is an unpopular form of anti-putin opposition — it's neither the liberal nor the far-right side of the Russian right wing. I support some initiatives of the <b>Libertarian Party of Russia</b> since 2018; the party proposes libertarian reforms in this rusty political system, but since 2022 it has been completely in exile, mostly being focused only on distingushing Russian people from the Russian state against the backdrop of collective discrimination.</>}/>
                             </p>
                         </>}
                         backgroundColor="#fff491"

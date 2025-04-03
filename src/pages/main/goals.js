@@ -14,6 +14,7 @@ import checkbox from "../../images/goals/checked.svg";
 import refLink from "../../images/goals/refLink.svg";
 import resultLink from "../../images/goals/resultLink.svg";
 import info from "../../images/goals/info.svg";
+import Notice from '../../components/Notice';
 import * as stylesGoalsPage from "../../styles/goals_page.module.scss"
 import * as stylesSpoilers from "../../styles/spoilers.module.scss"
 import * as stylesButtonsCommon from "../../styles/buttons_common.module.scss"
@@ -164,6 +165,9 @@ const Goals = () => {
 
             <div class="goalsBodyNested">
                 <div class={stylesGoalsPage.goalsTextContent}>
+
+                    <Notice title="☝️ Wait a moment" text="I've removed the goals to reorganize them into categories. They'll be here soon. You can only see the test ones."/>
+
                     <p>Here you can find the public version of my bucket list, which is actually an organized collection of my life's achievements if it was a RPG (that's exactly how I feel this life). There are boring cliché goals, serious and challenging ones, but also just simple little things for folks who, like me, enjoy goofing around doing stupid and sometimes epic dangerous stuff, because that's what makes life exciting. <StickerPack sticker="pug_dance"/> </p>
                     <div className="desktopOnlySupport">
                         <button class="noselect" className={stylesSpoilers.spoilerButton} ref={(el) => collRef.current.push(el)}>

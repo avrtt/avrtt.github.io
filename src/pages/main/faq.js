@@ -28,7 +28,11 @@ const Faq = () => {
                     <br/><br/>
                     <b>Q</b>: How you've made artworks with the same style?
                     <br/>
-                    <b>A</b>: For creating banner images and some illustrations, I use a combination of AI tools (like Recraft) for generating, inpainting, outpainting and style transfer, with public domain paintings as references. The Research post banners are taken from engravings by <a href="https://en.wikipedia.org/wiki/Gustave_Dor%C3%A9#Gallery">Gustave Doré</a>. Often these images turn out a little crooked, so I do some manual photoshop, color adjustments, and... that's it.
+                    <b>A</b>: For creating banner images and some illustrations, I use a combination of AI tools (like Recraft and ComfyUI) for generating, inpainting, outpainting and style transfer, with public domain paintings as references. The Research post banners are taken from engravings by <a href="https://en.wikipedia.org/wiki/Gustave_Dor%C3%A9#Gallery">Gustave Doré</a>, and colorized using my simple custom OpenCV model. Often these images turn out a little crooked, so I do some manual photoshop, color adjustments, and... that's it. In addition, some pictures aren't AI-generated, but collages that take hours of work each.
+                    <br/><br/>
+                    <b>Q</b>: Why so many emojis?
+                    <br/>
+                    <b>A</b>: Idk im autistic
                     <br/><br/>
                     (to be expanded)
                 </p>
