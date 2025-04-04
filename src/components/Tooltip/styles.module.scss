@@ -109,13 +109,13 @@
             -moz-user-select: none; 
             -ms-user-select: none;
             user-select: none;
-            line-height: 1.6rem; 
+            line-height: 1.4rem; 
         }
         @include mixins.respond-to(small-desktop) { 
-            line-height: 1.8rem; 
+            line-height: 1.4rem; 
         }
         @include mixins.respond-to(desktop) { 
-            line-height: 1.8rem; 
+            line-height: 1.4rem; 
         }
 
         &::after {

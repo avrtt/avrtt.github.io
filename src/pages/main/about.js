@@ -190,21 +190,29 @@ const About = () => {
                 </TileContainer>
                 <TileContainer columns={3}>
                     <ContentBlock
+                        emoji=' '
+                        description={''}
+                        backgroundColor="#f2f2f2"
+                        width='11%'
+                        textColor="#7d7d7d"
+                        paddingDescription="0.8rem 1rem 0rem 1rem"
+                        divAnimation={false}
+                        isMarkdown={false}
+                    />
+                    <ContentBlock
                         emoji='🕊️'
                         emojiGif={dove}
                         description="During [another wave](https://en.wikipedia.org/wiki/Russian_emigration_during_the_Russian_invasion_of_Ukraine) of emigration from Russia, I decided to start living on the road instead of settling somewhere. To achieve this, I've learned to work remotely and became an extreme minimalist, then [grabbed a camera](https://www.youtube.com/@vladaverett) and transformed my life into a full-time adventure."
                         backgroundColor="#E5E5E5"
                         justifyContent = 'start'
                         emojiAlign='right'
-                        width='73%'
+                        width='75%'
                     />
                     <ContentBlock
                         emoji=' '
-                        description={<>
-                            <p><a href="https://en.wikipedia.org/wiki/Russian_invasion_of_Ukraine">The war</a> was a significant point in my life worth mentioning before anything else.</p>
-                        </>}
+                        description={''}
                         backgroundColor="#f2f2f2"
-                        width='25%'
+                        width='11%'
                         textColor="#7d7d7d"
                         paddingDescription="0.8rem 1rem 0rem 1rem"
                         divAnimation={false}
@@ -552,7 +560,7 @@ const About = () => {
                         emoji="🐍"
                         emojiGif={snake}
                         description={<>
-                            <p>In most of my political attitudes, I support the ideas of <a href="https://en.wikipedia.org/wiki/Right-libertarianism">right-wing libertarianism</a> (more towards <a href="https://en.wikipedia.org/wiki/Classical_liberalism">classical liberalism</a>) and <a href="https://en.wikipedia.org/wiki/Cultural_conservatism">cultural conservatism</a> — as I'm moderately conservative overall.&nbsp; <Tooltip text={<>In short, I mostly advocate true federalization along with gradual reduction of government, which is an unpopular form of anti-putin opposition — it's neither the liberal nor the far-right side of the Russian right wing. I support some initiatives of the <b>Libertarian Party of Russia</b> since 2018; the party proposes libertarian reforms in this rusty political system, but since 2022 it has been completely in exile, mostly being focused only on distingushing Russian people from the Russian state against the backdrop of collective discrimination.</>}/>
+                            <p>In most of my political attitudes, I support the ideas of <a href="https://en.wikipedia.org/wiki/Right-libertarianism">right-wing libertarianism</a> (more towards <a href="https://en.wikipedia.org/wiki/Classical_liberalism">classical liberalism</a>) and <a href="https://en.wikipedia.org/wiki/Cultural_conservatism">cultural conservatism</a> — as I'm moderately conservative overall.&nbsp; <Tooltip text={<>In short, I mostly advocate freedom of speech & self-defence, property & privacy rights, free-market capitalism, natural law and true federalization along with gradual reduction of government — which is (sadly) an unpopular set of views — it's neither the liberal nor the far-right side of the Russian right wing. I support some initiatives of the <b>Libertarian Party of Russia</b> since 2018; the party proposes libertarian reforms in this rusty political system, but since 2022 it has been completely in exile, mostly being focused only on distingushing Russian people from the Russian state against the backdrop of collective discrimination.</>}/>
                             </p>
                         </>}
                         backgroundColor="#fff491"
