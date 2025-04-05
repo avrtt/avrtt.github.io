@@ -576,9 +576,15 @@ export const textServices = {
         },
         pricing: {
             en: 
-`Highly depends on features and scope, but **~$500** is the average price for complex multi-module applications. Large-scale systems (e.g., enterprise-grade software with robust documentation) may cost **$1000–$2000**.`,
+`Highly depends on features and scope, but **~$200** is the average price for complex multi-module applications. Large-scale systems (e.g., enterprise-grade software with robust documentation) may cost **$400–$700**.`,
             ru:
-`Сильно зависит от функционала и объёма работы, но **~500$** — средняя цена для комплексных многомодульных приложений. Системы большего масштаба (например, корпоративное ПО с полной документацией) могут стоить **1000–2000$**.`
+`Сильно зависит от функционала и объёма работы, но **~200$** — средняя цена для комплексных многомодульных приложений. Системы большего масштаба (например, корпоративное ПО с полной документацией) могут стоить **400–700$**.`
+        },
+        paymentModel: {
+            en:
+`Payment is normally pre-fixed and always per-deliverable.`,
+            ru:
+`Оплата, как правило, заранее фиксированная и всегда попроектная.`
         },
     },
     service2: {
@@ -632,9 +638,15 @@ export const textServices = {
         },
         pricing: {
             en: 
-`The average price for scraping static pages with minimal formatting is **~$60**. Handling pagination, login authentication or dynamic content may cost **$100–$200**. More advanced features (e.g., bypassing captchas, integrating proxies or scraping multiple sites with API development) are highly unpredictable in price.`,
+`The average price for scraping static pages with minimal formatting is **~$40**. Handling pagination, login authentication or dynamic content may cost **$60–$100**. More advanced features (e.g., bypassing captchas, integrating proxies or scraping multiple sites with API development) are highly unpredictable in price.`,
             ru:
-`Средняя стоимость скрапинга статических страниц с минимальным форматированием составляет **~60$**. Работа с многостраничностью, аутентификацией или динамическим контентом может стоить **100–200$**. Стоимость более сложных функции (например, обход CAPTCHA, интеграция прокси или скрапинг множества сайтов с разработкой API) сильно непредсказуема.`
+`Средняя стоимость скрапинга статических страниц с минимальным форматированием составляет **~40$**. Работа с многостраничностью, аутентификацией или динамическим контентом может стоить **60–100$**. Стоимость более сложных функции (например, обход CAPTCHA, интеграция прокси или скрапинг множества сайтов с разработкой API) сильно непредсказуема.`
+        },
+        paymentModel: {
+            en:
+`Payment is always per-deliverable and pre-fixed.`,
+            ru:
+`Оплата всегда попроектная и предварительно фиксированная.`
         },
     },
     service3: {
@@ -686,9 +698,15 @@ export const textServices = {
         },
         pricing: {
             en: 
-`**$50–$100** for basic tasks like cleaning datasets or simple transformations, depending on the amount of data. Handling large datasets with big data tools or creating reusable workflows may cost **$100–$200**. Advanced workflows (real-time processing, integrating pipelines) or working with specialized formats may cost more. The average price for this service is **~$70**.`,
+`**$40–$100** for basic tasks like cleaning datasets or simple transformations, depending on the amount of data. Handling large datasets with big data tools or creating reusable workflows may cost **$100–$200**. Advanced workflows (real-time processing, integrating pipelines) or working with specialized formats may cost more. The average price for this service is **~$70**.`,
             ru:
-`**50–100$** за базовые задачи, такие как очистка данных или простые трансформации, в зависимости от объема данных. Обработка больших данных с использованием специализированных инструментов или создание повторно используемых рабочих процессов может стоить **100–200$**. Более сложные задачи, такие как обработка в реальном времени или работа со специальными форматами, могут стоить больше. Средняя цена за эту услугу составляет **~70$**.`
+`**40–100$** за базовые задачи, такие как очистка данных или простые трансформации, в зависимости от объема данных. Обработка больших данных с использованием специализированных инструментов или создание повторно используемых рабочих процессов может стоить **100–200$**. Более сложные задачи, такие как обработка в реальном времени или работа со специальными форматами, могут стоить больше. Средняя цена за эту услугу составляет **~70$**.`
+        },
+        paymentModel: {
+            en:
+`In some cases, payment may be on an hourly basis.`,
+            ru:
+`В некоторых случаях оплата может быть почасовой.`
         },
     },
     service4: {
@@ -744,9 +762,15 @@ export const textServices = {
         },
         pricing: {
             en: 
-`**$50–$100** for basic charts on common data types in Python, Excel or Google Sheets. **$100–$200** for interactive/animated visualizations and uncommon data types. **$200+** for highly customized and detailed visuals, advanced interactivity or visualizations on multiple datasets. These prices are mostly determined by urgency.`,
+`**$30–$50** for basic charts on common data types in Python, Excel or Google Sheets. **$80–$200** for interactive/animated visualizations and uncommon data types. **$200+** for highly customized and detailed visuals, advanced interactivity or visualizations on multiple datasets. These prices are mostly determined by urgency.`,
             ru:
-`**50–100$** за базовые графики на распространённых типах данных с использованием Python, Excel или Google Sheets. **100–200$** за интерактивные/анимированные визуализации и работу с редкими типами данных. **200$+** за высококастомизированные и детализированные визуализации, продвинутую интерактивность или визуализации на нескольких наборах данных. Данные расценки в основном определяются срочностью.`
+`**30–50$** за базовые графики на распространённых типах данных с использованием Python, Excel или Google Sheets. **80–200$** за интерактивные/анимированные визуализации и работу с редкими типами данных. **200$+** за высококастомизированные и детализированные визуализации, продвинутую интерактивность или визуализации на нескольких наборах данных. Данные расценки в основном определяются срочностью.`
+        },
+        paymentModel: {
+            en:
+`In some cases, payment may be on an hourly basis.`,
+            ru:
+`В некоторых случаях оплата может быть почасовой.`
         },
     },
     service5: {
@@ -810,9 +834,15 @@ export const textServices = {
         },
         pricing: {
             en: 
-`**$100–$150** for summary statistics, correlations and basic charts with explanations. **$150–$250** for in-depth analysis, probably using feature engineering or specific problem-focused methods. Comprehensive reports on multiple large datasets or with advanced visualizations may vary in price highly.`,
+`**$50–$150** for summary statistics, correlations and basic charts with explanations. **$150–$250** for in-depth analysis, probably using feature engineering or specific problem-focused methods. Comprehensive reports on multiple large datasets or with advanced visualizations may vary in price highly.`,
             ru:
-`**100–150$** за сводную статистику, корреляции и основные графики с пояснениями. **150–250$** за углубленный анализ, возможно с использованием feature engineering или специальных методов, ориентированных на конкретную задачу. Комплексные отчеты по нескольким большим наборам данных или с продвинутой визуализацией могут сильно варьироваться в цене.`
+`**50–150$** за сводную статистику, корреляции и основные графики с пояснениями. **150–250$** за углубленный анализ, возможно с использованием feature engineering или специальных методов, ориентированных на конкретную задачу. Комплексные отчеты по нескольким большим наборам данных или с продвинутой визуализацией могут сильно варьироваться в цене.`
+        },
+        paymentModel: {
+            en:
+`Payment is often on an hourly basis.`,
+            ru:
+`Оплата зачастую почасовая.`
         },
     },
     service6: {
@@ -876,9 +906,15 @@ export const textServices = {
         },
         pricing: {
             en: 
-`**$200–$800** for tuning pre-trained models with perfomance validation, depending on many factors such as quality of data, problem scope and domain.`,
+`**$100–$400** for tuning pre-trained models with perfomance validation, depending on many factors such as quality of data, problem scope and domain.`,
             ru:
-`**200–800$** за настройку предварительно обученных моделей с оценкой производительности, в зависимости от множества факторов: качества данных, сложности задачи, области применения и т.д.`
+`**100–400$** за настройку предварительно обученных моделей с оценкой производительности, в зависимости от множества факторов: качества данных, сложности задачи, области применения и т.д.`
+        },
+        paymentModel: {
+            en:
+`Payment is normally pre-fixed and always per-deliverable.`,
+            ru:
+`Оплата, как правило, предварительно фиксированная и всегда попроектная.`
         },
     },
     service7: {
@@ -934,9 +970,15 @@ export const textServices = {
         },
         pricing: {
             en: 
-`**~$300** for frontend interfaces or single-page apps of moderate complexity with interactive elements and responsive designs. API integration and additional React modules may increase the price.`,
+`**~$150** for frontend interfaces or single-page apps of moderate complexity with interactive elements and responsive designs. API integration and additional React modules may increase the price.`,
             ru:
-`**~300$** за интерфейс или одностраничное приложение средней сложности с интерактивными элементами и адаптивным дизайном. Интеграция с API и дополнительные React-модули могут увеличить стоимость.`
+`**~150$** за интерфейс или одностраничное приложение средней сложности с интерактивными элементами и адаптивным дизайном. Интеграция с API и дополнительные React-модули могут увеличить стоимость.`
+        },
+        paymentModel: {
+            en:
+`Payment is always per-deliverable, but the price isn't guaranteed to be pre-fixed and depends on the client's revisions.`,
+            ru:
+`Оплата всегда попроектная, однако предварительно фиксированная стоимость не гарантируется в случае, если клиент вносит правки в ТЗ.`
         },
     },
     service8: {
@@ -1001,6 +1043,12 @@ export const textServices = {
 `**$150–$250** for basic 2-3 pages website (personal portfolio, small business pages). **~$400** for multi-page websites with contact forms, SEO and animations. Extensive custom design and JavaScript functionality may vary these prices significally.`,
             ru:
 `**150–250$** за простой сайт на 2-3 страницы (портфолио, страницы для малого бизнеса). **~400$** за многостраничные сайты с формами обратной связи, SEO и анимациями. Сложный, нестандартный дизайн и функциональность JavaScript могут существенно повлиять на эти цены.`
+        },
+        paymentModel: {
+            en:
+`Payment is always per-deliverable, but the price isn't guaranteed to be pre-fixed and depends on the client's revisions.`,
+            ru:
+`Оплата всегда попроектная, однако предварительно фиксированная стоимость не гарантируется в случае, если клиент вносит правки в ТЗ.`
         },
     },
     service9: {
@@ -1078,9 +1126,15 @@ If you order an userbot, then make sure there's nothing confidential or importan
         },
         pricing: {
             en: 
-`This service is highly unpredictable in price. In average, an NLP-driven bot of medium complexity with APIs integration or databases costs **~$230**.`,
+`This service is highly unpredictable in price. In average, an NLP-driven bot of medium complexity with APIs integration or databases costs **~$130**.`,
             ru:
-`Данная услуга крайне непредсказуема в цене. В среднем, NLP-ориентированный бот с не самым простым функционалом, интеграцией API или базой данных стоит **~$230**.`
+`Данная услуга крайне непредсказуема в цене. В среднем, NLP-ориентированный бот с не самым простым функционалом, интеграцией API или базой данных стоит **~$130**.`
+        },
+        paymentModel: {
+            en:
+`Payment is normally pre-fixed and always per-deliverable.`,
+            ru:
+`Оплата, как правило, предварительно фиксированная и попроектная.`
         },
     },
     service10: {
@@ -1136,9 +1190,15 @@ If you order an userbot, then make sure there's nothing confidential or importan
         },
         pricing: {
             en: 
-`**$150–$200** for one-time data extraction tool. **$200–$400** for tools with scheduling, filtering or error-handling. Real-time data collection may double the price.`,
+`**$100–$150** for one-time data extraction tool. **$150–$300** for tools with scheduling, filtering or error-handling. Real-time data collection may double the price.`,
             ru:
-`**$150-$200** за разовые инструменты извлечения данных. **$200-$400** за инструменты с scheduling, фильтрацией или обработкой ошибок. Сбор данных в режиме реального времени может удвоить цену.`
+`**$100-$150** за разовые инструменты извлечения данных. **$150-$300** за инструменты с scheduling, фильтрацией или обработкой ошибок. Сбор данных в режиме реального времени может удвоить цену.`
+        },
+        paymentModel: {
+            en:
+`Payment is normally pre-fixed and always per-deliverable.`,
+            ru:
+`Оплата, как правило, предварительно фиксированная и попроектная.`
         },
     },
     service11: {
@@ -1199,6 +1259,12 @@ If you order an userbot, then make sure there's nothing confidential or importan
 `This service depends on many factors, price is negotiable.`,
             ru:
 `Данная услуга зависит от многих факторов, цена договорная.`
+        },
+        paymentModel: {
+            en:
+`Payment is normally on an hourly basis.`,
+            ru:
+`Оплата, как правило, почасовая.`
         },
     },
     service12: {
@@ -1280,9 +1346,15 @@ Besides these tools, some “exotic” types of dashboards can be created using 
         },
         pricing: {
             en: 
-`Dashboards with simple visualizations and KPIs cost **$200–$400**. Custom features with advanced analytics, real-time updates and handling many data sources may cost **$400–$1000**. The averace price is **~$350**.`,
+`Dashboards with simple visualizations and KPIs cost **$100–$300**. Custom features with advanced analytics, real-time updates and handling many data sources may cost **$300–$800**. The average price is **~$350**.`,
             ru:
-`Дашборды с простыми визуализациями и ключевыми показателями стоят **$200–$400**. Специальные функции с расширенной аналитикой, обновлением в реальном времени и работой с большим количеством источников данных могут стоить **$400-$1000**. Средняя стоимость составляет **~$350**.`
+`Дашборды с простыми визуализациями и ключевыми показателями стоят **$100–$300**. Специальные функции с расширенной аналитикой, обновлением в реальном времени и работой с большим количеством источников данных могут стоить **$300-$800**. Средняя стоимость составляет **~$350**.`
+        },
+        paymentModel: {
+            en:
+`Payment is normally on an hourly basis.`,
+            ru:
+`Оплата, как правило, почасовая.`
         },
     },
     service13: {
@@ -1338,9 +1410,15 @@ Besides these tools, some “exotic” types of dashboards can be created using 
         },
         pricing: {
             en: 
-`Simple documentation cost **$50–$200** (guides or FAQs), depending on text length. API documentation and user manuals cost **$200–$500**. Complex technical whitepapers may cost more.`,
+`Simple documentation cost **$50–$150** (guides or FAQs), depending on text length. API documentation and user manuals cost **$150–$300**. Complex technical whitepapers may cost more.`,
             ru:
 `Простая документация (инструкции, FAQ) стоит **$50–$150** в зависимости от объёма текста. Документация API и руководства пользователя стоят **$150–$300**. Сложные технические бизнес-документы (white papers) могут стоить дороже.`
+        },
+        paymentModel: {
+            en:
+`Payment is always on an hourly basis.`,
+            ru:
+`Оплата всегда почасовая.`
         },
     },
     service14: {
@@ -1400,6 +1478,12 @@ Besides these tools, some “exotic” types of dashboards can be created using 
             ru:
 `**$50–$150** за простую автоматизацию задач, **$150–$400** за обработку данных, работу с базами данных или интеграцию API. **$500–$1000+** за end-to-end рабочие процессы или достаточно сложную логику. Средняя цена составляет за услугу **~$80**.`
         },
+        paymentModel: {
+            en:
+`Payment is always per-deliverable and pre-fixed.`,
+            ru:
+`Оплата всегда попроектная и предварительно фиксированная.`
+        },
     },
     service15: {
         desc: {
@@ -1456,9 +1540,15 @@ Besides these tools, some “exotic” types of dashboards can be created using 
         },
         pricing: {
             en: 
-`Highly depends on initial software. The average price for static data displays and basic interactivity is **~$200**.`,
+`Highly depends on initial software. The average price for static data displays and basic interactivity is **~$100**.`,
             ru:
-`Сильно зависит от исходного ПО. Средняя цена за отображение статических данных и базовой интерактивности составляет **~$200**.`
+`Сильно зависит от исходного ПО. Средняя цена за отображение статических данных и базовой интерактивности составляет **~$100**.`
+        },
+        paymentModel: {
+            en:
+`Payment is normally pre-fixed and always per-deliverable.`,
+            ru:
+`Оплата, как правило, предварительно фиксированная и всегда попроектная.`
         },
     },
     service16: {
@@ -1511,6 +1601,12 @@ Besides these tools, some “exotic” types of dashboards can be created using 
 `**$50–$300** for coding tasks, statistical and mixed problems. **$500+** for complex research projects. These prices are mostly determined by urgency.`,
             ru:
 `**$50-$300** за задач по программированию, статистических и смешанных работ. **$500+** за сложные исследовательские проекты. Данные цены в основном зависят от срочности.`
+        },
+        paymentModel: {
+            en:
+`Payment is always on an hourly basis.`,
+            ru:
+`Оплата всегда почасовая.`
         },
     },
     service17: {

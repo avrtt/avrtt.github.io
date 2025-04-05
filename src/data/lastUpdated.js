@@ -1,3 +1,6 @@
+export const servicesLastUpdatedEn = "Apr 5, 2025"
+export const servicesLastUpdatedRu = "5 апреля, 2025"
+
 export const handbookLastUpdated = "FEB 7, 2025"
 export const publicationsLastUpdated = "FEB 7, 2025"
 export const softwareLastUpdated = "FEB 7, 2025"
