@@ -54,7 +54,6 @@ const Misc = () => {
 			<Spoiler 
 				title={"More about this category"} 
 				block1={categoryDescDetailed}
-				block2={"The following list represents some of my highlighted misc projects (excluding open-source contributions and other proprietary or small projects)."}
 			/>
 			<br/>
 
