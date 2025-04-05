@@ -140,6 +140,7 @@ $padding-default: 20px 20px 8px 20px;
   @include mixins.respond-to(mobile) { width: 3.5rem; height: 1.5rem; padding-right: 1rem }
   @include mixins.respond-to(small-tablet) { width: 5rem; height: 2.2rem; }
   @include mixins.respond-to(tablet) { width: 5.5rem; height: 2.5rem; }
+  @include mixins.respond-to(desktop) { transform: scale(0.9) }
 
   &:hover {
     opacity: 0.8;
