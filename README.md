@@ -24,7 +24,9 @@ Here you can find the code and documentation of my minimalist, static, MDX-based
 - [Contribution](#contribution)
   - [To do](#to-do)
 - [Development](#development)
-- [Licensing](#licensing)
+- [Copyright](#copyright)
+  - [Licensing](#licensing)
+  - [Animated emojis](#animated-emojis)
 
 
 ## Introduction
@@ -213,22 +215,35 @@ Feature suggestions and especially bug/typo reports are very welcome. Feel free 
 > (про выделение памяти и что по умолчанию 5 GB, как избежать проблем) -->
 
 
-## Licensing
+## Copyright
+
+### Licensing
 
 > [!CAUTION]
 > I do keep an eye on my works. Do not copy any content from this website/repository without complying with the terms below OR my permission (via email). The following describes why this might be a bad idea.
 
 The **website's content** is dual-licensed depending on the type:  
-- Course content: the `/course` page and posts/articles in its table of contents, including `/research` posts (MDX files) appearing in the course, are licensed under **[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.en)** (see [LICENSE_COURSE](https://github.com/avrtt/avrtt.github.io/blob/main/LICENSE_COURSE))  
-- Content of other MDX files (i.e., content not appearing in the course) is licenced under **[CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.en)** (see [LICENSE_POSTS](https://github.com/avrtt/avrtt.github.io/blob/main/LICENSE_POSTS))  
+- Course content: the `/course` page and posts/articles in its table of contents, including `/research` posts (MDX files) appearing in the course, are licensed under **[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.en)** to encourage community contributions (see [LICENSE_COURSE](https://github.com/avrtt/avrtt.github.io/blob/main/LICENSE_COURSE)).  
+- Content of other MDX files (i.e., content not appearing in the course) is licenced under **[CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/deed.en)**, which is a strict control over plagiarism (see [LICENSE_POSTS](https://github.com/avrtt/avrtt.github.io/blob/main/LICENSE_POSTS)).  
 
-The **website's code** is licensed under **GNU AGPLv3** (see [LICENSE](https://github.com/avrtt/avrtt.github.io/blob/main/LICENSE)).  
+The **website's code** is licensed under **GNU AGPLv3** to prevent proprietary forks and ensure openness (see [LICENSE](https://github.com/avrtt/avrtt.github.io/blob/main/LICENSE)).  
 
-That means you're free to use, distribute and modify **[only]** the [course](#avrttcourse)-related content (text, images) of this website as long as you retain attribution under the same license (**CC BY-SA 4.0**), and you can use, distribute and modify the website's source code (which is everything in this repository except MDX files and the `/course` page component) under the conditions of **GNU AGPLv3**.
+That means you're free to use, distribute and modify **[only]** the [course](#avrttcourse)-related content (text, images) of this website as long as you retain attribution under the same license (**CC BY-SA 4.0**), and you can use, distribute and modify the website's source code (which is everything in this repository except MDX files and the `/course` page component) under the conditions of open source **GNU AGPLv3** license. Content outside of the course cannot be modified or used commercially, only distributed with attribution. 
 
 For attribution-free copying (i.e., avoiding license requirements) of substantial portions of content/code from this repository, contact me by email: **avrtt@tuta.io**.
 
 I don't provide any support for your code copied from this repo. If you copy, be prepared for silly bugs. I'm too lazy to fix legacy.
 
-If you're a bad guy, be warned that your copied version may possibly be blocked upon request because it's plagiarism (depending on your hosting platform), and the copied site won't be ranked by search engines nearly as much as the original. Putting plagiarized content/code on GitHub makes things worse for you: copied repository content can be recognized pretty easily, which will lead to a copyright infringement notice, followed by removal of the content. GitHub often terminates accounts that violate DMCA. See. [DMCA takedown policy](https://docs.github.com/en/site-policy/content-removal-policies/dmca-takedown-policy) for more information.
+> [!WARNING] 
+> If you're a bad guy, be warned that your copied version may possibly be blocked upon request because it's plagiarism (depending on your hosting platform), and the copied site won't be ranked by search engines nearly as much as the original. Putting plagiarized content/code on GitHub makes things worse for you: copied repository content can be recognized pretty easily, which will lead to a copyright infringement notice, followed by removal of the content. GitHub often terminates accounts that violate DMCA. See. [DMCA takedown policy](https://docs.github.com/en/site-policy/content-removal-policies/dmca-takedown-policy) for more information.
 
+<!--
+
+Указать, что при атрибуции считается appropriate credit, а что нет.
+
+-->
+
+
+### Animated emojis
+
+Animated emojis appearing on some pages of this site are taken from [here](https://googlefonts.github.io/noto-emoji-animation/) and distributed under the [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.en) license.
