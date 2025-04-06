@@ -1,3 +1,31 @@
+GNU AFFERO GENERAL PUBLIC LICENSE  
+Version 3, 19 November 2007  
+
+This software (commonly referred to as 'avrtt.blog', 'avrtt.github.io' or 'Vlad Averett's blog') is a personal all-in-one website and course platform. Please visit <https://github.com/avrtt/avrtt.github.io'> for source code and more information.  
+
+Copyright (C) 2022  Vladislav Averett (avrtt)  
+
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.  
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.  
+
+You should have received a copy of the GNU Affero General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.  
+
+Additional notice:  
+- This license applies only to the website's code, including (but not limited) to HTML, CSS, SCSS, TypeScript, JavaScript and backend scripts.  
+- This license DOES NOT apply to .mdx files located in the ‘src/pages/posts’ directory.  
+- All written content, including blog posts mentioned above, as well as any sort of articles and documentation are covered by different licenses. Please refer to LICENSE_POSTS and LICENSE_COURSE for complementary information.  
+
+Contact emails (both are equivalent):  
+1. avrtt@tuta.io  
+2. lenferdetroud@gmail.com  
+
+Related links:
+- LICENSE_POSTS: <https://github.com/avrtt/avrtt.github.io/blob/main/LICENSE_POSTS>
+- LICENSE_COURSE: <https://github.com/avrtt/avrtt.github.io/blob/main/LICENSE_COURSE>
+
+---
+
                     GNU AFFERO GENERAL PUBLIC LICENSE
                        Version 3, 19 November 2007
 
