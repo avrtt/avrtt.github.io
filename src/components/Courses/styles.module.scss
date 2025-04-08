@@ -80,6 +80,7 @@ $hover-scale: 0.985;
   font-size: 18px;
   margin-left: 14px;
   margin-top: 42px;
+  line-height: 20px;
   width: 90%;
   @include mixins.respond-to(mobile) { font-size: 0.85rem; margin-top: 0.8rem; margin-left: 0.15rem; }
   @include mixins.respond-to(small-tablet) { font-size: 0.85rem; margin-top: 0.8rem; margin-left: 0.15rem; }

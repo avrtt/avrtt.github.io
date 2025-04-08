@@ -16,6 +16,7 @@ const dateDurationStyle = {
   'font-size': '18px',
   'float': 'right',
   'line-height': '46.5px',
+  'color': '#bababa'
 }; 
 
 const logoStyle = {
@@ -27,7 +28,8 @@ const tagStyle = {
   'font-weight': 'lighter',
   'font-size': '18px',
   'margin-left': '47px',
-  'margin-top': '-14px'
+  'margin-top': '-14px',
+  'color': '#bababa'
 }; 
 
 const FreelanceProject = ({ isExample=false, emoji, projectName, projectDesc, date, duration, tag, source1, source1Link, source2, source2Link, source3, source3Link, extraContentHide, extraDesc, demoImg1, demoImg2, demoImg3, demoVidYTKey }) => {
