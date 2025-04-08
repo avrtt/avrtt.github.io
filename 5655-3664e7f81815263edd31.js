@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkavrtt_blog=self.webpackChunkavrtt_blog||[]).push([[5655],{45655:function(e,t,a){a.r(t),t.default=a.p+"static/yoba_pledik-2bc307e81afb9fbe45e54d5e6043ac19.png"}}]);
+//# sourceMappingURL=5655-3664e7f81815263edd31.js.map

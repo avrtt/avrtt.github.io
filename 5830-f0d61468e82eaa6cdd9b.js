@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkavrtt_blog=self.webpackChunkavrtt_blog||[]).push([[5830],{95830:function(t,c,a){a.r(c),c.default=a.p+"static/bibizan-c869e26df1549510dcdd470007176b2c.gif"}}]);
+//# sourceMappingURL=5830-f0d61468e82eaa6cdd9b.js.map

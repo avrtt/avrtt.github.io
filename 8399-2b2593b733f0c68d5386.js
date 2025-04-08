@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkavrtt_blog=self.webpackChunkavrtt_blog||[]).push([[8399],{38399:function(a,t,e){e.r(t),t.default=e.p+"static/cat_stand-e7609c6c84e111cf57baea05e2e55a9a.png"}}]);
+//# sourceMappingURL=8399-2b2593b733f0c68d5386.js.map

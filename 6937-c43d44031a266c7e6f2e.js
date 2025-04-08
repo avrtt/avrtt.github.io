@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkavrtt_blog=self.webpackChunkavrtt_blog||[]).push([[6937],{46937:function(t,a,e){e.r(a),a.default=e.p+"static/yoba_dovolen-a386296f088811c2d8037e39cb1798bd.png"}}]);
+//# sourceMappingURL=6937-c43d44031a266c7e6f2e.js.map

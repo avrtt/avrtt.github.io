@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkavrtt_blog=self.webpackChunkavrtt_blog||[]).push([[435],{20435:function(a,t,e){e.r(t),t.default=e.p+"static/pepe_wink-a11bacc909088baefa8864365994861b.gif"}}]);
+//# sourceMappingURL=435-1f9cf63bbfd0a964e9c3.js.map

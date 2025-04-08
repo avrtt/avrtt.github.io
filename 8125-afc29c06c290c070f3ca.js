@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkavrtt_blog=self.webpackChunkavrtt_blog||[]).push([[8125],{68125:function(e,t,a){a.r(t),t.default=a.p+"static/pepe_meditation-d16ea548d1813a1e1e1bf824fb749aa8.png"}}]);
+//# sourceMappingURL=8125-afc29c06c290c070f3ca.js.map

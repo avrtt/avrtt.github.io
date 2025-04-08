@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkavrtt_blog=self.webpackChunkavrtt_blog||[]).push([[7468],{27468:function(e,t,b){b.r(t),t.default=b.p+"static/cursed_emoji1-9d70bc8391359f26f2b1fe8e424d22b5.png"}}]);
+//# sourceMappingURL=7468-d87102ad6a938f9a8cea.js.map

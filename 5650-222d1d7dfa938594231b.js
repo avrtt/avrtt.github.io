@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkavrtt_blog=self.webpackChunkavrtt_blog||[]).push([[5650],{75650:function(e,t,a){a.r(t),t.default=a.p+"static/pepe_pledik-de851fee915fcb3520af32a2d7da7b6b.png"}}]);
+//# sourceMappingURL=5650-222d1d7dfa938594231b.js.map

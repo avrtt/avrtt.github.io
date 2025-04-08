@@ -1,0 +1,1 @@
+{"version":3,"file":"8272-0592ebc3a30122151b7b.js","mappings":"sHAAA,UAAe,IAA0B,uD","sources":["webpack://avrtt.blog/./src/stickers/trollface.png"],"sourcesContent":["export default __webpack_public_path__ + \"static/trollface-817f3b26e2f2f4e6b9c0fce3ae6a4d35.png\";"],"names":[],"sourceRoot":""}

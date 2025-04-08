@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkavrtt_blog=self.webpackChunkavrtt_blog||[]).push([[1896],{61896:function(e,t,b){b.r(t),t.default=b.p+"static/dog_nerd-46b75e04374ba237b6ebb59fd8dfe3f4.png"}}]);
+//# sourceMappingURL=1896-d5783bb35509dcd35e8c.js.map

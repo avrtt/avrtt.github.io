@@ -1,0 +1,1 @@
+{"version":3,"file":"689-52a2d23fde8f378c82ca.js","mappings":"qHAAA,UAAe,IAA0B,wD","sources":["webpack://avrtt.blog/./src/stickers/pepe_chair.gif"],"sourcesContent":["export default __webpack_public_path__ + \"static/pepe_chair-769f653e1d5c6a95eabc4a4bb290400c.gif\";"],"names":[],"sourceRoot":""}

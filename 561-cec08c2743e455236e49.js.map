@@ -1,0 +1,1 @@
+{"version":3,"file":"561-cec08c2743e455236e49.js","mappings":"qHAAA,UAAe,IAA0B,0D","sources":["webpack://avrtt.blog/./src/stickers/morshu_gnome.png"],"sourcesContent":["export default __webpack_public_path__ + \"static/morshu_gnome-1a683aeb583574f19ceaf932335dadd2.png\";"],"names":[],"sourceRoot":""}

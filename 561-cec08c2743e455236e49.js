@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkavrtt_blog=self.webpackChunkavrtt_blog||[]).push([[561],{30561:function(a,t,e){e.r(t),t.default=e.p+"static/morshu_gnome-1a683aeb583574f19ceaf932335dadd2.png"}}]);
+//# sourceMappingURL=561-cec08c2743e455236e49.js.map

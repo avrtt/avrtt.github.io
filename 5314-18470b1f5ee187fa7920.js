@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkavrtt_blog=self.webpackChunkavrtt_blog||[]).push([[5314],{35314:function(a,t,e){e.r(t),t.default=e.p+"static/beluga-465fc2f7da84fb8c4d52e0b1a3ba45e1.png"}}]);
+//# sourceMappingURL=5314-18470b1f5ee187fa7920.js.map

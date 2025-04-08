@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkavrtt_blog=self.webpackChunkavrtt_blog||[]).push([[8272],{78272:function(e,t,a){a.r(t),t.default=a.p+"static/trollface-817f3b26e2f2f4e6b9c0fce3ae6a4d35.png"}}]);
+//# sourceMappingURL=8272-0592ebc3a30122151b7b.js.map

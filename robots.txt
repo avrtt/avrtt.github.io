@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://avrtt.github.io/sitemap-index.xml
+Host: https://avrtt.github.io
