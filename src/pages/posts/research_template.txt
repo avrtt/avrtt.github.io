@@ -15,7 +15,7 @@ descOG: "Call to action"
 descTwitter: ""
 date: "DD.MM.YYYY"
 updated:
-prioritySitemap: "0.6"
+prioritySitemap: 0.6
 changefreqSitemap: "monthly"
 extraReadTimeMin: 0
 difficultyLevel: 1
@@ -36,11 +36,14 @@ otherTags: [""]
 keywordsSEO: [""]
 banner: "../../../images/posts/research/banners/IMAGE.jpg"
 imageOG: "../../../images/posts/research/banners/IMAGE.jpg"
+imageAltOG: ""
 imageTwitter: "../../../images/posts/research/banners/IMAGE.jpg"
+imageAltTwitter: ""
 canonicalURL: "https://avrtt.github.io/research/POST_URL"
 slug: "/research/POST_URL"
 ---
-import Image from "../../../components/PostImage"
+
+{/* add only those components that will be used
 import Video from "../../../components/Video"
 import Notice from "../../../components/Notice"
 import StickerPack from "../../../components/StickerPack"
@@ -49,6 +52,8 @@ import Shine from "../../../components/Shine"
 import Highlight from "../../../components/Highlight"
 import Code from "../../../components/Code"
 import Latex from "../../../components/Latex"
+*/}
+
 
 *(intro: a quote, catchphrase, joke, etc.)*
 

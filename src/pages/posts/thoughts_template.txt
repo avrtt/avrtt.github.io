@@ -12,7 +12,7 @@ descOG: "Call to action"
 descTwitter: ""
 date: "DD.MM.YYYY"
 updated:
-prioritySitemap: "0.8"
+prioritySitemap: 0.8
 changefreqSitemap: "yearly"
 extraReadTimeMin: 0
 difficultyLevel: 1
@@ -33,17 +33,22 @@ otherTags: [""]
 keywordsSEO: [""]
 banner: "../../../images/posts/thoughts/banners/IMAGE.jpg"
 imageOG: "../../../images/posts/thoughts/banners/IMAGE.jpg"
+imageAltOG: ""
 imageTwitter: "../../../images/posts/thoughts/banners/IMAGE.jpg"
+imageAltTwitter: ""
 canonicalURL: "https://avrtt.github.io/thoughts/POST_URL"
 slug: "/thoughts/POST_URL"
 ---
-import Image from "../../../components/PostImage"
+
+{/* add only those components that will be used
 import Video from "../../../components/Video"
 import Notice from "../../../components/Notice"
 import StickerPack from "../../../components/StickerPack"
 import Tooltip from "../../../components/Tooltip"
 import Shine from "../../../components/Shine"
 import Highlight from "../../../components/Highlight"
+*/}
+
 
 *(intro: a quote, catchphrase, joke, etc.)*
 
