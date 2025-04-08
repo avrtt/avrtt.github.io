@@ -631,7 +631,7 @@ const About = () => {
                     <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🚬</span> Non-smoker</div>
                     <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🥶</span> Prefer cold climate</div>
                     <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>😌</span> Prefer to live alone</div>
-                    <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🇺🇸</span> C1</div>
+                    <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🇺🇸</span> B2</div>
                     <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🇪🇸</span> A2</div>
                     <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🇸🇪</span> A1</div>
                     <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🇷🇺</span> Native</div>
