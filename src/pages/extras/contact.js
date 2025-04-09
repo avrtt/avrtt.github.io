@@ -14,9 +14,9 @@ const Contact = () => {
             exit={{opacity: 0 }}
             transition={{ duration: 0.15 }}>
             
-            <div class="contactBody">
+            <div className="contactBody">
                 <M text="Questions, corrections, business proposals, creative suggestions, bucket list ideas, offers to travel together, just chatting:"/>
-                <div class="list">
+                <div className="list">
                     <M text={`
 - 📲 Telegram (fastest way): **[@averett](https://t.me/averett)**<br/>
 - 📩 Email: **[avrtt@tuta.io](mailto:avrtt@tuta.io)**<br/>

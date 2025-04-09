@@ -23,10 +23,10 @@ const Zettelkasten = () => {
 				alt="Page cover: a painting depicting an enormous underground library"
 			/>
 
-			<div class="generalBody">
+			<div className="generalBody">
 				<p>This is my learning logs and knowledge base. I'm currently looking for a better way to pull everything from Obsidian to here.</p>
 			</div>
-			<div class="lastUpdatedTalks">UPDATED ON {zettelkastenLastUpdated}</div>
+			<div className="lastUpdatedTalks">UPDATED ON {zettelkastenLastUpdated}</div>
 
 	  	</motion.div>
 	);

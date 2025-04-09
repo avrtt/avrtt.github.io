@@ -207,7 +207,7 @@ const Handbook = () => {
 				*/}
 
 			</div>
-			<div class="lastUpdatedTalks">UPDATED ON {handbookLastUpdated}</div>
+			<div className="lastUpdatedTalks">UPDATED ON {handbookLastUpdated}</div>
 
 	  	</motion.div>
 	);

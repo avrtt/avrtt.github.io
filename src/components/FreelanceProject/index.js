@@ -97,9 +97,9 @@ const FreelanceProject = ({ isExample=false, emoji, projectName, projectDesc, da
           &nbsp;&nbsp;&nbsp;
           {duration}
           &nbsp;&nbsp;&nbsp;&nbsp;
-          <a href={source3Link}><img src={source3} id={stylesFreelancePages[source3Flag]} class="noselect" className={stylesFreelancePages.sourceIcon} alt="source_logo" style={logoStyle} /></a>
-          <a href={source2Link}><img src={source2} id={stylesFreelancePages[source2Flag]} class="noselect" className={stylesFreelancePages.sourceIcon} alt="source_logo" style={logoStyle} /></a>
-          <a href={source1Link}><img src={source1} id={stylesFreelancePages[source1Flag]} class="noselect" className={stylesFreelancePages.sourceIcon} alt="source_logo" style={logoStyle} /></a>
+          <a href={source3Link}><img src={source3} id={stylesFreelancePages[source3Flag]} className={`noselect ${stylesFreelancePages.sourceIcon}`} alt="source_logo" style={logoStyle} /></a>
+          <a href={source2Link}><img src={source2} id={stylesFreelancePages[source2Flag]} className={`noselect ${stylesFreelancePages.sourceIcon}`} alt="source_logo" style={logoStyle} /></a>
+          <a href={source1Link}><img src={source1} id={stylesFreelancePages[source1Flag]} className={`noselect ${stylesFreelancePages.sourceIcon}`} alt="source_logo" style={logoStyle} /></a>
         </span>
         <br/>
         <p style={tagStyle}>{tag}</p>
@@ -122,15 +122,15 @@ const FreelanceProject = ({ isExample=false, emoji, projectName, projectDesc, da
           <span>{emoji}</span> <b>{projectName}</b>
           &nbsp;&#8239;
           <a href={source3Link}>
-            <img src={source3} id={stylesFreelancePages[source3Flag]} class="noselect" alt="source_logo" style={{ filter: "invert(1)", width: "1.25rem", verticalAlign: "sub" }}/>
+            <img src={source3} id={stylesFreelancePages[source3Flag]} className="noselect" alt="source_logo" style={{ filter: "invert(1)", width: "1.25rem", verticalAlign: "sub" }}/>
             {source3Link ? <>&nbsp;&#8239;</> : ""}
           </a>
           <a href={source2Link}>
-            <img src={source2} id={stylesFreelancePages[source2Flag]} class="noselect" alt="source_logo" style={{ filter: "invert(1)", width: "1.25rem", verticalAlign: "sub" }}/>
+            <img src={source2} id={stylesFreelancePages[source2Flag]} className="noselect" alt="source_logo" style={{ filter: "invert(1)", width: "1.25rem", verticalAlign: "sub" }}/>
             {source2Link ? <>&nbsp;&#8239;</> : ""}
           </a>
           <a href={source1Link}>
-            <img src={source1} id={stylesFreelancePages[source1Flag]} class="noselect" alt="source_logo" style={{ filter: "invert(1)", width: "1.25rem", verticalAlign: "sub" }}/>
+            <img src={source1} id={stylesFreelancePages[source1Flag]} className="noselect" alt="source_logo" style={{ filter: "invert(1)", width: "1.25rem", verticalAlign: "sub" }}/>
             {source1Link ? <>&nbsp;&#8239;</> : ""}
           </a>
           <span style={{ opacity: 0.75 }}>— {projectDesc}</span>

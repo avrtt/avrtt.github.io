@@ -55,7 +55,7 @@ const Spoiler = ({ title,
       <div class={stylesSpoilers.spoilerContentWrapper}>
         <div class={stylesSpoilers.spoilerContent}>
           <br/>
-          <span class="mobileOnlySupport"><br/></span>
+          <span className="mobileOnlySupport"><br/></span>
           <M text={block1}/>
           <M text={block2}/>
           <M text={block3}/>

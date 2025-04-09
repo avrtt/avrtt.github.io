@@ -15,10 +15,10 @@ const Albums = () => {
 			exit={{ opacity: 0 }}
 			transition={{ duration: 0.15 }}>
 
-			<div class="generalBody">
+			<div className="generalBody">
 				<p>Work in progress...</p>
 			</div>
-			<div class="lastUpdatedTalks">UPDATED ON {albumsLastUpdated}</div>
+			<div className="lastUpdatedTalks">UPDATED ON {albumsLastUpdated}</div>
 
 	  	</motion.div>
 	);

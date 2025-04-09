@@ -121,7 +121,7 @@ const Course = ({ data }) => {
 			exit={{ opacity: 0 }}
 			transition={{ duration: 0.15 }}>
 
-			<div class="courseBody">
+			<div className="courseBody">
 				
 				<MoreCoursesNotice/>
 				<Notice title="☝️ FYI" text="This course was revised in **March 2025**. However, there are still a considerable amount of **gaps** and **bland narration**. I'm still working hard to make this course engaging, so please be patient."/>
@@ -129,7 +129,7 @@ const Course = ({ data }) => {
 				<M text="Here you can find tutorials on machine learning, data science and several other fields organized as a sequential, in-depth theoretical course presented in modules. I've created it single-handedly by studying and summarizing a huge amount of material, and launched together with this blog as open source."/>
 				<p>I also have plans to make video tutorials based on <Link to="/research">Research</Link> posts for my YouTube channel <Link to="https://www.youtube.com/@avheuristics">@avheuristics</Link> in the future.</p>
 				<div>
-					<button class="noselect" className={stylesSpoilers.spoilerButton} ref={(el) => collRef.current.push(el)}>
+					<button className={`noselect ${stylesSpoilers.spoilerButton}`} ref={(el) => collRef.current.push(el)}>
 						&nbsp;&nbsp;
 						<span className={stylesSpoilers.spoilerText}></span>
 						More about this course
@@ -147,7 +147,7 @@ const Course = ({ data }) => {
 				</div>
 			</div>
 			<br/>
-			<div class="courseBody noselect">
+			<div className="courseBody noselect">
 				<M text="# 📋 CONTENTS"/>
 				<M text="0. [Where the course began: an introduction about AI and research](/research/on_research)"/>
 				{groupedSequentially.map(group => (
@@ -166,7 +166,7 @@ const Course = ({ data }) => {
 				))}
 			</div>
 			<br/>
-			<div class="courseBody">
+			<div className="courseBody">
 				<M text="# 🌱 UPDATES & CONTRIBUTION"/>
 				<M text="The course keeps expanding while outdated information gets revised. Writing new chapters is a fairly time-consuming process, so if you'd like to see this educational project evolve, you're welcome to contribute. There are plenty of ways:"/>
 				<M text={`
@@ -202,13 +202,13 @@ const Course = ({ data }) => {
 				`}/>
 			</div>
 			<br/>
-			<div class="courseBody">
+			<div className="courseBody">
 				<M text="# ❤️ SUPPORT"/>
 				<p>The course is <H>free forever</H>. I've put a huge amount of my free time into this work, wished to make something enormous and helpful for people, and never sought to profit from this endeavor, as I believe that educational materials should be open to everyone. I also believe that earning the people's love is the only right way to earn coins from such projects, so if you found it useful — please consider support beyond contributing.</p>
 				<p>The easiest way to thank me and speed up development of the course is to <Link to="/donate"><S>donate right here</S></Link>. <StickerPack sticker="hedgehog"/></p>
 			</div>
 			<br/>
-			<div class="courseBody">
+			<div className="courseBody">
 				<M text="# 🙏 ACKNOWLEDGMENTS"/>
 				<M text="Many nights — in the light of a dim lamp — I've explored a completely new discipline, which at first seemed unfeasible to me. I must, therefore, express my gratitude to those who guided me through this arduous journey of learning:"/>
 				<M text={`
@@ -237,7 +237,7 @@ Practical Deep Learning for Coders (Howard)
 */}
 				<M text="Thanks for educating, inspiring, or both."/>
 			</div>
-			<div class="lastUpdatedCourse">UPDATED ON {courseLastUpdated}</div>
+			<div className="lastUpdatedCourse">UPDATED ON {courseLastUpdated}</div>
 
 	  	</motion.div>
 	);

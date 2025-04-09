@@ -15,7 +15,7 @@ const Faq = () => {
 			exit={{ opacity: 0 }}
 			transition={{ duration: 0.15 }}>
 
-			<div class="generalBody">
+			<div className="generalBody">
                 <h3>❓ FAQ</h3>
                 <p>
                     <b>Q</b>: Can I buy advertising on this site?
@@ -37,7 +37,7 @@ const Faq = () => {
                     (to be expanded)
                 </p>
 			</div>
-			<div class="lastUpdatedTalks">UPDATED ON {faqLastUpdated}</div>
+			<div className="lastUpdatedTalks">UPDATED ON {faqLastUpdated}</div>
 
 	  	</motion.div>
 	);

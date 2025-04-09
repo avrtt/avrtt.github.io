@@ -24,14 +24,14 @@ const Publications = () => {
 				alt="Page cover: a painting depicting scientific papers with books and a feather"
 			/>
 
-			<div class="publicationsBody">
+			<div className="publicationsBody">
 				<br/>
 				<div class={stylesPlaques.yellowNotice}>
 					<M text="## 🚧 HEADS UP!"/>
 					<M text="This page isn't finished or has been hidden for redesign. Content will appear soon."/>
 				</div>
 			</div>
-			<div class="lastUpdatedPublications">UPDATED ON {publicationsLastUpdated}</div>
+			<div className="lastUpdatedPublications">UPDATED ON {publicationsLastUpdated}</div>
 
 	  	</motion.div>
 	);

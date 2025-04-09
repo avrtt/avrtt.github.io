@@ -144,7 +144,7 @@ const ContentBlock = ({
         >
             {title && <p style={titleStyle}>{title}</p>}
             {emoji && <p className={`noselect ${styles.emoji}`} style={emojiStyle}>{emoji}</p>}
-            {emojiGif && <img class="noselect desktopOnlySupport" style={emojiGifStyle} src={emojiGif} alt={emoji} />}
+            {emojiGif && <img className="noselect desktopOnlySupport" style={emojiGifStyle} src={emojiGif} alt={emoji} />}
             {description && (
                 <span style={descriptionStyle}>
                     <M text={description} />
@@ -160,7 +160,7 @@ const ContentBlock = ({
         >
             {title && <p style={titleStyle}>{title}</p>}
             {emoji && <p className={`noselect ${styles.emoji}`} style={emojiStyle}>{emoji}</p>}
-            {emojiGif && <img class="noselect desktopOnlySupport" style={emojiGifStyle} src={emojiGif} alt={emoji} />}
+            {emojiGif && <img className="noselect desktopOnlySupport" style={emojiGifStyle} src={emojiGif} alt={emoji} />}
             {description && (
                 <span style={descriptionStyle}>
                     {description}

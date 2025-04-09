@@ -80,7 +80,7 @@ const Posts = ({ data }) => {
 				transition={{ duration: 0.15 }}>
 
 				<div className={stylesCompactViews.viewButtonWrapper}>
-					<motion.button onClick={toggleView} class="noselect" whileTap={{ scale: 0.95 }} className={stylesCompactViews.viewButton}>
+					<motion.button onClick={toggleView} whileTap={{ scale: 0.95 }} className={`noselect ${stylesCompactViews.viewButton}`}>
 						<motion.div
 							className={stylesButtonsCommon.buttonTextWrapper}
 							key={isTileView}

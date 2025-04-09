@@ -15,7 +15,7 @@ export function PostTemplate({ data: { mdx, allPostImages }, children }) {
   
   return (
     <> 
-      <div class="postBody" >
+      <div className="postBody" >
         <ImageContext.Provider
           value={{
             images: allPostImages.nodes,

@@ -23,10 +23,10 @@ const Stories = () => {
 				alt="Page cover: a painting depicting campfire at night"
 			/>
 
-			<div class="generalBody">
+			<div className="generalBody">
 				<p>This page is reserved for my life experiences beyond posts.</p>
 			</div>
-			<div class="lastUpdatedTalks">UPDATED ON {storiesLastUpdated}</div>
+			<div className="lastUpdatedTalks">UPDATED ON {storiesLastUpdated}</div>
 
 	  	</motion.div>
 	);

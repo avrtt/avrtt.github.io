@@ -37,20 +37,20 @@ const WebDevelopment = () => {
 		<GoBackButton link="/freelance" />
 
 		<div class={stylesFreelancePages.categorySwitchWrapper}>  
-			<Link title="Machine learning projects" class="noselect" className={stylesFreelancePages.categoryButton} to="/freelance/projects/machine_learning"><div class="noselect" className={stylesFreelancePages.categoryButton}><img src={MachineLearningIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
-			<Link title="Data analysis projects" class="noselect" className={stylesFreelancePages.categoryButton} to="/freelance/projects/data_analysis"><div class="noselect" className={stylesFreelancePages.categoryButton}><img src={DataAnalysisIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
-			<Link title="Data visualization projects" class="noselect" className={stylesFreelancePages.categoryButton} to="/freelance/projects/data_visualization"><div class="noselect" className={stylesFreelancePages.categoryButton}><img src={DataVisualizationIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
-			<Link title="Data collection projects" class="noselect" className={stylesFreelancePages.categoryButton} to="/freelance/projects/data_collection"><div class="noselect" className={stylesFreelancePages.categoryButton}><img src={DataCollectionIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
-			<Link title="Python projects" class="noselect" className={stylesFreelancePages.categoryButton} to="/freelance/projects/python_apps"><div class="noselect" className={stylesFreelancePages.categoryButton}><img src={PythonAppsIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
-			<Link title="Research projects" class="noselect" className={stylesFreelancePages.categoryButton} to="/freelance/projects/research"><div class="noselect" className={stylesFreelancePages.categoryButton}><img src={ResearchIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
-			<Link title="Technical writing projects" class="noselect" className={stylesFreelancePages.categoryButton} to="/freelance/projects/technical_writing"><div class="noselect" className={stylesFreelancePages.categoryButton}><img src={TechnicalWritingIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
-			<Link title="Post-production projects" class="noselect" className={stylesFreelancePages.categoryButton} to="/freelance/projects/post_production"><div class="noselect" className={stylesFreelancePages.categoryButton}><img src={PostProductionIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
-			<Link title="Misc projects" class="noselect" className={stylesFreelancePages.categoryButton} to="/freelance/projects/misc"><div class="noselect" className={stylesFreelancePages.categoryButton}><img src={MiscIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
+			<Link title="Machine learning projects" className={`noselect ${stylesFreelancePages.categoryButton}`} to="/freelance/projects/machine_learning"><div className={`noselect ${stylesFreelancePages.categoryButton}`}><img src={MachineLearningIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
+			<Link title="Data analysis projects" className={`noselect ${stylesFreelancePages.categoryButton}`} to="/freelance/projects/data_analysis"><div className={`noselect ${stylesFreelancePages.categoryButton}`}><img src={DataAnalysisIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
+			<Link title="Data visualization projects" className={`noselect ${stylesFreelancePages.categoryButton}`} to="/freelance/projects/data_visualization"><div className={`noselect ${stylesFreelancePages.categoryButton}`}><img src={DataVisualizationIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
+			<Link title="Data collection projects" className={`noselect ${stylesFreelancePages.categoryButton}`} to="/freelance/projects/data_collection"><div className={`noselect ${stylesFreelancePages.categoryButton}`}><img src={DataCollectionIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
+			<Link title="Python projects" className={`noselect ${stylesFreelancePages.categoryButton}`} to="/freelance/projects/python_apps"><div className={`noselect ${stylesFreelancePages.categoryButton}`}><img src={PythonAppsIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
+			<Link title="Research projects" className={`noselect ${stylesFreelancePages.categoryButton}`} to="/freelance/projects/research"><div className={`noselect ${stylesFreelancePages.categoryButton}`}><img src={ResearchIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
+			<Link title="Technical writing projects" className={`noselect ${stylesFreelancePages.categoryButton}`} to="/freelance/projects/technical_writing"><div className={`noselect ${stylesFreelancePages.categoryButton}`}><img src={TechnicalWritingIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
+			<Link title="Post-production projects" className={`noselect ${stylesFreelancePages.categoryButton}`} to="/freelance/projects/post_production"><div className={`noselect ${stylesFreelancePages.categoryButton}`}><img src={PostProductionIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
+			<Link title="Misc projects" className={`noselect ${stylesFreelancePages.categoryButton}`} to="/freelance/projects/misc"><div className={`noselect ${stylesFreelancePages.categoryButton}`}><img src={MiscIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
 		</div>
 
-		<div class="freelanceBody">
+		<div className="freelanceBody">
 
-			<div class="mobileOnlySupport"><br/></div>
+			<div className="mobileOnlySupport"><br/></div>
 			<Spoiler 
 				title={"More about this category"} 
 				block1={categoryDescDetailed}

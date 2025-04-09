@@ -28,14 +28,14 @@ const CV = () => {
 		exit={{opacity: 0 }}
 		transition={{ duration: 0.15 }}>
 
-		<div class="cvBody">
+		<div className="cvBody">
 			<br/>
 			<div class={stylesPlaques.yellowNotice}>
 				<M text="## 🚧 HEADS UP!"/>
 				<M text="This page isn't finished or has been hidden for redesign. Content will appear soon."/>
 			</div>
 		</div>
-		<div class="lastUpdatedCv">UPDATED ON {cvLastUpdated}</div>
+		<div className="lastUpdatedCv">UPDATED ON {cvLastUpdated}</div>
     </motion.div>
   );
 };

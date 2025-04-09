@@ -15,10 +15,10 @@ const Habits = () => {
 			exit={{ opacity: 0 }}
 			transition={{ duration: 0.15 }}>
 
-			<div class="generalBody">
+			<div className="generalBody">
 				Maybe I'll make a tracker of some habits here in the future. Publicity motivates me.
 			</div>
-			<div class="lastUpdatedTalks">UPDATED ON {habitsLastUpdated}</div>
+			<div className="lastUpdatedTalks">UPDATED ON {habitsLastUpdated}</div>
 
 	  	</motion.div>
 	);

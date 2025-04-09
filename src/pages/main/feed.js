@@ -15,10 +15,10 @@ const Feed = () => {
 			exit={{ opacity: 0 }}
 			transition={{ duration: 0.15 }}>
 
-			<div class="generalBody">
+			<div className="generalBody">
 				<p>Work in progress...</p>
 			</div>
-			<div class="lastUpdatedTalks">UPDATED ON {feedLastUpdated}</div>
+			<div className="lastUpdatedTalks">UPDATED ON {feedLastUpdated}</div>
 
 	  	</motion.div>
 	);

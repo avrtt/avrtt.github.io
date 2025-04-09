@@ -15,10 +15,10 @@ const Calisthenics = () => {
 			exit={{ opacity: 0 }}
 			transition={{ duration: 0.15 }}>
 
-			<div class="generalBody">
+			<div className="generalBody">
 				<p>This is a good place to keep track of my progress in calisthenics. Soon there will be photos, timeline, statistics, exercises, records, etc.</p>
 			</div>
-			<div class="lastUpdatedTalks">UPDATED ON {calisthenicsLastUpdated}</div>
+			<div className="lastUpdatedTalks">UPDATED ON {calisthenicsLastUpdated}</div>
 
 	  	</motion.div>
 	);

@@ -121,7 +121,7 @@ const About = () => {
             exit={{opacity: 0 }}
             transition={{ duration: 0.15 }}>
                        
-            <div class="aboutBodyTile">
+            <div className="aboutBodyTile">
                 <div className={`${stylesAboutPage.greetingsWrapper} ${stylesAboutPage.tileContainer} noselect`}>
                     <p style={greetingsStyle}>
                         <img className={stylesAboutPage.wave} src={wave} alt="👋🏻"/>
@@ -366,23 +366,23 @@ const About = () => {
                 </TileContainer>
                 <div className="mobileOnlySupport"><br/></div>
                 <AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
-                    <div class="aboutBodyRegular">
+                    <div className="aboutBodyRegular">
                         <M text="# 🗓 BIOGRAPHY TIMELINE"/>
-                        <div class="listDescTime"><M text="- 2008 June"/></div>
-                        <div class="listDescItem"><M text="Moved from 🇰🇬 [Bishkek](https://en.wikipedia.org/wiki/Bishkek) to 🇷🇺 [Orenburg](https://en.wikipedia.org/wiki/Orenburg), the family's hometown where I spent my school years"/></div>
-                        <div class="listDescTime"><M text="- 2023 July"/></div>
-                        <div class="listDescItem"><M text="Got a bachelor's degree in 🇷🇺 [Novosibirsk](https://en.wikipedia.org/wiki/Novosibirsk), where I moved from parents at 18"/></div>
-                        <div class="listDescTime"><M text="- 2023 July"/></div>
-                        <div class="listDescItem"><M text="Moved to 🇬🇪 [Batumi](https://en.wikipedia.org/wiki/batumi) and got some hitchhiking experience with almost no money in the Caucasus and Kurdistan"/></div>
-                        <div class="listDescTime"><M text="- 2024 June"/></div>
-                        <div class="listDescItem"><M text="Became a full-time freelancer"/></div>
-                        <div class="listDescTime"><M text="- 2025 February — Ongoing"/></div>
-                        <div class="listDescItem"><p>Started a free and open source <Link to="/course">course</Link> on machine learning and data science</p></div>
-                        <div class="listDescTime"><M text="- 2025 March — Ongoing"/></div>
-                        <div class="listDescItem"><p>Set off on my <Link to="/adventures/venturing_forth">planned trip</Link> around the world with the goal of circumnavigating the globe</p></div>
-                    {/*<div class="listDescTime"><M text="- ?"/></div>
-                        <div class="listDescItem"><M text="Traveled throughout Central Asia, make a long stop in 🇰🇿 [Almaty](https://en.wikipedia.org/wiki/Almaty)"/></div>*/}
-                        <div class="listDescItemLast"></div>
+                        <div className="listDescTime"><M text="- 2008 June"/></div>
+                        <div className="listDescItem"><M text="Moved from 🇰🇬 [Bishkek](https://en.wikipedia.org/wiki/Bishkek) to 🇷🇺 [Orenburg](https://en.wikipedia.org/wiki/Orenburg), the family's hometown where I spent my school years"/></div>
+                        <div className="listDescTime"><M text="- 2023 July"/></div>
+                        <div className="listDescItem"><M text="Got a bachelor's degree in 🇷🇺 [Novosibirsk](https://en.wikipedia.org/wiki/Novosibirsk), where I moved from parents at 18"/></div>
+                        <div className="listDescTime"><M text="- 2023 July"/></div>
+                        <div className="listDescItem"><M text="Moved to 🇬🇪 [Batumi](https://en.wikipedia.org/wiki/batumi) and got some hitchhiking experience with almost no money in the Caucasus and Kurdistan"/></div>
+                        <div className="listDescTime"><M text="- 2024 June"/></div>
+                        <div className="listDescItem"><M text="Became a full-time freelancer"/></div>
+                        <div className="listDescTime"><M text="- 2025 February — Ongoing"/></div>
+                        <div className="listDescItem"><p>Started a free and open source <Link to="/course">course</Link> on machine learning and data science</p></div>
+                        <div className="listDescTime"><M text="- 2025 March — Ongoing"/></div>
+                        <div className="listDescItem"><p>Set off on my <Link to="/adventures/venturing_forth">planned trip</Link> around the world with the goal of circumnavigating the globe</p></div>
+                    {/*<div className="listDescTime"><M text="- ?"/></div>
+                        <div className="listDescItem"><M text="Traveled throughout Central Asia, make a long stop in 🇰🇿 [Almaty](https://en.wikipedia.org/wiki/Almaty)"/></div>*/}
+                        <div className="listDescItemLast"></div>
                         <br/>
                     </div>
                 
@@ -391,7 +391,7 @@ const About = () => {
                 <TileContainer columns={1} marginTop='2vh' marginBottom='4vh'>
                     <div style={{ maxWidth: "fit-content", marginInline: "auto" }}>
                         <div>
-                            <button style={{ maxWidth: "fit-content", marginInline: "auto" }} class="noselect" className={stylesSpoilers.spoilerButton} ref={(el) => collRef.current.push(el)}>
+                            <button style={{ maxWidth: "fit-content", marginInline: "auto" }} className={`noselect ${stylesSpoilers.spoilerButton}`} ref={(el) => collRef.current.push(el)}>
                                 &nbsp;&nbsp;
                                 <span className={stylesSpoilers.spoilerText}></span>
                                 Where am I right now?
@@ -408,10 +408,10 @@ const About = () => {
                 <br/>
                 <div className="mobileOnlySupport"><br/></div>
                 <AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
-                    <div class="aboutBodyRegular">
+                    <div className="aboutBodyRegular">
                         <M text="# 👨🏻‍💻 PROFESSIONAL CAREER"/>
                         <p>Generally speaking, I help individuals and businesses implement, configure and improve <H>AI solutions</H>, handle <H>data-related & analytical problems</H> <Tooltip text="I work with any data-driven products & data itself, which can be collected, processed, structured or analyzed, and then used to extract helpful insights, especially when it comes to building predictive models, reports, visualizations, and other tools of data analysis."/>, and develop software to <H>automate processes</H>. Sometimes I build <H>websites</H> suitable for <a href="https://en.wikipedia.org/wiki/Search_engine_optimization">organic traffic</a> (like this one) and do other tech-related stuff.</p>
-                        <div class="list">
+                        <div className="list">
                             <M text={`
 - 🤔 Interested in <a href="https://en.wikipedia.org/wiki/Deep_learning">deep learning</a>, classical <a href="https://en.wikipedia.org/wiki/Machine_learning">machine learning</a> algorithms, <a href="https://en.wikipedia.org/wiki/Statistics">statistics</a>, <a href="https://en.wikipedia.org/wiki/Data_analysis">data analysis</a> and <a href="https://en.wikipedia.org/wiki/Data_and_information_visualization">data visualization</a>; passionate about everything data/AI-related
 - 🤓 Secondary (hobby-like) interests: <a href="https://en.wikipedia.org/wiki/Web_development">web development</a> (mostly frontend), <a href="https://en.wikipedia.org/wiki/Python_(programming_language)">Python</a> apps and <a href="https://en.wikipedia.org/wiki/Prompt_engineering">prompt engineering</a>
@@ -457,7 +457,7 @@ const About = () => {
                 </TileContainer>
                 <div className="mobileOnlySupport"><br/></div>
                 <AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
-                    <div class="aboutBodyRegular">
+                    <div className="aboutBodyRegular">
                         <M text="# 🔥 INTERESTS"/>
                         <div class={stylesTagBadges.badgesAboutWrapper}>
                             <div class={stylesTagBadges.badgeAbout}><span class={stylesTagBadges.badgeEmoji}>🎒</span> Travel theory <Tooltip isBadge={true} text="This may sound ridiculous, but comfortable, interesting, cheap and safe (all in one) travel ALWAYS requires planning and extensive knowledge, e.g., understanding methods of transportation, local guidelines, tricks to save money, ways to find essentials and lodging w/o money, clothing and gear materials, proper communication with people, cartography, orienteering, basic survival skills, mending, weight optimization, natural phenomena and environments, physics, physiology, food energy value, different situations and many other topics along with common sense. Travel is a philosophy, a science and an art, and I'm all for rational travel."/></div>
@@ -638,7 +638,7 @@ const About = () => {
                 </div>
             </AnimationOnScroll>
             <AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
-                <div class="aboutBodyRegular">
+                <div className="aboutBodyRegular">
                     <M text="# EVEN MORE DATA FOR GOOGLE AND THE CIA"/>
                     <M text="This place is reserved for something good. A family photo? Someday."/>
                 </div>
@@ -649,7 +649,7 @@ const About = () => {
                 </span>
                 <LastThreeGalleryImages />
             </div>
-            <div class="lastUpdatedAbout">UPDATED ON {aboutLastUpdated}</div>
+            <div className="lastUpdatedAbout">UPDATED ON {aboutLastUpdated}</div>
         </motion.div>
     );
 };

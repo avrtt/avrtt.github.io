@@ -65,7 +65,7 @@ const Image = ({ path, alt, caption="", zoom=false, offset="300" }) => {
       <AnimationOnScroll offset={offset} duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
         {zoom ? (
           <Zoom>
-            <div class="noselect">
+            <div className="noselect">
               <GatsbyImage style={imageStyle} image={imageData} alt={alt} />
             </div>
           </Zoom>

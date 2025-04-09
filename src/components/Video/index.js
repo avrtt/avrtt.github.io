@@ -16,8 +16,8 @@ const Vid = ({ ytKey, c="", offset="300" }) => {
   return (
     <center>
     	<AnimationOnScroll offset={offset} duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
-    		<div class="iframeWrapper">
-    		    <iframe class="iframe" src={ytLink} title="video"></iframe>
+    		<div className="iframeWrapper">
+    		    <iframe className="iframe" src={ytLink} title="video"></iframe>
     		</div>
     		<p style={captionStyle}>{c}</p>
     	</AnimationOnScroll>

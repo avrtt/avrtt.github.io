@@ -352,7 +352,7 @@ const Exploration = () => {
 		exit={{ opacity: 0 }}
 		transition={{ duration: 0.15 }}>
 
-		<div class='explorationBody'> 
+		<div className="explorationBody"> 
 			<br/>
 			<div class={stylesPlaques.yellowNotice}>
 				<M text="## 🚧 HEADS UP!"/>

@@ -197,7 +197,7 @@ const Goal = ({ goal, isOpaque, hideChecked, hideUnchecked }) => {
 			</div>
         </td>
         <td style={textStyle} width='100%' className={stylesGoalsPage.textExtra}>
-            <span class={legendaryText} style={textStatus}>{goal.text}</span><span class='noselect' style={showdeadline}> – {goal.deadline}</span>
+            <span class={legendaryText} style={textStatus}>{goal.text}</span><span className="noselect" style={showdeadline}> – {goal.deadline}</span>
             <span className="desktopOnlySupport">&nbsp;&nbsp;</span>
             <span className={`noselect ${stylesGoalsPage.tooltipGoals} ${stylesGoalsPage.tagAnimation}`}>
                 <span className="desktopOnlySupport" style={tag5Style}>{goal.tag5}

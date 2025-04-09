@@ -23,10 +23,10 @@ const Bookshelf = () => {
 				alt="Page cover: a painting depicting bookcase wall full of books"
 			/>
 
-			<div class="generalBody">
+			<div className="generalBody">
 				<p>Empty here :/ (for now)</p>
 			</div>
-			<div class="lastUpdatedTalks">UPDATED ON {bookshelfLastUpdated}</div>
+			<div className="lastUpdatedTalks">UPDATED ON {bookshelfLastUpdated}</div>
 
 	  	</motion.div>
 	);

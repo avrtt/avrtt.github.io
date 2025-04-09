@@ -10,25 +10,25 @@
 </style>
   <g id="Layer_1">
     <g>
-      <circle class="st0" cx="32" cy="32" r="32" style="fill: rgb(108, 218, 108);"/>
+      <circle className="st0" cx="32" cy="32" r="32" style="fill: rgb(108, 218, 108);"/>
     </g>
-    <g class="st1">
-      <path class="st2" d="M52,45c0,2.2-1.8,4-4,4H16c-2.2,0-4-1.8-4-4V25c0-2.2,1.8-4,4-4h32c2.2,0,4,1.8,4,4V45z"/>
-    </g>
-    <g>
-      <path class="st3" d="M52,43c0,2.2-1.8,4-4,4H16c-2.2,0-4-1.8-4-4V23c0-2.2,1.8-4,4-4h32c2.2,0,4,1.8,4,4V43z"/>
+    <g className="st1">
+      <path className="st2" d="M52,45c0,2.2-1.8,4-4,4H16c-2.2,0-4-1.8-4-4V25c0-2.2,1.8-4,4-4h32c2.2,0,4,1.8,4,4V45z"/>
     </g>
     <g>
-      <rect x="12" y="25" class="st4" width="40" height="6"/>
+      <path className="st3" d="M52,43c0,2.2-1.8,4-4,4H16c-2.2,0-4-1.8-4-4V23c0-2.2,1.8-4,4-4h32c2.2,0,4,1.8,4,4V43z"/>
     </g>
     <g>
-      <circle class="st5" cx="38" cy="41" r="2"/>
+      <rect x="12" y="25" className="st4" width="40" height="6"/>
     </g>
     <g>
-      <circle class="st5" cx="46" cy="41" r="2"/>
+      <circle className="st5" cx="38" cy="41" r="2"/>
     </g>
     <g>
-      <circle class="st5" cx="30" cy="41" r="2"/>
+      <circle className="st5" cx="46" cy="41" r="2"/>
+    </g>
+    <g>
+      <circle className="st5" cx="30" cy="41" r="2"/>
     </g>
   </g>
   <g id="Layer_2"/>

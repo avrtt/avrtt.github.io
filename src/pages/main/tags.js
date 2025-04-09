@@ -88,7 +88,7 @@ const Tags = ({ data }) => {
           </motion.div>
           <div style={{ width: 'fit-content', textAlign: 'center' }}>
             <div className={stylesTagsPage.sortingButtonWrapper} style={{ marginBottom: "18px"}} >
-              <motion.button onClick={toggleSorting} class="noselect" className={stylesTagsPage.sortingButton} whileTap={{ scale: 0.95 }}>
+              <motion.button onClick={toggleSorting} className={`noselect ${stylesTagsPage.sortingButton}`} whileTap={{ scale: 0.95 }}>
                 <motion.div
                   className={stylesButtonsCommon.buttonTextWrapper}
                   key={sortByFrequency}

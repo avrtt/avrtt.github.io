@@ -23,10 +23,10 @@ const HallOfFame = () => {
 				alt="Page cover: a painting depicting a wall with many paintings of people in sunglasses"
 			/>
 
-			<div class="generalBody">
+			<div className="generalBody">
 				<p>This will be a list of the people who have helped me the most, whether they are donators, contributors or just people who gave me a helping hand. I'm posting their links if they don't mind.</p>
 			</div>
-			<div class="lastUpdatedTalks">UPDATED ON {hallOfFameLastUpdated}</div>
+			<div className="lastUpdatedTalks">UPDATED ON {hallOfFameLastUpdated}</div>
 
 	  	</motion.div>
 	);

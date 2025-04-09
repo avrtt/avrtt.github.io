@@ -24,14 +24,14 @@ const Software = () => {
 				alt="Page cover: a painting depicting long-haired man looking at a laptop in a cozy room"
 			/>
 
-			<div class="softwareBody">
+			<div className="softwareBody">
 				<br/>
 				<div class={stylesPlaques.yellowNotice}>
 					<M text="## 🚧 HEADS UP!"/>
 					<M text="This page isn't finished or has been hidden for redesign. Content will appear soon."/>
 				</div>
 			</div>
-			<div class="lastUpdatedSoftware">UPDATED ON {softwareLastUpdated}</div>
+			<div className="lastUpdatedSoftware">UPDATED ON {softwareLastUpdated}</div>
 
 	  	</motion.div>
 	);

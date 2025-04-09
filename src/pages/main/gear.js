@@ -23,10 +23,10 @@ const Gear = () => {
 				alt="Page cover: a painting depicting travel gear, including a backpack, a hat, a flask and boots"
 			/>
 
-			<div class="generalBody">
+			<div className="generalBody">
 				<p>Work in progress...</p>
 			</div>
-			<div class="lastUpdatedTalks">UPDATED ON {gearLastUpdated}</div>
+			<div className="lastUpdatedTalks">UPDATED ON {gearLastUpdated}</div>
 
 	  	</motion.div>
 	);

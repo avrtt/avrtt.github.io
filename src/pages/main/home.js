@@ -92,13 +92,13 @@ const Home = () => {
 			exit={{opacity: 0 }}
 			transition={{ duration: 0.15 }}>
 						
-			<Box class="latestPosts noselect">
+			<Box className="latestPosts noselect">
 				<ImageList cols={3} gap={5}>
 					{postsLast.map(post => {
 						const image = getImage(post.frontmatter.banner);
 						return (
 							<ImageListItem key={post.id}>
-								<div class="hover">
+								<div className="hover">
 									<GatsbyImage
 										className={stylesPostsGallery.prevHome}
 										image={image}
@@ -122,7 +122,7 @@ const Home = () => {
 						const image = getImage(post.frontmatter.banner);
 						return (
 							<ImageListItem key={post.id}>
-								<div class="hover">
+								<div className="hover">
 									<GatsbyImage
 										className={stylesPostsGallery.prevHome}
 										image={image}
@@ -153,12 +153,12 @@ const Home = () => {
 
 			<div className="mobileOnlySupport"><br/></div>
 
-			<div class="homeBodyRegular">
+			<div className="homeBodyRegular">
 				<M text="### It's safe here, traveler."/>
 				<p>Welcome to my <S>personal</S> all-in-one corner of the internet — a reinvention of old school blogging, a community hub, an info page, a web dev playground, and even a course platform. Here I express my unbiased, honest opinion. No ads, no likes, no paywalls, no AI slop, no censorship, no hypocrisy, no bullshit. Truly libertarian. </p>
 				<div className="desktopOnlySupport"><br/></div>
 				<div>
-					<button class="noselect" className={stylesSpoilers.spoilerButton} ref={(el) => collRef.current.push(el)}>
+					<button className={`noselect ${stylesSpoilers.spoilerButton}`} ref={(el) => collRef.current.push(el)}>
 						&nbsp;&nbsp;
 						<span className={stylesSpoilers.spoilerText}></span>
 						Spoiler: More details
@@ -208,7 +208,7 @@ const Home = () => {
 			<div className="mobileOnlySupport"><br/></div>
 			
 			<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
-				<div class="homeBodyRegular">
+				<div className="homeBodyRegular">
 					<M text="### Main contents"/>
 					<p><Link to="/adventures">Adventures</Link>, <Link to="/research">Research</Link> and <Link to="/thoughts">Thoughts</Link> are categories of blog posts featuring highlights from my travels, research/study notes related to my professional interests (mostly AI-related stuff), and reflections on all kinds of things, respectively. You can filter these posts by tags <Link to="/tags">here</Link>.</p>
 					<p><Link to="/publications">Publications</Link>, <Link to="/software">Software</Link> and <Link to="/music">Music</Link> pages are related to my works in different areas: articles, papers, highlighted coding projects, music records, etc. A particular work is my <Link to="/handbook">travel handbook</Link>, a compilation of practical advice I write on a road.</p>
@@ -218,7 +218,7 @@ const Home = () => {
 					<p>I use <Link to="/exploration">Exploration</Link> to track progress in exploring the world, rank visited places and countries, and play with maps. <Link to="/goals">Goals</Link> is used to keep my public bucket list of lifelong aims and challenges (with a lot of stupid ones). Finally, the <Link to="/about">About</Link> page describes my bio and interests, which helps to introduce myself to avoid frequently asked questions.</p>
 					{/*<div className="desktopOnlySupport"><br/></div>
 					<div>
-						<button class="noselect" className={stylesSpoilers.spoilerButton} ref={(el) => collRef.current.push(el)}>
+						<button className={`noselect ${stylesSpoilers.spoilerButton}`} ref={(el) => collRef.current.push(el)}>
 							&nbsp;&nbsp;
 							<span className={stylesSpoilers.spoilerText}></span>
 							More pages: Archive & Misc sections
@@ -241,7 +241,7 @@ const Home = () => {
 			<div className="mobileOnlySupport"><br/></div>
 
 			<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
-				<div class="homeBodyRegular">
+				<div className="homeBodyRegular">
 					<M text="# 👋 GET IN TOUCH"/>
 					<div className="desktopOnlySupport">
 						<TileContainerLink columns={3} marginTop='2vh' marginBottom='4vh' animationonscroll={false}>
@@ -272,7 +272,7 @@ const Home = () => {
 						</TileContainerLink>
 					</div>
 					<div className="mobileOnlySupport">
-						<div class="list" style={{ marginLeft: 0 }}>
+						<div className="list" style={{ marginLeft: 0 }}>
 							<ul>
 								<li>📲 Telegram: <a href="https://t.me/averett">@averett</a> 👈 <H>fastest way</H></li>
 								<li>📩 Email: <a href="mailto:avrtt@tuta.io">avrtt@tuta.io</a></li>
@@ -281,7 +281,7 @@ const Home = () => {
 						</div>
 					</div>
 					<div>
-						<button class="noselect" className={stylesSpoilers.spoilerButton} ref={(el) => collRef.current.push(el)}>
+						<button className={`noselect ${stylesSpoilers.spoilerButton}`} ref={(el) => collRef.current.push(el)}>
 							&nbsp;&nbsp;
 							<span className={stylesSpoilers.spoilerText}></span>
 							Spoiler: Ways to cooperate
@@ -317,7 +317,7 @@ const Home = () => {
 					<div className="mobileOnlySupport">
 						
 						<h3>Social links</h3>
-						<div class="list" style={{ marginLeft: 0, marginBottom: "1rem" }}>
+						<div className="list" style={{ marginLeft: 0, marginBottom: "1rem" }}>
 							<ul>
 								<li>📌 <H>Vlog</H> (YT): <a href="https://www.youtube.com/@vladaverett">@vladaverett</a></li>
 								<li>📌 <H>Diary</H> (TG): <a href="https://t.me/venturingforth">@venturingforth</a></li>
@@ -352,7 +352,7 @@ const Home = () => {
 				</div>
 			</AnimationOnScroll>
 
-			<div class="homeBodyTile desktopOnlySupport">
+			<div className="homeBodyTile desktopOnlySupport">
 				<TileContainerLink columns={4} gap="1em" marginBottom="1em">
 					<LinkBlock
 						link='https://www.youtube.com/@vladaverett'

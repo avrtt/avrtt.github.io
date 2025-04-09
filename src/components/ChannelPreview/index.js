@@ -65,7 +65,7 @@ const ChannelPreview = ({ tgLink, ytLink, tgChannelPicture, tgChannelName, tgCha
 			<p style={textStyle}>Subscribe to <a style={linkStyle} href={hrefLink}>@{link}</a> on Telegram for updates and more posts</p>
 			<div style={divStyle}>
 				<p style={pStyle}>[ Channel preview was probably removed by the Adblock extension ]</p>
-				<iframe class="noselect" id='telegram-embed' style={telegramPrevStyle} src={srcLink} title='Telegram Preview' />
+				<iframe className="noselect" id='telegram-embed' style={telegramPrevStyle} src={srcLink} title='Telegram Preview' />
 			</div>
 		</center>
 	</>

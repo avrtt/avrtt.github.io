@@ -23,15 +23,15 @@ const Friends = () => {
 				alt="Page cover: a painting depicting friends talking in a tavern, medieval RPG style"
 			/>
 
-			<div class="generalBody">
+			<div className="generalBody">
 				<p>In today's world where "media fast food" (with a ton of AI garbage) has become the dominant form of content, it's become hard to find good old classic blogs. That's why I'm encouraging friends to create their own blogs and promote each other — leave social media to neural networks and move to your own uncluttered corner, where only you can be heard.</p>
 				<p>Here I'll be collecting blogs of my friends or simply awesome people. I don't expect anything in return, although I'd appreciate a mention of my blog from you.</p>
 			</div>
 			<br/>
-			<div class="generalBody">
+			<div className="generalBody">
 				<p>(gathering the party...)</p>
 			</div>
-			<div class="lastUpdatedTalks">UPDATED ON {friendsLastUpdated}</div>
+			<div className="lastUpdatedTalks">UPDATED ON {friendsLastUpdated}</div>
 
 	  	</motion.div>
 	);

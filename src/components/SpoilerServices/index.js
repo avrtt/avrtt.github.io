@@ -37,7 +37,7 @@ const Spoiler = ({ title, services = [], spoilerExtraDesc, isEnglish=true }) => 
   return isEnglish ? (
     <div>
       <button
-        class="noselect" className={stylesSpoilers.spoilerButton}
+        className={`noselect ${stylesSpoilers.spoilerButton}`}
         ref={(el) => collRef.current.push(el)}
       >
         &nbsp;&nbsp;
@@ -76,7 +76,7 @@ const Spoiler = ({ title, services = [], spoilerExtraDesc, isEnglish=true }) => 
   ) : (
     <div>
       <button
-        class="noselect" className={stylesSpoilers.spoilerButton}
+        className={`noselect ${stylesSpoilers.spoilerButton}`}
         ref={(el) => collRef.current.push(el)}
       >
         &nbsp;&nbsp;

@@ -19,7 +19,7 @@ const Courses = ({ lang = "en" }) => {
               &nbsp;&nbsp;&nbsp;&nbsp;
               <img
                 src={Mipt}
-                class="noselect"
+                className="noselect"
                 alt="course_icon"
                 className={styles.courseIcon}
               />
@@ -43,7 +43,7 @@ const Courses = ({ lang = "en" }) => {
               &nbsp;&nbsp;&nbsp;&nbsp;
               <img
                 src={Umich}
-                class="noselect"
+                className="noselect"
                 alt="course_icon"
                 className={styles.courseIcon}
               />
@@ -67,7 +67,7 @@ const Courses = ({ lang = "en" }) => {
               &nbsp;&nbsp;&nbsp;&nbsp;
               <img
                 src={Deeplearningai}
-                class="noselect"
+                className="noselect"
                 alt="course_icon"
                 className={styles.courseIcon}
               />
@@ -91,7 +91,7 @@ const Courses = ({ lang = "en" }) => {
               &nbsp;&nbsp;&nbsp;&nbsp;
               <img
                 src={Hse}
-                class="noselect"
+                className="noselect"
                 alt="course_icon"
                 className={styles.courseIcon}
               />
@@ -115,7 +115,7 @@ const Courses = ({ lang = "en" }) => {
               &nbsp;&nbsp;&nbsp;&nbsp;
               <img
                 src={Deeplearningai}
-                class="noselect"
+                className="noselect"
                 alt="course_icon"
                 className={styles.courseIcon}
               />
@@ -137,7 +137,7 @@ const Courses = ({ lang = "en" }) => {
               &nbsp;&nbsp;&nbsp;&nbsp;
               <img
                 src={Stanford}
-                class="noselect"
+                className="noselect"
                 alt="course_icon"
                 className={styles.courseIcon}
               />
@@ -159,7 +159,7 @@ const Courses = ({ lang = "en" }) => {
               &nbsp;&nbsp;&nbsp;&nbsp;
               <img
                 src={Mipt}
-                class="noselect"
+                className="noselect"
                 alt="course_icon"
                 className={styles.courseIcon}
               />
@@ -181,7 +181,7 @@ const Courses = ({ lang = "en" }) => {
               &nbsp;&nbsp;&nbsp;&nbsp;
               <img
                 src={Ods}
-                class="noselect"
+                className="noselect"
                 alt="course_icon"
                 className={styles.courseIcon}
               />
@@ -207,7 +207,7 @@ const Courses = ({ lang = "en" }) => {
               &nbsp;&nbsp;&nbsp;&nbsp;
               <img
                 src={Mipt}
-                class="noselect"
+                className="noselect"
                 alt="course_icon"
                 className={styles.courseIcon}
               />
@@ -231,7 +231,7 @@ const Courses = ({ lang = "en" }) => {
               &nbsp;&nbsp;&nbsp;&nbsp;
               <img
                 src={Umich}
-                class="noselect"
+                className="noselect"
                 alt="course_icon"
                 className={styles.courseIcon}
               />
@@ -255,7 +255,7 @@ const Courses = ({ lang = "en" }) => {
               &nbsp;&nbsp;&nbsp;&nbsp;
               <img
                 src={Deeplearningai}
-                class="noselect"
+                className="noselect"
                 alt="course_icon"
                 className={styles.courseIcon}
               />
@@ -279,7 +279,7 @@ const Courses = ({ lang = "en" }) => {
               &nbsp;&nbsp;&nbsp;&nbsp;
               <img
                 src={Hse}
-                class="noselect"
+                className="noselect"
                 alt="course_icon"
                 className={styles.courseIcon}
               />
@@ -303,7 +303,7 @@ const Courses = ({ lang = "en" }) => {
               &nbsp;&nbsp;&nbsp;&nbsp;
               <img
                 src={Deeplearningai}
-                class="noselect"
+                className="noselect"
                 alt="course_icon"
                 className={styles.courseIcon}
               />
@@ -347,7 +347,7 @@ const Courses = ({ lang = "en" }) => {
               &nbsp;&nbsp;&nbsp;&nbsp;
               <img
                 src={Mipt}
-                class="noselect"
+                className="noselect"
                 alt="course_icon"
                 className={styles.courseIcon}
               />
@@ -369,7 +369,7 @@ const Courses = ({ lang = "en" }) => {
               &nbsp;&nbsp;&nbsp;&nbsp;
               <img
                 src={Ods}
-                class="noselect"
+                className="noselect"
                 alt="course_icon"
                 className={styles.courseIcon}
               />

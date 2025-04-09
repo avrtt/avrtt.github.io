@@ -161,16 +161,16 @@ const Goals = () => {
             alt="Page cover: a painting depicting a trophy room"
         />
 
-        <div class='goalsBody'>
+        <div className="goalsBody">
 
-            <div class="goalsBodyNested">
+            <div className="goalsBodyNested">
                 <div class={stylesGoalsPage.goalsTextContent}>
 
                     <Notice title="☝️ Wait a moment" text="I've removed the goals to reorganize them into categories. They'll be here soon. You can only see the test ones."/>
 
                     <p>Here you can find the public version of my bucket list, which is actually an organized collection of my life's achievements if it was a RPG (that's exactly how I feel this life). There are boring cliché goals, serious and challenging ones, but also just simple little things for folks who, like me, enjoy goofing around doing stupid and sometimes epic dangerous stuff, because that's what makes life exciting. <StickerPack sticker="pug_dance"/> </p>
                     <div className="desktopOnlySupport">
-                        <button class="noselect" className={stylesSpoilers.spoilerButton} ref={(el) => collRef.current.push(el)}>
+                        <button className={`noselect ${stylesSpoilers.spoilerButton}`} ref={(el) => collRef.current.push(el)}>
                             &nbsp;&nbsp;
                             <span className={stylesSpoilers.spoilerText}></span>
                             Spoiler: How to read this list
@@ -210,7 +210,7 @@ const Goals = () => {
                         </motion.div>
                     </motion.button>
                     <span className="mobileOnlySupport"><br/></span>
-                    <motion.button class="noselect" style={hideUncheckedButtonStyle} onClick={removeUnchecked} whileTap={{ scale: 0.93 }} className={stylesGoalsPage.goalsButton}>
+                    <motion.button style={hideUncheckedButtonStyle} onClick={removeUnchecked} whileTap={{ scale: 0.93 }} className={`noselect ${stylesGoalsPage.goalsButton}`}>
                         <motion.div
                             className={stylesButtonsCommon.buttonTextWrapper}
                             key={hideUnchecked}
@@ -228,7 +228,7 @@ const Goals = () => {
                         </motion.div>
                     </motion.button>
                     <span className="mobileOnlySupport"><br/></span>
-                    <motion.button class="noselect" style={hideCheckedButtonStyle} onClick={removeChecked} whileTap={{ scale: 0.93 }} className={stylesGoalsPage.goalsButton}>
+                    <motion.button style={hideCheckedButtonStyle} onClick={removeChecked} whileTap={{ scale: 0.93 }} className={`noselect ${stylesGoalsPage.goalsButton}`}>
                         <motion.div
                             className={stylesButtonsCommon.buttonTextWrapper}
                             key={hideChecked}
@@ -261,18 +261,18 @@ const Goals = () => {
                 <br/>
             </div>
             <br/>
-            <div class="goalsBodyNested">
+            <div className="goalsBodyNested">
                 <div class={stylesGoalsPage.goalsTextContent}>
                     <M text="For me, keeping a list of goals has become one of the biggest drivers of a fulfilling life, and this website is a reminder of how to live in a more peaceful yet epic and creative lifestyle. Even if I won't live long enough to accomplish this - even half - I'm glad there's a place for my ideas somewhere, because they will live on after me and can inspire people to live the vibrant life they want."/>
                     <M text="If you have any ideas for goals, I'd really appreciate it if you could share them in the comments section below."/>
                 </div>
             </div> 
-            <div class="lastUpdatedGoals">UPDATED ON {goalsLastUpdated}</div>
+            <div className="lastUpdatedGoals">UPDATED ON {goalsLastUpdated}</div>
             <br/><br/>
-            <div class="noselect" style={tagStatsWrapper}>
+            <div className="noselect" style={tagStatsWrapper}>
                 {goalsTagsSpecific && goalsTagsSpecific.map(tag =>                  
                     <p class={stylesGoalsPage[tag.name]} style={tagStat}>
-                        <span class="select">{tag.emoji}</span>
+                        <span className="select">{tag.emoji}</span>
                         &nbsp;
                         <span>{tag.name}</span>
                         &nbsp;

@@ -16,14 +16,14 @@ const Music = () => {
 			exit={{ opacity: 0 }}
 			transition={{ duration: 0.15 }}>
 
-			<div class="musicBody">
+			<div className="musicBody">
 				<br/>
 				<div class={stylesPlaques.yellowNotice}>
 					<M text="## 🚧 HEADS UP!"/>
 					<M text="This page isn't finished or has been hidden for redesign. Content will appear soon."/>
 				</div>
 			</div>
-			<div class="lastUpdatedMusic">UPDATED ON {musicLastUpdated}</div>
+			<div className="lastUpdatedMusic">UPDATED ON {musicLastUpdated}</div>
 
 	  	</motion.div>
 	);

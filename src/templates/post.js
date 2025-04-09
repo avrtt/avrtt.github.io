@@ -178,7 +178,7 @@ export function PostTemplate({ data: { mdx, allMdx, allPostImages }, children })
         ))}
       </div>
 
-      <div class="postBody">
+      <div className="postBody">
         <TableOfContents toc={tableOfContents} />
       </div>
       <br/>
@@ -188,7 +188,7 @@ export function PostTemplate({ data: { mdx, allMdx, allPostImages }, children })
           textAlign: "right"
         }}>
         <motion.button 
-          class="noselect" className={stylesCustomPostLayouts.postButton}
+          className={`noselect ${stylesCustomPostLayouts.postButton}`}
           id={stylesCustomPostLayouts.postLayoutSwitchButton}
           onClick={toggleLayout}
           whileTap={{ scale: 0.93 }}
@@ -207,7 +207,7 @@ export function PostTemplate({ data: { mdx, allMdx, allPostImages }, children })
       </div>
       <br/>
       <div 
-        class="postBody" 
+        className="postBody" 
         style={{ 
           margin: isWideLayout ? "0 -14%" : "",
           maxWidth: isWideLayout ? "200%" : "",

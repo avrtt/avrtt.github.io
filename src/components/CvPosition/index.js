@@ -38,23 +38,23 @@ const point5Style = {
 const CvPosition = ({ positionName, companyName, companyLink, expTime, expLocation, expDesc, point1, point2, point3, point4, point5, pointLast }) => {
   return (
 	<>
-    <span class="expPosition">{positionName}</span>&nbsp;@&nbsp;<span class="expCompany"><a href={companyLink}>{companyName}</a></span>
+    <span className="expPosition">{positionName}</span>&nbsp;@&nbsp;<span className="expCompany"><a href={companyLink}>{companyName}</a></span>
     <br/>
-    <div class="expTimeLocationWrapper">
-      <span class="expTime">
-        <img src={cvCalendar} class="noselect" alt="calendar_logo" width="20" height="20" style={calendarLogoStyle} />
+    <div className="expTimeLocationWrapper">
+      <span className="expTime">
+        <img src={cvCalendar} className="noselect" alt="calendar_logo" width="20" height="20" style={calendarLogoStyle} />
 	      {expTime}
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       </span>
-      <span class="expLocation">
-        <img src={cvLocation} class="noselect" alt="location_logo" width="20" height="20" style={locationLogoStyle} />
+      <span className="expLocation">
+        <img src={cvLocation} className="noselect" alt="location_logo" width="20" height="20" style={locationLogoStyle} />
 	      {expLocation}
       </span>
     </div>
-    <div class="expDesc">
+    <div className="expDesc">
       <M text={expDesc}/>
     </div>
-    <div class="expDescList">
+    <div className="expDescList">
       <p style={point1Style}><M text={point1}/></p>
       <p style={point2Style}><M text={point2}/></p>
       <p style={point3Style}><M text={point3}/></p>

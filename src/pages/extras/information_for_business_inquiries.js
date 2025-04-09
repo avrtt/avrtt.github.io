@@ -13,7 +13,7 @@ const Business = () => {
 		exit={{opacity: 0 }}
 		transition={{ duration: 0.15 }}>
 	
-		<div class="aboutBody">
+		<div className="aboutBody">
 
 		<br/>
 		<div class={stylesPlaques.yellowNotice}>

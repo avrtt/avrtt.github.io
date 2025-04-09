@@ -15,10 +15,10 @@ const Articles = () => {
 			exit={{ opacity: 0 }}
 			transition={{ duration: 0.15 }}>
 
-			<div class="generalBody">
+			<div className="generalBody">
 				<p>I'm currently looking for a better way to forward saved notes from Telegram to here.</p>
 			</div>
-			<div class="lastUpdatedTalks">UPDATED ON {articlesLastUpdated}</div>
+			<div className="lastUpdatedTalks">UPDATED ON {articlesLastUpdated}</div>
 
 	  	</motion.div>
 	);

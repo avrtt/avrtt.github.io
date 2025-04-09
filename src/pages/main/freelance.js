@@ -125,7 +125,7 @@ const Freelance = () => {
 			exit={{opacity: 0 }}
 			transition={{ duration: 0.15 }}>
 
-			<div class="noselect" className={stylesFreelancePages.languageSwitchWrapper}>
+			<div className={`noselect ${stylesFreelancePages.languageSwitchWrapper}`}>
 				<Link to="/freelance/ru">
 					<span class={stylesFreelancePages.languageButton}>
 						<img style={flagStyle} src={russian} alt="russian-flag" />
@@ -134,7 +134,7 @@ const Freelance = () => {
 				</Link>
 			</div>
 
-			<div class="freelanceBody">
+			<div className="freelanceBody">
 				<div className="mobileOnlySupport"><br/><br/></div>
 				<FreelanceStatus/>
 				<p style={{ marginTop: "2.5rem" }}>
@@ -152,7 +152,7 @@ const Freelance = () => {
 				<M text={textMain.general.servicesRedirect.en}/>
 				<M text={textMain.general.contactMe.en}/>
 				<div className="mobileOnlySupport">
-					<div class="list" style={{ marginLeft: 0, marginBottom: "1rem" }}>
+					<div className="list" style={{ marginLeft: 0, marginBottom: "1rem" }}>
 						<ul>
 							<li>📲 Telegram: <a href="https://t.me/averett">@averett</a></li>
 							<li>📩 Email: <a href="mailto:avrtt@tuta.io">avrtt@tuta.io</a></li>
@@ -225,11 +225,11 @@ const Freelance = () => {
 				</div>
 				<span>Working hours: <H>{startHoursUTC}–{endHoursUTC}</H> ({strUTCOffset}), Mon – Fri</span>&nbsp;&nbsp;<Tooltip text={tooltipText}/>
 				<M text={textMain.general.outro.en}/>
-				<div class="sectionBreak"><M text="----------"/></div>
+				<div className="sectionBreak"><M text="----------"/></div>
 				<M text={textMain.projects.heading.en}/>
 				<M text={textMain.projects.intro.en}/>
 			</div>
-			<div class="freelanceBodyNested">
+			<div className="freelanceBodyNested">
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
 					<div class={stylesFreelancePages.freelanceCategorySectionWrapper}>
 						{categories.map((category) => (
@@ -244,7 +244,7 @@ const Freelance = () => {
 					</div>
 				</AnimationOnScroll>
 			</div>
-			<div class="freelanceBody">
+			<div className="freelanceBody">
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
 					<M text={textMain.workflow.heading.en}/>
 					<M text={textMain.workflow.section1.heading.en}/>
@@ -290,7 +290,7 @@ const Freelance = () => {
 						<M text={textMain.workflow.section8.block2.en}/>
 					</p>
 					<br/>
-					<button class="noselect" className={stylesSpoilers.spoilerButton} ref={(el) => collRef.current.push(el)}>
+					<button className={`noselect ${stylesSpoilers.spoilerButton}`} ref={(el) => collRef.current.push(el)}>
 						&nbsp;&nbsp;
 						<span className={stylesSpoilers.spoilerText}></span>
 						{textMain.workflow.faq.title.en}
@@ -370,10 +370,10 @@ const Freelance = () => {
 					</div>
 				</AnimationOnScroll>
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
-					<div class="sectionBreak"><M text="----------"/></div>
+					<div className="sectionBreak"><M text="----------"/></div>
 					<M text={textMain.testimonials.heading.en}/>
 					<div className="mobileOnlySupport">
-						<div class="list" style={{ marginLeft: 0, marginBottom: "1rem" }}>
+						<div className="list" style={{ marginLeft: 0, marginBottom: "1rem" }}>
 							<ul>
 								<li>👉 in <H>Telegram</H>: <a href="https://t.me/avrtt_feedback/6">@avrtt_feedback</a></li>
 								<li>👉 in <H>Facebook</H>: <a href="https://www.facebook.com/averett.freelance/reviews">@averett.freelance</a></li>
@@ -403,7 +403,7 @@ const Freelance = () => {
 						</TileContainerLink>
 					</div>
 					<M text={textMain.testimonials.general.en}/>
-					<button class="noselect" className={stylesSpoilers.spoilerButton} ref={(el) => collRef.current.push(el)}>
+					<button className={`noselect ${stylesSpoilers.spoilerButton}`} ref={(el) => collRef.current.push(el)}>
 						&nbsp;&nbsp;
 						<span className={stylesSpoilers.spoilerText}></span>
 						{textMain.testimonials.spoilerDifference.title.en}
@@ -419,7 +419,7 @@ const Freelance = () => {
 					<M text={textMain.testimonials.write.template.en}/>
 				</AnimationOnScroll>
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
-					<div class="sectionBreak"><M text="----------"/></div>
+					<div className="sectionBreak"><M text="----------"/></div>
 					<M text={textMain.background.heading.en}/>
 					<M text={textMain.background.block1.en}/>
 					<M text={textMain.background.block2.en}/>
@@ -430,53 +430,53 @@ const Freelance = () => {
 					<M text={textMain.background.block5.en}/>
 					<M text={textMain.background.block6.en}/>
 				</AnimationOnScroll>
-				<div class="sectionBreak"><M text="----------"/></div>
+				<div className="sectionBreak"><M text="----------"/></div>
 				<M text={textMain.courses.heading.en}/>
 				<M text={textMain.courses.intro.en}/>
 			</div>
-			<div class="freelanceBodyNested freelanceCoursesWrapper">
+			<div className="freelanceBodyNested freelanceCoursesWrapper">
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
 					<Courses lang="en"/>
 				</AnimationOnScroll>
 			</div>
-			<div class="freelanceBody">
+			<div className="freelanceBody">
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
 					<M text={textMain.stack.heading.en}/>
 					<Stack />
 				</AnimationOnScroll>
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
-					<div class="sectionBreak"><M text="----------"/></div>
+					<div className="sectionBreak"><M text="----------"/></div>
 					<M text={textMain.payment.heading.en}/>
 					<div className="mobileOnlySupport">
 						<div style={{ marginLeft: 0, marginBottom: "1.8rem" }}>
 							<p style={{ marginBottom: "-0.8rem" }}>
-								<img src={CardSber} class="noselect" alt="sber_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
+								<img src={CardSber} className="noselect" alt="sber_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
 								<motion.button className={stylesWallets.mobileWalletButton} onClick={() => navigator.clipboard.writeText(SberbankCardCopy)} whileTap={{ scale: 0.95 }}>Copy card number</motion.button> (Sberbank)
 							</p>
 							<p style={{ marginBottom: "-0.8rem" }}>
-								<img src={BTC} class="noselect" alt="btc_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
+								<img src={BTC} className="noselect" alt="btc_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
 								<motion.button className={stylesWallets.mobileWalletButton} onClick={() => navigator.clipboard.writeText(BitcoinWallet)} whileTap={{ scale: 0.95 }}>Copy address</motion.button> (BTC network)
 							</p>
 							<p style={{ marginBottom: "-0.8rem" }}>
-								<img src={BNB} class="noselect" alt="bnb_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
+								<img src={BNB} className="noselect" alt="bnb_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
 								<motion.button className={stylesWallets.mobileWalletButton} onClick={() => navigator.clipboard.writeText(BEP20Wallet)} whileTap={{ scale: 0.95 }}>Copy address</motion.button> (BEP-20 network)
 							</p>
 							<p style={{ marginBottom: "-0.8rem" }}>
-								<img src={ETH} class="noselect" alt="eth_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
+								<img src={ETH} className="noselect" alt="eth_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
 								<motion.button className={stylesWallets.mobileWalletButton} onClick={() => navigator.clipboard.writeText(ERC20Wallet)} whileTap={{ scale: 0.95 }}>Copy address</motion.button> (ETC-20 network)
 							</p>
 						</div>
 					</div>
 					<div className={`${stylesWallets.wallets} desktopOnlySupport`}>
 						<div className={stylesWallets.wallet3}>
-							<img src={CardSber} class="noselect" alt="card_logo" width="60" height="60" style={logoStyle} />
+							<img src={CardSber} className="noselect" alt="card_logo" width="60" height="60" style={logoStyle} />
 							<code class={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(SberbankCardCopy)}><div className={stylesWallets.tooltip}>{SberbankCardDisplay}
 							<span className={stylesWallets.tooltiptext}>Click to copy</span></div></code>
 							<div className={stylesWallets.currencyName}><b>RUB</b> &nbsp;(SBERBANK, RUSSIAN CARDS ONLY) &nbsp; | &nbsp; <code className={stylesWallets.phoneNumber} onClick={() => navigator.clipboard.writeText(SberbankSBPCopy)}><div className={stylesWallets.tooltip}>{SberbankSBPDisplay}
 							</div></code></div>
 						</div>
 						<div className={stylesWallets.wallet3}>				
-							<img src={BTC} class="noselect" alt="btc_logo" width="60" height="60" style={logoStyle} />
+							<img src={BTC} className="noselect" alt="btc_logo" width="60" height="60" style={logoStyle} />
 							<code class={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(BitcoinWallet)}><div className={stylesWallets.tooltip}>{BitcoinWallet}
 							<span className={stylesWallets.tooltiptext}>Click to copy</span></div></code>&nbsp;
 							<img id={stylesWallets.qr} className={stylesWallets.icon} src={QR} width="36" height="36" title="QR code" alt="qr-code" />
@@ -485,7 +485,7 @@ const Freelance = () => {
 							<div className={stylesWallets.currencyName}><b>BTC</b> &nbsp;(BITCOIN NETWORK)</div>
 						</div>		
 						<div className={stylesWallets.wallet3}>		
-							<img src={BNB} class="noselect" alt="bnb_logo" width="60" height="60" style={logoStyle} />
+							<img src={BNB} className="noselect" alt="bnb_logo" width="60" height="60" style={logoStyle} />
 							<code class={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(BEP20Wallet)}><div className={stylesWallets.tooltip}>{BEP20Wallet}
 							<span className={stylesWallets.tooltiptext}>Click to copy</span></div></code>&nbsp;
 							<img id={stylesWallets.qr} className={stylesWallets.icon} src={QR} width="36" height="36" title="QR code" alt="qr-code" />
@@ -494,7 +494,7 @@ const Freelance = () => {
 							<div className={stylesWallets.currencyName}><b>USDT • USDC • DAI • BNB</b> &nbsp;(BNB SMART CHAIN NETWORK, BEP-20)</div>
 						</div>				
 						<div className={stylesWallets.wallet6}>
-							<img src={ETH} class="noselect" alt="etherium_logo" width="60" height="60" style={logoStyle} />
+							<img src={ETH} className="noselect" alt="etherium_logo" width="60" height="60" style={logoStyle} />
 							<code class={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(ERC20Wallet)}><div className={stylesWallets.tooltip}>{ERC20Wallet}
 							<span className={stylesWallets.tooltiptext}>Click to copy</span></div></code>&nbsp;
 							<img id={stylesWallets.qr} className={stylesWallets.icon} src={QR} width="36" height="36" title="QR code" alt="qr-code" />
@@ -505,9 +505,9 @@ const Freelance = () => {
 					</div>
 				</AnimationOnScroll>
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
-					<div class="sectionBreak"><M text="----------"/></div>
+					<div className="sectionBreak"><M text="----------"/></div>
 					<M text={textMain.related.heading.en}/>
-					<div class="list"> 
+					<div className="list"> 
 						<M text={textMain.related.links.en}/>
 					</div>
 				</AnimationOnScroll>
@@ -519,7 +519,7 @@ const Freelance = () => {
 					</div>
 				</div>	
 			</div>
-			<div class="lastUpdatedFreelance">UPDATED ON {freelanceLastUpdated}</div>
+			<div className="lastUpdatedFreelance">UPDATED ON {freelanceLastUpdated}</div>
 		</motion.div>
   	);
 };

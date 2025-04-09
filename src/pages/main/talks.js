@@ -24,14 +24,14 @@ const Talks = () => {
 				alt="Page cover: a painting depicting long-haired man giving a speech to an audience"
 			/>
 
-			<div class="talksBody">
+			<div className="talksBody">
 				<br/>
 				<div class={stylesPlaques.yellowNotice}>
 					<M text="## 🚧 HEADS UP!"/>
 					<M text="This page isn't finished or has been hidden for redesign. Content will appear soon."/>
 				</div>
 			</div>
-			<div class="lastUpdatedTalks">UPDATED ON {talksLastUpdated}</div>
+			<div className="lastUpdatedTalks">UPDATED ON {talksLastUpdated}</div>
 
 	  	</motion.div>
 	);

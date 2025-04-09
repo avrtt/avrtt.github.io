@@ -37,20 +37,20 @@ const DataAnalysisRu = () => {
 		<GoBackButton link="/freelance/ru" title="К основной странице" />
 		
 		<div class={stylesFreelancePages.categorySwitchWrapper}>
-			<Link title="Проекты по машинному обучению" class="noselect" className={stylesFreelancePages.categoryButton} to="/freelance/ru/projects/machine_learning"><div class="noselect" className={stylesFreelancePages.categoryButton}><img src={MachineLearningIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
-			<Link title="Проекты по визуализации данных" class="noselect" className={stylesFreelancePages.categoryButton} to="/freelance/ru/projects/data_visualization"><div class="noselect" className={stylesFreelancePages.categoryButton}><img src={DataVisualizationIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
-			<Link title="Проекты по сбору данных" class="noselect" className={stylesFreelancePages.categoryButton} to="/freelance/ru/projects/data_collection"><div class="noselect" className={stylesFreelancePages.categoryButton}><img src={DataCollectionIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
-			<Link title="Python-приложения" class="noselect" className={stylesFreelancePages.categoryButton} to="/freelance/ru/projects/python_apps"><div class="noselect" className={stylesFreelancePages.categoryButton}><img src={PythonAppsIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
-			<Link title="Проекты по веб-разработке" class="noselect" className={stylesFreelancePages.categoryButton} to="/freelance/ru/projects/web_development"><div class="noselect" className={stylesFreelancePages.categoryButton}><img src={WebDevelopmentIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
-			<Link title="Проекты-исследования" class="noselect" className={stylesFreelancePages.categoryButton} to="/freelance/ru/projects/research"><div class="noselect" className={stylesFreelancePages.categoryButton}><img src={ResearchIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
-			<Link title="Проекты по техрайтингу" class="noselect" className={stylesFreelancePages.categoryButton} to="/freelance/ru/projects/technical_writing"><div class="noselect" className={stylesFreelancePages.categoryButton}><img src={TechnicalWritingIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
-			<Link title="Проекты по пост-продакшену" class="noselect" className={stylesFreelancePages.categoryButton} to="/freelance/ru/projects/post_production"><div class="noselect" className={stylesFreelancePages.categoryButton}><img src={PostProductionIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
-			<Link title="Прочие проекты" class="noselect" className={stylesFreelancePages.categoryButton} to="/freelance/ru/projects/misc"><div class="noselect" className={stylesFreelancePages.categoryButton}><img src={MiscIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
+			<Link title="Проекты по машинному обучению" className={`noselect ${stylesFreelancePages.categoryButton}`} to="/freelance/ru/projects/machine_learning"><div className={`noselect ${stylesFreelancePages.categoryButton}`}><img src={MachineLearningIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
+			<Link title="Проекты по визуализации данных" className={`noselect ${stylesFreelancePages.categoryButton}`} to="/freelance/ru/projects/data_visualization"><div className={`noselect ${stylesFreelancePages.categoryButton}`}><img src={DataVisualizationIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
+			<Link title="Проекты по сбору данных" className={`noselect ${stylesFreelancePages.categoryButton}`} to="/freelance/ru/projects/data_collection"><div className={`noselect ${stylesFreelancePages.categoryButton}`}><img src={DataCollectionIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
+			<Link title="Python-приложения" className={`noselect ${stylesFreelancePages.categoryButton}`} to="/freelance/ru/projects/python_apps"><div className={`noselect ${stylesFreelancePages.categoryButton}`}><img src={PythonAppsIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
+			<Link title="Проекты по веб-разработке" className={`noselect ${stylesFreelancePages.categoryButton}`} to="/freelance/ru/projects/web_development"><div className={`noselect ${stylesFreelancePages.categoryButton}`}><img src={WebDevelopmentIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
+			<Link title="Проекты-исследования" className={`noselect ${stylesFreelancePages.categoryButton}`} to="/freelance/ru/projects/research"><div className={`noselect ${stylesFreelancePages.categoryButton}`}><img src={ResearchIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
+			<Link title="Проекты по техрайтингу" className={`noselect ${stylesFreelancePages.categoryButton}`} to="/freelance/ru/projects/technical_writing"><div className={`noselect ${stylesFreelancePages.categoryButton}`}><img src={TechnicalWritingIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
+			<Link title="Проекты по пост-продакшену" className={`noselect ${stylesFreelancePages.categoryButton}`} to="/freelance/ru/projects/post_production"><div className={`noselect ${stylesFreelancePages.categoryButton}`}><img src={PostProductionIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
+			<Link title="Прочие проекты" className={`noselect ${stylesFreelancePages.categoryButton}`} to="/freelance/ru/projects/misc"><div className={`noselect ${stylesFreelancePages.categoryButton}`}><img src={MiscIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
 		</div>
 
-		<div class="freelanceBody">
+		<div className="freelanceBody">
 
-			<div class="mobileOnlySupport"><br/></div>
+			<div className="mobileOnlySupport"><br/></div>
 			<Spoiler 
 				title={"Подробнее про эту категорию"}  
 				block1={categoryDescDetailedRu}
