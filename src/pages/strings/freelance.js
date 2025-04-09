@@ -675,7 +675,7 @@ export const textServices = {
         iDo: {
             en: 
 `- Depending on the source, load the data into my workspace to use Python tools (**Pandas**, **NumPy**), **SQL** or **Google Sheets** (**Excel**)
-- Permorm data validation
+- Perform data validation
 - Clean, sort and standardize raw data
 - Handle missing values, inconsistencies and duplicates
 - Perform advanced data transformation, like pivoting, merging or aggregating`,
