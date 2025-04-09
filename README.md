@@ -1,3 +1,24 @@
+<a href="https://github.com/avrtt/avrtt.github.io/activity?ref=gh-pages&activity_type=direct_push">
+    <img
+      src="https://img.shields.io/github/last-commit/avrtt/avrtt.github.io/gh-pages?style=flat-square&label=%E2%9A%99%20%EF%B8%8FLast%20deploy%3A&labelColor=%230d1117&color=%230d1117"
+      alt="last-deploy-badge"
+    />
+</a>
+<br/>
+<a href="https://github.com/avrtt/avrtt.github.io/commits/main/">
+  <img
+    src="https://img.shields.io/github/commit-activity/t/avrtt/avrtt.github.io/main?style=flat-square&label=%F0%9F%A7%A9%20Commits%20(main%20branch)%3A&labelColor=%230d1117&color=%230d1117"
+    alt="commit-activity-badge"
+  />
+</a>
+<br/>
+<img
+  src="https://img.shields.io/github/repo-size/avrtt/avrtt.github.io?style=flat-square&label=%F0%9F%93%A6%20Repo%20size%3A&labelColor=%230d1117&color=%230d1117"
+  alt="repository-size-badge"
+/>
+
+<br/>
+
 # [avrtt.blog](https://avrtt.github.io/)
 
 Here you can find the code and documentation of my minimalist, static, MDX-based (and simply based) personal website. The site is **entirely custom**, designed only for my needs and **not meant to be a universal blog template**.
