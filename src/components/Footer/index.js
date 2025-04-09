@@ -7,7 +7,30 @@ import Map from "./map.svg";
 import YouTube from "./youtube.svg";
 import Facebook from "./facebook.svg";
 import { footerYear } from "../../data/lastUpdated";
+import { freelanceStatus, location } from "../../data/announcements"
+import { startHoursUTC, endHoursUTC } from '../../utils/freelance';
 import * as styles from "./styles.module.scss";
+
+var statusEmoji
+if (freelanceStatus === 1) {
+  statusEmoji = "👀"
+} else if (freelanceStatus === 2) {
+  statusEmoji = "😎"
+} else if (freelanceStatus === 3) {
+  statusEmoji = "⚡"
+} else if (freelanceStatus === 4) {
+  statusEmoji = "🤔"
+} else if (freelanceStatus === 5) {
+  statusEmoji = "🔥"
+} else if (freelanceStatus === 6) {
+  statusEmoji = "😴"
+} else if (freelanceStatus === 7) {
+  statusEmoji = "😌"
+} else if (freelanceStatus === 8) {
+  statusEmoji = "🏝️"
+} else if (freelanceStatus === 9) {
+  statusEmoji = "🍄"
+}
 
 const Footer = () => {
   return (
@@ -39,79 +62,41 @@ const Footer = () => {
         {/* badges on the left */}
         <div className={`${styles.row} ${styles.badgesLeftWrapper}`}>
           <Link to="/donate">
-            <img
-              className={`${styles.footerBadgeStyle} ${styles.badgeFirst}`}
-              src="https://img.shields.io/badge/🎁%20Donate-f2f2f2?style=flat-square"
-              alt="donate-badge"
-            />
+            <p className={`${styles.badgeFirst}`}>🎁 Donate</p>
           </Link>
-
+          <Link to="/contact">
+            <p className={`${styles.badgeSecond}`}>💬 Contact</p>
+          </Link>
           <a href="https://github.com/avrtt/avrtt.github.io/issues/new">
-            <img
-              className={`${styles.footerBadgeStyle} ${styles.badgeSecond}`}
-              src="https://img.shields.io/badge/🐞%20Report%20a%20bug-f2f2f2?style=flat-square"
-              alt="report-bug-badge"
-            />
+            <p className={`${styles.badgeThird}`}>🐞 Report a bug</p>
           </a>
-
           <a href="https://github.com/avrtt/avrtt.github.io/blob/main/README.md">
-            <img
-              className={`${styles.footerBadgeStyle} ${styles.badgeThird}`}
-              src="https://img.shields.io/badge/🤓%20README.md-f2f2f2?style=flat-square"
-              alt="readme-badge"
-            />
+            <p className={`${styles.badgeFourth}`}>🤓 README.md</p>
           </a>
-
-          <a href="https://github.com/avrtt/avrtt.github.io/activity?ref=gh-pages&activity_type=direct_push">
-            <img
-              className={`${styles.footerBadgeStyle} ${styles.badgeFourth}`}
-              src="https://img.shields.io/github/last-commit/avrtt/avrtt.github.io/gh-pages?style=flat-square&label=⚙️%20Last%20deploy%3A&labelColor=%23f2f2f2&color=%23f2f2f2"
-              alt="last-deploy-badge"
-            />
-          </a>
-
-          <a href="https://github.com/avrtt/avrtt.github.io/commits/main/">
-            <img
-              className={`${styles.footerBadgeStyle} ${styles.badgeFifth}`}
-              src="https://img.shields.io/github/commit-activity/t/avrtt/avrtt.github.io/main?style=flat-square&label=🧩%20Commits%20(main%20branch)%3A&labelColor=%23f2f2f2&color=%23f2f2f2"
-              alt="commit-activity-badge"
-            />
-          </a>
-
-          <img
-            className={`${styles.footerBadgeStyle} ${styles.badgeSixth}`}
-            src="https://img.shields.io/github/repo-size/avrtt/avrtt.github.io?style=flat-square&label=📦%20Repo%20size%3A&labelColor=%23f2f2f2&color=%23f2f2f2"
-            alt="repository-size-badge"
-          />
         </div>
 
         {/* badges on the right */}
         <div className={`${styles.row} ${styles.badgesRightWrapper}`}>
-          <img
-            className={styles.visitsTodayBadge}
-            src="https://api.visitorbadge.io/api/daily?path=https%3A%2F%2Favrtt.github.io%2F&label=TODAY&labelColor=%23f2f2f2&countColor=%23D9D9D9&style=flat-square&labelStyle=none"
-            alt="visits-today-badge"
-          />
-          <img
-            className={styles.visitsTotalBadge}
-            src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Favrtt.github.io%2F&label=TOTAL&labelColor=%23f2f2f2&countColor=%23D9D9D9&style=flat-square&labelStyle=none"
-            alt="visits-total-badge"
-          />
+          <span>
+            <p className={`${styles.badgeFirstRight}`}> </p>
+          </span>
+          <span>
+            <p className={`${styles.badgeSecondRight}`}> </p>
+          </span>
+          <Link to="/freelance">
+            <p className={`${styles.badgeThirdRight}`}>{startHoursUTC}–{endHoursUTC} &nbsp;{statusEmoji}</p>
+          </Link>
+          <span>
+            <p className={`${styles.badgeFourthRight}`}>{location}</p>
+          </span>
         </div>
 
-        {/* copyright, contact button */}
-        <div className={`${styles.row} ${styles.badgesRightWrapper}`}>
+        {/* copyright */}
+        <div className={`${styles.row}`}>
           <p className={styles.footerCopyStyle} title="Made with love!">
             Copyright © {footerYear}&nbsp;
             <span className={styles.footerNameStyle}>Vladislav Averett</span>
           </p>
-          <Link to="/contact">
-            <img
-              className={`${styles.footerContactStyle} ${styles.contactButtonStyle}`}
-              src="https://img.shields.io/badge/💬%20Contact-282828?style=flat-square"
-              alt="contact-badge"
-            />
-          </Link>
         </div>
       </div>
     </div>
