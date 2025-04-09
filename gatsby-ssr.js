@@ -1,5 +1,6 @@
 import React from 'react';
 import Layout from './src/components/layout';
+//import { LocationProvider } from '@reach/router';
 
 export const onRenderBody = ({ setHeadComponents }) => {
   setHeadComponents([
@@ -21,5 +22,26 @@ export const wrapPageElement = ({ element, props }) => {
   return <Layout {...props}>{element}</Layout>
 };
 
+/*export const wrapRootElement = ({ element, props }) => {
+  // wrap all other pages with layout and provide useLocation for Navbar
+  return (
+    <LocationProvider>
+      <Layout {...props}>{element}</Layout>
+    </LocationProvider>
+  );
+};*/
 
+export const shouldUpdateScroll = () => false;
+
+export const onRouteUpdate = ({ location, prevLocation }) => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+/*export const onRouteUpdate = ({ location, prevLocation }) => {
+  // keep scroll position after reloading the same page, but move on top if page route changed
+  if (location.pathname !== prevLocation?.pathname) {
+    // window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+};*/
 
