@@ -3,12 +3,11 @@
 .greyNotice, .yellowNotice, .greyNoticeCompact {
   max-width: 100%;
   border-radius: 2vh;
-  font-weight: lighter;
-  @include mixins.respond-to(mobile) { line-height: 1.25rem; }
-  @include mixins.respond-to(small-tablet) { line-height: 1.4rem; }
-  @include mixins.respond-to(tablet) { line-height: 1.6rem; }
-  @include mixins.respond-to(small-desktop) { line-height: 1.8rem; }
-  @include mixins.respond-to(desktop) { line-height: 2rem; }
+  @include mixins.respond-to(mobile) { line-height: 1.25rem; font-weight: normal; }
+  @include mixins.respond-to(small-tablet) { line-height: 1.4rem; font-weight: normal; }
+  @include mixins.respond-to(tablet) { line-height: 1.6rem; font-weight: lighter; }
+  @include mixins.respond-to(small-desktop) { line-height: 1.8rem; font-weight: lighter; }
+  @include mixins.respond-to(desktop) { line-height: 2rem; font-weight: lighter; }
 }
 
 .greyNotice {
