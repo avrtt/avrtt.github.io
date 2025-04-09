@@ -1,10 +1,32 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { AnimatePresence, motion } from 'framer-motion';
 
+// global styles
+import "../styles/page_bodies.scss"
+import "../styles/page_structure_utils.scss"
+import "../styles/selection_general.scss"
+import "../styles/headings_general.scss"
+import "../styles/tables_general.scss"
+import "../styles/media_general.scss"
+import "../styles/scrollbar.scss"
+import "../styles/last_updates.scss"
+import "../styles/links.scss"
+import "../styles/lists.scss"
+import "../styles/compatibility.scss"
+
 const Layout = ({ children, location }) => {
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
+    return () => clearTimeout(timeout);
+  }, [location.pathname]);
+
   const path = location?.pathname || '';
+  // console.log('Layout rendered for path:', path);
   
   var isDevNull = false;
   if (
