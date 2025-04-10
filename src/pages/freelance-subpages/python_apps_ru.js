@@ -36,7 +36,7 @@ const PythonAppsRu = () => {
 
 		<GoBackButton link="/freelance/ru" title="К основной странице" />
 		
-		<div class={stylesFreelancePages.categorySwitchWrapper}>
+		<div className={stylesFreelancePages.categorySwitchWrapper}>
 			<Link title="Проекты по машинному обучению" className={`noselect ${stylesFreelancePages.categoryButton}`} to="/freelance/ru/projects/machine_learning"><div className={`noselect ${stylesFreelancePages.categoryButton}`}><img src={MachineLearningIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
 			<Link title="Проекты по анализу данных" className={`noselect ${stylesFreelancePages.categoryButton}`} to="/freelance/ru/projects/data_analysis"><div className={`noselect ${stylesFreelancePages.categoryButton}`}><img src={DataAnalysisIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
 			<Link title="Проекты по визуализации данных" className={`noselect ${stylesFreelancePages.categoryButton}`} to="/freelance/ru/projects/data_visualization"><div className={`noselect ${stylesFreelancePages.categoryButton}`}><img src={DataVisualizationIcon} alt="button_icon" width="50%" height="100%" /></div></Link>

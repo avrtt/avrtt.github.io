@@ -18,7 +18,7 @@ const Music = () => {
 
 			<div className="musicBody">
 				<br/>
-				<div class={stylesPlaques.yellowNotice}>
+				<div className={stylesPlaques.yellowNotice}>
 					<M text="## 🚧 HEADS UP!"/>
 					<M text="This page isn't finished or has been hidden for redesign. Content will appear soon."/>
 				</div>

@@ -28,23 +28,23 @@ const spanStyle = {
 }
 
 const tagStatsWrapper = {
-    'font-size': 'clamp(0.4rem, 2.5vw, 1rem)',
-    'margin-left': '5%',
-    'margin-right': '5%',
-    'max-width': '100%',
-    'text-align': 'center',
-    'margin-top': '18px',
-    'margin-bottom': '-4px'
+    'fontSize': 'clamp(0.4rem, 2.5vw, 1rem)',
+    'marginLeft': '5%',
+    'marginRight': '5%',
+    'maxWidth': '100%',
+    'textAlign': 'center',
+    'marginTop': '18px',
+    'marginBottom': '-4px'
 }
 
 const tagStat = {
-    'background-color': '#D7D7D7',
-    'border-radius': '10px',
+    'backgroundColor': '#D7D7D7',
+    'borderRadius': '10px',
     'display': 'inline-block',
-    'font-weight': 'bold',
-    'padding-left': '10px',
-    'padding-right': '10px',
-    'vertical-align': 'middle',
+    'fontWeight': 'bold',
+    'paddingLeft': '10px',
+    'paddingRight': '10px',
+    'verticalAlign': 'middle',
     'margin': '4px 2px 0 2px',
 }
 
@@ -55,7 +55,7 @@ const taggedGoalsNumStyle = {
 const textImg = {
     'width': '32px',
     'opacity': '0.4',
-    'vertical-align': 'middle',
+    'verticalAlign': 'middle',
     'margin': '0'
 }
 
@@ -140,12 +140,12 @@ const Goals = () => {
 
     const hideCheckedButtonStyle = {
         'opacity': hideUnchecked ? 0.3 : 1,
-        'pointer-events': hideUnchecked ? 'none' : '',
+        'pointerEvents': hideUnchecked ? 'none' : '',
     }
 
     const hideUncheckedButtonStyle = {
         'opacity': hideChecked ? 0.3 : 1,
-        'pointer-events': hideChecked ? 'none' : '',
+        'pointerEvents': hideChecked ? 'none' : '',
     }
 
   return (
@@ -164,7 +164,7 @@ const Goals = () => {
         <div className="goalsBody">
 
             <div className="goalsBodyNested">
-                <div class={stylesGoalsPage.goalsTextContent}>
+                <div className={stylesGoalsPage.goalsTextContent}>
 
                     <Notice title="☝️ Wait a moment" text="I've removed the goals to reorganize them into categories. They'll be here soon. You can only see the test ones."/>
 
@@ -180,13 +180,13 @@ const Goals = () => {
                             <div className={stylesSpoilers.spoilerContentGoals}>
                                 <M text="Before you dive deep, here's a little explanation of the notation:"/>
                                 <ul>
-                                    <li><span class={stylesGoalsPage.tooltipGoals}><img id={stylesGoalsPage.infoStyle} style={textImg} src={info} class={stylesGoalsPage.c} alt='info-icon'/></span> will show additional information about a goal on hover </li>
+                                    <li><span className={stylesGoalsPage.tooltipGoals}><img id={stylesGoalsPage.infoStyle} style={textImg} src={info} className={stylesGoalsPage.c} alt='info-icon'/></span> will show additional information about a goal on hover </li>
                                     <li><img src={refLink} style={textImg} alt="reference-icon" /> can be a reference, inspiration, or extra source to describe a goal</li>
                                     <li><img src={resultLink} style={textImg} alt="result-link-icon" /> is a link to the result or proof of accomplishing a goal</li>
                                     <li>The right side of the page shows two tags: difficulty/rareness (stars) and the level of risk</li>
                                     <li>The date/text after "–" reflects a rough deadline for a goal</li>
                                     <li>The bunch of icons after each goal description represent the category tags for navigation and the statistics at the bottom of the page</li>
-                                    <li>Hovering over the <span class={stylesGoalsPage.tooltipGoals}><img id={stylesGoalsPage.checkboxStyle} style={textImg} src={checkbox} class={stylesGoalsPage.c} alt='checkbox-icon'/><span style={{ left: "50%"}} class={stylesGoalsPage.tooltiptextGoals}>You've discovered mouse control!</span></span> icons displays the date and location of completion</li>
+                                    <li>Hovering over the <span className={stylesGoalsPage.tooltipGoals}><img id={stylesGoalsPage.checkboxStyle} style={textImg} src={checkbox} className={stylesGoalsPage.c} alt='checkbox-icon'/><span style={{ left: "50%"}} className={stylesGoalsPage.tooltiptextGoals}>You've discovered mouse control!</span></span> icons displays the date and location of completion</li>
                                 </ul>
                             </div>
                         </div>
@@ -222,7 +222,7 @@ const Goals = () => {
                             <span>
                                 {hideUnchecked ? 'Show unachieved goals' : 'Hide unachieved goals'}
                             </span>
-                            <span class={stylesGoalsPage.goalsButtonCount}>
+                            <span className={stylesGoalsPage.goalsButtonCount}>
                                 {hideUnchecked ? ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'u' ? ++acc : acc, 0) + ')' : ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'u' ? ++acc : acc, 0) + ')'}
                             </span>
                         </motion.div>
@@ -240,7 +240,7 @@ const Goals = () => {
                             <span>
                                 {hideChecked ? 'Show achieved goals' : 'Hide achieved goals'}
                             </span>
-                            <span class={stylesGoalsPage.goalsButtonCount}>
+                            <span className={stylesGoalsPage.goalsButtonCount}>
                                 {hideChecked ? ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'c' ? ++acc : acc, 0) + ')' : ' (' + goalsConcat.reduce((acc, cur) => cur.status === 'c' ? ++acc : acc, 0) + ')'}
                             </span>
                         </motion.div>
@@ -262,7 +262,7 @@ const Goals = () => {
             </div>
             <br/>
             <div className="goalsBodyNested">
-                <div class={stylesGoalsPage.goalsTextContent}>
+                <div className={stylesGoalsPage.goalsTextContent}>
                     <M text="For me, keeping a list of goals has become one of the biggest drivers of a fulfilling life, and this website is a reminder of how to live in a more peaceful yet epic and creative lifestyle. Even if I won't live long enough to accomplish this - even half - I'm glad there's a place for my ideas somewhere, because they will live on after me and can inspire people to live the vibrant life they want."/>
                     <M text="If you have any ideas for goals, I'd really appreciate it if you could share them in the comments section below."/>
                 </div>
@@ -271,12 +271,12 @@ const Goals = () => {
             <br/><br/>
             <div className="noselect" style={tagStatsWrapper}>
                 {goalsTagsSpecific && goalsTagsSpecific.map(tag =>                  
-                    <p class={stylesGoalsPage[tag.name]} style={tagStat}>
+                    <p className={stylesGoalsPage[tag.name]} style={tagStat}>
                         <span className="select">{tag.emoji}</span>
                         &nbsp;
                         <span>{tag.name}</span>
                         &nbsp;
-                        <span class={tag.name} style={taggedGoalsNumStyle}>{
+                        <span className={tag.name} style={taggedGoalsNumStyle}>{
                             goalsConcat.reduce((acc, cur) => cur.difftag === String(tag.emoji) && cur.status === 'c' ? ++acc : acc, 0) +
                             goalsConcat.reduce((acc, cur) => cur.safetytag === String(tag.emoji) && cur.status === 'c' ? ++acc : acc, 0)} 
                             <span>/{
@@ -310,15 +310,15 @@ const Goals = () => {
                     </p>
                 )}
             </div>
-            <div className="noselect" class={stylesGoalsPage.tagStatsWrapper}>
-                <span class={stylesGoalsPage.tagStats}>
+            <div className="noselect" className={stylesGoalsPage.tagStatsWrapper}>
+                <span className={stylesGoalsPage.tagStats}>
                     {goalsConcat.reduce((acc, cur) => cur.status === 'c' ? ++acc : acc, 0)}&nbsp;
                     <span style={spanStyle}>/ {goalsConcat.reduce((acc, cur) => cur.status === 'c' ? ++acc : acc, 0) 
                         + goalsConcat.reduce((acc, cur) => cur.status === 'u' ? ++acc : acc, 0)}</span>
                 </span>
             </div>
         </div> 
-        <div class={stylesCommentsSections.chatWrapper}><TelegramComments websiteKey={'2JA7Wo3q'} customColor='000000' commentsNumber={5} pageId='goals' showDislikes={true} /></div>
+        <div className={stylesCommentsSections.chatWrapper}><TelegramComments websiteKey={'2JA7Wo3q'} customColor='000000' commentsNumber={5} pageId='goals' showDislikes={true} /></div>
     </motion.div>
   );
 };

@@ -36,7 +36,7 @@ const DataCollection = () => {
 
 		<GoBackButton link="/freelance" />
 	
-		<div class={stylesFreelancePages.categorySwitchWrapper}>
+		<div className={stylesFreelancePages.categorySwitchWrapper}>
 			<Link title="Machine learning projects" className={`noselect ${stylesFreelancePages.categoryButton}`} to="/freelance/projects/machine_learning"><div className={`noselect ${stylesFreelancePages.categoryButton}`}><img src={MachineLearningIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
 			<Link title="Data analysis projects" className={`noselect ${stylesFreelancePages.categoryButton}`} to="/freelance/projects/data_analysis"><div className={`noselect ${stylesFreelancePages.categoryButton}`}><img src={DataAnalysisIcon} alt="button_icon" width="50%" height="100%" /></div></Link>
 			<Link title="Data visualization projects" className={`noselect ${stylesFreelancePages.categoryButton}`} to="/freelance/projects/data_visualization"><div className={`noselect ${stylesFreelancePages.categoryButton}`}><img src={DataVisualizationIcon} alt="button_icon" width="50%" height="100%" /></div></Link>

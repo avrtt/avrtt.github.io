@@ -41,7 +41,7 @@ import * as stylesSpoilers from "../../styles/spoilers.module.scss"
 import * as stylesFreelancePages from "../../styles/freelance_pages.module.scss"
 
 const logoStyle = {
-	'vertical-align': 'middle'
+	'verticalAlign': 'middle'
 }
 
 const flagStyle = {
@@ -127,7 +127,7 @@ const Freelance = () => {
 
 			<div className={`noselect ${stylesFreelancePages.languageSwitchWrapper}`}>
 				<Link to="/freelance/ru">
-					<span class={stylesFreelancePages.languageButton}>
+					<span className={stylesFreelancePages.languageButton}>
 						<img style={flagStyle} src={russian} alt="russian-flag" />
 						<span style={codeStyle}>RU</span>
 					</span>
@@ -231,9 +231,10 @@ const Freelance = () => {
 			</div>
 			<div className="freelanceBodyNested">
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
-					<div class={stylesFreelancePages.freelanceCategorySectionWrapper}>
+					<div className={stylesFreelancePages.freelanceCategorySectionWrapper}>
 						{categories.map((category) => (
 							<FreelanceCategory 
+								key={category.categoryName}
 								categoryName={category.categoryName}
 								categoryDesc={category.categoryDesc}
 								numProjects={category.numProjects}
@@ -248,47 +249,47 @@ const Freelance = () => {
 				<AnimationOnScroll offset="300" duration="1.2" animateIn="animate__fadeIn" animateOnce="true">
 					<M text={textMain.workflow.heading.en}/>
 					<M text={textMain.workflow.section1.heading.en}/>
-					<p id={stylesFreelancePages.freelanceWorkflowItem}>
+					<div id={stylesFreelancePages.freelanceWorkflowItem}>
 						<M text={textMain.workflow.section1.block1.en}/>
 						<M text={textMain.workflow.section1.block2.en}/>
 						<M text={textMain.workflow.section1.block3.en}/>
 						<M text={textMain.workflow.section1.block4.en}/>
-					</p>
+					</div>
 					<M text={textMain.workflow.section2.heading.en}/>
-					<p id={stylesFreelancePages.freelanceWorkflowItem}>
+					<div id={stylesFreelancePages.freelanceWorkflowItem}>
 						<M text={textMain.workflow.section2.block1.en}/>
 						<M text={textMain.workflow.section2.block2.en}/>
 						<M text={textMain.workflow.section2.block3.en}/>
-					</p>
+					</div>
 					<M text={textMain.workflow.section3.heading.en}/>
-					<p id={stylesFreelancePages.freelanceWorkflowItem}>
+					<div id={stylesFreelancePages.freelanceWorkflowItem}>
 						<M text={textMain.workflow.section3.block1.en}/>
-					</p>
+					</div>
 					<M text={textMain.workflow.section4.heading.en}/>
-					<p id={stylesFreelancePages.freelanceWorkflowItem}>
+					<div id={stylesFreelancePages.freelanceWorkflowItem}>
 						<M text={textMain.workflow.section4.block1.en}/>
 						<M text={textMain.workflow.section4.block2.en}/>
 						<M text={textMain.workflow.section4.block3.en}/>
-					</p>
+					</div>
 					<M text={textMain.workflow.section5.heading.en}/>
-					<p id={stylesFreelancePages.freelanceWorkflowItem}>
+					<div id={stylesFreelancePages.freelanceWorkflowItem}>
 						<M text={textMain.workflow.section5.block1.en}/>
 						<M text={textMain.workflow.section5.block2.en}/>
-					</p>
+					</div>
 					<M text={textMain.workflow.section6.heading.en}/>
-					<p id={stylesFreelancePages.freelanceWorkflowItem}>
+					<div id={stylesFreelancePages.freelanceWorkflowItem}>
 						<M text={textMain.workflow.section6.block1.en}/>
 						<M text={textMain.workflow.section6.block2.en}/>
-					</p>
+					</div>
 					<M text={textMain.workflow.section7.heading.en}/>
-					<p id={stylesFreelancePages.freelanceWorkflowItem}>
+					<div id={stylesFreelancePages.freelanceWorkflowItem}>
 						<M text={textMain.workflow.section7.block1.en}/>
-					</p>
+					</div>
 					<M text={textMain.workflow.section8.heading.en}/>
-					<p id={stylesFreelancePages.freelanceWorkflowItem}>
+					<div id={stylesFreelancePages.freelanceWorkflowItem}>
 						<M text={textMain.workflow.section8.block1.en}/>
 						<M text={textMain.workflow.section8.block2.en}/>
-					</p>
+					</div>
 					<br/>
 					<button className={`noselect ${stylesSpoilers.spoilerButton}`} ref={(el) => collRef.current.push(el)}>
 						&nbsp;&nbsp;
@@ -299,72 +300,72 @@ const Freelance = () => {
 					<div className={stylesSpoilers.spoilerContentWrapper}>
 						<div className={stylesSpoilers.spoilerContentFAQ}>
 							<div className={stylesSpoilers.spoilerBlockQA}>
-								<p class={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q1.en}</p>
-								<p class={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a1.en}</p>
+								<p className={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q1.en}</p>
+								<p className={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a1.en}</p>
 							</div>
 							<div className={stylesSpoilers.spoilerBlockQA}>
-								<p class={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q2.en}</p>
-								<p class={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a2.en}</p>
+								<p className={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q2.en}</p>
+								<p className={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a2.en}</p>
 							</div>
 							<div className={stylesSpoilers.spoilerBlockQA}>
-								<p class={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q3.en}</p>
-								<p class={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a3.en}</p>
+								<p className={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q3.en}</p>
+								<p className={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a3.en}</p>
 							</div>
 							<div className={stylesSpoilers.spoilerBlockQA}>
-								<p class={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q4.en}</p>
-								<p class={stylesSpoilers.spoilerAnswer}><strong>A:</strong> <span dangerouslySetInnerHTML={{ __html: textMain.workflow.faq.a4.en }}/></p>
+								<p className={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q4.en}</p>
+								<p className={stylesSpoilers.spoilerAnswer}><strong>A:</strong> <span dangerouslySetInnerHTML={{ __html: textMain.workflow.faq.a4.en }}/></p>
 							</div>
 							<div className={stylesSpoilers.spoilerBlockQA}>
-								<p class={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q5.en}</p>
-								<p class={stylesSpoilers.spoilerAnswer}><strong>A:</strong> <span dangerouslySetInnerHTML={{ __html: textMain.workflow.faq.a5.en }}/></p>
+								<p className={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q5.en}</p>
+								<p className={stylesSpoilers.spoilerAnswer}><strong>A:</strong> <span dangerouslySetInnerHTML={{ __html: textMain.workflow.faq.a5.en }}/></p>
 							</div>
 							<div className={stylesSpoilers.spoilerBlockQA}>
-								<p class={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> <span dangerouslySetInnerHTML={{ __html: textMain.workflow.faq.q6.en }}/></p>
-								<p class={stylesSpoilers.spoilerAnswer}><strong>A:</strong> <span dangerouslySetInnerHTML={{ __html: textMain.workflow.faq.a6.en }}/></p>
+								<p className={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> <span dangerouslySetInnerHTML={{ __html: textMain.workflow.faq.q6.en }}/></p>
+								<p className={stylesSpoilers.spoilerAnswer}><strong>A:</strong> <span dangerouslySetInnerHTML={{ __html: textMain.workflow.faq.a6.en }}/></p>
 							</div>
 							<div className={stylesSpoilers.spoilerBlockQA}>
-								<p class={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> <span dangerouslySetInnerHTML={{ __html: textMain.workflow.faq.q7.en }}/></p>
-								<p class={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a7.en}</p>
+								<p className={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> <span dangerouslySetInnerHTML={{ __html: textMain.workflow.faq.q7.en }}/></p>
+								<p className={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a7.en}</p>
 							</div>
 							<div className={stylesSpoilers.spoilerBlockQA}>
-								<p class={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q8.en}</p>
-								<p class={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a8.en}</p>
+								<p className={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q8.en}</p>
+								<p className={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a8.en}</p>
 							</div>
 							<div className={stylesSpoilers.spoilerBlockQA}>
-								<p class={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q9.en}</p>
-								<p class={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a9.en}</p>
+								<p className={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q9.en}</p>
+								<p className={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a9.en}</p>
 							</div>
 							<div className={stylesSpoilers.spoilerBlockQA}>
-								<p class={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q10.en}</p>
-								<p class={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a10.en}</p>
+								<p className={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q10.en}</p>
+								<p className={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a10.en}</p>
 							</div>
 							<div className={stylesSpoilers.spoilerBlockQA}>
-								<p class={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q11.en}</p>
-								<p class={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a11.en}</p>
+								<p className={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q11.en}</p>
+								<p className={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a11.en}</p>
 							</div>
 							<div className={stylesSpoilers.spoilerBlockQA}>
-								<p class={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q12.en}</p>
-								<p class={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a12.en}</p>
+								<p className={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q12.en}</p>
+								<p className={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a12.en}</p>
 							</div>
 							<div className={stylesSpoilers.spoilerBlockQA}>
-								<p class={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q13.en}</p>
-								<p class={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a13.en}</p>
+								<p className={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q13.en}</p>
+								<p className={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a13.en}</p>
 							</div>
 							<div className={stylesSpoilers.spoilerBlockQA}>
-								<p class={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q14.en}</p>
-								<p class={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a14.en}</p>
+								<p className={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q14.en}</p>
+								<p className={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a14.en}</p>
 							</div>
 							<div className={stylesSpoilers.spoilerBlockQA}>
-								<p class={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q15.en}</p>
-								<p class={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a15.en}</p>
+								<p className={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q15.en}</p>
+								<p className={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a15.en}</p>
 							</div>
 							<div className={stylesSpoilers.spoilerBlockQA}>
-								<p class={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q16.en}</p>
-								<p class={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a16.en}</p>
+								<p className={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q16.en}</p>
+								<p className={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a16.en}</p>
 							</div>
 							<div className={stylesSpoilers.spoilerBlockQA}>
-								<p class={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q17.en}</p>
-								<p class={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a17.en}</p>
+								<p className={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q17.en}</p>
+								<p className={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a17.en}</p>
 							</div>
 						</div>
 					</div>
@@ -470,14 +471,14 @@ const Freelance = () => {
 					<div className={`${stylesWallets.wallets} desktopOnlySupport`}>
 						<div className={stylesWallets.wallet3}>
 							<img src={CardSber} className="noselect" alt="card_logo" width="60" height="60" style={logoStyle} />
-							<code class={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(SberbankCardCopy)}><div className={stylesWallets.tooltip}>{SberbankCardDisplay}
+							<code className={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(SberbankCardCopy)}><div className={stylesWallets.tooltip}>{SberbankCardDisplay}
 							<span className={stylesWallets.tooltiptext}>Click to copy</span></div></code>
 							<div className={stylesWallets.currencyName}><b>RUB</b> &nbsp;(SBERBANK, RUSSIAN CARDS ONLY) &nbsp; | &nbsp; <code className={stylesWallets.phoneNumber} onClick={() => navigator.clipboard.writeText(SberbankSBPCopy)}><div className={stylesWallets.tooltip}>{SberbankSBPDisplay}
 							</div></code></div>
 						</div>
 						<div className={stylesWallets.wallet3}>				
 							<img src={BTC} className="noselect" alt="btc_logo" width="60" height="60" style={logoStyle} />
-							<code class={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(BitcoinWallet)}><div className={stylesWallets.tooltip}>{BitcoinWallet}
+							<code className={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(BitcoinWallet)}><div className={stylesWallets.tooltip}>{BitcoinWallet}
 							<span className={stylesWallets.tooltiptext}>Click to copy</span></div></code>&nbsp;
 							<img id={stylesWallets.qr} className={stylesWallets.icon} src={QR} width="36" height="36" title="QR code" alt="qr-code" />
 							<img id={stylesWallets.myImg1} className={stylesWallets.icon} src={BTCQR} alt="BitcoinWallet" width="40" height="40" style={logoStyle} title="QR code" />&nbsp;
@@ -486,7 +487,7 @@ const Freelance = () => {
 						</div>		
 						<div className={stylesWallets.wallet3}>		
 							<img src={BNB} className="noselect" alt="bnb_logo" width="60" height="60" style={logoStyle} />
-							<code class={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(BEP20Wallet)}><div className={stylesWallets.tooltip}>{BEP20Wallet}
+							<code className={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(BEP20Wallet)}><div className={stylesWallets.tooltip}>{BEP20Wallet}
 							<span className={stylesWallets.tooltiptext}>Click to copy</span></div></code>&nbsp;
 							<img id={stylesWallets.qr} className={stylesWallets.icon} src={QR} width="36" height="36" title="QR code" alt="qr-code" />
 							<img id={stylesWallets.myImg3} className={stylesWallets.icon} src={BSCQR} alt="BEP20Wallet" width="40" height="40" style={logoStyle} title="QR code" />&nbsp;
@@ -495,7 +496,7 @@ const Freelance = () => {
 						</div>				
 						<div className={stylesWallets.wallet6}>
 							<img src={ETH} className="noselect" alt="etherium_logo" width="60" height="60" style={logoStyle} />
-							<code class={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(ERC20Wallet)}><div className={stylesWallets.tooltip}>{ERC20Wallet}
+							<code className={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(ERC20Wallet)}><div className={stylesWallets.tooltip}>{ERC20Wallet}
 							<span className={stylesWallets.tooltiptext}>Click to copy</span></div></code>&nbsp;
 							<img id={stylesWallets.qr} className={stylesWallets.icon} src={QR} width="36" height="36" title="QR code" alt="qr-code" />
 							<img id={stylesWallets.myImg2} className={stylesWallets.icon} src={ETHQR} alt="ERC20Wallet" width="40" height="40" style={logoStyle} title="QR code" />&nbsp;
@@ -512,9 +513,9 @@ const Freelance = () => {
 					</div>
 				</AnimationOnScroll>
 
-				<div id="myModal" class={stylesDonateCommon.modal}>
-					<div class={stylesDonateCommon.close}>
-						<img class={stylesDonateCommon.modalContent} id="img01" alt="modal-img" />
+				<div id="myModal" className={stylesDonateCommon.modal}>
+					<div className={stylesDonateCommon.close}>
+						<img className={stylesDonateCommon.modalContent} id="img01" alt="modal-img" />
 						<div id={stylesDonateCommon.address}></div>
 					</div>
 				</div>	

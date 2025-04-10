@@ -104,54 +104,54 @@ const Donate = () => {
                     </div>
                 </div>
                 <div className={`${stylesWallets.wallets} desktopOnlySupport`}>
-                    <div class={stylesWallets.wallet1}>
+                    <div className={stylesWallets.wallet1}>
                         <img src={KoFi} className="noselect" alt="kofi_logo" width="60" height="60" style={logoStyle} />
-                        <s><a href={KofiLink}><code class={stylesWallets.donateLink}>{KofiHandle}</code></a></s>
-                        <div class={stylesWallets.currencyName}>BUY ME A COFFEE WITH <b>KO-FI</b> </div>
+                        <s><a href={KofiLink}><code className={stylesWallets.donateLink}>{KofiHandle}</code></a></s>
+                        <div className={stylesWallets.currencyName}>BUY ME A COFFEE WITH <b>KO-FI</b> </div>
                     </div>
-                    <div class={stylesWallets.wallet3}>
+                    <div className={stylesWallets.wallet3}>
                         <img src={PayPal} className="noselect" alt="paypal_logo" width="60" height="60" style={logoStyle} />
-                        <s><a href={PaypalLink}><code class={stylesWallets.donateLink}>{PaypalHandle}</code></a></s>
-                        <div class={stylesWallets.currencyName}><b>PAYPAL</b> MULTICURRENCY TRANSFER</div>
+                        <s><a href={PaypalLink}><code className={stylesWallets.donateLink}>{PaypalHandle}</code></a></s>
+                        <div className={stylesWallets.currencyName}><b>PAYPAL</b> MULTICURRENCY TRANSFER</div>
                     </div>
-                    <div class={stylesWallets.wallet3}>
+                    <div className={stylesWallets.wallet3}>
                         <img src={Patreon} className="noselect" alt="patreon_logo" width="60" height="60" style={logoStyle} />
-                        <s><a href={PatreonLink}><code class={stylesWallets.donateLink}>{PatreonHandle}</code></a></s>
-                        <div class={stylesWallets.currencyName}><b>PATREON</b> EXCLUSIVE CONTENT VIA PAID SUBSCRIPTION</div>
+                        <s><a href={PatreonLink}><code className={stylesWallets.donateLink}>{PatreonHandle}</code></a></s>
+                        <div className={stylesWallets.currencyName}><b>PATREON</b> EXCLUSIVE CONTENT VIA PAID SUBSCRIPTION</div>
                     </div>
-                    <div class={stylesWallets.wallet3}>
+                    <div className={stylesWallets.wallet3}>
                         <img src={CardSber} className="noselect" alt="card_logo" width="60" height="60" style={logoStyle} />
-                        <code class={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(SberbankCardCopy)}><div class={stylesWallets.tooltip}>{SberbankCardDisplay}
-                        <span class={stylesWallets.tooltiptext}>Click to copy</span></div></code>
-                        <div class={stylesWallets.currencyName}><b>RUB</b> &nbsp;(SBERBANK, RUSSIAN CARDS ONLY) &nbsp; | &nbsp; <code class={stylesWallets.phoneNumber} onClick={() => navigator.clipboard.writeText(SberbankSBPCopy)}><div class={stylesWallets.tooltip}>{SberbankSBPDisplay}
+                        <code className={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(SberbankCardCopy)}><div className={stylesWallets.tooltip}>{SberbankCardDisplay}
+                        <span className={stylesWallets.tooltiptext}>Click to copy</span></div></code>
+                        <div className={stylesWallets.currencyName}><b>RUB</b> &nbsp;(SBERBANK, RUSSIAN CARDS ONLY) &nbsp; | &nbsp; <code className={stylesWallets.phoneNumber} onClick={() => navigator.clipboard.writeText(SberbankSBPCopy)}><div className={stylesWallets.tooltip}>{SberbankSBPDisplay}
                         </div></code></div>
                     </div>
-                    <div class={stylesWallets.wallet3}>				
+                    <div className={stylesWallets.wallet3}>				
                         <img src={BTC} className="noselect" alt="btc_logo" width="60" height="60" style={logoStyle} />
-                        <code class={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(BitcoinWallet)}><div class={stylesWallets.tooltip}>{BitcoinWallet}
-                        <span class={stylesWallets.tooltiptext}>Click to copy</span></div></code>&nbsp;
-                        <img id={stylesWallets.qr} class={stylesWallets.icon} src={QR} width="36" height="36" title="QR code" alt="qr-code" />
-                        <img id={stylesWallets.myImg1} class={stylesWallets.icon} src={BTCQR} alt="BitcoinWallet" width="40" height="40" style={logoStyle} title="QR code" />&nbsp;
-                        <a href={"https://mempool.space/address/" + BitcoinWallet}><img class={stylesWallets.icon} src={Search} alt="search_icon" width="18" height="20" style={logoStyle} title="Transaction history" /></a>
-                        <div class={stylesWallets.currencyName}><b>BTC</b> &nbsp;(BITCOIN NETWORK)</div>
+                        <code className={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(BitcoinWallet)}><div className={stylesWallets.tooltip}>{BitcoinWallet}
+                        <span className={stylesWallets.tooltiptext}>Click to copy</span></div></code>&nbsp;
+                        <img id={stylesWallets.qr} className={stylesWallets.icon} src={QR} width="36" height="36" title="QR code" alt="qr-code" />
+                        <img id={stylesWallets.myImg1} className={stylesWallets.icon} src={BTCQR} alt="BitcoinWallet" width="40" height="40" style={logoStyle} title="QR code" />&nbsp;
+                        <a href={"https://mempool.space/address/" + BitcoinWallet}><img className={stylesWallets.icon} src={Search} alt="search_icon" width="18" height="20" style={logoStyle} title="Transaction history" /></a>
+                        <div className={stylesWallets.currencyName}><b>BTC</b> &nbsp;(BITCOIN NETWORK)</div>
                     </div>		
-                    <div class={stylesWallets.wallet3}>		
+                    <div className={stylesWallets.wallet3}>		
                         <img src={BNB} className="noselect" alt="bnb_logo" width="60" height="60" style={logoStyle} />
-                        <code class={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(BEP20Wallet)}><div class={stylesWallets.tooltip}>{BEP20Wallet}
-                        <span class={stylesWallets.tooltiptext}>Click to copy</span></div></code>&nbsp;
-                        <img id={stylesWallets.qr} class={stylesWallets.icon} src={QR} width="36" height="36" title="QR code" alt="qr-code" />
-                        <img id={stylesWallets.myImg3} class={stylesWallets.icon} src={BSCQR} alt="BEP20Wallet" width="40" height="40" style={logoStyle} title="QR code" />&nbsp;
-                        <a href={"https://bscscan.com/address/" + BEP20Wallet}><img class={stylesWallets.icon} src={Search} alt="search_icon" width="18" height="20" style={logoStyle} title="Transaction history" /></a>
-                        <div class={stylesWallets.currencyName}><b>USDT • USDC • DAI • BNB</b> &nbsp;(BNB SMART CHAIN NETWORK, BEP-20)</div>
+                        <code className={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(BEP20Wallet)}><div className={stylesWallets.tooltip}>{BEP20Wallet}
+                        <span className={stylesWallets.tooltiptext}>Click to copy</span></div></code>&nbsp;
+                        <img id={stylesWallets.qr} className={stylesWallets.icon} src={QR} width="36" height="36" title="QR code" alt="qr-code" />
+                        <img id={stylesWallets.myImg3} className={stylesWallets.icon} src={BSCQR} alt="BEP20Wallet" width="40" height="40" style={logoStyle} title="QR code" />&nbsp;
+                        <a href={"https://bscscan.com/address/" + BEP20Wallet}><img className={stylesWallets.icon} src={Search} alt="search_icon" width="18" height="20" style={logoStyle} title="Transaction history" /></a>
+                        <div className={stylesWallets.currencyName}><b>USDT • USDC • DAI • BNB</b> &nbsp;(BNB SMART CHAIN NETWORK, BEP-20)</div>
                     </div>				
-                    <div class={stylesWallets.wallet6}>
+                    <div className={stylesWallets.wallet6}>
                         <img src={ETH} className="noselect" alt="etherium_logo" width="60" height="60" style={logoStyle} />
-                        <code class={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(ERC20Wallet)}><div class={stylesWallets.tooltip}>{ERC20Wallet}
-                        <span class={stylesWallets.tooltiptext}>Click to copy</span></div></code>&nbsp;
-                        <img id={stylesWallets.qr} class={stylesWallets.icon} src={QR} width="36" height="36" title="QR code" alt="qr-code" />
-                        <img id={stylesWallets.myImg2} class={stylesWallets.icon} src={ETHQR} alt="ERC20Wallet" width="40" height="40" style={logoStyle} title="QR code" />&nbsp;
-                        <a href={"https://etherscan.io/address/" + ERC20Wallet}><img class={stylesWallets.icon} src={Search} alt="search_icon" width="18" height="20" style={logoStyle} title="Transaction history" /></a>
-                        <div class={stylesWallets.currencyName}><b>USDT • USDC • DAI • ETH</b> &nbsp;(ETHEREUM NETWORK, ERC-20)</div>
+                        <code className={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(ERC20Wallet)}><div className={stylesWallets.tooltip}>{ERC20Wallet}
+                        <span className={stylesWallets.tooltiptext}>Click to copy</span></div></code>&nbsp;
+                        <img id={stylesWallets.qr} className={stylesWallets.icon} src={QR} width="36" height="36" title="QR code" alt="qr-code" />
+                        <img id={stylesWallets.myImg2} className={stylesWallets.icon} src={ETHQR} alt="ERC20Wallet" width="40" height="40" style={logoStyle} title="QR code" />&nbsp;
+                        <a href={"https://etherscan.io/address/" + ERC20Wallet}><img className={stylesWallets.icon} src={Search} alt="search_icon" width="18" height="20" style={logoStyle} title="Transaction history" /></a>
+                        <div className={stylesWallets.currencyName}><b>USDT • USDC • DAI • ETH</b> &nbsp;(ETHEREUM NETWORK, ERC-20)</div>
                     </div>
                 </div>
                 <p>Your donations directly allow me to spend more time on my community-related projects! <StickerPack sticker="pepe_wink"/></p>
@@ -175,9 +175,9 @@ const Donate = () => {
                         />
                     </div>
                 )}
-                <div id="myModal" class={stylesDonateCommon.modal}>
-                    <div class={stylesDonateCommon.close}>
-                        <img class={stylesDonateCommon.modalContent} id="img01" alt="modal-img" />
+                <div id="myModal" className={stylesDonateCommon.modal}>
+                    <div className={stylesDonateCommon.close}>
+                        <img className={stylesDonateCommon.modalContent} id="img01" alt="modal-img" />
                             <div id={stylesDonateCommon.address}></div>
                     </div>
                 </div>			

@@ -4,7 +4,7 @@ import { AnimationOnScroll } from 'react-animation-on-scroll'
 import Box from '@mui/material/Box'
 import ImageList from '@mui/material/ImageList'
 import ImageListItem from '@mui/material/ImageListItem'
-import { StaticImage, GatsbyImage, getImage } from 'gatsby-plugin-image'
+import { GatsbyImage, getImage } from 'gatsby-plugin-image'
 import { Link } from "gatsby"
 import { motion } from 'framer-motion'
 import M from '../../components/Markdown'
@@ -92,7 +92,7 @@ const Home = () => {
 			exit={{opacity: 0 }}
 			transition={{ duration: 0.15 }}>
 						
-			<Box className="latestPosts noselect">
+			<Box className="noselect">
 				<ImageList cols={3} gap={5}>
 					{postsLast.map(post => {
 						const image = getImage(post.frontmatter.banner);
