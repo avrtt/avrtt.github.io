@@ -33,8 +33,17 @@ export const wrapPageElement = ({ element, props }) => {
 
 export const shouldUpdateScroll = () => false;
 
-export const onRouteUpdate = ({ location, prevLocation }) => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
+export const onRouteUpdate = ({ location }) => {
+  const exemptPaths = [
+    '/adventures', 
+    '/research', 
+    '/thoughts'
+  ];
+  // prevent from scrolling on top on specific pages to save position after reload
+  const shouldScroll = !exemptPaths.some(path => location.pathname.startsWith(path));
+  if (shouldScroll) {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
 };
 
 /*export const onRouteUpdate = ({ location, prevLocation }) => {
