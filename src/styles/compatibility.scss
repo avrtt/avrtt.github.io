@@ -1,5 +1,9 @@
 @use 'mixins';
 
+strong, b {
+    font-weight: 700 !important;
+}
+
 .smallScreenNotice {
     font-size: 1.3rem;
     margin: 1rem;
