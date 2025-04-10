@@ -13,6 +13,17 @@ exports.onCreatePage = ({ page, actions }) => {
   }
 };
 
+// avoid conflicting order for styles (removes warnings from console)
+exports.onCreateWebpackConfig = ({ actions, getConfig }) => {
+  const config = getConfig();
+  config.plugins.forEach((plugin) => {
+    if (plugin.constructor.name === "MiniCssExtractPlugin") {
+      plugin.options.ignoreOrder = true;
+    }
+  });
+  actions.replaceWebpackConfig(config);
+};
+
 exports.createPages = async ({ actions, graphql }) => {
   const { createPage } = actions;
 
