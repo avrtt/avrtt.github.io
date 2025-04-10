@@ -20,11 +20,20 @@ import { AnimatePresence, motion } from 'framer-motion';
 const Layout = ({ children, location }) => {
 
   useEffect(() => {
+    const { pathname, hash } = location;
+    const exemptPaths = [
+      '/freelance/services', '/freelance/ru/services',
+      '/adventures', '/research', '/thoughts'
+    ];
+    // keep anchors when navigating to services or post chapters (prevent from scrolling on top)
+    if (exemptPaths.some(exemptPath => pathname.startsWith(exemptPath)) && hash) {
+      return;
+    }
     const timeout = setTimeout(() => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }, 100);
     return () => clearTimeout(timeout);
-  }, [location.pathname]);
+  }, [location.pathname, location.hash]);
 
   const path = location?.pathname || '';
   // console.log('Layout rendered for path:', path);
