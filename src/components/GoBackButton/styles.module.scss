@@ -8,6 +8,7 @@
   transition: top 0.3s ease-out;
   transform: translateY(7.5vh);
   margin-top: -6vh;
+  margin-left: -0.5vw;
   @include mixins.respond-to(mobile) { display: none }
   @include mixins.respond-to(small-tablet) { display: none }
   @include mixins.respond-to(tablet) { display: none }
