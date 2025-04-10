@@ -23,9 +23,9 @@
   border-radius: 2vh;
   align-self: center;
   margin-left: 5rem;
-  @include mixins.respond-to(mobile) { display: none }
-  @include mixins.respond-to(small-tablet) { display: none }
-  @include mixins.respond-to(tablet) { display: none }
+  @include mixins.respond-to(mobile) { display: none !important }
+  @include mixins.respond-to(small-tablet) { display: none !important }
+  @include mixins.respond-to(tablet) { display: none !important }
 }
 
 .wave {
@@ -36,9 +36,9 @@
   display: inline-block;
   vertical-align: middle;
   width: clamp(2rem, 5vw, 3.5rem);
-  @include mixins.respond-to(mobile) { display: none }
-  @include mixins.respond-to(small-tablet) { display: none }
-  @include mixins.respond-to(tablet) { display: none }
+  @include mixins.respond-to(mobile) { display: none !important }
+  @include mixins.respond-to(small-tablet) { display: none !important }
+  @include mixins.respond-to(tablet) { display: none !important }
 }
 
 @keyframes wave-animation {
