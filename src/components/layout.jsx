@@ -1,8 +1,3 @@
-import React, { useEffect } from 'react';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
-import { AnimatePresence, motion } from 'framer-motion';
-
 // global styles
 import "../styles/page_bodies.scss"
 import "../styles/page_structure_utils.scss"
@@ -15,6 +10,12 @@ import "../styles/last_updates.scss"
 import "../styles/links.scss"
 import "../styles/lists.scss"
 import "../styles/compatibility.scss"
+
+import React, { useEffect } from 'react';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
+import { AnimatePresence, motion } from 'framer-motion';
+
 
 const Layout = ({ children, location }) => {
 

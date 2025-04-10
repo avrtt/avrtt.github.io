@@ -67,7 +67,8 @@ const Spoiler = ({ title, services = [], spoilerExtraDesc, isEnglish=true }) => 
           <br />
           {spoilerExtraDesc && (
             <p className={stylesSpoilers.spoilerExtraDesc}>
-              <M text={spoilerExtraDesc} />
+              <br/>
+              <M span={true} text={spoilerExtraDesc} />
             </p>
           )}
         </div>
@@ -106,7 +107,8 @@ const Spoiler = ({ title, services = [], spoilerExtraDesc, isEnglish=true }) => 
           <br />
           {spoilerExtraDesc && (
             <p className={stylesSpoilers.spoilerExtraDesc}>
-              <M text={spoilerExtraDesc} />
+              <br/>
+              <M span={true} text={spoilerExtraDesc} />
             </p>
           )}
         </div>

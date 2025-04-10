@@ -325,9 +325,8 @@ const Courses = ({ lang = "en" }) => {
               &nbsp;&nbsp;&nbsp;&nbsp;
               <img
                 src={Stanford}
-                className="noselect"
                 alt="course_icon"
-                class={styles.courseIcon}
+                className={`noselect ${styles.courseIcon}`}
               />
             </span>
             <p className={styles.courseDesc}>

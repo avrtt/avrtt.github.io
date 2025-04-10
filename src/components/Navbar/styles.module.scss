@@ -203,9 +203,9 @@ $fade-in-down: fadeInDown 0.3s ease forwards;
     }
   }
   
-  @include mixins.respond-to(mobile) { display: none }
-  @include mixins.respond-to(small-tablet) { display: none }
-  @include mixins.respond-to(tablet) { display: none }
+  @include mixins.respond-to(mobile) { display: none !important }
+  @include mixins.respond-to(small-tablet) { display: none !important }
+  @include mixins.respond-to(tablet) { display: none !important }
   @include mixins.respond-to(small-desktop) {}
   @include mixins.respond-to(desktop) {}
 }
@@ -220,7 +220,7 @@ $fade-in-down: fadeInDown 0.3s ease forwards;
 }
 
 .hideOnSmallDesktops {
-  @include mixins.respond-to(small-desktop) { display: none }
+  @include mixins.respond-to(small-desktop) { display: none !important }
 }
 
 .logo {
@@ -236,9 +236,9 @@ $fade-in-down: fadeInDown 0.3s ease forwards;
   //@include respond-to(mobile) { position: absolute; left: 2vw; top: 1.5vw; width: 5.5rem }
   //@include respond-to(small-tablet) { position: absolute; left: 2vw; top: 1.5vw; width: 6rem }
   //@include respond-to(tablet) { position: absolute; left: 2vw; top: 1.5vw; width: 7.5rem }
-  @include mixins.respond-to(mobile) { display: none }
-  @include mixins.respond-to(small-tablet) { display: none }
-  @include mixins.respond-to(tablet) { display: none }
+  @include mixins.respond-to(mobile) { display: none !important }
+  @include mixins.respond-to(small-tablet) { display: none !important }
+  @include mixins.respond-to(tablet) { display: none !important }
   @include mixins.respond-to(small-desktop) { pointer-events: none; opacity: 0; margin-right: 3vh }
   @include mixins.respond-to(desktop) { margin-right: 3vh }
 }
@@ -257,9 +257,9 @@ $fade-in-down: fadeInDown 0.3s ease forwards;
     transition-duration: 0.1s;
   }
 
-  @include mixins.respond-to(mobile) { position: fixed; right: 0.6rem; top: 0.4rem }
-  @include mixins.respond-to(small-tablet) { position: fixed; right: 0.6rem; top: 0.4rem }
-  @include mixins.respond-to(tablet) { position: fixed; right: 0.6rem; top: 0.4rem }
+  @include mixins.respond-to(mobile) { position: fixed !important; right: 0.6rem !important; top: 0.4rem !important }
+  @include mixins.respond-to(small-tablet) { position: fixed !important; right: 0.6rem !important; top: 0.4rem !important }
+  @include mixins.respond-to(tablet) { position: fixed !important; right: 0.6rem !important; top: 0.4rem !important }
   @include mixins.respond-to(small-desktop) {}
   @include mixins.respond-to(desktop) {}
 }
@@ -275,8 +275,8 @@ $fade-in-down: fadeInDown 0.3s ease forwards;
   @include mixins.respond-to(mobile) {}
   @include mixins.respond-to(small-tablet) {}
   @include mixins.respond-to(tablet) {}
-  @include mixins.respond-to(small-desktop) { display: none; }
-  @include mixins.respond-to(desktop) { display: none; }
+  @include mixins.respond-to(small-desktop) { display: none !important; }
+  @include mixins.respond-to(desktop) { display: none !important; }
 }
 
 .mobileMenu {
@@ -301,8 +301,8 @@ $fade-in-down: fadeInDown 0.3s ease forwards;
   @include mixins.respond-to(mobile) {}
   @include mixins.respond-to(small-tablet) {}
   @include mixins.respond-to(tablet) {}
-  @include mixins.respond-to(small-desktop) { display: none; }
-  @include mixins.respond-to(desktop) { display: none; }
+  @include mixins.respond-to(small-desktop) { display: none !important; }
+  @include mixins.respond-to(desktop) { display: none !important; }
 }
 
 .mobileMenuContent {

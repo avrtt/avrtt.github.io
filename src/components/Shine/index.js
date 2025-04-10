@@ -53,7 +53,7 @@ const S = ({
   }, [sparkleFrequency, sparkleDuration, sparkleSize]);
 
   return (
-    <div
+    <span
       ref={containerRef}
       className={className}
       style={{ position: 'relative', display: 'inline-block', ...style }}
@@ -71,7 +71,7 @@ const S = ({
           100% { opacity: 0.8; transform: scale(0) rotate(180deg); }
         }
       `}</style>
-    </div>
+    </span>
   );
 };
 

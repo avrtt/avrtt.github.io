@@ -6,16 +6,16 @@ import M from '../Markdown';
 import * as stylesGoalsPage from "../../styles/goals_page.module.scss";
 
 const descStyle = {
-    'text-align': 'center',
-    'font-size': 'clamp(1rem, 2.5vw, 1.4rem)',
-    'line-height': 'clamp(1.2rem, 2.5vw, 1.8rem)',
-    'margin-bottom': '2rem',
-    'margin-top': '-3rem',
-    'font-weight': 'lighter'
+    'textAlign': 'center',
+    'fontSize': 'clamp(1rem, 2.5vw, 1.4rem)',
+    'lineHeight': 'clamp(1.2rem, 2.5vw, 1.8rem)',
+    'marginBottom': '2rem',
+    'marginTop': '-3rem',
+    'fontWeight': 'lighter'
 }
 
 const sectionEndStyle = {
-    'margin-bottom': '-60px' 
+    'marginBottom': '-60px' 
 }
 
 const GoalCategory = ({ array, name, desc='', isOpaque, hideChecked, hideUnchecked}) => {

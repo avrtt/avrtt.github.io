@@ -54,7 +54,7 @@ const ET = ({
   }, [emojiFrequency, emojiDuration, emojiSize, emojiColor]);
 
   return (
-    <div
+    <span
       ref={containerRef}
       className={className}
       style={{ position: 'relative', display: 'inline-block', ...style }}
@@ -73,7 +73,7 @@ const ET = ({
           100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
         }
       `}</style>
-    </div>
+    </span>
   );
 };
 

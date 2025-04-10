@@ -58,8 +58,8 @@ const Navbar = () => {
             onMouseEnter={showWorksDropdown}
             onMouseLeave={hideWorksDropdown}
           >
-            <Link
-              activeClassName={styles.active}
+            <p
+              activeclassname={styles.active}
               className={`${dropdownWorksVisible ? styles.active : ""} ${styles.navLink}`}
               style={{
                 opacity: dropdownWorksVisible ? "0.5" : "1",
@@ -68,19 +68,19 @@ const Navbar = () => {
               }}
             >
               Works
-            </Link>
+            </p>
             {dropdownWorksVisible && (
               <div className={styles.dropdownMenuLeft}>
-                <Link className={styles.dropdownItem} to="/handbook" activeClassName={styles.active}>
+                <Link className={styles.dropdownItem} to="/handbook" activeclassname={styles.active}>
                   Travel handbook
                 </Link>
-                <Link className={styles.dropdownItem} to="/publications" activeClassName={styles.active}>
+                <Link className={styles.dropdownItem} to="/publications" activeclassname={styles.active}>
                   Publications
                 </Link>
-                <Link className={styles.dropdownItem} to="/software" activeClassName={styles.active}>
+                <Link className={styles.dropdownItem} to="/software" activeclassname={styles.active}>
                   Software
                 </Link>
-                <Link className={styles.dropdownItem} to="/music" activeClassName={styles.active}>
+                <Link className={styles.dropdownItem} to="/music" activeclassname={styles.active}>
                   Music
                 </Link>
               </div>
@@ -92,8 +92,8 @@ const Navbar = () => {
             onMouseEnter={showPostsDropdown}
             onMouseLeave={hidePostsDropdown}
           >
-            <Link
-              activeClassName={styles.active}
+            <p
+              activeclassname={styles.active}
               className={`${dropdownPostsVisible ? styles.active : ""} ${styles.navLink}`}
               style={{
                 opacity: dropdownPostsVisible ? "0.5" : "1",
@@ -114,12 +114,12 @@ const Navbar = () => {
               >
                 {totalPostsCount}
               </span>
-            </Link>
+            </p>
             {dropdownPostsVisible && (
               <div className={styles.dropdownMenuLeft}>
                 <Link
                   to="/adventures"
-                  activeClassName={styles.active}
+                  activeclassname={styles.active}
                   className={styles.dropdownItem}
                   style={{
                     backgroundColor: isAdventuresPost ? "transparent" : "",
@@ -138,7 +138,7 @@ const Navbar = () => {
                 </Link>
                 <Link
                   to="/research"
-                  activeClassName={styles.active}
+                  activeclassname={styles.active}
                   className={styles.dropdownItem}
                   style={{
                     backgroundColor: isResearchPost ? "transparent" : "",
@@ -157,7 +157,7 @@ const Navbar = () => {
                 </Link>
                 <Link
                   to="/thoughts"
-                  activeClassName={styles.active}
+                  activeclassname={styles.active}
                   className={styles.dropdownItem}
                   style={{
                     backgroundColor: isThoughtsPost ? "transparent" : "",
@@ -175,37 +175,37 @@ const Navbar = () => {
                   </span>
                 </Link>
                 <p style={{ margin: "6px 0" }}> </p>
-                <Link className={styles.dropdownItem} to="/tags" activeClassName={styles.active}>
+                <Link className={styles.dropdownItem} to="/tags" activeclassname={styles.active}>
                   Filter by tag
                 </Link>
               </div>
             )}
           </div>
 
-          <Link className={styles.navLink} to="/course" activeClassName={styles.active}>
+          <Link className={styles.navLink} to="/course" activeclassname={styles.active}>
             Course
           </Link>
-          <Link className={styles.navLink} to="/talks" activeClassName={styles.active}>
+          <Link className={styles.navLink} to="/talks" activeclassname={styles.active}>
             Talks
           </Link>
-          <Link className={styles.navLink} to="/goals" activeClassName={styles.active}>
+          <Link className={styles.navLink} to="/goals" activeclassname={styles.active}>
             Goals
           </Link>
-          <Link className={styles.navLink} to="/exploration" activeClassName={styles.active}>
+          <Link className={styles.navLink} to="/exploration" activeclassname={styles.active}>
             Exploration
           </Link>
           <Link
             to="/freelance"
-            activeClassName={styles.active}
+            activeclassname={styles.active}
             partiallyActive={true}
             className={`${isFreelanceSubpage ? styles.freelanceSubpage : ""} ${styles.navLink}`}
           >
             Freelance
           </Link>
-          <Link className={styles.navLink} to="/cv" activeClassName={styles.active}>
+          <Link className={styles.navLink} to="/cv" activeclassname={styles.active}>
             CV
           </Link>
-          <Link className={styles.navLink} to="/about" activeClassName={styles.active}>
+          <Link className={styles.navLink} to="/about" activeclassname={styles.active}>
             About
           </Link>
 
@@ -214,8 +214,8 @@ const Navbar = () => {
             onMouseEnter={showArchiveDropdown}
             onMouseLeave={hideArchiveDropdown}
           >
-            <Link
-              activeClassName={styles.active}
+            <p
+              activeclassname={styles.active}
               className={`${dropdownArchiveVisible ? styles.active : ""} ${styles.navLink}`}
               style={{
                 opacity: dropdownArchiveVisible ? "0.5" : "1",
@@ -224,25 +224,25 @@ const Navbar = () => {
               }}
             >
               Archive
-            </Link>
+            </p>
             {dropdownArchiveVisible && (
               <div className={styles.dropdownMenuRight}>
-                <Link className={styles.dropdownItem} to="/gallery" activeClassName={styles.active}>
+                <Link className={styles.dropdownItem} to="/gallery" activeclassname={styles.active}>
                   Gallery
                 </Link>
-                <Link className={styles.dropdownItem} to="/stories" activeClassName={styles.active}>
+                <Link className={styles.dropdownItem} to="/stories" activeclassname={styles.active}>
                   Stories
                 </Link>
-                <Link className={styles.dropdownItem} to="/zettelkasten" activeClassName={styles.active}>
+                <Link className={styles.dropdownItem} to="/zettelkasten" activeclassname={styles.active}>
                   Zettelkasten
                 </Link>
-                <Link className={styles.dropdownItem} to="/articles" activeClassName={styles.active}>
+                <Link className={styles.dropdownItem} to="/articles" activeclassname={styles.active}>
                   Saved articles
                 </Link>
-                <Link className={styles.dropdownItem} to="/websites" activeClassName={styles.active}>
+                <Link className={styles.dropdownItem} to="/websites" activeclassname={styles.active}>
                   Saved sites
                 </Link>
-                <Link className={styles.dropdownItem} to="/videos" activeClassName={styles.active}>
+                <Link className={styles.dropdownItem} to="/videos" activeclassname={styles.active}>
                   Saved videos
                 </Link>
               </div>
@@ -254,8 +254,8 @@ const Navbar = () => {
             onMouseEnter={showMiscDropdown}
             onMouseLeave={hideMiscDropdown}
           >
-            <Link
-              activeClassName={styles.active}
+            <p
+              activeclassname={styles.active}
               className={`${dropdownMiscVisible ? styles.active : ""} ${styles.navLink}`}
               style={{
                 opacity: dropdownMiscVisible ? "0.5" : "1",
@@ -263,50 +263,50 @@ const Navbar = () => {
               }}
             >
               Misc
-            </Link>
+            </p>
             {dropdownMiscVisible && (
               <div className={styles.dropdownMenuRight}>
-                <Link className={styles.dropdownItem} to="/feed" activeClassName={styles.active}>
+                <Link className={styles.dropdownItem} to="/feed" activeclassname={styles.active}>
                   Feed
                 </Link>
-                <Link className={styles.dropdownItem} to="/playlists" activeClassName={styles.active}>
+                <Link className={styles.dropdownItem} to="/playlists" activeclassname={styles.active}>
                   Playlists
                 </Link>
-                <Link className={styles.dropdownItem} to="/albums" activeClassName={styles.active}>
+                <Link className={styles.dropdownItem} to="/albums" activeclassname={styles.active}>
                   Top albums
                 </Link>
-                <Link className={styles.dropdownItem} to="/films" activeClassName={styles.active}>
+                <Link className={styles.dropdownItem} to="/films" activeclassname={styles.active}>
                   Top films
                 </Link>
-                <Link className={styles.dropdownItem} to="/bookshelf" activeClassName={styles.active}>
+                <Link className={styles.dropdownItem} to="/bookshelf" activeclassname={styles.active}>
                   Bookshelf
                 </Link>
-                <Link className={styles.dropdownItem} to="/hall_of_fame" activeClassName={styles.active}>
+                <Link className={styles.dropdownItem} to="/hall_of_fame" activeclassname={styles.active}>
                   Hall of fame
                 </Link>
-                <Link className={styles.dropdownItem} to="/gear" activeClassName={styles.active}>
+                <Link className={styles.dropdownItem} to="/gear" activeclassname={styles.active}>
                   Gear & tools
                 </Link>
-                <Link className={styles.dropdownItem} to="/calisthenics" activeClassName={styles.active}>
+                <Link className={styles.dropdownItem} to="/calisthenics" activeclassname={styles.active}>
                   Calisthenics
                 </Link>
-                <Link className={styles.dropdownItem} to="/friends" activeClassName={styles.active}>
+                <Link className={styles.dropdownItem} to="/friends" activeclassname={styles.active}>
                   Friend blogs
                 </Link>
-                <Link className={styles.dropdownItem} to="/habits" activeClassName={styles.active}>
+                <Link className={styles.dropdownItem} to="/habits" activeclassname={styles.active}>
                   Habits
                 </Link>
-                <Link className={styles.dropdownItem} to="/faq" activeClassName={styles.active}>
+                <Link className={styles.dropdownItem} to="/faq" activeclassname={styles.active}>
                   FAQ
                 </Link>
               </div>
             )}
           </div>
 
-          <Link to="/all" className={`${styles.all} ${styles.mobileNavLinkMain}`} activeClassName={styles.active}>
+          <Link to="/all" className={`${styles.all} ${styles.mobileNavLinkMain}`} activeclassname={styles.active}>
             📝 Posts
           </Link>
-          <Link to="/about" className={`${styles.about} ${styles.mobileNavLinkMain}`} activeClassName={styles.active}>
+          <Link to="/about" className={`${styles.about} ${styles.mobileNavLinkMain}`} activeclassname={styles.active}>
             👤 About
           </Link>
 

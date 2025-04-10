@@ -12,7 +12,7 @@ const currentZoneUTC = "UTC" + getTimezoneByCountryCode(countryCode, exactTimezo
 const LocationStatus = ({ backgroundColor }) => {
   return (
 	<>
-    	<div style={{ backgroundColor: backgroundColor }} class={stylesPlaques.greyNoticeCompact}>
+    	<div style={{ backgroundColor: backgroundColor }} className={stylesPlaques.greyNoticeCompact}>
         	<p><strong>My current location:</strong> <H>{countryFlag} {location ? location : countryName}</H> ({currentZoneUTC})</p>
 			<p><strong>Planned:</strong> {plans ? plans : "TBA"}</p>
     	</div>

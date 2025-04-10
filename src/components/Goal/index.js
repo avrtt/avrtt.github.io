@@ -7,29 +7,29 @@ import { goalsTags } from "../../data/goals/tags";
 import * as stylesGoalsPage from "../../styles/goals_page.module.scss";
 
 const checkboxWrapper = {
-    'vertical-align': 'middle',
+    'verticalAlign': 'middle',
 }
 
 const refLinkStyle = {
-    'text-align': 'right',
-    'vertical-align': 'middle',
+    'textAlign': 'right',
+    'verticalAlign': 'middle',
 }
 
 const resultLinkStyle = {
-    'text-align': 'left',
-    'vertical-align': 'middle',
+    'textAlign': 'left',
+    'verticalAlign': 'middle',
 }
 
 const infoStyle = {
-	'text-align': 'right',
-	'vertical-align': 'middle',
-    'padding-left': '1.5vw',
+	'textAlign': 'right',
+	'verticalAlign': 'middle',
+    'paddingLeft': '1.5vw',
 } 
 
 const textStyle = {
-    'line-height': 'clamp(1.4rem, 2vw, 2rem)',
-    'font-size': 'clamp(0.9rem, 2.5vw, 1.4rem)',
-    'padding-right': '1.5vw',
+    'lineHeight': 'clamp(1.4rem, 2vw, 2rem)',
+    'fontSize': 'clamp(0.9rem, 2.5vw, 1.4rem)',
+    'paddingRight': '1.5vw',
 }
 
 const textChecked = {
@@ -42,7 +42,7 @@ const textUnchecked = {
 
 const deadlineStyle = {
     'opacity': '0.15',
-    'font-weight': 'lighter',
+    'fontWeight': 'lighter',
     'color': 'black'
 }
 
@@ -78,66 +78,66 @@ const Goal = ({ goal, isOpaque, hideChecked, hideUnchecked }) => {
   const diffStyle = {
     'opacity': isOpaque ? 1 : 0,
     'transition': 'opacity 0.3s ease', 
-    'font-size': '20px',
-    'vertical-align': 'middle',
-    'border-radius': '8px',
+    'fontSize': '20px',
+    'verticalAlign': 'middle',
+    'borderRadius': '8px',
     'padding': '3px 6px',
-    'margin-top': '-24px',
-    'line-height': '30px',
+    'marginTop': '-24px',
+    'lineHeight': '30px',
     'position': 'absolute',
   }
 
   const safetyStyle = {
     'opacity': isOpaque ? 1 : 0,
     'transition': 'opacity 0.3s ease', 
-    'font-size': '20px',
-    'vertical-align': 'middle',
-    'border-radius': '8px',
+    'fontSize': '20px',
+    'verticalAlign': 'middle',
+    'borderRadius': '8px',
     'padding': '3px 6px',
-    'margin-left': '3rem',
-    'margin-top': '-24px',
-    'line-height': '30px',
+    'marginLeft': '3rem',
+    'marginTop': '-24px',
+    'lineHeight': '30px',
     'position': 'absolute',
   }
 
   const tag1Style = {
     'opacity': isOpaque ? 1 : 0,
-    'font-size': isOpaque ? '18px' : '0px',
+    'fontSize': isOpaque ? '18px' : '0px',
     'transition': 'font-size 0.3s ease, opacity 0.3s ease', 
-    'vertical-align': 'middle',
-    'pointer-events': 'none',
+    'verticalAlign': 'middle',
+    'pointerEvents': 'none',
   }
 
   const tag2Style = {
     'opacity': isOpaque ? 1 : 0,
-    'font-size': isOpaque ? '18px' : '0px',
+    'fontSize': isOpaque ? '18px' : '0px',
     'transition': 'font-size 0.25s ease, opacity 0.25s ease', 
-    'vertical-align': 'middle',
-    'pointer-events': 'none',
+    'verticalAlign': 'middle',
+    'pointerEvents': 'none',
   }
 
   const tag3Style = {
     'opacity': isOpaque ? 1 : 0,
-    'font-size': isOpaque ? '18px' : '0px',
+    'fontSize': isOpaque ? '18px' : '0px',
     'transition': 'font-size 0.2s ease, opacity 0.2s ease', 
-    'vertical-align': 'middle',
-    'pointer-events': 'none',
+    'verticalAlign': 'middle',
+    'pointerEvents': 'none',
   }
 
   const tag4Style = {
     'opacity': isOpaque ? 1 : 0,
-    'font-size': isOpaque ? '18px' : '0px',
+    'fontSize': isOpaque ? '18px' : '0px',
     'transition': 'font-size 0.15s ease, opacity 0.15s ease', 
-    'vertical-align': 'middle',
-    'pointer-events': 'none',
+    'verticalAlign': 'middle',
+    'pointerEvents': 'none',
   }
 
   const tag5Style = {
     'opacity': isOpaque ? 1 : 0,
-    'font-size': isOpaque ? '18px' : '0px',
+    'fontSize': isOpaque ? '18px' : '0px',
     'transition': 'font-size 0.1s ease, opacity 0.1s ease', 
-    'vertical-align': 'middle',
-    'pointer-events': 'none',
+    'verticalAlign': 'middle',
+    'pointerEvents': 'none',
   }
 
   const rowStyleC = {
@@ -189,87 +189,87 @@ const Goal = ({ goal, isOpaque, hideChecked, hideUnchecked }) => {
   if (goal.status === 'c') {rowStyle = rowStyleC} else {rowStyle = rowStyleU}
 
   return (  
-    <tr style={rowStyle}>
+    <>
         <td style={checkboxWrapper}>
-            <div style={showtooltip} class={stylesGoalsPage.tooltipGoals} ref={tooltipRef}>
-				<img id={checkboxStyle} src={checkbox} class={goal.status} onClick={handleIconClick} alt='checkbox'/>
+            <div style={showtooltip} className={stylesGoalsPage.tooltipGoals} ref={tooltipRef}>
+				<img id={checkboxStyle} src={checkbox} className={goal.status} onClick={handleIconClick} alt='checkbox'/>
 				<span style={{ fontWeight: "lighter", left: "50%", marginLeft: "-3rem", width: "max-content", maxWidth: "400px" }} className={isOpen ? `${stylesGoalsPage.tooltiptextGoals} ${stylesGoalsPage.visible}` : stylesGoalsPage.tooltiptextGoals}>{goal.dateCompleted}</span>
 			</div>
         </td>
         <td style={textStyle} width='100%' className={stylesGoalsPage.textExtra}>
-            <span class={legendaryText} style={textStatus}>{goal.text}</span><span className="noselect" style={showdeadline}> – {goal.deadline}</span>
+            <span className={legendaryText} style={textStatus}>{goal.text}</span><span className="noselect" style={showdeadline}> – {goal.deadline}</span>
             <span className="desktopOnlySupport">&nbsp;&nbsp;</span>
             <span className={`noselect ${stylesGoalsPage.tooltipGoals} ${stylesGoalsPage.tagAnimation}`}>
                 <span className="desktopOnlySupport" style={tag5Style}>{goal.tag5}
-                    <p className={`${stylesGoalsPage.tooltiptextGoals}`} style={{bottom: "50%", left: "50%", marginLeft: "-210px"}}><span class={stylesGoalsPage.tooltipTitle}>{tagname5}</span><br/><br/>
+                    <p className={`${stylesGoalsPage.tooltiptextGoals}`} style={{bottom: "50%", left: "50%", marginLeft: "-210px"}}><span className={stylesGoalsPage.tooltipTitle}>{tagname5}</span><br/><br/>
                         <span style={{ fontWeight: "lighter", fontSize: "1rem" }}>{tagdesc5}</span>
                     </p>
                 </span>
             </span>
             <span className={`noselect ${stylesGoalsPage.tooltipGoals} ${stylesGoalsPage.tagAnimation}`}>
                 <span className="desktopOnlySupport" style={tag4Style}>{goal.tag4}
-                    <p className={`${stylesGoalsPage.tooltiptextGoals}`} style={{bottom: "50%", left: "50%", marginLeft: "-210px"}}><span class={stylesGoalsPage.tooltipTitle}>{tagname4}</span><br/><br/>
+                    <p className={`${stylesGoalsPage.tooltiptextGoals}`} style={{bottom: "50%", left: "50%", marginLeft: "-210px"}}><span className={stylesGoalsPage.tooltipTitle}>{tagname4}</span><br/><br/>
                         <span style={{ fontWeight: "lighter", fontSize: "1rem" }}>{tagdesc4}</span>
                     </p>
                 </span>
             </span>
             <span className={`noselect ${stylesGoalsPage.tooltipGoals} ${stylesGoalsPage.tagAnimation}`}>
                 <span className="desktopOnlySupport" style={tag3Style}>{goal.tag3}
-                    <p className={`${stylesGoalsPage.tooltiptextGoals}`} style={{bottom: "50%", left: "50%", marginLeft: "-210px"}}><span class={stylesGoalsPage.tooltipTitle}>{tagname3}</span><br/><br/>
+                    <p className={`${stylesGoalsPage.tooltiptextGoals}`} style={{bottom: "50%", left: "50%", marginLeft: "-210px"}}><span className={stylesGoalsPage.tooltipTitle}>{tagname3}</span><br/><br/>
                         <span style={{ fontWeight: "lighter", fontSize: "1rem" }}>{tagdesc3}</span>
                     </p>
                 </span>
             </span>
             <span className={`noselect ${stylesGoalsPage.tooltipGoals} ${stylesGoalsPage.tagAnimation}`}>
                 <span className="desktopOnlySupport" style={tag2Style}>{goal.tag2}
-                    <p className={`${stylesGoalsPage.tooltiptextGoals}`} style={{bottom: "50%", left: "50%", marginLeft: "-210px"}}><span class={stylesGoalsPage.tooltipTitle}>{tagname2}</span><br/><br/>
+                    <p className={`${stylesGoalsPage.tooltiptextGoals}`} style={{bottom: "50%", left: "50%", marginLeft: "-210px"}}><span className={stylesGoalsPage.tooltipTitle}>{tagname2}</span><br/><br/>
                         <span style={{ fontWeight: "lighter", fontSize: "1rem" }}>{tagdesc2}</span>
                     </p>
                 </span>
             </span>
             <span className={`noselect ${stylesGoalsPage.tooltipGoals} ${stylesGoalsPage.tagAnimation}`}>
                 <span className="desktopOnlySupport" style={tag1Style}>{goal.tag1}
-                    <p className={`${stylesGoalsPage.tooltiptextGoals}`} style={{bottom: "50%", left: "50%", marginLeft: "-210px"}}><span class={stylesGoalsPage.tooltipTitle}>{tagname1}</span><br/><br/>
+                    <p className={`${stylesGoalsPage.tooltiptextGoals}`} style={{bottom: "50%", left: "50%", marginLeft: "-210px"}}><span className={stylesGoalsPage.tooltipTitle}>{tagname1}</span><br/><br/>
                         <span style={{ fontWeight: "lighter", fontSize: "1rem" }}>{tagdesc1}</span>
                     </p>
                 </span>
             </span>
         </td>
         <td style={infoStyle}>
-			<div style={!goal.info ? { display: "none" } : {}} class={stylesGoalsPage.tooltipGoals} ref={tooltipRef}>
-				<img id={stylesGoalsPage.infoExtra} src={info} class={showinfo} alt='info' onClick={handleIconClick}/>
+			<div style={!goal.info ? { display: "none" } : {}} className={stylesGoalsPage.tooltipGoals} ref={tooltipRef}>
+				<img id={stylesGoalsPage.infoExtra} src={info} className={showinfo} alt='info' onClick={handleIconClick}/>
 				<span style={{ fontWeight: "lighter" }} className={isOpen ? `${stylesGoalsPage.tooltiptextGoals} ${stylesGoalsPage.visible}` : stylesGoalsPage.tooltiptextGoals}>{goal.info}</span>
 			</div>
 		</td>
         <td className="desktopOnlySupport" style={refLinkStyle}>
-            <a class={showref} href={goal.refLink}>
-                <img id={stylesGoalsPage.link} src={refLink} class={showref} alt='reference_link'/>
+            <a className={showref} href={goal.refLink}>
+                <img id={stylesGoalsPage.link} src={refLink} className={showref} alt='reference_link'/>
             </a>
         </td>
         <td className="desktopOnlySupport" style={resultLinkStyle}>
-            <a class={showresult} href={goal.resultLink}>
-                <img id={stylesGoalsPage.link} src={resultLink} class={showresult} alt='result_link'/>
+            <a className={showresult} href={goal.resultLink}>
+                <img id={stylesGoalsPage.link} src={resultLink} className={showresult} alt='result_link'/>
             </a>
         </td>
         <td className="desktopOnlySupport">
-            <span class={stylesGoalsPage.tooltipGoals}>
-                <span id={stylesGoalsPage[safetytagname]} class={stylesGoalsPage[safetytagname]} style={safetyStyle}>{goal.safetytag}
-                    <p className={`${stylesGoalsPage.tooltiptextGoals}`} style={{ bottom: "60%" }}><span class={stylesGoalsPage.tooltipTitle}>{safetytagname}</span><br/><br/>
+            <span className={stylesGoalsPage.tooltipGoals}>
+                <span id={stylesGoalsPage[safetytagname]} className={stylesGoalsPage[safetytagname]} style={safetyStyle}>{goal.safetytag}
+                    <p className={`${stylesGoalsPage.tooltiptextGoals}`} style={{ bottom: "60%" }}><span className={stylesGoalsPage.tooltipTitle}>{safetytagname}</span><br/><br/>
                         <span style={{ fontWeight: "lighter", fontSize: "1rem" }}>{safetydesc}</span>
                     </p>
                 </span>
             </span>
         </td>
         <td>
-            <span class={stylesGoalsPage.tooltipGoals}>
+            <span className={stylesGoalsPage.tooltipGoals}>
                 <span id={stylesGoalsPage[difftagname]} className={`desktopOnlySupport ${stylesGoalsPage[difftagname]}`} style={diffStyle}>{goal.difftag}
-                    <p className={`${stylesGoalsPage.tooltiptextGoals}`} style={{ bottom: "60%" }}><span class={stylesGoalsPage.tooltipTitle}>{difftagname}</span><br/><br/>
+                    <p className={`${stylesGoalsPage.tooltiptextGoals}`} style={{ bottom: "60%" }}><span className={stylesGoalsPage.tooltipTitle}>{difftagname}</span><br/><br/>
                         <span style={{ fontWeight: "lighter", fontSize: "1rem" }}>{diffdesc}</span>
                     </p>
                 </span>
             </span>
         </td>
-    </tr>
+    </>
   );
 };
 export default Goal;

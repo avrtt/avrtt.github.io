@@ -129,7 +129,7 @@ const LinkBlock = ({
                 <div style={blockContentStyle}>
                     <img style={iconStyle} className=".makeBlackAndWhite" src={icon} alt={`${name} icon`} />
                     <div style={textWrapperStyle}>
-                        <img title={!inactive && (isRussian ? "Russian language mostly" : null || isEnglishAndRussian ? "Bilingual" : null)} style={flagStyle} src={!inactive && (isRussian ? russian : null || isEnglishAndRussian ? englishRussian : null)}/>
+                        <img title={!inactive ? (isRussian ? "Russian language mostly" : isEnglishAndRussian ? "Bilingual" : undefined) : undefined} style={flagStyle} src={!inactive ? (isRussian ? russian : isEnglishAndRussian ? englishRussian : undefined) : undefined}/>
                         <span style={nameStyle}>
                             {name}
                             <span title={categoryName} style={categoryEmojiStyle}>{inactive || categoryEmoji}</span>
@@ -152,7 +152,7 @@ const LinkBlock = ({
                 <div style={blockContentStyle}>
                     <img style={iconStyle} className=".makeBlackAndWhite" src={icon} alt={`${name} icon`} />
                     <div style={textWrapperStyle}>
-                        <img title={!inactive && (isRussian ? "Russian language mostly" : null || isEnglishAndRussian ? "Bilingual" : null)} style={flagStyle} src={!inactive && (isRussian ? russian : null || isEnglishAndRussian ? englishRussian : null)} alt={isDonate ? "" : "country-flag"}/>
+                        <img title={!inactive ? (isRussian ? "Russian language mostly" : isEnglishAndRussian ? "Bilingual" : undefined) : undefined} style={flagStyle} src={!inactive ? (isRussian ? russian : isEnglishAndRussian ? englishRussian : undefined) : undefined} alt={isDonate ? "" : "country-flag"}/>
                         <span style={nameStyle}>
                             {name}
                             <span title={categoryName} style={categoryEmojiStyle}>{inactive || categoryEmoji}</span>

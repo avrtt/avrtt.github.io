@@ -11,8 +11,6 @@ const PostsLastNext = ({ nextPost, lastPost, section }) => {
   const nextPreview = nextPost ? getImage(nextPost.frontmatter.banner.childImageSharp) : null;
   const lastLink = lastPost ? `/${section}/${lastPost.frontmatter.slug.split('/').pop()}` : null;
   const nextLink = nextPost ? `/${section}/${nextPost.frontmatter.slug.split('/').pop()}` : null;
-  const keyNext = nextPost?.frontmatter.slug.split('/')[2];
-  const keyLast = lastPost?.frontmatter.slug.split('/')[2];
   
   return (
 	<>

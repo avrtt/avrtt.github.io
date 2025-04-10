@@ -29,14 +29,14 @@ $arrow-offset: 58.5%;
     margin-bottom: $spacing-large;
   }
 
-  @include mixins.respond-to(mobile) { display: none }
-  @include mixins.respond-to(small-tablet) { display: none }
-  @include mixins.respond-to(tablet) { display: none }
+  @include mixins.respond-to(mobile) { display: none !important }
+  @include mixins.respond-to(small-tablet) { display: none !important }
+  @include mixins.respond-to(tablet) { display: none !important }
 }
 
 @mixin post-style($position, $side) {
-  position: absolute;
-  #{$side}: 50.5%;
+  position: absolute !important;
+  #{$side}: 50.5% !important;
   width: $image-width;
   height: $image-height;
   border-radius: $image-radius;
