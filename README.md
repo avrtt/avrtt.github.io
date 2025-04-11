@@ -1,14 +1,18 @@
-<img
-  height="23"
-  src="https://api.visitorbadge.io/api/daily?path=https%3A%2F%2Favrtt.github.io%2F&label=%E2%9A%A1%EF%B8%8F%20Today&labelColor=%23383b40&countColor=%230d1117&style=flat-square&labelStyle=none"
-  alt="visits-today-badge"
-/>
+<a href="">
+  <img
+    height="23"
+    src="https://api.visitorbadge.io/api/daily?path=https%3A%2F%2Favrtt.github.io%2F&label=%E2%9A%A1%EF%B8%8F%20Today&labelColor=%23383b40&countColor=%230d1117&style=flat-square&labelStyle=none"
+    alt="visits-today-badge"
+  />
+</a>
 <br/>
-<img
-  height="23"
-  src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Favrtt.github.io%2F&label=%F0%9F%97%93%EF%B8%8F%20Total&labelColor=%23383b40&countColor=%230d1117&style=flat-square&labelStyle=none"
-  alt="visits-total-badge"
-/>
+<a href="">
+  <img
+    height="23"
+    src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Favrtt.github.io%2F&label=%F0%9F%97%93%EF%B8%8F%20Total&labelColor=%23383b40&countColor=%230d1117&style=flat-square&labelStyle=none"
+    alt="visits-total-badge"
+  />
+</a>
 <br/>
 <a href="https://github.com/avrtt/avrtt.github.io/commits/main/">
   <img
@@ -18,16 +22,18 @@
   />
 </a>
 <br/>
-<img
-  height="24"
-  src="https://img.shields.io/github/repo-size/avrtt/avrtt.github.io?style=flat-square&label=%F0%9F%93%A6%20Repo%20size&labelColor=%23383b40&color=%230d1117"
-  alt="repository-size-badge"
-/>
+<a href="">
+  <img
+    height="24"
+    src="https://img.shields.io/github/repo-size/avrtt/avrtt.github.io?style=flat-square&label=%F0%9F%93%A6%20Repo%20size&labelColor=%23383b40&color=%230d1117"
+    alt="repository-size-badge"
+  />
+</a>
 <br/>
-<a href="https://img.shields.io/github/last-commit/avrtt/avrtt.github.io/gh-pages?style=flat-square&label=%E2%9A%99%20Last%20deploy%3A&labelColor=%23383b40&color=%230d1117">
+<a href="https://github.com/avrtt/avrtt.github.io/deployments">
     <img
       height="24"
-      src="https://img.shields.io/github/last-commit/avrtt/avrtt.github.io/gh-pages?style=flat-square&label=%E2%9A%99%20%EF%B8%8FLast%20deploy&labelColor=%23ffb938&color=%230d1117"
+      src="https://img.shields.io/github/last-commit/avrtt/avrtt.github.io/gh-pages?style=flat-square&label=%F0%9F%9A%80%20Last%20deploy&labelColor=%23ffb938&color=%230d1117"
       alt="last-deploy-badge"
     />
 </a>
