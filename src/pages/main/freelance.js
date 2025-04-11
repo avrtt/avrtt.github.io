@@ -300,72 +300,72 @@ const Freelance = () => {
 					<div className={stylesSpoilers.spoilerContentWrapper}>
 						<div className={stylesSpoilers.spoilerContentFAQ}>
 							<div className={stylesSpoilers.spoilerBlockQA}>
-								<p className={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q1.en}</p>
-								<p className={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a1.en}</p>
+								<p className={stylesSpoilers.spoilerQuestion}><b>Q:</b> {textMain.workflow.faq.q1.en}</p>
+								<p className={stylesSpoilers.spoilerAnswer}><b>A:</b> {textMain.workflow.faq.a1.en}</p>
 							</div>
 							<div className={stylesSpoilers.spoilerBlockQA}>
-								<p className={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q2.en}</p>
-								<p className={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a2.en}</p>
+								<p className={stylesSpoilers.spoilerQuestion}><b>Q:</b> {textMain.workflow.faq.q2.en}</p>
+								<p className={stylesSpoilers.spoilerAnswer}><b>A:</b> {textMain.workflow.faq.a2.en}</p>
 							</div>
 							<div className={stylesSpoilers.spoilerBlockQA}>
-								<p className={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q3.en}</p>
-								<p className={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a3.en}</p>
+								<p className={stylesSpoilers.spoilerQuestion}><b>Q:</b> {textMain.workflow.faq.q3.en}</p>
+								<p className={stylesSpoilers.spoilerAnswer}><b>A:</b> {textMain.workflow.faq.a3.en}</p>
 							</div>
 							<div className={stylesSpoilers.spoilerBlockQA}>
-								<p className={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q4.en}</p>
-								<p className={stylesSpoilers.spoilerAnswer}><strong>A:</strong> <span dangerouslySetInnerHTML={{ __html: textMain.workflow.faq.a4.en }}/></p>
+								<p className={stylesSpoilers.spoilerQuestion}><b>Q:</b> {textMain.workflow.faq.q4.en}</p>
+								<p className={stylesSpoilers.spoilerAnswer}><b>A:</b> <span dangerouslySetInnerHTML={{ __html: textMain.workflow.faq.a4.en }}/></p>
 							</div>
 							<div className={stylesSpoilers.spoilerBlockQA}>
-								<p className={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q5.en}</p>
-								<p className={stylesSpoilers.spoilerAnswer}><strong>A:</strong> <span dangerouslySetInnerHTML={{ __html: textMain.workflow.faq.a5.en }}/></p>
+								<p className={stylesSpoilers.spoilerQuestion}><b>Q:</b> {textMain.workflow.faq.q5.en}</p>
+								<p className={stylesSpoilers.spoilerAnswer}><b>A:</b> <span dangerouslySetInnerHTML={{ __html: textMain.workflow.faq.a5.en }}/></p>
 							</div>
 							<div className={stylesSpoilers.spoilerBlockQA}>
-								<p className={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> <span dangerouslySetInnerHTML={{ __html: textMain.workflow.faq.q6.en }}/></p>
-								<p className={stylesSpoilers.spoilerAnswer}><strong>A:</strong> <span dangerouslySetInnerHTML={{ __html: textMain.workflow.faq.a6.en }}/></p>
+								<p className={stylesSpoilers.spoilerQuestion}><b>Q:</b> <span dangerouslySetInnerHTML={{ __html: textMain.workflow.faq.q6.en }}/></p>
+								<p className={stylesSpoilers.spoilerAnswer}><b>A:</b> <span dangerouslySetInnerHTML={{ __html: textMain.workflow.faq.a6.en }}/></p>
 							</div>
 							<div className={stylesSpoilers.spoilerBlockQA}>
-								<p className={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> <span dangerouslySetInnerHTML={{ __html: textMain.workflow.faq.q7.en }}/></p>
-								<p className={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a7.en}</p>
+								<p className={stylesSpoilers.spoilerQuestion}><b>Q:</b> <span dangerouslySetInnerHTML={{ __html: textMain.workflow.faq.q7.en }}/></p>
+								<p className={stylesSpoilers.spoilerAnswer}><b>A:</b> {textMain.workflow.faq.a7.en}</p>
 							</div>
 							<div className={stylesSpoilers.spoilerBlockQA}>
-								<p className={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q8.en}</p>
-								<p className={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a8.en}</p>
+								<p className={stylesSpoilers.spoilerQuestion}><b>Q:</b> {textMain.workflow.faq.q8.en}</p>
+								<p className={stylesSpoilers.spoilerAnswer}><b>A:</b> {textMain.workflow.faq.a8.en}</p>
 							</div>
 							<div className={stylesSpoilers.spoilerBlockQA}>
-								<p className={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q9.en}</p>
-								<p className={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a9.en}</p>
+								<p className={stylesSpoilers.spoilerQuestion}><b>Q:</b> {textMain.workflow.faq.q9.en}</p>
+								<p className={stylesSpoilers.spoilerAnswer}><b>A:</b> {textMain.workflow.faq.a9.en}</p>
 							</div>
 							<div className={stylesSpoilers.spoilerBlockQA}>
-								<p className={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q10.en}</p>
-								<p className={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a10.en}</p>
+								<p className={stylesSpoilers.spoilerQuestion}><b>Q:</b> {textMain.workflow.faq.q10.en}</p>
+								<p className={stylesSpoilers.spoilerAnswer}><b>A:</b> {textMain.workflow.faq.a10.en}</p>
 							</div>
 							<div className={stylesSpoilers.spoilerBlockQA}>
-								<p className={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q11.en}</p>
-								<p className={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a11.en}</p>
+								<p className={stylesSpoilers.spoilerQuestion}><b>Q:</b> {textMain.workflow.faq.q11.en}</p>
+								<p className={stylesSpoilers.spoilerAnswer}><b>A:</b> {textMain.workflow.faq.a11.en}</p>
 							</div>
 							<div className={stylesSpoilers.spoilerBlockQA}>
-								<p className={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q12.en}</p>
-								<p className={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a12.en}</p>
+								<p className={stylesSpoilers.spoilerQuestion}><b>Q:</b> {textMain.workflow.faq.q12.en}</p>
+								<p className={stylesSpoilers.spoilerAnswer}><b>A:</b> {textMain.workflow.faq.a12.en}</p>
 							</div>
 							<div className={stylesSpoilers.spoilerBlockQA}>
-								<p className={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q13.en}</p>
-								<p className={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a13.en}</p>
+								<p className={stylesSpoilers.spoilerQuestion}><b>Q:</b> {textMain.workflow.faq.q13.en}</p>
+								<p className={stylesSpoilers.spoilerAnswer}><b>A:</b> {textMain.workflow.faq.a13.en}</p>
 							</div>
 							<div className={stylesSpoilers.spoilerBlockQA}>
-								<p className={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q14.en}</p>
-								<p className={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a14.en}</p>
+								<p className={stylesSpoilers.spoilerQuestion}><b>Q:</b> {textMain.workflow.faq.q14.en}</p>
+								<p className={stylesSpoilers.spoilerAnswer}><b>A:</b> {textMain.workflow.faq.a14.en}</p>
 							</div>
 							<div className={stylesSpoilers.spoilerBlockQA}>
-								<p className={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q15.en}</p>
-								<p className={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a15.en}</p>
+								<p className={stylesSpoilers.spoilerQuestion}><b>Q:</b> {textMain.workflow.faq.q15.en}</p>
+								<p className={stylesSpoilers.spoilerAnswer}><b>A:</b> {textMain.workflow.faq.a15.en}</p>
 							</div>
 							<div className={stylesSpoilers.spoilerBlockQA}>
-								<p className={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q16.en}</p>
-								<p className={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a16.en}</p>
+								<p className={stylesSpoilers.spoilerQuestion}><b>Q:</b> {textMain.workflow.faq.q16.en}</p>
+								<p className={stylesSpoilers.spoilerAnswer}><b>A:</b> {textMain.workflow.faq.a16.en}</p>
 							</div>
 							<div className={stylesSpoilers.spoilerBlockQA}>
-								<p className={stylesSpoilers.spoilerQuestion}><strong>Q:</strong> {textMain.workflow.faq.q17.en}</p>
-								<p className={stylesSpoilers.spoilerAnswer}><strong>A:</strong> {textMain.workflow.faq.a17.en}</p>
+								<p className={stylesSpoilers.spoilerQuestion}><b>Q:</b> {textMain.workflow.faq.q17.en}</p>
+								<p className={stylesSpoilers.spoilerAnswer}><b>A:</b> {textMain.workflow.faq.a17.en}</p>
 							</div>
 						</div>
 					</div>

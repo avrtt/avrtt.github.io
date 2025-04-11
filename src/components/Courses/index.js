@@ -25,12 +25,12 @@ const Courses = ({ lang = "en" }) => {
               />
             </span>
             <p className={styles.courseDesc}>
-              Certified specialization in <strong>Machine Learning and Data Analysis</strong> offered by Moscow Institute of Physics and Technology (МФТИ) & Yandex
+              Certified specialization in <b>Machine Learning and Data Analysis</b> offered by Moscow Institute of Physics and Technology (МФТИ) & Yandex
             </p>
             <p className={styles.courseInfo}>
               <span>Oct 2020</span>
               &nbsp;&nbsp;&nbsp;&nbsp;
-              <span>Credential ID: <strong>BBTQSDXPTKCK</strong></span>
+              <span>Credential ID: <b>BBTQSDXPTKCK</b></span>
             </p>
           </div>
         </a>
@@ -49,12 +49,12 @@ const Courses = ({ lang = "en" }) => {
               />
             </span>
             <p className={styles.courseDesc}>
-              Certified specialization in <strong>applied Data Science</strong> offered by University of Michigan
+              Certified specialization in <b>applied Data Science</b> offered by University of Michigan
             </p>
             <p className={styles.courseInfo}>
               <span>Sep 2020</span>
               &nbsp;&nbsp;&nbsp;&nbsp;
-              <span>Credential ID: <strong>VWTSMYDC66TZ</strong></span>
+              <span>Credential ID: <b>VWTSMYDC66TZ</b></span>
             </p>
           </div>
         </a>
@@ -73,12 +73,12 @@ const Courses = ({ lang = "en" }) => {
               />
             </span>
             <p className={styles.courseDesc}>
-              Certified specialization in <strong>Deep Learning</strong> offered by DeepLearning.AI
+              Certified specialization in <b>Deep Learning</b> offered by DeepLearning.AI
             </p>
             <p className={styles.courseInfo}>
               <span>Jan 2021</span>
               &nbsp;&nbsp;&nbsp;&nbsp;
-              <span>Credential ID: <strong>TZY9XAAPRMXM</strong></span>
+              <span>Credential ID: <b>TZY9XAAPRMXM</b></span>
             </p>
           </div>
         </a>
@@ -97,12 +97,12 @@ const Courses = ({ lang = "en" }) => {
               />
             </span>
             <p className={styles.courseDesc}>
-              Certified specialization in <strong>advanced Machine Learning</strong> offered by National Research University Higher School of Economics (ВШЭ)
+              Certified specialization in <b>advanced Machine Learning</b> offered by National Research University Higher School of Economics (ВШЭ)
             </p>
             <p className={styles.courseInfo}>
               <span>Dec 2022</span>
               &nbsp;&nbsp;&nbsp;&nbsp;
-              <span><strong>Removed from Coursera</strong></span>
+              <span><b>Removed from Coursera</b></span>
             </p>
           </div>
         </a>
@@ -121,7 +121,7 @@ const Courses = ({ lang = "en" }) => {
               />
             </span>
             <p className={styles.courseDesc}>
-              Audited specialization in <strong>building AI apps with TensorFlow</strong> offered by DeepLearning.AI
+              Audited specialization in <b>building AI apps with TensorFlow</b> offered by DeepLearning.AI
             </p>
             <p className={styles.courseInfo}>
               <span>Dec 2023</span>
@@ -143,7 +143,7 @@ const Courses = ({ lang = "en" }) => {
               />
             </span>
             <p className={styles.courseDesc}>
-              Audited after Andrew Ng's classic course, a renewed specialization in <strong>Machine Learning</strong> offered by Stanford University & DeepLearning.AI
+              Audited after Andrew Ng's classic course, a renewed specialization in <b>Machine Learning</b> offered by Stanford University & DeepLearning.AI
             </p>
             <p className={styles.courseInfo}>
               <span>Oct 2024</span>
@@ -165,7 +165,7 @@ const Courses = ({ lang = "en" }) => {
               />
             </span>
             <p className={styles.courseDesc}>
-              Lectures and practices in <strong>Machine Learning</strong> provided by Moscow Institute of Physics and Technology (МФТИ)
+              Lectures and practices in <b>Machine Learning</b> provided by Moscow Institute of Physics and Technology (МФТИ)
             </p>
             <p className={styles.courseInfo}>
               <span>Spring semester 2020</span>
@@ -187,7 +187,7 @@ const Courses = ({ lang = "en" }) => {
               />
             </span>
             <p className={styles.courseDesc}>
-              Free course on <strong>Machine Learning</strong> provided by OpenDataScience (ods.ai) community
+              Free course on <b>Machine Learning</b> provided by OpenDataScience (ods.ai) community
             </p>
             <p className={styles.courseInfo}>
               <span>Jul 2023</span>
@@ -213,12 +213,12 @@ const Courses = ({ lang = "en" }) => {
               />
             </span>
             <p className={styles.courseDesc}>
-              Специализация с сертификатом по <strong>машинному обучению и анализу данных</strong> от Московского физико-технического института и Яндекса
+              Специализация с сертификатом по <b>машинному обучению и анализу данных</b> от Московского физико-технического института и Яндекса
             </p>
             <p className={styles.courseInfo}>
               <span>Окт 2020</span>
               &nbsp;&nbsp;&nbsp;&nbsp;
-              <span>ID сертификата: <strong>BBTQSDXPTKCK</strong></span>
+              <span>ID сертификата: <b>BBTQSDXPTKCK</b></span>
             </p>
           </div>
         </a>
@@ -237,12 +237,12 @@ const Courses = ({ lang = "en" }) => {
               />
             </span>
             <p className={styles.courseDesc}>
-              Специализация с сертификатом в области <strong>прикладной науки о данных</strong> от Мичиганского университета
+              Специализация с сертификатом в области <b>прикладной науки о данных</b> от Мичиганского университета
             </p>
             <p className={styles.courseInfo}>
               <span>Сен 2020</span>
               &nbsp;&nbsp;&nbsp;&nbsp;
-              <span>ID сертификата: <strong>VWTSMYDC66TZ</strong></span>
+              <span>ID сертификата: <b>VWTSMYDC66TZ</b></span>
             </p>
           </div>
         </a>
@@ -261,12 +261,12 @@ const Courses = ({ lang = "en" }) => {
               />
             </span>
             <p className={styles.courseDesc}>
-              Специализация с сертификатом по <strong>глубокому обучению</strong> от DeepLearning.AI
+              Специализация с сертификатом по <b>глубокому обучению</b> от DeepLearning.AI
             </p>
             <p className={styles.courseInfo}>
               <span>Янв 2021</span>
               &nbsp;&nbsp;&nbsp;&nbsp;
-              <span>ID сертификата: <strong>TZY9XAAPRMXM</strong></span>
+              <span>ID сертификата: <b>TZY9XAAPRMXM</b></span>
             </p>
           </div>
         </a>
@@ -285,12 +285,12 @@ const Courses = ({ lang = "en" }) => {
               />
             </span>
             <p className={styles.courseDesc}>
-              Специализация с сертификатом по <strong>продвинутому машинному обучению</strong> от НИУ &laquo;Высшая школа экономики&raquo;
+              Специализация с сертификатом по <b>продвинутому машинному обучению</b> от НИУ &laquo;Высшая школа экономики&raquo;
             </p>
             <p className={styles.courseInfo}>
               <span>Дек 2022</span>
               &nbsp;&nbsp;&nbsp;&nbsp;
-              <span><strong>Удалено с Coursera</strong></span>
+              <span><b>Удалено с Coursera</b></span>
             </p>
           </div>
         </a>
@@ -309,7 +309,7 @@ const Courses = ({ lang = "en" }) => {
               />
             </span>
             <p className={styles.courseDesc}>
-              Прослушанная специализация про <strong>TensorFlow-разработку</strong> от DeepLearning.AI
+              Прослушанная специализация про <b>TensorFlow-разработку</b> от DeepLearning.AI
             </p>
             <p className={styles.courseInfo}>
               <span>Дек 2023</span>
@@ -330,7 +330,7 @@ const Courses = ({ lang = "en" }) => {
               />
             </span>
             <p className={styles.courseDesc}>
-              Прослушанная после классического курса Эндрю Ына, обновлённая специализация по <strong>машинному обучению</strong> от Стэнфордского университета и DeepLearning.AI
+              Прослушанная после классического курса Эндрю Ына, обновлённая специализация по <b>машинному обучению</b> от Стэнфордского университета и DeepLearning.AI
             </p>
             <p className={styles.courseInfo}>
               <span>Окт 2024</span>
@@ -352,7 +352,7 @@ const Courses = ({ lang = "en" }) => {
               />
             </span>
             <p className={styles.courseDesc}>
-              Лекции и практики по <strong>машинному обучению</strong> от Московского физико-технического института
+              Лекции и практики по <b>машинному обучению</b> от Московского физико-технического института
             </p>
             <p className={styles.courseInfo}>
               <span>Весенний семестр 2020</span>
@@ -374,7 +374,7 @@ const Courses = ({ lang = "en" }) => {
               />
             </span>
             <p className={styles.courseDesc}>
-              Бесплатный курс по <strong>машинному обучению</strong> от сообщества OpenDataScience (ods.ai)
+              Бесплатный курс по <b>машинному обучению</b> от сообщества OpenDataScience (ods.ai)
             </p>
             <p className={styles.courseInfo}>
               <span>Июл 2023</span>

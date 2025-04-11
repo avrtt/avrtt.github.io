@@ -148,7 +148,7 @@ const Posts = ({ data }) => {
 												<span style={{opacity: "0.5"}}>{post.readTime}</span>
 											</span>
 											&#8239;&#8239;
-											<strong><span style={{opacity: "0.5"}}>#{post.index}</span></strong>
+											<b><span style={{opacity: "0.5"}}>#{post.index}</span></b>
 										</div>
 									</li>
 								))}

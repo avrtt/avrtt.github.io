@@ -49,7 +49,7 @@ const Image = ({ path, alt, caption="", zoom=false, offset="300" }) => {
         <p>An image was requested, but the frog was found.</p>
         {alt ? <p>Alt: "{alt}"</p> : <p>No alt specified!</p>}
         {caption ? <p>Caption: "{caption}"</p> : <p>No caption specified!</p>}
-        {path ? <p>Missing path: <strong>"{basePath}{path}"</strong></p> : <p>Error type: <strong>missing path</strong></p>}
+        {path ? <p>Missing path: <b>"{basePath}{path}"</b></p> : <p>Error type: <b>missing path</b></p>}
       </div>
     )
   }

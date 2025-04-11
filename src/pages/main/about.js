@@ -330,7 +330,7 @@ const About = () => {
                         emoji="🎓"
                         emojiGif={cap}
                         description={<>
-                            <p>I'm also an author and maintainer of a <Link to="/course">free in-depth course</Link> on machine learning and data science. There are <H><strong>{courseCount}</strong> articles</H> in the course so far.</p>
+                            <p>I'm also an author and maintainer of a <Link to="/course">free in-depth course</Link> on machine learning and data science. There are <H><b>{courseCount}</b> articles</H> in the course so far.</p>
                         </>}
                         isMarkdown={false}
                         backgroundColor="#dbdbdb"

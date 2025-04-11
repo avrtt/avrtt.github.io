@@ -274,7 +274,7 @@ const PostBanner = ({ postNumber, date, updated, readTime, difficulty, title, de
         <center>
             <div className='desktopOnlySupport noselect' style={prevStyle}>
 				<GatsbyImage style={prevImgStyle} image={image} alt="banner" />
-			    <b><div style={prevTextStyle}>{title}</div></b>
+			    <strong><div style={prevTextStyle}>{title}</div></strong>
 			    <div style={prevDescStyle}>{desc}</div>
 				<div style={prevInfoStyle}>
 					<span style={mainTagStyle}>#️⃣&#8239;&#8239;{mainTag}</span>
@@ -294,7 +294,7 @@ const PostBanner = ({ postNumber, date, updated, readTime, difficulty, title, de
 		    </div>
 			<div className="mobileOnlySupport">
 				<GatsbyImage style={prevImgStyleMobile} image={image} alt="banner" />
-				<b><div style={prevTextStyleMobile}>{title}</div></b>
+				<strong><div style={prevTextStyleMobile}>{title}</div></strong>
 				<div style={prevDescStyleMobile}>{desc}</div>
 				<span style={readTimeStyleMobile}>⌛&#8239;&#8239;{readTime}</span>
 			    <div style={prevNumberStyleMobile}>#{postNumber}</div>

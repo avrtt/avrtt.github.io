@@ -13,8 +13,8 @@ const LocationStatus = ({ backgroundColor }) => {
   return (
 	<>
     	<div style={{ backgroundColor: backgroundColor }} className={stylesPlaques.greyNoticeCompact}>
-        	<p><strong>My current location:</strong> <H>{countryFlag} {location ? location : countryName}</H> ({currentZoneUTC})</p>
-			<p><strong>Planned:</strong> {plans ? plans : "TBA"}</p>
+        	<p><b>My current location:</b> <H>{countryFlag} {location ? location : countryName}</H> ({currentZoneUTC})</p>
+			<p><b>Planned:</b> {plans ? plans : "TBA"}</p>
     	</div>
 	</>
   );

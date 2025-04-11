@@ -119,7 +119,7 @@ const FreelanceProject = ({ isExample=false, emoji, projectName, projectDesc, da
       </div>
       <div className="mobileOnlySupport" style={{ lineHeight: "1.25rem" }}>
         <div>
-          <span>{emoji}</span> <b>{projectName}</b>
+          <span>{emoji}</span> <strong>{projectName}</strong>
           &nbsp;&#8239;
           <a href={source3Link}>
             <img src={source3} id={stylesFreelancePages[source3Flag]} className="noselect" alt="source_logo" style={{ filter: "invert(1)", width: "1.25rem", verticalAlign: "sub" }}/>
