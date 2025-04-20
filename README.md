@@ -66,6 +66,10 @@ Here you can find the code and documentation of my minimalist, static, MDX-based
 - [Contribution](#contribution)
   - [To do](#to-do)
 - [Development](#development)
+- [Troubleshooting](#troubleshooting)
+  - [Type checking](#type-checking)
+  - [Type errors with third-party libraries](#type-errors-with-third-party-libraries)
+  - [JSX errors](#jsx-errors)
 - [Copyright](#copyright)
   - [Licensing](#licensing)
   - [Animated emojis](#animated-emojis)
@@ -255,6 +259,28 @@ Feature suggestions and especially bug/typo reports are very welcome. Feel free 
 
 > [!WARNING]
 > (про выделение памяти и что по умолчанию 5 GB, как избежать проблем) -->
+
+
+## Troubleshooting
+
+### Type checking
+
+Run `npm run check-types` for tracking TypeScript-specific errors.
+
+TypeScript config is strict, with `noImplicitAny` option enabled.
+
+### Type errors with third-party libraries
+
+When encountering type errors with third-party libraries, it's probably useful to:
+1. check if @types packages are available: `npm install --save-dev @types/package-name`
+2. add custom type declarations in `src/types/module-declarations.d.ts`
+
+### JSX errors
+
+In case of JSX-related errors, verify that:
+1. the TS configuration has `jsx` set correctly
+2. files using JSX have `.tsx` extension
+3. React is imported in files using JSX
 
 
 ## Copyright
