@@ -6,6 +6,7 @@ import Email from "./email.svg";
 import Map from "./map.svg";
 import YouTube from "./youtube.svg";
 import Facebook from "./facebook.svg";
+import RSS from "./rss.svg";
 import { footerYear } from "../../data/lastUpdated";
 import { freelanceStatus, location } from "../../data/announcements"
 import { startHoursUTC, endHoursUTC } from '../../utils/freelance';
@@ -56,6 +57,9 @@ const Footer = () => {
           </a>
           <a className={styles.footerLink} href="https://www.google.com/maps/d/viewer?mid=1X9b0bo11WcY9on87ZQXoB3YUkccwnK49&ll=0.3349379679001004%2C0&z=2">
             <img src={Map} className={styles.linkImg} alt="map-logo"/>
+          </a>
+          <a className={styles.footerLink} href="/rss.xml">
+            <img src={RSS} className={styles.linkImg} alt="rss-logo"/>
           </a>
         </div>
 

@@ -11,6 +11,60 @@ module.exports = {
   },
   plugins: [
     {
+      resolve: `gatsby-plugin-feed`,
+      options: {
+        query: `
+          {
+            site {
+              siteMetadata {
+                title
+                description
+                siteUrl
+                site_url: siteUrl
+              }
+            }
+          }
+        `,
+        feeds: [
+          {
+            serialize: ({ query: { site, allMdx } }) => {
+              return allMdx.nodes.map(node => {
+                return Object.assign({}, node.frontmatter, {
+                  description: node.excerpt,
+                  date: node.frontmatter.date,
+                  title: node.frontmatter.titleDetailed || node.frontmatter.title,
+                  url: site.siteMetadata.siteUrl + node.frontmatter.slug,
+                  guid: site.siteMetadata.siteUrl + node.frontmatter.slug,
+                  custom_elements: [{ "content:encoded": node.excerpt }],
+                })
+              })
+            },
+            query: `
+              {
+                allMdx(
+                  sort: { frontmatter: { index: DESC } }
+                  limit: 20
+                ) {
+                  nodes {
+                    excerpt
+                    frontmatter {
+                      titleDetailed
+                      title
+                      date
+                      slug
+                      index
+                    }
+                  }
+                }
+              }
+            `,
+            output: "/rss.xml",
+            title: "avrtt.blog RSS Feed",
+          },
+        ],
+      },
+    },
+    {
       resolve: `gatsby-plugin-sitemap`,
       options: {
         query: `

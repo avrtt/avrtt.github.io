@@ -46,6 +46,7 @@
     "d3": "^7.9.0",
     "framer-motion": "^11.3.31",
     "gatsby": "^5.13.7",
+    "gatsby-plugin-feed": "^5.14.0",
     "gatsby-plugin-image": "^3.13.1",
     "gatsby-plugin-manifest": "^5.13.1",
     "gatsby-plugin-mdx": "^5.13.1",
