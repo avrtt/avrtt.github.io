@@ -10,7 +10,6 @@ import M from "../Markdown";
 import Arrow from "../../images/freelance/services/arrow2.svg"
 import * as stylesSpoilers from "../../styles/spoilers.module.scss"
 
-// Define a type for service items
 interface ServiceItem {
   text?: string;
   textRu?: string;
@@ -19,10 +18,8 @@ interface ServiceItem {
 
 const Spoiler: React.FC<SpoilerServicesProps> = ({ title, services = [], spoilerExtraDesc, isEnglish=true }) => {
   
-  // Use proper type for the ref 
   const collRef = useRef<(HTMLButtonElement | null)[]>([]);
 
-  // Define the toggle content function with the correct type
   const toggleContent = (event: Event) => {
     const button = event.currentTarget as HTMLButtonElement;
     const content = button.nextElementSibling as HTMLElement;

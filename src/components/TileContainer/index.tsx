@@ -20,7 +20,6 @@ interface TileContainerProps {
     marginTop?: string;
 }
 
-// To ensure TypeScript recognizes 'width' as a valid property
 interface ChildProps {
     width?: string;
     [key: string]: any;

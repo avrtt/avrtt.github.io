@@ -14,7 +14,7 @@ import * as styles from './styles.module.scss'
 interface FileNode {
   id: string;
   childImageSharp: {
-    gatsbyImageData: any; // Using any for gatsby image data type for simplicity
+    gatsbyImageData: any;
   };
 }
 

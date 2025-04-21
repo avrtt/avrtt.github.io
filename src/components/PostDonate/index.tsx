@@ -52,7 +52,7 @@ function modal(myImg: string, qr: string, address: string, caption1: string, cap
 }
 
 const PostDonate: React.FC<PostDonateProps> = ({ address, caption1, caption2 }) => {
-  // Default values for props
+
   const btcAddress = address || BitcoinWallet;
   const btcCaption1 = caption1 || 'BITCOIN NETWORK';
   const btcCaption2 = caption2 || 'Address copied to clipboard!';

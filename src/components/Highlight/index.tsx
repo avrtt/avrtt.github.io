@@ -11,7 +11,7 @@ interface HighlightProps {
   color?: string;
   children: React.ReactNode;
   style?: CSSProperties;
-  [x: string]: any; // For any additional props
+  [x: string]: any;
 }
 
 const H: React.FC<HighlightProps> = ({ color = '#ffd56a', children, style = {}, ...rest }) => {
