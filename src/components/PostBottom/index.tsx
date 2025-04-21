@@ -43,7 +43,7 @@ const PostBottom: React.FC<PostBottomProps> = ({ nextPost, lastPost, keyCurrent,
       <PostsLastNext nextPost={nextPost} lastPost={lastPost} section={section} />
       <PostDonate />
       <div className={stylesCommentsSections.chatWrapper}>
-        <TelegramComments dataWebAppId="6397554270:AAE-IVHvLQrTzHXQ3Bn1Pf5DDnjTNyUVX-k" websiteKey={'2JA7Wo3q'} customColor='000000' commentsNumber={5} pageId={keyCurrent} showDislikes={true} />
+        <TelegramComments websiteKey={'2JA7Wo3q'} customColor='000000' commentsNumber={5} pageId={keyCurrent} showDislikes={true} />
       </div>
 	    <ChannelPreview tgLink={tgLink} ytLink={ytLink} tgChannelPicture={tgChannelPicture} tgChannelName={tgChannelName} tgChannelDesc={tgChannelDesc} />
 	  </>

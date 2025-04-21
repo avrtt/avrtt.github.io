@@ -348,7 +348,7 @@ const Goals = () => {
                 </span>
             </div>
         </div> 
-        <div className={stylesCommentsSections.chatWrapper}><TelegramComments dataWebAppId="6397554270:AAE-IVHvLQrTzHXQ3Bn1Pf5DDnjTNyUVX-k" websiteKey={'2JA7Wo3q'} customColor='000000' commentsNumber={5} pageId='goals' showDislikes={true} /></div>
+        <div className={stylesCommentsSections.chatWrapper}><TelegramComments websiteKey={'2JA7Wo3q'} customColor='000000' commentsNumber={5} pageId='goals' showDislikes={true} /></div>
     </motion.div>
   );
 };

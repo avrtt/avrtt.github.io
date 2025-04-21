@@ -14,13 +14,6 @@ import * as styles from './styles.module.scss';
 import 'react-medium-image-zoom/dist/styles.css'
 import 'animate.css/animate.min.css';
 
-interface ImageNode {
-  relativePath: string;
-  childImageSharp: {
-    gatsbyImageData: any;
-  };
-}
-
 const imageStyle = {
   paddingBottom: "0px",
   marginTop: "8px",
