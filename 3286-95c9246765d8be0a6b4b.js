@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkavrtt_blog=self.webpackChunkavrtt_blog||[]).push([[905,3286],{53286:function(e,t,a){a.r(t);var n=a(96540),r=a(56933),l=a(80420),i=a(32957);t.default=()=>n.createElement(n.Fragment,null,n.createElement("div",{class:i.N3},n.createElement("h2",null,n.createElement(l.A,{sticker:"gandonio",marginLeft:"0px",marginRight:"0.2em"})," Language warning!"),n.createElement(r.A,{text:"This page contains profanity. Little dudes aren't supposed to read it."})))}}]);
-//# sourceMappingURL=3286-95c9246765d8be0a6b4b.js.map

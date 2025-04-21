@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkavrtt_blog=self.webpackChunkavrtt_blog||[]).push([[2002,9621],{62002:function(e,t,n){n.r(t);var r=n(96540),a=n(56933),i=n(80420),l=n(32957);t.default=()=>r.createElement(r.Fragment,null,r.createElement("div",{class:l.N3},r.createElement("h2",null,r.createElement(i.A,{sticker:"dog_nerd",marginLeft:"0px",marginRight:"0.2em"})," Rewriting is coming!"),r.createElement(a.A,{text:"This page needs to be rewritten as it's either not well-written or the information here is outdated."})))}}]);
-//# sourceMappingURL=2002-37285b8a220aba7fe457.js.map
