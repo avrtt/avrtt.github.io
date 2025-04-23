@@ -347,6 +347,7 @@ const Home = () => {
 								<li>🎵 Music blog (TG): <a href="https://t.me/noiserett">@noiserett</a></li>
 								<li>🎵 Hollofus (Linktree): <a href="https://linktr.ee/hollofus">@hollofus</a></li>
 								<li>🎵 Averett project (Linktree): <a href="https://linktr.ee/averett">@averett</a></li>
+								<li>📎 Archives (YT): <a href="https://www.youtube.com/@avrtt.archives">@avrtt.archives</a></li>
 								<li>📎 Today I read (TG): <a href="https://t.me/avreads">@avreads</a></li>
 								<li>🤝 Prof. page (FB): <a href="https://www.facebook.com/averett.freelance">@averett.freelance</a></li>
 								<li>🤝 LinkedIn: <a href="https://www.linkedin.com/in/avrtt">@avrtt</a></li>
@@ -422,13 +423,13 @@ const Home = () => {
 						isEnglishAndRussian={true}
 					/>
 					<LinkBlock
-						link='https://t.me/avrttclub/8'
-						icon={telegram}
+						link='https://www.youtube.com/@avrtt.archives'
+						icon={youtube}
 						categoryEmoji={''}
-						categoryName="Community"
-						name='Stickers'
-						handle=''
-						description='Community packs'
+						categoryName="Misc"
+						name='Archives'
+						handle='@avrtt.archives'
+						description='Misc videos'
 					/>
 					<LinkBlock
 						link='https://www.facebook.com/avrttblog'
@@ -624,15 +625,13 @@ const Home = () => {
 						isRussian={true}
 					/>
 					<LinkBlock
-						inactive={true}
-						link='https://freelance.habr.com/freelancers/avrtt'
-						icon={habr}
+						link='https://t.me/avrttclub/8'
+						icon={telegram}
 						categoryEmoji={''}
-						categoryName="Work"
-						name='Habr'
-						handle='@avrtt'
-						description='Freelance marketplace'
-						isRussian={true}
+						categoryName="Community"
+						name='Stickers'
+						handle=''
+						description='Community packs'
 					/>
 					<S style={{}} className={""}>
 						<LinkBlock
