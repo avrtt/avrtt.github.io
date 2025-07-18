@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkavrtt_blog=self.webpackChunkavrtt_blog||[]).push([[6108],{6108:function(a,t,e){e.r(t),t.default=e.p+"static/cat_smile-2d3e4a1af1af5b2840f37d6355e8abad.png"}}]);
+//# sourceMappingURL=6108-b45230a3dc2366fac10b.js.map

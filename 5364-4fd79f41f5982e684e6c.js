@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkavrtt_blog=self.webpackChunkavrtt_blog||[]).push([[5364],{62983:function(a,t,e){e.r(t),t.default=e.p+"static/gandonio-f0caf7a1f6819baa9dbd1163ee6eb396.png"}}]);
+//# sourceMappingURL=5364-4fd79f41f5982e684e6c.js.map

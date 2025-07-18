@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkavrtt_blog=self.webpackChunkavrtt_blog||[]).push([[1353],{1353:function(e,f,t){t.r(f),f.default=t.p+"static/hedgehog-fc91fc4e8d634a3fb19531ae5fefc5a5.gif"}}]);
+//# sourceMappingURL=1353-5b290cd5a22922f0f05d.js.map

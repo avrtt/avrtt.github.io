@@ -1,0 +1,1 @@
+{"version":3,"file":"6108-b45230a3dc2366fac10b.js","mappings":"qHAAA,UAAe,IAA0B,uD","sources":["webpack://avrtt.blog/./src/stickers/cat_smile.png"],"sourcesContent":["export default __webpack_public_path__ + \"static/cat_smile-2d3e4a1af1af5b2840f37d6355e8abad.png\";"],"names":[],"sourceRoot":""}

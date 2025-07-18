@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkavrtt_blog=self.webpackChunkavrtt_blog||[]).push([[5080],{75080:function(a,e,t){t.r(e),e.default=t.p+"static/pepe_chair-769f653e1d5c6a95eabc4a4bb290400c.gif"}}]);
+//# sourceMappingURL=5080-8d4d54ccd5148cd5f913.js.map

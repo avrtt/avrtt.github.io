@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkavrtt_blog=self.webpackChunkavrtt_blog||[]).push([[9485],{29485:function(t,a,c){c.r(a),a.default=c.p+"static/cat_ya_piska-c7033c50f8fc1341c58e8e2a7bb6228f.png"}}]);
+//# sourceMappingURL=9485-5d1b035d8dfb0675daaf.js.map

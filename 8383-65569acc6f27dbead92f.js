@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkavrtt_blog=self.webpackChunkavrtt_blog||[]).push([[8383],{78383:function(e,t,a){a.r(t),t.default=a.p+"static/babel_tower-6787e2b351fe9981f99e80d5667e9814.png"}}]);
+//# sourceMappingURL=8383-65569acc6f27dbead92f.js.map
