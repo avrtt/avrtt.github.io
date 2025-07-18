@@ -440,6 +440,7 @@ I'll provide a discount after reading your review. Your detailed feedback helps 
 - 💼 [~12 months](/cv) of *super boring* **non-freelance work** experience (a so-called *employment*)<br/>
 - 🤓 33 completed **courses**: 23 certified and 10+ non-certified (see the section below)<br/>
 - 💪 Actively [contributing](https://github.com/avrtt) to **open-source** community<br/>
+- 🏅 [Have a rank](https://kaggle.com/lenferdetroud) of Kaggle Competitions Expert (top 500)<br/>
 - ✍️ Writing [blog posts](/research) about everything interesting I **research** since 2022<br/>
 - 🔎 Currently **developing skills** towards [AI engineering](https://en.wikipedia.org/wiki/Artificial_intelligence_engineering)<br/>
 - 📢 Keeping tech-related **social media blogs** beyond this website (see links on the [Home](/) page)<br/>
@@ -449,6 +450,7 @@ I'll provide a discount after reading your review. Your detailed feedback helps 
 - 💼 [~12 месяцев](/cv) опыта *очень скучной* **не-фриланс работы** (так называемое *трудоустройство*)<br/>
 - 🤓 33 пройденных **курса**: 23 с сертификатами и 10+ без них (см. раздел ниже)<br/>
 - 💪 Активно [вношу вклад](https://github.com/avrtt) в **опенсорс** сообщество<br/>
+- 🏅 [Имею звание](https://kaggle.com/lenferdetroud) "Kaggle Competitions Expert" (топ 500)<br/>
 - ✍️ Пишу [посты](/research) про всё интересное, что **изучаю** с 2022<br/>
 - 🔎 На данный момент **развиваю навыки** в направлении [AI engineering](https://en.wikipedia.org/wiki/Artificial_intelligence_engineering)<br/>
 - 📢 Веду профессиональные **блоги в соцсетях** помимо данного сайта (см. ссылки в [Home](/))<br/>
