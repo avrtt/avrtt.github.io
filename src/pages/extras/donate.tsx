@@ -17,14 +17,17 @@ import BNB from "../../images/donate/bnb.svg";
 import KoFi from "../../images/donate/kofi.svg";
 import PayPal from "../../images/donate/paypal.svg";
 import Patreon from "../../images/donate/patreon.svg";
-import Card from "../../images/donate/card.svg";
+import CardBakai from "../../images/donate/card_bakai.svg";
+import CardMbank from "../../images/donate/card_mbank.svg";
+import CardVirtualEURMbank from "../../images/donate/card_mbank_virtual_eur.svg";
+import CardVirtualRUBMbank from "../../images/donate/card_mbank_virtual_rub.svg";
 import CardSber from "../../images/donate/card_sber.svg";
 import BTCQR from "../../images/donate/btc-qr.svg";
 import ETHQR from "../../images/donate/eth-qr.svg";
 import BSCQR from "../../images/donate/bsc-qr.svg";
 import Search from "../../images/donate/search.svg";
 import QR from "../../images/donate/qr.png";
-import { KofiLink, KofiHandle, PaypalLink, PaypalHandle, PatreonLink, PatreonHandle, SberbankCardCopy, SberbankCardDisplay, SberbankSBPCopy, SberbankSBPDisplay, BitcoinWallet, BEP20Wallet, ERC20Wallet } from "../../data/paymentMethods";
+import { KofiLink, KofiHandle, PaypalLink, PaypalHandle, PatreonLink, PatreonHandle, BakaiCardCopy, BakaiCardDisplay, MbankCardCopy, MbankCardDisplay, MbankVirtualEURCardCopy, MbankVirtualEURCardDisplay, MbankVirtualRUBCardCopy, MbankVirtualRUBCardDisplay, SberbankCardCopy, SberbankCardDisplay, SberbankSBPCopy, SberbankSBPDisplay, BitcoinWallet, BEP20Wallet, ERC20Wallet } from "../../data/paymentMethods";
 import * as stylesWallets from "../../styles/wallets.module.scss"
 import * as stylesDonateCommon from "../../styles/donate_common.module.scss"
 
@@ -88,18 +91,34 @@ const Donate = () => {
                     <div style={{ marginLeft: 0, marginBottom: "1.8rem" }}>
                         <p style={{ marginBottom: "-0.8rem" }}>
                             <img src={KoFi} className="noselect" alt="kofi_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
-                            <s><a href="https://ko-fi.com/avrtt">@avrtt</a></s>
+                            <a href="https://ko-fi.com/avrtt">@avrtt</a>
                         </p>
                         <p style={{ marginBottom: "-0.8rem" }}>
                             <img src={PayPal} className="noselect" alt="paypal_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
-                            <s><a href="https://www.paypal.me/vladaverett">@vladaverett</a></s>
+                            <a href="https://www.paypal.me/vladaverett">@vladaverett</a>
                         </p>
                         <p style={{ marginBottom: "-0.8rem" }}>
                             <img src={Patreon} className="noselect" alt="patreon_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
-                            <s><a href="https://www.patreon.com/avrtt">@avrtt</a></s>
+                            <a href="https://www.patreon.com/avrtt">@avrtt</a>
                         </p>
                         <p style={{ marginBottom: "-0.8rem" }}>
-                            <img src={CardSber} className="noselect" alt="sber_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
+                            <img src={CardBakai} className="noselect" alt="card_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
+                            <motion.button className={stylesWallets.mobileWalletButton} onClick={() => navigator.clipboard.writeText(BakaiCardCopy)} whileTap={{ scale: 0.95 }}>Copy card number</motion.button> (Bakai Bank)
+                        </p>
+                        <p style={{ marginBottom: "-0.8rem" }}>
+                            <img src={CardMbank} className="noselect" alt="card_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
+                            <motion.button className={stylesWallets.mobileWalletButton} onClick={() => navigator.clipboard.writeText(MbankCardCopy)} whileTap={{ scale: 0.95 }}>Copy card number</motion.button> (MBank)
+                        </p>
+                        <p style={{ marginBottom: "-0.8rem" }}>
+                            <img src={CardVirtualEURMbank} className="noselect" alt="card_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
+                            <motion.button className={stylesWallets.mobileWalletButton} onClick={() => navigator.clipboard.writeText(MbankVirtualEURCardCopy)} whileTap={{ scale: 0.95 }}>Copy card number</motion.button> (MBank)
+                        </p>
+                        <p style={{ marginBottom: "-0.8rem" }}>
+                            <img src={CardVirtualRUBMbank} className="noselect" alt="card_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
+                            <motion.button className={stylesWallets.mobileWalletButton} onClick={() => navigator.clipboard.writeText(MbankVirtualRUBCardCopy)} whileTap={{ scale: 0.95 }}>Copy card number</motion.button> (MBank)
+                        </p>
+                        <p style={{ marginBottom: "-0.8rem" }}>
+                            <img src={CardSber} className="noselect" alt="card_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
                             <motion.button className={stylesWallets.mobileWalletButton} onClick={() => navigator.clipboard.writeText(SberbankCardCopy)} whileTap={{ scale: 0.95 }}>Copy card number</motion.button> (Sberbank)
                         </p>
                         <p style={{ marginBottom: "-0.8rem" }}>
@@ -119,18 +138,46 @@ const Donate = () => {
                 <div className={`${stylesWallets.wallets} desktopOnlySupport`}>
                     <div className={stylesWallets.wallet1}>
                         <img src={KoFi} className="noselect" alt="kofi_logo" width="60" height="60" style={logoStyle} />
-                        <s><a href={KofiLink}><code className={stylesWallets.donateLink}>{KofiHandle}</code></a></s>
+                        <a href={KofiLink}><code className={stylesWallets.donateLink}>{KofiHandle}</code></a>
                         <div className={stylesWallets.currencyName}>BUY ME A COFFEE WITH <b>KO-FI</b> </div>
                     </div>
                     <div className={stylesWallets.wallet3}>
                         <img src={PayPal} className="noselect" alt="paypal_logo" width="60" height="60" style={logoStyle} />
-                        <s><a href={PaypalLink}><code className={stylesWallets.donateLink}>{PaypalHandle}</code></a></s>
+                        <a href={PaypalLink}><code className={stylesWallets.donateLink}>{PaypalHandle}</code></a>
                         <div className={stylesWallets.currencyName}><b>PAYPAL</b> MULTICURRENCY TRANSFER</div>
                     </div>
                     <div className={stylesWallets.wallet3}>
                         <img src={Patreon} className="noselect" alt="patreon_logo" width="60" height="60" style={logoStyle} />
-                        <s><a href={PatreonLink}><code className={stylesWallets.donateLink}>{PatreonHandle}</code></a></s>
+                        <a href={PatreonLink}><code className={stylesWallets.donateLink}>{PatreonHandle}</code></a>
                         <div className={stylesWallets.currencyName}><b>PATREON</b> EXCLUSIVE CONTENT VIA PAID SUBSCRIPTION</div>
+                    </div>
+                    <div className={stylesWallets.wallet3}>
+                        <img src={CardBakai} className="noselect" alt="card_logo" width="60" height="60" style={logoStyle} />
+                        <code className={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(BakaiCardCopy)}><div className={stylesWallets.tooltip}>{BakaiCardDisplay}
+                        <span className={stylesWallets.tooltiptext}>Click to copy</span></div></code>
+                        <div className={stylesWallets.currencyName}><b>USD</b> &nbsp;(BAKAI BANK)
+                        </div>
+                    </div>
+                    <div className={stylesWallets.wallet3}>
+                        <img src={CardMbank} className="noselect" alt="card_logo" width="60" height="60" style={logoStyle} />
+                        <code className={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(MbankCardCopy)}><div className={stylesWallets.tooltip}>{MbankCardDisplay}
+                        <span className={stylesWallets.tooltiptext}>Click to copy</span></div></code>
+                        <div className={stylesWallets.currencyName}><b>USD</b> &nbsp;(MBANK)
+                        </div>
+                    </div>
+                    <div className={stylesWallets.wallet3}>
+                        <img src={CardVirtualEURMbank} className="noselect" alt="card_logo" width="60" height="60" style={logoStyle} />
+                        <code className={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(MbankVirtualEURCardCopy)}><div className={stylesWallets.tooltip}>{MbankVirtualEURCardDisplay}
+                        <span className={stylesWallets.tooltiptext}>Click to copy</span></div></code>
+                        <div className={stylesWallets.currencyName}><b>EUR</b> &nbsp;(MBANK)
+                        </div>
+                    </div>
+                    <div className={stylesWallets.wallet3}>
+                        <img src={CardVirtualRUBMbank} className="noselect" alt="card_logo" width="60" height="60" style={logoStyle} />
+                        <code className={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(MbankVirtualRUBCardCopy)}><div className={stylesWallets.tooltip}>{MbankVirtualRUBCardDisplay}
+                        <span className={stylesWallets.tooltiptext}>Click to copy</span></div></code>
+                        <div className={stylesWallets.currencyName}><b>RUB</b> &nbsp;(MBANK)
+                        </div>
                     </div>
                     <div className={stylesWallets.wallet3}>
                         <img src={CardSber} className="noselect" alt="card_logo" width="60" height="60" style={logoStyle} />

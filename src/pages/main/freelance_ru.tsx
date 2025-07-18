@@ -21,6 +21,11 @@ import FreelanceCategory from'../../components/FreelanceCategory';
 import Courses from'../../components/Courses';
 import SpoilerServices from '../../components/SpoilerServices';
 import { Link } from "gatsby"
+import PayPal from "../../images/donate/paypal.svg";
+import CardBakai from "../../images/donate/card_bakai.svg";
+import CardMbank from "../../images/donate/card_mbank.svg";
+import CardVirtualEURMbank from "../../images/donate/card_mbank_virtual_eur.svg";
+import CardVirtualRUBMbank from "../../images/donate/card_mbank_virtual_rub.svg";
 import CardSber from "../../images/donate/card_sber.svg";
 import BTC from "../../images/donate/btc.svg";
 import ETH from "../../images/donate/eth.svg";
@@ -41,7 +46,7 @@ import FreelanceStatus from "../../components/FreelanceStatus"
 import Tooltip from "../../components/Tooltip";
 import photoAbout from "../../images/about/photoAbout.jpg";
 import { textMain } from "../strings/freelance"
-import { SberbankCardCopy, SberbankCardDisplay, SberbankSBPCopy, SberbankSBPDisplay, BitcoinWallet, BEP20Wallet, ERC20Wallet } from "../../data/paymentMethods";
+import { PaypalLink, PaypalHandle, BakaiCardCopy, BakaiCardDisplay, MbankCardCopy, MbankCardDisplay, MbankVirtualEURCardCopy, MbankVirtualEURCardDisplay, MbankVirtualRUBCardCopy, MbankVirtualRUBCardDisplay, SberbankCardCopy, SberbankCardDisplay, SberbankSBPCopy, SberbankSBPDisplay, BitcoinWallet, BEP20Wallet, ERC20Wallet } from "../../data/paymentMethods";
 import * as stylesWallets from "../../styles/wallets.module.scss"
 import * as stylesDonateCommon from "../../styles/donate_common.module.scss"
 import * as stylesSpoilers from "../../styles/spoilers.module.scss"
@@ -467,7 +472,27 @@ const FreelanceRu = () => {
 					<div className="mobileOnlySupport">
 						<div style={{ marginLeft: 0, marginBottom: "1.8rem" }}>
 							<p style={{ marginBottom: "-0.8rem" }}>
-								<img src={CardSber} className="noselect" alt="sber_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
+								<img src={PayPal} className="noselect" alt="paypal_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
+								<a href="https://www.paypal.me/vladaverett">@vladaverett</a>
+							</p>
+							<p style={{ marginBottom: "-0.8rem" }}>
+								<img src={CardBakai} className="noselect" alt="card_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
+								<motion.button className={stylesWallets.mobileWalletButton} onClick={() => navigator.clipboard.writeText(BakaiCardCopy)} whileTap={{ scale: 0.95 }}>Скопировать номер карты</motion.button> (Бакай)
+							</p>
+							<p style={{ marginBottom: "-0.8rem" }}>
+								<img src={CardMbank} className="noselect" alt="card_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
+								<motion.button className={stylesWallets.mobileWalletButton} onClick={() => navigator.clipboard.writeText(MbankCardCopy)} whileTap={{ scale: 0.95 }}>Скопировать номер карты</motion.button> (МБанк)
+							</p>
+							<p style={{ marginBottom: "-0.8rem" }}>
+								<img src={CardVirtualEURMbank} className="noselect" alt="card_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
+								<motion.button className={stylesWallets.mobileWalletButton} onClick={() => navigator.clipboard.writeText(MbankVirtualEURCardCopy)} whileTap={{ scale: 0.95 }}>Скопировать номер карты</motion.button> (МБанк)
+							</p>
+							<p style={{ marginBottom: "-0.8rem" }}>
+								<img src={CardVirtualRUBMbank} className="noselect" alt="card_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
+								<motion.button className={stylesWallets.mobileWalletButton} onClick={() => navigator.clipboard.writeText(MbankVirtualRUBCardCopy)} whileTap={{ scale: 0.95 }}>Скопировать номер карты</motion.button> (МБанк)
+							</p>
+							<p style={{ marginBottom: "-0.8rem" }}>
+								<img src={CardSber} className="noselect" alt="card_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
 								<motion.button className={stylesWallets.mobileWalletButton} onClick={() => navigator.clipboard.writeText(SberbankCardCopy)} whileTap={{ scale: 0.95 }}>Скопировать номер карты</motion.button> (Сбер)
 							</p>
 							<p style={{ marginBottom: "-0.8rem" }}>
@@ -485,6 +510,35 @@ const FreelanceRu = () => {
 						</div>
 					</div>
 					<div className={`${stylesWallets.wallets} desktopOnlySupport`}>
+						<div className={stylesWallets.wallet3}>
+							<img src={PayPal} className="noselect" alt="paypal_logo" width="60" height="60" style={logoStyle} />
+							<a href={PaypalLink}><code className={stylesWallets.donateLink}>{PaypalHandle}</code></a>
+							<div className={stylesWallets.currencyName}><b>PAYPAL</b> (МУЛЬТИВАЛЮТНЫЙ ПЕРЕВОД)</div>
+						</div>
+						<div className={stylesWallets.wallet3}>
+							<img src={CardBakai} className="noselect" alt="card_logo" width="60" height="60" style={logoStyle} />
+							<code className={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(BakaiCardCopy)}><div className={stylesWallets.tooltip}>{BakaiCardDisplay}
+							<span className={stylesWallets.tooltiptext}>Скопировать</span></div></code>
+							<div className={stylesWallets.currencyName}><b>USD</b> &nbsp;(БАКАЙ БАНК)</div>
+						</div>
+						<div className={stylesWallets.wallet3}>
+							<img src={CardMbank} className="noselect" alt="card_logo" width="60" height="60" style={logoStyle} />
+							<code className={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(MbankCardCopy)}><div className={stylesWallets.tooltip}>{MbankCardDisplay}
+							<span className={stylesWallets.tooltiptext}>Скопировать</span></div></code>
+							<div className={stylesWallets.currencyName}><b>USD</b> &nbsp;(МБАНК)</div>
+						</div>
+						<div className={stylesWallets.wallet3}>
+							<img src={CardVirtualEURMbank} className="noselect" alt="card_logo" width="60" height="60" style={logoStyle} />
+							<code className={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(MbankVirtualEURCardCopy)}><div className={stylesWallets.tooltip}>{MbankVirtualEURCardDisplay}
+							<span className={stylesWallets.tooltiptext}>Скопировать</span></div></code>
+							<div className={stylesWallets.currencyName}><b>EUR</b> &nbsp;(МБАНК)</div>
+						</div>
+						<div className={stylesWallets.wallet3}>
+							<img src={CardVirtualRUBMbank} className="noselect" alt="card_logo" width="60" height="60" style={logoStyle} />
+							<code className={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(MbankVirtualRUBCardCopy)}><div className={stylesWallets.tooltip}>{MbankVirtualRUBCardDisplay}
+							<span className={stylesWallets.tooltiptext}>Скопировать</span></div></code>
+							<div className={stylesWallets.currencyName}><b>RUB</b> &nbsp;(МБАНК)</div>
+						</div>
 						<div className={stylesWallets.wallet3}>
 							<img src={CardSber} className="noselect" alt="card_logo" width="60" height="60" style={logoStyle} />
 							<code className={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(SberbankCardCopy)}><div className={stylesWallets.tooltip}>{SberbankCardDisplay}
@@ -511,7 +565,7 @@ const FreelanceRu = () => {
 							<div className={stylesWallets.currencyName}><b>USDT • USDC • DAI • BNB</b> &nbsp;(СЕТЬ BNB SMART CHAIN, BEP-20)</div>
 						</div>				
 						<div className={stylesWallets.wallet6}>
-							<img src={ETH} className="noselect" alt="etherium_logo" width="60" height="60" style={logoStyle} />
+							<img src={ETH} className="noselect" alt="ethereum_logo" width="60" height="60" style={logoStyle} />
 							<code className={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(ERC20Wallet)}><div className={stylesWallets.tooltip}>{ERC20Wallet}
 							<span className={stylesWallets.tooltiptext}>Скопировать</span></div></code>&nbsp;
 							<img id={stylesWallets.qr} className={stylesWallets.icon} src={QR} width="36" height="36" title="QR code" alt="qr-code" />
