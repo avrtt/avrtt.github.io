@@ -40,6 +40,7 @@ import pencil from "../../gifs/pencil.gif";
 import dove from "../../gifs/dove.gif";
 import hide from "../../gifs/hide.gif";
 import monocle from "../../gifs/monocle.gif";
+import beers from "../../gifs/beers.gif";
 import photoAbout from "../../images/about/photoAbout.jpg";
 import { Link } from 'gatsby';
 import LocationAnnouncements from "../../components/LocationAnnouncements";
@@ -349,7 +350,7 @@ const About = () => {
                         width="26%"
                     />
                 </TileContainer>
-                <TileContainer columns={2} animationonscroll={false} marginBottom='4vh'>
+                <TileContainer columns={2} animationonscroll={false}>
                     <ContentBlock
                         emoji='✏️'
                         emojiGif={pencil}
@@ -376,6 +377,41 @@ const About = () => {
                         width="34.5%"
                     />
                 </TileContainer>
+                <TileContainer columns={3} animationonscroll={false} marginBottom='4vh'>
+                    <ContentBlock
+                        emoji=""
+                        emojiGif={""}
+                        description=""
+                        isMarkdown={false}
+                        backgroundColor="#f2f2f2"
+                        justifyContent = 'start'
+                        emojiAlign='center'
+                        width="0%"
+                    />
+                    <ContentBlock
+                        emoji="🍻"
+                        emojiGif={beers}
+                        description={<>
+                            <p>I'm a member of several <H>travel communities</H>, <a href="https://www.couchsurfing.com/people/averett">including CouchSurfing</a>. I organize events, host travelers and try to give hospitality in different locations.</p>
+                        </>}
+                        backgroundColor="#DEDEDE"
+                        justifyContent = 'start'
+                        textAlign='center'
+                        emojiAlign='center'
+                        isMarkdown={false}
+                        width="66%"
+                    />
+                    <ContentBlock
+                        emoji=""
+                        emojiGif={""}
+                        description=""
+                        isMarkdown={false}
+                        backgroundColor="#f2f2f2"
+                        justifyContent = 'start'
+                        emojiAlign='center'
+                        width="0%"
+                    />
+                </TileContainer>
                 <div className="mobileOnlySupport"><br/></div>
                 <AnimationOnScroll offset={300} duration={1.2} animateIn="animate__fadeIn" animateOnce={true}>
                     <div className="aboutBodyRegular">
@@ -392,8 +428,8 @@ const About = () => {
                         <div className="listDescItem"><p>Started a free and open source <Link to="/course">course</Link> on machine learning and data science</p></div>
                         <div className="listDescTime"><M text="- 2025 March — Ongoing"/></div>
                         <div className="listDescItem"><p>Set off on my <Link to="/adventures/venturing_forth">planned trip</Link> around the world with the goal of circumnavigating the globe</p></div>
-                    {/*<div className="listDescTime"><M text="- ?"/></div>
-                        <div className="listDescItem"><M text="Traveled throughout Central Asia, make a long stop in 🇰🇿 [Almaty](https://en.wikipedia.org/wiki/Almaty)"/></div>*/}
+                        <div className="listDescTime"><M text="- 2025 July"/></div>
+                        <div className="listDescItem"><M text="Traveled throughout Central Asia, moved to 🇰🇬 [Bishkek](https://en.wikipedia.org/wiki/Bishkek)"/></div>
                         <div className="listDescItemLast"></div>
                         <br/>
                     </div>
@@ -429,7 +465,7 @@ const About = () => {
 - 🤓 Secondary (hobby-like) interests: <a href="https://en.wikipedia.org/wiki/Web_development">web development</a> (mostly frontend), <a href="https://en.wikipedia.org/wiki/Python_(programming_language)">Python</a> apps and <a href="https://en.wikipedia.org/wiki/Prompt_engineering">prompt engineering</a>
 - 🔬 Prefer to analyse & research rather than develop
 - 👁️ Main focus in DL applications is <a href="https://en.wikipedia.org/wiki/Computer_vision">computer vision</a> 
-- 🏆 Sometimes I <a href="https://www.kaggle.com/lenferdetroud">participate</a> in ML competitions and hackathons
+- 🏆 Sometimes I participate in ML competitions/hackathons and <a href="https://www.kaggle.com/lenferdetroud">have a rank</a> of Kaggle Competitions Expert
 - 🔎 Currently developing skills towards <a href="https://en.wikipedia.org/wiki/Artificial_intelligence_engineering">AI engineering</a>
                             `}/>
                         </div>
