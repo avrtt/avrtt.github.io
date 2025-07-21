@@ -179,7 +179,7 @@ const FreelanceRu = () => {
 							<li>📩 Почта: <a href="mailto:avrtt@tuta.io">avrtt@tuta.io</a></li>
 							<li>👤 Facebook: <a href="https://www.facebook.com/vladaverett">@vladaverett</a></li>
 							<li>🇷🇺 Kwork: <a href="https://kwork.ru/user/avrtt">@avrtt</a></li>
-							<li>🌐 Upwork: <a href="https://www.upwork.com/freelancers/~019b5459361c20c528">link</a></li>
+							<li>🌐 Upwork: <a href="https://www.upwork.com/freelancers/~015b4e73042bbcccd1">link</a></li>
 							<li>🌐 Fiverr: <a href="https://www.fiverr.com/vladaverett">@vladaverett</a></li>
 						</ul>
 					</div>
@@ -225,7 +225,7 @@ const FreelanceRu = () => {
 							padding='20px'
 						/>
 						<LinkBlock
-							link='https://www.upwork.com/freelancers/~019b5459361c20c528'
+							link='https://www.upwork.com/freelancers/~015b4e73042bbcccd1'
 							icon={upwork}
 							name='Upwork 🌐'
 							handle=''

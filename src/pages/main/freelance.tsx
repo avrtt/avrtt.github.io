@@ -177,7 +177,7 @@ const Freelance = () => {
 							<li>📲 Telegram: <a href="https://t.me/averett">@averett</a></li>
 							<li>📩 Email: <a href="mailto:avrtt@tuta.io">avrtt@tuta.io</a></li>
 							<li>👤 Facebook: <a href="https://www.facebook.com/vladaverett">@vladaverett</a></li>
-							<li>🌐 Upwork: <a href="https://www.upwork.com/freelancers/~019b5459361c20c528">link</a></li>
+							<li>🌐 Upwork: <a href="https://www.upwork.com/freelancers/~015b4e73042bbcccd1">link</a></li>
 							<li>🌐 Fiverr: <a href="https://www.fiverr.com/vladaverett">@vladaverett</a></li>
 							<li>🇷🇺 Kwork: <a href="https://kwork.ru/user/avrtt">@avrtt</a></li>
 						</ul>
@@ -215,7 +215,7 @@ const Freelance = () => {
 					</TileContainerLink>
 					<TileContainerLink columns={3} marginBottom='6vh' animationonscroll={false}>
 						<LinkBlock
-							link='https://www.upwork.com/freelancers/~019b5459361c20c528'
+							link='https://www.upwork.com/freelancers/~015b4e73042bbcccd1'
 							icon={upwork}
 							name='Upwork 🌐'
 							handle=''

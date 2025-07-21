@@ -351,7 +351,7 @@ const Home = () => {
 								<li>📎 Today I read (TG): <a href="https://t.me/avreads">@avreads</a></li>
 								<li>🤝 Prof. page (FB): <a href="https://www.facebook.com/averett.freelance">@averett.freelance</a></li>
 								<li>🤝 LinkedIn: <a href="https://www.linkedin.com/in/avrtt">@avrtt</a></li>
-								<li>🤝 Upwork: <a href="https://www.upwork.com/freelancers/~019b5459361c20c528/">link</a></li>
+								<li>🤝 Upwork: <a href="https://www.upwork.com/freelancers/~015b4e73042bbcccd1/">link</a></li>
 								<li>🤝 Fiverr: <a href="https://www.fiverr.com/vladaverett">@vladaverett</a></li>
 								<li>🤝 Kwork: <a href="https://kwork.ru/user/avrtt">@avrtt</a></li>
 								<li>🎁 <S style={{}} className={""}><H>Donate</H>: <Link to="/donate">link</Link></S></li>
@@ -593,7 +593,7 @@ const Home = () => {
 					/>
 					<LinkBlock
 						inactive={true}
-						link='https://www.upwork.com/freelancers/~019b5459361c20c528/'
+						link='https://www.upwork.com/freelancers/~015b4e73042bbcccd1/'
 						icon={upwork}
 						categoryEmoji={''}
 						categoryName="Work"
