@@ -582,7 +582,6 @@ const Home = () => {
 						description='Mostly for testimonials'
 					/>
 					<LinkBlock
-						inactive={true}
 						link='https://www.linkedin.com/in/avrtt'
 						icon={linkedin}
 						categoryEmoji={''}
@@ -592,7 +591,6 @@ const Home = () => {
 						description='For the future'
 					/>
 					<LinkBlock
-						inactive={true}
 						link='https://www.upwork.com/freelancers/~015b4e73042bbcccd1/'
 						icon={upwork}
 						categoryEmoji={''}
@@ -604,7 +602,6 @@ const Home = () => {
 				</TileContainerLink>
 				<TileContainerLink columns={4} gap="1em" marginBottom="0">
 					<LinkBlock
-						inactive={true}
 						link='https://www.fiverr.com/vladaverett'
 						icon={fiverr}
 						categoryEmoji={''}
