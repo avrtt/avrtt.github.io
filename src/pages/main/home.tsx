@@ -588,7 +588,7 @@ const Home = () => {
 						categoryName="Work"
 						name='LinkedIn'
 						handle='@avrtt'
-						description='For the future'
+						description='For networking'
 					/>
 					<LinkBlock
 						link='https://www.upwork.com/freelancers/~015b4e73042bbcccd1/'
