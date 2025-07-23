@@ -21,7 +21,6 @@ import FreelanceCategory from'../../components/FreelanceCategory';
 import Courses from'../../components/Courses';
 import SpoilerServices from '../../components/SpoilerServices';
 import { Link } from "gatsby"
-import PayPal from "../../images/donate/paypal.svg";
 import CardBakai from "../../images/donate/card_bakai.svg";
 import CardMbank from "../../images/donate/card_mbank.svg";
 import CardVirtualEURMbank from "../../images/donate/card_mbank_virtual_eur.svg";
@@ -46,7 +45,7 @@ import FreelanceStatus from "../../components/FreelanceStatus"
 import Tooltip from "../../components/Tooltip";
 import photoAbout from "../../images/about/photoAbout.jpg";
 import { textMain } from "../strings/freelance"
-import { PaypalLink, PaypalHandle, BakaiCardCopy, BakaiCardDisplay, MbankCardCopy, MbankCardDisplay, MbankVirtualEURCardCopy, MbankVirtualEURCardDisplay, MbankVirtualRUBCardCopy, MbankVirtualRUBCardDisplay, SberbankCardCopy, SberbankCardDisplay, SberbankSBPCopy, SberbankSBPDisplay, BitcoinWallet, BEP20Wallet, ERC20Wallet } from "../../data/paymentMethods";
+import { BakaiCardCopy, BakaiCardDisplay, MbankCardCopy, MbankCardDisplay, MbankVirtualEURCardCopy, MbankVirtualEURCardDisplay, MbankVirtualRUBCardCopy, MbankVirtualRUBCardDisplay, SberbankCardCopy, SberbankCardDisplay, SberbankSBPCopy, SberbankSBPDisplay, BitcoinWallet, BEP20Wallet, ERC20Wallet } from "../../data/paymentMethods";
 import * as stylesWallets from "../../styles/wallets.module.scss"
 import * as stylesDonateCommon from "../../styles/donate_common.module.scss"
 import * as stylesSpoilers from "../../styles/spoilers.module.scss"
@@ -471,10 +470,6 @@ const Freelance = () => {
 					<div className="mobileOnlySupport">
 						<div style={{ marginLeft: 0, marginBottom: "1.8rem" }}>
 							<p style={{ marginBottom: "-0.8rem" }}>
-								<img src={PayPal} className="noselect" alt="paypal_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
-								<a href="https://www.paypal.me/vladaverett">@vladaverett</a>
-							</p>
-							<p style={{ marginBottom: "-0.8rem" }}>
 								<img src={CardBakai} className="noselect" alt="card_logo" width="32rem" height="32rem" style={logoStyle} />&nbsp;
 								<motion.button className={stylesWallets.mobileWalletButton} onClick={() => navigator.clipboard.writeText(BakaiCardCopy)} whileTap={{ scale: 0.95 }}>Copy card number</motion.button> (Bakai Bank)
 							</p>
@@ -509,11 +504,6 @@ const Freelance = () => {
 						</div>
 					</div>
 					<div className={`${stylesWallets.wallets} desktopOnlySupport`}>
-						<div className={stylesWallets.wallet3}>
-							<img src={PayPal} className="noselect" alt="paypal_logo" width="60" height="60" style={logoStyle} />
-							<a href={PaypalLink}><code className={stylesWallets.donateLink}>{PaypalHandle}</code></a>
-							<div className={stylesWallets.currencyName}><b>PAYPAL</b> MULTICURRENCY TRANSFER</div>
-						</div>
 						<div className={stylesWallets.wallet3}>
 							<img src={CardBakai} className="noselect" alt="card_logo" width="60" height="60" style={logoStyle} />
 							<code className={stylesDonateCommon.address} onClick={() => navigator.clipboard.writeText(BakaiCardCopy)}><div className={stylesWallets.tooltip}>{BakaiCardDisplay}
