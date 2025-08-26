@@ -27,7 +27,7 @@ body {
   @include mix.respond-to(desktop) { max-width: 73%; padding: 0 2.4em }
 }
 
-.generalBody, .homeBodyRegular, .courseBody, .freelanceBody, .aboutBodyRegular, .postBody, .donateBody, .contactBody, .handbookBody {
+.generalBody, .homeBodyRegular, .courseBody, .freelanceBody, .aboutBodyRegular, .postBody, .donateBody, .contactBody, .handbookBody, .cvBody {
   @extend %body-box;
   font-size: clamp(1rem, 2.5vw, 1.4rem);
   transition: margin 1s ease, padding 1s ease;
@@ -98,7 +98,7 @@ body {
   font-weight: bold;
 }
 
-.publicationsBody, .softwareBody, .musicBody, .talksBody, .explorationBody, .explorationBodyNested, .cvBody {
+.publicationsBody, .softwareBody, .musicBody, .talksBody, .explorationBody, .explorationBodyNested {
   /* ... */
 }
 
