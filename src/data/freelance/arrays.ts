@@ -1843,6 +1843,62 @@ export const services = [{},
     - Email automation
     - PDF extraction (OCR), обработка/оцифровка документов
 	- Индексация цен (определение и корректировка цен)
+
+	Сделать категорию услуг преподавателя/переводчика русского языка
+
+	From Fiverr categories:
+	
+	DIGITAL MARKETING
+	> WEB ANALYTICS
+	> MARKETING AUTOMATION
+
+	WRITING & TRANSLATION
+	> ARTICLES & BLOG POSTS
+	> TRANSLATION / english, russian, spanish
+	> WEBSITE CONTENT
+	> BOOK EDITING
+	> TECHNICAL WRITING / user manuals, documentation, reports
+	> WHITE PAPERS
+	> LOCALIZATION
+	> CUSTOM WRITING PROPS
+	> ELEARNING CONTENT DEVELOPMENT
+	> RESEARCH & SUMMARIES
+	> ACADEMIC SUPPORT
+
+	VIDEO & ANIMATION
+	> VIDEO EDITING
+
+	PROGRAMMING & TECH
+	> WEBSITE DEVELOPMENT
+	> SOFTWARE DEVELOPMENT / big fixes, scripting, desktop apps, api & integrations, automation & workflows
+	> AI DEVELOPMENT / ai agents, ai integrations, custom gpt apps, ai software, ai technology consulting
+	> CHAT BOT DEVELOPMENT
+	> CLOUD COMPUTING
+
+	DATA
+	> DATA SCRAPING
+	> DATA LABELING & ANNOTATION
+	> DATA FORMATTING
+	> DATABASES
+	> DATA CLEANING
+	> DATA ENRICHMENT
+	> DATA PROCESSING
+	> DATA ENGINEERING
+	> DATA ANALYTICS
+	> DATA VISUALIZATION
+	> DATA SCIENCE & ML
+
+	BUSINESS
+	> MARKET RESEARCH
+	> ONLINE INVESTIGATIONS
+	> AI CONSULTING
+
+	PERSONAL GROWTH & HOBBIES
+	> LANGUAGE LESSONS
+	> TRAVELING
+
+	END-TO-END PROJECTS
+	> BUILD A WEBSITE
 */
  
 export const categories = [
