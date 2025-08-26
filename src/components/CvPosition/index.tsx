@@ -42,10 +42,17 @@ const point5Style = {
   marginBottom: '-26px'
 };
 
+const emojiStyle = {
+  float: 'right',
+  fontSize: '32px',
+  marginTop: '-12px'
+};
+
 interface CvPositionProps {
   positionName: string;
   companyName: string;
   companyLink: string;
+  emoji: string;
   expTime: string;
   expLocation: string;
   expDesc: string;
@@ -61,6 +68,7 @@ const CvPosition: React.FC<CvPositionProps> = ({
   positionName, 
   companyName, 
   companyLink, 
+  emoji,
   expTime, 
   expLocation, 
   expDesc, 
@@ -73,7 +81,7 @@ const CvPosition: React.FC<CvPositionProps> = ({
 }) => {
   return (
 	<>
-    <span className="expPosition">{positionName}</span>&nbsp;@&nbsp;<span className="expCompany"><a href={companyLink}>{companyName}</a></span>
+    <span className="expPosition"><b>{positionName}</b></span>&nbsp;@&nbsp;<span className="expCompany"><a href={companyLink}>{companyName}</a></span>&nbsp;<span style={emojiStyle}>{emoji}</span>
     <br/>
     <div className="expTimeLocationWrapper">
       <span className="expTime">

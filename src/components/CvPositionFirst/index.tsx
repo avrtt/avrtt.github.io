@@ -42,8 +42,15 @@ const point5Style = {
   marginBottom: '-26px'
 };
 
+const emojiStyle = {
+  float: 'right',
+  fontSize: '32px',
+  marginTop: '-12px'
+};
+
 interface CvPositionFirstProps {
   positionName: string;
+  emoji: string;
   expTime: string;
   expLocation: string;
   expDesc: string;
@@ -57,6 +64,7 @@ interface CvPositionFirstProps {
 
 const CvPositionFirst: React.FC<CvPositionFirstProps> = ({ 
   positionName, 
+  emoji,
   expTime, 
   expLocation, 
   expDesc, 
@@ -69,7 +77,7 @@ const CvPositionFirst: React.FC<CvPositionFirstProps> = ({
 }) => {
   return (
 	<>
-    <span className="expPosition">{positionName}</span>
+    <span className="expPosition"><b>{positionName}</b></span>&nbsp;<span style={emojiStyle}>{emoji}</span>
     <br/>
     <div className="expTimeLocationWrapper">
       <span className="expTime">
