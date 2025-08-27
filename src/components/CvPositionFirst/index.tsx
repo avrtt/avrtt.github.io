@@ -9,6 +9,7 @@ import React, { useEffect } from "react";
 import cvCalendar from "../../images/cv/cvCalendar.svg";
 import cvLocation from "../../images/cv/cvLocation.svg";
 import M from '../../components/Markdown';
+import H from '../../components/Highlight';
 
 const calendarLogoStyle = {
 	verticalAlign: 'middle',
@@ -77,7 +78,7 @@ const CvPositionFirst: React.FC<CvPositionFirstProps> = ({
 }) => {
   return (
 	<>
-    <span className="expPosition"><b>{positionName}</b></span>&nbsp;<span style={emojiStyle}>{emoji}</span>
+    <span className="expPosition"><H>{positionName}</H></span>&nbsp;<span style={emojiStyle}>{emoji}</span>
     <br/>
     <div className="expTimeLocationWrapper">
       <span className="expTime">
