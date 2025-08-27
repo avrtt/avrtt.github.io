@@ -38,7 +38,7 @@ const CV = () => {
 		
 		<div className="cvBody">
 	
-			<div className="noselect" style={downloadStyle}><a href="https://github.com/avrtt/avrtt.github.io/raw/master/src/documents/cv.pdf">Download</a> <br/> <div style={downloadDescStyle}>(compact version)</div></div>
+			<div className="noselect" style={downloadStyle}><a href="https://github.com/avrtt/avrtt.github.io/blob/main/src/documents/cv.pdf">Download</a> <br/> <div style={downloadDescStyle}>(compact version)</div></div>
 
 			<p>I'm a <b>Middle Data Scientist</b> with experience in ML engineering, Python programming and analytics. I specialize in designing/implementing/refining/deploying ML systems, data-related problems (collection, processing, transforming, modeling, visualization, analysis, interpreting), and developing various automation software.</p>
 			<p>This page provides a more detailed description of my professional skills, as opposed to the minimal version of the CV provided in the link above. For my freelance services and projects, check out the <Link to="/freelance">Freelance</Link> page.</p>
