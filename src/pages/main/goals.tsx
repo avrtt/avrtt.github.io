@@ -21,7 +21,7 @@ import checkbox from "../../images/goals/checked.svg";
 import refLink from "../../images/goals/refLink.svg";
 import resultLink from "../../images/goals/resultLink.svg";
 import info from "../../images/goals/info.svg";
-import Notice from '../../components/Notice';
+import { CustomTableOfContents } from '../../components/CustomTableOfContents';
 import * as stylesGoalsPage from "../../styles/goals_page.module.scss"
 import * as stylesSpoilers from "../../styles/spoilers.module.scss"
 import * as stylesButtonsCommon from "../../styles/buttons_common.module.scss"
@@ -66,6 +66,11 @@ const textImg = {
     'margin': '0'
 }
 
+const goalCategoryAnchor: React.CSSProperties = {
+    visibility: 'hidden',
+    fontSize: 0
+}
+
 interface Goal {
     text: string;
     status: 'c' | 'u';
@@ -86,7 +91,7 @@ interface Goal {
 const Goals = () => {
 
     const collRef = useRef<(HTMLButtonElement | null)[]>([]);
-
+    
     useEffect(() => {
         const coll = collRef.current;
         coll.forEach((element) => {
@@ -120,6 +125,9 @@ const Goals = () => {
             nodes {
               order
               title
+              titleAnchor
+              titleAnchorMobile
+              emoji
               description
               goals {
                 text
@@ -166,6 +174,56 @@ const Goals = () => {
     const hideCheckedButtonOpacity = hideUnchecked ? 0.3 : 1
     const hideUncheckedButtonOpacity = hideChecked ? 0.3 : 1
 
+    const [headings, setHeadings] = useState([]);
+    const [isDesktop, setIsDesktop] = useState<boolean>(true);
+
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+        const mediaQuery = window.matchMedia('(min-width: 992px)');
+        const updateIsDesktop = (e?: MediaQueryList | MediaQueryListEvent) => {
+            setIsDesktop((e as MediaQueryList)?.matches ?? mediaQuery.matches);
+        };
+        updateIsDesktop(mediaQuery);
+        const handler = (e: MediaQueryListEvent) => updateIsDesktop(e);
+        if (mediaQuery.addEventListener) {
+            mediaQuery.addEventListener('change', handler);
+        } else {
+            // @ts-ignore - Safari
+            mediaQuery.addListener(handler);
+        }
+        return () => {
+            if (mediaQuery.removeEventListener) {
+                mediaQuery.removeEventListener('change', handler);
+            } else {
+                // @ts-ignore - Safari
+                mediaQuery.removeListener(handler);
+            }
+        };
+    }, []);
+    
+    useEffect(() => {
+        const headingElements = Array.from(
+            document.querySelectorAll('.goalsBody h2')
+        );
+
+        headingElements.forEach((elem) => {
+        if (!elem.id) {
+            elem.id = elem.textContent ? elem.textContent
+            .toLowerCase()
+            .replace(/\s+/g, '-')
+            .replace(/[^\w-]+/g, '') : '';
+        }
+        });
+
+        const data = headingElements.map((el) => ({
+            id: el.id,
+            text: el.textContent,
+            level: el.tagName,
+        }));
+
+        setHeadings(data as any);
+    }, [isDesktop]);
+
   return (
     <motion.div
 		initial={{opacity: 0 }}
@@ -183,8 +241,6 @@ const Goals = () => {
 
             <div className="goalsBodyNested">
                 <div className={stylesGoalsPage.goalsTextContent}>
-
-                    <Notice title="☝️ Wait a moment" text="I've removed the goals to reorganize them into categories. They'll be here soon. You can only see the test ones."/>
 
                     <p>Here you can find the public version of my bucket list, which is actually an organized collection of my life's achievements if it was a RPG (that's exactly how I feel this life). There are boring cliché goals, serious and challenging ones, but also just simple little things for folks who, like me, enjoy goofing around doing stupid and sometimes epic dangerous stuff, because that's what makes life exciting. <StickerPack sticker="pug_dance"/> </p>
                     <div className="desktopOnlySupport">
@@ -211,6 +267,10 @@ const Goals = () => {
                     </div>
                     <M text="Keeping a list of goals constantly reminds me of my passions and motivates me to push forward, and I hope it can give you some inspiration if you're feeling stuck in life."/>
                 </div>
+            </div>
+            <br/>
+            <div className="goalsBodyNested">
+                <CustomTableOfContents headings={headings} showNumbers={false} />
             </div>
             <br/>
             <div className="goalsBodyNested goalsBodyNestedMain">
@@ -278,15 +338,24 @@ const Goals = () => {
                 </div>
                 <br/>
                 <span className="mobileOnlySupport"><br/></span>
-                {sortedCategories.map((category) => (
-                    <GoalCategory
-                        array={category.goals}
-                        name={category.title} 
-                        desc={category.description} 
-                        isOpaque={isOpaque}
-                        hideChecked={hideChecked}
-                        hideUnchecked={hideUnchecked}
-                    />
+                {sortedCategories.map((category: any) => (
+                    <>
+                        <h2 style={goalCategoryAnchor}>
+                            <span>
+                                {category.emoji}
+                                &nbsp;
+                                {isDesktop ? category.titleAnchor : category.titleAnchorMobile}
+                            </span>
+                        </h2>
+                        <GoalCategory
+                            array={category.goals}
+                            name={category.title} 
+                            desc={category.description} 
+                            isOpaque={isOpaque}
+                            hideChecked={hideChecked}
+                            hideUnchecked={hideUnchecked}
+                        />
+                    </>
                 ))}
                 <br/>
             </div>

@@ -40,9 +40,10 @@ function buildTOCHierarchy(headings: Heading[]): TOCItem[] {
 
 interface CustomTableOfContentsProps {
   headings: Heading[];
+  showNumbers?: boolean;
 }
 
-export const CustomTableOfContents: React.FC<CustomTableOfContentsProps> = ({ headings }) => {
+export const CustomTableOfContents: React.FC<CustomTableOfContentsProps> = ({ headings, showNumbers = true }) => {
   if (!headings || headings.length === 0) return null;
 
   const tocData = buildTOCHierarchy(headings);
@@ -56,7 +57,7 @@ export const CustomTableOfContents: React.FC<CustomTableOfContentsProps> = ({ he
   };
 
   return (
-    <nav className={stylesTableOfContents.toc}>
+    <nav className={`${stylesTableOfContents.toc} ${!showNumbers ? stylesTableOfContents.noNumbers : ''}`}>
       <ul>
         {tocData.map((h2Item, i) => (
           <li key={i}>

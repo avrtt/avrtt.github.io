@@ -17,3 +17,7 @@ Distributed under the GNU AGPLv3 license. For details and source code, please re
   content: counters(item, ".") ". "; 
   counter-increment: item;
 }
+
+.toc.noNumbers ul>li:before {
+  content: none;
+}
