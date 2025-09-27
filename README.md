@@ -42,7 +42,7 @@
 
 # [avrtt.blog](https://avrtt.github.io/)
 
-Here you can find the code and documentation of my minimalist, static, MDX-based (and simply based) personal website. The site is **entirely custom**, designed only for my needs and **not meant to be a universal blog template**.
+Here you can find the code and documentation of my minimalist, static, agent-powered, MDX-based (and simply based) personal website. The site is **entirely custom**, designed only for my needs and **not meant to be a universal blog template**.
 
 > [!IMPORTANT] 
 > Please, read the **[Licensing](#licensing)** section carefully before forking this repo.
@@ -63,6 +63,7 @@ Here you can find the code and documentation of my minimalist, static, MDX-based
   - [Frontmatter](#frontmatter)
   - [Page templates](#page-templates)
   - [Geo data](#geo-data)
+  - [Web agents](#web-agents)
 - [Contribution](#contribution)
   - [To do](#to-do)
 - [Development](#development)
@@ -104,6 +105,7 @@ I first rewrote it to React without SSG (a very bad idea for a blog), then tried
 &nbsp;&nbsp;&nbsp; 🍃 Animations: **Framer Motion**  
 &nbsp;&nbsp;&nbsp; ♾️ Formulas: **LaTeX**  
 &nbsp;&nbsp;&nbsp; 💬 Comments: **Telegram** (comments.app API)  
+&nbsp;&nbsp;&nbsp; 🤖 Agents: **[avrtt/avrtt.blog-agents](https://github.com/avrtt/avrtt.blog-agents)**
 
 See other plugins and dependencies in **[package.json](https://github.com/avrtt/avrtt.github.io/blob/main/package.json)**. 
 
@@ -231,6 +233,11 @@ slug: "/research/POST_URL"
 ### Geo data
 
 <!-- This section is under development. -->
+
+
+### Web agents
+
+Please refer to **[avrtt/avrtt.blog-agents](https://github.com/avrtt/avrtt.blog-agents)**.
 
 
 ## Contribution
