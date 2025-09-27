@@ -37,7 +37,6 @@ const prevDateStyle: React.CSSProperties = {
 	padding: "0",
 	color: "#ffffff",
 	fontSize: "0.9vw",
-	fontFamily: "'Quicksand', sans-serif",
 	fontWeight: "900",
 	opacity: "1",
 	borderRadius: "0"
@@ -53,7 +52,6 @@ const prevUpdatedStyle: React.CSSProperties = {
 	padding: "0",
 	color: "#ffffff",
 	fontSize: "0.9vw",
-	fontFamily: "'Quicksand', sans-serif",
 	fontWeight: "900",
 	opacity: "0.6",
 	borderRadius: "0"
@@ -69,7 +67,6 @@ const prevInfoStyle: React.CSSProperties = {
 	width: "100%",
 	padding: "0",
 	fontSize: "0.9vw",
-	fontFamily: "'Quicksand', sans-serif",
 	fontWeight: "1000",
 }
 
@@ -83,7 +80,6 @@ const prevNumberStyle: React.CSSProperties = {
 	padding: "0",
 	color: "#ffffff",
 	fontSize: "0.9vw",
-	fontFamily: "'Quicksand', sans-serif",
 	fontWeight: "900",
 	opacity: "1",
 	borderRadius: "0"
@@ -99,7 +95,6 @@ const prevNumberStyleMobile: React.CSSProperties = {
 	padding: "0",
 	color: "#ffffff",
 	fontSize: "1rem",
-	fontFamily: "'Quicksand', sans-serif",
 	fontWeight: "900",
 	opacity: "1",
 	borderRadius: "0"
@@ -134,7 +129,6 @@ const PostBanner: React.FC<PostBannerProps> = ({ postNumber, date, updated, read
 		padding: "0",
 		color: "#ffffff",
 		fontSize: "0.9vw",
-		fontFamily: "'Quicksand', sans-serif",
 		fontWeight: "900",
 		opacity: updated ? "0.6" : "0",
 		borderRadius: "0"
@@ -150,7 +144,6 @@ const PostBanner: React.FC<PostBannerProps> = ({ postNumber, date, updated, read
     	padding: "0 2vw 0 2vw",
     	color: "#7C7C7C",
     	fontSize: "2.5vw",
-    	fontFamily: "'Quicksand', sans-serif",
     	fontWeight: "1000",
     	backgroundColor: "rgb(255, 255, 255)",
     	opacity: "1",
@@ -168,7 +161,6 @@ const PostBanner: React.FC<PostBannerProps> = ({ postNumber, date, updated, read
     	padding: "0 2vw 0 2vw",
     	color: "#7C7C7C",
     	fontSize: "clamp(1.25rem, 5vw, 2rem)",
-    	fontFamily: "'Quicksand', sans-serif",
     	fontWeight: "1000",
     	backgroundColor: "#f2f2f2",
     	opacity: "1",
@@ -185,7 +177,6 @@ const PostBanner: React.FC<PostBannerProps> = ({ postNumber, date, updated, read
 		maxWidth: "100%",
     	color: "#ffffff",
     	fontSize: "1.2vw",
-    	fontFamily: "'Quicksand', sans-serif",
     	fontWeight: "bold",
     	opacity: "1",
     	borderRadius: "0"
@@ -203,7 +194,6 @@ const PostBanner: React.FC<PostBannerProps> = ({ postNumber, date, updated, read
 		maxWidth: "100%",
     	color: "#ffffff",
     	fontSize: "clamp(0.9rem, 3vw, 1.5rem)",
-    	fontFamily: "'Quicksand', sans-serif",
     	fontWeight: "bold",
     	opacity: "1",
   	}
