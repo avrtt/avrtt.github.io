@@ -20,34 +20,43 @@ import { startHoursUTC, endHoursUTC } from '../../utils/freelance';
 import * as styles from "./styles.module.scss";
 
 const status = freelanceStatus as number;
-let statusEmoji = "";
+let statusEmoji, backgroundStatus = "";
 switch(status) {
   case 1:
     statusEmoji = "👀";
+    backgroundStatus = styles.backgroundStatus1;
     break;
   case 2:
     statusEmoji = "😎";
+    backgroundStatus = styles.backgroundStatus2;
     break;
   case 3:
     statusEmoji = "⚡";
+    backgroundStatus = styles.backgroundStatus3;
     break;
   case 4:
     statusEmoji = "🤔";
+    backgroundStatus = styles.backgroundStatus4;
     break;
   case 5:
     statusEmoji = "🔥";
+    backgroundStatus = styles.backgroundStatus5;
     break;
   case 6:
     statusEmoji = "😴";
+    backgroundStatus = styles.backgroundStatus6;
     break;
   case 7:
     statusEmoji = "😌";
+    backgroundStatus = styles.backgroundStatus7;
     break;
   case 8:
     statusEmoji = "🏝️";
+    backgroundStatus = styles.backgroundStatus8;
     break;
   case 9:
     statusEmoji = "🍄";
+    backgroundStatus = styles.backgroundStatus9;
     break;
   default:
     statusEmoji = "";
@@ -108,7 +117,7 @@ const Footer = () => {
             <p className={`${styles.badgeSecondRight}`}> </p>
           </span>
           <Link to="/freelance">
-            <p className={`${styles.badgeThirdRight}`}>{startHoursUTC}–{endHoursUTC} &nbsp;{statusEmoji}</p>
+            <p className={`${styles.badgeThirdRight} ${backgroundStatus}`}>{startHoursUTC}–{endHoursUTC} &nbsp;{statusEmoji}</p>
           </Link>
           <span>
             <p className={`${styles.badgeFourthRight}`}>{location}</p>

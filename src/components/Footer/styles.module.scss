@@ -203,20 +203,15 @@ Distributed under the GNU AGPLv3 license. For details and source code, please re
 }
 
 .badgeThirdRight {
-  margin-top: 2.25vw;
+  margin-top: 1.8vw;
   position: absolute;
   margin-left: -0.6vw;
   font-size: clamp(0.5em, 0.9vw, 2em);
   font-weight: 800;
   border-bottom: 0;
-  color: #8e8e8e;
+  padding: 1px 8px;
+  border-radius: 1vh;
   transition: color 0.1s ease-in-out;
-  &:hover {
-    border-bottom: 0;
-    color: #424242;
-    text-decoration: none;
-    transition: color 0.1s ease-in-out;
-  }
 }
 
 .badgeFourthRight {
@@ -229,4 +224,106 @@ Distributed under the GNU AGPLv3 license. For details and source code, please re
   color: #8e8e8e;
   transition: color 0.1s ease-in-out;
   opacity: 0.8;
+  padding: 0px 8px;
+  white-space: nowrap;
+}
+
+.backgroundStatus1 {
+  background-color: #2deb59;
+  color: #6f6f6f;
+  transition: background-color 0.2s ease-in-out;
+  &:hover {
+    background-color: #46ff71;
+    border-bottom: 0;
+    text-decoration: none;
+    transition: background-color 0.2s ease-in-out;
+  }
+}
+.backgroundStatus2 {
+  background-color: #f7ffb9;
+  color: #8e8e8e;
+  transition: background-color 0.2s ease-in-out;
+  &:hover {
+    background-color: #f0ff7f;
+    border-bottom: 0;
+    text-decoration: none;
+    transition: background-color 0.2s ease-in-out;
+  }
+}
+.backgroundStatus3 {
+  background-color: #f7ffb9;
+  color: #8e8e8e;
+  transition: background-color 0.2s ease-in-out;
+  &:hover {
+    background-color: #f0ff7f;
+    border-bottom: 0;
+    text-decoration: none;
+    transition: background-color 0.2s ease-in-out;
+  }
+}
+.backgroundStatus4 {
+  background-color: #e3e3e3;
+  color: #8e8e8e;
+  transition: background-color 0.2s ease-in-out;
+  &:hover {
+    background-color: #d8d8d8;
+    border-bottom: 0;
+    text-decoration: none;
+    transition: background-color 0.2s ease-in-out;
+  }
+}
+.backgroundStatus5 {
+  background-color: #ffcdcd;
+  color: #8e8e8e;
+  transition: background-color 0.2s ease-in-out;
+  &:hover {
+    background-color: #ffa3a3;
+    border-bottom: 0;
+    text-decoration: none;
+    transition: background-color 0.2s ease-in-out;
+  }
+}
+.backgroundStatus6 {
+  background-color: #cceaff;
+  color: #8e8e8e;
+  transition: background-color 0.2s ease-in-out;
+  &:hover {
+    background-color: #a5d9ff;
+    border-bottom: 0;
+    text-decoration: none;
+    transition: background-color 0.2s ease-in-out;
+  }
+}
+.backgroundStatus7 {
+  background-color: #cceaff;
+  color: #8e8e8e;
+  transition: background-color 0.2s ease-in-out;
+  &:hover {
+    background-color: #a5d9ff;
+    border-bottom: 0;
+    text-decoration: none;
+    transition: background-color 0.2s ease-in-out;
+  }
+}
+.backgroundStatus8 {
+  background-color: #cceaff;
+  color: #8e8e8e;
+  transition: background-color 0.2s ease-in-out;
+  &:hover {
+    background-color: #a5d9ff;
+    border-bottom: 0;
+    text-decoration: none;
+    transition: background-color 0.2s ease-in-out;
+  }
+}
+.backgroundStatus9 {
+  background-color: #cceaff;
+  color: #8e8e8e;
+  transition: background-color 0.2s ease-in-out;
+  &:hover {
+    background-color: #a5d9ff;
+    border-bottom: 0;
+    text-decoration: none;
+    transition: background-color 0.2s ease-in-out;
+  }
 }
