@@ -49,6 +49,10 @@ const emojiStyle = {
   marginTop: '-12px'
 };
 
+const mobileMarginStyle = {
+  marginBottom: "100px"
+}
+
 interface CvPositionProps {
   positionName: string;
   companyName: string;
@@ -99,12 +103,13 @@ const CvPosition: React.FC<CvPositionProps> = ({
       <M text={expDesc}/>
     </div>
     <div className="expDescList">
-      <p style={point1Style}><M text={point1}/></p>
-      <p style={point2Style}><M text={point2}/></p>
-      <p style={point3Style}><M text={point3}/></p>
-      <p style={point4Style}><M text={point4}/></p>
-      <p style={point5Style}><M text={point5}/></p>
-      <p><M text={pointLast}/></p>
+      <span style={point1Style}><M text={point1}/></span>
+      <span style={point2Style}><M text={point2}/></span>
+      <span style={point3Style}><M text={point3}/></span>
+      <span style={point4Style}><M text={point4}/></span>
+      <span style={point5Style}><M text={point5}/></span>
+      <span><M text={pointLast}/></span>
+      <span className="mobileOnlySupport"><br/></span>
     </div>
 	</>
   );
