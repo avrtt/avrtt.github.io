@@ -1,0 +1,134 @@
+\documentclass[10pt,a4paper,withhyper,normalphoto]{altacv}
+\geometry{left=1.25cm,right=1.25cm,top=1.5cm,bottom=1.5cm,columnsep=1.2cm}
+\usepackage{paracol}
+\iftutex
+  \setmainfont{Roboto Slab}
+  \setsansfont{Lato}
+  \renewcommand{\familydefault}{\sfdefault}
+\else
+  \usepackage[rm]{roboto}
+  \usepackage[defaultsans]{lato}
+  \renewcommand{\familydefault}{\sfdefault}
+\fi
+\definecolor{SlateGrey}{HTML}{2E2E2E}
+\definecolor{LightGrey}{HTML}{666666}
+\definecolor{DarkPastelRed}{HTML}{450808}
+\definecolor{PastelRed}{HTML}{8F0D0D}
+\definecolor{GoldenEarth}{HTML}{E7D192}
+\colorlet{name}{black}
+\colorlet{tagline}{PastelRed}
+\colorlet{heading}{DarkPastelRed}
+\colorlet{headingrule}{GoldenEarth}
+\colorlet{subheading}{PastelRed}
+\colorlet{accent}{PastelRed}
+\colorlet{emphasis}{SlateGrey}
+\colorlet{body}{LightGrey}
+\renewcommand{\namefont}{\Huge\rmfamily\bfseries}
+\renewcommand{\personalinfofont}{\footnotesize}
+\renewcommand{\cvsectionfont}{\LARGE\rmfamily\bfseries}
+\renewcommand{\cvsubsectionfont}{\large\bfseries}
+\renewcommand{\cvItemMarker}{{\small\textbullet}}
+\renewcommand{\cvRatingMarker}{\faCircle}
+\input{pubs-num}
+\addbibresource{sample.bib}
+\begin{document}
+
+\name{Vladislav Ivanov}
+\tagline{Middle DS/MLE}
+\photoR{2.8cm}{Photo}
+\personalinfo{%
+  \mailaddress{avrtt@tuta.io}
+  \NewInfoField{telegram}{\faTelegram}[https://t.me/]
+  \telegram{averett}
+  \homepage{avrtt.github.io}
+  \linkedin{avrtt}
+  \github{avrtt}
+  \NewInfoField{kaggle}{\faKaggle}[https://www.kaggle.com/]
+  \kaggle{lenferdetroud}
+}
+
+\makecvheader
+\columnratio{0.6}
+\begin{paracol}{2}
+
+\cvsection{Experience}
+\cvevent{Data Scientist, ML Engineer \& Python Developer}{Freelance}{Jun 2024 -- Ongoing}{Various places}
+Long-term full-time freelancing \& seeking for a Middle ML Engineer position.
+\medskip
+\begin{itemize}
+\item Designing/implementing/refining/deploying ML systems.
+\item Handling data-related problems: collection, processing, transforming, modeling, visualization, analysis, etc.
+\item Developing various automation software.
+\end{itemize}
+\divider
+\cvevent{Middle Data Analyst}{Remokate}{Jul 2023 -- May 2024}{Tbilisi, Georgia (remote)}
+Remokate is a recruitment agency that connects top IT talent with leading companies in Russia and abroad, including startups, large corporations and international relocation opportunities.
+\medskip
+\begin{itemize}
+\item Designed, monitored and interpreted key business and product metrics to identify growth opportunities and bottlenecks across customer funnels.
+\item Wrote and optimized complex SQL queries for large datasets, improving data processing speed and accuracy.
+\item Built and maintained interactive dashboards in BI tools (DataLens, Tableau), enabling stakeholders to track KPIs, detect anomalies and make data-informed decisions.
+\item Conducted hypothesis testing and A/B experiments to validate product changes and measure their impact on core metrics.
+\item Performed cohort, funnel and factor analysis to understand user behavior, retention and conversion trends.
+\end{itemize}
+\divider
+\cvevent{Python/Web Developer \& Data Analyst}{}{Nov 2019 -- Jul 2023}{Russia (remote)}
+Various occasional short-term remote jobs and freelance gigs to get some experience (mostly freelance.habr.com).
+\medskip
+\begin{itemize}
+\item Built Python software: automation scripts, web scrapers and Telegram bots.
+\item Gathered data and performed data processing.
+\item Managed PostgreSQL databases for collected data.
+\item Implemented simple data pipelines.
+\item Designed and developed KPI dashboards and other analytical tools.
+\item Designed landing pages, blogs and promotional web pages.
+\item Implemented frontend using React.
+\end{itemize}
+
+\switchcolumn
+
+\cvsection{Education}
+\cvevent{B.Sc.\ in Applied Mathematics \& Computer Science}{Novosibirsk State Technical University}{2019 -- 2023}{}
+
+\medskip
+
+\cvsection{Strengths}
+\cvtag{\bfseries{SWE} \mdseries{-- Python, C++}}
+\cvtag{\bfseries{Data wrangling} \mdseries{-- Pandas, NumPy, BS4}}
+\cvtag{\bfseries{Data analysis} \mdseries{-- Plotly, Seaborn, SciPy, Matplotlib}}
+\cvtag{\bfseries{DL \& classical ML} \mdseries{-- TF2, Keras, Sklearn}}
+\cvtag{\bfseries{Cloud \& big data} \mdseries{-- PySpark, AWS}}
+\cvtag{\bfseries{Databases} \mdseries{-- PostgreSQL, SQLite}}
+\cvtag{\bfseries{Misc} \mdseries{-- Docker, Linux, frontend (TS, React)}}
+
+\divider
+
+\cvtag{Analytical thinking}
+\cvtag{Strategizing}\\
+\cvtag{Adaptability \& flexibility}
+\cvtag{Eye for detail}
+
+\medskip\medskip
+
+\cvsection{Ongoing project}
+\cvevent{\bfseries{avrtt.blog}}{My all-in-one website and course platform}{Since 2022}{}
+\faLink avrtt.github.io \break
+\faLink github.com/avrtt/avrtt.github.io
+
+\medskip\medskip
+
+\cvsection{Most Proud of}
+\cvachievement{\faBook}{My own DS/ML course}{avrtt.github.io/course}
+\cvachievement{\faTrophy}{Top 500 on Kaggle worldwide}{Competition Expert Rank}
+\medskip
+\cvachievement{\faHandshake}{More than 50 freelance projects}{for more than 2 years of freelancing}
+
+\cvsection{Languages}
+\cvskill{English}{4.5}
+\divider
+\cvskill{Russian}{5}
+\divider
+\cvskill{Spanish}{1.5}
+
+\end{paracol}
+\end{document}
