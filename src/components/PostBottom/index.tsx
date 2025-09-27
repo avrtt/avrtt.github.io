@@ -26,7 +26,7 @@ const PostBottom: React.FC<PostBottomProps> = ({ nextPost, lastPost, keyCurrent,
     tgChannelDesc = "Subscribe to my Telegram channel for updates in the Adventures section and more travel content";
   } else if (section === "research") {
     tgLink = "avheuristics";  
-    ytLink = "UUpPtaqqxzFqm9rZAh2xC5OA";
+    ytLink = "UUZ-u9UdFHLjAWHRucuCSvEA";
     tgChannelPicture = AvheuristicsPicture;
     tgChannelName = "Averett's Heuristics";
     tgChannelDesc = "Subscribe to my Telegram channel for updates in the Research section and more tech content";
@@ -43,7 +43,7 @@ const PostBottom: React.FC<PostBottomProps> = ({ nextPost, lastPost, keyCurrent,
       <PostsLastNext nextPost={nextPost} lastPost={lastPost} section={section} />
       <PostDonate />
       <div className={stylesCommentsSections.chatWrapper}>
-        <TelegramComments websiteKey={'2JA7Wo3q'} customColor='000000' commentsNumber={5} pageId={keyCurrent} showDislikes={true} />
+        <TelegramComments dataWebAppId={'2JA7Wo3q'} websiteKey={'2JA7Wo3q'} customColor='000000' commentsNumber={5} pageId={keyCurrent} showDislikes={true} />
       </div>
 	    <ChannelPreview tgLink={tgLink} ytLink={ytLink} tgChannelPicture={tgChannelPicture} tgChannelName={tgChannelName} tgChannelDesc={tgChannelDesc} />
 	  </>
