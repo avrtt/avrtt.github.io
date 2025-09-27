@@ -109,7 +109,7 @@ const CvPosition: React.FC<CvPositionProps> = ({
       <span style={point4Style}><M text={point4}/></span>
       <span style={point5Style}><M text={point5}/></span>
       <span><M text={pointLast}/></span>
-      <span className="mobileOnlySupport"><br/></span>
+      <br/>
     </div>
 	</>
   );
