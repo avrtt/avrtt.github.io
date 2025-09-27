@@ -45,6 +45,7 @@ import StickerPack from "../../../components/StickerPack"
 import Tooltip from "../../../components/Tooltip"
 import Shine from "../../../components/Shine"
 import Highlight from "../../../components/Highlight"
+import { Link } from "gatsby"
 */}
 
 

@@ -52,6 +52,7 @@ import Shine from "../../../components/Shine"
 import Highlight from "../../../components/Highlight"
 import Code from "../../../components/Code"
 import Latex from "../../../components/Latex"
+import { Link } from "gatsby"
 */}
 
 
