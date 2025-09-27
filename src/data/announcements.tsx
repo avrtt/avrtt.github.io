@@ -1,14 +1,14 @@
 // code of a current country
-export const countryCode = "kg"
+export const countryCode = "th"
 
 // (optional) if the country has more than 1 timezone
 export const exactTimezone = "+5" // [+/-]<offset>
 
 // country name, city, region, etc.
-export const location = "Kyrgyzstan"
+export const location = "Thailand"
 
 // locations and dates, if any
-export const plans = "Afghanistan ➡️ Pakistan ➡️ India ➡️ Nepal"
+export const plans = "Mexico ➡️ Argentina on motorcycle"
 
 // one of the working statuses:
 // 1 - 👀 open to anything
@@ -20,7 +20,7 @@ export const plans = "Afghanistan ➡️ Pakistan ➡️ India ➡️ Nepal"
 // 7 - 😌 no more projects
 // 8 - 🏝️ on vacation
 // 9 - 🍄 hermit mode
-export const freelanceStatus = 3
+export const freelanceStatus = 1
 
 // (optional) e.g. "Jan 1" or "~ Jan 1" or "Jan 1 – Jan 6" 
 export const dateOfStartResponding = "" 
