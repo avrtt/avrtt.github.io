@@ -31,7 +31,7 @@ $hover-scale: 0.985;
   padding: $padding $padding 8px $padding;
   border-radius: $border-radius;
   transition: transform 0.15s;
-  font-weight: lighter;
+  font-weight: 300;
   width: 100%;
   height: 100%;
   box-sizing: border-box;
@@ -57,14 +57,14 @@ $hover-scale: 0.985;
 }
 
 .rightUpperCornerWrapper {
-  font-weight: lighter;
+  font-weight: 300;
   font-size: 1.125rem;
   float: right;
   line-height: 46.5px;
 }
 
 .numCourses {
-  font-weight: lighter;
+  font-weight: 300;
   font-size: 1.125rem;
   color: #bababa;
   line-height: 46.5px;
@@ -83,7 +83,7 @@ $hover-scale: 0.985;
 }
 
 .courseDesc {
-  font-weight: lighter;
+  font-weight: 300;
   font-size: 18px;
   margin-left: 14px;
   margin-top: 42px;
@@ -95,7 +95,7 @@ $hover-scale: 0.985;
 }
 
 .courseInfo {
-  font-weight: lighter;
+  font-weight: 300;
   font-size: 18px;
   margin-left: 14px;
   margin-top: 20px;
