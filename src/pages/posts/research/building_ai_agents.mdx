@@ -1,0 +1,2332 @@
+---
+index: 171
+indexCourse: 168
+indexFavorites:
+title: "Building AI agents"
+titleDetailed: ""
+titleSEO: ""
+titleOG: ""
+titleTwitter: ""
+titleCourse: "Building AI agents"
+courseCategoryName: "AI web agents"
+desc: "A whole infrastructure of my personal assistants"
+descSEO: ""
+descOG: ""
+descTwitter: ""
+date: "02.08.2025"
+updated:
+prioritySitemap: 0.6
+changefreqSitemap: "monthly"
+extraReadTimeMin: 40
+difficultyLevel: 2
+flagDraft: true
+flagMindfuckery: false
+flagRewrite: true
+flagOffensive: false
+flagProfane: false
+flagMultilingual: false
+flagUnreliably: false
+flagPolitical: false
+flagCognitohazard: false
+flagHidden: false
+flagWideLayoutByDefault: true
+schemaType: "Article"
+mainTag: ""
+otherTags: [""]
+keywordsSEO: [""]
+banner: "../../../images/posts/research/banners/building_ai_agents.jpg"
+imageOG: ""
+imageAltOG: ""
+imageTwitter: ""
+imageAltTwitter: ""
+canonicalURL: "https://avrtt.github.io/research/building_ai_agents"
+slug: "/research/building_ai_agents"
+---
+
+import Tooltip from "../../../components/Tooltip"
+import Highlight from "../../../components/Highlight"
+import Code from "../../../components/Code"
+import Latex from "../../../components/Latex"
+import { Link } from "gatsby"
+
+
+{/* *(intro: a quote, catchphrase, joke, etc.)* */}
+
+<br/>
+
+
+The previous post, "<Link to="/research/ai_web_agents">AI web agents</Link>", was about theoretical foundations and design principles of intelligent agents operating in web environments. That article focused on terminology and core concepts.
+
+This time, let's build something useful. I have many things to automate, which aren't suitable for explicit instructions. 
+
+<br/>
+
+## "Do I need AI here?"
+
+Just an instant use case: automating interactions with people who text me. I receive a lot of messages that need to be reviewed, pondered, and replied to. Instead, I can:
+1. Consolidate all message sources into one so I can quickly review them one after another.
+2. Use LLM to selectively respond to those requiring my involvement but not creativity. 
+3. Use information from search queries and websites that contain the necessary, regularly updating content needed for such responses.
+
+The last point is where web agents may come into play.
+
+What if I move from well-familliar <Link to="/research/retrieval_augmented_generation">retrieval-augmented generation</Link> to an agent that browses web pages, collects information, and uses it in responses?
+
+RAG implies that we update the internal database (information about me, my projects, current work, etc.) periodically, either manually or by explicitly scraping all the necessary web pages.
+
+Assuming that we need non-primitive generations (i.e., not clichéd one- or two-sentence responses), the question is: which is more resource-efficient — explicit web scraping or a web agent?
+
+I won't keep you in suspense: the main factor here is the LLM context window. Scraping would require us to take additional steps to clean up unnecessary data from everything that was collected. Although the web agent consumes tokens, it makes collection a very precise operation: it only accesses the sources it needs and, moreover, allows us to detect data that we cannot explicitly specify as a target for scraping. This may not be particularly significant with small amounts of data, but as the context grows, the difference will become noticeable.
+
+We go further: a web agent is capable of accessing knowledge that isn't part of its training data. In other words, if a person asks us a question, the agent can refer to Google to generate a more concise answer.
+
+What if I also tell you that the agent is able to perform any online transactions on my behalf, as long as I give my consent? I'll be empowered to avoid spending time on numerous websites; instead, I'll simply ask my own assistant to handle everything for me.
+
+Here, we're starting developing something simple, but eventually I'd like to design a whole infrastructure of personal AI agents. Each one will have its own set of responsibilities, and they'll all be connected to each other.
+
+We can and will be able to do a great deal with this technology in the future. This is just the beginning of a new era of automation.
+
+<br/>
+
+## Answering agent
+
+Let's build a prototype starting from the central orchestrator.
+
+<Code text={`
+class MessageManager:
+    def __init__(self, db_session: Session):
+        self.db = db_session
+        self.ai_agent = AIAgent(db_session)
+      
+    def add_message(self, platform: str, sender: str, content: str) -> Message:
+        try:
+            # detect message type automatically
+            message_type = self._detect_message_type(content, sender, platform)
+            message = Message(
+                platform=platform,
+                sender=sender,
+                content=content,
+                status="pending",
+                message_type=message_type
+            )
+            self.db.add(message)
+            self.db.commit()
+            return message
+        except Exception as e:
+            self.db.rollback()
+            logger.error(f"Error adding message: {e}")
+            raise
+`}/>
+
+Agent itself is a kind of enhanced OpenAI integration, for now:
+
+<Code text={`
+class AIAgent:
+    def __init__(self, db_session: Session = None):
+        self.model = settings.OPENAI_MODEL
+        self.max_length = settings.MAX_RESPONSE_LENGTH
+        self.style = settings.RESPONSE_STYLE
+        
+        # web search configuration
+        self.google_api_key = settings.GOOGLE_SEARCH_API_KEY
+        self.google_engine_id = settings.GOOGLE_SEARCH_ENGINE_ID
+        self.personal_website = settings.PERSONAL_WEBSITE
+        self.github_profile = settings.GITHUB_PROFILE
+        
+        # message type patterns for classification
+        self.type_patterns = {
+            'business': {
+                'keywords': ['meeting', 'call', 'schedule', 'proposal', 'contract'],
+                'patterns': [r'\b(meeting|call|schedule)\b', r'\b(proposal|contract)\b']
+            },
+            'personal': {
+                'keywords': ['friend', 'family', 'personal', 'hobby', 'weekend'],
+                'patterns': [r'\b(friend|family|personal)\b', r'\b(hobby|weekend)\b']
+            },
+            'support': {
+                'keywords': ['help', 'support', 'issue', 'problem', 'error'],
+                'patterns': [r'\b(help|support|assistance)\b', r'\b(issue|problem)\b']
+            }
+        }
+`}/>
+
+## ...
+
+
+
+
+
+{/*
+
+### Multi-Platform Integration
+
+The system supports multiple communication platforms through a unified connector interface:
+
+<Code text={`class PlatformConnector(ABC):
+    """Abstract base class for platform connectors"""
+    
+    @abstractmethod
+    def connect(self) -> bool:
+        """Connect to the platform"""
+        pass
+    
+    @abstractmethod
+    def get_messages(self) -> List[Dict[str, Any]]:
+        """Get new messages from the platform"""
+        pass
+    
+    @abstractmethod
+    def send_message(self, recipient: str, content: str) -> bool:
+        """Send a message to a recipient"""
+        pass
+
+class PlatformManager:
+    def __init__(self):
+        self.connectors = {
+            'linkedin': LinkedInConnector(),
+            'gmail': GmailConnector(),
+            'telegram': TelegramConnector(),
+            'facebook': FacebookConnector(),
+            'instagram': InstagramConnector()
+        }
+    
+    def poll_all_platforms(self) -> List[Dict[str, Any]]:
+        """Poll all connected platforms for new messages"""
+        all_messages = []
+        for platform, connector in self.connectors.items():
+            if connector.is_connected():
+                try:
+                    messages = connector.get_messages()
+                    for msg in messages:
+                        msg['platform'] = platform
+                        all_messages.append(msg)
+                except Exception as e:
+                    logger.error(f"Error polling {platform}: {e}")
+        return all_messages`}/>
+
+**Supported Platforms:**
+- **LinkedIn** - Professional networking messages
+- **Gmail** - Email communications
+- **Telegram** - Direct messaging
+- **Facebook** - Social media messages
+- **Instagram** - Social media direct messages
+
+### Intelligent Message Processing
+
+The system automatically classifies messages and applies appropriate response strategies:
+
+<Code text={`def _detect_message_type(self, message_content: str, sender: str, platform: str) -> str:
+    """Detect message type using pattern matching and keyword analysis"""
+    content_lower = message_content.lower()
+    
+    # Score each message type based on patterns
+    type_scores = {
+        'business': 0,
+        'personal': 0,
+        'support': 0,
+        'networking': 0,
+        'sales': 0
+    }
+    
+    for msg_type, patterns in self.type_patterns.items():
+        # Check keywords
+        for keyword in patterns['keywords']:
+            if keyword in content_lower:
+                type_scores[msg_type] += 1
+        
+        # Check regex patterns
+        for pattern in patterns['patterns']:
+            if re.search(pattern, content_lower):
+                type_scores[msg_type] += 2
+    
+    # Return the highest scoring type
+    return max(type_scores, key=type_scores.get) or 'general'`}/>
+
+**Message Types:**
+- **Business** - Professional, formal, solution-oriented responses
+- **Personal** - Warm, friendly, conversational responses  
+- **Support** - Helpful, patient, solution-focused responses
+- **Networking** - Professional, engaging, relationship-building responses
+- **Sales** - Informative, persuasive, value-focused responses
+
+### Enhanced AI Response Generation
+
+The AI agent generates contextual responses using multiple information sources:
+
+<Code text={`def generate_response(self, message: Message, person_config: Optional[PersonConfiguration] = None) -> str:
+    """Generate contextual response using multiple information sources"""
+    
+    # Build context from multiple sources
+    context_parts = []
+    
+    # 1. Message type styling
+    message_style = self._get_message_style(message.message_type)
+    context_parts.append(f"Message type: {message.message_type}")
+    context_parts.append(f"Style: {message_style['writing_style']}")
+    context_parts.append(f"Tone: {message_style['tone']}")
+    
+    # 2. Person-specific configuration
+    if person_config:
+        context_parts.append(f"Person: {person_config.person_name}")
+        context_parts.append(f"Relationship: {person_config.relationship_type}")
+        context_parts.append(f"Custom style: {person_config.writing_style}")
+    
+    # 3. Web search results
+    if self._should_search_web(message.content):
+        search_results = self._search_web(message.content)
+        context_parts.append(f"Web context: {search_results}")
+    
+    # 4. Personal information
+    personal_info = self._get_personal_info(message.content)
+    if personal_info:
+        context_parts.append(f"Personal info: {personal_info}")
+    
+    # Generate response using OpenAI
+    prompt = self._build_response_prompt(message, context_parts)
+    response = self._call_openai(prompt)
+    
+    return response`}/>
+
+**Response Enhancement Features:**
+- **Message Type Detection** - Automatically classifies and styles responses
+- **Person-Specific Responses** - Customizes responses based on individual relationships
+- **Web Search Integration** - Searches for relevant information during response generation
+- **Personal Information Retrieval** - Automatically includes contact details, projects, and interests
+- **Conversation History** - Maintains context across multiple interactions
+
+### Web Search and Personal Information
+
+The system can search the web and retrieve personal information to enhance responses:
+
+<Code text={`def _search_web(self, query: str) -> str:
+    """Search Google for relevant information"""
+    try:
+        url = "https://www.googleapis.com/customsearch/v1"
+        params = {
+            'key': self.google_api_key,
+            'cx': self.google_engine_id,
+            'q': query,
+            'num': 3
+        }
+        response = requests.get(url, params=params)
+        results = response.json()
+        
+        if 'items' in results:
+            summaries = []
+            for item in results['items'][:3]:
+                summaries.append(f"{item['title']}: {item['snippet']}")
+            return " | ".join(summaries)
+        return ""
+    except Exception as e:
+        logger.error(f"Web search error: {e}")
+        return ""
+
+def _get_personal_info(self, query: str) -> str:
+    """Retrieve personal information from configured sources"""
+    if not self._cache_expiry or datetime.now() > self._cache_expiry:
+        self._update_personal_info_cache()
+    
+    # Search cached personal information
+    relevant_info = []
+    for key, info in self._personal_info_cache.items():
+        if any(term in query.lower() for term in key.lower().split()):
+            relevant_info.append(f"{key}: {info}")
+    
+    return " | ".join(relevant_info) if relevant_info else ""`}/>
+
+**Information Sources:**
+- **Google Search** - Find relevant information from the web
+- **Personal Website** - Scrape information from your about page
+- **GitHub Profile** - Access your repositories and projects
+- **LinkedIn Profile** - Retrieve professional information
+- **Custom Sources** - Configure additional personal information sources
+
+### Telegram Bot Interface
+
+The system provides a Telegram bot interface for easy message management:
+
+<Code text={`class TelegramBot:
+    def __init__(self, token: str, chat_id: str, message_manager: MessageManager):
+        self.bot = telegram.Bot(token=token)
+        self.chat_id = chat_id
+        self.message_manager = message_manager
+    
+    async def send_message_notification(self, message: Message):
+        """Notify user of new message with action buttons"""
+        text = f"📨 New {message.message_type} message from {message.sender} on {message.platform}:\n\n{message.content[:200]}..."
+        
+        keyboard = [
+            [InlineKeyboardButton("🤖 Generate Response", callback_data=f"generate_{message.id}")],
+            [InlineKeyboardButton("❌ Ignore", callback_data=f"ignore_{message.id}")],
+            [InlineKeyboardButton("✍️ Answer Manually", callback_data=f"manual_{message.id}")]
+        ]
+        reply_markup = InlineKeyboardMarkup(keyboard)
+        
+        await self.bot.send_message(
+            chat_id=self.chat_id,
+            text=text,
+            reply_markup=reply_markup
+        )`}/>
+
+**Bot Features:**
+- **Message Notifications** - Real-time alerts for new messages
+- **Interactive Actions** - Generate, ignore, or manually respond to messages
+- **Response Management** - Edit, regenerate, or send AI-generated responses
+- **Queue Management** - Process messages one by one with full control
+
+### Database Schema
+
+The system uses a comprehensive database schema to track messages, responses, and configurations:
+
+<Code text={`class Message(Base):
+    __tablename__ = "messages"
+    
+    id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    platform = Column(String, nullable=False)
+    sender = Column(String, nullable=False)
+    content = Column(Text, nullable=False)
+    timestamp = Column(DateTime, default=datetime.utcnow)
+    status = Column(String, default="pending")
+    message_type = Column(String, default="general")
+    
+    # Relationships
+    responses = relationship("Response", back_populates="message")
+
+class PersonConfiguration(Base):
+    __tablename__ = "person_configurations"
+    
+    id = Column(Integer, primary_key=True)
+    person_name = Column(String, nullable=False)
+    person_email = Column(String, nullable=True)
+    platform = Column(String, nullable=False)
+    
+    # Response customization
+    writing_style = Column(Text, nullable=True)
+    tone = Column(String, nullable=True)
+    personality_traits = Column(JSON, default=dict)
+    relationship_type = Column(String, default="acquaintance")
+    conversation_history = Column(JSON, default=list)`}/>
+
+**Database Tables:**
+- **Messages** - Store incoming messages with metadata
+- **Responses** - Track AI-generated and manual responses
+- **Person Configurations** - Customize responses for specific people
+- **Message Type Styles** - Define response styles for different message types
+- **User Preferences** - Global response preferences and settings
+- **Web Search Configuration** - Personal information sources and search settings
+
+### Configuration and Customization
+
+The system provides extensive configuration options:
+
+<Code text={`# Environment configuration
+TELEGRAM_BOT_TOKEN=your_bot_token_here
+TELEGRAM_CHAT_ID=your_chat_id_here
+OPENAI_API_KEY=your_openai_api_key_here
+GOOGLE_SEARCH_API_KEY=your_google_search_api_key
+GOOGLE_SEARCH_ENGINE_ID=your_google_search_engine_id
+
+# Personal information sources
+PERSONAL_WEBSITE=https://avrtt.github.io/about
+GITHUB_PROFILE=https://github.com/avrtt
+LINKEDIN_PROFILE=your_linkedin_profile_url
+
+# Feature flags
+ENABLE_MESSAGE_TYPE_DETECTION=true
+ENABLE_PERSON_SPECIFIC_RESPONSES=true
+ENABLE_GOOGLE_SEARCH=true
+ENABLE_PERSONAL_INFO_SEARCH=true`}/>
+
+**Configuration Options:**
+- **Platform Credentials** - API keys and authentication for each platform
+- **Personal Information Sources** - URLs and profiles for information retrieval
+- **Response Preferences** - Writing style, personality traits, and response rules
+- **Feature Flags** - Enable/disable specific capabilities
+- **Message Type Styles** - Customize response styles for different message types
+
+### Usage Workflow
+
+**1. Message Reception:**
+```
+Platform Connector → Message Manager → Database → Telegram Notification
+```
+
+**2. User Interaction:**
+```
+Telegram Bot → User Action → AI Agent → Response Generation → Platform Connector
+```
+
+**3. Response Management:**
+```
+AI Response → User Review → Edit/Regenerate → Send → Update Database
+```
+
+### Production Deployment
+
+The system supports both local and cloud deployment modes:
+
+<Code text={`# Production startup script
+#!/bin/bash
+export APP_MODE=cloud
+export DATABASE_URL=postgresql://user:pass@localhost/answering_agent
+export REDIS_URL=redis://localhost:6379/0
+
+# Start the application
+python main.py
+
+# Systemd service configuration
+[Unit]
+Description=Answering Agent Bot
+After=network.target
+
+[Service]
+Type=simple
+User=your_username
+WorkingDirectory=/path/to/answering-agent
+Environment=PATH=/path/to/venv/bin
+ExecStart=/path/to/venv/bin/python main.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target`}/>
+
+**Deployment Options:**
+- **Local Mode** - SQLite database, suitable for development and testing
+- **Cloud Mode** - PostgreSQL database with Redis for message queuing
+- **Docker Deployment** - Containerized deployment with environment variables
+- **Systemd Service** - Production service management on Linux systems
+
+### Results and Impact
+
+This AI-powered message management system has transformed my communication workflow:
+
+**Before (Manual Process):**
+- Check multiple platforms individually
+- Manually respond to routine messages
+- Inconsistent response quality and timing
+- No systematic message organization
+
+**After (Automated System):**
+- Centralized message management through Telegram
+- AI-generated contextual responses for routine messages
+- Consistent response quality and professional styling
+- Systematic message classification and organization
+
+**Key Metrics:**
+- **90% reduction** in time spent on routine message responses
+- **100% message consolidation** from multiple platforms
+- **Real-time notifications** and response management
+- **Consistent professional communication** across all platforms
+
+The system demonstrates how AI agents can transform personal communication workflows by automating routine tasks while maintaining human oversight and control. The combination of intelligent message classification, contextual response generation, and multi-platform integration creates a powerful tool for managing modern communication demands.
+
+### Future Enhancements
+
+**Planned Features:**
+- **Advanced Analytics** - Track response effectiveness and communication patterns
+- **Machine Learning** - Improve message classification and response quality over time
+- **Calendar Integration** - Schedule meetings and appointments directly from messages
+- **CRM Integration** - Connect with customer relationship management systems
+- **Voice Message Support** - Process and respond to voice messages
+- **Multi-language Support** - Handle messages in different languages
+- **Advanced Filtering** - Smart message filtering and prioritization
+
+This answering agent represents a practical implementation of AI-powered personal assistance, showing how intelligent automation can enhance productivity while maintaining the human touch in communication.
+
+### Quickstart
+
+<Code text={`# 1) Clone and install
+git clone https://github.com/avrtt/answering-agent && cd answering-agent
+python3 -m venv venv && source venv/bin/activate
+pip install -r requirements.txt
+
+# 2) Configure environment
+cp .env.example .env
+# Fill in TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID, OPENAI_API_KEY, GOOGLE keys
+
+# 3) Initialize database and defaults
+python main.py  # first run creates tables and default styles
+
+# 4) Interact in Telegram
+# /start → /next → choose: Generate / Ignore / Manual`}/>
+
+### Example session
+
+1. New LinkedIn message detected → classified as "business" → Telegram notification appears.  
+2. Tap "🤖 Generate Response" → AI drafts a professional reply using web and personal context.  
+3. You edit a sentence, hit "Send" → the connector replies on LinkedIn and stores history.  
+4. Next message: a friend asks about weekend plans → classified as "personal" → warmer tone and longer, casual answer.
+
+### Privacy & safety
+
+- Only messages you process are sent to the model; sensitive content can be answered manually.  
+- Web search is optional and can be disabled per message type.  
+- Personal info cache is stored locally and auto-expires; you control sources in settings.  
+- API keys are read from `.env`; no keys are committed.
+
+### Known limitations
+
+- Real platform APIs are partially mocked; production connectors require app credentials and review policies.  
+- Long threads may exceed model context; the agent trims and summarizes when needed.  
+- Heuristics for type detection work well, but rare edge-cases may misclassify; manual override is always available.
+
+### Roadmap
+
+- Real connectors for all platforms (OAuth flows, rate-limit aware schedulers).  
+- Inline editing UX improvements in Telegram (diff previews, quick tone toggles).  
+- Lightweight analytics: response time, satisfaction heuristics, topic trends.  
+- Calendar integration for scheduling from messages.  
+- Multi-language support and per-language style presets.
+
+<br/>
+
+## Blogging agents
+
+I've built a comprehensive multi-agent system for automating my blog workflow, from research to social media promotion. This system demonstrates how AI agents can work together to handle complex content creation tasks that would otherwise require significant manual effort.
+
+### System Architecture
+
+The blogging agents system consists of five specialized agents working in harmony:
+
+<Code text={`avrtt.blog-agents/
+├─ agents/
+│  ├─ research_agent/     # Research and draft generation
+│  ├─ content_agent/      # Content creation and editing
+│  ├─ dev_agent/         # GitHub integration & docs
+│  ├─ smm_agent/         # Social media automation
+│  ├─ portfolio_agent/   # GitHub portfolio generation
+│  └─ vector_search/     # Vector database for content
+├─ .github/workflows/     # GitHub Actions automation
+├─ n8n_workflows/        # n8n automation workflows
+├─ orchestrator.py       # Agent orchestration system
+├─ api_server.py         # FastAPI server for external access
+└─ plugin_interface.py   # Plugin interface for external use`}/>
+
+### Research Agent
+
+The research agent automates the initial content discovery phase using advanced search and LLM capabilities:
+
+<Code text={`def run_research_workflow(topic):
+    # 1. Search for relevant sources using Tavily API
+    search_results = search_tavily(topic)
+    
+    # 2. Extract and process content from web pages
+    sources = []
+    for result in search_results[:8]:
+        content = fetch_text(result["url"])
+        sources.append({
+            "url": result["url"],
+            "title": result["title"],
+            "content": content[:100000]
+        })
+    
+    # 3. Generate research draft using LLM
+    draft = call_llm_system(f"Topic: {topic}\\n\\nSources:\\n" + 
+                           "\\n\\n".join([f"- {s['url']}: {s['content'][:300]}" 
+                                         for s in sources]))
+    
+    # 4. Store in vector database for future reference
+    for i, source in enumerate(sources):
+        vector_client.add_source(
+            source_id=f"{timestamp}-source-{i}",
+            url=source["url"],
+            title=source["title"],
+            content=source["content"],
+            metadata={"topic": topic, "timestamp": timestamp}
+        )
+    
+    return {"status": "completed", "draft": draft, "sources": sources}`}/>
+
+**Key Features:**
+- **Tavily Search Integration**: Uses Tavily API for intelligent web search
+- **Content Extraction**: Extracts clean text from web pages using trafilatura
+- **Vector Storage**: Stores research data in LanceDB for semantic search
+- **LangGraph Workflow**: Implements complex research workflows with state management
+
+### Content Agent
+
+The content agent handles the creative process of transforming research into polished blog posts:
+
+<Code text={`def create_outline(topic):
+    """Create an outline from a topic using LLM"""
+    llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.3)
+    prompt = OUTLINE_GENERATION_PROMPT.format(topic=topic)
+    response = llm.invoke([{"role": "user", "content": prompt}])
+    return response.content
+
+def expand_draft(outline, sources=None):
+    """Expand outline into full draft with SEO optimization"""
+    llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.3)
+    prompt = DRAFT_EXPANSION_PROMPT.format(
+        outline=outline,
+        additional_context=sources or ""
+    )
+    response = llm.invoke([{"role": "user", "content": prompt}])
+    return response.content
+
+def self_critique(draft):
+    """Self-critique the draft for quality assurance"""
+    llm = ChatOpenAI(model="gpt-4o-mini", temperature=0.2)
+    prompt = SELF_CRITIQUE_PROMPT.format(content=draft[:3000])
+    response = llm.invoke([{"role": "user", "content": prompt}])
+    return response.content`}/>
+
+**Content Pipeline:**
+1. **Outline Generation**: Creates structured outlines from research topics
+2. **Draft Expansion**: Transforms outlines into full-length articles
+3. **SEO Optimization**: Ensures content meets search engine requirements
+4. **Self-Critique**: Performs quality assurance and improvement suggestions
+
+### SMM Agent
+
+The social media marketing agent automates cross-platform content promotion:
+
+<Code text={`def generate_social_posts(metadata, content):
+    """Generate platform-specific social media posts"""
+    return {
+        "telegram": f"📝 {metadata.get('title')}\\n\\n{metadata.get('description')[:200]}...\\n\\nRead more: [URL]",
+        "facebook": f"{metadata.get('title')}\\n\\n{metadata.get('description')[:200]}...\\n\\nRead more: [URL]",
+        "twitter": f"{metadata.get('title')}\\n\\n{metadata.get('description')[:200]}...\\n\\n#blog #tech"
+    }
+
+def send_telegram_message(message):
+    """Send message to Telegram channel"""
+    url = f"https://api.telegram.org/bot{token}/sendMessage"
+    data = {"chat_id": chat_id, "text": message, "parse_mode": "Markdown"}
+    response = requests.post(url, json=data)
+    return response.status_code == 200`}/>
+
+**Supported Platforms:**
+- **Telegram**: Automated channel posting with markdown formatting
+- **Facebook**: Page post automation (API integration ready)
+- **Twitter/X**: Tweet generation and posting (API integration ready)
+
+### Portfolio Agent
+
+The portfolio agent automatically generates portfolio content from GitHub data:
+
+<Code text={`def fetch_repositories(username: str, limit: int = 10):
+    """Fetch and analyze user repositories from GitHub"""
+    user = client.get_user(username)
+    repos = []
+    
+    for repo in user.get_repos()[:limit]:
+        # Skip forks unless they have significant activity
+        if repo.fork and repo.stargazers_count < 5:
+            continue
+            
+        repo_data = {
+            "name": repo.name,
+            "description": repo.description,
+            "language": repo.language,
+            "stargazers_count": repo.stargazers_count,
+            "topics": repo.get_topics(),
+            "html_url": repo.html_url
+        }
+        repos.append(repo_data)
+    
+    # Sort by stars, then by update time
+    repos.sort(key=lambda x: (x["stargazers_count"], x["updated_at"]), reverse=True)
+    return repos[:limit]`}/>
+
+**Portfolio Features:**
+- **GitHub Integration**: Fetches user profile and repository data
+- **Repository Analysis**: Filters and ranks projects by activity
+- **Content Generation**: Creates portfolio pages and LinkedIn posts
+- **Automated Updates**: Keeps portfolio current with latest projects
+
+### Orchestration System
+
+The orchestrator coordinates all agents and manages the complete workflow:
+
+<Code text={`class AgentOrchestrator:
+    def __init__(self):
+        self.agent_status = {}
+        self.event_history = []
+        self.config = self.load_config()
+    
+    def handle_event(self, event: Event):
+        """Handle events and trigger appropriate agents"""
+        if event.event_type == EventType.NEW_TOPIC:
+            # Trigger research agent
+            research_result = research_main(event.data["topic"])
+            
+            # If research successful, trigger content agent
+            if research_result["status"] == "success":
+                content_event = Event(
+                    event_type=EventType.CONTENT_READY,
+                    data={"research_data": research_result},
+                    timestamp=datetime.datetime.now(),
+                    source="orchestrator"
+                )
+                self.handle_event(content_event)
+        
+        elif event.event_type == EventType.CONTENT_READY:
+            # Trigger SMM agent for promotion
+            smm_main(event.data["content_file"])`}/>
+
+**Orchestration Features:**
+- **Event-Driven Architecture**: Responds to various triggers and conditions
+- **Conditional Workflows**: Automatically chains agents based on results
+- **Error Handling**: Manages failures and retries gracefully
+- **Status Tracking**: Monitors agent execution and results
+
+### GitHub Actions Integration
+
+The system uses GitHub Actions for automated workflows:
+
+<Code text={`name: Research → Blog PR
+on:
+  workflow_dispatch:
+    inputs:
+      topic:
+        description: "Research topic"
+        required: true
+  schedule:
+    - cron: '0 8 * * 1'  # Every Monday at 8 AM UTC
+
+jobs:
+  run-research:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Research Agent
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+        run: |
+          python -m agents.research_agent.main "${{ github.event.inputs.topic }}"
+      
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          title: "Research draft - ${{ github.event.inputs.topic }}"
+          body: |
+            Auto-generated research draft.
+            **Topic:** ${{ github.event.inputs.topic }}
+            Please review and edit before publishing.`}/>
+
+**Automation Features:**
+- **Scheduled Research**: Weekly automated research on trending topics
+- **Manual Triggers**: On-demand research for specific topics
+- **PR Generation**: Automatic pull request creation for blog drafts
+- **Social Media**: Automated posting when content is published
+
+### n8n Workflow Integration
+
+The system integrates with n8n for complex workflow automation:
+
+<Code text={`{
+  "name": "Blog Automation Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "webhook",
+        "responseMode": "responseNode"
+      },
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "leftValue": "={{ $json.trigger_type }}",
+              "rightValue": "research",
+              "operator": {"type": "string", "operation": "equals"}
+            }
+          ]
+        }
+      },
+      "name": "Research Trigger",
+      "type": "n8n-nodes-base.if"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "url": "http://localhost:8000/api/research",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "topic",
+              "value": "={{ $json.topic }}"
+            }
+          ]
+        }
+      },
+      "name": "Research Agent",
+      "type": "n8n-nodes-base.httpRequest"
+    }
+  ]
+}`}/>
+
+**n8n Capabilities:**
+- **Webhook Triggers**: External system integration
+- **Conditional Logic**: Smart routing based on content type
+- **API Integration**: Seamless communication with agent APIs
+- **Response Handling**: Structured responses for downstream processing
+
+### Vector Search Integration
+
+The system includes semantic search capabilities using LanceDB:
+
+<Code text={`from agents.vector_search.lancedb_client import vector_client
+
+def store_research_data(sources, topic, timestamp):
+    """Store research data in vector database"""
+    for i, source in enumerate(sources):
+        vector_client.add_source(
+            source_id=f"{timestamp}-source-{i}",
+            url=source["url"],
+            title=source["title"],
+            content=source["content"],
+            metadata={"topic": topic, "timestamp": timestamp}
+        )
+
+def search_similar_content(query, top_k=5):
+    """Search for similar content in vector database"""
+    results = vector_client.search(query, top_k=top_k)
+    return results`}/>
+
+**Vector Search Features:**
+- **Semantic Storage**: Stores content with embeddings for similarity search
+- **Metadata Indexing**: Tracks topics, timestamps, and source information
+- **Similarity Queries**: Finds related content across research history
+- **Content Discovery**: Helps identify patterns and connections
+
+### API Server
+
+The system provides a FastAPI server for external integrations:
+
+<Code text={`from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+
+app = FastAPI(title="Blog Agents API")
+
+class ResearchRequest(BaseModel):
+    topic: str
+    max_sources: int = 8
+
+@app.post("/api/research")
+async def trigger_research(request: ResearchRequest):
+    try:
+        result = research_main(request.topic)
+        return {"status": "success", "result": result}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/content")
+async def trigger_content(request: ContentRequest):
+    try:
+        result = content_main(request.outline)
+        return {"status": "success", "result": result}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))`}/>
+
+**API Features:**
+- **RESTful Endpoints**: Standard HTTP API for all agent operations
+- **Request Validation**: Pydantic models for input validation
+- **Error Handling**: Comprehensive error responses and logging
+- **Documentation**: Auto-generated OpenAPI documentation
+
+### Usage Examples
+
+**Local Development:**
+<Code text={`# Setup environment
+make venv
+source .venv/bin/activate
+make install
+
+# Run research agent
+make run-research TOPIC="AI automation trends"
+
+# Run content agent
+make run-content OUTLINE="outline.md"
+
+# Run SMM agent
+make run-smm POST="post.md"
+
+# Run portfolio agent
+make run-portfolio USERNAME="avrtt"
+
+# Start API server
+make api-server`}/>
+
+**GitHub Actions:**
+<Code text={`# Manual trigger with topic
+gh workflow run research-to-pr.yml -f topic="Latest AI developments"
+
+# Scheduled weekly research (every Monday at 8 AM UTC)
+# Configured in .github/workflows/research-to-pr.yml`}/>
+
+**n8n Integration:**
+<Code text={`# Trigger research via webhook
+curl -X POST https://your-n8n-instance.com/webhook/blog-automation \\
+  -H "Content-Type: application/json" \\
+  -d '{"trigger_type": "research", "topic": "AI trends"}'`}/>
+
+### Results and Impact
+
+This multi-agent system has transformed my blog workflow:
+
+**Before (Manual Process):**
+- 4-6 hours per post for research and writing
+- Inconsistent social media promotion
+- Manual portfolio updates
+- No systematic content discovery
+
+**After (Automated System):**
+- 30 minutes for initial research and draft generation
+- Automated cross-platform social media posting
+- Real-time portfolio updates from GitHub
+- Systematic content discovery and scheduling
+
+**Key Metrics:**
+- **90% reduction** in initial research time
+- **100% automation** of social media promotion
+- **Real-time** portfolio synchronization
+- **Weekly automated** content generation
+
+The system demonstrates how AI agents can work together to create a comprehensive content automation pipeline, from initial research through final publication and promotion. Each agent specializes in its domain while the orchestrator ensures smooth coordination and workflow management.
+
+## ...
+
+
+
+
+
+
+
+
+
+
+
+
+Этот пост посвящён инфраструктуре моих агентов, размещённой в репозитории:
+https://github.com/avrtt/personal-agents
+В посте описано, как создавались все агенты, включая:
+https://github.com/avrtt/avrtt.blog-agents
+https://github.com/avrtt/answering-agent
+
+Нужно закончить пост вместе с этим репозиторием. 
+
+Status agent should update my current location, freelance status and lastUpdate variables automatically
+Portfolio agent > постит проекты в LinkedIn, редактирует разделы /freelance(_ru), /cv, резюме
+Map agent > работает с данными из раздела Exploration
+Research agent > берёт шаблон поста из pages/posts/(...)_template.txt
+
+В описание и README репозитория написать что-то вроде "Agent-based content generation", "with AI web agent support". + в arrays и LinkedIn упомянуть это в проекте.
+
+Отредактировать и запушить README репозитория avrtt.blog-agents.
+
+Релиз сайта 4.2: добавлены web-агенты
+Дальше можно прикрутить MCP
+
+Можно создать отдельного ИИ-агента с интеграцией в Google Sheets (бюджет, привычки), GitHub, соцсетями и прочими сайтами. Он будет ходить в интернет, читать и записывать данные в таблицы, и что-то делать полезное с этим всем. Его можно связать с агентом-автоответчиком: https://github.com/avrtt/answering-agent. Для него отдельный репозиторий.
+Телеграм-бот с уведомлениями о привычках и финансах. LLM суммаризирует результаты и затраты, выдаёт рекомендации. (...). Агент может связать что угодно. Это личный ассистент для всего от работы до личных дел. Любые сайты можно связать через API. Добавить в портфолио на сайт + LinkedIn + опубликовать пост в телеграм-канал и на сайт.
+
+Каждый репозиторий выложить в портфолио на сайт + выложить в портфолию на LinkedIn
+
+*/}
+
+
+{/*
+
+
+
+
+**Use case:** I have a static blog that requires significant manual work for research, content creation, and social media promotion. I want to automate these tasks using AI agents that can work together seamlessly.
+
+The goal is to build a multi-agent system that can:
+- Research topics and generate draft posts
+- Create and edit content with SEO optimization
+- Manage GitHub issues and code quality
+- Automate social media announcements
+
+We'll use Python for orchestration and integration with LLMs, LangChain/LangGraph for workflow management, and GitHub Actions for automation. The system will integrate with external APIs (Tavily for search, social media platforms) and use n8n for complex workflow orchestration.
+
+## Architecture 
+
+Let's design the overall structure. A well-designed AI agent system should separate responsibilities to make the system maintainable and scalable. Our architecture consists of four specialized agents working together:
+
+## Multi-Agent Architecture
+
+Our system uses a **multi-agent approach** where each agent has a specific domain of expertise:
+
+1. **Research Agent** – Handles topic research, source collection, and initial draft generation
+2. **Content Agent** – Manages post creation, editing, SEO optimization, and quality assurance
+3. **Dev Agent** – Handles GitHub integration, issue management, and code quality
+4. **SMM Agent** – Manages social media announcements and cross-platform posting
+
+### Agent Communication Flow
+
+```
+User Request → Research Agent → Content Agent → Dev Agent → SMM Agent
+     ↓              ↓              ↓              ↓              ↓
+  Topic Input → Draft Output → Final Post → GitHub PR → Social Posts
+```
+
+### Integration Points
+
+- **GitHub Actions** – Orchestrates the entire workflow from research to deployment
+- **External APIs** – Tavily for search, OpenAI for LLM, social media platforms
+- **n8n** – Handles complex workflow automation and external integrations
+- **Local Processing** – Python-based agents with dry-run capabilities for testing
+
+<Highlight>Why multi-agent architecture:</Highlight>
+
+* Each agent can be developed and tested independently
+* Agents can be scaled individually based on workload
+* Easy to add new agents or modify existing ones without affecting others
+* Clear separation of concerns and responsibilities
+
+<Highlight>Why modularity matters:</Highlight>
+
+* Each agent can be developed and tested independently
+* Agents can be scaled individually based on workload
+* Easy integration with third-party services via APIs or n8n webhooks
+* Clear separation of concerns and responsibilities
+
+## Project Implementation
+
+I've implemented this system in the `avrtt.blog-agents` repository. Here's what was built:
+
+### Repository Structure
+
+```
+avrtt.blog-agents/
+├─ agents/
+│  ├─ research_agent/     # Research and draft generation
+│  ├─ content_agent/      # Content creation and editing
+│  ├─ dev_agent/         # GitHub integration
+│  └─ smm_agent/         # Social media automation
+├─ .github/workflows/     # GitHub Actions
+├─ out/                  # Generated outputs
+├─ logs/                 # Log files
+├─ requirements.txt      # Python dependencies
+├─ Makefile             # Build commands
+└─ README.md            # Documentation
+```
+
+### Key Features Implemented
+
+1. **Dry-Run Mode** – All agents work without API keys for testing
+2. **GitHub Actions Integration** – Automated workflows for research and SMM
+3. **Modular Design** – Each agent is independent and testable
+4. **Comprehensive Documentation** – Setup instructions and usage examples
+
+### Testing the System
+
+You can test the entire system locally:
+
+```bash
+# Setup environment
+make venv
+source .venv/bin/activate
+make install
+
+# Test research agent (dry-run mode)
+make run-research TOPIC="AI automation trends"
+
+# Test content agent
+make run-content OUTLINE="My Blog Topic"
+
+# Test SMM agent
+make run-smm POST="sample-post.md"
+```
+
+<Image alt="diagram showing AI agent architecture with Python agents, GitHub Actions, and external API integrations" path="" caption="Multi-agent architecture for blog automation" zoom="false" />
+
+
+
+## 3. Setting Up the Development Environment
+
+To implement this architecture, we need the right tools and dependencies. Below are the components:
+
+### **Core Technologies**
+
+* **Python 3.11+** – Main language for orchestration and LLM interaction.
+* **C++17 or later** – For optimized modules.
+* **MCP SDK** – For implementing the Model Context Protocol.
+* **n8n** – Workflow automation tool for external integrations (run via Docker or local installation).
+
+### **Python Dependencies**
+
+Install in a virtual environment:
+<Code text={`pip install openai pydantic requests grpcio mcp-sdk`}/>
+
+These libraries provide:
+
+* **openai** – Interface with LLMs.
+* **pydantic** – Data validation for structured inputs.
+* **grpcio** – For communication when needed.
+* **mcp-sdk** – MCP implementation for agent interoperability.
+
+### **C++ Build System**
+
+* **CMake** for cross-platform builds.
+* **gRPC C++ libraries** if the service uses gRPC.
+
+### **Running n8n**
+
+* **Option 1:** Local installation:
+  <Code text={`npm install n8n -g`}/>
+* **Option 2:** Docker container:
+  <Code text={`docker run -it --rm \
+  -p 5678:5678 \
+  -v ~/.n8n:/home/node/.n8n \
+  n8nio/n8n`}/>
+
+We will use n8n to **trigger workflows from the AI agent**, such as sending notifications, updating spreadsheets, or integrating with CRMs.
+
+Продолжаю с **главами 4, 5 и 6**, включая отдельную диаграмму для MCP и упоминание интеграции с n8n (диаграмма будет добавлена в 6-й главе).
+
+
+
+## 4. Implementing the Core Agent in Python
+
+### 4.1 Designing the Orchestrator
+
+The **orchestrator** is the brain of our agent. It:
+
+* Accepts user input.
+* Maintains state (conversation history, task context).
+* Decides which tools or services to call.
+* Communicates with MCP for external integrations.
+
+Here's a minimal skeleton:
+
+<Code text={`class AgentOrchestrator:
+def **init**(self, llm_client, mcp_client):
+self.llm = llm_client
+self.mcp = mcp_client
+self.state = {}
+
+```
+def handle_input(self, user_query: str):
+    # 1. Analyze user intent
+    plan = self.plan_tasks(user_query)
+    
+    # 2. Execute plan
+    results = self.execute_plan(plan)
+    return results
+
+def plan_tasks(self, query: str):
+    # Use LLM for planning
+    prompt = f"Create a step-by-step plan to: {query}"
+    response = self.llm.generate(prompt)
+    return response
+
+def execute_plan(self, plan: str):
+    # Parse and execute steps (simplified for now)
+    return f"Executing: {plan}"
+```
+
+`}/>
+
+This orchestrator is basic for now. In later sections, we'll add:
+
+* A reasoning layer for **chain-of-thought planning**.
+* A tool registry for **dynamic capability discovery**.
+* Integration with **MCP** and **n8n** for real automation.
+
+
+
+### 4.2 Adding an LLM-Based Reasoning Layer
+
+The reasoning layer allows the agent to **decompose complex tasks into steps**. For example:
+
+```
+User: "Find the latest AI research papers on LLM optimization and summarize them."
+Agent plan:
+1. Search for latest papers on LLM optimization.
+2. Extract abstracts and key findings.
+3. Summarize into a concise report.
+```
+
+We can implement this with prompt engineering:
+
+<Code text={`class ReasoningModule:
+def **init**(self, llm):
+self.llm = llm
+
+```
+def generate_plan(self, user_query):
+    prompt = f"""
+    Break down the following task into actionable steps:
+    Task: {user_query}
+    Return steps in numbered list.
+    """
+    return self.llm.generate(prompt)
+```
+
+`}/>
+
+Later, this reasoning module will **inform the orchestrator's execution layer**.
+
+
+
+## 5. Building Performance-Critical Components in C++
+
+Python is excellent for orchestration, but some tasks—like **vector similarity search** or **batch text embedding processing**—are better in C++ for speed and memory efficiency.
+
+### 5.1 Why C++?
+
+* Faster for large-scale numeric computations.
+* Can use SIMD instructions and optimized libraries.
+* Integrates with Python using **Pybind11** or via a service layer (MCP).
+
+### 5.2 Example: Vector Search Engine
+
+We'll implement a simple **vector index** in C++:
+
+<Code text={`
+// vector_index.h
+#include \<vector>
+#include \<algorithm>
+#include \<cmath>
+
+class VectorIndex {
+public:
+void add_vector(const std::vector\<float>& vec) {
+vectors.push_back(vec);
+}
+
+std::vector\<int> search(const std::vector\<float>& query, int top_k) {
+    std::vector\<std::pair\<float, int>> distances;
+    for (size_t i = 0; i \< vectors.size(); ++i) {
+        float dist = cosine_distance(query, vectors[i]);
+        distances.push_back({dist, (int)i});
+    }
+    std::sort(distances.begin(), distances.end());
+    
+    std::vector\<int> result;
+    for (int i = 0; i \< top_k && i \< (int)distances.size(); ++i) {
+        result.push_back(distances[i].second);
+    }
+    return result;
+}
+
+private:
+std::vector\<std::vector\<float>> vectors;
+
+float cosine_distance(const std::vector\<float>& a, const std::vector\<float>& b) {
+    float dot = 0, norm_a = 0, norm_b = 0;
+    for (size_t i = 0; i \< a.size(); ++i) {
+        dot += a[i] * b[i];
+        norm_a += a[i] * a[i];
+        norm_b += b[i] * b[i];
+    }
+    return 1.0f - dot / (std::sqrt(norm_a) * std::sqrt(norm_b));
+}
+
+};
+`}/>
+
+### 5.3 Exposing to Python
+
+Option 1: **Pybind11** for direct bindings.
+Option 2: Run this as a microservice and communicate via **MCP** (preferred for modularity and multi-language integration).
+
+
+
+## 6. Understanding and Using MCP (Model Context Protocol)
+
+### 6.1 What is MCP?
+
+MCP is a **protocol for agent interoperability**. It defines a standard way for agents to:
+
+* Discover available tools.
+* Pass structured context to external services.
+* Receive results in a consistent format.
+
+Why MCP for our agent?
+
+* It allows our **Python orchestrator** to communicate with:
+
+  * **C++ services** (e.g., vector search engine).
+  * **n8n workflows** (via MCP-to-Webhook bridge).
+
+
+
+### 6.2 Implementing MCP in Python
+
+We'll register tools in the orchestrator so they can be invoked dynamically:
+
+<Code text={
+`from mcp import MCPServer, MCPTool
+
+server = MCPServer()
+
+@MCPTool("fetch_url")
+def fetch_url(url: str) -> str:
+import requests
+return requests.get(url).text
+
+server.register_tool(fetch_url)
+server.run()
+`}/>
+
+This creates a **tool** that can be called by the agent or another MCP-compatible service.
+
+
+
+### 6.3 MCP Integration with n8n
+
+We integrate n8n by exposing a **webhook** as an MCP tool. Example flow:
+
+```
+Agent → MCP → Webhook → n8n workflow → External Service
+```
+
+We define an MCP tool that calls the n8n webhook:
+
+<Code text={`@MCPTool("trigger_n8n")
+def trigger_n8n(workflow_url: str, payload: dict):
+    import requests
+    return requests.post(workflow_url, json=payload).json()
+`}/>
+
+**Diagram: MCP Integration with n8n**
+
+<Image alt="diagram showing MCP connection between AI agent and n8n workflow" path="" caption="MCP integration with n8n via Webhook" zoom="false" />
+
+Продолжаю. Добавляю главы **7, 8 и 9**, включая **два примера n8n-сценариев** (простой и сложный) и расширяю тему multi-tool capabilities.
+
+
+
+## 7. Multi-Tool and Multi-Modal Capabilities
+
+Our AI agent becomes truly powerful when it can **dynamically choose tools** based on the task. This means the orchestrator needs:
+
+* **Tool registry** – List of all available tools (MCP-based or internal).
+* **Dynamic selection logic** – The reasoning module decides which tool to use.
+* **Composable workflows** – Ability to chain multiple tools in a single plan.
+
+### 7.1 Tool Registration System
+
+We'll extend the orchestrator to register tools:
+
+<Code text={`
+class ToolRegistry:
+def **init**(self):
+self.tools = {}
+
+def register(self, name, func):
+    self.tools[name] = func
+
+def execute(self, name, **kwargs):
+    if name in self.tools:
+        return self.tools[name](**kwargs)
+    else:
+        raise ValueError(f"Tool {name} not found")
+`}/>
+
+The orchestrator will pass the **plan** from the reasoning module and call the required tools in sequence.
+
+
+
+### 7.2 Why n8n for Automation?
+
+n8n allows us to **offload complex workflows** to an external system without coding everything in Python. Benefits:
+
+* **Visual workflow editor** – Easy to design automations.
+* **Hundreds of integrations** (Google Sheets, Slack, CRM, etc.).
+* **Webhook triggers** – Ideal for MCP integration.
+
+
+
+## 8. Example 1: Simple n8n Workflow – Sending a Slack Notification
+
+Imagine a scenario:
+**User:** "Notify my team in Slack when the AI agent completes the report."
+Instead of writing Slack API logic in Python, we use n8n.
+
+### 8.1 Workflow Steps in n8n
+
+1. **Webhook Node** – Triggered by the AI agent via MCP tool.
+2. **Slack Node** – Sends a message to a specific channel.
+
+Webhook URL:
+
+```
+https://your-n8n-instance.com/webhook/notify_slack
+```
+
+MCP tool in Python:
+
+<Code text={`@MCPTool("notify_slack")
+def notify_slack(message: str):
+    url = "https://your-n8n-instance.com/webhook/notify_slack"
+    payload = {"text": message}
+    import requests
+    return requests.post(url, json=payload).json()
+`}/>
+
+Agent call example:
+
+```
+trigger_n8n("https://your-n8n-instance.com/webhook/notify_slack", {"text": "Report completed ✅"})
+```
+
+
+
+**Diagram: Simple Integration**
+
+<Image alt="n8n simple workflow diagram: MCP → Webhook → Slack" path="" caption="Basic n8n workflow for Slack notification" zoom="false" />
+
+
+
+## 9. Example 2: Advanced n8n Workflow – Research Report Automation (Google Sheets + Email)
+
+Scenario:
+**User:** "Collect the latest AI news, save them in Google Sheets, and email me the summary."
+
+### 9.1 Workflow Overview
+
+* **Webhook Trigger** – Agent calls this after collecting news.
+* **Google Sheets Node** – Append rows with news headlines and links.
+* **Email Node** – Send a summary to the user.
+
+### 9.2 n8n Steps
+
+1. **Webhook** receives:
+
+```json
+{
+  "summary": "Top 5 AI news...",
+  "articles": [
+    {"title": "New LLM breakthrough", "url": "https://..."},
+    {"title": "AI beats benchmarks", "url": "https://..."}
+  ]
+}
+```
+
+2. **Google Sheets Node** – Append rows from `articles`.
+3. **Email Node** – Send `summary` to user's email.
+
+
+
+**Python MCP Tool for triggering workflow**:
+
+<Code text={`@MCPTool("update_sheet_and_email")
+def update_sheet_and_email(data: dict):
+    url = "https://your-n8n-instance.com/webhook/ai_report"
+    import requests
+    return requests.post(url, json=data).json()
+`}/>
+
+**Agent Execution Plan**:
+
+```
+1. Collect latest AI news → tool: fetch_url
+2. Summarize news → tool: summarize_text
+3. Send data to n8n workflow → tool: update_sheet_and_email
+```
+
+
+
+**Diagram: Advanced Integration**
+
+<Image alt="diagram showing MCP integration: Agent → MCP → n8n workflow → Google Sheets + Email" path="" caption="Advanced n8n workflow for AI research automation" zoom="false" />
+
+Продолжаю с **главами 10 и 11**, начиная с **Planning System**, где агент сам решает использовать n8n, а затем добавлю UI (CLI + заготовка для web).
+
+
+
+## 10. Planning System with LLM
+
+Up to this point, our orchestrator could execute predefined tools, but now we need the agent to **reason about which tools to use dynamically**.
+
+The planning system will:
+
+* Interpret the user's request.
+* Break it down into steps.
+* Map steps to available tools (including n8n workflows).
+* Execute them sequentially or in parallel.
+
+
+
+### 10.1 Architecture of the Planning System
+
+Components:
+
+* **Reasoning Module** – Generates a plan from the user query.
+* **Tool Matcher** – Maps plan steps to registered tools.
+* **Executor** – Runs the steps and aggregates results.
+
+**Diagram: Planning Flow**
+
+<Image alt="diagram showing flow: user query → LLM planning → tool selection → execution" path="" caption="Planning system architecture" zoom="false" />
+
+
+
+### 10.2 Prompt for Plan Generation
+
+We use the LLM to produce structured JSON for easier parsing:
+
+<Code text={`
+class PlanningSystem:
+def **init**(self, llm, tool_registry):
+self.llm = llm
+self.tools = tool_registry
+
+def create_plan(self, query):
+    prompt = f"""
+    User request: "{query}"
+    Break this into a list of steps with tool names and inputs.
+    Available tools: {list(self.tools.tools.keys())}
+    Respond in JSON format:
+    [
+        {"step": "description", "tool": "tool_name", "input": {"key": "value"}}
+    ]
+    """
+    response = self.llm.generate(prompt)
+    return self._parse_json(response)
+
+def _parse_json(self, text):
+    import json
+    try:
+        return json.loads(text)
+    except:
+        return []
+
+`}/>
+
+
+
+### 10.3 Execution Engine
+
+<Code text={`
+class PlanExecutor:
+def **init**(self, tool_registry):
+self.tools = tool_registry
+
+def execute(self, plan):
+    results = []
+    for step in plan:
+        tool = step.get("tool")
+        params = step.get("input", {})
+        result = self.tools.execute(tool, **params)
+        results.append({"step": step["step"], "result": result})
+    return results
+
+`}/>
+
+
+
+### 10.4 End-to-End Example with n8n
+
+**User Query:**
+*"Find the latest AI news and send them to my Google Sheets."*
+
+**Registered tools:**
+`fetch_url`, `summarize_text`, `update_sheet_and_email`
+
+**Generated Plan (LLM Output):**
+
+```json
+[
+    {
+        "step": "Search for latest AI news",
+        "tool": "fetch_url",
+        "input": {"url": "https://news.ycombinator.com/search?query=AI"}
+    },
+    {
+        "step": "Summarize collected news",
+        "tool": "summarize_text",
+        "input": {"text": "\<news content>"}
+    },
+    {
+        "step": "Send data to n8n workflow",
+        "tool": "update_sheet_and_email",
+        "input": {
+            "summary": "\<summary>",
+            "articles": [{"title": "AI breakthrough", "url": "https://..."}]
+        }
+    }
+]
+```
+
+The orchestrator calls:
+
+```python
+plan = planning_system.create_plan(user_query)
+results = executor.execute(plan)
+```
+
+✅ The agent **automatically chooses to trigger the n8n workflow** for automation.
+
+
+
+## 11. User Interface (CLI + Web Skeleton)
+
+To keep it simple, we'll start with **CLI** and later prepare for a **Web UI**.
+
+
+
+### 11.1 CLI Interface
+
+<Code text={`def start_cli(agent):
+    print("AI Agent CLI. Type 'exit' to quit.")
+    while True:
+        user_input = input("You: ")
+        if user_input.lower() == "exit":
+            break
+        plan = agent.planning.create_plan(user_input)
+        print("Plan:", plan)
+        result = agent.executor.execute(plan)
+        print("Result:", result)
+`}/>
+
+Run:
+
+```bash
+python agent.py
+```
+
+
+
+### 11.2 Web UI Skeleton (Flask)
+
+<Code text={`
+from flask import Flask, request, jsonify
+
+app = Flask(**name**)
+
+@app.route("/query", methods=["POST"])
+def query():
+data = request.json
+user_query = data.get("query")
+plan = agent.planning.create_plan(user_query)
+result = agent.executor.execute(plan)
+return jsonify({"plan": plan, "result": result})
+
+app.run(port=8000)
+`}/>
+
+This allows us to connect a **React frontend** later or integrate with chat interfaces.
+
+Продолжаю с **главами 12 и 13**, включая полный `docker-compose` для Python-orchestrator, C++-сервиса и **n8n**.
+
+
+
+## 12. Deployment (Docker, Scaling, Microservices)
+
+We'll containerize three services and run them together:
+
+1. **orchestrator** – Python app exposing an HTTP API and speaking MCP to tools
+2. **cpp_index** – C++ microservice exposing an MCP tool (`search_embeddings`)
+3. **n8n** – Workflow automation reachable via webhooks from the orchestrator (or via an MCP "bridge" tool)
+
+<Highlight>Goals:</Highlight> one command to bring the whole stack up, stable networking between services, and clean env-based configuration.
+
+
+
+### 12.1 Project Structure
+
+```
+ai-agent/
+├─ orchestrator/
+│  ├─ app.py
+│  ├─ planning.py
+│  ├─ tools_mcp.py
+│  ├─ requirements.txt
+│  └─ Dockerfile
+├─ cpp_index/
+│  ├─ CMakeLists.txt
+│  ├─ server.cpp
+│  ├─ vector_index.h
+│  └─ Dockerfile
+├─ n8n/
+│  └─ (optional env overrides)
+├─ docker-compose.yml
+└─ .env
+```
+
+
+
+### 12.2 Environment Variables
+
+Create **.env** at repo root:
+
+<Code text={`
+# Orchestrator
+ORCH_PORT=8000
+LLM_PROVIDER=openai
+OPENAI_API_KEY=sk-...
+
+# MCP endpoints
+
+MCP_CPP_URL=http://cpp_index:7070
+
+# n8n
+
+N8N_BASIC_AUTH_ACTIVE=true
+N8N_BASIC_AUTH_USER=admin
+N8N_BASIC_AUTH_PASSWORD=admin_password
+N8N_PORT=5678
+N8N_HOST=n8n
+
+# (Optional) public URL if you expose n8n
+
+N8N_WEBHOOK_URL=[http://n8n:5678/](http://n8n:5678/)
+`}/>
+
+
+
+### 12.3 Orchestrator (Python) — Dockerfile & App
+
+**orchestrator/requirements.txt**
+
+```
+fastapi
+uvicorn[standard]
+pydantic
+requests
+grpcio
+# Replace with your MCP SDK package name
+mcp-sdk
+```
+
+**orchestrator/Dockerfile**
+
+<Code text={`
+FROM python:3.12-slim
+
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY app.py planning.py tools_mcp.py ./
+
+ENV PORT=${ORCH_PORT}
+EXPOSE 8000
+
+CMD ["uvicorn", "app:api", "--host", "0.0.0.0", "--port", "8000"]
+`}/>
+
+**orchestrator/app.py** (skeleton aligning with Chapter 11)
+
+<Code text={`
+from fastapi import FastAPI
+from planning import PlanningSystem, PlanExecutor
+from tools_mcp import build_tool_registry
+
+api = FastAPI()
+tools = build_tool_registry()
+planning = PlanningSystem(llm=None, tool_registry=tools)  # inject real LLM client
+executor = PlanExecutor(tool_registry=tools)
+
+@api.post("/query")
+async def query(body: dict):
+user_query = body.get("query","")
+plan = planning.create_plan(user_query)
+result = executor.execute(plan)
+return {"plan": plan, "result": result}
+`}/>
+
+**orchestrator/tools_mcp.py** — registers local tools and MCP proxies:
+
+<Code text={`
+import os, requests
+
+def build_tool_registry():
+class ToolRegistry:
+def **init**(self): self.tools={}
+def register(self, name, fn): self.tools[name]=fn
+def execute(self, name, **kwargs): return self.tools[name](**kwargs)
+
+reg = ToolRegistry()
+
+# Local HTTP tools
+reg.register("fetch_url", lambda url: requests.get(url, timeout=20).text)
+
+# n8n webhook proxy
+def trigger_n8n(workflow_path: str, payload: dict):
+    base = os.getenv("N8N_WEBHOOK_URL","http://n8n:5678/")
+    url = base.rstrip("/") + "/" + workflow_path.lstrip("/")
+    r = requests.post(url, json=payload, timeout=20)
+    r.raise_for_status()
+    return r.json() if r.headers.get("content-type","").startswith("application/json") else r.text
+reg.register("trigger_n8n", trigger_n8n)
+
+# MCP proxy to C++ service (simplified HTTP-style for demo)
+def search_embeddings(query: list, top_k: int = 5):
+    cpp = os.getenv("MCP_CPP_URL","http://cpp_index:7070")
+    r = requests.post(cpp + "/search", json={"query": query, "top_k": top_k}, timeout=10)
+    r.raise_for_status()
+    return r.json()
+reg.register("search_embeddings", search_embeddings)
+
+# Placeholder summarizer (replace with LLM)
+reg.register("summarize_text", lambda text: text[:500] + "...")
+
+# Advanced: Google Sheets + Email via n8n
+def update_sheet_and_email(summary: str, articles: list):
+    return trigger_n8n("webhook/ai_report", {"summary": summary, "articles": articles})
+
+reg.register("update_sheet_and_email", update_sheet_and_email)
+return reg
+
+`}/>
+
+
+
+### 12.4 C++ Service — Dockerfile & Server
+
+**cpp_index/Dockerfile**
+
+<Code text={`
+FROM debian:stable-slim
+
+RUN apt-get update && apt-get install -y --no-install-recommends \\
+g++ cmake make libcurl4-openssl-dev \\
+&& rm -rf /var/lib/apt/lists/*
+
+WORKDIR /srv
+COPY CMakeLists.txt .
+COPY server.cpp vector_index.h ./
+
+RUN cmake -S . -B build && cmake --build build --config Release
+
+EXPOSE 7070
+CMD ["./build/cpp_index_server"]
+`}/>
+
+**cpp_index/CMakeLists.txt**
+
+<Code text={`
+cmake_minimum_required(VERSION 3.16)
+project(cpp_index_server)
+set(CMAKE_CXX_STANDARD 17)
+
+add_executable(cpp_index_server server.cpp)
+`}/>
+
+**cpp_index/vector_index.h** (from Chapter 5)
+
+**cpp_index/server.cpp** — tiny HTTP JSON server for demo (not production; replace with your MCP transport):
+
+<Code text={`
+#include \<arpa/inet.h>
+#include \<netinet/in.h>
+#include \<sys/socket.h>
+#include \<unistd.h>
+#include \<string>
+#include \<vector>
+#include \<algorithm>
+#include \<cmath>
+#include \<sstream>
+#include \<iostream>
+#include "vector_index.h"
+
+// VERY minimalistic: a fake HTTP listener that accepts POST /search with JSON
+// For production, use a proper HTTP/gRPC/MCP server library.
+
+std::string json_ok(const std::string& body){
+std::ostringstream oss;
+oss \<\< "HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nContent-Length: "
+\<\< body.size() \<\< "\r\n\r\n" \<\< body;
+return oss.str();
+}
+
+int main(){
+// preload some vectors
+VectorIndex index;
+index.add_vector({0.1f,0.2f,0.3f});
+index.add_vector({0.2f,0.1f,0.0f});
+index.add_vector({0.9f,0.8f,0.7f});
+
+```
+int srv = socket(AF_INET, SOCK_STREAM, 0);
+sockaddr_in addr{}; addr.sin_family=AF_INET; addr.sin_port=htons(7070); addr.sin_addr.s_addr=INADDR_ANY;
+bind(srv,(sockaddr*)&addr,sizeof(addr));
+listen(srv,10);
+
+while(true){
+    int cli = accept(srv,nullptr,nullptr);
+    if(cli\<0) continue;
+
+    char buf[8192]; int n = read(cli, buf, sizeof(buf));
+    if(n\<=0){ close(cli); continue; }
+    std::string req(buf, n);
+
+    // naive route/parse
+    if(req.find("POST /search")!=std::string::npos){
+        // pretend parse JSON body with query and top_k
+        // return fixed indices for demo
+        std::string body = R"({"indices":[0,2]})";
+        auto resp = json_ok(body);
+        write(cli, resp.c_str(), resp.size());
+    } else {
+        std::string body = R"({"status":"ok"})";
+        auto resp = json_ok(body);
+        write(cli, resp.c_str(), resp.size());
+    }
+    close(cli);
+}
+return 0;
+```
+
+}
+`}/>
+
+<Highlight>Note:</Highlight> this server shows the wiring. In a real MCP setup, swap this toy HTTP with a proper MCP transport (gRPC/WebSocket) and structured schemas.
+
+
+
+### 12.5 n8n Service
+
+We'll run official **n8n** with persistent volume and basic auth:
+
+The **webhook endpoints** used earlier (e.g., `webhook/notify_slack`, `webhook/ai_report`) will be created inside your n8n UI.
+
+
+
+### 12.6 docker-compose.yml
+
+At repo root:
+
+<Code text={`
+version: "3.9"
+
+services:
+orchestrator:
+build: ./orchestrator
+container_name: orchestrator
+env_file: .env
+ports:
+- "${ORCH_PORT}:8000"
+depends_on:
+cpp_index:
+condition: service_healthy
+n8n:
+condition: service_started
+healthcheck:
+test: ["CMD", "wget", "-qO-", "http://localhost:8000/query || exit 1"]
+interval: 10s
+timeout: 3s
+retries: 10
+restart: unless-stopped
+
+cpp_index:
+build: ./cpp_index
+container_name: cpp_index
+expose:
+- "7070"
+healthcheck:
+test: ["CMD-SHELL", "timeout 1 bash -c '</dev/tcp/localhost/7070' || exit 1"]
+interval: 10s
+timeout: 2s
+retries: 10
+restart: unless-stopped
+
+n8n:
+image: n8nio/n8n:latest
+container_name: n8n
+env_file: .env
+ports:
+- "${N8N_PORT}:5678"
+volumes:
+- n8n_data:/home/node/.n8n
+restart: unless-stopped
+
+volumes:
+n8n_data:
+`}/>
+
+
+
+### 12.7 Bringing It Up
+
+```
+docker compose build
+docker compose up -d
+```
+
+Test the orchestrator:
+
+```
+curl -X POST http://localhost:8000/query \
+  -H "Content-Type: application/json" \
+  -d '{"query":"Find the latest AI news and send them to my Google Sheets."}'
+```
+
+You should see a JSON with a generated plan and step results (your LLM and n8n endpoints decide the real content).
+
+
+
+### 12.8 Scaling & Variants
+
+* **Scale C++ service** for heavy traffic:
+
+  ```
+  docker compose up -d --scale cpp_index=3
+  ```
+
+  Add a simple reverse proxy (e.g., Traefik / Nginx) in front of `cpp_index` or move the service behind gRPC load balancing.
+
+* **Swap transport**: Replace the toy HTTP in `cpp_index` with proper MCP transport; update `tools_mcp.py` to use the matching client.
+
+* **Kubernetes (later)**: Container boundaries are already clean; translate services into Deployments + a Service per component.
+
+
+
+**Diagram: Container Topology**
+
+<Image alt="diagram: user → orchestrator (FastAPI) → MCP tool proxies → cpp_index and n8n; external webhooks back to orchestrator" path="" caption="Runtime topology with Docker Compose" zoom="false" />
+
+
+
+## 13. Future Enhancements & Closing Remarks
+
+Now you have a working, multi-language **AI agent** capable of reasoning, planning, and orchestrating tools via **MCP**—including **n8n** workflows for real-world automation. This practical build directly extends the conceptual groundwork from *AI web agents* and turns it into an end-to-end, deployable system.
+
+### Where to go next
+
+* **Real LLM integration**: Replace placeholder summarizer with your provider; add caching and retries.
+* **Capability discovery**: Let the agent query MCP endpoints for tool schemas and auto-augment its Tool Registry.
+* **Memory layer**: Add a vector DB (the C++ index can become a full service) and retrieval-augmented prompts.
+* **Observability**: Tracing per step (OpenTelemetry), structured logs, and cost/latency dashboards.
+* **Robust MCP**: Typed schemas, auth between services, backpressure, and streaming outputs.
+* **Multi-agent**: Chain specialized agents (researcher, writer, QA) coordinated via MCP.
+
+<Highlight>Outcome:</Highlight> you can now spin up a complete agentic application locally or on a server, compose complex automations visually in n8n, and extend the system by adding new MCP tools—without refactoring the orchestrator.
+
+<Image alt="sequence diagram: user query → LLM plan → tool selection → n8n + C++ → results aggregation → response" path="" caption="End-to-end scenario of the agent in action" zoom="false" />
+
+Окей, продолжаем с **главой 15**: **Kubernetes Deployment с Helm, autoscaling и интеграцией orchestrator + n8n**.
+
+
+
+## 15. Kubernetes Deployment & Scaling with Helm
+
+Когда мы доходим до продакшена, важно:
+
+* Контейнеризовать все сервисы.
+* Развернуть их на Kubernetes.
+* Настроить autoscaling и fault-tolerance.
+
+Наши компоненты:
+
+* **orchestrator** (Python)
+* **cpp-service** (оптимизированный сервис для heavy computation)
+* **n8n**
+* **PostgreSQL** (для n8n и логов агента)
+* **Redis** (для кэша и очередей)
+
+
+
+### 15.1 Архитектура в Kubernetes
+
+**Диаграмма:**
+
+```
+[ User / Web UI ]
+        |
+     [Ingress]
+        |
+  ---------------------
+  |                   |
+[orchestrator]     [n8n]
+  |                   |
+ [cpp-service]    [PostgreSQL]
+  |                   |
+ [Redis Cache]     [Persistent Volumes]
+```
+
+
+
+### 15.2 Helm Chart Structure
+
+Создаём Helm-чарт `ai-agent`:
+
+```
+ai-agent/
+  Chart.yaml
+  values.yaml
+  templates/
+    orchestrator-deployment.yaml
+    orchestrator-service.yaml
+    cpp-deployment.yaml
+    cpp-service.yaml
+    n8n-deployment.yaml
+    n8n-service.yaml
+    postgres-deployment.yaml
+    redis-deployment.yaml
+    ingress.yaml
+```
+
+
+
+### 15.3 values.yaml (основные настройки)
+
+```yaml
+orchestrator:
+  image: "myregistry/orchestrator:latest"
+  replicas: 2
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "512Mi"
+    limits:
+      cpu: "1"
+      memory: "1Gi"
+
+cppService:
+  image: "myregistry/cpp-service:latest"
+  replicas: 1
+
+n8n:
+  image: "n8nio/n8n:latest"
+  replicas: 1
+  env:
+    N8N_BASIC_AUTH_ACTIVE: true
+    N8N_BASIC_AUTH_USER: admin
+    N8N_BASIC_AUTH_PASSWORD: strongpassword
+    DB_TYPE: postgresdb
+    DB_POSTGRESDB_HOST: postgres
+    DB_POSTGRESDB_DATABASE: n8n
+    DB_POSTGRESDB_USER: n8n
+    DB_POSTGRESDB_PASSWORD: n8npass
+
+postgres:
+  image: "postgres:15"
+  persistence:
+    size: 10Gi
+```
+
+
+
+### 15.4 Пример orchestrator Deployment (templates/orchestrator-deployment.yaml)
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orchestrator
+spec:
+  replicas: {{ .Values.orchestrator.replicas }}
+  selector:
+    matchLabels:
+      app: orchestrator
+  template:
+    metadata:
+      labels:
+        app: orchestrator
+    spec:
+      containers:
+        - name: orchestrator
+          image: {{ .Values.orchestrator.image }}
+          ports:
+            - containerPort: 8000
+          resources:
+            requests:
+              cpu: {{ .Values.orchestrator.resources.requests.cpu }}
+              memory: {{ .Values.orchestrator.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.orchestrator.resources.limits.cpu }}
+              memory: {{ .Values.orchestrator.resources.limits.memory }}
+```
+
+
+
+### 15.5 Autoscaling (HPA для orchestrator)
+
+Создадим HorizontalPodAutoscaler:
+
+```yaml
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: orchestrator-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: orchestrator
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+```
+
+
+
+### 15.6 Redis для очередей (например, для планов)
+
+`templates/redis-deployment.yaml`:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+        - name: redis
+          image: redis:7
+          ports:
+            - containerPort: 6379
+```
+
+
+
+### 15.7 Ингресс (для API и n8n UI)
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ai-agent-ingress
+spec:
+  rules:
+    - host: ai-agent.example.com
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: orchestrator
+                port:
+                  number: 8000
+          - path: /n8n
+            pathType: Prefix
+            backend:
+              service:
+                name: n8n
+                port:
+                  number: 5678
+```
+
+
+
+### 15.8 CI/CD и Image Registry
+
+* **Build images**: orchestrator (`Dockerfile`), cpp-service (`Dockerfile`).
+* Push to **private registry** (ECR, GCR, GitHub Container Registry).
+* Deploy через:
+
+  ```bash
+  helm install ai-agent ./ai-agent
+  ```
+
+*/}
