@@ -58,7 +58,7 @@ $transition-duration: 0.1s;
   font-size: 3.5vh;
   color: $primary-text-color;
   text-decoration: none;
-  font-weight: 800;
+  font-weight: bold;
   position: absolute;
   margin: 6.5vh 0 0 2vh;
   @include mixins.respond-to(mobile) { display: none }
@@ -68,7 +68,7 @@ $transition-duration: 0.1s;
   font-size: 2.5vh;
   color: $secondary-text-color;
   text-decoration: none;
-  font-weight: 800;
+  font-weight: bold;
   position: absolute;
   margin: 11.5vh 0 0 2vh;
   @include mixins.respond-to(mobile) { font-size: 1.6rem; margin: 0.1rem 0 0 1rem; color: #f2f2f2 }
