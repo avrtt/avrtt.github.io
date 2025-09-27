@@ -18,12 +18,13 @@ import CvPosition from'../../components/CvPosition'
 import CvPositionFirst from'../../components/CvPositionFirst'
 
 const downloadStyle = {
+	"font-size": "1.4rem",
 	"text-align": "center",
-	"margin-bottom": "53px"
+	"margin-bottom": "3.4rem"
 } 
 
 const downloadDescStyle = {
-	"font-size": "22px",
+	"font-size": "1.4rem",
 	"margin-top": "-12px"
 } 
 
@@ -38,7 +39,8 @@ const CV = () => {
 		
 		<div className="cvBody">
 	
-			<div className="noselect" style={downloadStyle}><a href="https://github.com/avrtt/avrtt.github.io/blob/main/src/documents/cv.pdf">Download</a> <br/> <div style={downloadDescStyle}>(compact version)</div></div>
+			<span className="mobileOnlySupport"><br/></span>
+			<div className="noselect" style={downloadStyle}><a href="https://github.com/avrtt/avrtt.github.io/blob/main/src/documents/cv.pdf">Download</a> <br/> <div className={"desktopOnlySupport"} style={downloadDescStyle}>(compact version)</div></div>
 
 			<p>I'm a <b>Middle Data Scientist</b> with experience in ML engineering, Python programming and analytics. I specialize in designing/implementing/refining/deploying ML systems, data-related problems (collection, processing, transforming, modeling, visualization, analysis, interpreting), and developing various automation software.</p>
 			<p>This page provides a more detailed description of my professional skills, as opposed to the minimal version of the CV provided in the link above. For my freelance services and projects, check out the <Link to="/freelance">Freelance</Link> page.</p>
