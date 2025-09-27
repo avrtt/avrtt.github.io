@@ -33,9 +33,9 @@ $border-radius: 1vh;
   max-width: 100%;
   @include mixins.respond-to(mobile) { line-height: 1.25rem; border-radius: $border-radius; font-weight: normal; }
   @include mixins.respond-to(small-tablet) { line-height: 1.4rem; border-radius: $border-radius; font-weight: normal; }
-  @include mixins.respond-to(tablet) { line-height: 1.6rem; border-radius: $border-radius; font-weight: lighter; }
-  @include mixins.respond-to(small-desktop) { line-height: 1.8rem; font-weight: lighter; }
-  @include mixins.respond-to(desktop) { line-height: 1.8rem; font-weight: lighter; }
+  @include mixins.respond-to(tablet) { line-height: 1.6rem; border-radius: $border-radius; font-weight: 300; }
+  @include mixins.respond-to(small-desktop) { line-height: 1.8rem; font-weight: 300; }
+  @include mixins.respond-to(desktop) { line-height: 1.8rem; font-weight: 300; }
 }
 
 .spoilerContent,

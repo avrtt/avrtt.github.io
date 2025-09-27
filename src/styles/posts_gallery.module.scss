@@ -5,6 +5,7 @@ Distributed under the GNU AGPLv3 license. For details and source code, please re
 
 */
 
+@use 'variables' as var;
 @use 'mixins';
 
 .prevHome {
@@ -64,7 +65,7 @@ Distributed under the GNU AGPLv3 license. For details and source code, please re
   width: 100%;
   height: 100%;
   color: #ffffff;
-  font-family: "Quicksand", sans-serif;
+  font-family: var.$font-family-primary;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -82,7 +83,7 @@ Distributed under the GNU AGPLv3 license. For details and source code, please re
   width: 100%;
   height: 100%;
   color: #ffffff;
-  font-family: "Quicksand", sans-serif;
+  font-family: var.$font-family-primary;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -101,7 +102,7 @@ Distributed under the GNU AGPLv3 license. For details and source code, please re
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   color: #ffffff;
-  font-family: "Quicksand", sans-serif;
+  font-family: var.$font-family-primary;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -120,7 +121,7 @@ Distributed under the GNU AGPLv3 license. For details and source code, please re
   height: 100%;
   background: rgba(0, 0, 0, 0);
   color: #ffffff;
-  font-family: "Quicksand", sans-serif;
+  font-family: var.$font-family-primary;
   display: flex;
   flex-direction: column;
   align-items: center;

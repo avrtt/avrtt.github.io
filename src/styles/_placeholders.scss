@@ -17,9 +17,9 @@ Distributed under the GNU AGPLv3 license. For details and source code, please re
   padding: 0.2rem 1.5rem;
   border-radius: 2vh;
   transition: margin 1s ease, padding 1s ease;
-  @include mix.respond-to(tablet) { font-weight: lighter; }
-  @include mix.respond-to(small-desktop) { font-weight: lighter; }
-  @include mix.respond-to(desktop) { font-weight: lighter; }
+  @include mix.respond-to(tablet) { font-weight: 300; }
+  @include mix.respond-to(small-desktop) { font-weight: 300; }
+  @include mix.respond-to(desktop) { font-weight: 300; }
 }
   
 %body-box-tile {
@@ -27,9 +27,9 @@ Distributed under the GNU AGPLv3 license. For details and source code, please re
   background-color: transparent;
   font-size: clamp(0.8rem, 2vw, 1.2rem);
   margin-top: 1em;
-  @include mix.respond-to(tablet) { font-weight: lighter; }
-  @include mix.respond-to(small-desktop) { font-weight: lighter; }
-  @include mix.respond-to(desktop) { font-weight: lighter; }
+  @include mix.respond-to(tablet) { font-weight: 300; }
+  @include mix.respond-to(small-desktop) { font-weight: 300; }
+  @include mix.respond-to(desktop) { font-weight: 300; }
 }
   
 %body-box-nested {
@@ -37,14 +37,14 @@ Distributed under the GNU AGPLv3 license. For details and source code, please re
   font-size: clamp(1rem, 2.5vw, 1.4rem);
   border-radius: 2vh;
   transition: margin 1s ease, padding 1s ease;
-  @include mix.respond-to(tablet) { font-weight: lighter; }
-  @include mix.respond-to(small-desktop) { font-weight: lighter; }
-  @include mix.respond-to(desktop) { font-weight: lighter; }
+  @include mix.respond-to(tablet) { font-weight: 300; }
+  @include mix.respond-to(small-desktop) { font-weight: 300; }
+  @include mix.respond-to(desktop) { font-weight: 300; }
 }
   
 %link-common {
   text-decoration: none;
-  font-weight: 800;
+  font-weight: bold;
   border-bottom: 0;
   color: var.$color-link;
   transition: color 0.1s ease-in-out;

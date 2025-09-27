@@ -37,7 +37,7 @@ $padding-default: 20px 20px 8px 20px;
   color: $color-light;
   padding: $padding-default;
   border-radius: $border-radius-medium;
-  font-weight: lighter;
+  font-weight: 300;
   @include transition(transform, $transition-fast);
 }
 
