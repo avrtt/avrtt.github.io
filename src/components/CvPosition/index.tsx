@@ -82,6 +82,10 @@ const CvPosition: React.FC<CvPositionProps> = ({
   point3, 
   point4, 
   point5, 
+  point6, 
+  point7, 
+  point8, 
+  point9, 
   pointLast 
 }) => {
   return (
@@ -108,6 +112,10 @@ const CvPosition: React.FC<CvPositionProps> = ({
       <span style={point3Style}><M text={point3}/></span>
       <span style={point4Style}><M text={point4}/></span>
       <span style={point5Style}><M text={point5}/></span>
+      <span style={point3Style}><M text={point6}/></span>
+      <span style={point4Style}><M text={point7}/></span>
+      <span style={point5Style}><M text={point8}/></span>
+      <span style={point5Style}><M text={point9}/></span>
       <span><M text={pointLast}/></span>
       <br/>
     </div>

@@ -48,16 +48,32 @@ const CV = () => {
 			<div className="sectionBreak"><M text="----------"/></div>
 			<M text="# 👨🏻‍💻 WORK EXPERIENCE "/>
 			<CvPosition 
+				positionName={"Machine Learning Engineer (LLMs & multimodal learning)"} 
+				companyName={"NPmatic GmbH"} 
+				companyLink={"https://labs.npmatic.de/"}
+				emoji={"🤖"} 
+				expTime={"Jul 2025 — Nov 2025"} 
+				expLocation={"Berlin, Germany (remote)"} 
+				expDesc={"Designed and delivered production-ready components that combined modern LLM engineering with multimodal learning for a Russian-speaking fintech & enterprise analytics startup team based in the EU; moving from Data Scientist responsibilities toward ML Engineering (model adaptation, inference optimization, MLOps). NPmatic focuses on B2B, building LLM systems for reasoning, retrieval, large-scale data analysis and business process automation."}
+				point1={"- Designed and implemented hybrid LLM + multimodal architectures (text + vision/audio encoders as perception frontends) to enable structured reasoning and grounded generation in product features, mostly for analyzing complicated reports & live presentations in order to provide automated question answering. Integrated CLIP into production pipelines."}
+				point2={"- Built E2E RAG pipelines for corporate analytics: data ingestion workflows, chunking, embeddings generation, tuning & indexing into a vector store, vector search (OpenSearch), and reranking with cross-encoders & cache layers for low-latency contextual vector retrieval with fast access. Implemented hybrid retrieval strategies (vector + keyword) using OpenSearch and FAISS to balance recall and precision. Passed the extracted relevant passages to an LLM module in order to integrate the pipeline with LLM inference for factual grounding and tool-calling, enabling faster document summarization."}
+				point3={"- Fine-tuned some LLMs & multimodal backbones to project-specific needs using PEFT approaches (LoRA/QLoRA), synthetic instruction and data augmentation, adapting them to financial domain while keeping training cost practical, which basically reduced hallucinations. Applied knowledge distillation to obtain smaller models for cost-efficient inference and reduced dependency on closed APIs."}
+				point4={"- Implemented latency- and cost-reduction techniques for model inference optimization in production: request batching & shaping, operator fusion, dynamic truncation of long inputs and weight quantization improving throughput and Time-to-First-Token, which reduced memory footprint, per-request cost and accelerated response generation with minimal quality degradation, so we met strict enterprise latency SLAs. Applied INT8/INT4 quantization and optimized GPU utilization for cloud-based inference."}
+				point5={"- Implemented model serving and MLOps practices for rapid response to data shifts and safe model updates without downtime: deployed containerized services and established CI/CD pipelines for automated delivery of model and data updates; implemented model versioning and quality monitoring (drift detectors, regression tests, metrics using LLM-as-judge, offline benchmarks) for stable production behavior and fast iteration. Monitored token usage, latency, failure modes and quality drift in production."}
+				point6={"- Deployed models and services as scalable microservices on cloud infrastructure (Docker + Kubernetes, AWS), defined API contracts for frontend/backend integration and participated in PoC > MVP cycles: building APIs, demoing prototypes to clients and integrating feedback iteratively (so we accelerated feature delivery)."}
+				pointLast={"- Developed reusable components that combined LLM reasoning with vision/audio modules. These components were reused across multiple product features and halved the development time for new scenarios. In particular, applying this solution shortened prototyping cycles, improved contextual accuracy in target features and sped up generation of analytic reports from corporate data (tasks that previously took hours or days now completed in minutes). Integrated agentic workflows (tool-calling, function execution, planners) using LlamaIndex–style abstractions with custom orchestration logic for multi-step reasoning tasks."}
+			/>
+			<CvPosition 
 				positionName={"Data Scientist, ML Engineer & Python Developer"} 
 				companyName={"Freelance"} 
 				companyLink={"/freelance"}
 				emoji={"🥥"} 
-				expTime={"Jun 2024 — Present"} 
+				expTime={"Jun 2024 — Nov 2025"} 
 				expLocation={"Various places"} 
 				expDesc={"Long-term full-time freelancing & seeking for a Middle ML Engineer position."}
-				point1={"- Designing/implementing/refining/deploying ML systems."}
-				point2={"- Handling data-related problems: collection, processing, transforming, modeling, visualization, analysis, etc."}
-				pointLast={"- Developing various automation software."}
+				point1={"- Designed/implemented/refined/deployed ML systems."}
+				point2={"- Handled data-related problems: collection, processing, transforming, modeling, visualization, analysis, etc."}
+				pointLast={"- Developed various automation software."}
 			/>
 			<CvPosition 
 				positionName={"Middle Data Analyst"} 
@@ -66,7 +82,7 @@ const CV = () => {
 				emoji={"✈️"} 
 				expTime={"Jul 2023 — May 2024"} 
 				expLocation={"Tbilisi, Georgia (remote)"} 
-				expDesc={"Remokate is a recruitment agency that connects top IT talent with leading companies in Russia and abroad, including startups, large corporations and international relocation opportunities."}
+				expDesc={"Worked on solutions that impacted product and business outcomes for clients in fintech, retail, SaaS and large-scale product companies. Remokate is a recruitment agency that connects top IT talent with leading companies in Russia and abroad, including startups, large corporations and international relocation opportunities."}
 				point1={"- Designed, monitored and interpreted key business and product metrics to identify growth opportunities and bottlenecks across customer funnels."}
 				point2={"- Wrote and optimized complex SQL queries for large datasets, improving data processing speed and accuracy."}
 				point3={"- Built and maintained interactive dashboards in BI tools (DataLens, Tableau), enabling stakeholders to track KPIs, detect anomalies and make data-informed decisions."}
