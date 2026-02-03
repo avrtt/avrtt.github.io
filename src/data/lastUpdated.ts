@@ -30,4 +30,4 @@ export const videosLastUpdated = "FEB 7, 2025"
 export const habitsLastUpdated = "FEB 7, 2025"
 export const faqLastUpdated = "FEB 7, 2025"
 
-export const footerYear = "2025"
+export const footerYear = "2026"
