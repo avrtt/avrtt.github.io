@@ -563,12 +563,12 @@ const Home = () => {
 				</TileContainerLink>
 				<TileContainerLink columns={4} gap="1em" marginBottom="1em">
 					<LinkBlock
-						link='https://t.me/avreads'
+						link='https://t.me/avlearns'
 						icon={telegram}
 						categoryEmoji={''}
 						categoryName="Misc"
-						name='Today I read'
-						handle='@avreads'
+						name='Today I learned'
+						handle='@avlearns'
 						description='My r/TIL-like notes'
 						isEnglishAndRussian={true}
 					/>
