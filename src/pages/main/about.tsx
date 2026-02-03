@@ -430,6 +430,10 @@ const About = () => {
                         <div className="listDescItem"><p>Set off on my <Link to="/adventures/venturing_forth">planned trip</Link> around the world with the goal of circumnavigating the globe</p></div>
                         <div className="listDescTime"><M text="- 2025 July"/></div>
                         <div className="listDescItem"><M text="Traveled throughout Central Asia, moved to 🇰🇬 [Bishkek](https://en.wikipedia.org/wiki/Bishkek)"/></div>
+                        <div className="listDescTime"><M text="- 2025 Oct"/></div>
+                        <div className="listDescItem"><M text="Moved to 🇰🇿 [Almaty](https://en.wikipedia.org/wiki/Almaty)"/></div>
+                        <div className="listDescTime"><M text="- 2026 Feb"/></div>
+                        <div className="listDescItem"><M text="Finished the first Chinese expedition, moved to 🇻🇳 [Nha Trang](https://en.wikipedia.org/wiki/Nha_Trang), bought my first motorcycle"/></div>
                         <div className="listDescItemLast"></div>
                         <br/>
                     </div>
@@ -621,7 +625,7 @@ const About = () => {
                     <ContentBlock
                         emoji="🧐"
                         emojiGif={monocle}
-                        description="I keep a channel [@avreads](https://t.me/avreads) in Telegram with some knowledge I get from reading Wikipedia and classic literature."
+                        description="I keep a channel [Wayfarer's Archives](https://t.me/avlearns) in Telegram with some knowledge I get mostly from reading Wikipedia and classic literature."
                         backgroundColor="#dbdbdb"
                         justifyContent = 'start'
                         textAlign='center'
@@ -679,10 +683,10 @@ const About = () => {
                     <div className={stylesTagBadges.badgeAbout}><span className={stylesTagBadges.badgeEmoji}>🚬</span> Non-smoker</div>
                     <div className={stylesTagBadges.badgeAbout}><span className={stylesTagBadges.badgeEmoji}>🥶</span> Prefer cold climate</div>
                     <div className={stylesTagBadges.badgeAbout}><span className={stylesTagBadges.badgeEmoji}>😌</span> Prefer to live alone</div>
-                    <div className={stylesTagBadges.badgeAbout}><span className={stylesTagBadges.badgeEmoji}>🇺🇸</span> B2</div>
-                    <div className={stylesTagBadges.badgeAbout}><span className={stylesTagBadges.badgeEmoji}>🇪🇸</span> A2</div>
-                    <div className={stylesTagBadges.badgeAbout}><span className={stylesTagBadges.badgeEmoji}>🇸🇪</span> A1</div>
-                    <div className={stylesTagBadges.badgeAbout}><span className={stylesTagBadges.badgeEmoji}>🇷🇺</span> Native</div>
+                    <div className={stylesTagBadges.badgeAbout}>🇺🇸 B2</div>
+                    <div className={stylesTagBadges.badgeAbout}>🇪🇸 A2</div>
+                    <div className={stylesTagBadges.badgeAbout}>🇨🇳 A1</div>
+                    <div className={stylesTagBadges.badgeAbout}>🇷🇺 Native</div>
                 </div>
             </AnimationOnScroll>
             <AnimationOnScroll offset={300} duration={1.2} animateIn="animate__fadeIn" animateOnce={true}>
