@@ -20,7 +20,7 @@ export const plans = "Southeast Asia on motorcycle"
 // 7 - 😌 no more projects
 // 8 - 🏝️ on vacation
 // 9 - 🍄 hermit mode
-export const freelanceStatus = 4
+export const freelanceStatus = 1
 
 // (optional) e.g. "Jan 1" or "~ Jan 1" or "Jan 1 – Jan 6" 
 export const dateOfStartResponding = "" 
