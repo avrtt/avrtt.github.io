@@ -72,6 +72,58 @@ const TableOfContents = ({ toc }) => {
   )
 }
 
+const VideoVersionEmbed = ({ link }) => {
+  if (!link) return null;
+
+  const getVideoId = (url) => {
+    const regExp =
+      /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&?/]+)/;
+    const match = url.match(regExp);
+    return match ? match[1] : null;
+  };
+
+  const videoId = getVideoId(link);
+  if (!videoId) return null;
+
+  const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+
+  return (
+    <div
+      className="desktopOnlySupport"
+      style={{
+        maxWidth: "900px",
+        margin: "0 auto 3vh auto",
+      }}
+    >
+      <div
+        style={{
+          position: "relative",
+          paddingBottom: "56.25%", // 16:9
+          height: 0,
+          borderRadius: "2vh",
+          overflow: "hidden",
+        }}
+      >
+        <iframe
+          src={embedUrl}
+          title="Video version"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            border: 0,
+          }}
+        />
+      </div>
+      <br/>
+    </div>
+  );
+};
+
 export function PostTemplate({ data: { mdx, allMdx, allPostImages }, children }) {
 
   const { frontmatter, body, tableOfContents } = mdx;
@@ -183,6 +235,10 @@ export function PostTemplate({ data: { mdx, allMdx, allPostImages }, children })
             {tag}
           </span>
         ))}
+      </div>
+
+      <div>
+        <VideoVersionEmbed link={frontmatter.ytVideoURL} />
       </div>
 
       <div className="postBody">
@@ -370,6 +426,7 @@ export const query = graphql`
         imageAltOG
         imageTwitter
         imageAltTwitter
+        ytVideoURL
         canonicalURL
         slug
       }

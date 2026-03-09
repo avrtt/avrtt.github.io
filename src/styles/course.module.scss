@@ -1,0 +1,19 @@
+/* 
+
+Copyright © 2022  Vladislav Averett (avrtt)
+Distributed under the GNU AGPLv3 license. For details and source code, please refer to <https://github.com/avrtt/avrtt.github.io>.
+
+*/
+
+.ytIcon {
+  transition: 100ms ease-in;
+  width: 26px; 
+  height: 26px;
+  opacity: 0.75;
+  vertical-align: text-top;
+
+  &:hover {
+    opacity: 1.0;
+    transform: scale(1.1)
+  }
+}

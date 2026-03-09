@@ -18,7 +18,9 @@ import MoreCoursesNotice from '../../components/MoreCoursesNotice';
 import StickerPack from '../../components/StickerPack';
 import { courseLastUpdated } from '../../data/lastUpdated';
 import { wordsPerMinuteResearch } from '../../data/commonVariables';
+import ytIcon from "../../images/links/youtube_regular.svg";
 import * as stylesSpoilers from "../../styles/spoilers.module.scss"
+import * as stylesCourse from "../../styles/course.module.scss"
 import 'animate.css/animate.min.css';
 
 interface PostFrontmatter {
@@ -30,6 +32,7 @@ interface PostFrontmatter {
 	flagMindfuckery?: boolean;
 	extraReadTimeMin?: number;
 	readTime?: string;
+	ytVideoURL: string;
 }
 
 interface PostNode {
@@ -180,7 +183,7 @@ const Course = ({ data }: { data: CourseData }) => {
 				<Notice title="☝️ FYI" text="This course was revised in **March 2025**. However, there are still a considerable amount of **gaps** and **bland narration**. I'm still working hard to make this course engaging, so please be patient."/>
 				
 				<M text="Here you can find tutorials on machine learning, data science and several other fields organized as a sequential, in-depth theoretical course presented in modules. I've created it single-handedly by studying and summarizing a huge amount of material, and launched together with this blog as open source."/>
-				<p>I also have plans to make video tutorials based on <Link to="/research">Research</Link> posts for my YouTube channel <Link to="https://www.youtube.com/@avheuristics">@avheuristics</Link> in the future.</p>
+				<p>Since 2026, I've also started making video lessons based on the course content for my YouTube channel <H><Link to="https://www.youtube.com/@avheuristics">@avheuristics</Link></H>. Use YouTube icons in the course content to navigate to the corresponding videos.</p>
 				<div>
 					<button className={`noselect ${stylesSpoilers.spoilerButton}`} ref={(el) => { if(el) collRef.current.push(el); }}>
 						&nbsp;&nbsp;
@@ -212,6 +215,18 @@ const Course = ({ data }: { data: CourseData }) => {
 									<span style={{ borderLeft: "solid", marginLeft: "-15px", borderWidth: "0.3em", borderColor: parseDifficulty(post.difficultyLevel, post.flagMindfuckery) }}><span style={{ marginLeft: "10px" }}>{post.indexCourse}</span>. </span>
 									<Link to={post.slug}>{post.titleCourse}</Link>
 									<span style={{ opacity: 0.4 }}>&nbsp;{post.readTime}</span>
+									{post.ytVideoURL && (
+										<span>
+											&nbsp;&nbsp;
+											<a href={post.ytVideoURL} target="_blank" rel="noopener noreferrer">
+												<img
+													src={ytIcon}
+													alt=""
+													className={stylesCourse.ytIcon}
+												/>
+											</a>
+										</span>
+									)}
 								</div>
 							))}
 						</ul>
@@ -311,6 +326,7 @@ export const query = graphql`
 					extraReadTimeMin
 					difficultyLevel
 					flagMindfuckery
+					ytVideoURL
 					slug
         		}
 				body
