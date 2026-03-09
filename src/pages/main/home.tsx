@@ -460,7 +460,7 @@ const Home = () => {
 						categoryName="Tech"
 						name='Tech videos'
 						handle='@avheuristics'
-						description='Career-related content'
+						description='AI-related content'
 					/>
 					<LinkBlock
 						link='https://t.me/avheuristics'
@@ -469,7 +469,7 @@ const Home = () => {
 						categoryName="Tech"
 						name='Tech blog'
 						handle='@avheuristics'
-						description='Career-related content'
+						description='AI-related content'
 						isEnglishAndRussian={true}
 					/>
 					<LinkBlock
