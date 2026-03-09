@@ -104,10 +104,6 @@ In addition to traditional security problems associated with software, LLMs have
 - Red teaming frameworks like garak for stress-testing 50+ attack vectors, including DAN jailbreaks.  
 - Layered defenses: Input regex filters, output moderation APIs, and runtime anomaly detection with Langfuse.  
 - etc.  
-9. Monitoring and maintenance  
-- Key metrics: Per-user token quotas, GPU memory utilization alerts, and drift detection for degraded outputs.  
-- CI/CD pipelines for seamless model updates: Canary deployments with 5% traffic shadowing for GPT-4 parity checks.  
-- etc.  
 
 */}
 
@@ -398,17 +394,6 @@ Some metrics especially relevant to LLM deployment:
 - **Per-user token quotas**: You may want to throttle or limit usage for cost control or user fairness.  
 - **GPU memory utilization**: LLMs can have spiky usage patterns, so continuous monitoring of VRAM usage is critical to avoid out-of-memory errors.  
 - **Drift detection**: Over time, user queries may shift (e.g. new slang or domain topics). The model's performance might degrade if it was not trained or fine-tuned for such changes. Tracking the performance across a sample of real queries or measuring user feedback can indicate the need for re-training or further fine-tuning.  
-
-### 9.2 CI/CD pipelines for model updates
-
-In modern MLOps, it is common to treat model updates with the same rigor as software releases. The pipeline might look like:
-
-1. **Development**: Fine-tune the model or update quantization strategies in a staging environment.  
-2. **Testing**: Evaluate performance on a hold-out dataset or run automatic red teaming checks.  
-3. **Canary deployment**: Gradually route a small percentage (e.g. 5%) of real user traffic to the new model instance. Compare logs and results with the main production model.  
-4. **Full rollout**: If performance meets or exceeds expectations, shift more traffic to the new version until it becomes the production default.
-
-This approach is sometimes used with **GPT-4 parity checks**, where organizations measure how a new model version compares to GPT-4 on carefully curated test sets. The objective is to ensure no major regression or unexpected behaviors appear.
 
 ---
 

@@ -39,6 +39,7 @@ imageOG: "../../../images/posts/research/banners/IMAGE.jpg"
 imageAltOG: ""
 imageTwitter: "../../../images/posts/research/banners/IMAGE.jpg"
 imageAltTwitter: ""
+ytVideoURL: ""
 canonicalURL: "https://avrtt.github.io/research/POST_URL"
 slug: "/research/POST_URL"
 ---
